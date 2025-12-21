@@ -1,0 +1,13 @@
+{
+  "itemGroup.galacticraftlegacy": "Example Mod Tab",
+  "block.galacticraftlegacy.example_block": "Example Block",
+  "item.galacticraftlegacy.example_item": "Example Item",
+
+  "galacticraftlegacy.configuration.title": "Galacticraft - Legacy Configs",
+  "galacticraftlegacy.configuration.section.galacticraftlegacy.common.toml": "Galacticraft - Legacy Configs",
+  "galacticraftlegacy.configuration.section.galacticraftlegacy.common.toml.title": "Galacticraft - Legacy Configs",
+  "galacticraftlegacy.configuration.items": "Item List",
+  "galacticraftlegacy.configuration.logDirtBlock": "Log Dirt Block",
+  "galacticraftlegacy.configuration.magicNumberIntroduction": "Magic Number Text",
+  "galacticraftlegacy.configuration.magicNumber": "Magic Number"
+}
