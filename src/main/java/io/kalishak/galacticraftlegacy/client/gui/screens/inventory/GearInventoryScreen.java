@@ -1,0 +1,52 @@
+package io.kalishak.galacticraftlegacy.client.gui.screens.inventory;
+
+import io.kalishak.galacticraftlegacy.Galacticraft;
+import io.kalishak.galacticraftlegacy.world.inventory.GearInventoryMenu;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.screens.inventory.*;
+import net.minecraft.client.renderer.RenderPipelines;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.entity.player.Inventory;
+
+import static net.minecraft.client.gui.screens.inventory.InventoryScreen.renderEntityInInventoryFollowsMouse;
+
+public class GearInventoryScreen extends AbstractContainerScreen<GearInventoryMenu> {
+    public static final Identifier GEAR_INVENTORY_LOCATION = Identifier.fromNamespaceAndPath(Galacticraft.MODID, "textures/gui/container/gear_inventory.png");
+    private float xMouse;
+    private float yMouse;
+    private final EffectsInInventory effects;
+
+    public GearInventoryScreen(GearInventoryMenu menu, Inventory playerInventory, Component component) {
+        super(menu, playerInventory, component);
+        this.titleLabelX = 97;
+        this.effects = new EffectsInInventory(this);
+    }
+
+    @Override
+    protected void renderLabels(GuiGraphics guiGraphics, int mouseX, int mouseY) {
+        guiGraphics.drawString(this.font, this.title, this.titleLabelX, this.titleLabelY, -12566464, false);
+    }
+
+    @Override
+    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
+        super.render(guiGraphics, mouseX, mouseY, partialTicks);
+        renderTooltip(guiGraphics, mouseX, mouseY);
+        this.effects.render(guiGraphics, mouseX, mouseY);
+        this.xMouse = mouseX;
+        this.yMouse = mouseY;
+    }
+
+    @Override
+    public boolean showsActiveEffects() {
+        return this.effects.canSeeEffects();
+    }
+
+    @Override
+    protected void renderBg(GuiGraphics guiGraphics, float partialTick, int mouseX, int mouseY) {
+        int i = this.leftPos;
+        int j = this.topPos;
+        guiGraphics.blit(RenderPipelines.GUI_TEXTURED, GEAR_INVENTORY_LOCATION, i, j, 0.0F, 0.0F, this.imageWidth, this.imageHeight, 256, 256);
+        renderEntityInInventoryFollowsMouse(guiGraphics, i + 26, j + 8, i + 75, j + 78, 30, 0.0625F, this.xMouse, this.yMouse, this.minecraft.player);
+    }
+}

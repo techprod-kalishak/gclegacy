@@ -1,0 +1,13 @@
+{
+  "entries": [
+    {
+      "enum": "net/minecraft/world/item/Rarity",
+      "name": "GALACTICRAFTLEGACY_GALAXY",
+      "constructor": "(ILjava/lang/String;Ljava/util/function/UnaryOperator;)V",
+      "parameters": {
+        "class": "io/kalishak/galacticraftlegacy/EnumExtensions",
+        "field": "RARITY_GALAXY"
+      }
+    }
+  ]
+}

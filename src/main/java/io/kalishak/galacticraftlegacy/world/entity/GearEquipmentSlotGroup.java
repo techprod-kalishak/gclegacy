@@ -17,7 +17,7 @@ public enum GearEquipmentSlotGroup implements SerializableEnum, Iterable<GearEqu
     ANY(0, "any", Predicates.alwaysTrue()),
     GEAR(1, "gear", GearEquipmentSlot::isGear),
     TOOL(2, "tool", slot -> slot == GearEquipmentSlot.TELEMETRY || slot == GearEquipmentSlot.PARACHUTE),
-    THERMAL(2, "thermal", GearEquipmentSlot::isThermal);
+    THERMAL(3, "thermal", GearEquipmentSlot::isThermal);
 
     public static final Codec<GearEquipmentSlotGroup> CODEC = SerializableEnum.codec(GearEquipmentSlotGroup.class);
     public static final StreamCodec<ByteBuf, GearEquipmentSlotGroup> STREAM_CODEC = SerializableEnum.streamCodec(GearEquipmentSlotGroup.class);
@@ -39,9 +39,9 @@ public enum GearEquipmentSlotGroup implements SerializableEnum, Iterable<GearEqu
 
     public static GearEquipmentSlotGroup bySlot(GearEquipmentSlot slot) {
         return switch (slot) {
-            case HELMET, GEAR, LEFT_TANK, RIGHT_TANK -> GEAR;
+            case MASK, GEAR, TANK, ADDITIONAL_TANK -> GEAR;
             case TELEMETRY, PARACHUTE -> TOOL;
-            case THERMAL_HEAD, THERMAL_CHEST, THERMAL_LEG, THERMAL_FOOT -> THERMAL;
+            case THERMAL_CAP, THERMAL_SHIRT, THERMAL_LEGGINGS, THERMAL_SOCKS -> THERMAL;
         };
     }
 

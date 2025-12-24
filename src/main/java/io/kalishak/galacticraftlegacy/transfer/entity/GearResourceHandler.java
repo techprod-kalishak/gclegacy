@@ -10,19 +10,19 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.common.util.ValueIOSerializable;
-import net.neoforged.neoforge.transfer.ResourceHandler;
+import net.neoforged.neoforge.transfer.StacksResourceHandler;
 import net.neoforged.neoforge.transfer.TransferPreconditions;
 import net.neoforged.neoforge.transfer.item.ItemResource;
+import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
 import net.neoforged.neoforge.transfer.transaction.SnapshotJournal;
 import net.neoforged.neoforge.transfer.transaction.TransactionContext;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
-import java.util.EnumMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
+import java.util.function.Consumer;
 
-public class GearResourceHandler extends SnapshotJournal<EnumMap<GearEquipmentSlot, ItemResource>> implements ResourceHandler<@NonNull ItemResource>, ValueIOSerializable {
+public class GearResourceHandler extends SnapshotJournal<EnumMap<GearEquipmentSlot, ItemResource>> implements MutableResourceHandler<@NonNull ItemResource>, ValueIOSerializable {
     public static final Codec<GearResourceHandler> CODEC = Codec.unboundedMap(GearEquipmentSlot.CODEC, ItemResource.CODEC).xmap(map -> {
         EnumMap<GearEquipmentSlot, ItemResource> items = new EnumMap<>(GearEquipmentSlot.class);
         items.putAll(map);
@@ -46,9 +46,14 @@ public class GearResourceHandler extends SnapshotJournal<EnumMap<GearEquipmentSl
         return items;
     });
     private final EnumMap<GearEquipmentSlot, ItemResource> items;
+    private final List<GearJournal> snapshots;
 
     GearResourceHandler(EnumMap<GearEquipmentSlot, ItemResource> items) {
         this.items = items;
+        this.snapshots = new ArrayList<>(items.size());
+        for (int i = 0; i < items.size(); i++) {
+            snapshots.add(new GearJournal(i));
+        }
     }
 
     public static GearResourceHandler empty() {
@@ -72,11 +77,15 @@ public class GearResourceHandler extends SnapshotJournal<EnumMap<GearEquipmentSl
     }
 
     public void set(int index, ItemResource resource, int amount) {
-        GearEquipmentSlot slot = findSlot(resource);
+        GearEquipmentSlot slot = GearEquipmentSlot.byId(index);
 
-        if (isValid(index, resource) && slot != null) {
-            setNoUpdate(slot, resource);
+        if (isValid(index, resource)) {
+            onChange(index, setNoUpdate(slot, resource));
         }
+    }
+
+    public void onChange(int index, ItemResource oldResource) {
+        //Update Player attributes and equipped models
     }
 
     public boolean isEmpty() {
@@ -95,16 +104,16 @@ public class GearResourceHandler extends SnapshotJournal<EnumMap<GearEquipmentSl
 
     @Override
     protected EnumMap<GearEquipmentSlot, ItemResource> createSnapshot() {
-        EnumMap<GearEquipmentSlot, ItemResource> newItems = new EnumMap<>(this.items);
-        newItems.values().removeIf(ItemResource::isEmpty);
+        EnumMap<GearEquipmentSlot, ItemResource> snapshot = new EnumMap<>(this.items);
+        snapshot.values().removeIf(ItemResource::isEmpty);
 
-        return newItems;
+        return snapshot;
     }
 
     @Override
-    protected void revertToSnapshot(EnumMap<GearEquipmentSlot, ItemResource> gearEquipmentSlotItemResourceEnumMap) {
+    protected void revertToSnapshot(EnumMap<GearEquipmentSlot, ItemResource> snapshot) {
         clear();
-        this.items.putAll(gearEquipmentSlotItemResourceEnumMap);
+        this.items.putAll(snapshot);
     }
 
     @Override
@@ -115,7 +124,7 @@ public class GearResourceHandler extends SnapshotJournal<EnumMap<GearEquipmentSl
     @Override
     public ItemResource getResource(int index) {
         Objects.checkIndex(index, size());
-        return this.items.get(GearEquipmentSlot.values()[index]);
+        return Objects.requireNonNullElse(this.items.get(GearEquipmentSlot.byId(index)), ItemResource.EMPTY);
     }
 
     @Override
@@ -133,30 +142,27 @@ public class GearResourceHandler extends SnapshotJournal<EnumMap<GearEquipmentSl
     @Override
     public boolean isValid(int index, ItemResource resource) {
         Objects.checkIndex(index, size());
-        GearEquipmentSlot slot = GearEquipmentSlot.values()[index];
-        GearEquippable equippable = resource.get(GalacticraftDataComponents.GEAR_EQUIPPABLE);
 
-        return equippable != null && equippable.gearSlot() == slot;
+        GearEquipmentSlot slot = GearEquipmentSlot.byId(index);
+        GearEquippable gearEquippable = resource.get(GalacticraftDataComponents.GEAR_EQUIPPABLE);
+
+        return gearEquippable != null && (gearEquippable.gearSlot() == slot || gearEquippable.additionalGearSlot().filter(GearEquipmentSlot::isTank).isPresent());
     }
 
     @Override
     public int insert(int index, ItemResource resource, int amount, TransactionContext transaction) {
         Objects.checkIndex(index, size());
         TransferPreconditions.checkNonEmptyNonNegative(resource, amount);
-        ItemResource currentResource = getResource(index);
 
-        if (currentResource.isEmpty() && isValid(index, resource)) {
+        ItemResource currentResource = getResource(index);
+        int count = getAmountAsInt(index);
+
+        if (count == 0 || currentResource.matches(resource.toStack()) && isValid(index, resource)) {
             int insertedAmount = Math.min(amount, 1 - amount);
 
             if (insertedAmount > 0) {
                 updateSnapshots(transaction);
-                currentResource = getResource(index);
-
-                if (currentResource.isEmpty()) {
-                    currentResource = resource;
-                }
-
-                set(index, currentResource, insertedAmount);
+                setNoUpdate(GearEquipmentSlot.byId(index), resource);
 
                 return insertedAmount;
             }
@@ -169,15 +175,16 @@ public class GearResourceHandler extends SnapshotJournal<EnumMap<GearEquipmentSl
     public int extract(int index, ItemResource resource, int amount, TransactionContext transaction) {
         Objects.checkIndex(index, this.size());
         TransferPreconditions.checkNonEmptyNonNegative(resource, amount);
+
         ItemResource currentResource = getResource(index);
 
-        if (resource.is(currentResource.getHolder())) {
-            int extracted = Math.min(1, amount);
+        if (resource.matches(currentResource.toStack())) {
+            int currentAmount = getAmountAsInt(index);
+            int extracted = Math.min(amount, currentAmount);
 
             if (extracted > 0) {
                 updateSnapshots(transaction);
-
-                set(index, ItemResource.EMPTY, extracted);
+                setNoUpdate(GearEquipmentSlot.byId(index), resource);
 
                 return extracted;
             }
@@ -194,5 +201,28 @@ public class GearResourceHandler extends SnapshotJournal<EnumMap<GearEquipmentSl
     @Override
     public void deserialize(ValueInput valueInput) {
         valueInput.read("Gear", GearResourceHandler.CODEC).ifPresent(savedData -> this.items.putAll(savedData.items));
+    }
+
+    private class GearJournal extends SnapshotJournal<ItemResource> {
+        private final int index;
+
+        private GearJournal(int index) {
+            this.index = index;
+        }
+
+        @Override
+        protected ItemResource createSnapshot() {
+            return GearResourceHandler.this.items.get(GearEquipmentSlot.byId(this.index));
+        }
+
+        @Override
+        protected void revertToSnapshot(ItemResource snapshot) {
+            GearResourceHandler.this.items.put(GearEquipmentSlot.byId(this.index), snapshot);
+        }
+
+        @Override
+        protected void onRootCommit(ItemResource originalState) {
+            GearResourceHandler.this.onChange(this.index, originalState);
+        }
     }
 }

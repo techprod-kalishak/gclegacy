@@ -1,0 +1,22 @@
+package io.kalishak.galacticraftlegacy.world.inventory.slot;
+
+import io.kalishak.galacticraftlegacy.world.inventory.CoalGeneratorMenu;
+import net.minecraft.world.inventory.FurnaceFuelSlot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.neoforged.neoforge.transfer.IndexModifier;
+import net.neoforged.neoforge.transfer.ResourceHandler;
+import net.neoforged.neoforge.transfer.item.ItemResource;
+
+import java.util.function.Predicate;
+
+public class FuelHandlerSlot extends MutableHandlerSlot {
+    public FuelHandlerSlot(ResourceHandler<ItemResource> handler, IndexModifier<ItemResource> slotModifier, int index, int xPosition, int yPosition) {
+        super(handler, slotModifier, resource -> CoalGeneratorMenu.isFuel(resource.getHolder()), index, xPosition, yPosition);
+    }
+
+    @Override
+    public int getMaxStackSize(ItemStack stack) {
+        return stack.is(Items.BUCKET) ? 1 : super.getMaxStackSize(stack);
+    }
+}

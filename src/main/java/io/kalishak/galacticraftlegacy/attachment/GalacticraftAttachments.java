@@ -1,6 +1,6 @@
 package io.kalishak.galacticraftlegacy.attachment;
 
-import io.kalishak.galacticraftlegacy.GalacticraftLegacy;
+import io.kalishak.galacticraftlegacy.Galacticraft;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.attachment.AttachmentType;
 import net.neoforged.neoforge.registries.DeferredHolder;
@@ -9,14 +9,18 @@ import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import org.jspecify.annotations.NonNull;
 
 public final class GalacticraftAttachments {
-    private static final DeferredRegister<AttachmentType<?>> ATTACHMENTS = DeferredRegister.create(NeoForgeRegistries.Keys.ATTACHMENT_TYPES, GalacticraftLegacy.MODID);
+    private static final DeferredRegister<AttachmentType<?>> REGISTRY = DeferredRegister.create(NeoForgeRegistries.Keys.ATTACHMENT_TYPES, Galacticraft.MODID);
 
-    public static final DeferredHolder<AttachmentType<?>, @NonNull AttachmentType<SpacePlayerData>> SPACE_DATA = ATTACHMENTS.register(
+    public static final DeferredHolder<AttachmentType<?>, @NonNull AttachmentType<GearInventory>> GEAR_INVENTORY = REGISTRY.register(
             "space_data",
-            () -> AttachmentType.builder(() -> new SpacePlayerData()).serialize(SpacePlayerData.CODEC).sync(SpacePlayerData.STREAM_CODEC).copyOnDeath().copyHandler(SpacePlayerData::copyOnDeath).build()
+            () -> AttachmentType.builder(GearInventory::new)
+                    .serialize(GearInventory.CODEC)
+                    .sync(GearInventory.STREAM_CODEC)
+                    .copyOnDeath()
+                    .copyHandler(GearInventory::copyOnDeath).build()
     );
 
     public static void init(IEventBus eventBus) {
-        ATTACHMENTS.register(eventBus);
+        REGISTRY.register(eventBus);
     }
 }
