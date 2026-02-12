@@ -1,0 +1,9 @@
+{
+  "layers": {
+    "galacticraftlegacy/tank": [
+      {
+        "texture": "galacticraftlegacy:medium_oxygen_tank"
+      }
+    ]
+  }
+}

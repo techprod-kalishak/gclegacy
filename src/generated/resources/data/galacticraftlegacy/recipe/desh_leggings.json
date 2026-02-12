@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "I": "#galacticraftlegacy:ingots/desh"
+  },
+  "pattern": [
+    "III",
+    "I I",
+    "I I"
+  ],
+  "result": {
+    "count": 1,
+    "id": "galacticraftlegacy:desh_leggings"
+  }
+}

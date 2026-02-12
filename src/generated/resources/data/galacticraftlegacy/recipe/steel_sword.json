@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "I": "#galacticraftlegacy:ingots/steel",
+    "S": "minecraft:stick"
+  },
+  "pattern": [
+    "I",
+    "I",
+    "S"
+  ],
+  "result": {
+    "count": 1,
+    "id": "galacticraftlegacy:steel_sword"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "galacticraftlegacy:steel_ingot"
+  ],
+  "result": {
+    "count": 9,
+    "id": "galacticraftlegacy:steel_nugget"
+  }
+}

@@ -3,6 +3,7 @@ package io.kalishak.galacticraftlegacy.world.level.material.fluid;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
+import net.neoforged.neoforge.common.NeoForgeMod;
 import net.neoforged.neoforge.fluids.BaseFlowingFluid;
 
 public abstract class GaseousFluid extends BaseFlowingFluid {

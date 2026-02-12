@@ -1,0 +1,8 @@
+{
+  "asset_id": "galacticraftlegacy:tier_2_rocket",
+  "level": "basic",
+  "title": {
+    "color": "yellow",
+    "translate": "schematic.galacticraftlegacy.tier_2_rocket.title"
+  }
+}

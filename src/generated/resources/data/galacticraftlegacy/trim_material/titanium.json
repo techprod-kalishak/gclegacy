@@ -1,0 +1,10 @@
+{
+  "asset_name": "titanium",
+  "description": {
+    "color": "#3D414F",
+    "translate": "trim_material.galacticraftlegacy.titanium"
+  },
+  "override_armor_assets": {
+    "galacticraftlegacy:titanium": "titanium_darker"
+  }
+}

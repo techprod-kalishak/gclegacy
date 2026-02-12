@@ -1,13 +1,25 @@
 package io.kalishak.galacticraftlegacy.client.gui.screens.inventory;
 
 import io.kalishak.galacticraftlegacy.Galacticraft;
+import io.kalishak.galacticraftlegacy.client.gui.components.ItemDisplayButton;
+import io.kalishak.galacticraftlegacy.network.payload.ToggleGearInventoryPayload;
 import io.kalishak.galacticraftlegacy.world.inventory.GearInventoryMenu;
+import io.kalishak.galacticraftlegacy.world.item.GalacticraftItems;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.*;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.*;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.item.Items;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.client.event.ScreenEvent;
+import net.neoforged.neoforge.client.network.ClientPacketDistributor;
+
+import java.util.function.Consumer;
 
 import static net.minecraft.client.gui.screens.inventory.InventoryScreen.renderEntityInInventoryFollowsMouse;
 
@@ -18,9 +30,55 @@ public class GearInventoryScreen extends AbstractContainerScreen<GearInventoryMe
     private final EffectsInInventory effects;
 
     public GearInventoryScreen(GearInventoryMenu menu, Inventory playerInventory, Component component) {
-        super(menu, playerInventory, component);
-        this.titleLabelX = 97;
+        super(menu, playerInventory, Component.empty());
         this.effects = new EffectsInInventory(this);
+    }
+
+    private static void addInventoryTabs(Consumer<Button> widgetConsumer, int leftPos, int topPos, Minecraft mc) {
+        widgetConsumer.accept(new ItemDisplayButton(
+                mc,
+                leftPos,
+                topPos - 20,
+                26,
+                24,
+                Component.translatable("container.inventory"),
+                Items.CRAFTING_TABLE.getDefaultInstance(),
+                false,
+                false,
+                onClick -> {
+                    mc.player.closeContainer();
+                    mc.setScreen(new InventoryScreen(mc.player));
+                },
+                mutableComponentSupplier -> Component.empty()
+        ));
+        widgetConsumer.accept(new ItemDisplayButton(
+                mc,
+                leftPos + 28,
+                topPos - 20,
+                26,
+                24,
+                Component.translatable("container.gear"),
+                GalacticraftItems.OXYGEN_MASK.toStack(),
+                false,
+                false,
+                onClick -> ClientPacketDistributor.sendToServer(new ToggleGearInventoryPayload(true)),
+                mutableComponentSupplier -> Component.empty()
+        ));
+    }
+
+    @SubscribeEvent
+    public static void setupScreen(ScreenEvent.Init.Post event) {
+        Screen screen = event.getScreen();
+
+        if (screen instanceof InventoryScreen inventoryScreen) {
+            addInventoryTabs(event::addListener, inventoryScreen.getGuiLeft(), inventoryScreen.getGuiTop(), inventoryScreen.getMinecraft());
+        }
+    }
+
+    @Override
+    protected void init() {
+        super.init();
+        addInventoryTabs(this::addRenderableWidget, this.leftPos, this.topPos, this.minecraft);
     }
 
     @Override
@@ -47,6 +105,6 @@ public class GearInventoryScreen extends AbstractContainerScreen<GearInventoryMe
         int i = this.leftPos;
         int j = this.topPos;
         guiGraphics.blit(RenderPipelines.GUI_TEXTURED, GEAR_INVENTORY_LOCATION, i, j, 0.0F, 0.0F, this.imageWidth, this.imageHeight, 256, 256);
-        renderEntityInInventoryFollowsMouse(guiGraphics, i + 26, j + 8, i + 75, j + 78, 30, 0.0625F, this.xMouse, this.yMouse, this.minecraft.player);
+        renderEntityInInventoryFollowsMouse(guiGraphics, i + 7, j + 7, i + 60, j + 78, 30, 0.0625F, this.xMouse, this.yMouse, this.minecraft.player);
     }
 }

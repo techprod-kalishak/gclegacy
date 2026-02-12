@@ -27,7 +27,9 @@ public class CircuitFabricatorBlock extends AbstractMachineBlock {
 
     @Override
     protected void openContainer(Level level, BlockPos pos, Player player) {
-
+        if (level.getBlockEntity(pos) instanceof CircuitFabricatorBlockEntity circuitFabricator) {
+            player.openMenu(circuitFabricator, pos);
+        }
     }
 
     @Override

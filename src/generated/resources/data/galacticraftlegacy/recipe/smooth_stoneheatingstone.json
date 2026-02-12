@@ -1,0 +1,11 @@
+{
+  "type": "galacticraftlegacy:heating",
+  "category": "blocks",
+  "cookingtime": 100,
+  "group": "stone",
+  "ingredient": "minecraft:stone",
+  "result": {
+    "count": 1,
+    "id": "minecraft:smooth_stone"
+  }
+}

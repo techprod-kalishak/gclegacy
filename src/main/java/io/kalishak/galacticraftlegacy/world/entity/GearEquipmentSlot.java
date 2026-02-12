@@ -1,8 +1,8 @@
 package io.kalishak.galacticraftlegacy.world.entity;
 
 import io.kalishak.galacticraftlegacy.codec.SerializableEnum;
-import io.kalishak.galacticraftlegacy.world.item.GalacticraftDataComponents;
-import io.kalishak.galacticraftlegacy.world.item.GearEquippable;
+import io.kalishak.galacticraftlegacy.world.item.component.GalacticraftDataComponents;
+import io.kalishak.galacticraftlegacy.world.item.component.GearEquippable;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.util.StringRepresentable;
@@ -12,18 +12,20 @@ import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
 public enum GearEquipmentSlot implements SerializableEnum {
-    MASK(EquipmentSlot.HEAD, 0, "mask"),
-    GEAR(EquipmentSlot.CHEST, 1, "gear"),
-    TANK(EquipmentSlot.CHEST, 2, "tank"),
-    ADDITIONAL_TANK(EquipmentSlot.CHEST, 3, "additional_tank"),
-    PARACHUTE(EquipmentSlot.CHEST, 4, "parachute"),
-    TELEMETRY(EquipmentSlot.HEAD, 5, "telemetry"),
-    THERMAL_CAP(EquipmentSlot.HEAD, 6, "thermal_cap"),
-    THERMAL_SHIRT(EquipmentSlot.HEAD, 7, "thermal_shirt"),
-    THERMAL_LEGGINGS(EquipmentSlot.HEAD, 8, "thermal_leggings"),
-    THERMAL_SOCKS(EquipmentSlot.HEAD, 9, "thermal_foot_socks");
+    THERMAL_CAP(EquipmentSlot.HEAD, 0, "thermal_cap"),
+    THERMAL_SHIRT(EquipmentSlot.CHEST, 1, "thermal_shirt"),
+    THERMAL_LEGGINGS(EquipmentSlot.LEGS, 2, "thermal_leggings"),
+    THERMAL_SOCKS(EquipmentSlot.FEET, 3, "thermal_foot_socks"),
+    MASK(EquipmentSlot.HEAD, 4, "mask"),
+    GEAR(EquipmentSlot.CHEST, 5, "gear"),
+    TANK(EquipmentSlot.CHEST, 6, "tank"),
+    ADDITIONAL_TANK(EquipmentSlot.CHEST, 7, "additional_tank"),
+    PARACHUTE(EquipmentSlot.CHEST, 8, "parachute"),
+    TELEMETRY(EquipmentSlot.HEAD, 9, "telemetry"),
+    SHIELD(EquipmentSlot.BODY, 10, "shield"),
+    BODY(EquipmentSlot.BODY, 11, "body");
 
-    public static final EnumCodec<@NonNull GearEquipmentSlot> CODEC = StringRepresentable.fromEnum(GearEquipmentSlot::values);
+    public static final EnumCodec<GearEquipmentSlot> CODEC = StringRepresentable.fromEnum(GearEquipmentSlot::values);
     public static final StreamCodec<ByteBuf, GearEquipmentSlot> STREAM_CODEC = SerializableEnum.streamCodec(GearEquipmentSlot.class);
     private final EquipmentSlot relatedEquipment;
     private final int index;
@@ -59,9 +61,7 @@ public enum GearEquipmentSlot implements SerializableEnum {
 
     public static GearEquipmentSlot byId(int index) {
         if (index >= 0 && index < GearEquipmentSlot.values().length) {
-            for (GearEquipmentSlot slot : GearEquipmentSlot.values()) {
-                if (slot.index == index) return slot;
-            }
+            return GearEquipmentSlot.values()[index];
         }
 
         throw new IndexOutOfBoundsException("Index " +  index + " is out of bounds for GearEquipmentSlot.");
@@ -72,10 +72,10 @@ public enum GearEquipmentSlot implements SerializableEnum {
     }
 
     public boolean isGear() {
-        return this.index < THERMAL_CAP.getIndex();
+        return this.index >= MASK.getIndex() && this.index <= PARACHUTE.getIndex();
     }
 
     public boolean isThermal() {
-        return this.index >= THERMAL_CAP.getIndex();
+        return this.index < MASK.getIndex();
     }
 }

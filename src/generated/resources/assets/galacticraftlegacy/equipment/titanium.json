@@ -1,0 +1,14 @@
+{
+  "layers": {
+    "humanoid": [
+      {
+        "texture": "galacticraftlegacy:titanium"
+      }
+    ],
+    "humanoid_leggings": [
+      {
+        "texture": "galacticraftlegacy:titanium"
+      }
+    ]
+  }
+}

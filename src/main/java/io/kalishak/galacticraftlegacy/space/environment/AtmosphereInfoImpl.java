@@ -1,16 +1,17 @@
 package io.kalishak.galacticraftlegacy.space.environment;
 
-import it.unimi.dsi.fastutil.doubles.Double2ObjectOpenHashMap;
+import it.unimi.dsi.fastutil.objects.Object2DoubleArrayMap;
+import it.unimi.dsi.fastutil.objects.Object2DoubleMap;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.material.Fluid;
 
 public class AtmosphereInfoImpl implements AtmosphereInfo {
     private final boolean isCorrosive;
     private final boolean hasPrecipitation;
-    private final Double2ObjectOpenHashMap<ResourceKey<Fluid>> gasComposition;
+    private final Object2DoubleMap<ResourceKey<Fluid>> gasComposition;
     private final float temperature;
 
-    AtmosphereInfoImpl(boolean isCorrosive, boolean hasPrecipitation, Double2ObjectOpenHashMap<ResourceKey<Fluid>> gasComposition, float temperature) {
+    AtmosphereInfoImpl(boolean isCorrosive, boolean hasPrecipitation, Object2DoubleMap<ResourceKey<Fluid>> gasComposition, float temperature) {
         this.isCorrosive = isCorrosive;
         this.hasPrecipitation = hasPrecipitation;
         this.gasComposition = gasComposition;
@@ -28,7 +29,7 @@ public class AtmosphereInfoImpl implements AtmosphereInfo {
     }
 
     @Override
-    public Double2ObjectOpenHashMap<ResourceKey<Fluid>> getGasComposition() {
+    public Object2DoubleMap<ResourceKey<Fluid>> getGasComposition() {
         return this.gasComposition;
     }
 
@@ -38,10 +39,10 @@ public class AtmosphereInfoImpl implements AtmosphereInfo {
     }
 
     public static class Builder {
-        private boolean isCorrosive;
-        private boolean hasPrecipitation = true;
-        private final Double2ObjectOpenHashMap<ResourceKey<Fluid>> gasComposition = new Double2ObjectOpenHashMap<>();
-        private float temperature;
+        private boolean isCorrosive = false;
+        private boolean hasPrecipitation = false;
+        private final Object2DoubleMap<ResourceKey<Fluid>> gasComposition = new Object2DoubleArrayMap<>();
+        private float temperature = 273.15F;
 
         public Builder() {}
 
@@ -55,8 +56,8 @@ public class AtmosphereInfoImpl implements AtmosphereInfo {
             return this;
         }
 
-        public Builder gas(double amount, ResourceKey<Fluid> fluid) {
-            this.gasComposition.put(amount, fluid);
+        public Builder gas(ResourceKey<Fluid> fluid, double amount) {
+            this.gasComposition.put(fluid, amount);
             return this;
         }
 

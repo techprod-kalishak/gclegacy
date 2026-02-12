@@ -1,0 +1,23 @@
+{
+  "atmosphere_info": {
+    "gas_composition": {
+      "galacticraftlegacy:argon": 0.02,
+      "galacticraftlegacy:carbon_dioxide": 0.95,
+      "galacticraftlegacy:nitrogen": 0.03
+    },
+    "has_precipitation": false,
+    "is_corrosive": false,
+    "temperature": -60.0
+  },
+  "gravity_scale": 0.38,
+  "temperature_modifier": 0.38,
+  "transition": {
+    "type": "air_balloon",
+    "initial_velocity": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "transition_height": 256
+  }
+}

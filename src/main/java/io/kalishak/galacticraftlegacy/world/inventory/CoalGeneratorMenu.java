@@ -7,39 +7,40 @@ import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlock
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
-import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.registries.datamaps.builtin.FurnaceFuel;
 import net.neoforged.neoforge.registries.datamaps.builtin.NeoForgeDataMaps;
+import net.neoforged.neoforge.transfer.item.ItemResource;
 
 public class CoalGeneratorMenu extends AbstractContainerMenu {
     private static final int INV_SLOT_START = 1;
     private static final int INV_SLOT_END = 28;
     private static final int USE_ROW_SLOT_START = 28;
     private static final int USE_ROW_SLOT_END = 37;
-    private final ContainerData containerData;
+    private final DataSlot heatData;
 
-    public CoalGeneratorMenu(int containerId, Inventory playerInventory, CoalGeneratorBlockEntity coalGenerator, ContainerData containerData) {
+    public CoalGeneratorMenu(int containerId, Inventory playerInventory, CoalGeneratorBlockEntity coalGenerator, DataSlot heatData) {
         super(GalacticraftMenuType.COAL_GENERATOR.get(), containerId);
-        this.containerData = containerData;
+        this.heatData = heatData;
 
         addSlot(new FuelHandlerSlot(
-                ResourcefulHelper.getItemResourceHandler(coalGenerator, null),
+                ResourcefulHelper.getResourceHandler(Capabilities.Item.BLOCK, ItemResource.EMPTY, coalGenerator, null),
                 coalGenerator::set,
                 0,
-                56,
-                53
+                33,
+                34
         ));
         addStandardInventorySlots(playerInventory, 8, 84);
-        addDataSlots(containerData);
+        addDataSlot(heatData);
     }
 
     public CoalGeneratorMenu(int containerId, Inventory playerInventory, RegistryFriendlyByteBuf data) {
-        this(containerId, playerInventory, ResourcefulHelper.readBlockEntity(GalacticraftBlockEntityType.COAL_GENERATOR.get(), playerInventory.player.level(), data), new SimpleContainerData(3));
+        this(containerId, playerInventory, ResourcefulHelper.readBlockEntity(GalacticraftBlockEntityType.COAL_GENERATOR.get(), playerInventory.player.level(), data), DataSlot.standalone());
     }
 
     public static boolean isFuel(Holder<Item> itemHolder) {
@@ -94,22 +95,7 @@ public class CoalGeneratorMenu extends AbstractContainerMenu {
         return true;
     }
 
-    public float getLitProgress() {
-        int i = this.containerData.get(1);
-        if (i == 0) {
-            i = 200;
-        }
-
-        return Mth.clamp((float) this.containerData.get(0) / i, 0.0F, 1.0F);
-    }
-
-    public boolean isLit() {
-        return this.containerData.get(0) > 0;
-    }
-
     public float getHeatLevel() {
-        int i = this.containerData.get(2);
-
-        return Math.max(0, Math.min(i, 100));
+        return Math.max(0, Math.min(this.heatData.get(), 100));
     }
 }

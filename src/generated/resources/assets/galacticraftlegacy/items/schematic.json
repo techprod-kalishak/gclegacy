@@ -1,0 +1,38 @@
+{
+  "model": {
+    "type": "minecraft:condition",
+    "component": "galacticraftlegacy:schematic",
+    "on_false": {
+      "type": "minecraft:model",
+      "model": "galacticraftlegacy:item/schematic_tier_1"
+    },
+    "on_true": {
+      "type": "minecraft:select",
+      "cases": [
+        {
+          "model": {
+            "type": "minecraft:model",
+            "model": "galacticraftlegacy:item/schematic_tier_1"
+          },
+          "when": "basic"
+        },
+        {
+          "model": {
+            "type": "minecraft:model",
+            "model": "galacticraftlegacy:item/schematic_tier_2"
+          },
+          "when": "advanced"
+        },
+        {
+          "model": {
+            "type": "minecraft:model",
+            "model": "galacticraftlegacy:item/schematic_tier_3"
+          },
+          "when": "ultimate"
+        }
+      ],
+      "property": "galacticraftlegacy:schematic_level"
+    },
+    "property": "minecraft:has_component"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "atmosphere_info": {
+    "gas_composition": {
+      "galacticraftlegacy:argon": 0.93,
+      "galacticraftlegacy:carbon_dioxide": 0.04,
+      "galacticraftlegacy:nitrogen": 78.08,
+      "galacticraftlegacy:oxygen": 20.95
+    },
+    "has_precipitation": true,
+    "is_corrosive": false,
+    "temperature": 288.15
+  },
+  "gravity_scale": 1.0,
+  "temperature_modifier": 1.0,
+  "transition": {
+    "type": "parachute",
+    "initial_velocity": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "transition_height": 0
+  }
+}

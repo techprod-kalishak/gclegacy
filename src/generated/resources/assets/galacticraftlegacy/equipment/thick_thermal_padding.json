@@ -1,0 +1,9 @@
+{
+  "layers": {
+    "galacticraftlegacy/thermal_padding": [
+      {
+        "texture": "galacticraftlegacy:thick_thermal_padding"
+      }
+    ]
+  }
+}

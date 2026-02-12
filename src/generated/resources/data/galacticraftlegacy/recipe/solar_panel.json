@@ -1,0 +1,8 @@
+{
+  "type": "galacticraftlegacy:circuit",
+  "ingredients": "minecraft:lapis_lazuli",
+  "result": {
+    "count": 9,
+    "id": "galacticraftlegacy:solar_wafer"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "asset_id": "galacticraftlegacy:astro_miner",
+  "level": "ultimate",
+  "title": {
+    "color": "yellow",
+    "translate": "schematic.galacticraftlegacy.astro_miner.title"
+  }
+}

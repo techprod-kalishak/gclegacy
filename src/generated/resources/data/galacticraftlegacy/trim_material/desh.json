@@ -1,0 +1,10 @@
+{
+  "asset_name": "desh",
+  "description": {
+    "color": "#1F1F1E",
+    "translate": "trim_material.galacticraftlegacy.desh"
+  },
+  "override_armor_assets": {
+    "galacticraftlegacy:desh": "desh_darker"
+  }
+}

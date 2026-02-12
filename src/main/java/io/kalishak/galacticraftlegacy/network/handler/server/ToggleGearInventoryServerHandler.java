@@ -8,14 +8,14 @@ import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 public class ToggleGearInventoryServerHandler {
-    public static void handle(ToggleGearInventoryPayload payload, IPayloadContext cxt) {
+    public static void handleServer(ToggleGearInventoryPayload payload, IPayloadContext cxt) {
         cxt.enqueueWork(() -> {
             Player player = cxt.player();
 
-            if (!player.hasContainerOpen() && payload.open()) {
-                cxt.player().openMenu(new SimpleMenuProvider(GearInventoryMenu::new, Component.translatable("container.inventory")));
-            }  else if (!payload.open()) {
-                cxt.player().closeContainer();
+            if (payload.open()) {
+                player.openMenu(new SimpleMenuProvider(GearInventoryMenu::new, Component.translatable("container.inventory")));
+            }  else {
+                cxt.reply(new ToggleGearInventoryPayload(true));
             }
 
         }).exceptionally(e -> {

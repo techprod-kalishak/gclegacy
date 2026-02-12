@@ -1,0 +1,235 @@
+package io.kalishak.galacticraftlegacy.client.data;
+
+import io.kalishak.galacticraftlegacy.Constants;
+import io.kalishak.galacticraftlegacy.Galacticraft;
+import io.kalishak.galacticraftlegacy.client.item.ColorByFluid;
+import io.kalishak.galacticraftlegacy.client.renderer.item.properties.numeric.DungeonLocatorAngle;
+import io.kalishak.galacticraftlegacy.client.renderer.item.properties.numeric.DungeonLocatorAngleState;
+import io.kalishak.galacticraftlegacy.client.renderer.item.properties.range.FluidAmountProperty;
+import io.kalishak.galacticraftlegacy.client.renderer.item.properties.select.SchematicTierProperty;
+import io.kalishak.galacticraftlegacy.client.data.models.model.GalacticraftTexturedModel;
+import io.kalishak.galacticraftlegacy.world.item.FeatureTier;
+import io.kalishak.galacticraftlegacy.world.item.GalacticraftItems;
+import io.kalishak.galacticraftlegacy.world.item.GearEquipmentAssets;
+import io.kalishak.galacticraftlegacy.world.item.component.GalacticraftDataComponents;
+import io.kalishak.galacticraftlegacy.world.item.equipment.trim.GalacticraftMaterialAssetGroup;
+import io.kalishak.galacticraftlegacy.world.item.equipment.trim.GalacticraftTrimMaterials;
+import io.kalishak.galacticraftlegacy.world.level.block.GalacticraftBlocks;
+import net.minecraft.client.data.models.BlockModelGenerators;
+import net.minecraft.client.data.models.ItemModelGenerators;
+import net.minecraft.client.data.models.ModelProvider;
+import net.minecraft.client.data.models.MultiVariant;
+import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
+import net.minecraft.client.data.models.model.*;
+import net.minecraft.client.renderer.item.ItemModel;
+import net.minecraft.client.renderer.item.properties.numeric.CompassAngle;
+import net.minecraft.client.renderer.item.properties.numeric.CompassAngleState;
+import net.minecraft.data.PackOutput;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.equipment.trim.MaterialAssetGroup;
+import net.minecraft.world.item.equipment.trim.TrimMaterials;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+
+import java.util.List;
+
+public class GalacticraftModelProvider extends ModelProvider {
+    public static final List<ItemModelGenerators.TrimMaterialData> TRIM_MATERIAL_MODELS = List.of(
+            new ItemModelGenerators.TrimMaterialData(GalacticraftMaterialAssetGroup.STEEL, GalacticraftTrimMaterials.STEEL),
+            new ItemModelGenerators.TrimMaterialData(GalacticraftMaterialAssetGroup.CHEESE, GalacticraftTrimMaterials.CHEESE),
+            new ItemModelGenerators.TrimMaterialData(GalacticraftMaterialAssetGroup.DESH, GalacticraftTrimMaterials.DESH),
+            new ItemModelGenerators.TrimMaterialData(GalacticraftMaterialAssetGroup.TITANIUM, GalacticraftTrimMaterials.TITANIUM),
+            new ItemModelGenerators.TrimMaterialData(GalacticraftMaterialAssetGroup.LEAD, GalacticraftTrimMaterials.LEAD)
+    );
+
+    public GalacticraftModelProvider(PackOutput output) {
+        super(output, Galacticraft.MODID);
+    }
+
+    @Override
+    protected void registerModels(BlockModelGenerators blockModels, ItemModelGenerators itemModels) {
+        litMachine(blockModels, GalacticraftBlocks.COAL_GENERATOR.get());
+        machine(blockModels, GalacticraftBlocks.CIRCUIT_FABRICATOR.get());
+        machine(blockModels, GalacticraftBlocks.ELECTRIC_FURNACE.get());
+        blockModels.createNonTemplateModelBlock(GalacticraftBlocks.OIL.get());
+        blockModels.createNonTemplateModelBlock(GalacticraftBlocks.FUEL.get());
+
+        blockModels.createTrivialCube(GalacticraftBlocks.MOON_ROCK.get());
+        blockModels.createNonTemplateModelBlock(GalacticraftBlocks.EMPTY_AIR.get(), Blocks.AIR);
+        blockModels.createNonTemplateModelBlock(GalacticraftBlocks.OXYGEN_AIR.get(), Blocks.AIR);
+        blockModels.createChest(GalacticraftBlocks.PARACHEST.get(), Blocks.OAK_PLANKS, Constants.texture("entity/chest/parachest"), false);
+
+        itemModels.generateFlatItem(GalacticraftItems.BATTERY.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.INFINITE_BATTERY.get(), GalacticraftItems.BATTERY.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.THERMAL_CLOTH.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.THERMAL_PADDING_HELM.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.THERMAL_PADDING_CHESTPIECE.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.THERMAL_PADDING_LEGGINGS.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.THERMAL_PADDING_BOOTS.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.ISOTHERMAL_FABRIC.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.ISOTHERMAL_HELM.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.ISOTHERMAL_CHESTPIECE.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.ISOTHERMAL_LEGGINGS.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.ISOTHERMAL_BOOTS.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.THERMAL_WOLF_JACKET.get(),  ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.LIGHT_TANK.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.MEDIUM_TANK.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.HEAVY_TANK.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.INFINITE_OXYGEN_TANK.get(), GalacticraftItems.HEAVY_TANK.get(),  ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.OXYGEN_MASK.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.OXYGEN_GEAR.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.PROTO_SHIELD_CONTROLLER.get(),  ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.SHIELD_CONTROLLER.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.WRENCH.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.BLACK_PARACHUTE.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.BLUE_PARACHUTE.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.BROWN_PARACHUTE.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.CYAN_PARACHUTE.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.GRAY_PARACHUTE.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.GREEN_PARACHUTE.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.LIGHT_BLUE_PARACHUTE.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.LIGHT_GRAY_PARACHUTE.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.LIME_PARACHUTE.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.MAGENTA_PARACHUTE.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.ORANGE_PARACHUTE.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.PINK_PARACHUTE.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.PURPLE_PARACHUTE.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.RED_PARACHUTE.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.WHITE_PARACHUTE.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.YELLOW_PARACHUTE.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.SENSOR_GLASSES.get(),  ModelTemplates.FLAT_ITEM);
+        generateDungeonLocator(itemModels, GalacticraftItems.DUNGEON_LOCATOR.get());
+        itemModels.generateFlatItem(GalacticraftItems.RAW_SILICON.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.BASIC_WAFER.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.ADVANCED_WAFER.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.SOLAR_WAFER.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.FLAG.get(), ModelTemplates.FLAT_ITEM);
+        schematic(itemModels, GalacticraftItems.SCHEMATIC.get());
+        fluidTank(itemModels, GalacticraftItems.FLUID_TANK.get());
+        itemModels.generateFlatItem(GalacticraftItems.OIL_BUCKET.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.FUEL_BUCKET.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.RAW_STEEL.get(),  ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.STEEL_INGOT.get(),  ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.STEEL_NUGGET.get(),  ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.STEEL_SWORD.get(),  ModelTemplates.FLAT_HANDHELD_ITEM);
+        itemModels.generateSpear(GalacticraftItems.STEEL_SPEAR.get());
+        itemModels.generateFlatItem(GalacticraftItems.STEEL_SHOVEL.get(),  ModelTemplates.FLAT_HANDHELD_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.STEEL_PICKAXE.get(),  ModelTemplates.FLAT_HANDHELD_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.STEEL_AXE.get(),  ModelTemplates.FLAT_HANDHELD_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.STEEL_HOE.get(),  ModelTemplates.FLAT_HANDHELD_ITEM);
+        itemModels.generateTrimmableItem(GalacticraftItems.STEEL_HELMET.get(), GearEquipmentAssets.STEEL, ItemModelGenerators.TRIM_PREFIX_HELMET, false);
+        itemModels.generateTrimmableItem(GalacticraftItems.STEEL_CHESTPLATE.get(), GearEquipmentAssets.STEEL, ItemModelGenerators.TRIM_PREFIX_CHESTPLATE, false);
+        itemModels.generateTrimmableItem(GalacticraftItems.STEEL_LEGGINGS.get(), GearEquipmentAssets.STEEL, ItemModelGenerators.TRIM_PREFIX_LEGGINGS, false);
+        itemModels.generateTrimmableItem(GalacticraftItems.STEEL_BOOTS.get(), GearEquipmentAssets.STEEL, ItemModelGenerators.TRIM_PREFIX_BOOTS, false);
+        itemModels.generateFlatItem(GalacticraftItems.STEEL_HORSE_ARMOR.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.STEEL_NAUTILUS_ARMOR.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.RAW_DESH.get(),  ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.DESH_INGOT.get(),  ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.DESH_NUGGET.get(),  ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.DESH_SWORD.get(),  ModelTemplates.FLAT_HANDHELD_ITEM);
+        itemModels.generateSpear(GalacticraftItems.DESH_SPEAR.get());
+        itemModels.generateFlatItem(GalacticraftItems.DESH_SHOVEL.get(),  ModelTemplates.FLAT_HANDHELD_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.DESH_PICKAXE.get(),  ModelTemplates.FLAT_HANDHELD_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.DESH_AXE.get(),  ModelTemplates.FLAT_HANDHELD_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.DESH_HOE.get(),  ModelTemplates.FLAT_HANDHELD_ITEM);
+        itemModels.generateTrimmableItem(GalacticraftItems.DESH_HELMET.get(), GearEquipmentAssets.DESH, ItemModelGenerators.TRIM_PREFIX_HELMET, false);
+        itemModels.generateTrimmableItem(GalacticraftItems.DESH_CHESTPLATE.get(), GearEquipmentAssets.DESH, ItemModelGenerators.TRIM_PREFIX_CHESTPLATE, false);
+        itemModels.generateTrimmableItem(GalacticraftItems.DESH_LEGGINGS.get(), GearEquipmentAssets.DESH, ItemModelGenerators.TRIM_PREFIX_LEGGINGS, false);
+        itemModels.generateTrimmableItem(GalacticraftItems.DESH_BOOTS.get(), GearEquipmentAssets.DESH, ItemModelGenerators.TRIM_PREFIX_BOOTS, false);
+        itemModels.generateFlatItem(GalacticraftItems.RAW_TITANIUM.get(),  ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.TITANIUM_INGOT.get(),  ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.TITANIUM_NUGGET.get(),  ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.TITANIUM_SWORD.get(),  ModelTemplates.FLAT_HANDHELD_ITEM);
+        itemModels.generateSpear(GalacticraftItems.TITANIUM_SPEAR.get());
+        itemModels.generateFlatItem(GalacticraftItems.TITANIUM_SHOVEL.get(),  ModelTemplates.FLAT_HANDHELD_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.TITANIUM_PICKAXE.get(),  ModelTemplates.FLAT_HANDHELD_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.TITANIUM_AXE.get(),  ModelTemplates.FLAT_HANDHELD_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.TITANIUM_HOE.get(),  ModelTemplates.FLAT_HANDHELD_ITEM);
+        itemModels.generateTrimmableItem(GalacticraftItems.TITANIUM_HELMET.get(), GearEquipmentAssets.TITANIUM, ItemModelGenerators.TRIM_PREFIX_HELMET, false);
+        itemModels.generateTrimmableItem(GalacticraftItems.TITANIUM_CHESTPLATE.get(), GearEquipmentAssets.TITANIUM, ItemModelGenerators.TRIM_PREFIX_CHESTPLATE, false);
+        itemModels.generateTrimmableItem(GalacticraftItems.TITANIUM_LEGGINGS.get(), GearEquipmentAssets.TITANIUM, ItemModelGenerators.TRIM_PREFIX_LEGGINGS, false);
+        itemModels.generateTrimmableItem(GalacticraftItems.TITANIUM_BOOTS.get(), GearEquipmentAssets.TITANIUM, ItemModelGenerators.TRIM_PREFIX_BOOTS, false);
+        itemModels.generateFlatItem(GalacticraftItems.RAW_LEAD.get(),  ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.LEAD_INGOT.get(),  ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.LEAD_NUGGET.get(),  ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.CHEESE_CHUNK.get(),  ModelTemplates.FLAT_ITEM);
+    }
+
+    public void schematic(ItemModelGenerators gen, Item item) {
+        Identifier itemModel = ModelLocationUtils.getModelLocation(item);
+        Identifier firstLayer = TextureMapping.getItemTexture(item);
+        ItemModel.Unbaked tier1_model = ItemModelUtils.plainModel(gen.createFlatItemModel(item, "_tier_1", ModelTemplates.FLAT_ITEM));
+        ItemModel.Unbaked tier2_model = ItemModelUtils.plainModel(gen.createFlatItemModel(item, "_tier_2", ModelTemplates.FLAT_ITEM));
+        ItemModel.Unbaked tier3_model = ItemModelUtils.plainModel(gen.createFlatItemModel(item, "_tier_3", ModelTemplates.FLAT_ITEM));
+
+        ModelTemplates.FLAT_ITEM.create(itemModel, TextureMapping.layer0(firstLayer), gen.modelOutput);
+
+        gen.itemModelOutput.accept(
+                item,
+                ItemModelUtils.conditional(
+                        ItemModelUtils.hasComponent(GalacticraftDataComponents.SCHEMATIC.get()),
+                        ItemModelUtils.select(
+                                new SchematicTierProperty(),
+                                ItemModelUtils.when(FeatureTier.TIER_1, tier1_model),
+                                ItemModelUtils.when(FeatureTier.TIER_2, tier2_model),
+                                ItemModelUtils.when(FeatureTier.TIER_3, tier3_model)
+                        ),
+                        tier1_model
+                )
+        );
+    }
+
+    public void fluidTank(ItemModelGenerators gen, Item item) {
+        ItemModel.Unbaked fallbackModel = ItemModelUtils.plainModel(gen.createFlatItemModel(item, ModelTemplates.FLAT_ITEM));
+        ItemModel.Unbaked partialModel_1 = ItemModelUtils.tintedModel(gen.createFlatItemModel(item, "_partial_1", ModelTemplates.FLAT_ITEM), new ColorByFluid());
+        ItemModel.Unbaked partialModel_2 = ItemModelUtils.tintedModel(gen.createFlatItemModel(item, "_partial_2", ModelTemplates.FLAT_ITEM), new ColorByFluid());
+        ItemModel.Unbaked partialModel_3 = ItemModelUtils.tintedModel(gen.createFlatItemModel(item, "_partial_3", ModelTemplates.FLAT_ITEM), new ColorByFluid());
+        ItemModel.Unbaked partialModel_4 = ItemModelUtils.tintedModel(gen.createFlatItemModel(item, "_partial_4", ModelTemplates.FLAT_ITEM), new ColorByFluid());
+        ItemModel.Unbaked partialModel_5 = ItemModelUtils.tintedModel(gen.createFlatItemModel(item, "_partial_5", ModelTemplates.FLAT_ITEM), new ColorByFluid());
+        ItemModel.Unbaked partialModel_6 = ItemModelUtils.tintedModel(gen.createFlatItemModel(item, "_partial_6", ModelTemplates.FLAT_ITEM), new ColorByFluid());
+
+        gen.itemModelOutput.accept(
+                item,
+                ItemModelUtils.rangeSelect(
+                        new FluidAmountProperty(),
+                        fallbackModel,
+                        ItemModelUtils.override(partialModel_1, 0.13F),
+                        ItemModelUtils.override(partialModel_2, 0.28F),
+                        ItemModelUtils.override(partialModel_3, 0.42F),
+                        ItemModelUtils.override(partialModel_4, 0.57F),
+                        ItemModelUtils.override(partialModel_5, 0.71F),
+                        ItemModelUtils.override(partialModel_6, 0.85F)
+                )
+        );
+    }
+
+    public void generateDungeonLocator(ItemModelGenerators gen, Item item) {
+        gen.itemModelOutput
+                .accept(
+                        item,
+                        ItemModelUtils.rangeSelect(new DungeonLocatorAngle(), 32.0F, gen.createCompassModels(item))
+                );
+    }
+
+    private void litMachine(BlockModelGenerators gen, Block block) {
+        MultiVariant regularVariant = BlockModelGenerators.plainVariant(GalacticraftTexturedModel.SIMPLE_MACHINE.create(block, gen.modelOutput));
+        Identifier litTexture = TextureMapping.getBlockTexture(block, "_front_on");
+        MultiVariant litVariant = BlockModelGenerators.plainVariant(GalacticraftTexturedModel.SIMPLE_MACHINE.get(block).updateTextures(mapping -> mapping.put(TextureSlot.NORTH, litTexture)).createWithSuffix(block, "_on", gen.modelOutput));
+        gen.blockStateOutput.accept(
+                MultiVariantGenerator.dispatch(block)
+                        .with(BlockModelGenerators.createBooleanModelDispatch(BlockStateProperties.LIT, litVariant, regularVariant))
+                        .with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING)
+        );
+    }
+    private void machine(BlockModelGenerators gen, Block block) {
+        gen.blockStateOutput.accept(
+                MultiVariantGenerator.dispatch(
+                        block,
+                        BlockModelGenerators.plainVariant(GalacticraftTexturedModel.SIMPLE_MACHINE.create(block, gen.modelOutput))
+                ).with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING)
+        );
+    }
+}

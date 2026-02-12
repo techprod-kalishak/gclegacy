@@ -1,7 +1,6 @@
 package io.kalishak.galacticraftlegacy.world.level.block.entity;
 
 import io.kalishak.galacticraftlegacy.world.inventory.CoalGeneratorMenu;
-import io.kalishak.galacticraftlegacy.world.inventory.WorldlyEnergyHandler;
 import io.kalishak.galacticraftlegacy.world.level.block.AbstractMachineBlock;
 import io.kalishak.galacticraftlegacy.world.level.block.GalacticraftBlocks;
 import net.minecraft.core.BlockPos;
@@ -13,7 +12,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.inventory.DataSlot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
@@ -22,51 +21,29 @@ import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.registries.datamaps.builtin.FurnaceFuel;
 import net.neoforged.neoforge.registries.datamaps.builtin.NeoForgeDataMaps;
-import net.neoforged.neoforge.transfer.VoidingResourceHandler;
+import net.neoforged.neoforge.transfer.RangedResourceHandler;
 import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.neoforged.neoforge.transfer.item.ItemUtil;
 import net.neoforged.neoforge.transfer.transaction.Transaction;
 import org.jspecify.annotations.Nullable;
 
 public class CoalGeneratorBlockEntity extends AbstractMachineBlockEntity {
-    public static final int DATA_LIT_DURATION = 0;
-    public static final int DATA_LIT_TOTAL = 1;
-    public static final int DATA_HEAT_LEVEL = 2;
     public static final int MIN_ENERGY_PER_HEAT = 30;
     public static final int MAX_ENERGY_PER_HEAT = 150;
     public static final float HEAT_UP_SPEED = 0.3F;
     int litTimeRemaining;
     int litTotalTime;
     float heatLevel;
-    private final ContainerData containerData = new ContainerData() {
-        @Override
-        public int get(int index) {
-            return switch (index) {
-                case DATA_LIT_DURATION -> {
-                    if (CoalGeneratorBlockEntity.this.litTotalTime > Short.MAX_VALUE) {
-                        yield Mth.floor((double) CoalGeneratorBlockEntity.this.litTimeRemaining / CoalGeneratorBlockEntity.this.litTotalTime * Short.MAX_VALUE);
-                    }
+    private final DataSlot heatData = new DataSlot() {
 
-                    yield CoalGeneratorBlockEntity.this.litTimeRemaining;
-                }
-                case DATA_LIT_TOTAL -> Math.min(CoalGeneratorBlockEntity.this.litTotalTime, Short.MAX_VALUE);
-                case DATA_HEAT_LEVEL -> Mth.floor(CoalGeneratorBlockEntity.this.heatLevel);
-                default -> 0;
-            };
+        @Override
+        public int get() {
+            return Mth.floor(CoalGeneratorBlockEntity.this.heatLevel);
         }
 
         @Override
-        public void set(int index, int value) {
-            switch (index) {
-                case DATA_LIT_DURATION -> CoalGeneratorBlockEntity.this.litTimeRemaining = value;
-                case DATA_LIT_TOTAL -> CoalGeneratorBlockEntity.this.litTotalTime = value;
-                case DATA_HEAT_LEVEL -> CoalGeneratorBlockEntity.this.heatLevel = value;
-            }
-        }
-
-        @Override
-        public int getCount() {
-            return 3;
+        public void set(int value) {
+            CoalGeneratorBlockEntity.this.heatLevel = value;
         }
     };
 
@@ -75,26 +52,17 @@ public class CoalGeneratorBlockEntity extends AbstractMachineBlockEntity {
     }
 
     public static void registerCapabilities(RegisterCapabilitiesEvent event) {
+        registerSingleEnergyInputEnergyHandler(Direction.EAST, GalacticraftBlockEntityType.COAL_GENERATOR.get(), event);
         event.registerBlockEntity(
                 Capabilities.Item.BLOCK,
                 GalacticraftBlockEntityType.COAL_GENERATOR.get(),
                 (machine, cxt) -> {
-                    if (cxt == null || cxt == Direction.UP) {
-                        return machine.innerResourceHandler;
+                    if (cxt == Direction.UP) {
+                        return RangedResourceHandler.ofSingleIndex(() -> machine.innerResourceHandler, 0);
                     }
 
-                    return new VoidingResourceHandler<>(ItemResource.EMPTY);
+                    return machine.innerResourceHandler;
                 }
-        );
-        registerEnergyHandler(
-                GalacticraftBlockEntityType.COAL_GENERATOR.get(),
-                Direction.SOUTH,
-                machine -> new WorldlyEnergyHandler(new WorldlyEnergyHandler.SidedSource() {
-                    @Override
-                    public Direction getOutputDirection() {
-                        return Direction.SOUTH;
-                    }}, Direction.SOUTH, machine.energyHandler),
-                event
         );
     }
 
@@ -158,7 +126,7 @@ public class CoalGeneratorBlockEntity extends AbstractMachineBlockEntity {
 
     @Override
     public @Nullable AbstractContainerMenu createMenu(int containerId, Inventory playerInventory, Player player) {
-        return new CoalGeneratorMenu(containerId, playerInventory, this, this.containerData);
+        return new CoalGeneratorMenu(containerId, playerInventory, this, this.heatData);
     }
 
     @Override

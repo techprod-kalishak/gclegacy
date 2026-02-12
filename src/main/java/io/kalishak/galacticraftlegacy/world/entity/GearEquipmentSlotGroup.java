@@ -39,9 +39,10 @@ public enum GearEquipmentSlotGroup implements SerializableEnum, Iterable<GearEqu
 
     public static GearEquipmentSlotGroup bySlot(GearEquipmentSlot slot) {
         return switch (slot) {
-            case MASK, GEAR, TANK, ADDITIONAL_TANK -> GEAR;
+            case MASK, GEAR, TANK, ADDITIONAL_TANK, SHIELD -> GEAR;
             case TELEMETRY, PARACHUTE -> TOOL;
             case THERMAL_CAP, THERMAL_SHIRT, THERMAL_LEGGINGS, THERMAL_SOCKS -> THERMAL;
+            default -> ANY;
         };
     }
 

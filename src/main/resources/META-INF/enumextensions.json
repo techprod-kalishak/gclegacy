@@ -1,12 +1,57 @@
 {
   "entries": [
     {
-      "enum": "net/minecraft/world/item/Rarity",
-      "name": "GALACTICRAFTLEGACY_GALAXY",
-      "constructor": "(ILjava/lang/String;Ljava/util/function/UnaryOperator;)V",
+      "enum": "net/minecraft/world/inventory/RecipeBookType",
+      "name": "GALACTICRAFTLEGACY_FABRICATING",
+      "constructor": "()V",
       "parameters": {
         "class": "io/kalishak/galacticraftlegacy/EnumExtensions",
-        "field": "RARITY_GALAXY"
+        "field": "RECIPE_BOOK_TYPE_FABRICATING"
+      }
+    },
+    {
+      "enum": "net/minecraft/world/inventory/RecipeBookType",
+      "name": "GALACTICRAFTLEGACY_HEATING",
+      "constructor": "()V",
+      "parameters": {
+        "class": "io/kalishak/galacticraftlegacy/EnumExtensions",
+        "field": "RECIPE_BOOK_TYPE_HEATING"
+      }
+    },
+    {
+      "enum": "net/minecraft/world/damagesource/DamageScaling",
+      "name": "GALACTICRAFTLEGACY_BY_CELESTIAL_BODY",
+      "constructor": "(Ljava/lang/String;Lnet/neoforged/neoforge/common/damagesource/IScalingFunction;)V",
+      "parameters": {
+        "class": "io/kalishak/galacticraftlegacy/EnumExtensions",
+        "field": "DAMAGE_SCALING_BY_CELESTIAL_BODY"
+      }
+    },
+    {
+      "enum": "net/minecraft/client/resources/model/EquipmentClientInfo$LayerType",
+      "name": "GALACTICRAFTLEGACY_PARACHUTE",
+      "constructor": "(Ljava/lang/String;)V",
+      "parameters": {
+        "class": "io/kalishak/galacticraftlegacy/EnumExtensions",
+        "field": "LAYER_TYPE_PARACHUTE"
+      }
+    },
+    {
+      "enum": "net/minecraft/client/resources/model/EquipmentClientInfo$LayerType",
+      "name": "GALACTICRAFTLEGACY_TANK",
+      "constructor": "(Ljava/lang/String;)V",
+      "parameters": {
+        "class": "io/kalishak/galacticraftlegacy/EnumExtensions",
+        "field": "LAYER_TYPE_TANK"
+      }
+    },
+    {
+      "enum": "net/minecraft/client/resources/model/EquipmentClientInfo$LayerType",
+      "name": "GALACTICRAFTLEGACY_THERMAL_PADDING",
+      "constructor": "(Ljava/lang/String;)V",
+      "parameters": {
+        "class": "io/kalishak/galacticraftlegacy/EnumExtensions",
+        "field": "LAYER_TYPE_THERMAL_PADDING"
       }
     }
   ]

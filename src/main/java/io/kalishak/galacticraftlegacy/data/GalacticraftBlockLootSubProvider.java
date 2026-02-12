@@ -19,6 +19,10 @@ public class GalacticraftBlockLootSubProvider extends BlockLootSubProvider {
     @Override
     protected void generate() {
         add(GalacticraftBlocks.COAL_GENERATOR.get(), this::createNameableBlockEntityTable);
+        add(GalacticraftBlocks.CIRCUIT_FABRICATOR.get(), this::createNameableBlockEntityTable);
+        add(GalacticraftBlocks.ELECTRIC_FURNACE.get(), this::createNameableBlockEntityTable);
+        add(GalacticraftBlocks.PARACHEST.get(), noDrop());
+        dropSelf(GalacticraftBlocks.MOON_ROCK.get());
     }
 
     @Override

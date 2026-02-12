@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "R": "minecraft:redstone",
+    "W": "#minecraft:wool"
+  },
+  "pattern": [
+    " W ",
+    "WRW",
+    " W "
+  ],
+  "result": {
+    "count": 1,
+    "id": "galacticraftlegacy:thermal_cloth"
+  }
+}

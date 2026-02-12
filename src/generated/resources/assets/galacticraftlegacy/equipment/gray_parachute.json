@@ -1,0 +1,9 @@
+{
+  "layers": {
+    "galacticraftlegacy/parachute": [
+      {
+        "texture": "galacticraftlegacy:gray_parachute"
+      }
+    ]
+  }
+}

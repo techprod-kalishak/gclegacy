@@ -1,0 +1,13 @@
+{
+  "values": [
+    {
+      "id": "#galacticraftlegacy:raw_materials/cheese",
+      "required": false
+    },
+    "#galacticraftlegacy:raw_materials/desh",
+    "#galacticraftlegacy:raw_materials/lead",
+    "#galacticraftlegacy:raw_materials/silicon",
+    "#galacticraftlegacy:raw_materials/steel",
+    "#galacticraftlegacy:raw_materials/titanium"
+  ]
+}

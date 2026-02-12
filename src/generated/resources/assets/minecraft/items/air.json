@@ -1,0 +1,10 @@
+{
+  "model": {
+    "type": "minecraft:special",
+    "base": "minecraft:item/air",
+    "model": {
+      "type": "minecraft:chest",
+      "texture": "galacticraftlegacy:textures/entity/chest/parachest"
+    }
+  }
+}

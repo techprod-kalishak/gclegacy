@@ -1,0 +1,14 @@
+{
+  "layers": {
+    "humanoid": [
+      {
+        "texture": "galacticraftlegacy:desh"
+      }
+    ],
+    "humanoid_leggings": [
+      {
+        "texture": "galacticraftlegacy:desh"
+      }
+    ]
+  }
+}

@@ -2,7 +2,7 @@ package io.kalishak.galacticraftlegacy.world.level.block;
 
 import com.mojang.serialization.MapCodec;
 import io.kalishak.galacticraftlegacy.transfer.ResourcefulHelper;
-import io.kalishak.galacticraftlegacy.world.item.GalacticraftDataComponents;
+import io.kalishak.galacticraftlegacy.world.item.component.GalacticraftDataComponents;
 import io.kalishak.galacticraftlegacy.world.item.GalacticraftItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

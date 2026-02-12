@@ -1,9 +1,6 @@
 package io.kalishak.galacticraftlegacy.world.level.block.entity;
 
-import io.kalishak.galacticraftlegacy.network.payload.UpdateStoredEnergyPayload;
-import io.kalishak.galacticraftlegacy.world.inventory.WorldlyEnergyHandler;
-import io.kalishak.galacticraftlegacy.world.inventory.WorldlyResourceHandler;
-import io.kalishak.galacticraftlegacy.world.item.GalacticraftDataComponents;
+import io.kalishak.galacticraftlegacy.world.item.component.GalacticraftDataComponents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -15,76 +12,91 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
-import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.Containers;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.ItemContainerContents;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
-import net.neoforged.neoforge.capabilities.BlockCapability;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
-import net.neoforged.neoforge.client.network.ClientPacketDistributor;
-import net.neoforged.neoforge.network.PacketDistributor;
 import net.neoforged.neoforge.transfer.ResourceHandler;
 import net.neoforged.neoforge.transfer.access.ItemAccess;
 import net.neoforged.neoforge.transfer.energy.EnergyHandler;
 import net.neoforged.neoforge.transfer.energy.EnergyHandlerUtil;
 import net.neoforged.neoforge.transfer.energy.SimpleEnergyHandler;
+import net.neoforged.neoforge.transfer.energy.VoidingEnergyHandler;
 import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
-import net.neoforged.neoforge.transfer.resource.Resource;
+import net.neoforged.neoforge.transfer.item.ItemUtil;
 import net.neoforged.neoforge.transfer.transaction.Transaction;
+import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
-import java.util.function.Function;
-
 public abstract class AbstractMachineBlockEntity extends NamedBlockEntity {
+    public static final int BASIC_MACHINE_ENERGY_CAPACITY = 25000;
+    public static final int BASIC_MACHINE_MAX_TRANSFER_RATE = 25;
+    public static final int ADVANCED_MACHINE_ENERGY_CAPACITY = 50000;
+    public static final int ADVANCED_MACHINE_MAX_TRANSFER_RATE = 70;
+    public static final int MACHINE_ENERGY_LEAK = 5;
     protected final NonNullList<ItemStack> items = NonNullList.withSize(size(), ItemStack.EMPTY);
     protected final ItemStacksResourceHandler innerResourceHandler = new ItemStacksResourceHandler(this.items);
-    protected final SimpleEnergyHandler energyHandler = new SimpleEnergyHandler(energyCapacity(), maxTransferRate()) {
-        @Override
-        protected void onEnergyChanged(int previousAmount) {
-            AbstractMachineBlockEntity.this.notifyEnergyChange(previousAmount);
-        }
-    };
+    protected final SimpleEnergyHandler energyHandler = new SimpleEnergyHandler(energyCapacity(), maxTransferRate());
 
     protected AbstractMachineBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState blockState) {
         super(type, pos, blockState);
     }
 
-    protected static <R extends Resource, M extends AbstractMachineBlockEntity> void registerResourceHandler(BlockCapability<ResourceHandler<R>, @Nullable Direction> capability, BlockEntityType<M> type, @Nullable Direction direction, Function<M, WorldlyResourceHandler<R>> sidedHandler, Function<M, ResourceHandler<R>> defaultHandler, RegisterCapabilitiesEvent event) {
-        event.registerBlockEntity(
-                capability,
-                type,
-                (machine, cxt) ->
-                        direction != null ? sidedHandler.apply(machine) : defaultHandler.apply(machine)
-        );
-    }
-
-    protected static <M extends AbstractMachineBlockEntity> void registerEnergyHandler(BlockEntityType<M> type, @Nullable Direction side, Function<M, WorldlyEnergyHandler> sidedHandler, RegisterCapabilitiesEvent event) {
+    protected static <M extends AbstractMachineBlockEntity> void registerSingleEnergyInputEnergyHandler(@NonNull Direction direction, BlockEntityType<M> type, RegisterCapabilitiesEvent event) {
         event.registerBlockEntity(
                 Capabilities.Energy.BLOCK,
                 type,
-                (machine, cxt) -> side != null ? sidedHandler.apply(machine) : machine.energyHandler
+                (machine, cxt) -> {
+                    if (cxt == null || cxt == direction) {
+                        return machine.energyHandler;
+                    }
+
+                    return VoidingEnergyHandler.INSTANCE;
+                }
         );
     }
 
-    protected static <M extends AbstractMachineBlockEntity> void energyTransferTick(ServerLevel level, BlockPos pos, BlockState state, M machine) {
+    protected static <M extends AbstractMachineBlockEntity> void energyTransferTick(M machine, @Nullable Transaction tx) {
         ItemResource battery = machine.innerResourceHandler.getResource(machine.getBatterySlotIndex());
 
         if (!battery.isEmpty()) {
             EnergyHandler itemCapacitor = battery.toStack().getCapability(Capabilities.Energy.ITEM, ItemAccess.forHandlerIndex(machine.innerResourceHandler, machine.getBatterySlotIndex()));
 
             if (itemCapacitor != null && itemCapacitor.getAmountAsInt() > 0) {
-                try (Transaction tx = Transaction.open(null)) {
-                    if (EnergyHandlerUtil.move(itemCapacitor, machine.energyHandler, machine.maxTransferRate(), tx) > 0) {
-                        tx.commit();
+                try (Transaction childTx = Transaction.open(tx)) {
+                    if (EnergyHandlerUtil.move(itemCapacitor, machine.energyHandler, machine.maxTransferRate(), childTx) > 0) {
+                        childTx.commit();
                     }
                 }
             }
         }
+    }
+
+    /**
+     * Checks whether all ingredients can be considered a recipe
+     * @param machine producer
+     * @param ingredientSlotStart inclusive slot index
+     * @param ingredientSlotEnd exclusive slot index
+     * @return true if all the slots are filled
+     */
+    protected static boolean hasRequiredIngredients(AbstractMachineBlockEntity machine, int ingredientSlotStart, int ingredientSlotEnd) {
+        return machine.items.subList(ingredientSlotStart, ingredientSlotEnd).stream().noneMatch(ItemStack::isEmpty);
+    }
+
+    protected static boolean hasRequiredIngredients(ResourceHandler<ItemResource> resourceHandler, int ingredientSlotStart, int ingredientSlotEnd) {
+        for (int i = ingredientSlotStart; i < ingredientSlotEnd; i++) {
+            if (resourceHandler.getResource(i).isEmpty()) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     protected abstract int size();
@@ -92,19 +104,19 @@ public abstract class AbstractMachineBlockEntity extends NamedBlockEntity {
     protected abstract int getBatterySlotIndex();
 
     protected int energyCapacity() {
-        return 25000;
+        return BASIC_MACHINE_ENERGY_CAPACITY;
     }
 
     protected int maxTransferRate() {
-        return 25;
+        return BASIC_MACHINE_MAX_TRANSFER_RATE;
+    }
+
+    protected boolean hasEnoughEnergy() {
+        return this.energyHandler.getAmountAsInt() > BASIC_MACHINE_MAX_TRANSFER_RATE;
     }
 
     public void set(int index, ItemResource resource, int amount) {
         this.innerResourceHandler.set(index, resource, amount);
-    }
-
-    protected void notifyEnergyChange(int previousAmount) {
-        setChanged();
     }
 
     @Override
@@ -143,5 +155,16 @@ public abstract class AbstractMachineBlockEntity extends NamedBlockEntity {
     @Override
     public @Nullable Packet<ClientGamePacketListener> getUpdatePacket() {
         return ClientboundBlockEntityDataPacket.create(this);
+    }
+
+    @Override
+    public void preRemoveSideEffects(BlockPos pos, BlockState state) {
+        super.preRemoveSideEffects(pos, state);
+
+        if (this.level != null) {
+            for (int i = 0; i < size(); i++) {
+                Containers.dropItemStack(this.level, pos.getX(), pos.getY(), pos.getZ(), ItemUtil.getStack(this.innerResourceHandler, i));
+            }
+        }
     }
 }

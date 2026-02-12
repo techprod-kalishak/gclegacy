@@ -1,0 +1,15 @@
+{
+  "sources": [
+    {
+      "type": "minecraft:paletted_permutations",
+      "palette_key": "minecraft:trims/color_palettes/trim_palette",
+      "permutations": {
+        "cheese": "galacticraftlegacy:trims/color_palettes/cheese",
+        "desh": "galacticraftlegacy:trims/color_palettes/desh",
+        "steel": "galacticraftlegacy:trims/color_palettes/steel",
+        "titanium": "galacticraftlegacy:trims/color_palettes/titanium"
+      },
+      "textures": []
+    }
+  ]
+}

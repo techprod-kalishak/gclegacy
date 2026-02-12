@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "galacticraftlegacy:desh_ingot"
+  ],
+  "result": {
+    "count": 9,
+    "id": "galacticraftlegacy:desh_nugget"
+  }
+}

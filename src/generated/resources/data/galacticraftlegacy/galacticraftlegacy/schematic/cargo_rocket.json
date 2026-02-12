@@ -1,0 +1,8 @@
+{
+  "asset_id": "galacticraftlegacy:cargo_rocket",
+  "level": "advanced",
+  "title": {
+    "color": "yellow",
+    "translate": "schematic.galacticraftlegacy.cargo_rocket.title"
+  }
+}

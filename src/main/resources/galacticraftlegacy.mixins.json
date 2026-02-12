@@ -2,7 +2,11 @@
   "required": true,
   "package": "io.kalishak.galacticraftlegacy.mixin",
   "compatibilityLevel": "JAVA_21",
-  "mixins": [],
+  "mixins": [
+    "InventoryMixin"
+  ],
+  "client": [
+  ],
   "injectors": {
     "defaultRequire": 1
   },

@@ -1,0 +1,24 @@
+{
+  "layers": {
+    "horse_body": [
+      {
+        "texture": "galacticraftlegacy:steel"
+      }
+    ],
+    "humanoid": [
+      {
+        "texture": "galacticraftlegacy:steel"
+      }
+    ],
+    "humanoid_leggings": [
+      {
+        "texture": "galacticraftlegacy:steel"
+      }
+    ],
+    "nautilus_body": [
+      {
+        "texture": "galacticraftlegacy:steel"
+      }
+    ]
+  }
+}

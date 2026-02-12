@@ -1,0 +1,12 @@
+{
+  "values": [
+    {
+      "id": "#galacticraftlegacy:is_asteroids",
+      "required": false
+    },
+    {
+      "id": "#galacticraftlegacy:is_venus",
+      "required": false
+    }
+  ]
+}

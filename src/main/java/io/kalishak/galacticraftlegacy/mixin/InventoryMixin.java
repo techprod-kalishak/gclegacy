@@ -1,0 +1,34 @@
+package io.kalishak.galacticraftlegacy.mixin;
+
+import io.kalishak.galacticraftlegacy.attachment.GalacticraftAttachments;
+import io.kalishak.galacticraftlegacy.transfer.ResourcefulHelper;
+import net.minecraft.world.Container;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.neoforged.neoforge.transfer.item.ItemUtil;
+import org.spongepowered.asm.mixin.Final;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+import java.util.function.Predicate;
+
+@Mixin(Inventory.class)
+public class InventoryMixin {
+    @Shadow
+    @Final
+    public Player player;
+
+    @Inject(method = "clearOrCountMatchingItems", at = @At("TAIL"), cancellable = true)
+    private void galacticraftlegacy$clearOrCountMatchingItems(Predicate<ItemStack> stackPredicate, int maxCount, Container inventory, CallbackInfoReturnable<Integer> cir) {
+        int value = cir.getReturnValue();
+        int cleared = ResourcefulHelper.clearOrCountMatching(player.getData(GalacticraftAttachments.PLAYER_SPACE_DATA).getGearEquipment(), ItemUtil::getStack, stackPredicate, maxCount - value, maxCount == 0);
+
+        if (cleared > 0) {
+            cir.setReturnValue(value + cleared);
+        }
+    }
+}

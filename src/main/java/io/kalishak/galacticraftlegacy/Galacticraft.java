@@ -3,23 +3,26 @@ package io.kalishak.galacticraftlegacy;
 import io.kalishak.galacticraftlegacy.attachment.GalacticraftAttachments;
 import io.kalishak.galacticraftlegacy.data.GalacticraftData;
 import io.kalishak.galacticraftlegacy.network.GalacticraftNetworkHandler;
+import io.kalishak.galacticraftlegacy.registry.GalacticraftRegistries;
 import io.kalishak.galacticraftlegacy.space.CelestialBodyType;
+import io.kalishak.galacticraftlegacy.world.attribute.GalacticraftAttributeTypes;
+import io.kalishak.galacticraftlegacy.world.attribute.GalacticraftEnvironmentAttributes;
+import io.kalishak.galacticraftlegacy.world.entity.GalacticraftEntityType;
 import io.kalishak.galacticraftlegacy.world.inventory.GalacticraftMenuType;
 import io.kalishak.galacticraftlegacy.world.item.GalacticraftCreativeModeTabs;
-import io.kalishak.galacticraftlegacy.world.item.GalacticraftDataComponents;
+import io.kalishak.galacticraftlegacy.world.item.component.GalacticraftDataComponents;
 import io.kalishak.galacticraftlegacy.world.item.GalacticraftItems;
+import io.kalishak.galacticraftlegacy.world.item.crafting.GalacticraftRecipeBookCategories;
+import io.kalishak.galacticraftlegacy.world.item.crafting.display.GalacticraftRecipeDisplay;
+import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.GalacticraftRecipeSerializer;
+import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.GalacticraftRecipeType;
 import io.kalishak.galacticraftlegacy.world.level.block.GalacticraftBlocks;
+import io.kalishak.galacticraftlegacy.world.level.block.GalacticraftDispenserBehaviors;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityType;
 import io.kalishak.galacticraftlegacy.world.level.material.fluid.GalacticraftFluidType;
 import io.kalishak.galacticraftlegacy.world.level.material.fluid.GalacticraftFluids;
-import net.minecraft.core.Registry;
-import net.minecraft.core.component.DataComponents;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.Identifier;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.world.item.Rarity;
+import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
-import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
@@ -36,36 +39,36 @@ public class Galacticraft {
 
     public Galacticraft(IEventBus modEventBus, ModContainer modContainer) {
         GalacticraftAttachments.init(modEventBus);
+        GalacticraftAttributeTypes.init(modEventBus);
         GalacticraftBlocks.init(modEventBus);
         GalacticraftBlockEntityType.init(modEventBus);
         CelestialBodyType.init(modEventBus);
         GalacticraftCreativeModeTabs.init(modEventBus);
         GalacticraftDataComponents.init(modEventBus);
+        GalacticraftEntityType.init(modEventBus);
+        GalacticraftEnvironmentAttributes.init(modEventBus);
         GalacticraftFluidType.init(modEventBus);
         GalacticraftFluids.init(modEventBus);
         GalacticraftItems.init(modEventBus);
         GalacticraftMenuType.init(modEventBus);
+        GalacticraftRecipeBookCategories.init(modEventBus);
+        GalacticraftRecipeDisplay.init(modEventBus);
+        GalacticraftRecipeSerializer.init(modEventBus);
+        GalacticraftRecipeType.init(modEventBus);
 
-        modEventBus.addListener(this::modifyDefaultComponents);
+        modEventBus.addListener(this::setup);
+
         modEventBus.addListener(GalacticraftData::gatherData);
         modEventBus.addListener(GalacticraftNetworkHandler::registerPackets);
+        modEventBus.register(GalacticraftRegistries.class);
 
         NeoForge.EVENT_BUS.register(new NeoEventHandler());
-        modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
+        modContainer.registerConfig(ModConfig.Type.SERVER, ServerConfig.SPEC);
+        modContainer.registerConfig(ModConfig.Type.COMMON, CommonConfig.SPEC);
+        modContainer.registerConfig(ModConfig.Type.CLIENT, ClientConfig.SPEC);
     }
 
-    public static Identifier id(String assetName) {
-        return Identifier.fromNamespaceAndPath(MODID, assetName);
-    }
-
-    public static <R> ResourceKey<R> key(ResourceKey<? extends Registry<R>> registryKey, String name) {
-        return ResourceKey.create(registryKey, id(name));
-    }
-
-    public void modifyDefaultComponents(ModifyDefaultComponentsEvent event) {
-        event.modifyMatching(
-                item -> BuiltInRegistries.ITEM.getKey(item).getNamespace().equals(MODID),
-                builder -> builder.set(DataComponents.RARITY, EnumExtensions.RARITY_GALAXY.getValue())
-        );
+    private void setup(FMLCommonSetupEvent event) {
+        event.enqueueWork(GalacticraftDispenserBehaviors::registerDispenseBehaviors);
     }
 }

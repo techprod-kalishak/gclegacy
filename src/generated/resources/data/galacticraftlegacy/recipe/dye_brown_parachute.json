@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "group": "parachute_dye",
+  "ingredients": [
+    "minecraft:brown_dye",
+    [
+      "galacticraftlegacy:black_parachute",
+      "galacticraftlegacy:blue_parachute",
+      "galacticraftlegacy:cyan_parachute",
+      "galacticraftlegacy:gray_parachute",
+      "galacticraftlegacy:green_parachute",
+      "galacticraftlegacy:light_blue_parachute",
+      "galacticraftlegacy:light_gray_parachute",
+      "galacticraftlegacy:lime_parachute",
+      "galacticraftlegacy:magenta_parachute",
+      "galacticraftlegacy:orange_parachute",
+      "galacticraftlegacy:pink_parachute",
+      "galacticraftlegacy:purple_parachute",
+      "galacticraftlegacy:red_parachute",
+      "galacticraftlegacy:yellow_parachute",
+      "galacticraftlegacy:white_parachute"
+    ]
+  ],
+  "result": {
+    "count": 1,
+    "id": "galacticraftlegacy:brown_parachute"
+  }
+}
