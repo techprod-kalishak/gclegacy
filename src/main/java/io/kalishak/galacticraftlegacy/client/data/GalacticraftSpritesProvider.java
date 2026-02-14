@@ -25,8 +25,6 @@ public class GalacticraftSpritesProvider extends SpriteSourceProvider {
 
     @Override
     protected void gather() {
-        atlas(AtlasIds.GUI).addSource(new DirectoryLister(Galacticraft.MODID, ""));
-        atlas(AtlasIds.CHESTS).addSource(new SingleFile(Constants.id("parachest")));
         atlas(AtlasIds.ARMOR_TRIMS).addSource(new PalettedPermutations(
                 List.of(),
                 Identifier.withDefaultNamespace("trims/color_palettes/trim_palette"),
@@ -38,6 +36,9 @@ public class GalacticraftSpritesProvider extends SpriteSourceProvider {
                 ),
                 PalettedPermutations.DEFAULT_SEPARATOR
         ));
-        atlas(SCHEMATICS).addSource(new DirectoryLister("schematic", ""));
+        atlas(AtlasIds.CHESTS).addSource(new SingleFile(Constants.id("parachest")));
+        atlas(AtlasIds.GUI).addSource(new DirectoryLister(Galacticraft.MODID, ""));
+        atlas(PARACHUTES).addSource(new DirectoryLister("entity/equipment/galacticraftlegacy/parachute", "entity/equipment/galacticraftlegacy/parachute/"));
+        atlas(SCHEMATICS).addSource(new DirectoryLister("schematic", "schematic/"));
     }
 }

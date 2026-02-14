@@ -2,6 +2,7 @@ package io.kalishak.galacticraftlegacy;
 
 import io.kalishak.galacticraftlegacy.attachment.AttachmentHelper;
 import io.kalishak.galacticraftlegacy.attachment.entity.GearInventoryProvider;
+import io.kalishak.galacticraftlegacy.config.EnergyUnit;
 import io.kalishak.galacticraftlegacy.data.GalacticraftTags;
 import io.kalishak.galacticraftlegacy.world.entity.GearEquipmentSlot;
 import io.kalishak.galacticraftlegacy.world.item.component.*;
@@ -57,7 +58,7 @@ public class NeoEventHandler {
 
                 EnergyHandler energyHandler = stack.getCapability(Capabilities.Energy.ITEM, itemAccess);
                 if (energyHandler != null) {
-                    ItemAccessEnergyUtils.addTooltip(energyHandler, event::addTooltipLines);
+                    ItemAccessEnergyUtils.addTooltip(energyHandler, Constants.ifClient(event.getContext().level(), ClientConfig.ENERGY_UNIT, EnergyUnit.GIGA_JOULES), event::addTooltipLines);
                 }
 
                 ResourceHandler<FluidResource> fluidHandler = stack.getCapability(Capabilities.Fluid.ITEM, itemAccess);

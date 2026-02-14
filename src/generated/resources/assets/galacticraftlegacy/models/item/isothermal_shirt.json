@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "galacticraftlegacy:item/thick_thermal_cap"
+    "layer0": "galacticraftlegacy:item/isothermal_shirt"
   }
 }

@@ -51,42 +51,42 @@ public final class GalacticraftItems {
     public static final DeferredItem<GearItem> THERMAL_PADDING_HELM = REGISTRY.registerItem(
             "thermal_cap",
             GearItem::new,
-            () -> GearItem.thermalPiece(GearEquipmentSlot.THERMAL_CAP, GearEquipmentAssets.THIN_THERMAL)
+            () -> GearItem.thermalPiece(GearEquipmentSlot.THERMAL_CAP, GearEquipmentAssets.THERMAL)
     );
     public static final DeferredItem<GearItem> THERMAL_PADDING_CHESTPIECE = REGISTRY.registerItem(
             "thermal_shirt",
             GearItem::new,
-            () -> GearItem.thermalPiece(GearEquipmentSlot.THERMAL_SHIRT, GearEquipmentAssets.THIN_THERMAL)
+            () -> GearItem.thermalPiece(GearEquipmentSlot.THERMAL_SHIRT, GearEquipmentAssets.THERMAL)
     );
     public static final DeferredItem<GearItem> THERMAL_PADDING_LEGGINGS = REGISTRY.registerItem(
             "thermal_leggings",
             GearItem::new,
-            () -> GearItem.thermalPiece(GearEquipmentSlot.THERMAL_LEGGINGS, GearEquipmentAssets.THIN_THERMAL)
+            () -> GearItem.thermalPiece(GearEquipmentSlot.THERMAL_LEGGINGS, GearEquipmentAssets.THERMAL)
     );
     public static final DeferredItem<GearItem> THERMAL_PADDING_BOOTS = REGISTRY.registerItem(
             "thermal_socks",
             GearItem::new,
-            () -> GearItem.thermalPiece(GearEquipmentSlot.THERMAL_SOCKS, GearEquipmentAssets.THIN_THERMAL)
+            () -> GearItem.thermalPiece(GearEquipmentSlot.THERMAL_SOCKS, GearEquipmentAssets.THERMAL)
     );
     public static final DeferredItem<GearItem> ISOTHERMAL_HELM = REGISTRY.registerItem(
-            "thick_thermal_cap",
+            "isothermal_cap",
             GearItem::new,
-            () -> GearItem.thermalPiece(GearEquipmentSlot.THERMAL_CAP, GearEquipmentAssets.THICK_THERMAL)
+            () -> GearItem.thermalPiece(GearEquipmentSlot.THERMAL_CAP, GearEquipmentAssets.ISOTHERMAL)
     );
     public static final DeferredItem<GearItem> ISOTHERMAL_CHESTPIECE = REGISTRY.registerItem(
-            "thick_thermal_shirt",
+            "isothermal_shirt",
             GearItem::new,
-            () -> GearItem.thermalPiece(GearEquipmentSlot.THERMAL_SHIRT, GearEquipmentAssets.THICK_THERMAL)
+            () -> GearItem.thermalPiece(GearEquipmentSlot.THERMAL_SHIRT, GearEquipmentAssets.ISOTHERMAL)
     );
     public static final DeferredItem<GearItem> ISOTHERMAL_LEGGINGS = REGISTRY.registerItem(
-            "thick_thermal_leggings",
+            "isothermal_leggings",
             GearItem::new,
-            () -> GearItem.thermalPiece(GearEquipmentSlot.THERMAL_LEGGINGS, GearEquipmentAssets.THICK_THERMAL)
+            () -> GearItem.thermalPiece(GearEquipmentSlot.THERMAL_LEGGINGS, GearEquipmentAssets.ISOTHERMAL)
     );
     public static final DeferredItem<GearItem> ISOTHERMAL_BOOTS = REGISTRY.registerItem(
-            "thick_thermal_socks",
+            "isothermal_socks",
             GearItem::new,
-            () -> GearItem.thermalPiece(GearEquipmentSlot.THERMAL_SOCKS, GearEquipmentAssets.THICK_THERMAL)
+            () -> GearItem.thermalPiece(GearEquipmentSlot.THERMAL_SOCKS, GearEquipmentAssets.ISOTHERMAL)
     );
     public static final DeferredItem<GearItem> THERMAL_WOLF_JACKET = REGISTRY.registerItem(
             "thermal_wolf_jacket",

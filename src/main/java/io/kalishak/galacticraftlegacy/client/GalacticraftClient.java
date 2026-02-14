@@ -53,6 +53,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Set;
 
+@SuppressWarnings("unused")
 @Mod(value = Galacticraft.MODID, dist = Dist.CLIENT)
 public class GalacticraftClient {
     public static final Logger LOGGER = LoggerFactory.getLogger(GalacticraftClient.class);
@@ -156,12 +157,12 @@ public class GalacticraftClient {
         event.registerLayerDefinition(GalacticraftModelLayers.MEDIUM_OXYGEN_TANK, OxygenTankModel::createMediumTankLayer);
         event.registerLayerDefinition(GalacticraftModelLayers.LIGHT_OXYGEN_TANK, OxygenTankModel::createLightTankLayer);
         event.registerLayerDefinition(GalacticraftModelLayers.PARACHUTE, ParachuteModel::createParachuteLayer);
-        ArmorModelSet<LayerDefinition> thermalPadding = PlayerModel.createArmorMeshSet(new CubeDeformation(0.001F), new CubeDeformation(0.01F)).map(layer -> LayerDefinition.create(layer, 64, 64));
+        ArmorModelSet<LayerDefinition> thermalPadding = PlayerModel.createArmorMeshSet(new CubeDeformation(0.004F), new CubeDeformation(0.02F)).map(layer -> LayerDefinition.create(layer, 64, 32));
         event.registerLayerDefinition(GalacticraftModelLayers.THERMAL_PADDING.head(), thermalPadding::head);
         event.registerLayerDefinition(GalacticraftModelLayers.THERMAL_PADDING.chest(), thermalPadding::chest);
         event.registerLayerDefinition(GalacticraftModelLayers.THERMAL_PADDING.legs(), thermalPadding::legs);
         event.registerLayerDefinition(GalacticraftModelLayers.THERMAL_PADDING.feet(), thermalPadding::feet);
-        LayerDefinition wolfThermal = LayerDefinition.create(WolfModel.createMeshDefinition(new CubeDeformation(0.2F)), 64, 32);
+        LayerDefinition wolfThermal = LayerDefinition.create(WolfModel.createMeshDefinition(new CubeDeformation(0.02F)), 64, 32);
         event.registerLayerDefinition(GalacticraftModelLayers.WOLF_THERMAL, () -> wolfThermal);
         event.registerLayerDefinition(GalacticraftModelLayers.WOLF_BABY_THERMAL, () -> wolfThermal.apply(WolfModel.BABY_TRANSFORMER));
 

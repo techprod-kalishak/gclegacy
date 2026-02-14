@@ -6,7 +6,6 @@ import io.kalishak.galacticraftlegacy.world.item.GearEquipmentAssets;
 import net.minecraft.client.data.models.EquipmentAssetProvider;
 import net.minecraft.client.resources.model.EquipmentClientInfo;
 import net.minecraft.data.PackOutput;
-import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.equipment.EquipmentAsset;
@@ -40,12 +39,12 @@ public class GalacticraftEquipmentAssetProvider extends EquipmentAssetProvider {
         );
 
         output.accept(
-                GearEquipmentAssets.THIN_THERMAL,
-                custom(GearEquipmentAssets.THIN_THERMAL, EnumExtensions.LAYER_TYPE_THERMAL_PADDING::getValue)
+                GearEquipmentAssets.THERMAL,
+                thermalHumanoid(GearEquipmentAssets.THERMAL)
         );
         output.accept(
-                GearEquipmentAssets.THICK_THERMAL,
-                custom(GearEquipmentAssets.THICK_THERMAL, EnumExtensions.LAYER_TYPE_THERMAL_PADDING::getValue)
+                GearEquipmentAssets.ISOTHERMAL,
+                thermalHumanoid(GearEquipmentAssets.ISOTHERMAL)
         );
         output.accept(
                 GearEquipmentAssets.WOLF_THERMAL,
@@ -72,7 +71,7 @@ public class GalacticraftEquipmentAssetProvider extends EquipmentAssetProvider {
                     EquipmentClientInfo.builder()
                             .addLayers(
                                     EnumExtensions.LAYER_TYPE_PARACHUTE.getValue(),
-                                    EquipmentClientInfo.Layer.onlyIfDyed(Constants.id(dyeColor.getSerializedName() + "_parachute"), false)
+                                    EquipmentClientInfo.Layer.onlyIfDyed(Constants.id(dyeColor.getSerializedName()), false)
                             )
                             .build()
             );
@@ -82,6 +81,13 @@ public class GalacticraftEquipmentAssetProvider extends EquipmentAssetProvider {
     protected static EquipmentClientInfo custom(ResourceKey<EquipmentAsset> assetKey, Supplier<EquipmentClientInfo.LayerType> layerType) {
         return EquipmentClientInfo.builder()
                 .addLayers(layerType.get(), new EquipmentClientInfo.Layer(assetKey.identifier()))
+                .build();
+    }
+
+    protected static EquipmentClientInfo thermalHumanoid(ResourceKey<EquipmentAsset> assetKey) {
+        return EquipmentClientInfo.builder()
+                .addLayers(EnumExtensions.LAYER_TYPE_THERMAL_PADDING.getValue(), new EquipmentClientInfo.Layer(assetKey.identifier()))
+                .addLayers(EnumExtensions.LAYER_TYPE_THERMAL_PADDING_LEGGINGS.getValue(), new EquipmentClientInfo.Layer(assetKey.identifier()))
                 .build();
     }
 

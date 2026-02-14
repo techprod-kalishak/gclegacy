@@ -56,4 +56,5 @@ public class EnumExtensions {
     public static final EnumProxy<EquipmentClientInfo.LayerType> LAYER_TYPE_PARACHUTE = new EnumProxy<>(EquipmentClientInfo.LayerType.class, "galacticraftlegacy:parachute");
     public static final EnumProxy<EquipmentClientInfo.LayerType> LAYER_TYPE_TANK = new EnumProxy<>(EquipmentClientInfo.LayerType.class, "galacticraftlegacy:tank");
     public static final EnumProxy<EquipmentClientInfo.LayerType> LAYER_TYPE_THERMAL_PADDING = new EnumProxy<>(EquipmentClientInfo.LayerType.class, "galacticraftlegacy:thermal_padding");
+    public static final EnumProxy<EquipmentClientInfo.LayerType> LAYER_TYPE_THERMAL_PADDING_LEGGINGS = new EnumProxy<>(EquipmentClientInfo.LayerType.class, "galacticraftlegacy:thermal_padding_leggings");
 }

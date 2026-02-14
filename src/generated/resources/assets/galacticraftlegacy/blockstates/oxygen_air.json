@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "galacticraftlegacy:block/oxygen_air"
+      "model": "minecraft:block/air"
     }
   }
 }

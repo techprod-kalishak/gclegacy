@@ -201,7 +201,7 @@ public class FallingParachest extends FallingBlockEntity implements ParachuteFal
                 }
             }
 
-            setDeltaMovement(this.getDeltaMovement().scale(0.98));
+            setDeltaMovement(this.getDeltaMovement().scale(0.49));
             if (isAlive() && block instanceof Fallable feblock) {
                 feblock.fallingTick(level(), blockPosition(), this);
             }
@@ -234,6 +234,11 @@ public class FallingParachest extends FallingBlockEntity implements ParachuteFal
                 parachestBlock.copyTankFrom(this.fuelTank);
             }
         }
+    }
+
+    @Override
+    protected double getDefaultGravity() {
+        return 0.015D;
     }
 
     @Override

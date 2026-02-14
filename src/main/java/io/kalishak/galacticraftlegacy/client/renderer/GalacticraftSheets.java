@@ -16,7 +16,7 @@ public class GalacticraftSheets {
     public static final Identifier PARACHUTE_SHEET = Constants.id("textures/atlas/parachutes.png");
     public static final Identifier SCHEMATIC_SHEET = Constants.id("textures/atlas/schematics.png");
     public static final Material PARACHEST = Sheets.CHEST_MAPPER.apply(Constants.id("parachest"));
-    public static final MaterialMapper PARACHUTE_MAPPER = new MaterialMapper(PARACHUTE_SHEET, "entity/parachute");
+    public static final MaterialMapper PARACHUTE_MAPPER = new MaterialMapper(PARACHUTE_SHEET, "entity/equipment/galacticraftlegacy/parachute");
     public static final List<Material> PARACHUTE_TEXTURE_LOCATION = Arrays.stream(DyeColor.values())
             .sorted(Comparator.comparingInt(DyeColor::getId))
             .map(GalacticraftSheets::createParachuteMaterial)
@@ -26,11 +26,7 @@ public class GalacticraftSheets {
         return PARACHUTE_TEXTURE_LOCATION.get(color.getId());
     }
 
-    public static Identifier colorToParachuteMaterial(DyeColor dyeColor) {
-        return Constants.id(dyeColor.getName() + "_parachute");
-    }
-
     public static Material createParachuteMaterial(DyeColor color) {
-        return PARACHUTE_MAPPER.apply(colorToParachuteMaterial(color));
+        return PARACHUTE_MAPPER.apply(Constants.id( color.getName()));
     }
 }

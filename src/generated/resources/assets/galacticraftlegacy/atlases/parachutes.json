@@ -1,0 +1,9 @@
+{
+  "sources": [
+    {
+      "type": "minecraft:directory",
+      "prefix": "entity/equipment/galacticraftlegacy/parachute/",
+      "source": "entity/equipment/galacticraftlegacy/parachute"
+    }
+  ]
+}

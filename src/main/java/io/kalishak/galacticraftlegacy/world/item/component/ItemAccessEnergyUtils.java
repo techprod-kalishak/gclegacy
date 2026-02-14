@@ -1,6 +1,8 @@
 package io.kalishak.galacticraftlegacy.world.item.component;
 
+import io.kalishak.galacticraftlegacy.ClientConfig;
 import io.kalishak.galacticraftlegacy.Constants;
+import io.kalishak.galacticraftlegacy.config.EnergyUnit;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.component.DataComponentGetter;
 import net.minecraft.network.chat.Component;
@@ -17,6 +19,7 @@ import net.neoforged.neoforge.transfer.energy.VoidingEnergyHandler;
 import org.jspecify.annotations.NonNull;
 
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 public interface ItemAccessEnergyUtils extends TooltipProvider {
     int stored();
@@ -27,10 +30,8 @@ public interface ItemAccessEnergyUtils extends TooltipProvider {
         if (stored() > 0 && componentGetter instanceof ItemStack stack) {
             EnergyHandler energyHandler = stack.getCapability(Capabilities.Energy.ITEM, ItemAccess.forStack(stack));
 
-            if (energyHandler instanceof InfiniteEnergyHandler) {
-                Constants.infinite(tooltipAdder);
-            } else if (energyHandler != null) {
-                addTooltip(stored(), capacity(), tooltipAdder);
+            if (energyHandler != null) {
+                ItemAccessEnergyUtils.addTooltip(energyHandler, Constants.ifClient(context.level(), ClientConfig.ENERGY_UNIT, EnergyUnit.GIGA_JOULES), tooltipAdder);
             }
         }
     }
@@ -47,20 +48,12 @@ public interface ItemAccessEnergyUtils extends TooltipProvider {
         return energyHandler == null ? new VoidingEnergyHandler() : energyHandler;
     }
 
-    static void addTooltip(@NonNull EnergyHandler energyHandler, Consumer<Component> tooltipAdder) {
+    static void addTooltip(@NonNull EnergyHandler energyHandler, Supplier<EnergyUnit> energyUnit, Consumer<Component> tooltipAdder) {
         if (energyHandler instanceof InfiniteEnergyHandler) {
             Constants.infinite(tooltipAdder);
         } else {
-            addTooltip(energyHandler.getAmountAsInt(), energyHandler.getCapacityAsInt(), tooltipAdder);
+            Constants.energy(energyHandler.getAmountAsInt(), energyHandler.getCapacityAsInt(), energyUnit, tooltipAdder);
         }
-    }
-
-    static void addTooltip(int stored, int capacity, Consumer<Component> tooltipAdder) {
-        tooltipAdder.accept(
-                Component.translatable("item.galacticraftlegacy.battery.tooltip").withStyle(ChatFormatting.GRAY)
-                        .append(Component.literal(stored + "/" + capacity + " gJ")
-                                .withStyle(Style.EMPTY.withColor(ItemAccessEnergyUtils.colorFromStorage(stored, capacity))))
-        );
     }
 
     static int colorFromStorage(EnergyHandler energyHandler) {

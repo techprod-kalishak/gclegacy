@@ -53,6 +53,15 @@
         "class": "io/kalishak/galacticraftlegacy/EnumExtensions",
         "field": "LAYER_TYPE_THERMAL_PADDING"
       }
+    },
+    {
+      "enum": "net/minecraft/client/resources/model/EquipmentClientInfo$LayerType",
+      "name": "GALACTICRAFTLEGACY_THERMAL_PADDING_LEGGINGS",
+      "constructor": "(Ljava/lang/String;)V",
+      "parameters": {
+        "class": "io/kalishak/galacticraftlegacy/EnumExtensions",
+        "field": "LAYER_TYPE_THERMAL_PADDING_LEGGINGS"
+      }
     }
   ]
 }

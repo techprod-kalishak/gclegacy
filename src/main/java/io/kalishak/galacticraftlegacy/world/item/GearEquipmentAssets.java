@@ -16,8 +16,8 @@ public final class GearEquipmentAssets {
     public static final ResourceKey<EquipmentAsset> STEEL = key(EquipmentAssets.ROOT_ID, "steel");
     public static final ResourceKey<EquipmentAsset> TITANIUM = key(EquipmentAssets.ROOT_ID, "titanium");
 
-    public static final ResourceKey<EquipmentAsset> THIN_THERMAL = key(EquipmentAssets.ROOT_ID, "thin_thermal_padding");
-    public static final ResourceKey<EquipmentAsset> THICK_THERMAL = key(EquipmentAssets.ROOT_ID, "thick_thermal_padding");
+    public static final ResourceKey<EquipmentAsset> THERMAL = key(EquipmentAssets.ROOT_ID, "thermal_padding");
+    public static final ResourceKey<EquipmentAsset> ISOTHERMAL = key(EquipmentAssets.ROOT_ID, "isothermal_padding");
     public static final ResourceKey<EquipmentAsset> WOLF_THERMAL = key(EquipmentAssets.ROOT_ID, "wolf_thermal_padding");
     public static final ResourceKey<EquipmentAsset> LIGHT_TANK = key(EquipmentAssets.ROOT_ID,  "light_oxygen_tank");
     public static final ResourceKey<EquipmentAsset> MEDIUM_TANK = key(EquipmentAssets.ROOT_ID,  "medium_oxygen_tank");

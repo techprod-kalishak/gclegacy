@@ -8,6 +8,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.HangingEntityItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
@@ -33,8 +34,7 @@ public class SchematicItem extends Item {
 
         Level level = context.getLevel();
         SchematicContent schematicHolder = itemInHand.getOrDefault(GalacticraftDataComponents.SCHEMATIC, SchematicContent.DEFAULT);
-
-        SchematicEntity schematicEntity = new SchematicEntity(level, clickedPos, clickedFace, schematicHolder);
+        SchematicEntity schematicEntity = new SchematicEntity(level, relative, clickedFace, schematicHolder);
 
         EntityType.createDefaultStackConfig(level, itemInHand, player).accept(schematicEntity);
 

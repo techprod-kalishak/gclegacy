@@ -23,6 +23,7 @@ import java.util.List;
 
 public interface ThermalEquipmentLayer<S extends LivingEntityRenderState, M extends Model<S>> {
     Identifier PADDING_LAYER = Constants.texture("entity/equipment/galacticraftlegacy/thermal_padding/colored_layer.png");
+    Identifier PADDING_LEGGINGS_LAYER = Constants.texture("entity/equipment/galacticraftlegacy/thermal_padding_leggings/colored_layer.png");
 
     M getModel(EquipmentSlot slot, S renderState);
 
@@ -30,7 +31,7 @@ public interface ThermalEquipmentLayer<S extends LivingEntityRenderState, M exte
 
     default void renderThermalPiece(PoseStack poseStack, SubmitNodeCollector nodeCollector, ItemStack item, GearEquipmentSlot slot, int packedLight, S renderState, EquipmentClientInfo.LayerType layerType, Identifier paddingLayer) {
         GearEquippable gearEquippable = item.get(GalacticraftDataComponents.GEAR_EQUIPPABLE);
-        if (gearEquippable != null && ThermalEquipmentLayer.shouldRender(gearEquippable, slot)) {
+        if (gearEquippable != null && ThermalEquipmentLayer.shouldRender(gearEquippable, slot, renderState.isInvisible)) {
             M model = getModel(slot.getRelatedEquipment(), renderState);
             int color = getColor(renderState);
             List<EquipmentClientInfo.Layer> list = getEquipmentAssetManager().get(gearEquippable.assetId().orElseThrow()).getLayers(layerType);
@@ -71,12 +72,16 @@ public interface ThermalEquipmentLayer<S extends LivingEntityRenderState, M exte
         renderThermalPiece(poseStack, nodeCollector, item, slot, packedLight, renderState, EnumExtensions.LAYER_TYPE_THERMAL_PADDING.getValue(), PADDING_LAYER);
     }
 
-    static boolean shouldRender(ItemStack stack, GearEquipmentSlot gearSlot) {
+    static boolean shouldRender(ItemStack stack, GearEquipmentSlot gearSlot, boolean invisible) {
         GearEquippable gearEquippable = stack.get(GalacticraftDataComponents.GEAR_EQUIPPABLE);
-        return gearEquippable != null && shouldRender(gearEquippable, gearSlot);
+        return gearEquippable != null && shouldRender(gearEquippable, gearSlot, invisible);
     }
 
-    static boolean shouldRender(GearEquippable gearEquippable, GearEquipmentSlot gearSlot) {
+    static boolean shouldRender(GearEquippable gearEquippable, GearEquipmentSlot gearSlot, boolean invisible) {
+        if (invisible) {
+            return false;
+        }
+
         return gearEquippable.assetId().isPresent() && gearEquippable.gearSlot() == gearSlot;
     }
 
