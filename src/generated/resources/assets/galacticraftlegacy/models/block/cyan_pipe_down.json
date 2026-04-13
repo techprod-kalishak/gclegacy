@@ -1,0 +1,7 @@
+{
+  "parent": "galacticraftlegacy:block/pipe_leg_template",
+  "render_type": "minecraft:cutout",
+  "textures": {
+    "texture": "galacticraftlegacy:block/cyan_pipe"
+  }
+}

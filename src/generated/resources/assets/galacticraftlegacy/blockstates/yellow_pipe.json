@@ -1,0 +1,62 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "galacticraftlegacy:block/yellow_pipe"
+      }
+    },
+    {
+      "apply": {
+        "model": "galacticraftlegacy:block/yellow_pipe_north"
+      },
+      "when": {
+        "north": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "galacticraftlegacy:block/yellow_pipe_east",
+        "y": 90
+      },
+      "when": {
+        "east": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "galacticraftlegacy:block/yellow_pipe_east",
+        "y": 180
+      },
+      "when": {
+        "south": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "galacticraftlegacy:block/yellow_pipe_east",
+        "y": 270
+      },
+      "when": {
+        "west": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "galacticraftlegacy:block/yellow_pipe_up",
+        "x": 270
+      },
+      "when": {
+        "up": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "galacticraftlegacy:block/yellow_pipe_up",
+        "x": 90
+      },
+      "when": {
+        "down": "true"
+      }
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "id": "equip_parachute",
+  "required_items": {
+    "parachute": {
+      "items": "#galacticraftlegacy:parachute"
+    }
+  }
+}

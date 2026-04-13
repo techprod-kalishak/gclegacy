@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "moon_bricks_wall",
+  "key": {
+    "#": "galacticraftlegacy:moon_bricks"
+  },
+  "pattern": [
+    "###",
+    "###"
+  ],
+  "result": {
+    "count": 6,
+    "id": "galacticraftlegacy:moon_brick_wall"
+  }
+}

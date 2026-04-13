@@ -1,0 +1,17 @@
+{
+  "id": "equip_thermal_padding",
+  "required_items": {
+    "thermal_cap": {
+      "items": "galacticraftlegacy:thermal_cap"
+    },
+    "thermal_foot_socks": {
+      "items": "galacticraftlegacy:thermal_socks"
+    },
+    "thermal_leggings": {
+      "items": "galacticraftlegacy:thermal_leggings"
+    },
+    "thermal_shirt": {
+      "items": "galacticraftlegacy:thermal_shirt"
+    }
+  }
+}

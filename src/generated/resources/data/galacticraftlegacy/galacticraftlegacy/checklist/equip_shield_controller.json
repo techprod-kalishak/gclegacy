@@ -1,0 +1,10 @@
+{
+  "id": "equip_shield_controller",
+  "required_items": {
+    "shield": {
+      "predicates": {
+        "galacticraftlegacy:shield_controller": {}
+      }
+    }
+  }
+}

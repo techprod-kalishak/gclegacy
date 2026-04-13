@@ -1,0 +1,10 @@
+{
+  "model": {
+    "type": "minecraft:special",
+    "base": "galacticraftlegacy:item/moon_dungeon_key",
+    "model": {
+      "type": "galacticraftlegacy:key_renderer",
+      "feature_tier": "basic"
+    }
+  }
+}

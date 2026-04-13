@@ -1,0 +1,17 @@
+{
+  "id": "equip_isothermal_padding",
+  "required_items": {
+    "thermal_cap": {
+      "items": "galacticraftlegacy:isothermal_cap"
+    },
+    "thermal_foot_socks": {
+      "items": "galacticraftlegacy:isothermal_socks"
+    },
+    "thermal_leggings": {
+      "items": "galacticraftlegacy:isothermal_leggings"
+    },
+    "thermal_shirt": {
+      "items": "galacticraftlegacy:isothermal_shirt"
+    }
+  }
+}

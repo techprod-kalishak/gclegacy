@@ -1,0 +1,12 @@
+{
+  "values": [
+    {
+      "id": "galacticraftlegacy:moon_plains",
+      "required": false
+    },
+    {
+      "id": "galacticraftlegacy:moon_crater_oceans",
+      "required": false
+    }
+  ]
+}

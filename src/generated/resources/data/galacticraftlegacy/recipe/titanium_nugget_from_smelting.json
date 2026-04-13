@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 0.1,
+  "group": "steel",
+  "ingredient": [
+    "galacticraftlegacy:titanium_sword",
+    "galacticraftlegacy:titanium_spear",
+    "galacticraftlegacy:titanium_shovel",
+    "galacticraftlegacy:titanium_pickaxe",
+    "galacticraftlegacy:titanium_axe",
+    "galacticraftlegacy:titanium_hoe",
+    "galacticraftlegacy:titanium_helmet",
+    "galacticraftlegacy:titanium_chestplate",
+    "galacticraftlegacy:titanium_leggings",
+    "galacticraftlegacy:titanium_boots"
+  ],
+  "result": {
+    "count": 1,
+    "id": "galacticraftlegacy:titanium_nugget"
+  }
+}

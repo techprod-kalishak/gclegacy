@@ -1,0 +1,8 @@
+{
+  "id": "equip_grappling_hook",
+  "required_items": {
+    "telemetry": {
+      "items": "galacticraftlegacy:sensor_glasses"
+    }
+  }
+}

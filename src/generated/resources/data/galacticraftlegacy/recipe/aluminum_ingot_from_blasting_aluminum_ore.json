@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 100,
+  "experience": 0.1,
+  "group": "aluminum_ingot",
+  "ingredient": "galacticraftlegacy:aluminum_ore",
+  "result": {
+    "count": 1,
+    "id": "galacticraftlegacy:aluminum_ingot"
+  }
+}

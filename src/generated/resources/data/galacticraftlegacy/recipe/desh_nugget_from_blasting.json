@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 100,
+  "experience": 0.1,
+  "group": "desh",
+  "ingredient": [
+    "galacticraftlegacy:desh_sword",
+    "galacticraftlegacy:desh_spear",
+    "galacticraftlegacy:desh_shovel",
+    "galacticraftlegacy:desh_pickaxe",
+    "galacticraftlegacy:desh_axe",
+    "galacticraftlegacy:desh_hoe",
+    "galacticraftlegacy:desh_helmet",
+    "galacticraftlegacy:desh_chestplate",
+    "galacticraftlegacy:desh_leggings",
+    "galacticraftlegacy:desh_boots"
+  ],
+  "result": {
+    "count": 1,
+    "id": "galacticraftlegacy:desh_nugget"
+  }
+}

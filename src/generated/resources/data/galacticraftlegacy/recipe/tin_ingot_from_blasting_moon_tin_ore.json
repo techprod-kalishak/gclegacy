@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 100,
+  "experience": 0.1,
+  "group": "tin_ingot",
+  "ingredient": "galacticraftlegacy:moon_tin_ore",
+  "result": {
+    "count": 1,
+    "id": "galacticraftlegacy:tin_ingot"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "galacticraftlegacy:block/moon_turf"
+      },
+      {
+        "model": "galacticraftlegacy:block/moon_turf_mirrored"
+      },
+      {
+        "model": "galacticraftlegacy:block/moon_turf",
+        "y": 180
+      },
+      {
+        "model": "galacticraftlegacy:block/moon_turf_mirrored",
+        "y": 180
+      }
+    ]
+  }
+}

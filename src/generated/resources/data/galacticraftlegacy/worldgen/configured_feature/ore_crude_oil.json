@@ -1,0 +1,19 @@
+{
+  "type": "galacticraftlegacy:crude_oil_pool",
+  "config": {
+    "height": {
+      "type": "minecraft:uniform",
+      "max_inclusive": 2,
+      "min_inclusive": 1
+    },
+    "radius": {
+      "type": "minecraft:uniform",
+      "max_inclusive": 4,
+      "min_inclusive": 2
+    },
+    "target": {
+      "predicate_type": "minecraft:tag_match",
+      "tag": "galacticraftlegacy:crude_oil_pool_replaceable"
+    }
+  }
+}

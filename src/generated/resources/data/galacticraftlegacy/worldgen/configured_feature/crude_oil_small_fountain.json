@@ -1,0 +1,16 @@
+{
+  "type": "galacticraftlegacy:crude_oil_pool",
+  "config": {
+    "height": {
+      "type": "minecraft:uniform",
+      "max_inclusive": 4,
+      "min_inclusive": 2
+    },
+    "max_column_height": 80,
+    "radius": 2,
+    "target": {
+      "block": "minecraft:water",
+      "predicate_type": "minecraft:block_match"
+    }
+  }
+}

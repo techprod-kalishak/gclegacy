@@ -1,0 +1,120 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "galacticraftlegacy:titanium_nugget_from_smelting"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_titanium_axe": {
+      "conditions": {
+        "items": [
+          {
+            "items": "galacticraftlegacy:titanium_axe"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_titanium_boots": {
+      "conditions": {
+        "items": [
+          {
+            "items": "galacticraftlegacy:titanium_boots"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_titanium_chestplate": {
+      "conditions": {
+        "items": [
+          {
+            "items": "galacticraftlegacy:titanium_chestplate"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_titanium_helmet": {
+      "conditions": {
+        "items": [
+          {
+            "items": "galacticraftlegacy:titanium_helmet"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_titanium_hoe": {
+      "conditions": {
+        "items": [
+          {
+            "items": "galacticraftlegacy:titanium_hoe"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_titanium_leggings": {
+      "conditions": {
+        "items": [
+          {
+            "items": "galacticraftlegacy:titanium_leggings"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_titanium_pickaxe": {
+      "conditions": {
+        "items": [
+          {
+            "items": "galacticraftlegacy:titanium_pickaxe"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_titanium_shovel": {
+      "conditions": {
+        "items": [
+          {
+            "items": "galacticraftlegacy:titanium_shovel"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_titanium_sword": {
+      "conditions": {
+        "items": [
+          {
+            "items": "galacticraftlegacy:titanium_sword"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_titanium_sword",
+      "has_titanium_shovel",
+      "has_titanium_pickaxe",
+      "has_titanium_axe",
+      "has_titanium_hoe",
+      "has_titanium_helmet",
+      "has_titanium_chestplate",
+      "has_titanium_leggings",
+      "has_titanium_boots"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "galacticraftlegacy:titanium_nugget_from_smelting"
+    ]
+  }
+}

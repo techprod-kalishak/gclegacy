@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/template_torch",
+  "textures": {
+    "torch": "galacticraftlegacy:block/unlit_torch"
+  }
+}

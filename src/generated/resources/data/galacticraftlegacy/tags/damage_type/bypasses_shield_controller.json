@@ -1,0 +1,12 @@
+{
+  "values": [
+    {
+      "id": "galacticraftlegacy:suffocation",
+      "required": false
+    },
+    {
+      "id": "galacticraftlegacy:sun_radiation",
+      "required": false
+    }
+  ]
+}

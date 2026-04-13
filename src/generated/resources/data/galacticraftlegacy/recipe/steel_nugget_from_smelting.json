@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 0.1,
+  "group": "steel",
+  "ingredient": [
+    "galacticraftlegacy:steel_sword",
+    "galacticraftlegacy:steel_spear",
+    "galacticraftlegacy:steel_shovel",
+    "galacticraftlegacy:steel_pickaxe",
+    "galacticraftlegacy:steel_axe",
+    "galacticraftlegacy:steel_hoe",
+    "galacticraftlegacy:steel_helmet",
+    "galacticraftlegacy:steel_chestplate",
+    "galacticraftlegacy:steel_leggings",
+    "galacticraftlegacy:steel_boots",
+    "galacticraftlegacy:steel_horse_armor",
+    "galacticraftlegacy:steel_nautilus_armor"
+  ],
+  "result": {
+    "count": 1,
+    "id": "galacticraftlegacy:steel_nugget"
+  }
+}

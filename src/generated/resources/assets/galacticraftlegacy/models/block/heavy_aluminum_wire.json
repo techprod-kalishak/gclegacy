@@ -1,0 +1,6 @@
+{
+  "parent": "galacticraftlegacy:block/pipe_dense_template",
+  "textures": {
+    "texture": "galacticraftlegacy:block/heavy_aluminum_wire"
+  }
+}

@@ -1,0 +1,142 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_steel_axe": {
+      "conditions": {
+        "items": [
+          {
+            "items": "galacticraftlegacy:steel_axe"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_steel_boots": {
+      "conditions": {
+        "items": [
+          {
+            "items": "galacticraftlegacy:steel_boots"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_steel_chestplate": {
+      "conditions": {
+        "items": [
+          {
+            "items": "galacticraftlegacy:steel_chestplate"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_steel_helmet": {
+      "conditions": {
+        "items": [
+          {
+            "items": "galacticraftlegacy:steel_helmet"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_steel_hoe": {
+      "conditions": {
+        "items": [
+          {
+            "items": "galacticraftlegacy:steel_hoe"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_steel_horse_armor": {
+      "conditions": {
+        "items": [
+          {
+            "items": "galacticraftlegacy:steel_horse_armor"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_steel_leggings": {
+      "conditions": {
+        "items": [
+          {
+            "items": "galacticraftlegacy:steel_leggings"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_steel_nautilus_armor": {
+      "conditions": {
+        "items": [
+          {
+            "items": "galacticraftlegacy:steel_nautilus_armor"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_steel_pickaxe": {
+      "conditions": {
+        "items": [
+          {
+            "items": "galacticraftlegacy:steel_pickaxe"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_steel_shovel": {
+      "conditions": {
+        "items": [
+          {
+            "items": "galacticraftlegacy:steel_shovel"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_steel_sword": {
+      "conditions": {
+        "items": [
+          {
+            "items": "galacticraftlegacy:steel_sword"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "galacticraftlegacy:steel_nugget_from_smelting"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_steel_sword",
+      "has_steel_shovel",
+      "has_steel_pickaxe",
+      "has_steel_axe",
+      "has_steel_hoe",
+      "has_steel_helmet",
+      "has_steel_chestplate",
+      "has_steel_leggings",
+      "has_steel_boots",
+      "has_steel_horse_armor",
+      "has_steel_nautilus_armor"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "galacticraftlegacy:steel_nugget_from_smelting"
+    ]
+  }
+}

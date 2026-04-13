@@ -1,0 +1,8 @@
+{
+  "id": "equip_oxygen_suit",
+  "required_items": {
+    "mask": {
+      "items": "galacticraftlegacy:oxygen_mask"
+    }
+  }
+}

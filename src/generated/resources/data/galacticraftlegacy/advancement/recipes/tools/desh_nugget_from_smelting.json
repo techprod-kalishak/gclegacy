@@ -1,0 +1,120 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_desh_axe": {
+      "conditions": {
+        "items": [
+          {
+            "items": "galacticraftlegacy:desh_axe"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_desh_boots": {
+      "conditions": {
+        "items": [
+          {
+            "items": "galacticraftlegacy:desh_boots"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_desh_chestplate": {
+      "conditions": {
+        "items": [
+          {
+            "items": "galacticraftlegacy:desh_chestplate"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_desh_helmet": {
+      "conditions": {
+        "items": [
+          {
+            "items": "galacticraftlegacy:desh_helmet"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_desh_hoe": {
+      "conditions": {
+        "items": [
+          {
+            "items": "galacticraftlegacy:desh_hoe"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_desh_leggings": {
+      "conditions": {
+        "items": [
+          {
+            "items": "galacticraftlegacy:desh_leggings"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_desh_pickaxe": {
+      "conditions": {
+        "items": [
+          {
+            "items": "galacticraftlegacy:desh_pickaxe"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_desh_shovel": {
+      "conditions": {
+        "items": [
+          {
+            "items": "galacticraftlegacy:desh_shovel"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_desh_sword": {
+      "conditions": {
+        "items": [
+          {
+            "items": "galacticraftlegacy:desh_sword"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "galacticraftlegacy:desh_nugget_from_smelting"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_desh_sword",
+      "has_desh_shovel",
+      "has_desh_pickaxe",
+      "has_desh_axe",
+      "has_desh_hoe",
+      "has_desh_helmet",
+      "has_desh_chestplate",
+      "has_desh_leggings",
+      "has_desh_boots"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "galacticraftlegacy:desh_nugget_from_smelting"
+    ]
+  }
+}

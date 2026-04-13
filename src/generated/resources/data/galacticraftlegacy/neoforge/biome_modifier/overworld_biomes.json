@@ -1,0 +1,14 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": "#minecraft:is_overworld",
+  "features": [
+    "galacticraftlegacy:ore_aluminum_upper",
+    "galacticraftlegacy:ore_aluminum_lower",
+    "galacticraftlegacy:ore_tin_upper",
+    "galacticraftlegacy:ore_tin_middle",
+    "galacticraftlegacy:ore_tin_lower",
+    "galacticraftlegacy:ore_silicon",
+    "galacticraftlegacy:ore_silicon_extra"
+  ],
+  "step": "underground_decoration"
+}

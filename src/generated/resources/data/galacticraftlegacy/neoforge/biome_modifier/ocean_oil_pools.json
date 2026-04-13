@@ -1,0 +1,9 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": "#minecraft:is_ocean",
+  "features": [
+    "galacticraftlegacy:crude_oil_fountain",
+    "galacticraftlegacy:crude_oil_small_fountain"
+  ],
+  "step": "underground_decoration"
+}
