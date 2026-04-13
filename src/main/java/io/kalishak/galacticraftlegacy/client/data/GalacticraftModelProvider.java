@@ -4,10 +4,10 @@ import io.kalishak.galacticraftlegacy.Constants;
 import io.kalishak.galacticraftlegacy.Galacticraft;
 import io.kalishak.galacticraftlegacy.client.item.ColorByFluid;
 import io.kalishak.galacticraftlegacy.client.renderer.item.properties.numeric.DungeonLocatorAngle;
-import io.kalishak.galacticraftlegacy.client.renderer.item.properties.numeric.DungeonLocatorAngleState;
 import io.kalishak.galacticraftlegacy.client.renderer.item.properties.range.FluidAmountProperty;
 import io.kalishak.galacticraftlegacy.client.renderer.item.properties.select.SchematicTierProperty;
 import io.kalishak.galacticraftlegacy.client.data.models.model.GalacticraftTexturedModel;
+import io.kalishak.galacticraftlegacy.client.renderer.special.KeySpecialRenderer;
 import io.kalishak.galacticraftlegacy.world.item.FeatureTier;
 import io.kalishak.galacticraftlegacy.world.item.GalacticraftItems;
 import io.kalishak.galacticraftlegacy.world.item.GearEquipmentAssets;
@@ -15,26 +15,33 @@ import io.kalishak.galacticraftlegacy.world.item.component.GalacticraftDataCompo
 import io.kalishak.galacticraftlegacy.world.item.equipment.trim.GalacticraftMaterialAssetGroup;
 import io.kalishak.galacticraftlegacy.world.item.equipment.trim.GalacticraftTrimMaterials;
 import io.kalishak.galacticraftlegacy.world.level.block.GalacticraftBlocks;
+import io.kalishak.galacticraftlegacy.world.level.block.wire.ColoredPipeBlock;
+import io.kalishak.galacticraftlegacy.world.level.block.wire.HeavyWireBlock;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.ModelProvider;
 import net.minecraft.client.data.models.MultiVariant;
+import net.minecraft.client.data.models.blockstates.MultiPartGenerator;
 import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
+import net.minecraft.client.data.models.blockstates.PropertyDispatch;
 import net.minecraft.client.data.models.model.*;
 import net.minecraft.client.renderer.item.ItemModel;
-import net.minecraft.client.renderer.item.properties.numeric.CompassAngle;
-import net.minecraft.client.renderer.item.properties.numeric.CompassAngleState;
+import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.equipment.trim.MaterialAssetGroup;
-import net.minecraft.world.item.equipment.trim.TrimMaterials;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.neoforged.neoforge.client.model.generators.template.ExtendedModelTemplateBuilder;
 
+import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
+
+import static net.minecraft.client.data.models.BlockModelGenerators.*;
 
 public class GalacticraftModelProvider extends ModelProvider {
     public static final List<ItemModelGenerators.TrimMaterialData> TRIM_MATERIAL_MODELS = List.of(
@@ -51,16 +58,70 @@ public class GalacticraftModelProvider extends ModelProvider {
 
     @Override
     protected void registerModels(BlockModelGenerators blockModels, ItemModelGenerators itemModels) {
+        blockModels.createTrivialCube(GalacticraftBlocks.ALUMINUM_ORE.get());
+        blockModels.createTrivialCube(GalacticraftBlocks.DEEPSLATE_ALUMINUM_ORE.get());
+        blockModels.createTrivialCube(GalacticraftBlocks.ALUMINUM_BLOCK.get());
+        blockModels.createTrivialCube(GalacticraftBlocks.RAW_ALUMINUM_BLOCK.get());
+        blockModels.createTrivialCube(GalacticraftBlocks.TIN_ORE.get());
+        blockModels.createTrivialCube(GalacticraftBlocks.DEEPSLATE_TIN_ORE.get());
+        blockModels.createTrivialCube(GalacticraftBlocks.TIN_BLOCK.get());
+        blockModels.createTrivialCube(GalacticraftBlocks.RAW_TIN_BLOCK.get());
+        blockModels.createTrivialCube(GalacticraftBlocks.SILICON_ORE.get());
+        blockModels.createTrivialCube(GalacticraftBlocks.DEEPSLATE_SILICON_ORE.get());
+        blockModels.createTrivialCube(GalacticraftBlocks.RAW_SILICON_BLOCK.get());
         litMachine(blockModels, GalacticraftBlocks.COAL_GENERATOR.get());
         machine(blockModels, GalacticraftBlocks.CIRCUIT_FABRICATOR.get());
         machine(blockModels, GalacticraftBlocks.ELECTRIC_FURNACE.get());
         blockModels.createNonTemplateModelBlock(GalacticraftBlocks.OIL.get());
         blockModels.createNonTemplateModelBlock(GalacticraftBlocks.FUEL.get());
+        blockModels.family(GalacticraftBlocks.MOON_BRICKS.get()).generateFor(GalacticraftBlockFamilies.MOON_BRICKS);
 
+        blockModels.createTrivialCube(GalacticraftBlocks.MOON_DIRT.get());
+        blockModels.createRotatedMirroredVariantBlock(GalacticraftBlocks.MOON_TURF.get());
         blockModels.createTrivialCube(GalacticraftBlocks.MOON_ROCK.get());
+        blockModels.createTrivialCube(GalacticraftBlocks.MOON_CHEESE_ORE.get());
+        blockModels.createTrivialCube(GalacticraftBlocks.MOON_COPPER_ORE.get());
+        blockModels.createTrivialCube(GalacticraftBlocks.MOON_TIN_ORE.get());
+        blockModels.createTrivialCube(GalacticraftBlocks.MOON_SAPPHIRE_ORE.get());
         blockModels.createNonTemplateModelBlock(GalacticraftBlocks.EMPTY_AIR.get(), Blocks.AIR);
         blockModels.createNonTemplateModelBlock(GalacticraftBlocks.OXYGEN_AIR.get(), Blocks.AIR);
-        blockModels.createChest(GalacticraftBlocks.PARACHEST.get(), Blocks.OAK_PLANKS, Constants.texture("entity/chest/parachest"), false);
+        blockModels.createParticleOnlyBlock(GalacticraftBlocks.PARACHEST.get(), Blocks.OAK_PLANKS);
+        blockModels.createParticleOnlyBlock(GalacticraftBlocks.PARACHEST_18.get(), Blocks.OAK_PLANKS);
+        blockModels.createParticleOnlyBlock(GalacticraftBlocks.PARACHEST_36.get(), Blocks.OAK_PLANKS);
+        blockModels.createParticleOnlyBlock(GalacticraftBlocks.PARACHEST_54.get(), Blocks.OAK_PLANKS);
+        blockModels.createParticleOnlyBlock(GalacticraftBlocks.MOON_DUNGEON_CHEST.get(), Blocks.OAK_PLANKS);
+        blockModels.createParticleOnlyBlock(GalacticraftBlocks.MARS_DUNGEON_CHEST.get(), Blocks.OAK_PLANKS);
+        blockModels.createParticleOnlyBlock(GalacticraftBlocks.VENUS_DUNGEON_CHEST.get(), Blocks.OAK_PLANKS);
+        grating(blockModels, GalacticraftBlocks.GRATING.get());
+        cheese(blockModels, GalacticraftBlocks.CHEESE.get());
+        blockModels.createTrivialBlock(
+                GalacticraftBlocks.OXYGEN_DETECTOR.get(),
+                TexturedModel.createDefault(
+                        block -> TextureMapping.column(ModelLocationUtils.getModelLocation(block, "_side"), Constants.id("block/machine_top")),
+                        ModelTemplates.CUBE_COLUMN
+                )
+        );
+        pipeLike(blockModels, GalacticraftBlocks.ALUMINUM_WIRE.get());
+        pipeLike(blockModels, GalacticraftBlocks.HEAVY_ALUMINUM_WIRE.get());
+        pipeLike(blockModels, GalacticraftBlocks.WHITE_PIPE.get());
+        pipeLike(blockModels, GalacticraftBlocks.ORANGE_PIPE.get());
+        pipeLike(blockModels, GalacticraftBlocks.MAGENTA_PIPE.get());
+        pipeLike(blockModels, GalacticraftBlocks.LIGHT_BLUE_PIPE.get());
+        pipeLike(blockModels, GalacticraftBlocks.YELLOW_PIPE.get());
+        pipeLike(blockModels, GalacticraftBlocks.LIME_PIPE.get());
+        pipeLike(blockModels, GalacticraftBlocks.PINK_PIPE.get());
+        pipeLike(blockModels, GalacticraftBlocks.GRAY_PIPE.get());
+        pipeLike(blockModels, GalacticraftBlocks.LIGHT_GRAY_PIPE.get());
+        pipeLike(blockModels, GalacticraftBlocks.CYAN_PIPE.get());
+        pipeLike(blockModels, GalacticraftBlocks.PURPLE_PIPE.get());
+        pipeLike(blockModels, GalacticraftBlocks.BLUE_PIPE.get());
+        pipeLike(blockModels, GalacticraftBlocks.BROWN_PIPE.get());
+        pipeLike(blockModels, GalacticraftBlocks.GREEN_PIPE.get());
+        pipeLike(blockModels, GalacticraftBlocks.RED_PIPE.get());
+        pipeLike(blockModels, GalacticraftBlocks.BLACK_PIPE.get());
+        createCauldron(blockModels, GalacticraftBlocks.OIL_CAULDRON.get(), GalacticraftBlocks.OIL.get());
+        createCauldron(blockModels, GalacticraftBlocks.FUEL_CAULDRON.get(), GalacticraftBlocks.FUEL.get());
+        blockModels.createNormalTorch(GalacticraftBlocks.UNLIT_TORCH.get(), GalacticraftBlocks.UNLIT_WALL_TORCH.get());
 
         itemModels.generateFlatItem(GalacticraftItems.BATTERY.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(GalacticraftItems.INFINITE_BATTERY.get(), GalacticraftItems.BATTERY.get(), ModelTemplates.FLAT_ITEM);
@@ -74,7 +135,6 @@ public class GalacticraftModelProvider extends ModelProvider {
         itemModels.generateFlatItem(GalacticraftItems.ISOTHERMAL_CHESTPIECE.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(GalacticraftItems.ISOTHERMAL_LEGGINGS.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(GalacticraftItems.ISOTHERMAL_BOOTS.get(), ModelTemplates.FLAT_ITEM);
-        itemModels.generateFlatItem(GalacticraftItems.THERMAL_WOLF_JACKET.get(),  ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(GalacticraftItems.LIGHT_TANK.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(GalacticraftItems.MEDIUM_TANK.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(GalacticraftItems.HEAVY_TANK.get(), ModelTemplates.FLAT_ITEM);
@@ -102,7 +162,12 @@ public class GalacticraftModelProvider extends ModelProvider {
         itemModels.generateFlatItem(GalacticraftItems.YELLOW_PARACHUTE.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(GalacticraftItems.SENSOR_GLASSES.get(),  ModelTemplates.FLAT_ITEM);
         generateDungeonLocator(itemModels, GalacticraftItems.DUNGEON_LOCATOR.get());
+        itemModels.generateFlatItem(GalacticraftItems.RAW_ALUMINUM.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.ALUMINUM_INGOT.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.RAW_TIN.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.TIN_INGOT.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(GalacticraftItems.RAW_SILICON.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.SAPPHIRE.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(GalacticraftItems.BASIC_WAFER.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(GalacticraftItems.ADVANCED_WAFER.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(GalacticraftItems.SOLAR_WAFER.get(), ModelTemplates.FLAT_ITEM);
@@ -156,6 +221,57 @@ public class GalacticraftModelProvider extends ModelProvider {
         itemModels.generateFlatItem(GalacticraftItems.LEAD_INGOT.get(),  ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(GalacticraftItems.LEAD_NUGGET.get(),  ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(GalacticraftItems.CHEESE_CHUNK.get(),  ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.CHEESE_SLICE.get(), ModelTemplates.FLAT_ITEM);
+        createKey(itemModels, GalacticraftItems.MOON_DUNGEON_KEY.get(), FeatureTier.TIER_1);
+        createKey(itemModels, GalacticraftItems.MARS_DUNGEON_KEY.get(), FeatureTier.TIER_2);
+        createKey(itemModels, GalacticraftItems.VENUS_DUNGEON_KEY.get(), FeatureTier.TIER_3);
+    }
+
+    private void grating(BlockModelGenerators blockModels, Block gratingBlock) {
+        blockModels.registerSimpleFlatItemModel(gratingBlock.asItem());
+
+        Identifier textures = ModelLocationUtils.getModelLocation(gratingBlock);
+        TextureMapping mapping = new TextureMapping().put(TextureSlot.PARTICLE,  textures).put(TextureSlot.TEXTURE, textures);
+        Identifier modelId = ModelTemplates.create(TextureSlot.PARTICLE, TextureSlot.TEXTURE)
+                .extend()
+                .parent(Constants.id("block/grating_template"))
+                .build()
+                .create(gratingBlock, mapping, blockModels.modelOutput);
+
+        blockModels.blockStateOutput.accept(MultiVariantGenerator.dispatch(gratingBlock, BlockModelGenerators.plainVariant(modelId)));
+    }
+
+    private void cheese(BlockModelGenerators blockModels, Block cheeseBlock) {
+        blockModels.registerSimpleFlatItemModel(cheeseBlock.asItem());
+        TextureMapping mainMapping = new TextureMapping()
+                .put(TextureSlot.PARTICLE, ModelLocationUtils.getModelLocation(cheeseBlock, "_side"))
+                .put(TextureSlot.BOTTOM, ModelLocationUtils.getModelLocation(cheeseBlock, "_top"))
+                .put(TextureSlot.TOP, ModelLocationUtils.getModelLocation(cheeseBlock, "_top"))
+                .put(TextureSlot.SIDE, ModelLocationUtils.getModelLocation(cheeseBlock, "_side"));
+        TextureMapping innerMapping = mainMapping
+                .copy()
+                .put(TextureSlot.INSIDE, ModelLocationUtils.getModelLocation(cheeseBlock, "_inner"));
+        Identifier mainModel = ModelTemplates.create(TextureSlot.PARTICLE, TextureSlot.BOTTOM, TextureSlot.TOP, TextureSlot.SIDE)
+                .extend()
+                .parent(Identifier.withDefaultNamespace("block/cake"))
+                .build()
+                .create(cheeseBlock, mainMapping, blockModels.modelOutput);
+        Function<Integer, Identifier> gen = bitesCount -> ModelTemplates.create("cheese", "_slice" + bitesCount, TextureSlot.PARTICLE, TextureSlot.BOTTOM, TextureSlot.TOP, TextureSlot.SIDE, TextureSlot.INSIDE)
+                .extend()
+                .parent(Identifier.withDefaultNamespace("block/cake_slice" + bitesCount))
+                .build().create(cheeseBlock, innerMapping, blockModels.modelOutput);
+
+        blockModels.blockStateOutput.accept(MultiVariantGenerator.dispatch(cheeseBlock)
+                .with(PropertyDispatch.initial(BlockStateProperties.BITES)
+                        .select(0, BlockModelGenerators.plainVariant(mainModel))
+                        .select(1, BlockModelGenerators.plainVariant(gen.apply(1)))
+                        .select(2, BlockModelGenerators.plainVariant(gen.apply(2)))
+                        .select(3, BlockModelGenerators.plainVariant(gen.apply(3)))
+                        .select(4, BlockModelGenerators.plainVariant(gen.apply(4)))
+                        .select(5, BlockModelGenerators.plainVariant(gen.apply(5)))
+                        .select(6, BlockModelGenerators.plainVariant(gen.apply(6)))
+                )
+        );
     }
 
     public void schematic(ItemModelGenerators gen, Item item) {
@@ -183,7 +299,7 @@ public class GalacticraftModelProvider extends ModelProvider {
     }
 
     public void fluidTank(ItemModelGenerators gen, Item item) {
-        ItemModel.Unbaked fallbackModel = ItemModelUtils.plainModel(gen.createFlatItemModel(item, ModelTemplates.FLAT_ITEM));
+        ItemModel.Unbaked emptyTank = ItemModelUtils.plainModel(gen.createFlatItemModel(item, ModelTemplates.FLAT_ITEM));
         ItemModel.Unbaked partialModel_1 = ItemModelUtils.tintedModel(gen.createFlatItemModel(item, "_partial_1", ModelTemplates.FLAT_ITEM), new ColorByFluid());
         ItemModel.Unbaked partialModel_2 = ItemModelUtils.tintedModel(gen.createFlatItemModel(item, "_partial_2", ModelTemplates.FLAT_ITEM), new ColorByFluid());
         ItemModel.Unbaked partialModel_3 = ItemModelUtils.tintedModel(gen.createFlatItemModel(item, "_partial_3", ModelTemplates.FLAT_ITEM), new ColorByFluid());
@@ -193,15 +309,18 @@ public class GalacticraftModelProvider extends ModelProvider {
 
         gen.itemModelOutput.accept(
                 item,
-                ItemModelUtils.rangeSelect(
-                        new FluidAmountProperty(),
-                        fallbackModel,
-                        ItemModelUtils.override(partialModel_1, 0.13F),
-                        ItemModelUtils.override(partialModel_2, 0.28F),
-                        ItemModelUtils.override(partialModel_3, 0.42F),
-                        ItemModelUtils.override(partialModel_4, 0.57F),
-                        ItemModelUtils.override(partialModel_5, 0.71F),
-                        ItemModelUtils.override(partialModel_6, 0.85F)
+                ItemModelUtils.composite(
+                        emptyTank,
+                        ItemModelUtils.rangeSelect(
+                                new FluidAmountProperty(),
+                                emptyTank,
+                                ItemModelUtils.override(partialModel_1, 0.13F),
+                                ItemModelUtils.override(partialModel_2, 0.28F),
+                                ItemModelUtils.override(partialModel_3, 0.42F),
+                                ItemModelUtils.override(partialModel_4, 0.57F),
+                                ItemModelUtils.override(partialModel_5, 0.71F),
+                                ItemModelUtils.override(partialModel_6, 0.85F)
+                        )
                 )
         );
     }
@@ -230,6 +349,90 @@ public class GalacticraftModelProvider extends ModelProvider {
                         block,
                         BlockModelGenerators.plainVariant(GalacticraftTexturedModel.SIMPLE_MACHINE.create(block, gen.modelOutput))
                 ).with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING)
+        );
+    }
+
+    private Identifier generatePipeBaseModel(Block block, BiConsumer<Identifier, ModelInstance> maker) {
+        Identifier parent = Constants.id("block/pipe_" + (block instanceof HeavyWireBlock ? "dense_" : "") + "template");
+        ExtendedModelTemplateBuilder builder = ExtendedModelTemplateBuilder.builder().parent(parent).requiredTextureSlot(TextureSlot.TEXTURE);
+
+        if (block instanceof ColoredPipeBlock) {
+            builder = builder.renderType("cutout");
+        }
+
+        return builder.build().create(block, TextureMapping.defaultTexture(block), maker);
+    }
+
+    private Identifier generatePipeLegModel(Block block, Direction direction, BiConsumer<Identifier, ModelInstance> maker) {
+        Identifier parent = Constants.id("block/pipe_" + (block instanceof HeavyWireBlock ? "dense_" : "") + "leg_template");
+        ExtendedModelTemplateBuilder builder = ExtendedModelTemplateBuilder.builder().parent(parent).requiredTextureSlot(TextureSlot.TEXTURE);
+
+        if (block instanceof ColoredPipeBlock) {
+            builder = builder.renderType("cutout");
+        }
+
+        return builder.build().createWithSuffix(block, "_" + direction.getName(), TextureMapping.defaultTexture(block), maker);
+    }
+
+    private void pipeLike(BlockModelGenerators gen, Block block) {
+        Identifier baseModel = generatePipeBaseModel(block, gen.modelOutput);
+        gen.registerSimpleFlatItemModel(block.asItem());
+        Map<Direction, Identifier> modelPerFace = new EnumMap<>(Direction.class);
+
+        for (Direction direction : Direction.values()) {
+            modelPerFace.put(direction, generatePipeLegModel(block, direction, gen.modelOutput));
+        }
+
+        gen.blockStateOutput.accept(MultiPartGenerator.multiPart(block)
+                .with(plainVariant(baseModel))
+                .with(
+                        condition()
+                                .term(BlockStateProperties.NORTH, true),
+                        plainVariant(modelPerFace.get(Direction.NORTH))
+                )
+                .with(
+                        condition()
+                                .term(BlockStateProperties.EAST, true),
+                        plainVariant(modelPerFace.get(Direction.EAST))
+                                .with(Y_ROT_90)
+                )
+                .with(
+                        condition()
+                                .term(BlockStateProperties.SOUTH, true),
+                        plainVariant(modelPerFace.get(Direction.EAST))
+                                .with(Y_ROT_180)
+                )
+                .with(
+                        condition()
+                                .term(BlockStateProperties.WEST, true),
+                        plainVariant(modelPerFace.get(Direction.EAST))
+                                .with(Y_ROT_270)
+                )
+                .with(
+                        condition()
+                                .term(BlockStateProperties.UP, true),
+                        plainVariant(modelPerFace.get(Direction.UP))
+                                .with(X_ROT_270)
+                )
+                .with(
+                        condition()
+                                .term(BlockStateProperties.DOWN, true),
+                        plainVariant(modelPerFace.get(Direction.UP))
+                                .with(X_ROT_90)
+                )
+        );
+    }
+
+    private void createKey(ItemModelGenerators itemModelGenerators, Item key, FeatureTier featureTier) {
+        Identifier model = itemModelGenerators.createFlatItemModel(key, ExtendedModelTemplateBuilder.builder().parent(Constants.id("item/key_template")).build());
+        ItemModel.Unbaked unbakedModel = ItemModelUtils.specialModel(model, new KeySpecialRenderer.Unbaked(featureTier));
+        itemModelGenerators.itemModelOutput.accept(key, unbakedModel);
+    }
+
+    private void createCauldron(BlockModelGenerators gen, Block block, Block liquidBlock) {
+        gen.blockStateOutput.accept(createSimpleBlock(
+                block,
+                plainVariant(ModelTemplates.CAULDRON_FULL.create(block, TextureMapping.cauldron(TextureMapping.getBlockTexture(liquidBlock, "_still")), gen.modelOutput)))
         );
     }
 }

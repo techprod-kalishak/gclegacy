@@ -1,12 +1,18 @@
 package io.kalishak.galacticraftlegacy.world.level.block;
 
+import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import io.kalishak.galacticraftlegacy.codec.SerializableEnum;
 import io.kalishak.galacticraftlegacy.transfer.ResourcefulHelper;
 import io.kalishak.galacticraftlegacy.world.entity.FallingParachest;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityType;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.ParachestBlockEntity;
+import io.netty.buffer.ByteBuf;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.Containers;
@@ -34,22 +40,34 @@ import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
 public class ParachestBlock extends AbstractChestBlock<ParachestBlockEntity> implements SimpleWaterloggedBlock, Fallable {
-    public static final MapCodec<ParachestBlock> CODEC = simpleCodec(ParachestBlock::new);
+    public static final MapCodec<ParachestBlock> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+            Type.CODEC.fieldOf("type").forGetter(block -> block.type),
+            propertiesCodec()
+    ).apply(instance, ParachestBlock::new));
     public static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     private static final VoxelShape SHAPE = Block.column(14.0, 0.0, 14.0);
+    private final Type type;
 
-    public ParachestBlock(BlockBehaviour.Properties properties) {
+    public ParachestBlock(Type type, BlockBehaviour.Properties properties) {
         super(properties, GalacticraftBlockEntityType.PARACHEST::value);
+        this.type = type;
+
         registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(WATERLOGGED, false));
     }
 
     @Override
     protected MapCodec<ParachestBlock> codec() {
         return CODEC;
+    }
+
+    @Override
+    public MutableComponent getName() {
+        return super.getName();
     }
 
     @Override
@@ -102,7 +120,7 @@ public class ParachestBlock extends AbstractChestBlock<ParachestBlockEntity> imp
         BlockEntity blockEntity = level.getBlockEntity(pos);
 
         if (blockEntity instanceof ParachestBlockEntity parachest) {
-            player.openMenu(parachest, buf -> buf.writeBlockPos(pos).writeVarInt(parachest.size()));
+            player.openMenu(parachest, pos);
         }
 
         return InteractionResult.SUCCESS;
@@ -110,7 +128,7 @@ public class ParachestBlock extends AbstractChestBlock<ParachestBlockEntity> imp
 
     @Override
     public @Nullable BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new ParachestBlockEntity(pos, state);
+        return new ParachestBlockEntity(pos, state, this.type.extraSize());
     }
 
     @Override
@@ -158,6 +176,37 @@ public class ParachestBlock extends AbstractChestBlock<ParachestBlockEntity> imp
             if (blockEntity instanceof ParachestBlockEntity parachest) {
                 parachest.recheckOpen();
             }
+        }
+    }
+
+    public enum Type implements SerializableEnum {
+        MINIMAL(0, "minimal"),
+        SINGLE(1, "single"),
+        DOUBLE(2, "double"),
+        TRIPLE(3, "triple");
+
+        public static final Codec<Type> CODEC = SerializableEnum.codec(Type.class);
+        public static final StreamCodec<ByteBuf, Type> STREAM_CODEC = SerializableEnum.streamCodec(Type.class);
+        private final int id;
+        private final String name;
+
+        Type(int id, String name) {
+            this.id = id;
+            this.name = name;
+        }
+
+        @Override
+        public int getIndex() {
+            return this.id;
+        }
+
+        @Override
+        public @NonNull String getSerializedName() {
+            return this.name;
+        }
+
+        public int extraSize() {
+            return 9 * this.id;
         }
     }
 }

@@ -10,10 +10,11 @@ import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.GalacticraftRec
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.InteractionHand;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.TooltipProvider;
 import net.minecraft.world.level.Level;
@@ -21,13 +22,11 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.gamerules.GameRules;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.capabilities.Capabilities;
-import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.util.AttributeTooltipContext;
 import net.neoforged.neoforge.event.AddAttributeTooltipsEvent;
 import net.neoforged.neoforge.event.OnDatapackSyncEvent;
 import net.neoforged.neoforge.event.VanillaGameEvent;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
-import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import net.neoforged.neoforge.transfer.ResourceHandler;
@@ -61,9 +60,12 @@ public class NeoEventHandler {
                     ItemAccessEnergyUtils.addTooltip(energyHandler, Constants.ifClient(event.getContext().level(), ClientConfig.ENERGY_UNIT, EnergyUnit.GIGA_JOULES), event::addTooltipLines);
                 }
 
-                ResourceHandler<FluidResource> fluidHandler = stack.getCapability(Capabilities.Fluid.ITEM, itemAccess);
-                if (fluidHandler != null) {
-                    ItemAccessFluidUtils.addTooltip(fluidHandler, event::addTooltipLines);
+                if (!(stack.getItem() instanceof BucketItem)) {
+                    ResourceHandler<FluidResource> fluidHandler = stack.getCapability(Capabilities.Fluid.ITEM, itemAccess);
+
+                    if (fluidHandler != null) {
+                        ItemAccessFluidUtils.addTooltip(fluidHandler, event::addTooltipLines);
+                    }
                 }
             }
         }
@@ -107,17 +109,21 @@ public class NeoEventHandler {
     @SubscribeEvent
     public void handleEntityDamage(LivingIncomingDamageEvent event) {
         LivingEntity entity = event.getEntity();
+        DamageSource source = event.getSource();
+        boolean bypasses = source.is(GalacticraftTags.DamageTypes.BYPASSES_SHIELD_CONTROLLER);
 
         if (entity.getType().is(GalacticraftTags.EntityTypes.CAN_EQUIP_GEAR) && AttachmentHelper.hasGearInventory(entity)) {
-            ItemStack shieldItem = AttachmentHelper.getGearInventory(entity).getStackBySlot(GearEquipmentSlot.SHIELD);
+            ItemStack shieldItem = AttachmentHelper.getGearInventory(entity).getGearEquipment().get(GearEquipmentSlot.SHIELD);
 
             if (!shieldItem.isEmpty() && entity.level() instanceof ServerLevel serverLevel) {
-                event.setAmount(0.0F);
+                if (!bypasses && !entity.isInvulnerableTo(serverLevel, source)) {
+                    event.setAmount(0.0F);
 
-                ShieldController shieldController = shieldItem.get(GalacticraftDataComponents.SHIELD_CONTROLLER);
+                    ShieldController shieldController = shieldItem.get(GalacticraftDataComponents.SHIELD_CONTROLLER);
 
-                if (shieldController != null) {
-                    shieldController.depleteByValue(shieldItem, entity, serverLevel, (int) Math.floor(event.getOriginalAmount()));
+                    if (shieldController != null) {
+                        shieldController.depleteByValue(shieldItem, entity, serverLevel, (int) Math.floor(event.getOriginalAmount()));
+                    }
                 }
             }
         }
@@ -134,24 +140,6 @@ public class NeoEventHandler {
                 gearInventory.serverGearTick(serverLevel, player);
             } else {
                 gearInventory.clientGearTick(player.level(), player);
-            }
-        }
-    }
-
-    @SubscribeEvent
-    @SuppressWarnings("ConstantConditions")
-    public void onEntityInteraction(PlayerInteractEvent.EntityInteract event) {
-        Entity target = event.getTarget();
-        Player player = event.getEntity();
-        InteractionHand hand = event.getHand();
-        ItemStack itemInHand = player.getItemInHand(hand);
-        GearEquippable gearEquippable = itemInHand.get(GalacticraftDataComponents.GEAR_EQUIPPABLE);
-
-        if (target instanceof LivingEntity livingEntity) {
-            if (itemInHand.is(Tags.Items.TOOLS_SHEAR) && !(target instanceof Player)) {
-                GearEquippable.shearFromTarget(player, itemInHand, hand, livingEntity, null);
-            } else if (itemInHand.has(GalacticraftDataComponents.GEAR_EQUIPPABLE) && target.getType().is(GalacticraftTags.EntityTypes.CAN_EQUIP_GEAR)) {
-                gearEquippable.equipOnTarget(player, livingEntity, itemInHand);
             }
         }
     }

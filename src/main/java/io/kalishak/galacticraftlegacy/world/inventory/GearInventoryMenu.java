@@ -45,7 +45,6 @@ public class GearInventoryMenu extends AbstractContainerMenu {
         case PARACHUTE -> EMPTY_SLOT_PARACHUTE;
         case TELEMETRY -> EMPTY_SLOT_TELEMETRY;
         case SHIELD -> EMPTY_SLOT_SHIELD;
-        case BODY -> Identifier.withDefaultNamespace("empty");
     });
     private static final GearEquipmentSlot[] SLOTS_IDS = GearEquipmentSlot.values();
     public static final Identifier EMPTY_ARMOR_SLOT_HELMET = Identifier.withDefaultNamespace("container/slot/helmet");
@@ -86,7 +85,7 @@ public class GearInventoryMenu extends AbstractContainerMenu {
         for (int i = 0; i < 4; i++) {
             EquipmentSlot equipmentslot = ARMOR_SLOT_IDS[i];
             Identifier identifier = ARMOR_TEXTURE_EMPTY_SLOTS.get(equipmentslot);
-            addSlot(new ArmorSlot(playerInventory, player, equipmentslot, USE_ROW_SLOT_END - 1 - i, 61, 8 + i * 18, identifier));
+            addSlot(new ArmorSlot(playerInventory, player, equipmentslot, 39 - i, 61, 8 + i * 18, identifier));
         }
         addStandardInventorySlots(playerInventory, 8, 84);
     }

@@ -5,15 +5,11 @@ import io.kalishak.galacticraftlegacy.registry.GalacticraftRegistries;
 import io.kalishak.galacticraftlegacy.registry.SchematicVariant;
 import io.kalishak.galacticraftlegacy.world.item.component.GalacticraftDataComponents;
 import io.kalishak.galacticraftlegacy.world.item.component.SchematicContent;
-import io.kalishak.galacticraftlegacy.world.level.block.GalacticraftBlocks;
 import io.kalishak.galacticraftlegacy.world.level.material.fluid.GalacticraftFluids;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.nbt.NbtOps;
-import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.RegistryOps;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.EitherHolder;
 import net.minecraft.world.item.ItemStack;
@@ -50,7 +46,7 @@ public final class GalacticraftCreativeModeTabs {
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> BLOCKS = REGISTRY.register(
             "blocks",
             CreativeModeTab.builder()
-                    .icon(GalacticraftBlocks.COAL_GENERATOR::toStack)
+                    .icon(GalacticraftItems.COAL_GENERATOR::toStack)
                     .displayItems(GalacticraftCreativeModeTabs::buildBlocks)
                     .title(Component.translatable("itemGroup.galacticraftlegacy.blocks"))
                     ::build
@@ -64,6 +60,7 @@ public final class GalacticraftCreativeModeTabs {
         output.accept(GalacticraftItems.BATTERY);
         emptyAndCharged(output, GalacticraftItems.BATTERY);
         output.accept(GalacticraftItems.INFINITE_BATTERY);
+        output.accept(GalacticraftItems.DUNGEON_LOCATOR);
         output.accept(GalacticraftItems.THERMAL_PADDING_HELM);
         output.accept(GalacticraftItems.THERMAL_PADDING_CHESTPIECE);
         output.accept(GalacticraftItems.THERMAL_PADDING_LEGGINGS);
@@ -72,12 +69,11 @@ public final class GalacticraftCreativeModeTabs {
         output.accept(GalacticraftItems.ISOTHERMAL_CHESTPIECE);
         output.accept(GalacticraftItems.ISOTHERMAL_LEGGINGS);
         output.accept(GalacticraftItems.ISOTHERMAL_BOOTS);
-        output.accept(GalacticraftItems.THERMAL_WOLF_JACKET);
         output.accept(GalacticraftItems.OXYGEN_MASK);
         output.accept(GalacticraftItems.OXYGEN_GEAR);
-        emptyAndFilled(output, GalacticraftItems.LIGHT_TANK, GalacticraftFluids.OXYGEN.get());
-        emptyAndFilled(output, GalacticraftItems.MEDIUM_TANK, GalacticraftFluids.OXYGEN.get());
-        emptyAndFilled(output, GalacticraftItems.HEAVY_TANK, GalacticraftFluids.OXYGEN.get());
+        emptyAndFilled(output, GalacticraftItems.LIGHT_TANK, GalacticraftFluids.OXYGEN);
+        emptyAndFilled(output, GalacticraftItems.MEDIUM_TANK, GalacticraftFluids.OXYGEN);
+        emptyAndFilled(output, GalacticraftItems.HEAVY_TANK, GalacticraftFluids.OXYGEN);
         output.accept(GalacticraftItems.INFINITE_OXYGEN_TANK);
         output.accept(GalacticraftItems.BLACK_PARACHUTE);
         output.accept(GalacticraftItems.BLUE_PARACHUTE);
@@ -97,8 +93,10 @@ public final class GalacticraftCreativeModeTabs {
         output.accept(GalacticraftItems.SENSOR_GLASSES);
         output.accept(GalacticraftItems.FLAG);
         itemDisplayParameters.holders().lookup(GalacticraftRegistries.Keys.SCHEMATIC).ifPresent(registry -> {
-            generateSchematics(output, itemDisplayParameters.holders(), registry);
+            generateSchematics(output, registry);
         });
+        output.accept(GalacticraftItems.CHEESE_CHUNK);
+        output.accept(GalacticraftItems.CHEESE_SLICE);
         output.accept(GalacticraftItems.WRENCH);
         output.accept(GalacticraftItems.RAW_SILICON);
         output.accept(GalacticraftItems.RAW_STEEL);
@@ -142,25 +140,74 @@ public final class GalacticraftCreativeModeTabs {
         output.accept(GalacticraftItems.TITANIUM_CHESTPLATE);
         output.accept(GalacticraftItems.TITANIUM_LEGGINGS);
         output.accept(GalacticraftItems.TITANIUM_BOOTS);
+        output.accept(GalacticraftItems.RAW_ALUMINUM);
+        output.accept(GalacticraftItems.ALUMINUM_INGOT);
+        output.accept(GalacticraftItems.RAW_TIN);
+        output.accept(GalacticraftItems.TIN_INGOT);
+        output.accept(GalacticraftItems.CHEESE_CHUNK);
+        output.accept(GalacticraftItems.SAPPHIRE);
         output.accept(GalacticraftItems.RAW_LEAD);
         output.accept(GalacticraftItems.LEAD_INGOT);
         output.accept(GalacticraftItems.LEAD_NUGGET);
-        output.accept(GalacticraftItems.CHEESE_CHUNK);
         output.accept(GalacticraftItems.BASIC_WAFER);
         output.accept(GalacticraftItems.ADVANCED_WAFER);
         output.accept(GalacticraftItems.SOLAR_WAFER);
         output.accept(GalacticraftItems.FLUID_TANK);
-        emptyAndFilled(output, GalacticraftItems.FLUID_TANK, GalacticraftFluids.OXYGEN.get());
-        emptyAndFilled(output, GalacticraftItems.FLUID_TANK, GalacticraftFluids.OIL.get());
-        emptyAndFilled(output, GalacticraftItems.FLUID_TANK, GalacticraftFluids.FUEL.get());
+        emptyAndFilled(output, GalacticraftItems.FLUID_TANK, GalacticraftFluids.OXYGEN);
+        emptyAndFilled(output, GalacticraftItems.FLUID_TANK, GalacticraftFluids.OIL);
+        emptyAndFilled(output, GalacticraftItems.FLUID_TANK, GalacticraftFluids.FUEL);
         output.accept(GalacticraftItems.OIL_BUCKET);
         output.accept(GalacticraftItems.FUEL_BUCKET);
     }
 
     private static void buildBlocks(CreativeModeTab.ItemDisplayParameters itemDisplayParameters, CreativeModeTab.Output output) {
-        output.accept(GalacticraftBlocks.COAL_GENERATOR);
-        output.accept(GalacticraftBlocks.CIRCUIT_FABRICATOR);
-        output.accept(GalacticraftBlocks.ELECTRIC_FURNACE);
+        output.accept(GalacticraftItems.ALUMINUM_ORE);
+        output.accept(GalacticraftItems.DEEPSLATE_ALUMINUM_ORE);
+        output.accept(GalacticraftItems.RAW_ALUMINUM_BLOCK);
+        output.accept(GalacticraftItems.ALUMINUM_BLOCK);
+        output.accept(GalacticraftItems.TIN_ORE);
+        output.accept(GalacticraftItems.DEEPSLATE_TIN_ORE);
+        output.accept(GalacticraftItems.RAW_TIN_BLOCK);
+        output.accept(GalacticraftItems.TIN_BLOCK);
+        output.accept(GalacticraftItems.SILICON_ORE);
+        output.accept(GalacticraftItems.DEEPSLATE_SILICON_ORE);
+        output.accept(GalacticraftItems.RAW_SILICON_BLOCK);
+        output.accept(GalacticraftItems.GRATING);
+        output.accept(GalacticraftItems.CHEESE);
+        output.accept(GalacticraftItems.COAL_GENERATOR);
+        output.accept(GalacticraftItems.CIRCUIT_FABRICATOR);
+        output.accept(GalacticraftItems.ELECTRIC_FURNACE);
+        output.accept(GalacticraftItems.OXYGEN_DETECTOR);
+        output.accept(GalacticraftItems.ALUMINUM_WIRE);
+        output.accept(GalacticraftItems.HEAVY_ALUMINUM_WIRE);
+        output.accept(GalacticraftItems.WHITE_PIPE);
+        output.accept(GalacticraftItems.ORANGE_PIPE);
+        output.accept(GalacticraftItems.MAGENTA_PIPE);
+        output.accept(GalacticraftItems.LIGHT_BLUE_PIPE);
+        output.accept(GalacticraftItems.YELLOW_PIPE);
+        output.accept(GalacticraftItems.LIME_PIPE);
+        output.accept(GalacticraftItems.PINK_PIPE);
+        output.accept(GalacticraftItems.GRAY_PIPE);
+        output.accept(GalacticraftItems.LIGHT_GRAY_PIPE);
+        output.accept(GalacticraftItems.CYAN_PIPE);
+        output.accept(GalacticraftItems.PURPLE_PIPE);
+        output.accept(GalacticraftItems.BLUE_PIPE);
+        output.accept(GalacticraftItems.BROWN_PIPE);
+        output.accept(GalacticraftItems.GREEN_PIPE);
+        output.accept(GalacticraftItems.RED_PIPE);
+        output.accept(GalacticraftItems.BLACK_PIPE);
+        output.accept(GalacticraftItems.MOON_DIRT);
+        output.accept(GalacticraftItems.MOON_TURF);
+        output.accept(GalacticraftItems.MOON_ROCK);
+        output.accept(GalacticraftItems.MOON_COPPER_ORE);
+        output.accept(GalacticraftItems.MOON_TIN_ORE);
+        output.accept(GalacticraftItems.MOON_SAPPHIRE_ORE);
+        output.accept(GalacticraftItems.MOON_CHEESE_ORE);
+        output.accept(GalacticraftItems.MOON_BRICKS);
+        output.accept(GalacticraftItems.MOON_BRICK_STAIRS);
+        output.accept(GalacticraftItems.MOON_BRICK_SLAB);
+        output.accept(GalacticraftItems.MOON_BRICK_WALL);
+        output.accept(GalacticraftItems.UNLIT_TORCH);
     }
 
     private static void emptyAndCharged(CreativeModeTab.Output output, ItemLike item) {
@@ -173,7 +220,7 @@ public final class GalacticraftCreativeModeTabs {
         }
     }
 
-    private static void emptyAndFilled(CreativeModeTab.Output output, ItemLike item, Fluid fluid) {
+    private static void emptyAndFilled(CreativeModeTab.Output output, ItemLike item, Holder<Fluid> fluid) {
         ItemStack stack = new ItemStack(item);
         ResourceHandler<FluidResource> fluidHandler = stack.getCapability(Capabilities.Fluid.ITEM, ItemAccess.forStack(stack));
 
@@ -184,8 +231,7 @@ public final class GalacticraftCreativeModeTabs {
         }
     }
 
-    private static void generateSchematics(CreativeModeTab.Output output, HolderLookup.Provider registries, HolderLookup.RegistryLookup<SchematicVariant> schematicLookup) {
-        RegistryOps<Tag> registryops = registries.createSerializationContext(NbtOps.INSTANCE);
+    private static void generateSchematics(CreativeModeTab.Output output, HolderLookup.RegistryLookup<SchematicVariant> schematicLookup) {
         schematicLookup.listElements().sorted(SCHEMATIC_SORTER).forEach(holder -> {
             ItemStack itemstack = GalacticraftItems.SCHEMATIC.toStack();
             itemstack.set(GalacticraftDataComponents.SCHEMATIC, new SchematicContent(new EitherHolder<>(holder)));

@@ -1,12 +1,14 @@
 package io.kalishak.galacticraftlegacy.client.gui.screens.inventory;
 
+import io.kalishak.galacticraftlegacy.attachment.GalacticraftAttachments;
+import io.kalishak.galacticraftlegacy.attachment.block.SyncedEnergyHandler;
+import io.kalishak.galacticraftlegacy.client.gui.ClientResourceHandlerTextUtils;
 import io.kalishak.galacticraftlegacy.world.inventory.AbstractMachineMenu;
-import io.kalishak.galacticraftlegacy.world.level.block.entity.AbstractMachineBlockEntity;
+import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.AbstractMachineBlockEntity;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.RenderPipelines;
-import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
@@ -16,8 +18,6 @@ import java.awt.*;
 
 public abstract class AbstractFluidMachineScreen<BE extends AbstractMachineBlockEntity, M extends AbstractMachineMenu<BE>> extends AbstractContainerScreen<M> implements MachineScreen, FluidTankScreen {
     protected final Identifier backgroundTexture;
-    protected int storedEnergy = 0;
-    protected final NonNullList<FluidStack> fluidTanks = NonNullList.withSize(2, FluidStack.EMPTY);
 
     public AbstractFluidMachineScreen(M menu, Inventory playerInventory, Component title, Identifier backgroundTexture) {
         super(menu, playerInventory, title);
@@ -25,23 +25,23 @@ public abstract class AbstractFluidMachineScreen<BE extends AbstractMachineBlock
     }
 
     @Override
-    public void updateEnergy(int newAmount) {
-        this.storedEnergy = newAmount;
-    }
-
-    @Override
     public int getEnergyStored() {
-        return this.storedEnergy;
+        return getMenu().getMachine().getExistingData(GalacticraftAttachments.SYNC_ENERGY_STORAGE)
+                .map(SyncedEnergyHandler::storedEnergy)
+                .orElse(0);
     }
 
     @Override
     public void updateTankContents(FluidStack content, int tankIndex) {
-        this.fluidTanks.set(tankIndex, content);
+        getMenu().getMachine().getExistingData(GalacticraftAttachments.SYNC_FLUID_STORAGE)
+                .ifPresent(fluidStorage -> fluidStorage.updateFluidStack(tankIndex, content));
     }
 
     @Override
     public FluidStack getTankContents(int tankIndex) {
-        return this.fluidTanks.get(tankIndex);
+        return getMenu().getMachine().getExistingData(GalacticraftAttachments.SYNC_FLUID_STORAGE)
+                .map(syncFluidStorage -> syncFluidStorage.getFluidStack(tankIndex))
+                .orElse(FluidStack.EMPTY);
     }
 
     @Override
@@ -55,8 +55,6 @@ public abstract class AbstractFluidMachineScreen<BE extends AbstractMachineBlock
     @Override
     public void renderSprites(GuiGraphics guiGraphics, int leftOffset, int topOffset, int energyCapacity) {
         MachineScreen.super.renderSprites(guiGraphics, leftOffset, topOffset, energyCapacity);
-
-
     }
 
     @Override
@@ -67,7 +65,7 @@ public abstract class AbstractFluidMachineScreen<BE extends AbstractMachineBlock
         if (isHovering(rectangle.x, rectangle.y, rectangle.width, rectangle.width, x, y)) {
             guiGraphics.setTooltipForNextFrame(
                     this.font,
-                    Component.translatable("item.galacticraftlegacy.battery.tooltip", getEnergyStored() + "/" + this.menu.getEnergyCapacity() + " gJ").withStyle(ChatFormatting.GRAY),
+                    ClientResourceHandlerTextUtils.energyComponentWithCapacity(getEnergyStored(), this.menu.getEnergyCapacity(), style -> style.withColor(ChatFormatting.GRAY)),
                     x,
                     y
             );

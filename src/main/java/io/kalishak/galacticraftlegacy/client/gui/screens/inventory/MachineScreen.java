@@ -5,16 +5,12 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.MenuType;
 
 import java.awt.*;
 
 public interface MachineScreen {
     Identifier ENERGY_BAR_SPRITE = Constants.id("container/power_bar");
     Identifier ENERGY_INDICATOR = Constants.id("container/power_indicator");
-
-    void updateEnergy(int newAmount);
 
     int getEnergyStored();
 

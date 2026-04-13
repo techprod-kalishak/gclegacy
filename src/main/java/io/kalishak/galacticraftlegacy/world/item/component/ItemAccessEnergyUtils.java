@@ -3,10 +3,8 @@ package io.kalishak.galacticraftlegacy.world.item.component;
 import io.kalishak.galacticraftlegacy.ClientConfig;
 import io.kalishak.galacticraftlegacy.Constants;
 import io.kalishak.galacticraftlegacy.config.EnergyUnit;
-import net.minecraft.ChatFormatting;
 import net.minecraft.core.component.DataComponentGetter;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.Style;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -61,10 +59,10 @@ public interface ItemAccessEnergyUtils extends TooltipProvider {
     }
 
     static int colorFromStorage(int stored, int capacity) {
-        float perc = Math.max(0.0F, Math.min(1.0F, (float) stored / (float) capacity));
+        float perc = Math.clamp((float) stored / (float) capacity, 0.0F, 1.0F);
 
-        int r = Math.round(255 * (1 - perc));
-        int g = Math.round(255 * perc);
+        int r = Math.round(255.0F * (1.0F - perc));
+        int g = Math.round(255.0F * perc);
 
         return r << 16 | g << 8;
     }

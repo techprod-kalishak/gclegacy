@@ -1,9 +1,9 @@
 package io.kalishak.galacticraftlegacy.world.level.block.entity;
 
-import io.kalishak.galacticraftlegacy.attachment.GalacticraftAttachments;
 import io.kalishak.galacticraftlegacy.attachment.level.race.SpaceRaceManager;
 import io.kalishak.galacticraftlegacy.attachment.level.race.SpaceRaceTeam;
 import io.kalishak.galacticraftlegacy.data.GalacticraftTags;
+import io.kalishak.galacticraftlegacy.transfer.ResourcefulHelper;
 import io.kalishak.galacticraftlegacy.transfer.capability.fluid.SingleTankResourceHandler;
 import io.kalishak.galacticraftlegacy.world.inventory.ParachestMenu;
 import io.kalishak.galacticraftlegacy.world.item.component.GalacticraftDataComponents;
@@ -15,6 +15,7 @@ import net.minecraft.core.component.DataComponentGetter;
 import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -39,6 +40,7 @@ import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.fluids.SimpleFluidContent;
 import net.neoforged.neoforge.transfer.fluid.FluidResource;
+import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
 import net.neoforged.neoforge.transfer.item.ItemUtil;
 import org.jspecify.annotations.Nullable;
@@ -50,7 +52,6 @@ public class ParachestBlockEntity extends NamedBlockEntity implements LidBlockEn
     private FluidStack tank = FluidStack.EMPTY;
     private LockCode lockKey = LockCode.NO_LOCK;
     private @Nullable UUID owner;
-    private final int chestSlots;
     private final NonNullList<ItemStack> inventory;
     private DyeColor parachuteColor = DyeColor.RED;
 
@@ -105,8 +106,7 @@ public class ParachestBlockEntity extends NamedBlockEntity implements LidBlockEn
 
     public ParachestBlockEntity(BlockPos blockPos, BlockState blockState, int chestSlots) {
         super(GalacticraftBlockEntityType.PARACHEST.get(), blockPos, blockState);
-        this.chestSlots = chestSlots;
-        this.inventory = NonNullList.withSize(2 + this.chestSlots, ItemStack.EMPTY);
+        this.inventory = NonNullList.withSize(3 + chestSlots, ItemStack.EMPTY);
         this.itemResources = new ItemStacksResourceHandler(this.inventory) {
             @Override
             protected void onContentsChanged(int index, ItemStack previousContents) {
@@ -138,6 +138,14 @@ public class ParachestBlockEntity extends NamedBlockEntity implements LidBlockEn
 
     public DyeColor getParachuteColor() {
         return this.parachuteColor;
+    }
+
+    public void setTankItem(int index, ItemResource itemResource, int amount) {
+        ItemResource newResource = ResourcefulHelper.fillTank(this.fluidResource, fluid -> fluid.is(GalacticraftTags.Fluids.IS_FUEL), itemResource.toStack(), null);
+
+        if (!ResourcefulHelper.areResourcesEqual(newResource, itemResource, ItemResource::toStack, ItemStack::isSameItemSameComponents)) {
+            this.itemResources.set(index, itemResource, amount);
+        }
     }
 
     @Override
@@ -215,12 +223,15 @@ public class ParachestBlockEntity extends NamedBlockEntity implements LidBlockEn
             return par;
         }
 
-        SpaceRaceManager manager = player.level().getData(GalacticraftAttachments.SPACE_RACE_MANAGER);
-        SpaceRaceTeam team = manager.getSpaceRaceTeamById(this.owner);
+        if (player instanceof ServerPlayer serverPlayer) {
+            SpaceRaceManager manager = SpaceRaceManager.getFromLevel(serverPlayer.level());
 
-        if (team != null && team.hasMember(player)) {
-            return par;
-        }
+            SpaceRaceTeam team = manager.getSpaceRaceTeamByPlayerId(this.owner);
+
+            if (team != null && team.hasMember(player)) {
+                return par;
+            }
+        } else return par;
 
         return false;
     }
@@ -229,19 +240,19 @@ public class ParachestBlockEntity extends NamedBlockEntity implements LidBlockEn
         if (!this.remove && !containerUser.getLivingEntity().isSpectator()) {
             this.openersCounter
                     .incrementOpeners(
-                            containerUser.getLivingEntity(), getLevel(), this.getBlockPos(), this.getBlockState(), containerUser.getContainerInteractionRange()
+                            containerUser.getLivingEntity(), getLevel(), getBlockPos(), getBlockState(), containerUser.getContainerInteractionRange()
                     );
         }
     }
 
     public void stopOpen(ContainerUser containerUser) {
         if (!this.remove && !containerUser.getLivingEntity().isSpectator()) {
-            this.openersCounter.decrementOpeners(containerUser.getLivingEntity(), getLevel(), this.getBlockPos(), this.getBlockState());
+            this.openersCounter.decrementOpeners(containerUser.getLivingEntity(), getLevel(), getBlockPos(), getBlockState());
         }
     }
 
     public List<ContainerUser> getEntitiesWithContainerOpen() {
-        return this.openersCounter.getEntitiesWithContainerOpen(getLevel(), this.getBlockPos());
+        return this.openersCounter.getEntitiesWithContainerOpen(getLevel(), getBlockPos());
     }
 
     @Override
@@ -255,7 +266,7 @@ public class ParachestBlockEntity extends NamedBlockEntity implements LidBlockEn
 
     public void recheckOpen() {
         if (!this.remove) {
-            this.openersCounter.recheckOpeners(getLevel(), this.getBlockPos(), this.getBlockState());
+            this.openersCounter.recheckOpeners(getLevel(), getBlockPos(), getBlockState());
         }
     }
 
@@ -267,7 +278,7 @@ public class ParachestBlockEntity extends NamedBlockEntity implements LidBlockEn
     @Override
     public @Nullable AbstractContainerMenu createMenu(int containerId, Inventory playerInventory, Player player) {
         if (canOpen(player)) {
-            return new ParachestMenu(containerId, playerInventory, this, size());
+            return new ParachestMenu(containerId, playerInventory, this);
         }
 
         BaseContainerBlockEntity.sendChestLockedNotifications(getBlockPos().getCenter(), player, getDisplayName());

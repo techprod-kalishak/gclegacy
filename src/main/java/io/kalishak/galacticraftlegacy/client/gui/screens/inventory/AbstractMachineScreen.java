@@ -1,7 +1,10 @@
 package io.kalishak.galacticraftlegacy.client.gui.screens.inventory;
 
+import io.kalishak.galacticraftlegacy.attachment.GalacticraftAttachments;
+import io.kalishak.galacticraftlegacy.attachment.block.SyncedEnergyHandler;
+import io.kalishak.galacticraftlegacy.client.gui.ClientResourceHandlerTextUtils;
 import io.kalishak.galacticraftlegacy.world.inventory.AbstractMachineMenu;
-import io.kalishak.galacticraftlegacy.world.level.block.entity.AbstractMachineBlockEntity;
+import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.AbstractMachineBlockEntity;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractRecipeBookScreen;
@@ -15,7 +18,6 @@ import java.awt.*;
 
 public abstract class AbstractMachineScreen<BE extends AbstractMachineBlockEntity, M extends AbstractMachineMenu<BE>> extends AbstractRecipeBookScreen<M> implements MachineScreen {
     protected final Identifier backgroundTexture;
-    protected int storedEnergy = 0;
 
     public AbstractMachineScreen(M menu, RecipeBookComponent<?> recipeBookComponent, Inventory playerInventory, Component title, Identifier backgroundTexture) {
         super(menu, recipeBookComponent, playerInventory, title);
@@ -23,13 +25,10 @@ public abstract class AbstractMachineScreen<BE extends AbstractMachineBlockEntit
     }
 
     @Override
-    public void updateEnergy(int newAmount) {
-        this.storedEnergy = newAmount;
-    }
-
-    @Override
     public int getEnergyStored() {
-        return this.storedEnergy;
+        return getMenu().getMachine().getExistingData(GalacticraftAttachments.SYNC_ENERGY_STORAGE)
+                .map(SyncedEnergyHandler::storedEnergy)
+                .orElse(0);
     }
 
     @Override
@@ -44,14 +43,17 @@ public abstract class AbstractMachineScreen<BE extends AbstractMachineBlockEntit
     protected void renderTooltip(GuiGraphics guiGraphics, int x, int y) {
         super.renderTooltip(guiGraphics, x, y);
 
-        Rectangle rectangle = getEnergyBarBounds();
-        if (isHovering(rectangle.x, rectangle.y, rectangle.width, rectangle.width, x, y)) {
+        if (isHovering(getEnergyBarBounds(), x, y)) {
             guiGraphics.setTooltipForNextFrame(
                     this.font,
-                    Component.translatable("item.galacticraftlegacy.battery.tooltip", getEnergyStored() + "/" + this.menu.getEnergyCapacity() + " gJ").withStyle(ChatFormatting.GRAY),
+                    ClientResourceHandlerTextUtils.energyComponentWithCapacity(getEnergyStored(), this.menu.getEnergyCapacity(), style -> style.withColor(ChatFormatting.GRAY)),
                     x,
                     y
             );
         }
+    }
+
+    protected boolean isHovering(Rectangle area, double x, double y) {
+        return isHovering(area.x, area.y, area.width, area.height, x, y);
     }
 }

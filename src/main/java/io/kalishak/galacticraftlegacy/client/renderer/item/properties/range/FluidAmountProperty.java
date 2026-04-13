@@ -16,12 +16,11 @@ public record FluidAmountProperty() implements RangeSelectItemModelProperty {
 
     @Override
     public float get(ItemStack stack, @Nullable ClientLevel level, @Nullable ItemOwner owner, int seed) {
-        ResourceHandler<FluidResource> resourceHandler = stack.getCapability(Capabilities.Fluid.ITEM, ItemAccess.forStack(stack));
+        ResourceHandler<FluidResource> tank = stack.getCapability(Capabilities.Fluid.ITEM, ItemAccess.forStack(stack));
 
-        if (resourceHandler != null) {
-            FluidResource resource = resourceHandler.getResource(0);
-
-            return (float) resourceHandler.getAmountAsInt(0) / (float) resourceHandler.getCapacityAsInt(0, resource);
+        if (tank != null) {
+            FluidResource resource = tank.getResource(0);
+            return tank.getAmountAsInt(0) / (float) tank.getCapacityAsInt(0, resource);
         }
 
         return 0.0F;

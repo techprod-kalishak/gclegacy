@@ -17,9 +17,7 @@ public class GalacticraftEntityTypeTagsProvider extends EntityTypeTagsProvider {
     @Override
     protected void addTags(HolderLookup.Provider registries) {
         tag(GalacticraftTags.EntityTypes.CAN_EQUIP_PARACHUTE)
-                .add(EntityType.PLAYER)
-                .add(EntityType.PIG)
-                .add(EntityType.WOLF);
+                .add(EntityType.PLAYER);
         tag(GalacticraftTags.EntityTypes.CAN_EQUIP_GEAR)
                 .add(EntityType.CREEPER)
                 .add(EntityType.PLAYER)

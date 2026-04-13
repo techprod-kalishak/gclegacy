@@ -2,33 +2,31 @@ package io.kalishak.galacticraftlegacy.client.gui.screens.inventory;
 
 import io.kalishak.galacticraftlegacy.Constants;
 import io.kalishak.galacticraftlegacy.client.gui.screens.recipebook.ElectricFurnaceRecipeBookComponent;
-import io.kalishak.galacticraftlegacy.client.gui.screens.recipebook.SearchRecipeBookCategory;
 import io.kalishak.galacticraftlegacy.world.inventory.ElectricFurnaceMenu;
-import io.kalishak.galacticraftlegacy.world.item.crafting.GalacticraftRecipeBookCategories;
-import io.kalishak.galacticraftlegacy.world.level.block.entity.ElectricFurnaceBlockEntity;
+import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.ElectricFurnaceBlockEntity;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.navigation.ScreenPosition;
 import net.minecraft.client.gui.screens.recipebook.RecipeBookComponent;
+import net.minecraft.client.gui.screens.recipebook.SearchRecipeBookCategory;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.RecipeBookCategories;
 
 import java.awt.*;
 import java.util.List;
-import java.util.Optional;
 
 public class ElectricFurnaceScreen extends AbstractMachineScreen<ElectricFurnaceBlockEntity, ElectricFurnaceMenu> {
     private static final Identifier BURN_PROGRESS_SPRITE = Constants.id("container/electric_furnace/burn_progress");
     private static final Identifier TEXTURES = Constants.id("textures/gui/container/electric_furnace.png");
     private static final List<RecipeBookComponent.TabInfo> TABS = List.of(
-            new RecipeBookComponent.TabInfo(new ItemStack(Items.COMPASS), Optional.empty(), SearchRecipeBookCategory.HEATING),
-            new RecipeBookComponent.TabInfo(Items.PORKCHOP, GalacticraftRecipeBookCategories.HEATING_FOOD.get()),
-            new RecipeBookComponent.TabInfo(Items.STONE, GalacticraftRecipeBookCategories.HEATING_BLOCKS.get()),
-            new RecipeBookComponent.TabInfo(Items.LAVA_BUCKET, Items.EMERALD, GalacticraftRecipeBookCategories.HEATING_MISC.get())
+            new RecipeBookComponent.TabInfo(SearchRecipeBookCategory.FURNACE),
+            new RecipeBookComponent.TabInfo(Items.PORKCHOP, RecipeBookCategories.FURNACE_FOOD),
+            new RecipeBookComponent.TabInfo(Items.STONE, RecipeBookCategories.FURNACE_BLOCKS),
+            new RecipeBookComponent.TabInfo(Items.LAVA_BUCKET, Items.EMERALD, RecipeBookCategories.FURNACE_MISC)
     );
 
     public ElectricFurnaceScreen(ElectricFurnaceMenu menu, Inventory playerInventory, Component title) {
@@ -43,7 +41,7 @@ public class ElectricFurnaceScreen extends AbstractMachineScreen<ElectricFurnace
 
     @Override
     protected ScreenPosition getRecipeBookButtonPosition() {
-        return new ScreenPosition(this.leftPos + 20, this.height / 2 - 49);
+        return new ScreenPosition(this.leftPos + 20, this.height / 2 - 56);
     }
 
     @Override

@@ -5,7 +5,7 @@ import io.kalishak.galacticraftlegacy.client.gui.screens.recipebook.FabricatingR
 import io.kalishak.galacticraftlegacy.client.gui.screens.recipebook.SearchRecipeBookCategory;
 import io.kalishak.galacticraftlegacy.world.inventory.CircuitFabricatorMenu;
 import io.kalishak.galacticraftlegacy.world.item.GalacticraftItems;
-import io.kalishak.galacticraftlegacy.world.level.block.entity.CircuitFabricatorBlockEntity;
+import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.CircuitFabricatorBlockEntity;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.navigation.ScreenPosition;
 import net.minecraft.client.gui.screens.recipebook.RecipeBookComponent;
@@ -30,7 +30,7 @@ public class CircuitFabricatorScreen extends AbstractMachineScreen<CircuitFabric
     public CircuitFabricatorScreen(CircuitFabricatorMenu menu, Inventory playerInventory, Component title) {
         super(menu, new FabricatingRecipeBook(menu, TABS), playerInventory, title, TEXTURES);
         this.titleLabelX = (this.imageWidth - this.font.width(this.title)) / 2;
-        this.inventoryLabelY = this.imageHeight - 94;
+        this.inventoryLabelY = this.imageHeight / 2 - 24;
         this.imageHeight = 192;
     }
 

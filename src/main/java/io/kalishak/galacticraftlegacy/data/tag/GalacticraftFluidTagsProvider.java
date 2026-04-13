@@ -6,6 +6,7 @@ import io.kalishak.galacticraftlegacy.world.level.material.fluid.GalacticraftFlu
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.FluidTagsProvider;
+import net.minecraft.tags.FluidTags;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -16,6 +17,9 @@ public class GalacticraftFluidTagsProvider extends FluidTagsProvider {
 
     @Override
     protected void addTags(HolderLookup.Provider provider) {
+        tag(GalacticraftTags.Fluids.FLOWS_GRATING)
+                .addTag(FluidTags.WATER)
+                .addTag(FluidTags.LAVA);
         tag(GalacticraftTags.Fluids.IS_OXYGEN)
                 .add(GalacticraftFluids.OXYGEN.get())
                 .add(GalacticraftFluids.OXYGEN_FLOWING.get());
@@ -25,5 +29,8 @@ public class GalacticraftFluidTagsProvider extends FluidTagsProvider {
         tag(GalacticraftTags.Fluids.IS_FUEL)
                 .add(GalacticraftFluids.FUEL.get())
                 .add(GalacticraftFluids.FUEL_FLOWING.get());
+        tag(GalacticraftTags.Fluids.FLAMMABLE_LIQUID)
+                .addTag(GalacticraftTags.Fluids.IS_OIL)
+                .addTag(GalacticraftTags.Fluids.IS_FUEL);
     }
 }

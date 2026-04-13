@@ -61,7 +61,7 @@ public class ParachestBlockRenderer implements BlockEntityRenderer<ParachestBloc
         openess = 1.0F - openess * openess * openess;
         Material material = GalacticraftSheets.PARACHEST;
         RenderType renderType = material.renderType(RenderTypes::entityCutout);
-        TextureAtlasSprite sprite = materials.get(material);
+        TextureAtlasSprite sprite = this.materials.get(material);
         nodeCollector.submitModel(
                 this.model,
                 openess,

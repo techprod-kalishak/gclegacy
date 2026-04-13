@@ -36,11 +36,6 @@ public class FallingParachestRenderer extends EntityRenderer<FallingParachest, P
     }
 
     @Override
-    public boolean shouldRender(FallingParachest fallingParachest, Frustum camera, double camX, double camY, double camZ) {
-        return super.shouldRender(fallingParachest, camera, camX, camY, camZ) && fallingParachest.getBlockState() != fallingParachest.level().getBlockState(fallingParachest.blockPosition());
-    }
-
-    @Override
     public void submit(ParachestRenderState renderState, PoseStack poseStack, SubmitNodeCollector nodeCollector, CameraRenderState cameraRenderState) {
         poseStack.pushPose();
         poseStack.translate(0.5F, 0.5F, 0.5F);
@@ -88,7 +83,7 @@ public class FallingParachestRenderer extends EntityRenderer<FallingParachest, P
     }
 
     @Override
-    public Material getMaterial(ParachestRenderState renderState) {
+    public Material getParachuteMaterial(ParachestRenderState renderState) {
         return GalacticraftSheets.getParachuteMaterial(renderState.parachuteColor);
     }
 

@@ -14,6 +14,7 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
@@ -54,8 +55,10 @@ public class Flag extends Entity {
         FlagData flagData = getFlagData();
         Component teamName = Component.empty();
 
-        if (getOwner() instanceof Player player) {
-            SpaceRaceTeam team = level().getData(GalacticraftAttachments.SPACE_RACE_MANAGER).getSpaceRaceTeamById(player.getUUID());
+        if (getOwner() instanceof ServerPlayer player) {
+            SpaceRaceManager manager = SpaceRaceManager.getFromLevel(player.level());
+
+            SpaceRaceTeam team = manager.getSpaceRaceTeamByPlayerId(player.getUUID());
 
             if (team != null) {
                 teamName = team.getDisplayName();
@@ -175,9 +178,9 @@ public class Flag extends Entity {
     public void tick() {
         super.tick();
 
-        if (level().isClientSide() && (this.tickCount - 1) % 20 == 0) {
-            if (getOwner() instanceof Player player && distanceToSqr(player) < 50.0D) {
-                FlagData flagData = SpaceRaceManager.getPlayerFlag(level(), player);
+        if (!level().isClientSide() && (this.tickCount - 1) % 20 == 0) {
+            if (getOwner() instanceof ServerPlayer player && distanceToSqr(player) < 50.0D) {
+                FlagData flagData = SpaceRaceManager.getPlayerFlag(player);
                 setFlagData(flagData);
             }
         }

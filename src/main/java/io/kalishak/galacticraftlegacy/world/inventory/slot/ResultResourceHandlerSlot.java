@@ -1,6 +1,6 @@
 package io.kalishak.galacticraftlegacy.world.inventory.slot;
 
-import io.kalishak.galacticraftlegacy.world.level.block.entity.ElectricFurnaceBlockEntity;
+import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.ElectricFurnaceBlockEntity;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -28,7 +28,7 @@ public class ResultResourceHandlerSlot extends ResourceHandlerSlot {
 
     @Override
     public Optional<ItemStack> tryRemove(int count, int decrement, Player player) {
-        Optional<ItemStack> stack = tryRemove(count, decrement, player);
+        Optional<ItemStack> stack = super.tryRemove(count, decrement, player);
 
         if (stack.isPresent()) {
             this.removeCount += decrement;

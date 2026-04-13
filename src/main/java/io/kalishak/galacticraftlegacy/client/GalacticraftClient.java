@@ -7,10 +7,12 @@ import io.kalishak.galacticraftlegacy.client.gui.SensorGlassesOverlay;
 import io.kalishak.galacticraftlegacy.client.gui.TanksLayer;
 import io.kalishak.galacticraftlegacy.client.gui.screens.inventory.*;
 import io.kalishak.galacticraftlegacy.client.gui.screens.recipebook.GalacticraftClientRecipeBookCategories;
+import io.kalishak.galacticraftlegacy.client.gui.screens.transition.CelestialSelectionScreen;
 import io.kalishak.galacticraftlegacy.client.item.ColorByFluid;
 import io.kalishak.galacticraftlegacy.client.model.FlagModel;
 import io.kalishak.galacticraftlegacy.client.model.gear.OxygenGearModel;
 import io.kalishak.galacticraftlegacy.client.model.gear.ParachuteModel;
+import io.kalishak.galacticraftlegacy.client.renderer.blockentity.DungeonBlockRenderer;
 import io.kalishak.galacticraftlegacy.client.renderer.blockentity.ParachestBlockRenderer;
 import io.kalishak.galacticraftlegacy.client.renderer.entity.FallingParachestRenderer;
 import io.kalishak.galacticraftlegacy.client.renderer.entity.layer.gear.OxygenMaskLayer;
@@ -21,18 +23,24 @@ import io.kalishak.galacticraftlegacy.client.renderer.entity.FlagRenderer;
 import io.kalishak.galacticraftlegacy.client.renderer.entity.SchematicRenderer;
 import io.kalishak.galacticraftlegacy.client.renderer.entity.layer.gear.GearEquipmentLayer;
 import io.kalishak.galacticraftlegacy.client.renderer.entity.state.GearRenderState;
+import io.kalishak.galacticraftlegacy.client.renderer.item.KeyModel;
 import io.kalishak.galacticraftlegacy.client.renderer.item.properties.numeric.DungeonLocatorAngle;
 import io.kalishak.galacticraftlegacy.client.renderer.item.properties.range.FluidAmountProperty;
 import io.kalishak.galacticraftlegacy.client.renderer.item.properties.select.SchematicTierProperty;
 import io.kalishak.galacticraftlegacy.client.data.GalacticraftSpritesProvider;
+import io.kalishak.galacticraftlegacy.client.renderer.special.KeySpecialRenderer;
 import io.kalishak.galacticraftlegacy.world.entity.GalacticraftEntityType;
 import io.kalishak.galacticraftlegacy.world.inventory.GalacticraftMenuType;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityType;
+import io.kalishak.galacticraftlegacy.world.level.dimension.GalacticraftDimensions;
 import io.kalishak.galacticraftlegacy.world.level.material.fluid.GalacticraftFluidType;
+import net.minecraft.client.gui.screens.LevelLoadingScreen;
+import net.minecraft.client.gui.screens.inventory.ContainerScreen;
 import net.minecraft.client.model.animal.wolf.WolfModel;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.player.PlayerModel;
+import net.minecraft.client.multiplayer.LevelLoadTracker;
 import net.minecraft.client.renderer.entity.*;
 import net.minecraft.client.renderer.entity.player.AvatarRenderer;
 import net.minecraft.client.resources.model.*;
@@ -41,16 +49,21 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.client.DimensionTransitionScreenManager;
 import net.neoforged.neoforge.client.event.*;
+import net.neoforged.neoforge.client.extensions.common.IClientBlockExtensions;
 import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
+import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 import net.neoforged.neoforge.client.renderstate.RegisterRenderStateModifiersEvent;
 import net.neoforged.neoforge.common.NeoForge;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.List;
 import java.util.Set;
 
 @SuppressWarnings("unused")
@@ -69,6 +82,8 @@ public class GalacticraftClient {
         bus.addListener(this::registerRangedItemModelProperty);
         bus.addListener(this::addRenderStates);
         bus.addListener(this::registerSelectItemModelProperty);
+        bus.addListener(this::registerSpecialRenderers);
+        bus.addListener(this::registerDimensionTransitionScreen);
 
         bus.addListener(EntityRenderersEvent.AddLayers.class, GearEquipmentLayer::registerAdditionalLayers);
         bus.addListener(GalacticraftClientRecipeBookCategories::registerBookCategories);
@@ -100,23 +115,28 @@ public class GalacticraftClient {
         event.registerFluidType(new IClientFluidTypeExtensions() {
             @Override
             public int getTintColor() {
-                return 0xAFEEEE;
+                return 0xFFAFEEEE;
             }
         }, GalacticraftFluidType.OXYGEN);
         event.registerFluidType(new IClientFluidTypeExtensions() {
             @Override
+            public Identifier getOverlayTexture() {
+                return Identifier.withDefaultNamespace("block/water_overlay");
+            }
+
+            @Override
             public Identifier getStillTexture() {
-                return Constants.id("block/oil_still");
+                return Identifier.withDefaultNamespace("block/water_still");
             }
 
             @Override
             public Identifier getFlowingTexture() {
-                return Constants.id("block/oil_flow");
+                return Identifier.withDefaultNamespace("block/water_flow");
             }
 
             @Override
             public int getTintColor() {
-                return 0x281E15;
+                return 0xFF281E15;
             }
         }, GalacticraftFluidType.OIL);
         event.registerFluidType(new IClientFluidTypeExtensions() {
@@ -132,7 +152,7 @@ public class GalacticraftClient {
 
             @Override
             public int getTintColor() {
-                return 0xE6AC27;
+                return 0xFFECF542;
             }
         }, GalacticraftFluidType.FUEL);
     }
@@ -143,28 +163,27 @@ public class GalacticraftClient {
         event.registerEntityRenderer(GalacticraftEntityType.FALLING_PARACHEST.get(), FallingParachestRenderer::new);
 
         event.registerBlockEntityRenderer(GalacticraftBlockEntityType.PARACHEST.get(), ParachestBlockRenderer::new);
+        event.registerBlockEntityRenderer(GalacticraftBlockEntityType.DUNGEON_CHEST.get(), DungeonBlockRenderer::new);
     }
 
     private void registerOverlays(RegisterGuiLayersEvent event) {
         event.registerAboveAll(Constants.id("sensor_glasses"), new SensorGlassesOverlay());
-        event.registerAbove(Constants.id("sensor_glasses"), Constants.id("tanks"), new TanksLayer());
+        event.registerBelow(Constants.id("sensor_glasses"), Constants.id("tanks"), new TanksLayer());
     }
 
     private void registerLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
+        event.registerLayerDefinition(GalacticraftModelLayers.KEY, KeyModel::createLayer);
         event.registerLayerDefinition(GalacticraftModelLayers.OXYGEN_MASK, OxygenMaskLayer::createOxygenMaskLayer);
         event.registerLayerDefinition(GalacticraftModelLayers.OXYGEN_GEAR, OxygenGearModel::createOxygenGearLayer);
         event.registerLayerDefinition(GalacticraftModelLayers.HEAVY_OXYGEN_TANK, OxygenTankModel::createHeavyTankLayer);
         event.registerLayerDefinition(GalacticraftModelLayers.MEDIUM_OXYGEN_TANK, OxygenTankModel::createMediumTankLayer);
         event.registerLayerDefinition(GalacticraftModelLayers.LIGHT_OXYGEN_TANK, OxygenTankModel::createLightTankLayer);
         event.registerLayerDefinition(GalacticraftModelLayers.PARACHUTE, ParachuteModel::createParachuteLayer);
-        ArmorModelSet<LayerDefinition> thermalPadding = PlayerModel.createArmorMeshSet(new CubeDeformation(0.004F), new CubeDeformation(0.02F)).map(layer -> LayerDefinition.create(layer, 64, 32));
+        ArmorModelSet<LayerDefinition> thermalPadding = PlayerModel.createArmorMeshSet(new CubeDeformation(0.008F), new CubeDeformation(0.04F)).map(layer -> LayerDefinition.create(layer, 64, 32));
         event.registerLayerDefinition(GalacticraftModelLayers.THERMAL_PADDING.head(), thermalPadding::head);
         event.registerLayerDefinition(GalacticraftModelLayers.THERMAL_PADDING.chest(), thermalPadding::chest);
         event.registerLayerDefinition(GalacticraftModelLayers.THERMAL_PADDING.legs(), thermalPadding::legs);
         event.registerLayerDefinition(GalacticraftModelLayers.THERMAL_PADDING.feet(), thermalPadding::feet);
-        LayerDefinition wolfThermal = LayerDefinition.create(WolfModel.createMeshDefinition(new CubeDeformation(0.02F)), 64, 32);
-        event.registerLayerDefinition(GalacticraftModelLayers.WOLF_THERMAL, () -> wolfThermal);
-        event.registerLayerDefinition(GalacticraftModelLayers.WOLF_BABY_THERMAL, () -> wolfThermal.apply(WolfModel.BABY_TRANSFORMER));
 
         event.registerLayerDefinition(GalacticraftModelLayers.FLAG, FlagModel::createLayer);
     }
@@ -175,6 +194,11 @@ public class GalacticraftClient {
         event.register(GalacticraftMenuType.CIRCUIT_FABRICATOR.get(), CircuitFabricatorScreen::new);
         event.register(GalacticraftMenuType.GEAR.get(), GearInventoryScreen::new);
         event.register(GalacticraftMenuType.PARACHEST.get(), ParachestScreen::new);
+        event.register(GalacticraftMenuType.DUNGEON_CHEST.get(), DungeonChestScreen::new);
+    }
+
+    private void registerDimensionTransitionScreen(RegisterDimensionTransitionScreenEvent event) {
+        event.registerIncomingEffect(GalacticraftDimensions.MOON, (levelLoadTracker, reason) -> new CelestialSelectionScreen(levelLoadTracker, false, List.of(), true));
     }
 
     private void registerTintSources(RegisterColorHandlersEvent.ItemTintSources event) {
@@ -184,6 +208,10 @@ public class GalacticraftClient {
     private void registerRangedItemModelProperty(RegisterRangeSelectItemModelPropertyEvent event) {
         event.register(Constants.id("fluid_amount"), FluidAmountProperty.CODEC);
         event.register(Constants.id("dungeon_location"), DungeonLocatorAngle.MAP_CODEC);
+    }
+
+    private void registerSpecialRenderers(RegisterSpecialModelRendererEvent event) {
+        event.register(Constants.id("key_renderer"), KeySpecialRenderer.Unbaked.MAP_CODEC);
     }
 
     private void addRenderStates(RegisterRenderStateModifiersEvent event) {
@@ -202,10 +230,6 @@ public class GalacticraftClient {
         event.registerEntityModifier(
                 SkeletonRenderer.class,
                 GearRenderState::appendCommonRenderStates
-        );
-        event.registerEntityModifier(
-                WolfRenderer.class,
-                GearRenderState::appendWolfRenderStates
         );
     }
 

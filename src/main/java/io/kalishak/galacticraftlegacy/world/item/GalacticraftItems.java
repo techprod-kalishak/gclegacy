@@ -14,8 +14,8 @@ import io.kalishak.galacticraftlegacy.world.item.gear.OxygenTankItem;
 import io.kalishak.galacticraftlegacy.world.item.gear.ShieldControllerItem;
 import io.kalishak.galacticraftlegacy.world.level.block.GalacticraftBlocks;
 import io.kalishak.galacticraftlegacy.world.level.material.fluid.GalacticraftFluids;
+import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponents;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.*;
@@ -87,19 +87,6 @@ public final class GalacticraftItems {
             "isothermal_socks",
             GearItem::new,
             () -> GearItem.thermalPiece(GearEquipmentSlot.THERMAL_SOCKS, GearEquipmentAssets.ISOTHERMAL)
-    );
-    public static final DeferredItem<GearItem> THERMAL_WOLF_JACKET = REGISTRY.registerItem(
-            "thermal_wolf_jacket",
-            GearItem::new,
-            () -> new Item.Properties()
-                    .stacksTo(1)
-                    .component(GalacticraftDataComponents.GEAR_EQUIPPABLE, GearEquippable.builder(GearEquipmentSlot.BODY)
-                            .setAllowedEntities(EntityType.WOLF)
-                            .setAsset(GearEquipmentAssets.WOLF_THERMAL)
-                            .setEquipSound(SoundEvents.HARNESS_EQUIP)
-                            .setCanBeSheared(true)
-                            .build()
-                    )
     );
     public static final DeferredItem<GearItem> LIGHT_TANK = REGISTRY.registerItem(
             "light_oxygen_tank",
@@ -246,7 +233,12 @@ public final class GalacticraftItems {
             StructureFinderItem::new,
             properties -> properties.stacksTo(1)
     );
+    public static final DeferredItem<Item> ALUMINUM_INGOT = REGISTRY.registerSimpleItem("aluminum_ingot");
+    public static final DeferredItem<Item> RAW_ALUMINUM = REGISTRY.registerSimpleItem("raw_aluminum");
+    public static final DeferredItem<Item> TIN_INGOT = REGISTRY.registerSimpleItem("tin_ingot");
+    public static final DeferredItem<Item> RAW_TIN = REGISTRY.registerSimpleItem("raw_tin");
     public static final DeferredItem<Item> RAW_SILICON = REGISTRY.registerSimpleItem("raw_silicon");
+    public static final DeferredItem<Item> SAPPHIRE = REGISTRY.registerSimpleItem("sapphire", properties -> properties.rarity(Rarity.UNCOMMON));
     public static final DeferredItem<Item> BASIC_WAFER = REGISTRY.registerSimpleItem("basic_wafer");
     public static final DeferredItem<Item> ADVANCED_WAFER = REGISTRY.registerSimpleItem("advanced_wafer");
     public static final DeferredItem<Item> SOLAR_WAFER = REGISTRY.registerSimpleItem("solar_wafer");
@@ -437,13 +429,85 @@ public final class GalacticraftItems {
     public static final DeferredItem<Item> LEAD_NUGGET = REGISTRY.registerSimpleItem("lead_nugget");
     public static final DeferredItem<Item> CHEESE_CHUNK = REGISTRY.registerSimpleItem(
             "cheese_chunk",
-            properties -> properties.trimMaterial(GalacticraftTrimMaterials.CHEESE)
+            properties -> properties
+                    .trimMaterial(GalacticraftTrimMaterials.CHEESE)
+                    .food(GalacticraftFoods.CHEESE)
+    );
+    public static final DeferredItem<Item> CHEESE_SLICE = REGISTRY.registerSimpleItem(
+            "cheese_slice",
+            properties -> properties.food(GalacticraftFoods.CHEESE)
+    );
+    public static final DeferredItem<Item> MOON_DUNGEON_KEY = REGISTRY.registerSimpleItem(
+            "moon_dungeon_key",
+            properties -> properties.stacksTo(1).component(GalacticraftDataComponents.KEY_LOCK, KeyLock.preGenTier(FeatureTier.TIER_1))
+    );
+    public static final DeferredItem<Item> MARS_DUNGEON_KEY = REGISTRY.registerSimpleItem(
+            "mars_dungeon_key",
+            properties -> properties.stacksTo(1).component(GalacticraftDataComponents.KEY_LOCK, KeyLock.preGenTier(FeatureTier.TIER_2))
+    );
+    public static final DeferredItem<Item> VENUS_DUNGEON_KEY = REGISTRY.registerSimpleItem(
+            "venus_dungeon_key",
+            properties -> properties.stacksTo(1).component(GalacticraftDataComponents.KEY_LOCK, KeyLock.preGenTier(FeatureTier.TIER_3))
     );
 
+    public static final DeferredItem<BlockItem> ALUMINUM_WIRE = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.ALUMINUM_WIRE);
+    public static final DeferredItem<BlockItem> HEAVY_ALUMINUM_WIRE = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.HEAVY_ALUMINUM_WIRE);
+    public static final DeferredItem<BlockItem> WHITE_PIPE = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.WHITE_PIPE);
+    public static final DeferredItem<BlockItem> ORANGE_PIPE = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.ORANGE_PIPE);
+    public static final DeferredItem<BlockItem> MAGENTA_PIPE = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.MAGENTA_PIPE);
+    public static final DeferredItem<BlockItem> LIGHT_BLUE_PIPE = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.LIGHT_BLUE_PIPE);
+    public static final DeferredItem<BlockItem> YELLOW_PIPE = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.YELLOW_PIPE);
+    public static final DeferredItem<BlockItem> LIME_PIPE = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.LIME_PIPE);
+    public static final DeferredItem<BlockItem> PINK_PIPE = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.PINK_PIPE);
+    public static final DeferredItem<BlockItem> GRAY_PIPE = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.GRAY_PIPE);
+    public static final DeferredItem<BlockItem> LIGHT_GRAY_PIPE = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.LIGHT_GRAY_PIPE);
+    public static final DeferredItem<BlockItem> CYAN_PIPE = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.CYAN_PIPE);
+    public static final DeferredItem<BlockItem> PURPLE_PIPE = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.PURPLE_PIPE);
+    public static final DeferredItem<BlockItem> BLUE_PIPE = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.BLUE_PIPE);
+    public static final DeferredItem<BlockItem> BROWN_PIPE = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.BROWN_PIPE);
+    public static final DeferredItem<BlockItem> GREEN_PIPE = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.GREEN_PIPE);
+    public static final DeferredItem<BlockItem> RED_PIPE = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.RED_PIPE);
+    public static final DeferredItem<BlockItem> BLACK_PIPE = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.BLACK_PIPE);
+    public static final DeferredItem<BlockItem> GRATING = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.GRATING);
+    public static final DeferredItem<BlockItem> OXYGEN_DETECTOR = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.OXYGEN_DETECTOR);
+    public static final DeferredItem<BlockItem> CHEESE = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.CHEESE);
     public static final DeferredItem<BlockItem> COAL_GENERATOR = REGISTRY.registerSimpleBlockItemWithDescription(GalacticraftBlocks.COAL_GENERATOR);
     public static final DeferredItem<BlockItem> CIRCUIT_FABRICATOR = REGISTRY.registerSimpleBlockItemWithDescription(GalacticraftBlocks.CIRCUIT_FABRICATOR);
     public static final DeferredItem<BlockItem> ELECTRIC_FURNACE = REGISTRY.registerSimpleBlockItemWithDescription(GalacticraftBlocks.ELECTRIC_FURNACE);
+    public static final DeferredItem<BlockItem> MOON_DIRT = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.MOON_DIRT);
+    public static final DeferredItem<BlockItem> MOON_TURF = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.MOON_TURF);
     public static final DeferredItem<BlockItem> MOON_ROCK = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.MOON_ROCK);
+    public static final DeferredItem<BlockItem> MOON_CHEESE_ORE = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.MOON_CHEESE_ORE);
+    public static final DeferredItem<BlockItem> MOON_COPPER_ORE = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.MOON_COPPER_ORE);
+    public static final DeferredItem<BlockItem> MOON_TIN_ORE = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.MOON_TIN_ORE);
+    public static final DeferredItem<BlockItem> MOON_SAPPHIRE_ORE = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.MOON_SAPPHIRE_ORE);
+    public static final DeferredItem<BlockItem> MOON_BRICKS = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.MOON_BRICKS);
+    public static final DeferredItem<BlockItem> MOON_BRICK_STAIRS = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.MOON_BRICK_STAIRS);
+    public static final DeferredItem<BlockItem> MOON_BRICK_SLAB = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.MOON_BRICK_SLAB);
+    public static final DeferredItem<BlockItem> MOON_BRICK_WALL = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.MOON_BRICK_WALL);
+    public static final DeferredItem<BlockItem> MOON_DUNGEON_CHEST = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.MOON_DUNGEON_CHEST);
+    public static final DeferredItem<BlockItem> MARS_DUNGEON_CHEST = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.MARS_DUNGEON_CHEST);
+    public static final DeferredItem<BlockItem> VENUS_DUNGEON_CHEST = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.VENUS_DUNGEON_CHEST);
+    public static final DeferredItem<BlockItem> ALUMINUM_ORE = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.ALUMINUM_ORE);
+    public static final DeferredItem<BlockItem> DEEPSLATE_ALUMINUM_ORE = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.DEEPSLATE_ALUMINUM_ORE);
+    public static final DeferredItem<BlockItem> RAW_ALUMINUM_BLOCK = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.RAW_ALUMINUM_BLOCK);
+    public static final DeferredItem<BlockItem> ALUMINUM_BLOCK = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.ALUMINUM_BLOCK);
+    public static final DeferredItem<BlockItem> TIN_ORE = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.TIN_ORE);
+    public static final DeferredItem<BlockItem> DEEPSLATE_TIN_ORE = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.DEEPSLATE_TIN_ORE);
+    public static final DeferredItem<BlockItem> RAW_TIN_BLOCK = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.RAW_TIN_BLOCK);
+    public static final DeferredItem<BlockItem> TIN_BLOCK = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.TIN_BLOCK);
+    public static final DeferredItem<BlockItem> SILICON_ORE = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.SILICON_ORE);
+    public static final DeferredItem<BlockItem> DEEPSLATE_SILICON_ORE = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.DEEPSLATE_SILICON_ORE);
+    public static final DeferredItem<BlockItem> RAW_SILICON_BLOCK = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.RAW_SILICON_BLOCK);
+    public static final DeferredItem<StandingAndWallBlockItem> UNLIT_TORCH = REGISTRY.registerBlockItem(
+            GalacticraftBlocks.UNLIT_TORCH,
+            (standingBlock, properties) -> new StandingAndWallBlockItem(
+                    standingBlock,
+                    GalacticraftBlocks.UNLIT_WALL_TORCH.get(),
+                    Direction.DOWN,
+                    properties
+            )
+    );
 
     public static void init(IEventBus bus) {
         REGISTRY.register(bus);

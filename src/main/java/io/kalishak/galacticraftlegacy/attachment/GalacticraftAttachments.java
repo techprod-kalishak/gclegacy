@@ -1,27 +1,58 @@
 package io.kalishak.galacticraftlegacy.attachment;
 
 import io.kalishak.galacticraftlegacy.Galacticraft;
+import io.kalishak.galacticraftlegacy.attachment.block.SyncedEnergyHandler;
+import io.kalishak.galacticraftlegacy.attachment.block.SyncedFluidResource;
+import io.kalishak.galacticraftlegacy.attachment.entity.AdvancedMovement;
 import io.kalishak.galacticraftlegacy.attachment.entity.EntityGearInventory;
 import io.kalishak.galacticraftlegacy.attachment.entity.PlayerSpaceData;
 import io.kalishak.galacticraftlegacy.attachment.level.CelestialBodyLevelData;
 import io.kalishak.galacticraftlegacy.attachment.level.race.FlagData;
-import io.kalishak.galacticraftlegacy.attachment.level.race.SpaceRaceManager;
-import io.kalishak.galacticraftlegacy.attachment.level.race.SpaceRaceTeam;
-import io.kalishak.galacticraftlegacy.registry.SchematicVariants;
 import io.kalishak.galacticraftlegacy.world.item.component.SchematicContent;
 import net.minecraft.core.Holder;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.EitherHolder;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.attachment.AttachmentType;
+import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
+import org.jetbrains.annotations.ApiStatus;
 
 public final class GalacticraftAttachments {
     private static final DeferredRegister<AttachmentType<?>> REGISTRY = DeferredRegister.create(NeoForgeRegistries.Keys.ATTACHMENT_TYPES, Galacticraft.MODID);
 
+    //Block
+    @ApiStatus.Internal
+    public static final DeferredHolder<AttachmentType<?>, AttachmentType<SyncedEnergyHandler>> SYNC_ENERGY_STORAGE = REGISTRY.register(
+            "energy_storage",
+            () -> AttachmentType.builder(SyncedEnergyHandler::fromBlockEntity)
+                    .sync(SyncedEnergyHandler.STREAM_CODEC)
+                    .build()
+    );
+    @ApiStatus.Internal
+    public static final DeferredHolder<AttachmentType<?>, AttachmentType<SyncedFluidResource>> SYNC_FLUID_STORAGE = REGISTRY.register(
+            "fluid_storage",
+            () -> AttachmentType.builder(SyncedFluidResource::fromBlockEntity)
+                    .sync(SyncedFluidResource.STREAM_CODEC)
+                    .build()
+    );
+
+    public static final DeferredHolder<AttachmentType<?>, AttachmentType<FluidStack>> SYNC_FLUID_STACK = REGISTRY.register(
+            "fluidstack",
+            () -> AttachmentType.builder(() -> FluidStack.EMPTY)
+                    .sync(FluidStack.OPTIONAL_STREAM_CODEC)
+                    .build()
+    );
+
     //Entity
+    public static final DeferredHolder<AttachmentType<?>, AttachmentType<AdvancedMovement>> ADVANCED_MOVEMENT = REGISTRY.register(
+            "advanced_movement",
+            () -> AttachmentType.builder(AdvancedMovement::new)
+                    .serialize(AdvancedMovement.MAP_CODEC)
+                    .sync(AdvancedMovement.STREAM_CODEC)
+                    .build()
+    );
+
     public static final DeferredHolder<AttachmentType<?>, AttachmentType<FlagData>> DATA_FLAG = REGISTRY.register(
             "data_flag",
             () -> AttachmentType.builder(() -> FlagData.DEFAULT)
@@ -36,7 +67,6 @@ public final class GalacticraftAttachments {
                     .sync(SchematicContent.STREAM_CODEC)
                     .build()
     );
-
     public static final DeferredHolder<AttachmentType<?>, AttachmentType<PlayerSpaceData>> PLAYER_SPACE_DATA = REGISTRY.register(
             "player_space_data",
             () -> AttachmentType.builder(PlayerSpaceData::new)
@@ -53,14 +83,6 @@ public final class GalacticraftAttachments {
                     .build()
     );
 
-    //Level
-    public static final DeferredHolder<AttachmentType<?>, AttachmentType<SpaceRaceManager>> SPACE_RACE_MANAGER = REGISTRY.register(
-            "space_race_manager",
-            () -> AttachmentType.builder(SpaceRaceManager::new)
-                    .serialize(SpaceRaceManager.MAP_CODEC)
-                    .sync(SpaceRaceManager.STREAM_CODEC)
-                    .build()
-    );
     public static final DeferredHolder<AttachmentType<?>, AttachmentType<Holder<CelestialBodyLevelData>>> CELESTIAL_BODY = REGISTRY.register(
             "celestial_body_data",
             () -> AttachmentType.builder(CelestialBodyLevelData::fromLevel).build()

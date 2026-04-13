@@ -8,7 +8,7 @@ import io.kalishak.galacticraftlegacy.world.item.GalacticraftItems;
 import io.kalishak.galacticraftlegacy.world.item.crafting.GalacticraftRecipeBookCategories;
 import io.kalishak.galacticraftlegacy.world.item.crafting.display.CircutFabricatorRecipeDisplay;
 import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.input.SimpleResourceInput;
-import io.kalishak.galacticraftlegacy.world.level.block.entity.CircuitFabricatorBlockEntity;
+import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.CircuitFabricatorBlockEntity;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderSet;

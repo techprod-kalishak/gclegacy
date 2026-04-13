@@ -1,8 +1,12 @@
 package io.kalishak.galacticraftlegacy;
 
 import java.util.List;
+import java.util.Objects;
 
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.dimension.BuiltinDimensionTypes;
 import net.neoforged.neoforge.common.ModConfigSpec;
 
@@ -44,5 +48,9 @@ public class CommonConfig {
 
     private static boolean validateResourceKeys(final Object obj) {
         return obj instanceof String key && Identifier.tryParse(key) != null;
+    }
+
+    public static List<ResourceKey<Level>> getDimensions() {
+        return DIMENSIONS_WITH_DISABLED_ROCKETS.get().stream().map(Identifier::tryParse).filter(Objects::nonNull).map(key -> ResourceKey.create(Registries.DIMENSION, key)).toList();
     }
 }

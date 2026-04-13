@@ -10,7 +10,6 @@ import net.neoforged.neoforge.client.gui.GuiLayer;
 
 public abstract class GearLayer implements GuiLayer {
     public GearLayer() {
-
     }
 
     public ItemStack getStackFromSlot(GearEquipmentSlot gearEquipmentSlot) {
@@ -19,7 +18,7 @@ public abstract class GearLayer implements GuiLayer {
         if (player != null) {
             GearInventoryProvider gearInventoryProvider = AttachmentHelper.getGearInventory(player);
 
-            return gearInventoryProvider.getStackBySlot(gearEquipmentSlot);
+            return gearInventoryProvider.getGearEquipment().get(gearEquipmentSlot);
         }
 
         return ItemStack.EMPTY;

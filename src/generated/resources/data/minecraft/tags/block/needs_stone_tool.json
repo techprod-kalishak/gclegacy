@@ -2,6 +2,11 @@
   "values": [
     "galacticraftlegacy:coal_generator",
     "galacticraftlegacy:circuit_fabricator",
-    "galacticraftlegacy:electric_furnace"
+    "galacticraftlegacy:electric_furnace",
+    "galacticraftlegacy:moon_copper_ore",
+    "galacticraftlegacy:moon_cheese_ore",
+    "galacticraftlegacy:tin_ore",
+    "galacticraftlegacy:deepslate_tin_ore",
+    "galacticraftlegacy:moon_tin_ore"
   ]
 }

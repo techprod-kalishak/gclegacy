@@ -5,6 +5,7 @@ import io.kalishak.galacticraftlegacy.world.item.GalacticraftItems;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -17,7 +18,10 @@ public class SensorGlassesOverlay implements GuiLayer {
 
     @Override
     public void render(GuiGraphics guiGraphics, DeltaTracker deltaTracker) {
-        ItemStack sensorGlasses = Minecraft.getInstance().player.getItemBySlot(EquipmentSlot.HEAD);
+        Minecraft mc = Minecraft.getInstance();
+        LocalPlayer player = mc.player;
+
+        ItemStack sensorGlasses = player.getItemBySlot(EquipmentSlot.HEAD);
 
         if (sensorGlasses.is(GalacticraftItems.SENSOR_GLASSES)) {
             this.zoom++;

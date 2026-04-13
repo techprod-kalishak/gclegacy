@@ -1,8 +1,9 @@
 package io.kalishak.galacticraftlegacy.client.gui.screens.inventory;
 
 import io.kalishak.galacticraftlegacy.Galacticraft;
+import io.kalishak.galacticraftlegacy.client.gui.ClientResourceHandlerTextUtils;
 import io.kalishak.galacticraftlegacy.world.inventory.CoalGeneratorMenu;
-import io.kalishak.galacticraftlegacy.world.level.block.entity.CoalGeneratorBlockEntity;
+import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.CoalGeneratorBlockEntity;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.RenderPipelines;
@@ -42,9 +43,7 @@ public class CoalGeneratorScreen extends AbstractContainerScreen<CoalGeneratorMe
 
         boolean warmingUp = this.menu.getHeatLevel() <= 0 || this.menu.getHeatLevel() < CoalGeneratorBlockEntity.MIN_ENERGY_PER_HEAT;
         Component generate = warmingUp ? Component.translatable("container.coal_generator.not_generating") : Component.translatable("container.coal_generator.generating");
-        Component status = warmingUp
-                ? Component.translatable("container.coal_generator.heat_level", Mth.floor(this.menu.getHeatLevel() / CoalGeneratorBlockEntity.MIN_ENERGY_PER_HEAT * 100) + "%")
-                : Component.literal((int) Math.floor(this.menu.getHeatLevel() - CoalGeneratorBlockEntity.MIN_ENERGY_PER_HEAT) + "gJ/t");
+        Component status;
 
         guiGraphics.drawString(
                 this.font,
@@ -56,10 +55,22 @@ public class CoalGeneratorScreen extends AbstractContainerScreen<CoalGeneratorMe
         );
 
         if (warmingUp) {
+            status = Component.translatable("container.coal_generator.heat_level", Mth.floor(this.menu.getHeatLevel() / CoalGeneratorBlockEntity.MIN_ENERGY_PER_HEAT * 100) + "%");
+
             guiGraphics.drawString(
                     this.font,
                     status,
-                    i + 122 - this.font.width(generate) / 2,
+                    i + 122 - this.font.width(status) / 2,
+                    j + 45,
+                    -12566464,
+                    false
+            );
+        } else if (this.menu.getHeatLevel() < CoalGeneratorBlockEntity.MAX_ENERGY_PER_HEAT) {
+            status = ClientResourceHandlerTextUtils.energyComponent((int) Math.floor(this.menu.getHeatLevel() - CoalGeneratorBlockEntity.MIN_ENERGY_PER_HEAT), true);
+            guiGraphics.drawString(
+                    this.font,
+                    status,
+                    i + 122 - this.font.width(status) / 2,
                     j + 45,
                     -12566464,
                     false

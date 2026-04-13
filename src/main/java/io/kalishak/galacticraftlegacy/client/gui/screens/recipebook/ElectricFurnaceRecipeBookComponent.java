@@ -17,10 +17,10 @@ import java.util.List;
 
 public class ElectricFurnaceRecipeBookComponent extends RecipeBookComponent<ElectricFurnaceMenu> {
     private static final WidgetSprites FILTER_SPRITES = new WidgetSprites(
-            Constants.id("recipe_book/arc_furnace_filter_enabled"),
-            Constants.id("recipe_book/arc_furnace_filter_disabled"),
-            Constants.id("recipe_book/arc_furnace_filter_enabled_highlighted"),
-            Constants.id("recipe_book/arc_furnace_filter_disabled_highlighted")
+            Constants.id("recipe_book/electric_furnace_filter_enabled"),
+            Constants.id("recipe_book/electric_furnace_filter_disabled"),
+            Constants.id("recipe_book/electric_furnace_filter_enabled_highlighted"),
+            Constants.id("recipe_book/electric_furnace_filter_disabled_highlighted")
     );
     private static final Component FILTER_NAME = Component.translatable("gui.recipebook.toggleRecipes.heatable");
 
@@ -52,7 +52,7 @@ public class ElectricFurnaceRecipeBookComponent extends RecipeBookComponent<Elec
     protected void fillGhostRecipe(GhostSlots ghostSlots, RecipeDisplay recipeDisplay, ContextMap contextMap) {
         ghostSlots.setResult(this.menu.getSlot(2), contextMap, recipeDisplay.result());
 
-        if (recipeDisplay instanceof  FurnaceRecipeDisplay furnaceRecipeDisplay) {
+        if (recipeDisplay instanceof FurnaceRecipeDisplay furnaceRecipeDisplay) {
             ghostSlots.setInput(this.menu.getSlot(0), contextMap, furnaceRecipeDisplay.ingredient());
 
 //            Slot slot = this.menu.slots.get(1);

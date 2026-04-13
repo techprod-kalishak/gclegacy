@@ -2,18 +2,23 @@ package io.kalishak.galacticraftlegacy.world.item;
 
 import io.kalishak.galacticraftlegacy.data.GalacticraftTags;
 import io.kalishak.galacticraftlegacy.world.item.component.GalacticraftDataComponents;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.GlobalPos;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
+import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
+
+import java.util.function.Consumer;
 
 public class StructureFinderItem extends Item {
     public StructureFinderItem(Properties properties) {
@@ -44,5 +49,10 @@ public class StructureFinderItem extends Item {
         }
 
         return InteractionResult.SUCCESS_SERVER;
+    }
+
+    @Override
+    public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay tooltipDisplay, Consumer<Component> tooltipAdder, TooltipFlag flag) {
+        tooltipAdder.accept(Component.translatable("item.galacticraftlegacy.creative_only").withStyle(ChatFormatting.RED));
     }
 }

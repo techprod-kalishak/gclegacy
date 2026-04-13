@@ -1,10 +1,9 @@
 package io.kalishak.galacticraftlegacy.data;
 
 import io.kalishak.galacticraftlegacy.Constants;
-import io.kalishak.galacticraftlegacy.data.recipes.builder.HeatingRecipeBuilder;
-import io.kalishak.galacticraftlegacy.data.recipes.builder.SingleInputMachineRecipeBuilder;
+import io.kalishak.galacticraftlegacy.client.data.GalacticraftBlockFamilies;
+import io.kalishak.galacticraftlegacy.data.recipes.builder.FabricatingRecipeBuilder;
 import io.kalishak.galacticraftlegacy.world.item.GalacticraftItems;
-import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -12,18 +11,51 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.AbstractCookingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.ItemLike;
 import org.jspecify.annotations.Nullable;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
-import java.util.function.Consumer;
 import java.util.stream.Stream;
 
 public class GalacticraftRecipeProvider extends RecipeProvider {
+    private static final List<ItemLike> ALUMINUM_SMELTABLE = List.of(
+            GalacticraftItems.RAW_ALUMINUM,
+            GalacticraftItems.ALUMINUM_ORE,
+            GalacticraftItems.DEEPSLATE_ALUMINUM_ORE
+    );
+    private static final List<ItemLike> COPPER_SMELTABLE = List.of(
+            GalacticraftItems.MOON_COPPER_ORE
+    );
+    private static final List<ItemLike> DESH_SMELTABLE = List.of(
+            GalacticraftItems.RAW_DESH
+    );
+    private static final List<ItemLike> LEAD_SMELTABLE = List.of(
+            GalacticraftItems.RAW_LEAD
+    );
+    private static final List<ItemLike> SILICON_SMELTABLE = List.of(
+            GalacticraftItems.SILICON_ORE,
+            GalacticraftItems.DEEPSLATE_SILICON_ORE
+    );
+    private static final List<ItemLike> STEEL_SMELTABLE = List.of(
+            GalacticraftItems.RAW_STEEL
+    );
+    private static final List<ItemLike> TIN_SMELTABLE = List.of(
+            GalacticraftItems.TIN_ORE,
+            GalacticraftItems.DEEPSLATE_TIN_ORE,
+            GalacticraftItems.MOON_TIN_ORE,
+            GalacticraftItems.RAW_TIN
+    );
+    private static final List<ItemLike> TITANIUM_SMELTABLE = List.of(
+            GalacticraftItems.RAW_TITANIUM
+    );
+
     GalacticraftRecipeProvider(HolderLookup.Provider registries, RecipeOutput output) {
         super(registries, output);
     }
@@ -54,6 +86,61 @@ public class GalacticraftRecipeProvider extends RecipeProvider {
                 getItemId(GalacticraftItems.STEEL_INGOT) + "_from_steel_nugget",
                 null
         );
+        SimpleCookingRecipeBuilder.smelting(
+                Ingredient.of(GalacticraftItems.STEEL_SWORD,
+                        GalacticraftItems.STEEL_SPEAR,
+                        GalacticraftItems.STEEL_SHOVEL,
+                        GalacticraftItems.STEEL_PICKAXE,
+                        GalacticraftItems.STEEL_AXE,
+                        GalacticraftItems.STEEL_HOE,
+                        GalacticraftItems.STEEL_HELMET,
+                        GalacticraftItems.STEEL_CHESTPLATE,
+                        GalacticraftItems.STEEL_LEGGINGS,
+                        GalacticraftItems.STEEL_BOOTS,
+                        GalacticraftItems.STEEL_HORSE_ARMOR,
+                        GalacticraftItems.STEEL_NAUTILUS_ARMOR
+                ), RecipeCategory.TOOLS, GalacticraftItems.STEEL_NUGGET, 0.1F, 200)
+                .unlockedBy(getHasName(GalacticraftItems.STEEL_SWORD), has(GalacticraftItems.STEEL_SWORD))
+                .unlockedBy(getHasName(GalacticraftItems.STEEL_SHOVEL), has(GalacticraftItems.STEEL_SHOVEL))
+                .unlockedBy(getHasName(GalacticraftItems.STEEL_PICKAXE), has(GalacticraftItems.STEEL_PICKAXE))
+                .unlockedBy(getHasName(GalacticraftItems.STEEL_AXE), has(GalacticraftItems.STEEL_AXE))
+                .unlockedBy(getHasName(GalacticraftItems.STEEL_HOE), has(GalacticraftItems.STEEL_HOE))
+                .unlockedBy(getHasName(GalacticraftItems.STEEL_HELMET), has(GalacticraftItems.STEEL_HELMET))
+                .unlockedBy(getHasName(GalacticraftItems.STEEL_CHESTPLATE), has(GalacticraftItems.STEEL_CHESTPLATE))
+                .unlockedBy(getHasName(GalacticraftItems.STEEL_LEGGINGS), has(GalacticraftItems.STEEL_LEGGINGS))
+                .unlockedBy(getHasName(GalacticraftItems.STEEL_BOOTS), has(GalacticraftItems.STEEL_BOOTS))
+                .unlockedBy(getHasName(GalacticraftItems.STEEL_HORSE_ARMOR), has(GalacticraftItems.STEEL_HORSE_ARMOR))
+                .unlockedBy(getHasName(GalacticraftItems.STEEL_NAUTILUS_ARMOR), has(GalacticraftItems.STEEL_NAUTILUS_ARMOR))
+                .group("steel")
+                .save(this.output, Constants.key(Registries.RECIPE, getSmeltingRecipeName(GalacticraftItems.STEEL_NUGGET)));
+        SimpleCookingRecipeBuilder.blasting(
+                        Ingredient.of(GalacticraftItems.STEEL_SWORD,
+                                GalacticraftItems.STEEL_SPEAR,
+                                GalacticraftItems.STEEL_SHOVEL,
+                                GalacticraftItems.STEEL_PICKAXE,
+                                GalacticraftItems.STEEL_AXE,
+                                GalacticraftItems.STEEL_HOE,
+                                GalacticraftItems.STEEL_HELMET,
+                                GalacticraftItems.STEEL_CHESTPLATE,
+                                GalacticraftItems.STEEL_LEGGINGS,
+                                GalacticraftItems.STEEL_BOOTS,
+                                GalacticraftItems.STEEL_HORSE_ARMOR,
+                                GalacticraftItems.STEEL_NAUTILUS_ARMOR
+                        ), RecipeCategory.TOOLS, GalacticraftItems.STEEL_NUGGET, 0.1F, 100)
+                .unlockedBy(getHasName(GalacticraftItems.STEEL_SWORD), has(GalacticraftItems.STEEL_SWORD))
+                .unlockedBy(getHasName(GalacticraftItems.STEEL_SHOVEL), has(GalacticraftItems.STEEL_SHOVEL))
+                .unlockedBy(getHasName(GalacticraftItems.STEEL_PICKAXE), has(GalacticraftItems.STEEL_PICKAXE))
+                .unlockedBy(getHasName(GalacticraftItems.STEEL_AXE), has(GalacticraftItems.STEEL_AXE))
+                .unlockedBy(getHasName(GalacticraftItems.STEEL_HOE), has(GalacticraftItems.STEEL_HOE))
+                .unlockedBy(getHasName(GalacticraftItems.STEEL_HELMET), has(GalacticraftItems.STEEL_HELMET))
+                .unlockedBy(getHasName(GalacticraftItems.STEEL_CHESTPLATE), has(GalacticraftItems.STEEL_CHESTPLATE))
+                .unlockedBy(getHasName(GalacticraftItems.STEEL_LEGGINGS), has(GalacticraftItems.STEEL_LEGGINGS))
+                .unlockedBy(getHasName(GalacticraftItems.STEEL_BOOTS), has(GalacticraftItems.STEEL_BOOTS))
+                .unlockedBy(getHasName(GalacticraftItems.STEEL_HORSE_ARMOR), has(GalacticraftItems.STEEL_HORSE_ARMOR))
+                .unlockedBy(getHasName(GalacticraftItems.STEEL_NAUTILUS_ARMOR), has(GalacticraftItems.STEEL_NAUTILUS_ARMOR))
+                .group("steel")
+                .save(this.output, Constants.key(Registries.RECIPE, getBlastingRecipeName(GalacticraftItems.STEEL_NUGGET)));
+
         toolSet(GalacticraftTags.Items.INGOTS_DESH,
                 GalacticraftItems.DESH_SWORD,
                 GalacticraftItems.DESH_SPEAR,
@@ -78,6 +165,53 @@ public class GalacticraftRecipeProvider extends RecipeProvider {
                 getItemId(GalacticraftItems.DESH_INGOT) + "_from_desh_nugget",
                 null
         );
+        SimpleCookingRecipeBuilder.smelting(
+                        Ingredient.of(GalacticraftItems.DESH_SWORD,
+                                GalacticraftItems.DESH_SPEAR,
+                                GalacticraftItems.DESH_SHOVEL,
+                                GalacticraftItems.DESH_PICKAXE,
+                                GalacticraftItems.DESH_AXE,
+                                GalacticraftItems.DESH_HOE,
+                                GalacticraftItems.DESH_HELMET,
+                                GalacticraftItems.DESH_CHESTPLATE,
+                                GalacticraftItems.DESH_LEGGINGS,
+                                GalacticraftItems.DESH_BOOTS
+                        ), RecipeCategory.TOOLS, GalacticraftItems.DESH_NUGGET, 0.1F, 200)
+                .unlockedBy(getHasName(GalacticraftItems.DESH_SWORD), has(GalacticraftItems.DESH_SWORD))
+                .unlockedBy(getHasName(GalacticraftItems.DESH_SHOVEL), has(GalacticraftItems.DESH_SHOVEL))
+                .unlockedBy(getHasName(GalacticraftItems.DESH_PICKAXE), has(GalacticraftItems.DESH_PICKAXE))
+                .unlockedBy(getHasName(GalacticraftItems.DESH_AXE), has(GalacticraftItems.DESH_AXE))
+                .unlockedBy(getHasName(GalacticraftItems.DESH_HOE), has(GalacticraftItems.DESH_HOE))
+                .unlockedBy(getHasName(GalacticraftItems.DESH_HELMET), has(GalacticraftItems.DESH_HELMET))
+                .unlockedBy(getHasName(GalacticraftItems.DESH_CHESTPLATE), has(GalacticraftItems.DESH_CHESTPLATE))
+                .unlockedBy(getHasName(GalacticraftItems.DESH_LEGGINGS), has(GalacticraftItems.DESH_LEGGINGS))
+                .unlockedBy(getHasName(GalacticraftItems.DESH_BOOTS), has(GalacticraftItems.DESH_BOOTS))
+                .group("desh")
+                .save(this.output, Constants.key(Registries.RECIPE, getSmeltingRecipeName(GalacticraftItems.DESH_NUGGET)));
+        SimpleCookingRecipeBuilder.blasting(
+                        Ingredient.of(GalacticraftItems.DESH_SWORD,
+                                GalacticraftItems.DESH_SPEAR,
+                                GalacticraftItems.DESH_SHOVEL,
+                                GalacticraftItems.DESH_PICKAXE,
+                                GalacticraftItems.DESH_AXE,
+                                GalacticraftItems.DESH_HOE,
+                                GalacticraftItems.DESH_HELMET,
+                                GalacticraftItems.DESH_CHESTPLATE,
+                                GalacticraftItems.DESH_LEGGINGS,
+                                GalacticraftItems.DESH_BOOTS
+                        ), RecipeCategory.TOOLS, GalacticraftItems.DESH_NUGGET, 0.1F, 100)
+                .unlockedBy(getHasName(GalacticraftItems.DESH_SWORD), has(GalacticraftItems.DESH_SWORD))
+                .unlockedBy(getHasName(GalacticraftItems.DESH_SHOVEL), has(GalacticraftItems.DESH_SHOVEL))
+                .unlockedBy(getHasName(GalacticraftItems.DESH_PICKAXE), has(GalacticraftItems.DESH_PICKAXE))
+                .unlockedBy(getHasName(GalacticraftItems.DESH_AXE), has(GalacticraftItems.DESH_AXE))
+                .unlockedBy(getHasName(GalacticraftItems.DESH_HOE), has(GalacticraftItems.DESH_HOE))
+                .unlockedBy(getHasName(GalacticraftItems.DESH_HELMET), has(GalacticraftItems.DESH_HELMET))
+                .unlockedBy(getHasName(GalacticraftItems.DESH_CHESTPLATE), has(GalacticraftItems.DESH_CHESTPLATE))
+                .unlockedBy(getHasName(GalacticraftItems.DESH_LEGGINGS), has(GalacticraftItems.DESH_LEGGINGS))
+                .unlockedBy(getHasName(GalacticraftItems.DESH_BOOTS), has(GalacticraftItems.DESH_BOOTS))
+                .group("desh")
+                .save(this.output, Constants.key(Registries.RECIPE, getBlastingRecipeName(GalacticraftItems.DESH_NUGGET)));
+
         toolSet(GalacticraftTags.Items.INGOTS_TITANIUM,
                 GalacticraftItems.TITANIUM_SWORD,
                 GalacticraftItems.TITANIUM_SPEAR,
@@ -102,6 +236,78 @@ public class GalacticraftRecipeProvider extends RecipeProvider {
                 getItemId(GalacticraftItems.TITANIUM_INGOT) + "_from_titanium_nugget",
                 null
         );
+        SimpleCookingRecipeBuilder.smelting(
+                        Ingredient.of(GalacticraftItems.TITANIUM_SWORD,
+                                GalacticraftItems.TITANIUM_SPEAR,
+                                GalacticraftItems.TITANIUM_SHOVEL,
+                                GalacticraftItems.TITANIUM_PICKAXE,
+                                GalacticraftItems.TITANIUM_AXE,
+                                GalacticraftItems.TITANIUM_HOE,
+                                GalacticraftItems.TITANIUM_HELMET,
+                                GalacticraftItems.TITANIUM_CHESTPLATE,
+                                GalacticraftItems.TITANIUM_LEGGINGS,
+                                GalacticraftItems.TITANIUM_BOOTS
+                        ), RecipeCategory.TOOLS, GalacticraftItems.TITANIUM_NUGGET, 0.1F, 200)
+                .unlockedBy(getHasName(GalacticraftItems.TITANIUM_SWORD), has(GalacticraftItems.TITANIUM_SWORD))
+                .unlockedBy(getHasName(GalacticraftItems.TITANIUM_SHOVEL), has(GalacticraftItems.TITANIUM_SHOVEL))
+                .unlockedBy(getHasName(GalacticraftItems.TITANIUM_PICKAXE), has(GalacticraftItems.TITANIUM_PICKAXE))
+                .unlockedBy(getHasName(GalacticraftItems.TITANIUM_AXE), has(GalacticraftItems.TITANIUM_AXE))
+                .unlockedBy(getHasName(GalacticraftItems.TITANIUM_HOE), has(GalacticraftItems.TITANIUM_HOE))
+                .unlockedBy(getHasName(GalacticraftItems.TITANIUM_HELMET), has(GalacticraftItems.TITANIUM_HELMET))
+                .unlockedBy(getHasName(GalacticraftItems.TITANIUM_CHESTPLATE), has(GalacticraftItems.TITANIUM_CHESTPLATE))
+                .unlockedBy(getHasName(GalacticraftItems.TITANIUM_LEGGINGS), has(GalacticraftItems.TITANIUM_LEGGINGS))
+                .unlockedBy(getHasName(GalacticraftItems.TITANIUM_BOOTS), has(GalacticraftItems.TITANIUM_BOOTS))
+                .group("steel")
+                .save(this.output, Constants.key(Registries.RECIPE, getSmeltingRecipeName(GalacticraftItems.TITANIUM_NUGGET)));
+        SimpleCookingRecipeBuilder.blasting(
+                        Ingredient.of(GalacticraftItems.TITANIUM_SWORD,
+                                GalacticraftItems.TITANIUM_SPEAR,
+                                GalacticraftItems.TITANIUM_SHOVEL,
+                                GalacticraftItems.TITANIUM_PICKAXE,
+                                GalacticraftItems.TITANIUM_AXE,
+                                GalacticraftItems.TITANIUM_HOE,
+                                GalacticraftItems.TITANIUM_HELMET,
+                                GalacticraftItems.TITANIUM_CHESTPLATE,
+                                GalacticraftItems.TITANIUM_LEGGINGS,
+                                GalacticraftItems.TITANIUM_BOOTS
+                        ), RecipeCategory.TOOLS, GalacticraftItems.TITANIUM_NUGGET, 0.1F, 100)
+                .unlockedBy(getHasName(GalacticraftItems.TITANIUM_SWORD), has(GalacticraftItems.TITANIUM_SWORD))
+                .unlockedBy(getHasName(GalacticraftItems.TITANIUM_SHOVEL), has(GalacticraftItems.TITANIUM_SHOVEL))
+                .unlockedBy(getHasName(GalacticraftItems.TITANIUM_PICKAXE), has(GalacticraftItems.TITANIUM_PICKAXE))
+                .unlockedBy(getHasName(GalacticraftItems.TITANIUM_AXE), has(GalacticraftItems.TITANIUM_AXE))
+                .unlockedBy(getHasName(GalacticraftItems.TITANIUM_HOE), has(GalacticraftItems.TITANIUM_HOE))
+                .unlockedBy(getHasName(GalacticraftItems.TITANIUM_HELMET), has(GalacticraftItems.TITANIUM_HELMET))
+                .unlockedBy(getHasName(GalacticraftItems.TITANIUM_CHESTPLATE), has(GalacticraftItems.TITANIUM_CHESTPLATE))
+                .unlockedBy(getHasName(GalacticraftItems.TITANIUM_LEGGINGS), has(GalacticraftItems.TITANIUM_LEGGINGS))
+                .unlockedBy(getHasName(GalacticraftItems.TITANIUM_BOOTS), has(GalacticraftItems.TITANIUM_BOOTS))
+                .group("steel")
+                .save(this.output, Constants.key(Registries.RECIPE, getBlastingRecipeName(GalacticraftItems.TITANIUM_NUGGET)));
+        oreSmelting(ALUMINUM_SMELTABLE, RecipeCategory.MISC, GalacticraftItems.ALUMINUM_INGOT, 0.1F, 200, "aluminum_ingot");
+        oreBlasting(ALUMINUM_SMELTABLE, RecipeCategory.MISC, GalacticraftItems.ALUMINUM_INGOT, 0.1F, 100, "aluminum_ingot");
+        oreSmelting(DESH_SMELTABLE, RecipeCategory.MISC, GalacticraftItems.DESH_INGOT, 0.1F, 200, "desh_ingot");
+        oreBlasting(DESH_SMELTABLE, RecipeCategory.MISC, GalacticraftItems.DESH_INGOT, 0.1F, 100, "desh_ingot");
+        oreSmelting(LEAD_SMELTABLE, RecipeCategory.MISC, GalacticraftItems.LEAD_INGOT, 0.2F, 200, "lead_ingot");
+        oreBlasting(LEAD_SMELTABLE, RecipeCategory.MISC, GalacticraftItems.LEAD_INGOT, 0.2F, 100, "lead_ingot");
+        SimpleCookingRecipeBuilder.smelting(Ingredient.of(GalacticraftItems.RAW_STEEL), RecipeCategory.MISC, GalacticraftItems.STEEL_INGOT, 0.1F, 200)
+                .unlockedBy(getHasName(GalacticraftItems.RAW_STEEL), has(GalacticraftItems.RAW_STEEL))
+                .save(this.output, Constants.key(Registries.RECIPE, getSmeltingRecipeName(GalacticraftItems.STEEL_INGOT)));
+        SimpleCookingRecipeBuilder.blasting(Ingredient.of(GalacticraftItems.RAW_STEEL), RecipeCategory.MISC, GalacticraftItems.STEEL_INGOT, 0.1F, 100)
+                .unlockedBy(getHasName(GalacticraftItems.RAW_STEEL), has(GalacticraftItems.RAW_STEEL))
+                .save(this.output, Constants.key(Registries.RECIPE, getBlastingRecipeName(GalacticraftItems.STEEL_INGOT)));
+        oreSmelting(SILICON_SMELTABLE, RecipeCategory.MISC, GalacticraftItems.RAW_SILICON, 0.1F, 200, "raw_silicon");
+        oreBlasting(SILICON_SMELTABLE, RecipeCategory.MISC, GalacticraftItems.RAW_SILICON, 0.1F, 100, "raw_silicon");
+        oreSmelting(TIN_SMELTABLE, RecipeCategory.MISC, GalacticraftItems.TIN_INGOT, 0.1F, 200, "tin_ingot");
+        oreBlasting(TIN_SMELTABLE, RecipeCategory.MISC, GalacticraftItems.TIN_INGOT, 0.1F, 100, "tin_ingot");
+        oreSmelting(TITANIUM_SMELTABLE, RecipeCategory.MISC, GalacticraftItems.TITANIUM_INGOT, 0.2F, 200, "titanium_ingot");
+        oreBlasting(TITANIUM_SMELTABLE, RecipeCategory.MISC, GalacticraftItems.TITANIUM_INGOT, 0.2F, 100, "titanium_ingot");
+        SimpleCookingRecipeBuilder.smelting(Ingredient.of(GalacticraftItems.MOON_SAPPHIRE_ORE), RecipeCategory.MISC, GalacticraftItems.SAPPHIRE, 0.1F, 200)
+                .unlockedBy(getHasName(GalacticraftItems.MOON_SAPPHIRE_ORE), has(GalacticraftItems.MOON_SAPPHIRE_ORE))
+                .save(this.output, Constants.key(Registries.RECIPE, getSmeltingRecipeName(GalacticraftItems.SAPPHIRE)));
+        SimpleCookingRecipeBuilder.blasting(Ingredient.of(GalacticraftItems.MOON_SAPPHIRE_ORE), RecipeCategory.MISC, GalacticraftItems.SAPPHIRE, 0.1F, 100)
+                .unlockedBy(getHasName(GalacticraftItems.MOON_SAPPHIRE_ORE), has(GalacticraftItems.MOON_SAPPHIRE_ORE))
+                .save(this.output, Constants.key(Registries.RECIPE, getBlastingRecipeName(GalacticraftItems.SAPPHIRE)));
+        oreSmelting(COPPER_SMELTABLE, RecipeCategory.MISC, Items.COPPER_INGOT, 0.2F, 200, "copper_ingot");
+        oreBlasting(COPPER_SMELTABLE, RecipeCategory.MISC, Items.COPPER_INGOT, 0.2F, 100, "copper_ingot");
 
         parachute(GalacticraftItems.BLACK_PARACHUTE, Items.BLACK_WOOL);
         parachute(GalacticraftItems.BLUE_PARACHUTE, Items.BLUE_WOOL);
@@ -193,18 +399,23 @@ public class GalacticraftRecipeProvider extends RecipeProvider {
                 .unlockedBy(getHasName(GalacticraftItems.THERMAL_CLOTH), has(GalacticraftItems.THERMAL_CLOTH))
                 .save(this.output, Constants.key(Registries.RECIPE, getItemName(GalacticraftItems.THERMAL_PADDING_BOOTS)));
 
-        SingleInputMachineRecipeBuilder.classic(GalacticraftItems.BASIC_WAFER.get(), 1, Ingredient.of(Items.REDSTONE_TORCH))
+        FabricatingRecipeBuilder.classic(GalacticraftItems.BASIC_WAFER.get(), 1, Ingredient.of(Items.REDSTONE_TORCH))
                 .unlockedBy(getHasName(GalacticraftItems.RAW_SILICON), has(GalacticraftTags.Items.RAW_MATERIALS_SILICON))
                 .save(output, Constants.key(Registries.RECIPE, "basic_wafer"));
-        SingleInputMachineRecipeBuilder.classic(GalacticraftItems.ADVANCED_WAFER.get(), 1, Ingredient.of(Items.REPEATER))
+        FabricatingRecipeBuilder.classic(GalacticraftItems.ADVANCED_WAFER.get(), 1, Ingredient.of(Items.REPEATER))
                 .unlockedBy(getHasName(GalacticraftItems.RAW_SILICON), has(GalacticraftTags.Items.RAW_MATERIALS_SILICON))
                 .save(output, Constants.key(Registries.RECIPE, "advanced_wafer"));
-        SingleInputMachineRecipeBuilder.classic(GalacticraftItems.SOLAR_WAFER.get(), 9, Ingredient.of(Items.LAPIS_LAZULI))
+        FabricatingRecipeBuilder.classic(GalacticraftItems.SOLAR_WAFER.get(), 9, Ingredient.of(Items.LAPIS_LAZULI))
                 .unlockedBy(getHasName(GalacticraftItems.RAW_SILICON), has(GalacticraftTags.Items.RAW_MATERIALS_SILICON))
                 .save(output, Constants.key(Registries.RECIPE, "solar_panel"));
-        electricFurnace("stone", RecipeCategory.BUILDING_BLOCKS, Items.STONE, Items.COBBLESTONE);
-        electricFurnace("stone", RecipeCategory.BUILDING_BLOCKS, Items.SMOOTH_STONE, Items.STONE);
+        GalacticraftBlockFamilies.getFamilies().forEach(blockFamily -> generateRecipes(blockFamily, FeatureFlags.DEFAULT_FLAGS));
+    }
 
+    @Override
+    protected <T extends AbstractCookingRecipe> void oreCooking(RecipeSerializer<T> serializer, AbstractCookingRecipe.Factory<T> recipeFactory, List<ItemLike> ingredients, RecipeCategory category, ItemLike result, float experience, int cookingTime, String group, String suffix) {
+        for(ItemLike itemlike : ingredients) {
+            SimpleCookingRecipeBuilder.generic(Ingredient.of(itemlike), category, result, experience, cookingTime, serializer, recipeFactory).group(group).unlockedBy(getHasName(itemlike), this.has(itemlike)).save(this.output, Constants.key(Registries.RECIPE, getItemName(result) + suffix + "_" + getItemName(itemlike)));
+        }
     }
 
     public void toolSet(TagKey<Item> ingredient, ItemLike sword, ItemLike spear, ItemLike shovel, ItemLike pickaxe, ItemLike axe, ItemLike hoe) {
@@ -284,18 +495,6 @@ public class GalacticraftRecipeProvider extends RecipeProvider {
                 .pattern("I I")
                 .unlockedBy(getHasName(GalacticraftItems.STEEL_INGOT), has(ingredient))
                 .save(this.output, Constants.key(Registries.RECIPE, getItemName(boots)));
-    }
-
-    public void electricFurnace(@Nullable String group, RecipeCategory recipeCategory, ItemLike result, ItemLike ingredient) {
-        Consumer<HeatingRecipeBuilder> common = builder -> builder.group(group).unlockedBy(getHasName(ingredient), has(ingredient));
-
-        HeatingRecipeBuilder recipeBuilder = HeatingRecipeBuilder.heating(recipeCategory, result, Ingredient.of(ingredient));
-        common.accept(recipeBuilder);
-        recipeBuilder.save(output, Constants.key(Registries.RECIPE, getHeatingRecipeName(result, ingredient)));
-
-        recipeBuilder = HeatingRecipeBuilder.arcHeating(recipeCategory, result, Ingredient.of(ingredient));
-        common.accept(recipeBuilder);
-        recipeBuilder.save(output, Constants.key(Registries.RECIPE, getArcHeatingRecipeName(result, ingredient)));
     }
 
     private String conversionName(ItemLike result, String conversionName, ItemLike ingredient) {

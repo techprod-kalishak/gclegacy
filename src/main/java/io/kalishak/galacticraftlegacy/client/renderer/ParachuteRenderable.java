@@ -13,11 +13,11 @@ import net.minecraft.client.resources.model.MaterialSet;
 
 public interface ParachuteRenderable<S extends EntityRenderState> {
     Model<S> getParachuteModel();
-    Material getMaterial(S renderState);
+    Material getParachuteMaterial(S renderState);
     MaterialSet materials();
 
     default void renderParachute(PoseStack poseStack, SubmitNodeCollector nodeCollector, int packedLight, S renderState) {
-        Material material = getMaterial(renderState);
+        Material material = getParachuteMaterial(renderState);
         RenderType renderType = material.renderType(RenderTypes::entityCutout);
         TextureAtlasSprite sprite = materials().get(material);
 

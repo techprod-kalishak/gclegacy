@@ -12,7 +12,6 @@ import io.kalishak.galacticraftlegacy.world.item.component.ShieldController;
 import io.kalishak.galacticraftlegacy.world.level.material.fluid.GalacticraftFluids;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
-import net.minecraft.core.Vec3i;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.EntityTypeTags;
@@ -30,7 +29,6 @@ import net.neoforged.neoforge.transfer.ResourceHandler;
 import net.neoforged.neoforge.transfer.access.ItemAccess;
 import net.neoforged.neoforge.transfer.fluid.FluidResource;
 import net.neoforged.neoforge.transfer.item.ItemResource;
-import net.neoforged.neoforge.transfer.item.ItemUtil;
 import net.neoforged.neoforge.transfer.item.LivingEntityEquipmentWrapper;
 import net.neoforged.neoforge.transfer.transaction.Transaction;
 
@@ -51,11 +49,12 @@ public abstract class GearInventoryProvider implements ParachuteFalling {
 
     public void serverGearTick(ServerLevel serverLevel, LivingEntity gearOwner) {
         //Oxygen
-
+        this.gearEquipment.tick(gearOwner);
+        SpaceGearEquipment spaceGearEquipment = getGearEquipment();
         Holder<CelestialBodyLevelData> celestialBodyLevelData = serverLevel.getData(GalacticraftAttachments.CELESTIAL_BODY);
 
         if (!gearOwner.getType().is(EntityTypeTags.UNDEAD)) {
-            if (!mayBreath(gearOwner) && !depleteOxygen(gearOwner, 1)) {
+            if (!mayBreath(gearOwner) && !depleteOxygen()) {
                 gearOwner.hurtServer(serverLevel, serverLevel.damageSources().source(GalacticraftDamageTypes.SUFFOCATION), 2.0F);
             }
 
@@ -70,7 +69,7 @@ public abstract class GearInventoryProvider implements ParachuteFalling {
             if (celestialBodyLevelData.value().atmosphereInfo().isCorrosive()) {
                 boolean isProtected = false;
 
-                ItemStack shieldItem = getStackBySlot(GearEquipmentSlot.SHIELD);
+                ItemStack shieldItem = spaceGearEquipment.get(GearEquipmentSlot.SHIELD);
 
                 if (!shieldItem.isEmpty()) {
                     isProtected = true;
@@ -106,15 +105,11 @@ public abstract class GearInventoryProvider implements ParachuteFalling {
     }
 
     public void clientGearTick(Level level, LivingEntity gearOwner) {
-
+        this.gearEquipment.tick(gearOwner);
     }
 
     public SpaceGearEquipment getGearEquipment() {
         return this.gearEquipment;
-    }
-
-    public ItemStack getStackBySlot(GearEquipmentSlot slot) {
-        return ItemUtil.getStack(getGearEquipment(), slot.getIndex());
     }
 
     @Override
@@ -136,8 +131,8 @@ public abstract class GearInventoryProvider implements ParachuteFalling {
     }
 
     public int getRemainingOxygen() {
-        ItemStack tank = getStackBySlot(GearEquipmentSlot.TANK);
-        ItemStack additionalTank = getStackBySlot(GearEquipmentSlot.ADDITIONAL_TANK);
+        ItemStack tank = getGearEquipment().get(GearEquipmentSlot.TANK);
+        ItemStack additionalTank = getGearEquipment().get(GearEquipmentSlot.ADDITIONAL_TANK);
 
         if (tank.isEmpty() && additionalTank.isEmpty()) {
             return 0;
@@ -161,23 +156,27 @@ public abstract class GearInventoryProvider implements ParachuteFalling {
     }
 
     public boolean hasCompleteOxygenSetup() {
-        ItemStack tank = getStackBySlot(GearEquipmentSlot.TANK);
-        ItemStack additionalTank = getStackBySlot(GearEquipmentSlot.ADDITIONAL_TANK);
-        ItemStack mask = getStackBySlot(GearEquipmentSlot.MASK);
-        ItemStack gear = getStackBySlot(GearEquipmentSlot.GEAR);
+        ItemStack tank = getGearEquipment().get(GearEquipmentSlot.TANK);
+        ItemStack additionalTank = getGearEquipment().get(GearEquipmentSlot.ADDITIONAL_TANK);
+        ItemStack mask = getGearEquipment().get(GearEquipmentSlot.MASK);
+        ItemStack gear = getGearEquipment().get(GearEquipmentSlot.GEAR);
 
-        return !mask.isEmpty() && !gear.isEmpty() && (!tank.isEmpty() || additionalTank.isEmpty());
+        return !mask.isEmpty() && !gear.isEmpty() && (!tank.isEmpty() || !additionalTank.isEmpty());
     }
 
     public boolean mayBreath(LivingEntity livingEntity) {
+        if (livingEntity.getType().is(EntityTypeTags.UNDEAD)) {
+            return true;
+        }
+
         Level level = livingEntity.level();
         Vec3 headPos = livingEntity.getEyePosition();
-        Vec3i blockPos = new Vec3i(
+        BlockPos blockPos = new BlockPos(
                 Mth.floor(headPos.x),
                 Mth.floor(headPos.y),
                 Mth.floor(headPos.z)
         );
-        BlockState state = level.getBlockState(new BlockPos(blockPos));
+        BlockState state = level.getBlockState(blockPos);
 
         if (state.is(GalacticraftTags.Blocks.BREATHABLE_AIR)) {
             return true;
@@ -186,11 +185,9 @@ public abstract class GearInventoryProvider implements ParachuteFalling {
         return hasCompleteOxygenSetup() && getRemainingOxygen() > 0;
     }
 
-    protected boolean depleteOxygen(LivingEntity notifier, int amount) {
-        ItemStack tank = getStackBySlot(GearEquipmentSlot.TANK);
-        ItemStack additionalTank = getStackBySlot(GearEquipmentSlot.ADDITIONAL_TANK);
-        int extracted = 0;
-        GearEquipmentSlot effectiveTank = null;
+    protected boolean depleteOxygen() {
+        ItemStack tank = getGearEquipment().get(GearEquipmentSlot.TANK);
+        ItemStack additionalTank = getGearEquipment().get(GearEquipmentSlot.ADDITIONAL_TANK);
 
         if (tank.isEmpty() && additionalTank.isEmpty()) {
             return false;
@@ -201,10 +198,9 @@ public abstract class GearInventoryProvider implements ParachuteFalling {
                 ResourceHandler<FluidResource> tankHandler = tank.getCapability(Capabilities.Fluid.ITEM, ItemAccess.forHandlerIndex(getGearEquipment(), GearEquipmentSlot.TANK.getIndex()));
 
                 if (tankHandler != null) {
-                    extracted = tankHandler.extract(FluidResource.of(GalacticraftFluids.OXYGEN), amount, tx);
-
-                    if (extracted > 0) {
-                        effectiveTank = GearEquipmentSlot.TANK;
+                    if (tankHandler.extract(FluidResource.of(GalacticraftFluids.OXYGEN), 1, tx) > 0) {
+                        tx.commit();
+                        return true;
                     }
                 }
             }
@@ -213,20 +209,15 @@ public abstract class GearInventoryProvider implements ParachuteFalling {
                 ResourceHandler<FluidResource> additionalTankHandler = additionalTank.getCapability(Capabilities.Fluid.ITEM, ItemAccess.forHandlerIndex(getGearEquipment(), GearEquipmentSlot.ADDITIONAL_TANK.getIndex()));
 
                 if (additionalTankHandler != null) {
-                    extracted = additionalTankHandler.extract(FluidResource.of(GalacticraftFluids.OXYGEN), amount, tx);
-
-                    if (extracted > 0) {
-                        effectiveTank = GearEquipmentSlot.ADDITIONAL_TANK;
+                    if (additionalTankHandler.extract(FluidResource.of(GalacticraftFluids.OXYGEN), 1, tx) > 0) {
+                        tx.commit();
+                        return true;
                     }
                 }
             }
         }
 
-//        if (extracted > 0 && notifier instanceof ServerPlayer serverPlayer) {
-//            PacketDistributor.sendToPlayer(serverPlayer, new UpdateStoredOxygenPayload(serverPlayer.getId(), getStackBySlot(effectiveTank), effectiveTank));
-//        }
-
-        return extracted > 0;
+        return false;
     }
 
     public void onGearEquipped(LivingEntity entity, GearEquipmentSlot slot, ItemStack newStack, ItemStack oldStack) {

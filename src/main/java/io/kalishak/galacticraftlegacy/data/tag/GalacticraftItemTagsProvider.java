@@ -30,6 +30,10 @@ public class GalacticraftItemTagsProvider extends ItemTagsProvider {
                 .add(GalacticraftItems.DESH_BOOTS.get())
                 .add(GalacticraftItems.STEEL_BOOTS.get())
                 .add(GalacticraftItems.TITANIUM_BOOTS.get());
+        tag(GalacticraftTags.Items.GEMS_SAPPHIRE)
+                .add(GalacticraftItems.SAPPHIRE.get());
+        tag(Tags.Items.GEMS)
+                .addTag(GalacticraftTags.Items.GEMS_SAPPHIRE);
         tag(ItemTags.HEAD_ARMOR)
                 .add(GalacticraftItems.DESH_HELMET.get())
                 .add(GalacticraftItems.STEEL_HELMET.get())
@@ -54,6 +58,16 @@ public class GalacticraftItemTagsProvider extends ItemTagsProvider {
                 .add(GalacticraftItems.DESH_SPEAR.get())
                 .add(GalacticraftItems.STEEL_SPEAR.get())
                 .add(GalacticraftItems.TITANIUM_SPEAR.get());
+        tag(GalacticraftTags.Items.STORAGE_BLOCKS_ALUMINUM)
+                .add(GalacticraftItems.ALUMINUM_BLOCK.get());
+        tag(GalacticraftTags.Items.STORAGE_BLOCKS_RAW_ALUMINUM)
+                .add(GalacticraftItems.RAW_ALUMINUM_BLOCK.get());
+        tag(GalacticraftTags.Items.STORAGE_BLOCKS_TIN)
+                .add(GalacticraftItems.TIN_BLOCK.get());
+        tag(GalacticraftTags.Items.STORAGE_BLOCKS_RAW_TIN)
+                .add(GalacticraftItems.RAW_TIN_BLOCK.get());
+        tag(GalacticraftTags.Items.STORAGE_BLOCKS_RAW_SILICON)
+                .add(GalacticraftItems.RAW_SILICON_BLOCK.get());
         tag(ItemTags.SWORDS)
                 .add(GalacticraftItems.DESH_SWORD.get())
                 .add(GalacticraftItems.STEEL_SWORD.get())
@@ -63,9 +77,11 @@ public class GalacticraftItemTagsProvider extends ItemTagsProvider {
                 .add(GalacticraftItems.OIL_BUCKET.get())
                 .add(GalacticraftItems.FUEL_BUCKET.get());
         tag(Tags.Items.INGOTS)
+                .addTag(GalacticraftTags.Items.INGOTS_ALUMINUM)
                 .addTag(GalacticraftTags.Items.INGOTS_DESH)
                 .addTag(GalacticraftTags.Items.INGOTS_LEAD)
                 .addTag(GalacticraftTags.Items.INGOTS_STEEL)
+                .addTag(GalacticraftTags.Items.INGOTS_TIN)
                 .addTag(GalacticraftTags.Items.INGOTS_TITANIUM);
         tag(Tags.Items.NUGGETS)
                 .addTag(GalacticraftTags.Items.NUGGETS_DESH)
@@ -73,21 +89,27 @@ public class GalacticraftItemTagsProvider extends ItemTagsProvider {
                 .addTag(GalacticraftTags.Items.NUGGETS_STEEL)
                 .addTag(GalacticraftTags.Items.NUGGETS_TITANIUM);
         tag(Tags.Items.RAW_MATERIALS)
-                .addOptionalTag(GalacticraftTags.Items.RAW_MATERIALS_CHEESE)
+                .addTag(GalacticraftTags.Items.RAW_MATERIALS_CHEESE)
+                .addTag(GalacticraftTags.Items.RAW_MATERIALS_ALUMINUM)
                 .addTag(GalacticraftTags.Items.RAW_MATERIALS_DESH)
                 .addTag(GalacticraftTags.Items.RAW_MATERIALS_LEAD)
                 .addTag(GalacticraftTags.Items.RAW_MATERIALS_SILICON)
                 .addTag(GalacticraftTags.Items.RAW_MATERIALS_STEEL)
+                .addTag(GalacticraftTags.Items.RAW_MATERIALS_TIN)
                 .addTag(GalacticraftTags.Items.RAW_MATERIALS_TITANIUM);
         tag(Tags.Items.TOOLS)
                 .addTag(GalacticraftTags.Items.WRENCH);
 
+        tag(GalacticraftTags.Items.INGOTS_ALUMINUM)
+                .add(GalacticraftItems.ALUMINUM_INGOT.get());
         tag(GalacticraftTags.Items.INGOTS_DESH)
                 .add(GalacticraftItems.DESH_INGOT.get());
         tag(GalacticraftTags.Items.INGOTS_LEAD)
                 .add(GalacticraftItems.LEAD_INGOT.get());
         tag(GalacticraftTags.Items.INGOTS_STEEL)
                 .add(GalacticraftItems.STEEL_INGOT.get());
+        tag(GalacticraftTags.Items.INGOTS_TIN)
+                .add(GalacticraftItems.TIN_INGOT.get());
         tag(GalacticraftTags.Items.INGOTS_TITANIUM)
                 .add(GalacticraftItems.TITANIUM_INGOT.get());
         tag(GalacticraftTags.Items.NUGGETS_DESH)
@@ -114,6 +136,32 @@ public class GalacticraftItemTagsProvider extends ItemTagsProvider {
                 .add(GalacticraftItems.RED_PARACHUTE.get())
                 .add(GalacticraftItems.WHITE_PARACHUTE.get())
                 .add(GalacticraftItems.YELLOW_PARACHUTE.get());
+        tag(GalacticraftTags.Items.ORES_ALUMINUM)
+                .add(GalacticraftItems.ALUMINUM_ORE.get())
+                .add(GalacticraftItems.DEEPSLATE_ALUMINUM_ORE.get());
+        tag(GalacticraftTags.Items.ORES_CHEESE)
+                .add(GalacticraftItems.MOON_CHEESE_ORE.get());
+        tag(GalacticraftTags.Items.ORES_SAPPHIRE)
+                .add(GalacticraftItems.MOON_SAPPHIRE_ORE.get());
+        tag(GalacticraftTags.Items.ORES_SILICON)
+                .add(GalacticraftItems.SILICON_ORE.get())
+                .add(GalacticraftItems.DEEPSLATE_SILICON_ORE.get());
+        tag(GalacticraftTags.Items.ORES_TIN)
+                .add(GalacticraftItems.MOON_TIN_ORE.get());
+        tag(Tags.Items.ORES)
+                .addTag(GalacticraftTags.Items.ORES_ALUMINUM);
+        tag(Tags.Items.ORES)
+                .addTag(GalacticraftTags.Items.ORES_CHEESE);
+        tag(Tags.Items.ORES)
+                .addTag(GalacticraftTags.Items.ORES_SAPPHIRE);
+        tag(Tags.Items.ORES)
+                .addTag(GalacticraftTags.Items.ORES_SILICON);
+        tag(Tags.Items.ORES)
+                .addTag(GalacticraftTags.Items.ORES_TIN);
+        tag(Tags.Items.ORES_COPPER)
+                .add(GalacticraftItems.MOON_COPPER_ORE.get());
+        tag(GalacticraftTags.Items.RAW_MATERIALS_ALUMINUM)
+                .add(GalacticraftItems.RAW_ALUMINUM.get());
         tag(GalacticraftTags.Items.RAW_MATERIALS_CHEESE)
                 .add(GalacticraftItems.CHEESE_CHUNK.get());
         tag(GalacticraftTags.Items.RAW_MATERIALS_DESH)
@@ -124,6 +172,8 @@ public class GalacticraftItemTagsProvider extends ItemTagsProvider {
                 .add(GalacticraftItems.RAW_SILICON.get());
         tag(GalacticraftTags.Items.RAW_MATERIALS_STEEL)
                 .add(GalacticraftItems.RAW_STEEL.get());
+        tag(GalacticraftTags.Items.RAW_MATERIALS_TIN)
+                .add(GalacticraftItems.RAW_TIN.get());
         tag(GalacticraftTags.Items.RAW_MATERIALS_TITANIUM)
                 .add(GalacticraftItems.RAW_TITANIUM.get());
         tag(GalacticraftTags.Items.REPAIRS_DESH_ARMOR)
@@ -138,6 +188,20 @@ public class GalacticraftItemTagsProvider extends ItemTagsProvider {
                 .addTag(GalacticraftTags.Items.INGOTS_STEEL);
         tag(GalacticraftTags.Items.REPAIRS_TITANIUM_TOOL)
                 .addTag(GalacticraftTags.Items.INGOTS_TITANIUM);
+
+        tag(ItemTags.SLABS)
+                .add(GalacticraftItems.MOON_BRICK_SLAB.get());
+        tag(ItemTags.STAIRS)
+                .add(GalacticraftItems.MOON_BRICK_STAIRS.get());
+        tag(Tags.Items.STORAGE_BLOCKS)
+                .addTag(GalacticraftTags.Items.STORAGE_BLOCKS_ALUMINUM)
+                .addTag(GalacticraftTags.Items.STORAGE_BLOCKS_RAW_ALUMINUM)
+                .addTag(GalacticraftTags.Items.STORAGE_BLOCKS_TIN)
+                .addTag(GalacticraftTags.Items.STORAGE_BLOCKS_RAW_TIN)
+                .addTag(GalacticraftTags.Items.STORAGE_BLOCKS_RAW_SILICON);
+        tag(ItemTags.WALLS)
+                .add(GalacticraftItems.MOON_BRICK_WALL.get());
+
         tag(GalacticraftTags.Items.WRENCH)
                 .add(GalacticraftItems.WRENCH.get());
     }

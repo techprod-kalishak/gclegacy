@@ -10,15 +10,6 @@
       }
     },
     {
-      "enum": "net/minecraft/world/inventory/RecipeBookType",
-      "name": "GALACTICRAFTLEGACY_HEATING",
-      "constructor": "()V",
-      "parameters": {
-        "class": "io/kalishak/galacticraftlegacy/EnumExtensions",
-        "field": "RECIPE_BOOK_TYPE_HEATING"
-      }
-    },
-    {
       "enum": "net/minecraft/world/damagesource/DamageScaling",
       "name": "GALACTICRAFTLEGACY_BY_CELESTIAL_BODY",
       "constructor": "(Ljava/lang/String;Lnet/neoforged/neoforge/common/damagesource/IScalingFunction;)V",

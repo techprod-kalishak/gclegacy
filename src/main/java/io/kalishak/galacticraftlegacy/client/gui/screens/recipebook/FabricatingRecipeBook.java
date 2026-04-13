@@ -3,7 +3,7 @@ package io.kalishak.galacticraftlegacy.client.gui.screens.recipebook;
 import io.kalishak.galacticraftlegacy.Constants;
 import io.kalishak.galacticraftlegacy.world.inventory.CircuitFabricatorMenu;
 import io.kalishak.galacticraftlegacy.world.item.crafting.display.CircutFabricatorRecipeDisplay;
-import io.kalishak.galacticraftlegacy.world.level.block.entity.CircuitFabricatorBlockEntity;
+import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.CircuitFabricatorBlockEntity;
 import net.minecraft.client.gui.components.WidgetSprites;
 import net.minecraft.client.gui.screens.recipebook.GhostSlots;
 import net.minecraft.client.gui.screens.recipebook.RecipeBookComponent;
@@ -18,10 +18,10 @@ import java.util.List;
 
 public class FabricatingRecipeBook extends RecipeBookComponent<CircuitFabricatorMenu> {
     private static final WidgetSprites FILTER_SPRITES = new WidgetSprites(
-            Constants.id("recipe_book/circut_fabricator_filter_enabled"),
-            Constants.id("recipe_book/circut_fabricator_filter_disabled"),
-            Constants.id("recipe_book/circut_fabricator_filter_enabled_highlighted"),
-            Constants.id("recipe_book/circut_fabricator_filter_disabled_highlighted")
+            Constants.id("recipe_book/circuit_fabricator_filter_enabled"),
+            Constants.id("recipe_book/circuit_fabricator_filter_disabled"),
+            Constants.id("recipe_book/circuit_fabricator_filter_enabled_highlighted"),
+            Constants.id("recipe_book/circuit_fabricator_filter_disabled_highlighted")
     );
 
     public FabricatingRecipeBook(CircuitFabricatorMenu menu, List<TabInfo> tabInfos) {

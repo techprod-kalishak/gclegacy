@@ -2,15 +2,15 @@ package io.kalishak.galacticraftlegacy.client.renderer;
 
 import com.google.common.collect.ImmutableList;
 import io.kalishak.galacticraftlegacy.Constants;
+import io.kalishak.galacticraftlegacy.world.item.FeatureTier;
 import net.minecraft.client.renderer.MaterialMapper;
 import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.resources.model.Material;
 import net.minecraft.resources.Identifier;
+import net.minecraft.util.Util;
 import net.minecraft.world.item.DyeColor;
 
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 public class GalacticraftSheets {
     public static final Identifier PARACHUTE_SHEET = Constants.id("textures/atlas/parachutes.png");
@@ -21,6 +21,7 @@ public class GalacticraftSheets {
             .sorted(Comparator.comparingInt(DyeColor::getId))
             .map(GalacticraftSheets::createParachuteMaterial)
             .collect(ImmutableList.toImmutableList());
+    public static final Map<FeatureTier, Material> DUNGEON_CHESTS = Util.makeEnumMap(FeatureTier.class, featureTier -> Sheets.CHEST_MAPPER.apply(Constants.id(featureTier.getCelestialBodyName() + "_dungeon_chest")));
 
     public static Material getParachuteMaterial(DyeColor color) {
         return PARACHUTE_TEXTURE_LOCATION.get(color.getId());
@@ -28,5 +29,9 @@ public class GalacticraftSheets {
 
     public static Material createParachuteMaterial(DyeColor color) {
         return PARACHUTE_MAPPER.apply(Constants.id( color.getName()));
+    }
+
+    public static Material getDungeonChestMaterial(FeatureTier featureTier) {
+        return DUNGEON_CHESTS.get(featureTier);
     }
 }

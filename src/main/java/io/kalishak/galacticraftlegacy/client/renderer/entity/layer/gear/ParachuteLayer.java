@@ -47,7 +47,7 @@ public class ParachuteLayer<S extends LivingEntityRenderState, M extends EntityM
     }
 
     @Override
-    public Material getMaterial(S renderState) {
+    public Material getParachuteMaterial(S renderState) {
         ResourceKey<EquipmentAsset> equipmentAsset = getDataFromContext(renderState, GearRenderState.PARACHUTE, GearEquipmentAssets.PARACHUTES.get(DyeColor.RED));
         return new Material(GalacticraftSheets.PARACHUTE_SHEET, equipmentAsset.identifier());
     }

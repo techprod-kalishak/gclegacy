@@ -8,6 +8,7 @@
     "is_corrosive": false,
     "temperature": 462.0
   },
+  "celestial_object_reference": "galacticraftlegacy:venus",
   "gravity_scale": 0.904,
   "temperature_modifier": 1.0,
   "transition": {

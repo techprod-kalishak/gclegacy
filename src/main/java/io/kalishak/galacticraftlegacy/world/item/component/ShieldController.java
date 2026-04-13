@@ -1,6 +1,8 @@
 package io.kalishak.galacticraftlegacy.world.item.component;
 
 import com.mojang.serialization.Codec;
+import io.kalishak.galacticraftlegacy.attachment.AttachmentHelper;
+import io.kalishak.galacticraftlegacy.world.entity.GearEquipmentSlot;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.core.component.DataComponentGetter;
 import net.minecraft.core.component.DataComponents;
@@ -41,7 +43,8 @@ public class ShieldController implements TooltipProvider {
     public void depleteByValue(ItemStack controller, LivingEntity owner, Level level, int value) {
         if (this.ticksBeforeFatalDamage - value <= 0) {
             level.playLocalSound(owner, SoundEvents.ITEM_BREAK.value(), SoundSource.PLAYERS, 1.0F, 1.0F);
-            controller.set(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, false);
+            controller.shrink(1);
+            AttachmentHelper.getGearInventory(owner).getGearEquipment().set(GearEquipmentSlot.SHIELD, ItemStack.EMPTY);
         } else {
             this.ticksBeforeFatalDamage -= value;
         }

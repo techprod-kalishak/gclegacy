@@ -2,25 +2,35 @@ package io.kalishak.galacticraftlegacy.transfer;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.NonNullList;
 import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.capabilities.BlockCapability;
 import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.common.Tags;
+import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.transfer.EmptyResourceHandler;
 import net.neoforged.neoforge.transfer.ResourceHandler;
 import net.neoforged.neoforge.transfer.ResourceHandlerUtil;
 import net.neoforged.neoforge.transfer.VoidingResourceHandler;
+import net.neoforged.neoforge.transfer.access.ItemAccess;
 import net.neoforged.neoforge.transfer.energy.EmptyEnergyHandler;
 import net.neoforged.neoforge.transfer.energy.EnergyHandler;
 import net.neoforged.neoforge.transfer.energy.VoidingEnergyHandler;
+import net.neoforged.neoforge.transfer.fluid.FluidResource;
 import net.neoforged.neoforge.transfer.item.ItemResource;
+import net.neoforged.neoforge.transfer.resource.DataComponentHolderResource;
 import net.neoforged.neoforge.transfer.resource.Resource;
 import net.neoforged.neoforge.transfer.transaction.Transaction;
 import org.jspecify.annotations.Nullable;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.*;
 
 public interface ResourcefulHelper {
@@ -146,5 +156,59 @@ public interface ResourcefulHelper {
         }
 
         return 0;
+    }
+
+    static ItemResource fillTank(ResourceHandler<FluidResource> tank, Predicate<FluidResource> extractedFluidPredicate, ItemStack emptyTank, @Nullable Transaction tx) {
+        ResourceHandler<FluidResource> itemTank = emptyTank.getCapability(Capabilities.Fluid.ITEM, ItemAccess.forStack(emptyTank));
+
+        if (itemTank != null) {
+            boolean isBucket = emptyTank.is(Tags.Items.BUCKETS_EMPTY);
+
+            try (Transaction childTx = Transaction.open(tx)) {
+                FluidResource toExtract = ResourceHandlerUtil.findExtractableResource(tank, extractedFluidPredicate, childTx);
+                int maxAmount = isBucket ? FluidType.BUCKET_VOLUME : tank.getAmountAsInt(0);
+
+                if (toExtract != null) {
+                    int extracted = tank.extract(toExtract, maxAmount, childTx);
+
+                    if (isBucket && extracted == FluidType.BUCKET_VOLUME) {
+                        childTx.commit();
+                        return ItemResource.of(toExtract.getFluid().getBucket());
+                    } else if (!isBucket) {
+                        int filled = itemTank.insert(toExtract, extracted, childTx);
+
+                        if (filled == extracted) {
+                            childTx.commit();
+                        }
+                    }
+                }
+            }
+        }
+
+        return ItemResource.of(emptyTank);
+    }
+
+    static <R extends Resource, S> boolean areResourcesEqual(R resource, R otherResource, int resourceCount, int otherResourceCount, BiFunction<R, Integer, S> stacker, BiPredicate<S, S> stackComparator) {
+        if (resource.isEmpty() && otherResource.isEmpty()) {
+            return true;
+        } else if (resource.isEmpty() || otherResource.isEmpty()) {
+            return false;
+        }
+
+        return stackComparator.test(stacker.apply(resource, resourceCount), stacker.apply(otherResource, otherResourceCount));
+    }
+
+    static <R extends Resource, S> boolean areResourcesEqual(R resource, R otherResource, Function<R, S> stacker, BiPredicate<S, S> stackComparator) {
+        return areResourcesEqual(resource, otherResource, 1, 1, (r, i) -> stacker.apply(r), stackComparator);
+    }
+
+    static <R extends Resource, S> List<S> asList(ResourceHandler<R> resourceHandler, BiFunction<ResourceHandler<R>, Integer, S> stacker) {
+        List<S> resources = new ArrayList<>(resourceHandler.size());
+
+        for (int i = 0; i < resourceHandler.size(); i++) {
+            resources.set(i, stacker.apply(resourceHandler, i));
+        }
+
+        return resources;
     }
 }

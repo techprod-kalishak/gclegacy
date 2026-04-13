@@ -22,8 +22,7 @@ public enum GearEquipmentSlot implements SerializableEnum {
     ADDITIONAL_TANK(EquipmentSlot.CHEST, 7, "additional_tank"),
     PARACHUTE(EquipmentSlot.CHEST, 8, "parachute"),
     TELEMETRY(EquipmentSlot.HEAD, 9, "telemetry"),
-    SHIELD(EquipmentSlot.BODY, 10, "shield"),
-    BODY(EquipmentSlot.BODY, 11, "body");
+    SHIELD(EquipmentSlot.BODY, 10, "shield");
 
     public static final EnumCodec<GearEquipmentSlot> CODEC = StringRepresentable.fromEnum(GearEquipmentSlot::values);
     public static final StreamCodec<ByteBuf, GearEquipmentSlot> STREAM_CODEC = SerializableEnum.streamCodec(GearEquipmentSlot.class);

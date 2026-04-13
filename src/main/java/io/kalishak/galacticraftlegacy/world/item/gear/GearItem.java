@@ -74,6 +74,6 @@ public  class GearItem extends Item {
     protected boolean isEquipped(ItemStack stack, GearInventoryProvider gearEquipment) {
         GearEquippable equippable = stack.get(GalacticraftDataComponents.GEAR_EQUIPPABLE);
 
-        return equippable != null && !gearEquipment.getStackBySlot(equippable.gearSlot()).isEmpty();
+        return equippable != null && !gearEquipment.getGearEquipment().get(equippable.gearSlot()).isEmpty();
     }
 }

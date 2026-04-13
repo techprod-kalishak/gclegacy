@@ -5,7 +5,7 @@ import net.minecraft.world.level.levelgen.SurfaceRules;
 
 public class GalacticraftSurfaceRuleData {
     public static SurfaceRules.RuleSource moon() {
-        return SurfaceRules.state(GalacticraftBlocks.MOON_ROCK.get().defaultBlockState());
+        return SurfaceRules.state(GalacticraftBlocks.MOON_TURF.get().defaultBlockState());
     }
 
     public static SurfaceRules.RuleSource empty() {

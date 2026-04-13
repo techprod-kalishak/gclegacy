@@ -15,6 +15,8 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 public class Constants {
+    public static final double RTD = 180.0D / Math.PI;
+
     public static Identifier id(String assetName) {
         return Identifier.fromNamespaceAndPath(Galacticraft.MODID, assetName);
     }
@@ -45,12 +47,12 @@ public class Constants {
     }
 
     public static void energy(int stored, int capacity, Supplier<EnergyUnit> unitSupplier, Consumer<Component> tooltipAdder) {
-        int stored0 = unitSupplier.get().calculate(stored);
-        int capacity0 = unitSupplier.get().calculate(stored);
+        int scaledStored = unitSupplier.get().calculate(stored);
+        int scaledCapacity = unitSupplier.get().calculate(stored);
 
         tooltipAdder.accept(
                 Component.translatable("item.galacticraftlegacy.battery.tooltip").withStyle(ChatFormatting.GRAY)
-                        .append(Component.literal(stored0 + "/" + capacity0 + " " + unitSupplier.get().getUnit())
+                        .append(Component.literal(" " + scaledStored + "/" + scaledCapacity + " " + unitSupplier.get().getUnit())
                                 .withStyle(Style.EMPTY.withColor(ItemAccessEnergyUtils.colorFromStorage(stored, capacity))))
         );
     }

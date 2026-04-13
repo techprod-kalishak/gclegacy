@@ -9,7 +9,7 @@ import io.kalishak.galacticraftlegacy.world.inventory.slot.MutableHandlerSlot;
 import io.kalishak.galacticraftlegacy.world.item.component.ItemAccessEnergyUtils;
 import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.CircuitRecipe;
 import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.input.SimpleResourceInput;
-import io.kalishak.galacticraftlegacy.world.level.block.entity.CircuitFabricatorBlockEntity;
+import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.CircuitFabricatorBlockEntity;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityType;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.recipebook.ServerPlaceRecipe;

@@ -7,13 +7,22 @@ import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.levelgen.*;
+import net.minecraft.world.level.levelgen.synth.BlendedNoise;
 import net.minecraft.world.level.levelgen.synth.NormalNoise;
 
 public class GalacticraftNoiseRouterData {
+    public static final ResourceKey<DensityFunction> BASE_3D_NOISE_MOON = Constants.key(Registries.DENSITY_FUNCTION, "moon/base_3d_noise");
+    public static final ResourceKey<DensityFunction> BASE_3D_NOISE_MARS = Constants.key(Registries.DENSITY_FUNCTION, "mars/base_3d_noise");
+    public static final ResourceKey<DensityFunction> BASE_3D_NOISE_VENUS = Constants.key(Registries.DENSITY_FUNCTION, "venus/base_3d_noise");
+    public static final ResourceKey<DensityFunction> BASE_3D_NOISE_ASTEROIDS = Constants.key(Registries.DENSITY_FUNCTION, "asteroids/base_3d_noise");
+    public static final ResourceKey<DensityFunction> BASE_3D_NOISE_SPACE_STATION = Constants.key(Registries.DENSITY_FUNCTION, "space_station/base_3d_noise");
     public static final ResourceKey<DensityFunction> MOON_OCEANS = Constants.key(Registries.DENSITY_FUNCTION, "moon_oceans");
 
     public static void bootstrap(BootstrapContext<DensityFunction> cxt) {
+        HolderGetter<NormalNoise.NoiseParameters> noiseParameters = cxt.lookup(Registries.NOISE);
+        HolderGetter<DensityFunction> densityFunction = cxt.lookup(Registries.DENSITY_FUNCTION);
 
+        cxt.register(BASE_3D_NOISE_MOON, BlendedNoise.createUnseeded(0.3F, 0.215F, 40.0F, 56.0F, 4.0F));
     }
 
     public static NoiseRouter template(HolderGetter<DensityFunction> densityFunctions, HolderGetter<NormalNoise.NoiseParameters> noiseParameters, DensityFunction postProcessor) {
@@ -35,9 +44,9 @@ public class GalacticraftNoiseRouterData {
                 DensityFunctions.zero(),
                 DensityFunctions.zero(),
                 densityfunction4,
-                DensityFunctions.zero(),
-                DensityFunctions.zero(),
-                DensityFunctions.zero()
+                DensityFunctions.constant(0.1D),
+                DensityFunctions.constant(1.0D),
+                DensityFunctions.constant(0.3D)
         );
     }
 

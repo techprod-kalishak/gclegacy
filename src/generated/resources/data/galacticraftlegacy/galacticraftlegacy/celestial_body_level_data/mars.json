@@ -9,6 +9,7 @@
     "is_corrosive": false,
     "temperature": -60.0
   },
+  "celestial_object_reference": "galacticraftlegacy:mars",
   "gravity_scale": 0.38,
   "temperature_modifier": 0.38,
   "transition": {

@@ -4,14 +4,13 @@ import io.kalishak.galacticraftlegacy.Constants;
 import io.kalishak.galacticraftlegacy.attachment.AttachmentHelper;
 import io.kalishak.galacticraftlegacy.attachment.GalacticraftAttachments;
 import io.kalishak.galacticraftlegacy.attachment.entity.GearInventoryProvider;
+import io.kalishak.galacticraftlegacy.transfer.entity.SpaceGearEquipment;
 import io.kalishak.galacticraftlegacy.world.entity.GearEquipmentSlot;
 import io.kalishak.galacticraftlegacy.world.item.component.GearEquippable;
 import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
-import net.minecraft.client.renderer.entity.state.WolfRenderState;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.context.ContextKey;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.animal.wolf.Wolf;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.equipment.EquipmentAsset;
 
@@ -27,38 +26,33 @@ public interface GearRenderState {
     ContextKey<ResourceKey<EquipmentAsset>> PARACHUTE = new ContextKey<>(Constants.id("parachute"));
     ContextKey<Boolean> IS_PARACHUTE_VISIBLE = new ContextKey<>(Constants.id("is_parachute_visible"));
     ContextKey<Boolean> HAS_TELEMETRY = new ContextKey<>(Constants.id("has_telemetry"));
-    ContextKey<ResourceKey<EquipmentAsset>> SHIELD = new ContextKey<>(Constants.id("shield"));
-    ContextKey<ItemStack> GEAR_BODY_ITEM = new ContextKey<>(Constants.id("gear_body_item"));
+    ContextKey<Boolean> HAS_SHIELD = new ContextKey<>(Constants.id("has_shield"));
 
     ContextKey<Float> TEMPERATURE_MODIFIER = new ContextKey<>(Constants.id("temperature_modifier"));
 
     static <E extends LivingEntity, S extends LivingEntityRenderState> void appendCommonRenderStates(E entity, S reusedState) {
         GearInventoryProvider gear = AttachmentHelper.getGearInventory(entity);
+        SpaceGearEquipment spaceGearEquipment = gear.getGearEquipment();
 
-        reusedState.setRenderData(GearRenderState.HAS_OXYGEN_MASK, !gear.getStackBySlot(GearEquipmentSlot.MASK).isEmpty());
-        reusedState.setRenderData(GearRenderState.HAS_OXYGEN_GEAR, !gear.getStackBySlot(GearEquipmentSlot.GEAR).isEmpty());
-        GearEquippable.extractAssetId(gear.getStackBySlot(GearEquipmentSlot.TANK)).ifPresent(gearEquipped -> reusedState.setRenderData(GearRenderState.LEFT_TANK, gearEquipped));
-        GearEquippable.extractAssetId(gear.getStackBySlot(GearEquipmentSlot.ADDITIONAL_TANK)).ifPresent(gearEquipped -> reusedState.setRenderData(GearRenderState.RIGHT_TANK, gearEquipped));
-    }
-
-    static void appendWolfRenderStates(Wolf wolf, WolfRenderState reusedState) {
-        appendCommonRenderStates(wolf, reusedState);
-        GearInventoryProvider gear = AttachmentHelper.getGearInventory(wolf);
-        reusedState.setRenderData(GearRenderState.GEAR_BODY_ITEM, gear.getStackBySlot(GearEquipmentSlot.BODY));
+        reusedState.setRenderData(GearRenderState.HAS_OXYGEN_MASK, !spaceGearEquipment.get(GearEquipmentSlot.MASK).isEmpty());
+        reusedState.setRenderData(GearRenderState.HAS_OXYGEN_GEAR, !spaceGearEquipment.get(GearEquipmentSlot.GEAR).isEmpty());
+        GearEquippable.extractAssetId(spaceGearEquipment.get(GearEquipmentSlot.TANK)).ifPresent(gearEquipped -> reusedState.setRenderData(GearRenderState.LEFT_TANK, gearEquipped));
+        GearEquippable.extractAssetId(spaceGearEquipment.get(GearEquipmentSlot.ADDITIONAL_TANK)).ifPresent(gearEquipped -> reusedState.setRenderData(GearRenderState.RIGHT_TANK, gearEquipped));
     }
 
     static <E extends LivingEntity, S extends LivingEntityRenderState> void appendPlayerRenderStates(E entity, S reusedState) {
         GearInventoryProvider gear = AttachmentHelper.getGearInventory(entity);
+        SpaceGearEquipment spaceGearEquipment = gear.getGearEquipment();
 
-        reusedState.setRenderData(GearRenderState.THERMAL_CAP, gear.getStackBySlot(GearEquipmentSlot.THERMAL_CAP));
-        reusedState.setRenderData(GearRenderState.THERMAL_SHIRT, gear.getStackBySlot(GearEquipmentSlot.THERMAL_SHIRT));
-        reusedState.setRenderData(GearRenderState.THERMAL_LEGGINGS, gear.getStackBySlot(GearEquipmentSlot.THERMAL_LEGGINGS));
-        reusedState.setRenderData(GearRenderState.THERMAL_SOCKS, gear.getStackBySlot(GearEquipmentSlot.THERMAL_SOCKS));
+        reusedState.setRenderData(GearRenderState.THERMAL_CAP, spaceGearEquipment.get(GearEquipmentSlot.THERMAL_CAP));
+        reusedState.setRenderData(GearRenderState.THERMAL_SHIRT, spaceGearEquipment.get(GearEquipmentSlot.THERMAL_SHIRT));
+        reusedState.setRenderData(GearRenderState.THERMAL_LEGGINGS, spaceGearEquipment.get(GearEquipmentSlot.THERMAL_LEGGINGS));
+        reusedState.setRenderData(GearRenderState.THERMAL_SOCKS, spaceGearEquipment.get(GearEquipmentSlot.THERMAL_SOCKS));
         appendCommonRenderStates(entity, reusedState);
-        GearEquippable.extractAssetId(gear.getStackBySlot(GearEquipmentSlot.PARACHUTE)).ifPresent(gearEquipped -> reusedState.setRenderData(GearRenderState.PARACHUTE, gearEquipped));
+        GearEquippable.extractAssetId(spaceGearEquipment.get(GearEquipmentSlot.PARACHUTE)).ifPresent(gearEquipped -> reusedState.setRenderData(GearRenderState.PARACHUTE, gearEquipped));
         reusedState.setRenderData(GearRenderState.IS_PARACHUTE_VISIBLE, gear.usesParachute());
-        reusedState.setRenderData(GearRenderState.HAS_TELEMETRY, !gear.getStackBySlot(GearEquipmentSlot.TELEMETRY).isEmpty());
-        GearEquippable.extractAssetId(gear.getStackBySlot(GearEquipmentSlot.SHIELD)).ifPresent(gearEquipped -> reusedState.setRenderData(GearRenderState.SHIELD, gearEquipped));
+        reusedState.setRenderData(GearRenderState.HAS_TELEMETRY, !spaceGearEquipment.get(GearEquipmentSlot.TELEMETRY).isEmpty());
+        reusedState.setRenderData(GearRenderState.HAS_SHIELD, !spaceGearEquipment.get(GearEquipmentSlot.SHIELD).isEmpty());
 
         AttachmentHelper.getMap(entity.level(), GalacticraftAttachments.CELESTIAL_BODY, levelData -> levelData.value().temperatureModifier())
                 .ifPresent(temperatureModifier -> reusedState.setRenderData(GearRenderState.TEMPERATURE_MODIFIER, temperatureModifier));

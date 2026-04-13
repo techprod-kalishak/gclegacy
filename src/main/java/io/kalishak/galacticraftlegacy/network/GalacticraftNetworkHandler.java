@@ -1,12 +1,8 @@
 package io.kalishak.galacticraftlegacy.network;
 
 import io.kalishak.galacticraftlegacy.network.handler.client.ToggleGearInventoryClientHandler;
-import io.kalishak.galacticraftlegacy.network.handler.client.UpdateStoredEnergyClientHandler;
-import io.kalishak.galacticraftlegacy.network.handler.client.UpdateStoredFluidClientHandler;
 import io.kalishak.galacticraftlegacy.network.handler.server.ToggleGearInventoryServerHandler;
 import io.kalishak.galacticraftlegacy.network.payload.ToggleGearInventoryPayload;
-import io.kalishak.galacticraftlegacy.network.payload.UpdateStoredEnergyPayload;
-import io.kalishak.galacticraftlegacy.network.payload.UpdateStoredFluidPayload;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 
@@ -19,17 +15,6 @@ public final class GalacticraftNetworkHandler {
                 ToggleGearInventoryPayload.STREAM_CODEC,
                 ToggleGearInventoryServerHandler::handleServer,
                 ToggleGearInventoryClientHandler::handleClient
-        );
-        registrar.playToClient(
-                UpdateStoredEnergyPayload.TYPE,
-                UpdateStoredEnergyPayload.STREAM_CODEC,
-                UpdateStoredEnergyClientHandler::handleClient
-        );
-
-        registrar.playToClient(
-                UpdateStoredFluidPayload.TYPE,
-                UpdateStoredFluidPayload.STREAM_CODEC,
-                UpdateStoredFluidClientHandler::handleClient
         );
     }
 }

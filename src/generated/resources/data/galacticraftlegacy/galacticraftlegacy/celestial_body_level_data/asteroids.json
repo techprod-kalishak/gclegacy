@@ -5,6 +5,7 @@
     "is_corrosive": false,
     "temperature": 2.7
   },
+  "celestial_object_reference": "galacticraftlegacy:asteroids",
   "gravity_scale": 0.01,
   "temperature_modifier": 0.0,
   "transition": {

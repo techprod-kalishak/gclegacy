@@ -1,7 +1,24 @@
 {
   "values": [
+    "galacticraftlegacy:moon_rock",
+    "galacticraftlegacy:moon_copper_ore",
+    "galacticraftlegacy:moon_cheese_ore",
+    "galacticraftlegacy:moon_tin_ore",
+    "galacticraftlegacy:moon_sapphire_ore",
+    "galacticraftlegacy:moon_bricks",
+    "galacticraftlegacy:moon_brick_slab",
+    "galacticraftlegacy:moon_brick_stairs",
+    "galacticraftlegacy:moon_brick_wall",
     "galacticraftlegacy:coal_generator",
     "galacticraftlegacy:circuit_fabricator",
-    "galacticraftlegacy:electric_furnace"
+    "galacticraftlegacy:electric_furnace",
+    "galacticraftlegacy:aluminum_ore",
+    "galacticraftlegacy:deepslate_aluminum_ore",
+    "galacticraftlegacy:tin_ore",
+    "galacticraftlegacy:deepslate_tin_ore",
+    "galacticraftlegacy:silicon_ore",
+    "galacticraftlegacy:deepslate_silicon_ore",
+    "galacticraftlegacy:oil_cauldron",
+    "galacticraftlegacy:fuel_cauldron"
   ]
 }

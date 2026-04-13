@@ -17,6 +17,7 @@ public final class GalacticraftEntityType {
             "falling_parachest",
             () -> EntityType.Builder.of(FallingParachest::new, MobCategory.MISC)
                     .noLootTable()
+                    .fireImmune()
                     .canSpawnFarFromPlayer()
                     .build(Constants.key(Registries.ENTITY_TYPE, "falling_parachest"))
     );

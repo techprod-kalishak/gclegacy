@@ -1,84 +1,93 @@
 {
   "model": {
-    "type": "minecraft:range_dispatch",
-    "entries": [
+    "type": "minecraft:composite",
+    "models": [
       {
-        "model": {
-          "type": "minecraft:model",
-          "model": "galacticraftlegacy:item/fluid_tank_partial_1",
-          "tints": [
-            {
-              "type": "galacticraftlegacy:color_by_fluid"
-            }
-          ]
-        },
-        "threshold": 0.13
+        "type": "minecraft:model",
+        "model": "galacticraftlegacy:item/fluid_tank"
       },
       {
-        "model": {
+        "type": "minecraft:range_dispatch",
+        "entries": [
+          {
+            "model": {
+              "type": "minecraft:model",
+              "model": "galacticraftlegacy:item/fluid_tank_partial_1",
+              "tints": [
+                {
+                  "type": "galacticraftlegacy:color_by_fluid"
+                }
+              ]
+            },
+            "threshold": 0.13
+          },
+          {
+            "model": {
+              "type": "minecraft:model",
+              "model": "galacticraftlegacy:item/fluid_tank_partial_2",
+              "tints": [
+                {
+                  "type": "galacticraftlegacy:color_by_fluid"
+                }
+              ]
+            },
+            "threshold": 0.28
+          },
+          {
+            "model": {
+              "type": "minecraft:model",
+              "model": "galacticraftlegacy:item/fluid_tank_partial_3",
+              "tints": [
+                {
+                  "type": "galacticraftlegacy:color_by_fluid"
+                }
+              ]
+            },
+            "threshold": 0.42
+          },
+          {
+            "model": {
+              "type": "minecraft:model",
+              "model": "galacticraftlegacy:item/fluid_tank_partial_4",
+              "tints": [
+                {
+                  "type": "galacticraftlegacy:color_by_fluid"
+                }
+              ]
+            },
+            "threshold": 0.57
+          },
+          {
+            "model": {
+              "type": "minecraft:model",
+              "model": "galacticraftlegacy:item/fluid_tank_partial_5",
+              "tints": [
+                {
+                  "type": "galacticraftlegacy:color_by_fluid"
+                }
+              ]
+            },
+            "threshold": 0.71
+          },
+          {
+            "model": {
+              "type": "minecraft:model",
+              "model": "galacticraftlegacy:item/fluid_tank_partial_6",
+              "tints": [
+                {
+                  "type": "galacticraftlegacy:color_by_fluid"
+                }
+              ]
+            },
+            "threshold": 0.85
+          }
+        ],
+        "fallback": {
           "type": "minecraft:model",
-          "model": "galacticraftlegacy:item/fluid_tank_partial_2",
-          "tints": [
-            {
-              "type": "galacticraftlegacy:color_by_fluid"
-            }
-          ]
+          "model": "galacticraftlegacy:item/fluid_tank"
         },
-        "threshold": 0.28
-      },
-      {
-        "model": {
-          "type": "minecraft:model",
-          "model": "galacticraftlegacy:item/fluid_tank_partial_3",
-          "tints": [
-            {
-              "type": "galacticraftlegacy:color_by_fluid"
-            }
-          ]
-        },
-        "threshold": 0.42
-      },
-      {
-        "model": {
-          "type": "minecraft:model",
-          "model": "galacticraftlegacy:item/fluid_tank_partial_4",
-          "tints": [
-            {
-              "type": "galacticraftlegacy:color_by_fluid"
-            }
-          ]
-        },
-        "threshold": 0.57
-      },
-      {
-        "model": {
-          "type": "minecraft:model",
-          "model": "galacticraftlegacy:item/fluid_tank_partial_5",
-          "tints": [
-            {
-              "type": "galacticraftlegacy:color_by_fluid"
-            }
-          ]
-        },
-        "threshold": 0.71
-      },
-      {
-        "model": {
-          "type": "minecraft:model",
-          "model": "galacticraftlegacy:item/fluid_tank_partial_6",
-          "tints": [
-            {
-              "type": "galacticraftlegacy:color_by_fluid"
-            }
-          ]
-        },
-        "threshold": 0.85
+        "property": "galacticraftlegacy:fluid_amount"
       }
-    ],
-    "fallback": {
-      "type": "minecraft:model",
-      "model": "galacticraftlegacy:item/fluid_tank"
-    },
-    "property": "galacticraftlegacy:fluid_amount"
+    ]
   }
 }

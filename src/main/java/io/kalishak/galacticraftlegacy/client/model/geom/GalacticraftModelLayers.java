@@ -6,15 +6,13 @@ import net.minecraft.client.renderer.entity.ArmorModelSet;
 
 public class GalacticraftModelLayers {
     public static final ModelLayerLocation FLAG = createLocation("flag");
+    public static final ModelLayerLocation KEY = createLocation("key");
     public static final ModelLayerLocation OXYGEN_MASK = createLocation("oxygen_mask");
     public static final ModelLayerLocation OXYGEN_GEAR = createLocation("oxygen_gear");
     public static final ModelLayerLocation HEAVY_OXYGEN_TANK = createLocation("heavy_oxygen_tank");
     public static final ModelLayerLocation MEDIUM_OXYGEN_TANK = createLocation("medium_oxygen_tank");
     public static final ModelLayerLocation LIGHT_OXYGEN_TANK = createLocation("light_oxygen_tank");
     public static final ModelLayerLocation PARACHUTE = createLocation("parachute");
-
-    public static final ModelLayerLocation WOLF_THERMAL = createLocation("wolf_thermal");
-    public static final ModelLayerLocation WOLF_BABY_THERMAL = createLocation("wolf_baby_thermal");
     public static final ArmorModelSet<ModelLayerLocation> THERMAL_PADDING = new ArmorModelSet<>(
             createLocation("head_thermal_padding"),
             createLocation("chest_thermal_padding"),

@@ -11,6 +11,7 @@ import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.world.entity.LivingEntity;
+import net.neoforged.neoforge.transfer.ResourceHandlerUtil;
 import net.neoforged.neoforge.transfer.item.ItemUtil;
 import org.jspecify.annotations.NonNull;
 
@@ -40,7 +41,7 @@ public class EntityGearInventory extends GearInventoryProvider {
 
     @Override
     public float getThermalArmorEffectiveness() {
-        return getStackBySlot(GearEquipmentSlot.BODY).isEmpty() ? 0.0F : 1.0F;
+        return 1.0F;
     }
 
     @Override
@@ -62,6 +63,6 @@ public class EntityGearInventory extends GearInventoryProvider {
     }
 
     public boolean shouldSave() {
-        return !this.gearEquipment.isEmpty();
+        return !ResourceHandlerUtil.isEmpty(this.gearEquipment);
     }
 }

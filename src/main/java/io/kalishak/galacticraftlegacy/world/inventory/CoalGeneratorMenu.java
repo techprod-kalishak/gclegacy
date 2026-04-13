@@ -2,7 +2,7 @@ package io.kalishak.galacticraftlegacy.world.inventory;
 
 import io.kalishak.galacticraftlegacy.transfer.ResourcefulHelper;
 import io.kalishak.galacticraftlegacy.world.inventory.slot.FuelHandlerSlot;
-import io.kalishak.galacticraftlegacy.world.level.block.entity.CoalGeneratorBlockEntity;
+import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.CoalGeneratorBlockEntity;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityType;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;

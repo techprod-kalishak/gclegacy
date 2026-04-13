@@ -2,6 +2,7 @@ package io.kalishak.galacticraftlegacy.world.item.component;
 
 import com.mojang.serialization.Codec;
 import io.kalishak.galacticraftlegacy.Galacticraft;
+import io.kalishak.galacticraftlegacy.world.item.KeyLock;
 import net.minecraft.core.GlobalPos;
 import net.minecraft.core.UUIDUtil;
 import net.minecraft.core.component.DataComponentType;
@@ -37,6 +38,10 @@ public final class GalacticraftDataComponents {
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<ItemWithDescription>> ITEM_WITH_DESCRIPTION = REGISTRY.registerComponentType(
             "item_with_description",
             builder -> builder.persistent(ItemWithDescription.CODEC).networkSynchronized(ItemWithDescription.STREAM_CODEC).cacheEncoding()
+    );
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<KeyLock>> KEY_LOCK = REGISTRY.registerComponentType(
+            "key_lock",
+            builder -> builder.persistent(KeyLock.CODEC).networkSynchronized(KeyLock.STREAM_CODEC).cacheEncoding()
     );
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<SchematicContent>> SCHEMATIC = REGISTRY.registerComponentType(
             "schematic",

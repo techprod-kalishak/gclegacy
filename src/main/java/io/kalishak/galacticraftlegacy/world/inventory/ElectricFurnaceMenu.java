@@ -1,12 +1,9 @@
 package io.kalishak.galacticraftlegacy.world.inventory;
 
-import io.kalishak.galacticraftlegacy.EnumExtensions;
 import io.kalishak.galacticraftlegacy.transfer.ResourcefulHelper;
 import io.kalishak.galacticraftlegacy.world.inventory.slot.CapabilityHandlerSlot;
 import io.kalishak.galacticraftlegacy.world.inventory.slot.ResultResourceHandlerSlot;
-import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.HeatingRecipe;
-import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.input.SimpleResourceInput;
-import io.kalishak.galacticraftlegacy.world.level.block.entity.ElectricFurnaceBlockEntity;
+import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.ElectricFurnaceBlockEntity;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityType;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.recipebook.ServerPlaceRecipe;
@@ -18,6 +15,9 @@ import net.minecraft.world.entity.player.StackedItemContents;
 import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.RecipePropertySet;
+import net.minecraft.world.item.crafting.SingleRecipeInput;
+import net.minecraft.world.item.crafting.SmeltingRecipe;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.registries.datamaps.builtin.FurnaceFuel;
 import net.neoforged.neoforge.registries.datamaps.builtin.NeoForgeDataMaps;
@@ -46,7 +46,7 @@ public class ElectricFurnaceMenu extends AbstractMachineMenu<ElectricFurnaceBloc
 
     @Override
     public RecipeBookType getRecipeBookType() {
-        return EnumExtensions.RECIPE_BOOK_TYPE_HEATING.getValue();
+        return RecipeBookType.FURNACE;
     }
 
     public float getBurnProgress() {
@@ -106,7 +106,11 @@ public class ElectricFurnaceMenu extends AbstractMachineMenu<ElectricFurnaceBloc
     }
 
     private boolean canSmelt(ItemStack stackInSlot) {
-        return true;
+        if (stackInSlot.isEmpty() || !this.machine.hasLevel()) {
+            return false;
+        }
+
+        return this.machine.getLevel().recipeAccess().propertySet(RecipePropertySet.FURNACE_INPUT).test(stackInSlot);
     }
 
     private boolean isFuel(ItemStack stack) {
@@ -115,16 +119,11 @@ public class ElectricFurnaceMenu extends AbstractMachineMenu<ElectricFurnaceBloc
     }
 
     @Override
-    public boolean stillValid(Player player) {
-        return false;
-    }
-
-    @Override
     @SuppressWarnings("unchecked")
     public PostPlaceAction handlePlacement(boolean useMaxItems, boolean isCreative, RecipeHolder<?> recipe, ServerLevel level, Inventory playerInventory) {
         List<Slot> craftingSlots = List.of(getSlot(0), getSlot(2));
 
-        return ServerPlaceRecipe.placeRecipe(new ServerPlaceRecipe.CraftingMenuAccess<HeatingRecipe>() {
+        return ServerPlaceRecipe.placeRecipe(new ServerPlaceRecipe.CraftingMenuAccess<>() {
             @Override
             public void fillCraftSlotsStackedContents(StackedItemContents stackedItemContents) {
                 ElectricFurnaceMenu.this.fillCraftSlotsStackedContents(stackedItemContents);
@@ -136,9 +135,9 @@ public class ElectricFurnaceMenu extends AbstractMachineMenu<ElectricFurnaceBloc
             }
 
             @Override
-            public boolean recipeMatches(RecipeHolder<HeatingRecipe> recipe) {
-                return recipe.value().matches(new SimpleResourceInput(() -> ElectricFurnaceMenu.this.resourceHandler, 0, 1), level);
+            public boolean recipeMatches(RecipeHolder<SmeltingRecipe> recipe) {
+                return recipe.value().matches(new SingleRecipeInput(getSlot(0).getItem()), level);
             }
-        }, 1, 1, List.of(getSlot(0)), craftingSlots, playerInventory, (RecipeHolder<HeatingRecipe>) recipe, useMaxItems, isCreative);
+        }, 1, 1, List.of(getSlot(0)), craftingSlots, playerInventory, (RecipeHolder<SmeltingRecipe>) recipe, useMaxItems, isCreative);
     }
 }

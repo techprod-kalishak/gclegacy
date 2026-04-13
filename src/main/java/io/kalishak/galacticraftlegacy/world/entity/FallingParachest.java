@@ -12,12 +12,14 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockUpdatePacket;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.entity.item.FallingBlockEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.DirectionalPlaceContext;
@@ -45,7 +47,7 @@ public class FallingParachest extends FallingBlockEntity implements ParachuteFal
     private static final Logger LOGGER = LogUtils.getLogger();
     private final NonNullList<ItemStack> inventory;
     private FluidStack fuelTank = FluidStack.EMPTY;
-    private DyeColor parachuteColor = DyeColor.WHITE;
+    private DyeColor parachuteColor = DyeColor.RED;
 
     private final ItemStacksResourceHandler itemResources;
     private final SingleTankResourceHandler fluidResource = new SingleTankResourceHandler() {
@@ -67,7 +69,8 @@ public class FallingParachest extends FallingBlockEntity implements ParachuteFal
 
     public FallingParachest(EntityType<? extends FallingParachest> entityType, Level level) {
         super(entityType, level);
-        this.inventory = NonNullList.withSize(2, ItemStack.EMPTY);
+        this.blockState = GalacticraftBlocks.PARACHEST.get().defaultBlockState();
+        this.inventory = NonNullList.withSize(3, ItemStack.EMPTY);
         this.itemResources = new ItemStacksResourceHandler(this.inventory);
 
         setInvulnerable(true);
@@ -88,7 +91,7 @@ public class FallingParachest extends FallingBlockEntity implements ParachuteFal
 
             this.parachuteColor = parachestBlockEntity.getParachuteColor();
         } else {
-            this.inventory = NonNullList.withSize(2, ItemStack.EMPTY);
+            this.inventory = NonNullList.withSize(3, ItemStack.EMPTY);
         }
 
         this.itemResources = new ItemStacksResourceHandler(this.inventory);
@@ -115,6 +118,25 @@ public class FallingParachest extends FallingBlockEntity implements ParachuteFal
         return fallingParachest;
     }
 
+    public static FallingParachest returnFromSpace(Level level, Player player, Entity rocket, ResourceKey<Level> previousDimension) {
+        BlockPos parachestInitialPos = player.blockPosition().above();
+        BlockState state = getStateFromRocketStorage(rocket);
+        FallingParachest fallingParachest = new FallingParachest(
+                level,
+                parachestInitialPos.getX(),
+                parachestInitialPos.getY(),
+                parachestInitialPos.getZ(),
+                state,
+                null
+        );
+
+        fallingParachest.setFallingTicks(0);
+        level.setBlock(parachestInitialPos, state.getFluidState().createLegacyBlock(), Block.UPDATE_ALL);
+        level.addFreshEntity(fallingParachest);
+
+        return fallingParachest;
+    }
+
     public static void registerCapabilities(RegisterCapabilitiesEvent event) {
         event.registerEntity(
                 Capabilities.Item.ENTITY,
@@ -126,6 +148,10 @@ public class FallingParachest extends FallingBlockEntity implements ParachuteFal
                 GalacticraftEntityType.FALLING_PARACHEST.get(),
                 (entity, cxt) -> entity.fluidResource
         );
+    }
+
+    private static BlockState getStateFromRocketStorage(Entity rocket) {
+        return GalacticraftBlocks.PARACHEST.get().defaultBlockState();
     }
 
     @Override

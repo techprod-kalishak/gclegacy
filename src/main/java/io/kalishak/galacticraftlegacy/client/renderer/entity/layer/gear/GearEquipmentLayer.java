@@ -75,12 +75,6 @@ public abstract class GearEquipmentLayer<S extends LivingEntityRenderState, M ex
 
         ZombieRenderer zombieRenderer = event.getRenderer(EntityType.ZOMBIE);
         registerLayerForRenderer(zombieRenderer, modelSet, layerRenderer, equipmentAssets);
-
-        WolfRenderer wolfRenderer = event.getRenderer(EntityType.WOLF);
-
-        if (wolfRenderer != null) {
-            wolfRenderer.addLayer(new ThermalWolfJacketLayer(wolfRenderer, modelSet, layerRenderer, equipmentAssets));
-        }
     }
 
     private static <S extends HumanoidRenderState, M extends HumanoidModel<S>> void registerLayerForPlayerRenderer(@Nullable AvatarRenderer<?> renderer, EntityModelSet modelSet, EquipmentLayerRenderer layerRenderer, EquipmentAssetManager equipmentAssets, MaterialSet materials) {

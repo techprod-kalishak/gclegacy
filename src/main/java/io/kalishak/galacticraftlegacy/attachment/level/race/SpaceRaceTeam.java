@@ -3,10 +3,10 @@ package io.kalishak.galacticraftlegacy.attachment.level.race;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import io.kalishak.galacticraftlegacy.galaxies.CelestialObject;
 import io.kalishak.galacticraftlegacy.registry.GalacticraftRegistries;
 import io.kalishak.galacticraftlegacy.attachment.GalacticraftAttachments;
 import io.kalishak.galacticraftlegacy.attachment.entity.Schematics;
-import io.kalishak.galacticraftlegacy.space.CelestialBody;
 import io.kalishak.galacticraftlegacy.registry.SchematicVariant;
 import io.netty.buffer.ByteBuf;
 import it.unimi.dsi.fastutil.objects.*;
@@ -29,8 +29,8 @@ public class SpaceRaceTeam {
             SpaceRaceMember.CODEC.listOf().optionalFieldOf("Members", List.of()).forGetter(SpaceRaceTeam::listMembers),
             FlagData.CODEC.optionalFieldOf("FlagData", FlagData.DEFAULT).forGetter(SpaceRaceTeam::getFlagData),
             Codec.LONG.optionalFieldOf("Ticks", 0L).forGetter(SpaceRaceTeam::getTicks),
-            Codec.unboundedMap(ResourceKey.codec(GalacticraftRegistries.Keys.CELESTIAL_BODY), Codec.LONG).xmap(map -> {
-                        Object2LongMap<ResourceKey<CelestialBody>> celestialBodyStatus = new Object2LongOpenHashMap<>(4, 1F);
+            Codec.unboundedMap(ResourceKey.codec(GalacticraftRegistries.Keys.CELESTIAL_OBJECT), Codec.LONG).xmap(map -> {
+                        Object2LongMap<ResourceKey<CelestialObject>> celestialBodyStatus = new Object2LongOpenHashMap<>(4, 1F);
                         celestialBodyStatus.putAll(map);
                         return celestialBodyStatus;
                     }, Object2LongOpenHashMap::new
@@ -44,7 +44,7 @@ public class SpaceRaceTeam {
             SpaceRaceMember.STREAM_CODEC.apply(ByteBufCodecs.list()), SpaceRaceTeam::listMembers,
             FlagData.STREAM_CODEC, SpaceRaceTeam::getFlagData,
             ByteBufCodecs.LONG, SpaceRaceTeam::getTicks,
-            ByteBufCodecs.<ByteBuf, ResourceKey<CelestialBody>, Long, Object2LongMap<ResourceKey<CelestialBody>>>map(i -> new Object2LongOpenHashMap<>(4, 1.0F), ResourceKey.streamCodec(GalacticraftRegistries.Keys.CELESTIAL_BODY), ByteBufCodecs.LONG), SpaceRaceTeam::getVisitedCelestialBodies,
+            ByteBufCodecs.<ByteBuf, ResourceKey<CelestialObject>, Long, Object2LongMap<ResourceKey<CelestialObject>>>map(i -> new Object2LongOpenHashMap<>(4, 1.0F), ResourceKey.streamCodec(GalacticraftRegistries.Keys.CELESTIAL_OBJECT), ByteBufCodecs.LONG), SpaceRaceTeam::getVisitedCelestialBodies,
             Schematics.STREAM_CODEC, SpaceRaceTeam::getTeamUnlockedSchematics,
             SpaceRaceTeam::load
     );
@@ -52,7 +52,7 @@ public class SpaceRaceTeam {
     private final String teamName;
     private final Style displayNameStyle;
     private final Set<SpaceRaceMember> members = Sets.newHashSet();
-    private final Object2LongMap<ResourceKey<CelestialBody>> discoveredCelestialBodies = new Object2LongOpenHashMap<>(4, 1F);
+    private final Object2LongMap<ResourceKey<CelestialObject>> discoveredCelestialBodies = new Object2LongOpenHashMap<>(4, 1F);
     private Schematics teamUnlockedSchematics = Schematics.empty();
     private Component displayName;
     private FlagData flagData = FlagData.DEFAULT;
@@ -66,12 +66,8 @@ public class SpaceRaceTeam {
         this.displayNameStyle = Style.EMPTY.withInsertion(teamName).withHoverEvent(new HoverEvent.ShowText(Component.literal(teamName)));
     }
 
-    SpaceRaceTeam(String teamName, SpaceRaceMember member) {
-        this(teamName, Set.of(member));
-    }
-
     static SpaceRaceTeam load(String name, Component displayName, Vec3 color, List<SpaceRaceMember> members, FlagData flagData, long ticks,
-                              Object2LongMap<ResourceKey<CelestialBody>> celestialBodyStatus, Schematics teamSharedUnlockedSchematics) {
+                              Object2LongMap<ResourceKey<CelestialObject>> celestialBodyStatus, Schematics teamSharedUnlockedSchematics) {
         SpaceRaceTeam spaceRaceTeam = new SpaceRaceTeam(name, members);
         spaceRaceTeam.displayName = displayName;
         spaceRaceTeam.teamColor = color;
@@ -188,7 +184,7 @@ public class SpaceRaceTeam {
         return this.ticks;
     }
 
-    public Object2LongMap<ResourceKey<CelestialBody>> getVisitedCelestialBodies() {
+    public Object2LongMap<ResourceKey<CelestialObject>> getVisitedCelestialBodies() {
         return Object2LongMaps.unmodifiable(this.discoveredCelestialBodies);
     }
 
@@ -196,7 +192,7 @@ public class SpaceRaceTeam {
         return this.teamUnlockedSchematics;
     }
 
-    public void setReachedCelestialBody(ResourceKey<CelestialBody> body) {
+    public void setReachedCelestialBody(ResourceKey<CelestialObject> body) {
         this.discoveredCelestialBodies.put(body, this.ticks);
         this.isDirty = true;
     }

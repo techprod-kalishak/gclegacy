@@ -1,9 +1,12 @@
 package io.kalishak.galacticraftlegacy.data;
 
 import io.kalishak.galacticraftlegacy.Galacticraft;
+import io.kalishak.galacticraftlegacy.client.data.GalacticraftSoundProvider;
 import io.kalishak.galacticraftlegacy.client.data.models.GalacticraftEquipmentAssetProvider;
 import io.kalishak.galacticraftlegacy.data.tag.*;
+import io.kalishak.galacticraftlegacy.data.worldgen.GalacticraftCarvers;
 import io.kalishak.galacticraftlegacy.registry.CelestialBodyLevelDataEntries;
+import io.kalishak.galacticraftlegacy.registry.Checklist;
 import io.kalishak.galacticraftlegacy.registry.GalacticraftRegistries;
 import io.kalishak.galacticraftlegacy.client.data.GalacticraftLanguageProvider;
 import io.kalishak.galacticraftlegacy.client.data.GalacticraftModelProvider;
@@ -11,27 +14,37 @@ import io.kalishak.galacticraftlegacy.client.data.GalacticraftSpritesProvider;
 import io.kalishak.galacticraftlegacy.registry.SchematicVariants;
 import io.kalishak.galacticraftlegacy.world.damagesource.GalacticraftDamageTypes;
 import io.kalishak.galacticraftlegacy.world.item.equipment.trim.GalacticraftTrimMaterials;
+import io.kalishak.galacticraftlegacy.world.level.biome.GalacticraftBiomes;
 import io.kalishak.galacticraftlegacy.world.level.dimension.GalacticraftDimensionTypes;
+import io.kalishak.galacticraftlegacy.world.level.levelgen.GalacticraftBiomeModifiers;
 import io.kalishak.galacticraftlegacy.world.level.levelgen.GalacticraftNoiseGeneratorSettings;
+import io.kalishak.galacticraftlegacy.world.level.levelgen.features.GalacticraftFeatures;
+import io.kalishak.galacticraftlegacy.world.level.levelgen.placement.GalacticraftPlacements;
 import io.kalishak.galacticraftlegacy.world.timeline.GalacticraftTimelines;
 import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.loot.LootTableProvider;
-import net.minecraft.data.registries.VanillaRegistries;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.neoforged.neoforge.common.data.DatapackBuiltinEntriesProvider;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
+import net.neoforged.neoforge.registries.NeoForgeRegistries;
 
 import java.util.List;
 import java.util.Set;
 
 public class GalacticraftData {
     private static final RegistrySetBuilder SET_BUILDER = new RegistrySetBuilder()
+            .add(Registries.BIOME, GalacticraftBiomes::bootstrap)
+            .add(Registries.CONFIGURED_CARVER, GalacticraftCarvers::bootstrap)
+            .add(Registries.CONFIGURED_FEATURE, GalacticraftFeatures::bootstrap)
             .add(Registries.DAMAGE_TYPE, GalacticraftDamageTypes::bootstrap)
             .add(Registries.DIMENSION_TYPE, GalacticraftDimensionTypes::bootstrap)
+            .add(Registries.PLACED_FEATURE, GalacticraftPlacements::bootstrap)
             .add(Registries.TIMELINE, GalacticraftTimelines::bootstrap)
             .add(Registries.TRIM_MATERIAL, GalacticraftTrimMaterials::bootstrap)
             .add(Registries.NOISE_SETTINGS, GalacticraftNoiseGeneratorSettings::bootstrap)
+            .add(NeoForgeRegistries.Keys.BIOME_MODIFIERS, GalacticraftBiomeModifiers::bootstrap)
+            .add(GalacticraftRegistries.Keys.CHECKLIST, Checklist::bootstrap)
             .add(GalacticraftRegistries.Keys.SCHEMATIC, SchematicVariants::bootstrap)
             .add(GalacticraftRegistries.Keys.CELESTIAL_BODY_LEVEL_DATA, CelestialBodyLevelDataEntries::bootstrap);
 
@@ -40,6 +53,7 @@ public class GalacticraftData {
         event.createProvider(GalacticraftLanguageProvider::new);
         event.createProvider(GalacticraftModelProvider::new);
         event.createProvider(GalacticraftEquipmentAssetProvider::new);
+        event.createProvider(GalacticraftSoundProvider::new);
 
         event.createProvider(GalacticraftRecipeProvider.Runner::new);
         event.createProvider((output, lookupProvider) -> new LootTableProvider(
@@ -57,6 +71,7 @@ public class GalacticraftData {
         event.createProvider(GalacticraftItemTagsProvider::new);
         event.createProvider(GalacticraftBiomeTagsProvider::new);
         event.createProvider(GalacticraftBlockTagsProvider::new);
+        event.createProvider(GalacticraftDamageTypeTags::new);
         event.createProvider(GalacticraftEntityTypeTagsProvider::new);
         event.createProvider(GalacticraftFluidTagsProvider::new);
         event.createProvider(GalacticraftTimelinesTagsProvider::new);

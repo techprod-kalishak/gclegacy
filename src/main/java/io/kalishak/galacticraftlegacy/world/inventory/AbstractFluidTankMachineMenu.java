@@ -1,22 +1,17 @@
 package io.kalishak.galacticraftlegacy.world.inventory;
 
-import io.kalishak.galacticraftlegacy.network.payload.UpdateStoredEnergyPayload;
-import io.kalishak.galacticraftlegacy.network.payload.UpdateStoredFluidPayload;
 import io.kalishak.galacticraftlegacy.transfer.ResourcefulHelper;
-import io.kalishak.galacticraftlegacy.world.level.block.entity.AbstractFluidTankMachineBlockEntity;
-import net.minecraft.server.level.ServerPlayer;
+import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.AbstractFluidTankMachineBlockEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.MenuType;
 import net.neoforged.neoforge.capabilities.Capabilities;
-import net.neoforged.neoforge.network.PacketDistributor;
 import net.neoforged.neoforge.transfer.ResourceHandler;
 import net.neoforged.neoforge.transfer.energy.DelegatingEnergyHandler;
 import net.neoforged.neoforge.transfer.energy.EnergyHandler;
 import net.neoforged.neoforge.transfer.fluid.FluidResource;
-import net.neoforged.neoforge.transfer.fluid.FluidUtil;
 import net.neoforged.neoforge.transfer.item.ItemResource;
 
 public abstract class AbstractFluidTankMachineMenu<M extends AbstractFluidTankMachineBlockEntity> extends AbstractContainerMenu {
@@ -40,15 +35,5 @@ public abstract class AbstractFluidTankMachineMenu<M extends AbstractFluidTankMa
 
     public int getEnergyCapacity() {
         return this.energyHandler.getCapacityAsInt();
-    }
-
-    @Override
-    public void broadcastChanges() {
-        super.broadcastChanges();
-
-        if (this.player.containerMenu.containerId == this.containerId && this.player instanceof ServerPlayer serverPlayer) {
-            PacketDistributor.sendToPlayer(serverPlayer, new UpdateStoredEnergyPayload(this.containerId, AbstractFluidTankMachineMenu.this.energyHandler.getAmountAsInt()));
-            PacketDistributor.sendToPlayer(serverPlayer, new UpdateStoredFluidPayload(this.containerId, FluidUtil.getStack(this.fluidResourceHandler, 0), 0));
-        }
     }
 }

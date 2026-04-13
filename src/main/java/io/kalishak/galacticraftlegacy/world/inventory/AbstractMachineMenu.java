@@ -1,16 +1,14 @@
 package io.kalishak.galacticraftlegacy.world.inventory;
 
-import io.kalishak.galacticraftlegacy.network.payload.UpdateStoredEnergyPayload;
 import io.kalishak.galacticraftlegacy.transfer.ResourcefulHelper;
-import io.kalishak.galacticraftlegacy.world.level.block.entity.AbstractMachineBlockEntity;
-import net.minecraft.server.level.ServerPlayer;
+import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.AbstractMachineBlockEntity;
+import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.RecipeBookMenu;
 import net.neoforged.neoforge.capabilities.Capabilities;
-import net.neoforged.neoforge.network.PacketDistributor;
 import net.neoforged.neoforge.transfer.ResourceHandler;
 import net.neoforged.neoforge.transfer.energy.DelegatingEnergyHandler;
 import net.neoforged.neoforge.transfer.energy.EnergyHandler;
@@ -33,16 +31,16 @@ public abstract class AbstractMachineMenu<M extends AbstractMachineBlockEntity> 
         addDataSlots(containerData);
     }
 
+    @Override
+    public boolean stillValid(Player player) {
+        return Container.stillValidBlockEntity(this.machine, player);
+    }
+
     public int getEnergyCapacity() {
         return this.energyHandler.getCapacityAsInt();
     }
 
-    @Override
-    public void broadcastChanges() {
-        super.broadcastChanges();
-
-        if (this.player.containerMenu.containerId == this.containerId && this.player instanceof ServerPlayer serverPlayer) {
-            PacketDistributor.sendToPlayer(serverPlayer, new UpdateStoredEnergyPayload(this.containerId, AbstractMachineMenu.this.energyHandler.getAmountAsInt()));
-        }
+    public M getMachine() {
+        return this.machine;
     }
 }
