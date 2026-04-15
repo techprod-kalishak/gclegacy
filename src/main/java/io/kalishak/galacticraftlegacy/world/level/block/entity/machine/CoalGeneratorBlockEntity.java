@@ -15,6 +15,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.DataSlot;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
@@ -89,13 +90,13 @@ public class CoalGeneratorBlockEntity extends AbstractMachineBlockEntity {
 
         if (coalGenerator.litTimeRemaining <= 0 && !fuel.isEmpty()) {
             try (Transaction tx = Transaction.open(null)) {
-                FurnaceFuel furnaceFuel = level.registryAccess().lookupOrThrow(Registries.ITEM).getData(NeoForgeDataMaps.FURNACE_FUELS, fuel.getHolder().unwrapKey().orElseThrow());
-                ItemStack remainder = fuel.toStack().getCraftingRemainder();
+                FurnaceFuel furnaceFuel = level.registryAccess().lookupOrThrow(Registries.ITEM).getData(NeoForgeDataMaps.FURNACE_FUELS, fuel.typeHolder().unwrapKey().orElseThrow());
+                ItemStackTemplate remainder = fuel.toStack().getCraftingRemainder();
 
                 if (coalGenerator.innerResourceHandler.extract(fuel, 1, tx) > 0) {
                     if (furnaceFuel != null && furnaceFuel.burnTime() > 0) {
-                        if (!remainder.isEmpty()) {
-                            coalGenerator.innerResourceHandler.set(0, ItemResource.of(remainder), remainder.getCount());
+                        if (remainder != null) {
+                            coalGenerator.innerResourceHandler.set(0, ItemResource.of(remainder), remainder.count());
                         }
 
                         coalGenerator.litTotalTime =  furnaceFuel.burnTime();
@@ -134,9 +135,9 @@ public class CoalGeneratorBlockEntity extends AbstractMachineBlockEntity {
     @Override
     public void set(int index, ItemResource resource, int amount) {
         ItemStack existingStack = ItemUtil.getStack(this.innerResourceHandler, index);
-        ItemStack remainder = existingStack.getCraftingRemainder();
+        ItemStackTemplate remainder = existingStack.getCraftingRemainder();
 
-        if (!remainder.isEmpty()) {
+        if (remainder != null) {
             try (Transaction tx = Transaction.open(null)) {
                 if (!ItemUtil.insertItemReturnRemaining(this.innerResourceHandler, existingStack, false, tx).isEmpty()) {
                     tx.commit();

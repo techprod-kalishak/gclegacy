@@ -21,7 +21,7 @@ import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.resources.model.EquipmentAssetManager;
 import net.minecraft.client.resources.model.EquipmentClientInfo;
-import net.minecraft.client.resources.model.MaterialSet;
+import net.minecraft.client.resources.model.sprite.SpriteGetter;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.context.ContextKey;
@@ -57,34 +57,34 @@ public abstract class GearEquipmentLayer<S extends LivingEntityRenderState, M ex
     @SubscribeEvent
     public static void registerAdditionalLayers(EntityRenderersEvent.AddLayers event) {
         EntityModelSet modelSet = event.getEntityModels();
-        EquipmentLayerRenderer layerRenderer = event.getContext().getEquipmentRenderer();
+        EquipmentLayerRenderer equipmentRenderer = event.getContext().getEquipmentRenderer();
         EquipmentAssetManager equipmentAssets = event.getContext().getEquipmentAssets();
-        MaterialSet materials = event.getContext().getMaterials();
+        SpriteGetter spriteGetter = event.getContext().getSprites();
 
         AvatarRenderer<?> slimAvatarRenderer = event.getPlayerRenderer(PlayerModelType.SLIM);
-        registerLayerForPlayerRenderer(slimAvatarRenderer, modelSet, layerRenderer, equipmentAssets, materials);
+        registerLayerForPlayerRenderer(slimAvatarRenderer, modelSet, equipmentRenderer, equipmentAssets, spriteGetter);
 
         AvatarRenderer<?> wideAvatarRenderer = event.getPlayerRenderer(PlayerModelType.WIDE);
-        registerLayerForPlayerRenderer(wideAvatarRenderer, modelSet, layerRenderer, equipmentAssets, materials);
+        registerLayerForPlayerRenderer(wideAvatarRenderer, modelSet, equipmentRenderer, equipmentAssets, spriteGetter);
 
         CreeperRenderer creeperRenderer = event.getRenderer(EntityType.CREEPER);
-        registerLayerForRenderer(creeperRenderer, modelSet, layerRenderer, equipmentAssets);
+        registerLayerForRenderer(creeperRenderer, modelSet, equipmentRenderer, equipmentAssets);
 
         SkeletonRenderer skeletonRenderer = event.getRenderer(EntityType.SKELETON);
-        registerLayerForRenderer(skeletonRenderer, modelSet, layerRenderer, equipmentAssets);
+        registerLayerForRenderer(skeletonRenderer, modelSet, equipmentRenderer, equipmentAssets);
 
         ZombieRenderer zombieRenderer = event.getRenderer(EntityType.ZOMBIE);
-        registerLayerForRenderer(zombieRenderer, modelSet, layerRenderer, equipmentAssets);
+        registerLayerForRenderer(zombieRenderer, modelSet, equipmentRenderer, equipmentAssets);
     }
 
-    private static <S extends HumanoidRenderState, M extends HumanoidModel<S>> void registerLayerForPlayerRenderer(@Nullable AvatarRenderer<?> renderer, EntityModelSet modelSet, EquipmentLayerRenderer layerRenderer, EquipmentAssetManager equipmentAssets, MaterialSet materials) {
+    private static <S extends HumanoidRenderState, M extends HumanoidModel<S>> void registerLayerForPlayerRenderer(@Nullable AvatarRenderer<?> renderer, EntityModelSet modelSet, EquipmentLayerRenderer layerRenderer, EquipmentAssetManager equipmentAssets, SpriteGetter spriteGetter) {
         if (renderer != null) {
             renderer.addLayer(new OxygenMaskLayer<>(renderer, modelSet, layerRenderer, equipmentAssets));
             renderer.addLayer(new OxygenGearLayer<>(renderer, modelSet, layerRenderer, equipmentAssets));
             renderer.addLayer(new OxygenTankLayer<>(renderer, modelSet, layerRenderer, equipmentAssets));
             renderer.addLayer(new ThermalPaddingLayer(renderer, GalacticraftModelLayers.THERMAL_PADDING, modelSet, layerRenderer, equipmentAssets));
             renderer.addLayer(new TelemetryModuleLayer<>(renderer, layerRenderer, equipmentAssets));
-            renderer.addLayer(new ParachuteLayer<>(renderer, materials, modelSet, layerRenderer, equipmentAssets));
+            renderer.addLayer(new ParachuteLayer<>(renderer, spriteGetter, modelSet, layerRenderer, equipmentAssets));
         }
     }
 

@@ -18,6 +18,10 @@ public final class GalacticraftCriteriaTriggers {
             "checklist_check",
             ChecklistDoneTrigger::new
     );
+    public static final DeferredHolder<CriterionTrigger<?>, BedUsedInSpaceTrigger> BED_USED_IN_SPACE = REGISTRY.register(
+            "bed_used_in_space",
+            BedUsedInSpaceTrigger::new
+    );
 
     public static void init(IEventBus bus) {
         REGISTRY.register(bus);

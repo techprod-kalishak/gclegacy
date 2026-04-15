@@ -15,7 +15,7 @@ public enum EarthPhase implements SerializableEnum {
     LOW_ILLUMINATION_CRESCENT(7, "low_illumination_crescent");
 
     public static final Codec<EarthPhase> CODEC = SerializableEnum.codec(EarthPhase.class);
-    public static final int PHASE_LENGTH = 24000 * 29;
+    public static final int PHASE_LENGTH = 24000;
     private final int id;
     private final String name;
 

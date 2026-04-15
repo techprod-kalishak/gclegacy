@@ -6,6 +6,7 @@ import net.minecraft.core.Holder;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.valueproviders.ConstantInt;
 import net.minecraft.util.valueproviders.IntProvider;
+import net.minecraft.util.valueproviders.IntProviders;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
@@ -19,8 +20,8 @@ import java.util.Optional;
 public record CrudeOilPoolConfiguration(RuleTest target, IntProvider radius, IntProvider height, Optional<Integer> distanceFromRoof) implements FeatureConfiguration {
     public static final Codec<CrudeOilPoolConfiguration> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             RuleTest.CODEC.fieldOf("target").forGetter(CrudeOilPoolConfiguration::target),
-            IntProvider.codec(0, 16).fieldOf("radius").forGetter(CrudeOilPoolConfiguration::radius),
-            IntProvider.codec(0, 16).fieldOf("height").forGetter(CrudeOilPoolConfiguration::height),
+            IntProviders.codec(0, 16).fieldOf("radius").forGetter(CrudeOilPoolConfiguration::radius),
+            IntProviders.codec(0, 16).fieldOf("height").forGetter(CrudeOilPoolConfiguration::height),
             Codec.INT.optionalFieldOf("max_column_height").forGetter(CrudeOilPoolConfiguration::distanceFromRoof)
     ).apply(instance, CrudeOilPoolConfiguration::new));
 

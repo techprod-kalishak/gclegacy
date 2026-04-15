@@ -2,6 +2,8 @@ package io.kalishak.galacticraftlegacy.world.item;
 
 import io.kalishak.galacticraftlegacy.Constants;
 import io.kalishak.galacticraftlegacy.Galacticraft;
+import io.kalishak.galacticraftlegacy.registry.SchematicVariant;
+import io.kalishak.galacticraftlegacy.registry.SchematicVariants;
 import io.kalishak.galacticraftlegacy.registry.deferred.DeferredItemRegister;
 import io.kalishak.galacticraftlegacy.transfer.capability.fluid.ItemAccessFluidTank;
 import io.kalishak.galacticraftlegacy.world.entity.GearEquipmentSlot;
@@ -248,7 +250,7 @@ public final class GalacticraftItems {
             SchematicItem::new,
             properties -> properties
                     .stacksTo(1)
-                    .component(GalacticraftDataComponents.SCHEMATIC, SchematicContent.DEFAULT)
+                    .delayedHolderComponent(GalacticraftDataComponents.SCHEMATIC.get(), SchematicVariants.TIER_2_ROCKET)
     );
     public static final DeferredItem<FluidTankItem> FLUID_TANK = REGISTRY.registerItem(
             "fluid_tank",

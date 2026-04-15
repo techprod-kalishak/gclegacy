@@ -12,6 +12,7 @@ import io.kalishak.galacticraftlegacy.client.item.ColorByFluid;
 import io.kalishak.galacticraftlegacy.client.model.FlagModel;
 import io.kalishak.galacticraftlegacy.client.model.gear.OxygenGearModel;
 import io.kalishak.galacticraftlegacy.client.model.gear.ParachuteModel;
+import io.kalishak.galacticraftlegacy.client.renderer.environment.MoonSkyRenderer;
 import io.kalishak.galacticraftlegacy.client.renderer.blockentity.DungeonBlockRenderer;
 import io.kalishak.galacticraftlegacy.client.renderer.blockentity.ParachestBlockRenderer;
 import io.kalishak.galacticraftlegacy.client.renderer.entity.FallingParachestRenderer;
@@ -34,32 +35,28 @@ import io.kalishak.galacticraftlegacy.world.inventory.GalacticraftMenuType;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityType;
 import io.kalishak.galacticraftlegacy.world.level.dimension.GalacticraftDimensions;
 import io.kalishak.galacticraftlegacy.world.level.material.fluid.GalacticraftFluidType;
-import net.minecraft.client.gui.screens.LevelLoadingScreen;
-import net.minecraft.client.gui.screens.inventory.ContainerScreen;
-import net.minecraft.client.model.animal.wolf.WolfModel;
+import io.kalishak.galacticraftlegacy.world.level.material.fluid.GalacticraftFluids;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.player.PlayerModel;
-import net.minecraft.client.multiplayer.LevelLoadTracker;
+import net.minecraft.client.renderer.block.FluidModel;
 import net.minecraft.client.renderer.entity.*;
 import net.minecraft.client.renderer.entity.player.AvatarRenderer;
-import net.minecraft.client.resources.model.*;
+import net.minecraft.client.resources.model.sprite.AtlasManager;
+import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.resources.Identifier;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
-import net.neoforged.neoforge.client.DimensionTransitionScreenManager;
 import net.neoforged.neoforge.client.event.*;
-import net.neoforged.neoforge.client.extensions.common.IClientBlockExtensions;
 import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
-import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 import net.neoforged.neoforge.client.renderstate.RegisterRenderStateModifiersEvent;
 import net.neoforged.neoforge.common.NeoForge;
-import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -75,6 +72,8 @@ public class GalacticraftClient {
         bus.addListener(this::registerAtlases);
         bus.addListener(this::registerClientExtensions);
         bus.addListener(this::registerEntityRenderers);
+        bus.addListener(this::registerEnvironmentEffects);
+        bus.addListener(this::registerFluidModels);
         bus.addListener(this::registerOverlays);
         bus.addListener(this::registerLayerDefinitions);
         bus.addListener(this::registerScreens);
@@ -109,52 +108,53 @@ public class GalacticraftClient {
                         Set.of()
                 )
         );
+        event.register(
+                new AtlasManager.AtlasConfig(
+                        GalacticraftSheets.CELESTIAL_BODY_SHEET,
+                        GalacticraftSpritesProvider.CELESTIAL_BODIES,
+                        false,
+                        Set.of()
+                )
+        );
+    }
+
+    private void registerEnvironmentEffects(RegisterCustomEnvironmentEffectRendererEvent event) {
+        event.registerSkyboxRenderer(MoonSkyRenderer.ID, MoonSkyRenderer.INSTANCE);
+    }
+
+    private void registerFluidModels(RegisterFluidModelsEvent event) {
+        final Identifier still = Identifier.withDefaultNamespace("block/water_still");
+        final Identifier flow = Identifier.withDefaultNamespace("block/water_flow");
+
+        event.register(new FluidModel.Unbaked(
+                new Material(still),
+                new Material(flow),
+                null,
+                state -> 0xFFAFEEEE
+        ), GalacticraftFluids.OXYGEN, GalacticraftFluids.OXYGEN_FLOWING);
+        event.register(new FluidModel.Unbaked(
+                new Material(still),
+                new Material(flow),
+                new Material(Identifier.withDefaultNamespace("block/water_overlay")),
+                state -> 0xFF281E15
+                ), GalacticraftFluids.OIL, GalacticraftFluids.OIL_FLOWING
+        );
+        event.register(new FluidModel.Unbaked(
+                        new Material(Constants.id("block/fuel_still")),
+                        new Material(Constants.id("block/fuel_flow")),
+                        null,
+                        state -> 0xFFECF542
+                ), GalacticraftFluids.FUEL, GalacticraftFluids.FUEL_FLOWING
+        );
     }
 
     private void registerClientExtensions(RegisterClientExtensionsEvent event) {
         event.registerFluidType(new IClientFluidTypeExtensions() {
             @Override
-            public int getTintColor() {
-                return 0xFFAFEEEE;
-            }
-        }, GalacticraftFluidType.OXYGEN);
-        event.registerFluidType(new IClientFluidTypeExtensions() {
-            @Override
-            public Identifier getOverlayTexture() {
-                return Identifier.withDefaultNamespace("block/water_overlay");
-            }
-
-            @Override
-            public Identifier getStillTexture() {
-                return Identifier.withDefaultNamespace("block/water_still");
-            }
-
-            @Override
-            public Identifier getFlowingTexture() {
-                return Identifier.withDefaultNamespace("block/water_flow");
-            }
-
-            @Override
-            public int getTintColor() {
-                return 0xFF281E15;
+            public Identifier getRenderOverlayTexture(Minecraft mc) {
+                return Identifier.withDefaultNamespace("textures/misc/underwater.png");
             }
         }, GalacticraftFluidType.OIL);
-        event.registerFluidType(new IClientFluidTypeExtensions() {
-            @Override
-            public Identifier getStillTexture() {
-                return Constants.id("block/fuel_still");
-            }
-
-            @Override
-            public Identifier getFlowingTexture() {
-                return Constants.id("block/fuel_flow");
-            }
-
-            @Override
-            public int getTintColor() {
-                return 0xFFECF542;
-            }
-        }, GalacticraftFluidType.FUEL);
     }
 
     private void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {

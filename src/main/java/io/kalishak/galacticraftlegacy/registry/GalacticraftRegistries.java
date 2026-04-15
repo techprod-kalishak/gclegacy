@@ -23,9 +23,9 @@ public class GalacticraftRegistries {
 
     @SubscribeEvent
     public static void newDatapackRegistries(DataPackRegistryEvent.NewRegistry event) {
-        event.dataPackRegistry(Keys.CHECKLIST, ChecklistEntry.DIRECT_CODEC, ChecklistEntry.DIRECT_CODEC, builder -> builder.defaultKey(Checklist.EQUIP_OXYGEN_SUIT));
-        event.dataPackRegistry(Keys.SCHEMATIC, SchematicVariant.DIRECT_CODEC, SchematicVariant.DIRECT_CODEC, builder -> builder.defaultKey(SchematicVariants.TIER_2_ROCKET));
-        event.dataPackRegistry(Keys.CELESTIAL_BODY_LEVEL_DATA, CelestialBodyLevelData.DIRECT_CODEC, CelestialBodyLevelData.DIRECT_CODEC, builder -> builder.defaultKey(CelestialBodyLevelDataEntries.OVERWORLD));
+        event.dataPackRegistry(Keys.CHECKLIST, ChecklistEntry.DIRECT_CODEC, ChecklistEntry.DIRECT_CODEC, builder -> builder.sync(true).defaultKey(Checklist.EQUIP_OXYGEN_SUIT));
+        event.dataPackRegistry(Keys.SCHEMATIC, SchematicVariant.DIRECT_CODEC, SchematicVariant.DIRECT_CODEC, builder -> builder.sync(true).defaultKey(SchematicVariants.TIER_2_ROCKET));
+        event.dataPackRegistry(Keys.CELESTIAL_BODY_LEVEL_DATA, CelestialBodyLevelData.DIRECT_CODEC, CelestialBodyLevelData.DIRECT_CODEC, builder -> builder.sync(true).defaultKey(CelestialBodyLevelDataEntries.OVERWORLD));
     }
 
     public static class Keys {

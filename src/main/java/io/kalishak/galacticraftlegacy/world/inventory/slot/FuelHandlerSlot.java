@@ -9,7 +9,7 @@ import net.neoforged.neoforge.transfer.item.ItemResource;
 
 public class FuelHandlerSlot extends MutableHandlerSlot {
     public FuelHandlerSlot(ResourceHandler<ItemResource> handler, IndexModifier<ItemResource> slotModifier, int index, int xPosition, int yPosition) {
-        super(handler, slotModifier, stack -> CoalGeneratorMenu.isFuel(stack.getItemHolder()), index, xPosition, yPosition);
+        super(handler, slotModifier, stack -> CoalGeneratorMenu.isFuel(stack.typeHolder()), index, xPosition, yPosition);
     }
 
     @Override

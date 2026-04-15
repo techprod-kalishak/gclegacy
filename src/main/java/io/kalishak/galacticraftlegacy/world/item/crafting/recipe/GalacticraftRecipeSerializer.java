@@ -12,23 +12,23 @@ public final class GalacticraftRecipeSerializer {
 
     public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<CircuitRecipe>> CIRCUIT = REGISTRY.register(
             "circuit",
-            CircuitRecipe.Serializer::new
+            () -> new RecipeSerializer<>(CircuitRecipe.CODEC, CircuitRecipe.STREAM_CODEC)
     );
     public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<AnvilCompressingRecipe>> COMPRESSING = REGISTRY.register(
             "compressing",
-            () -> new CompressingRecipe.Serializer<>(AnvilCompressingRecipe::new, 200)
+            () -> CompressingRecipe.recipeSerializer(AnvilCompressingRecipe::new, 200)
     );
     public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<ElectricCompressingRecipe>> ELECTRIC_COMPRESSING = REGISTRY.register(
             "electric_compressing",
-            () -> new CompressingRecipe.Serializer<>(ElectricCompressingRecipe::new, 100)
+            () -> CompressingRecipe.recipeSerializer(ElectricCompressingRecipe::new, 100)
     );
     public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<HeatingRecipe>> HEATING = REGISTRY.register(
             "heating",
-            () -> new AbstractSmeltingRecipe.Serializer<>(HeatingRecipe::new, 100)
+            () -> AbstractSmeltingRecipe.recipeSerializer(HeatingRecipe::new, 100)
     );
     public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<ArcHeatingRecipe>> ARC_HEATING = REGISTRY.register(
             "arc_heating",
-            () -> new AbstractSmeltingRecipe.Serializer<>(ArcHeatingRecipe::new, 50)
+            () -> AbstractSmeltingRecipe.recipeSerializer(ArcHeatingRecipe::new, 50)
     );
 
     public static void init(IEventBus bus) {

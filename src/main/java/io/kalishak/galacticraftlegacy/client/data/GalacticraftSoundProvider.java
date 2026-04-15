@@ -14,5 +14,7 @@ public class GalacticraftSoundProvider extends SoundDefinitionsProvider {
     @Override
     public void registerSounds() {
         add(GalacticraftSounds.SHUTTLE, definition().with(sound(Constants.id("shuttle/shuttle"))));
+        add(GalacticraftSounds.MUSIC_SPACE_RACE, definition().with(sound(Constants.id("music/spacerace"))));
+        add(GalacticraftSounds.AMBIENT_SPACE, definition().with(sound(Constants.id("ambience/scary_scape"))));
     }
 }

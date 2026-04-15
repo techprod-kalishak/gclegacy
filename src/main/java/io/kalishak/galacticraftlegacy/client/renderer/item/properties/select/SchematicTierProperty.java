@@ -2,12 +2,12 @@ package io.kalishak.galacticraftlegacy.client.renderer.item.properties.select;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
+import io.kalishak.galacticraftlegacy.registry.SchematicVariant;
 import io.kalishak.galacticraftlegacy.world.item.FeatureTier;
 import io.kalishak.galacticraftlegacy.world.item.component.GalacticraftDataComponents;
-import io.kalishak.galacticraftlegacy.world.item.component.SchematicContent;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.item.properties.select.SelectItemModelProperty;
-import net.minecraft.core.HolderLookup;
+import net.minecraft.core.Holder;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
@@ -22,14 +22,9 @@ public record SchematicTierProperty() implements SelectItemModelProperty<Feature
 
     @Override
     public FeatureTier get(ItemStack stack, @Nullable ClientLevel level, @Nullable LivingEntity entity, int seed, ItemDisplayContext displayContext) {
-        if (level != null) {
-            SchematicContent schematic = stack.getOrDefault(GalacticraftDataComponents.SCHEMATIC, SchematicContent.DEFAULT);
-            HolderLookup.Provider registries = level.registryAccess();
+        Holder<SchematicVariant> schematic = stack.get(GalacticraftDataComponents.SCHEMATIC);
 
-            return schematic.schematic().unwrap(registries).map(schematicVariantHolder -> schematicVariantHolder.value().tier()).orElse(FeatureTier.TIER_1);
-        }
-
-        return FeatureTier.TIER_1;
+        return schematic != null ? schematic.value().tier() : FeatureTier.TIER_1;
     }
 
     @Override

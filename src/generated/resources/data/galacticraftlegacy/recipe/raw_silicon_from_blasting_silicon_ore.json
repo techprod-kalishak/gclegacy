@@ -6,7 +6,6 @@
   "group": "raw_silicon",
   "ingredient": "galacticraftlegacy:silicon_ore",
   "result": {
-    "count": 1,
     "id": "galacticraftlegacy:raw_silicon"
   }
 }

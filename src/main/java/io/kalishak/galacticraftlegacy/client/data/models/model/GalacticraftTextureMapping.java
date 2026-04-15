@@ -3,25 +3,29 @@ package io.kalishak.galacticraftlegacy.client.data.models.model;
 import io.kalishak.galacticraftlegacy.Galacticraft;
 import net.minecraft.client.data.models.model.TextureMapping;
 import net.minecraft.client.data.models.model.TextureSlot;
+import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.Block;
 
 public class GalacticraftTextureMapping {
-    public static final Identifier MACHINE = Identifier.fromNamespaceAndPath(Galacticraft.MODID, "block/machine");
+    private static final Material MACHINE = new Material(Identifier.fromNamespaceAndPath(Galacticraft.MODID, "block/machine"));
 
-    public static TextureMapping simpleMachine(Identifier base) {
+    public static TextureMapping simpleMachine(Material base) {
         return new TextureMapping()
-                .put(TextureSlot.NORTH, base.withSuffix("_front"))
-                .put(TextureSlot.SOUTH, MACHINE.withSuffix("_side"))
-                .put(TextureSlot.EAST, MACHINE.withSuffix("_energy_output"))
-                .put(TextureSlot.WEST, MACHINE.withSuffix("_side"))
-                .put(TextureSlot.UP, MACHINE.withSuffix("_top"))
-                .put(TextureSlot.DOWN, MACHINE.withSuffix("_top"))
-                .put(TextureSlot.PARTICLE, MACHINE.withSuffix("_top"));
+                .put(TextureSlot.NORTH, withSuffix(base, "_front"))
+                .put(TextureSlot.SOUTH, withSuffix(MACHINE, "_side"))
+                .put(TextureSlot.EAST, withSuffix(MACHINE, "_energy_output"))
+                .put(TextureSlot.WEST, withSuffix(MACHINE, "_side"))
+                .put(TextureSlot.UP, withSuffix(MACHINE, "_top"))
+                .put(TextureSlot.DOWN, withSuffix(MACHINE, "_top"))
+                .put(TextureSlot.PARTICLE, withSuffix(MACHINE, "_top"));
     }
 
     public static TextureMapping simpleMachine(Block block) {
-        Identifier id = TextureMapping.getBlockTexture(block);
-        return simpleMachine(id);
+        return simpleMachine(TextureMapping.getBlockTexture(block));
+    }
+
+    private static Material withSuffix(Material material, String suffix) {
+        return new Material(material.sprite().withSuffix(suffix));
     }
 }

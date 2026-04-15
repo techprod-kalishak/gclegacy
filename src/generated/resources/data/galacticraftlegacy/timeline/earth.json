@@ -1,0 +1,42 @@
+{
+  "clock": "galacticraftlegacy:moon",
+  "period_ticks": 696000,
+  "tracks": {
+    "galacticraftlegacy:visual/earth_phase": {
+      "keyframes": [
+        {
+          "ticks": 0,
+          "value": "full_earth"
+        },
+        {
+          "ticks": 24000,
+          "value": "gibbous"
+        },
+        {
+          "ticks": 48000,
+          "value": "low_illumination_gibbous"
+        },
+        {
+          "ticks": 72000,
+          "value": "very_low_illumination_gibbous"
+        },
+        {
+          "ticks": 96000,
+          "value": "half"
+        },
+        {
+          "ticks": 120000,
+          "value": "high_illumination_crescent"
+        },
+        {
+          "ticks": 144000,
+          "value": "crescent"
+        },
+        {
+          "ticks": 168000,
+          "value": "low_illumination_crescent"
+        }
+      ]
+    }
+  }
+}

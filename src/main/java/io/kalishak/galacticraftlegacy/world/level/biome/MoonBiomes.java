@@ -6,6 +6,8 @@ import io.kalishak.galacticraftlegacy.world.level.levelgen.placement.MoonPlaceme
 import net.minecraft.core.HolderGetter;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.util.ARGB;
+import net.minecraft.util.Mth;
 import net.minecraft.world.attribute.BackgroundMusic;
 import net.minecraft.world.attribute.EnvironmentAttributes;
 import net.minecraft.world.level.biome.Biome;
@@ -54,5 +56,10 @@ public class MoonBiomes {
         builder.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION, MoonPlacements.ORE_TIN_UPPER);
         builder.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION, MoonPlacements.ORE_TIN_MIDDLE);
         builder.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION, MoonPlacements.ORE_TIN_LOWER);
+    }
+
+    public static int calculateSkyColor() {
+        float temp = -2.0F / 3.0F;
+        return ARGB.opaque(Mth.hsvToRgb(0.62222224F - temp * 0.05F, 0.5F + temp * 0.1F, 1.0F));
     }
 }

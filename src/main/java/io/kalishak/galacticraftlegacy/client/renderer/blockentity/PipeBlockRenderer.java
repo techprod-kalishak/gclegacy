@@ -8,14 +8,13 @@ import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
-import net.minecraft.client.renderer.state.CameraRenderState;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
 import org.jspecify.annotations.Nullable;
 
 public class PipeBlockRenderer implements BlockEntityRenderer<ColoredPipeBlockEntity, PipeBlockEntityRenderState> {
     public PipeBlockRenderer(BlockEntityRendererProvider.Context context) {
-
     }
 
     @Override
@@ -27,11 +26,11 @@ public class PipeBlockRenderer implements BlockEntityRenderer<ColoredPipeBlockEn
     public void extractRenderState(ColoredPipeBlockEntity blockEntity, PipeBlockEntityRenderState renderState, float partialTick, Vec3 cameraPosition, ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
         BlockEntityRenderer.super.extractRenderState(blockEntity, renderState, partialTick, cameraPosition, breakProgress);
 
-        renderState.fluidColor = blockEntity.getExistingData(GalacticraftAttachments.SYNC_FLUID_STACK).map(fluidStack -> IClientFluidTypeExtensions.of(fluidStack.getFluidType()).getTintColor()).orElse(-1);
+        //renderState.fluidColor = blockEntity.getExistingData(GalacticraftAttachments.SYNC_FLUID_STACK).map(fluidStack -> IClientFluidTypeExtensions.of(fluidStack.getFluidType()).getTintColor()).orElse(-1);
     }
 
     @Override
-    public void submit(PipeBlockEntityRenderState pipeBlockEntityRenderState, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, CameraRenderState cameraRenderState) {
+    public void submit(PipeBlockEntityRenderState pipeBlockEntityRenderState, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, CameraRenderState camera) {
 
     }
 }

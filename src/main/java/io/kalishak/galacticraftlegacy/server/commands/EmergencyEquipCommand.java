@@ -79,7 +79,7 @@ public class EmergencyEquipCommand {
     static int createEquipment(LivingEntity target, EmergencyEquipment args, boolean swap) throws CommandSyntaxException {
         int swapped = 0;
 
-        if (!target.getType().is(GalacticraftTags.EntityTypes.CAN_EQUIP_GEAR)) {
+        if (!target.is(GalacticraftTags.EntityTypes.CAN_EQUIP_GEAR)) {
             throw ERROR_ITEMS_NOT_EQUPPABLE.create(target.getType(), args);
         }
 

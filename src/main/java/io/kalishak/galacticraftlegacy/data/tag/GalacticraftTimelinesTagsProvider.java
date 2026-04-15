@@ -20,13 +20,12 @@ public class GalacticraftTimelinesTagsProvider extends KeyTagProvider<Timeline> 
     @Override
     protected void addTags(HolderLookup.Provider provider) {
         tag(GalacticraftTags.Timelines.IN_ORBIT)
-                .addTag(TimelineTags.UNIVERSAL);
+                .addTag(TimelineTags.IN_OVERWORLD);
         tag(GalacticraftTags.Timelines.IN_MOON)
-                .addTag(TimelineTags.UNIVERSAL)
-                .addOptional(GalacticraftTimelines.MOON_DAY)
-                .addOptional(GalacticraftTimelines.EARTH);
+                .add(GalacticraftTimelines.MOON_DAY)
+                .add(GalacticraftTimelines.EARTH);
         tag(GalacticraftTags.Timelines.IN_MARS)
-                .addTag(TimelineTags.UNIVERSAL);
+                .add(GalacticraftTimelines.MARS_DAY);
         tag(GalacticraftTags.Timelines.IN_ASTEROIDS)
                 .addTag(TimelineTags.UNIVERSAL);
         tag(GalacticraftTags.Timelines.IN_VENUS)

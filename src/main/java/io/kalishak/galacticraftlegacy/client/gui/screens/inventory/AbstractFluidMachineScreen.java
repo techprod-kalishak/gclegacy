@@ -6,7 +6,7 @@ import io.kalishak.galacticraftlegacy.client.gui.ClientResourceHandlerTextUtils;
 import io.kalishak.galacticraftlegacy.world.inventory.AbstractMachineMenu;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.AbstractMachineBlockEntity;
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
@@ -45,29 +45,29 @@ public abstract class AbstractFluidMachineScreen<BE extends AbstractMachineBlock
     }
 
     @Override
-    protected void renderBg(GuiGraphics guiGraphics, float partialTick, int mouseX, int mouseY) {
+    public void extractBackground(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTick) {
         int i = this.leftPos;
         int j = this.topPos;
         guiGraphics.blit(RenderPipelines.GUI_TEXTURED, this.backgroundTexture, i, j, 0.0F, 0.0F, this.imageWidth, this.imageHeight, 256, 256);
-        renderSprites(guiGraphics, i, j, this.menu.getEnergyCapacity());
+        extractSprites(guiGraphics, i, j, this.menu.getEnergyCapacity());
     }
 
     @Override
-    public void renderSprites(GuiGraphics guiGraphics, int leftOffset, int topOffset, int energyCapacity) {
-        MachineScreen.super.renderSprites(guiGraphics, leftOffset, topOffset, energyCapacity);
+    public void extractSprites(GuiGraphicsExtractor guiGraphics, int leftOffset, int topOffset, int energyCapacity) {
+        MachineScreen.super.extractSprites(guiGraphics, leftOffset, topOffset, energyCapacity);
     }
 
     @Override
-    protected void renderTooltip(GuiGraphics guiGraphics, int x, int y) {
-        super.renderTooltip(guiGraphics, x, y);
+    protected void extractTooltip(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY) {
+        super.extractTooltip(guiGraphics, mouseX, mouseY);
 
         Rectangle rectangle = getEnergyBarBounds();
-        if (isHovering(rectangle.x, rectangle.y, rectangle.width, rectangle.width, x, y)) {
+        if (isHovering(rectangle.x, rectangle.y, rectangle.width, rectangle.width, mouseX, mouseY)) {
             guiGraphics.setTooltipForNextFrame(
                     this.font,
                     ClientResourceHandlerTextUtils.energyComponentWithCapacity(getEnergyStored(), this.menu.getEnergyCapacity(), style -> style.withColor(ChatFormatting.GRAY)),
-                    x,
-                    y
+                    mouseX,
+                    mouseY
             );
         }
     }

@@ -8,7 +8,6 @@ import it.unimi.dsi.fastutil.objects.Reference2IntMap;
 import it.unimi.dsi.fastutil.objects.Reference2IntOpenHashMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
@@ -187,14 +186,14 @@ public class ElectricFurnaceBlockEntity extends AbstractMachineBlockEntity imple
                 recipeHolder = furnace.quickCheck.getRecipeFor(recipeInput, level).orElse(null);
             }
 
-            if (furnace.hasEnergyToOperate() && canHeat(level.registryAccess(), recipeHolder, recipeInput, furnace.innerResourceHandler, furnace.energyHandler)) {
+            if (furnace.hasEnergyToOperate() && canHeat(recipeHolder, recipeInput, furnace.innerResourceHandler, furnace.energyHandler)) {
                 furnace.cookingTimer++;
 
                 if (furnace.cookingTimer == furnace.cookingTotalTime) {
                     furnace.cookingTimer = 0;
                     furnace.cookingTotalTime = getTotalSmeltingTime(level, furnace);
 
-                    if (heat(level.registryAccess(), recipeHolder, recipeInput, furnace.innerResourceHandler, furnace.energyHandler)) {
+                    if (heat(recipeHolder, recipeInput, furnace.innerResourceHandler, furnace.energyHandler)) {
                         furnace.setRecipeUsed(recipeHolder);
                     }
 
@@ -223,9 +222,9 @@ public class ElectricFurnaceBlockEntity extends AbstractMachineBlockEntity imple
         return furnace.quickCheck.getRecipeFor(recipeInput, level).map(recipeHolder -> recipeHolder.value().cookingTime()).orElse(100);
     }
 
-    private static boolean canHeat(RegistryAccess registryAccess, @Nullable RecipeHolder<SmeltingRecipe> recipe, SingleRecipeInput recipeInput, ResourceHandler<ItemResource> items, EnergyHandler energyHandler) {
+    private static boolean canHeat(@Nullable RecipeHolder<SmeltingRecipe> recipe, SingleRecipeInput recipeInput, ResourceHandler<ItemResource> items, EnergyHandler energyHandler) {
         if (!items.getResource(SLOT_INPUT).isEmpty() && recipe != null && energyHandler.getAmountAsInt() > BASIC_MACHINE_MAX_TRANSFER_RATE) {
-            ItemStack recipeResult = recipe.value().assemble(recipeInput, registryAccess);
+            ItemStack recipeResult = recipe.value().assemble(recipeInput);
 
             if (recipeResult.isEmpty()) {
                 return false;
@@ -248,10 +247,10 @@ public class ElectricFurnaceBlockEntity extends AbstractMachineBlockEntity imple
         return false;
     }
 
-    private static boolean heat(RegistryAccess registryAccess, @Nullable RecipeHolder<SmeltingRecipe> recipe, SingleRecipeInput recipeInput, ResourceHandler<ItemResource> items, EnergyHandler energyHandler) {
-        if (recipe != null && canHeat(registryAccess, recipe, recipeInput, items, energyHandler)) {
+    private static boolean heat(@Nullable RecipeHolder<SmeltingRecipe> recipe, SingleRecipeInput recipeInput, ResourceHandler<ItemResource> items, EnergyHandler energyHandler) {
+        if (recipe != null && canHeat(recipe, recipeInput, items, energyHandler)) {
             try (Transaction tx = Transaction.open(null)) {
-                ItemStack result = recipe.value().assemble(recipeInput, registryAccess);
+                ItemStack result = recipe.value().assemble(recipeInput);
 
                 if (!result.isEmpty() && items.insert(SLOT_RESULT, ItemResource.of(result), result.getCount(), tx) > 0) {
                     if (items.extract(ItemResource.of(recipeInput.item()), 1, tx) > 0) {

@@ -23,9 +23,9 @@ public class InventoryMixin {
     public Player player;
 
     @Inject(method = "clearOrCountMatchingItems", at = @At("TAIL"), cancellable = true)
-    private void galacticraftlegacy$clearOrCountMatchingItems(Predicate<ItemStack> stackPredicate, int maxCount, Container inventory, CallbackInfoReturnable<Integer> cir) {
+    private void galacticraftlegacy$clearOrCountMatchingItems(Predicate<ItemStack> predicate, int amountToRemove, Container craftSlots, CallbackInfoReturnable<Integer> cir) {
         int value = cir.getReturnValue();
-        int cleared = ResourcefulHelper.clearOrCountMatching(player.getData(GalacticraftAttachments.PLAYER_SPACE_DATA).getGearEquipment(), ItemUtil::getStack, stackPredicate, maxCount - value, maxCount == 0);
+        int cleared = ResourcefulHelper.clearOrCountMatching(player.getData(GalacticraftAttachments.PLAYER_SPACE_DATA).getGearEquipment(), ItemUtil::getStack, predicate, amountToRemove - value, amountToRemove == 0);
 
         if (cleared > 0) {
             cir.setReturnValue(value + cleared);

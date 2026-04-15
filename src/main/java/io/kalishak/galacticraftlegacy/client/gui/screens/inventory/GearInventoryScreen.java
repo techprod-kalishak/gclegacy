@@ -6,7 +6,7 @@ import io.kalishak.galacticraftlegacy.network.payload.ToggleGearInventoryPayload
 import io.kalishak.galacticraftlegacy.world.inventory.GearInventoryMenu;
 import io.kalishak.galacticraftlegacy.world.item.GalacticraftItems;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.*;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.*;
@@ -20,8 +20,6 @@ import net.neoforged.neoforge.client.event.ScreenEvent;
 import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 
 import java.util.function.Consumer;
-
-import static net.minecraft.client.gui.screens.inventory.InventoryScreen.renderEntityInInventoryFollowsMouse;
 
 public class GearInventoryScreen extends AbstractContainerScreen<GearInventoryMenu> {
     public static final Identifier GEAR_INVENTORY_LOCATION = Identifier.fromNamespaceAndPath(Galacticraft.MODID, "textures/gui/container/gear_inventory.png");
@@ -71,7 +69,7 @@ public class GearInventoryScreen extends AbstractContainerScreen<GearInventoryMe
         Screen screen = event.getScreen();
 
         if (screen instanceof InventoryScreen inventoryScreen) {
-            addInventoryTabs(event::addListener, inventoryScreen.getGuiLeft(), inventoryScreen.getGuiTop(), inventoryScreen.getMinecraft());
+            addInventoryTabs(event::addListener, inventoryScreen.getLeftPos(), inventoryScreen.getTopPos(), inventoryScreen.getMinecraft());
         }
     }
 
@@ -82,15 +80,15 @@ public class GearInventoryScreen extends AbstractContainerScreen<GearInventoryMe
     }
 
     @Override
-    protected void renderLabels(GuiGraphics guiGraphics, int mouseX, int mouseY) {
-        guiGraphics.drawString(this.font, this.title, this.titleLabelX, this.titleLabelY, -12566464, false);
+    protected void extractLabels(GuiGraphicsExtractor graphics, int mouseX, int mouseY) {
+        graphics.text(this.font, this.title, this.titleLabelX, this.titleLabelY, -12566464, false);
     }
 
     @Override
-    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
-        super.render(guiGraphics, mouseX, mouseY, partialTicks);
-        renderTooltip(guiGraphics, mouseX, mouseY);
-        this.effects.render(guiGraphics, mouseX, mouseY);
+    public void extractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
+        super.extractRenderState(graphics, mouseX, mouseY, a);
+        extractTooltip(graphics, mouseX, mouseY);
+        this.effects.extractRenderState(graphics, mouseX, mouseY);
         this.xMouse = mouseX;
         this.yMouse = mouseY;
     }
@@ -101,10 +99,11 @@ public class GearInventoryScreen extends AbstractContainerScreen<GearInventoryMe
     }
 
     @Override
-    protected void renderBg(GuiGraphics guiGraphics, float partialTick, int mouseX, int mouseY) {
+    public void extractBackground(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTicks) {
+        super.extractBackground(graphics, mouseX, mouseY, partialTicks);
         int i = this.leftPos;
         int j = this.topPos;
-        guiGraphics.blit(RenderPipelines.GUI_TEXTURED, GEAR_INVENTORY_LOCATION, i, j, 0.0F, 0.0F, this.imageWidth, this.imageHeight, 256, 256);
-        renderEntityInInventoryFollowsMouse(guiGraphics, i + 7, j + 7, i + 60, j + 78, 30, 0.0625F, this.xMouse, this.yMouse, this.minecraft.player);
+        graphics.blit(RenderPipelines.GUI_TEXTURED, GEAR_INVENTORY_LOCATION, i, j, 0.0F, 0.0F, this.imageWidth, this.imageHeight, 256, 256);
+        InventoryScreen.extractEntityInInventoryFollowsMouse(graphics, i + 7, j + 7, i + 60, j + 78, 30, 0.0625F, this.xMouse, this.yMouse, this.minecraft.player);
     }
 }

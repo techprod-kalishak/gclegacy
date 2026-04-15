@@ -2,12 +2,21 @@ package io.kalishak.galacticraftlegacy.client.item;
 
 import com.mojang.serialization.MapCodec;
 import io.kalishak.galacticraftlegacy.world.item.component.GalacticraftDataComponents;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.color.item.ItemTintSource;
 import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.renderer.block.FluidRenderer;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.LiquidBlock;
+import net.neoforged.neoforge.client.color.item.FluidContentsTint;
 import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
+import net.neoforged.neoforge.client.fluid.FluidTintSource;
+import net.neoforged.neoforge.client.fluid.FluidTintSources;
+import net.neoforged.neoforge.fluids.FluidInstance;
 import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.FluidStackTemplate;
 import net.neoforged.neoforge.fluids.SimpleFluidContent;
 import net.neoforged.neoforge.transfer.fluid.FluidUtil;
 import org.jspecify.annotations.Nullable;
@@ -17,15 +26,13 @@ public record ColorByFluid() implements ItemTintSource {
 
     @Override
     public int calculate(ItemStack stack, @Nullable ClientLevel level, @Nullable LivingEntity entity) {
-        SimpleFluidContent fluidContent = stack.getOrDefault(GalacticraftDataComponents.FLUID_TANK, SimpleFluidContent.EMPTY);
-
-        if (!fluidContent.isEmpty()) {
-            IClientFluidTypeExtensions extensions = IClientFluidTypeExtensions.of(fluidContent.getFluidType());
-
-            return extensions.getTintColor();
-        }
-
-        return 0;
+        FluidStack fluid = FluidUtil.getFirstStackContained(stack);
+        FluidTintSource tintSource = Minecraft.getInstance()
+                .getModelManager()
+                .getFluidStateModelSet()
+                .get(fluid.getFluid().defaultFluidState())
+                .fluidTintSource();
+        return tintSource != null ? tintSource.colorAsStack(fluid) : -1;
     }
 
     @Override

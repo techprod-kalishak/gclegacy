@@ -3,7 +3,6 @@ package io.kalishak.galacticraftlegacy.data;
 import io.kalishak.galacticraftlegacy.registry.ChecklistEntry;
 import io.kalishak.galacticraftlegacy.registry.GalacticraftRegistries;
 import io.kalishak.galacticraftlegacy.Constants;
-import io.kalishak.galacticraftlegacy.registry.SchematicVariant;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
@@ -13,13 +12,12 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.timeline.Timeline;
 
 public final class GalacticraftTags {
-    public static final TagKey<SchematicVariant> PLACEABLE_SCHEMATICS = tagKey(GalacticraftRegistries.Keys.SCHEMATIC, "placeable");
-
     private static <R> TagKey<R> tagKey(ResourceKey<? extends Registry<R>> registryKey, String tagKey) {
         return TagKey.create(registryKey, Constants.id(tagKey));
     }
@@ -78,6 +76,12 @@ public final class GalacticraftTags {
 
     public static class DamageTypes {
         public static final TagKey<DamageType> BYPASSES_SHIELD_CONTROLLER = tagKey(Registries.DAMAGE_TYPE, "bypasses_shield_controller");
+    }
+
+    public static class DimensionTypes {
+        public static final TagKey<DimensionType> OPEN_SPACE = tagKey(Registries.DIMENSION_TYPE, "open_space");
+        public static final TagKey<DimensionType> REQUIRES_CRYOCHAMBER = tagKey(Registries.DIMENSION_TYPE, "requires_cryochamber");
+        public static final TagKey<DimensionType> HAS_DISABLED_ROCKETS = tagKey(Registries.DIMENSION_TYPE, "has_disabled_rockets");
     }
 
     public static class EntityTypes {

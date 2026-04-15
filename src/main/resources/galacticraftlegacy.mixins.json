@@ -3,6 +3,7 @@
   "package": "io.kalishak.galacticraftlegacy.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "BedBlockMixin",
     "InventoryMixin"
   ],
   "client": [

@@ -59,7 +59,7 @@ public class CoalGeneratorMenu extends AbstractContainerMenu {
             swappedStack = newStack.copy();
 
             if (index != 0) {
-                if (isFuel(newStack.getItemHolder())) {
+                if (isFuel(newStack.typeHolder())) {
                     if (!this.moveItemStackTo(newStack, 0, 1, false)) {
                         return ItemStack.EMPTY;
                     }

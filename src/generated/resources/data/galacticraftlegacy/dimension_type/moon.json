@@ -1,15 +1,35 @@
 {
   "ambient_light": 0.0,
   "attributes": {
+    "minecraft:audio/ambient_sounds": {
+      "mood": {
+        "block_search_extent": 8,
+        "offset": 2.0,
+        "sound": "galacticraftlegacy:scary_scape",
+        "tick_delay": 12000
+      }
+    },
+    "minecraft:audio/background_music": {
+      "default": {
+        "max_delay": 265500,
+        "min_delay": 88500,
+        "sound": "galacticraftlegacy:spacerace"
+      }
+    },
     "minecraft:gameplay/bed_rule": {
       "can_set_spawn": "never",
       "can_sleep": "never",
-      "explodes": true
+      "error_message": {
+        "translate": "block.galacticraftlegacy.bed.sleep_in_cryo_chamber"
+      }
     },
-    "minecraft:gameplay/water_evaporates": true
+    "minecraft:gameplay/water_evaporates": true,
+    "minecraft:visual/sky_color": "#9097ff"
   },
   "coordinate_scale": 1.0,
+  "default_clock": "galacticraftlegacy:moon",
   "has_ceiling": false,
+  "has_ender_dragon_fight": false,
   "has_skylight": false,
   "height": 128,
   "infiniburn": "#galacticraftlegacy:infiniburn_open_space",

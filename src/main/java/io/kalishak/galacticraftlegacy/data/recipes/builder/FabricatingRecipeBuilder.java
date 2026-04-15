@@ -1,20 +1,22 @@
 package io.kalishak.galacticraftlegacy.data.recipes.builder;
 
+import io.kalishak.galacticraftlegacy.Constants;
 import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.CircuitRecipe;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementRequirements;
 import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.Criterion;
 import net.minecraft.advancements.criterion.RecipeUnlockedTrigger;
+import net.minecraft.core.Holder;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
-import net.minecraft.world.level.ItemLike;
 import org.jspecify.annotations.Nullable;
 
 import java.util.LinkedHashMap;
@@ -22,19 +24,19 @@ import java.util.Map;
 
 public class FabricatingRecipeBuilder implements RecipeBuilder {
     private final RecipeCategory category;
-    private final ItemStack result;
+    private final ItemStackTemplate result;
     private final Ingredient ingredient;
     private final Map<String, Criterion<?>> criteria = new LinkedHashMap<>();
     private @Nullable String groupName;
 
-    private FabricatingRecipeBuilder(RecipeCategory category, ItemStack result, Ingredient ingredient) {
+    private FabricatingRecipeBuilder(RecipeCategory category, ItemStackTemplate result, Ingredient ingredient) {
         this.category = category;
         this.result = result;
         this.ingredient = ingredient;
     }
 
-    public static FabricatingRecipeBuilder classic(ItemLike result, int count, Ingredient mainIngredient) {
-        return new FabricatingRecipeBuilder(RecipeCategory.MISC, new ItemStack(result, count), mainIngredient);
+    public static FabricatingRecipeBuilder classic(Holder<Item> result, int count, Ingredient mainIngredient) {
+        return new FabricatingRecipeBuilder(RecipeCategory.MISC, new ItemStackTemplate(result, count), mainIngredient);
     }
 
     @Override
@@ -50,8 +52,8 @@ public class FabricatingRecipeBuilder implements RecipeBuilder {
     }
 
     @Override
-    public Item getResult() {
-        return this.result.getItem();
+    public ResourceKey<Recipe<?>> defaultId() {
+        return Constants.key(Registries.RECIPE, "basic_wafer");
     }
 
     @Override

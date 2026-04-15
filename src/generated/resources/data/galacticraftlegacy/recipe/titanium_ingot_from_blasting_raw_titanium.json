@@ -6,7 +6,6 @@
   "group": "titanium_ingot",
   "ingredient": "galacticraftlegacy:raw_titanium",
   "result": {
-    "count": 1,
     "id": "galacticraftlegacy:titanium_ingot"
   }
 }

@@ -28,6 +28,8 @@ public class GalacticraftLanguageProvider extends LanguageProvider {
         add("itemGroup.galacticraftlegacy.blocks", "Galacticraft Legacy Blocks");
         add("itemGroup.galacticraftlegacy.items", "Galacticraft Legacy Items");
 
+        add("block.galacticraftlegacy.bed.sleep_in_cryo_chamber", "I should sleep in a Cryo-chamber");
+
         add("container.coal_generator.generating", "Generating");
         add("container.coal_generator.not_generating", "Not generating");
         add("container.coal_generator.heat_level", "Hull Heat: %s");

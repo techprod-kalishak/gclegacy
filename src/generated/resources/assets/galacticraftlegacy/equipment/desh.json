@@ -5,6 +5,11 @@
         "texture": "galacticraftlegacy:desh"
       }
     ],
+    "humanoid_baby": [
+      {
+        "texture": "galacticraftlegacy:desh"
+      }
+    ],
     "humanoid_leggings": [
       {
         "texture": "galacticraftlegacy:desh"

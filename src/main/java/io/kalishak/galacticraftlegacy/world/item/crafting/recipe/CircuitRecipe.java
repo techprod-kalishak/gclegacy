@@ -19,6 +19,7 @@ import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.item.crafting.display.RecipeDisplay;
@@ -32,10 +33,24 @@ import org.jspecify.annotations.Nullable;
 import java.util.List;
 
 public class CircuitRecipe extends MachineRecipe<SimpleResourceInput> {
+    public static final MapCodec<CircuitRecipe> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+            Codec.STRING.optionalFieldOf("group", "").forGetter(CircuitRecipe::group),
+            Ingredient.CODEC.fieldOf("ingredients").forGetter(circuitRecipe -> circuitRecipe.ingredient),
+            ItemStackTemplate.CODEC.fieldOf("result").forGetter(CircuitRecipe::result),
+            Codec.BOOL.optionalFieldOf("is_classic_recipe", true).forGetter(CircuitRecipe::isClassicRecipe)
+    ).apply(instance, CircuitRecipe::new));
+    public static final StreamCodec<RegistryFriendlyByteBuf, CircuitRecipe> STREAM_CODEC = StreamCodec.composite(
+            ByteBufCodecs.STRING_UTF8, CircuitRecipe::group,
+            Ingredient.CONTENTS_STREAM_CODEC, circuitRecipe -> circuitRecipe.ingredient,
+            ItemStackTemplate.STREAM_CODEC, CircuitRecipe::result,
+            ByteBufCodecs.BOOL, CircuitRecipe::isClassicRecipe,
+            CircuitRecipe::new
+    );
+
     private final Ingredient ingredient;
     private final boolean isClassicRecipe; //TODO make it usable
 
-    public CircuitRecipe(String group, Ingredient ingredient, ItemStack result, boolean isClassicRecipe) {
+    public CircuitRecipe(String group, Ingredient ingredient, ItemStackTemplate result, boolean isClassicRecipe) {
         super(group, result);
         this.ingredient = ingredient;
         this.isClassicRecipe = isClassicRecipe;
@@ -52,7 +67,7 @@ public class CircuitRecipe extends MachineRecipe<SimpleResourceInput> {
     }
 
     @Override
-    public ItemStack disassembleIngredients(SimpleResourceInput simpleResourceInput, @Nullable Transaction tx, HolderLookup.Provider registries, boolean simulate) {
+    public ItemStack disassembleIngredients(SimpleResourceInput simpleResourceInput, @Nullable Transaction tx, HolderGetter.Provider registries, boolean simulate) {
         if (!simulate) {
             try (Transaction childTx = Transaction.open(tx)) {
                 for (int i = 0; i < simpleResourceInput.size() - 1; i++) {
@@ -69,18 +84,18 @@ public class CircuitRecipe extends MachineRecipe<SimpleResourceInput> {
             NonNullList<Ingredient> items = withBase(registries.lookupOrThrow(Registries.ITEM), this.ingredient);
 
             for (int i = 0; i < simpleResourceInput.size() - 1; i++) {
-                if (!items.get(i).acceptsItem(simpleResourceInput.getResource(i).getHolder())) {
+                if (!items.get(i).acceptsItem(simpleResourceInput.getResource(i).typeHolder())) {
                     return ItemStack.EMPTY;
                 }
             }
         }
 
-        return assemble(simpleResourceInput, registries);
+        return assemble(simpleResourceInput);
     }
 
     @Override
     public boolean matches(SimpleResourceInput input, Level level) {
-        return this.ingredient.acceptsItem(input.getItem(CircuitFabricatorBlockEntity.SLOT_INGREDIENT).getItemHolder());
+        return this.ingredient.acceptsItem(input.getItem(CircuitFabricatorBlockEntity.SLOT_INGREDIENT).typeHolder());
     }
 
     private static NonNullList<Ingredient> withBase(HolderGetter<Item> itemHolderGetter, Ingredient mainIngredient) {
@@ -124,31 +139,5 @@ public class CircuitRecipe extends MachineRecipe<SimpleResourceInput> {
 
     private boolean isClassicRecipe() {
         return this.isClassicRecipe;
-    }
-
-    public static class Serializer implements RecipeSerializer<CircuitRecipe> {
-        public static final MapCodec<CircuitRecipe> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
-                Codec.STRING.optionalFieldOf("group", "").forGetter(CircuitRecipe::group),
-                Ingredient.CODEC.fieldOf("ingredients").forGetter(circuitRecipe -> circuitRecipe.ingredient),
-                ItemStack.CODEC.fieldOf("result").forGetter(CircuitRecipe::result),
-                Codec.BOOL.optionalFieldOf("is_classic_recipe", true).forGetter(CircuitRecipe::isClassicRecipe)
-        ).apply(instance, CircuitRecipe::new));
-        public static final StreamCodec<RegistryFriendlyByteBuf, CircuitRecipe> STREAM_CODEC = StreamCodec.composite(
-                ByteBufCodecs.STRING_UTF8, CircuitRecipe::group,
-                Ingredient.CONTENTS_STREAM_CODEC, circuitRecipe -> circuitRecipe.ingredient,
-                ItemStack.STREAM_CODEC, CircuitRecipe::result,
-                ByteBufCodecs.BOOL, CircuitRecipe::isClassicRecipe,
-                CircuitRecipe::new
-        );
-
-        @Override
-        public MapCodec<CircuitRecipe> codec() {
-            return CODEC;
-        }
-
-        @Override
-        public StreamCodec<RegistryFriendlyByteBuf, CircuitRecipe> streamCodec() {
-            return STREAM_CODEC;
-        }
     }
 }

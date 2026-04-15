@@ -1,7 +1,9 @@
 package io.kalishak.galacticraftlegacy.world.attribute;
 
 import io.kalishak.galacticraftlegacy.Galacticraft;
+import io.kalishak.galacticraftlegacy.world.level.EarthPhase;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.world.attribute.AttributeType;
 import net.minecraft.world.attribute.AttributeTypes;
 import net.minecraft.world.attribute.EnvironmentAttribute;
 import net.neoforged.bus.api.IEventBus;
@@ -18,13 +20,13 @@ public final class GalacticraftEnvironmentAttributes {
                     .syncable()
                     .build()
     );
-//    public static final DeferredHolder<EnvironmentAttribute<?>, EnvironmentAttribute<EarthPhase>> EARTH_PHASE = REGISTRY.register(
-//            "visual/earth_phase",
-//            () -> EnvironmentAttribute.builder(GalacticraftAttributeTypes.EARTH_PHASE.get())
-//                    .defaultValue(EarthPhase.FULL_EARTH)
-//                    .syncable()
-//                    .build()
-//    );
+    public static final DeferredHolder<EnvironmentAttribute<?>, EnvironmentAttribute<EarthPhase>> EARTH_PHASE = REGISTRY.register(
+            "visual/earth_phase",
+            () -> EnvironmentAttribute.builder(GalacticraftAttributeTypes.EARTH_PHASE)
+                    .defaultValue(EarthPhase.FULL_EARTH)
+                    .syncable()
+                    .build()
+    );
 
     public static void init(IEventBus bus) {
         REGISTRY.register(bus);

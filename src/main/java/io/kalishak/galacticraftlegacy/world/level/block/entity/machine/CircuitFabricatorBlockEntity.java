@@ -123,7 +123,7 @@ public class CircuitFabricatorBlockEntity extends AbstractMachineBlockEntity imp
         if (hasRequiredIngredients(items, 1, 6) && recipeHolder != null) {
             try (Transaction tx = Transaction.open(parentTx)) {
                 if (energyHandler.extract(CircuitFabricatorBlockEntity.BASIC_MACHINE_MAX_TRANSFER_RATE, tx) > 0) {
-                    ItemStack assembledResult = recipeHolder.value().assemble(simpleResourceInput, registryAccess);
+                    ItemStack assembledResult = recipeHolder.value().assemble(simpleResourceInput);
 
                     if (assembledResult.isEmpty()) return false;
 
@@ -147,7 +147,7 @@ public class CircuitFabricatorBlockEntity extends AbstractMachineBlockEntity imp
                 if (energyHandler.extract(CircuitFabricatorBlockEntity.BASIC_MACHINE_MAX_TRANSFER_RATE, tx) > 0) {
                     ItemStack assembledResult = recipeHolder.value().disassembleIngredients(simpleResourceInput, tx, registryAccess, false);
 
-                    if (items.insert(SLOT_OUTPUT, ItemResource.of(assembledResult.getItemHolder()), assembledResult.getCount(), tx) > 0) {
+                    if (items.insert(SLOT_OUTPUT, ItemResource.of(assembledResult.typeHolder()), assembledResult.getCount(), tx) > 0) {
                         tx.commit();
 
                         return true;

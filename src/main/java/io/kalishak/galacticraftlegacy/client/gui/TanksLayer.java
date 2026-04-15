@@ -7,7 +7,7 @@ import io.kalishak.galacticraftlegacy.attachment.level.CelestialBodyLevelData;
 import io.kalishak.galacticraftlegacy.world.entity.GearEquipmentSlot;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
@@ -23,14 +23,14 @@ public class TanksLayer extends GearLayer {
     private static final Identifier FILLED_TANK_LOCATION = Constants.id("hud/filled_tank");
 
     @Override
-    public void render(GuiGraphics guiGraphics, DeltaTracker deltaTracker) {
+    public void render(GuiGraphicsExtractor graphics, DeltaTracker deltaTracker) {
         if (isVisible(Minecraft.getInstance().level, Minecraft.getInstance().player)) {
             ItemStack tank = getStackFromSlot(GearEquipmentSlot.TANK);
             ItemStack additionalTank = getStackFromSlot(GearEquipmentSlot.ADDITIONAL_TANK);
             ClientConfig.OxygenTankPosition pos = ClientConfig.OXYGEN_TANKS_POSITION.get();
 
-            int width = guiGraphics.guiWidth();
-            int height = guiGraphics.guiHeight();
+            int width = graphics.guiWidth();
+            int height = graphics.guiHeight();
             int leftX = 10;
             int rightX = 30;
             int topY = height - 57;
@@ -44,21 +44,21 @@ public class TanksLayer extends GearLayer {
                 topY = 10;
             }
 
-            renderVisibleTank(guiGraphics, leftX, topY, tank);
-            renderVisibleTank(guiGraphics, rightX, topY, additionalTank);
+            renderVisibleTank(graphics, leftX, topY, tank);
+            renderVisibleTank(graphics, rightX, topY, additionalTank);
         }
     }
 
-    private void renderVisibleTank(GuiGraphics guiGraphics, int x, int y, ItemStack tank) {
+    private void renderVisibleTank(GuiGraphicsExtractor graphics, int x, int y, ItemStack tank) {
         if (!tank.isEmpty()) {
-            guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, EMPTY_TANK_LOCATION, 19, 47, 0, 0, x, y, 19, 47);
+            graphics.blitSprite(RenderPipelines.GUI_TEXTURED, EMPTY_TANK_LOCATION, 19, 47, 0, 0, x, y, 19, 47);
 
             ResourceHandler<FluidResource> additionalTankFluid = tank.getCapability(Capabilities.Fluid.ITEM, ItemAccess.forStack(tank));
 
             if (additionalTankFluid != null) {
                 float fill = (float) additionalTankFluid.getAmountAsInt(0) / (float) additionalTankFluid.getCapacityAsInt(0, additionalTankFluid.getResource(0));
 
-                guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, FILLED_TANK_LOCATION, 17, 45, 0, 0, x + 1, y + 1, 17, 45 - (int) Math.floor(fill));
+                graphics.blitSprite(RenderPipelines.GUI_TEXTURED, FILLED_TANK_LOCATION, 17, 45, 0, 0, x + 1, y + 1, 17, 45 - (int) Math.floor(fill));
             }
         }
     }

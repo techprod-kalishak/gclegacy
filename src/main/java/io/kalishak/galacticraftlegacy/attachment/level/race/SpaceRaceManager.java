@@ -2,6 +2,7 @@ package io.kalishak.galacticraftlegacy.attachment.level.race;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import io.kalishak.galacticraftlegacy.Constants;
 import io.kalishak.galacticraftlegacy.attachment.GalacticraftAttachments;
 import it.unimi.dsi.fastutil.objects.Object2ObjectMap;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
@@ -16,7 +17,7 @@ import org.jspecify.annotations.Nullable;
 import java.util.*;
 
 public class SpaceRaceManager extends SavedData {
-    public static final SavedDataType<SpaceRaceManager> SAVE_DATA_ID = new SavedDataType<>("space_rane_manager", SpaceRaceManager::new, SpaceRaceManager.CODEC);
+    public static final SavedDataType<SpaceRaceManager> SAVE_DATA_ID = new SavedDataType<>(Constants.id("space_rane_manager"), SpaceRaceManager::new, SpaceRaceManager.CODEC);
     public static final Codec<SpaceRaceManager> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             Codec.STRING.listOf().fieldOf("TeamNames").forGetter(SpaceRaceManager::listTeamsNames),
             SpaceRaceTeam.CODEC.listOf().fieldOf("Teams").forGetter(SpaceRaceManager::listTeams)

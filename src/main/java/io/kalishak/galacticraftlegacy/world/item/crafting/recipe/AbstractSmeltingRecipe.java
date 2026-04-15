@@ -6,12 +6,14 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.kalishak.galacticraftlegacy.world.item.crafting.GalacticraftRecipeBookCategories;
 import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.input.SimpleResourceInput;
 import net.minecraft.core.Holder;
+import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.item.crafting.display.RecipeDisplay;
 import net.minecraft.world.level.Level;
@@ -29,7 +31,7 @@ public abstract class AbstractSmeltingRecipe extends MachineRecipe<SimpleResourc
     protected final Ingredient ingredient;
     protected final int cookingTime;
 
-    protected AbstractSmeltingRecipe(String group, CookingBookCategory category, Ingredient ingredient, ItemStack result, int cookingTime) {
+    protected AbstractSmeltingRecipe(String group, CookingBookCategory category, Ingredient ingredient, ItemStackTemplate result, int cookingTime) {
         super(group, result);
         this.category = category;
         this.ingredient = ingredient;
@@ -53,24 +55,24 @@ public abstract class AbstractSmeltingRecipe extends MachineRecipe<SimpleResourc
 
     @Override
     public boolean matches(SimpleResourceInput input, Level level) {
-        return this.ingredient.acceptsItem(input.getResource(0).getHolder());
+        return this.ingredient.acceptsItem(input.getResource(0).typeHolder());
     }
 
     @Override
-    public ItemStack disassembleIngredients(SimpleResourceInput resourceInput, @Nullable Transaction tx, HolderLookup.Provider registries, boolean simulate) {
+    public ItemStack disassembleIngredients(SimpleResourceInput resourceInput, @Nullable Transaction tx, HolderGetter.Provider registries, boolean simulate) {
         ItemResource itemResource = resourceInput.getResource(0);
 
         if (itemResource.isEmpty()) return ItemStack.EMPTY;
 
         try (Transaction childTx = Transaction.open(tx)) {
-            if (this.ingredient.acceptsItem(itemResource.getHolder())) {
+            if (this.ingredient.acceptsItem(itemResource.typeHolder())) {
                 if (resourceInput.extract(0, itemResource, 1, childTx) > 0) {
 
                     if (!simulate) {
                         childTx.commit();
                     }
 
-                    return assemble(resourceInput, registries);
+                    return assemble(resourceInput);
                 }
             }
         }
@@ -106,39 +108,26 @@ public abstract class AbstractSmeltingRecipe extends MachineRecipe<SimpleResourc
 
     @FunctionalInterface
     public interface Factory<T extends AbstractSmeltingRecipe> {
-        T create(String group, CookingBookCategory category, Ingredient ingredient, ItemStack result, int cookingTime);
+        T create(String group, CookingBookCategory category, Ingredient ingredient, ItemStackTemplate result, int cookingTime);
     }
 
-    public static class Serializer<T extends AbstractSmeltingRecipe> implements RecipeSerializer<T> {
-        private final MapCodec<T> codec;
-        private final StreamCodec<RegistryFriendlyByteBuf, T> streamCodec;
-
-        public Serializer(Factory<T> factory, int defaultCookingTime) {
-            this.codec = RecordCodecBuilder.mapCodec(instance -> instance.group(
-                    Codec.STRING.optionalFieldOf("group", "").forGetter(AbstractSmeltingRecipe::group),
-                    CookingBookCategory.CODEC.fieldOf("category").orElse(CookingBookCategory.MISC).forGetter(AbstractSmeltingRecipe::category),
-                    Ingredient.CODEC.fieldOf("ingredient").forGetter(AbstractSmeltingRecipe::ingredient),
-                    ItemStack.CODEC.fieldOf("result").forGetter(AbstractSmeltingRecipe::result),
-                    Codec.INT.fieldOf("cookingtime").orElse(defaultCookingTime).forGetter(AbstractSmeltingRecipe::cookingTime)
-            ).apply(instance, factory::create));
-            this.streamCodec = StreamCodec.composite(
-                    ByteBufCodecs.STRING_UTF8, AbstractSmeltingRecipe::group,
-                    CookingBookCategory.STREAM_CODEC, AbstractSmeltingRecipe::category,
-                    Ingredient.CONTENTS_STREAM_CODEC, AbstractSmeltingRecipe::ingredient,
-                    ItemStack.STREAM_CODEC, AbstractSmeltingRecipe::result,
-                    ByteBufCodecs.INT, AbstractSmeltingRecipe::cookingTime,
-                    factory::create
-            );
-        }
-
-        @Override
-        public MapCodec<T> codec() {
-            return this.codec;
-        }
-
-        @Override
-        public StreamCodec<RegistryFriendlyByteBuf, T> streamCodec() {
-            return this.streamCodec;
-        }
+    public static <T extends AbstractSmeltingRecipe> RecipeSerializer<T> recipeSerializer(Factory<T> factory, int defaultCookingTime) {
+        return new RecipeSerializer<>(
+                RecordCodecBuilder.mapCodec(instance -> instance.group(
+                        Codec.STRING.optionalFieldOf("group", "").forGetter(AbstractSmeltingRecipe::group),
+                        CookingBookCategory.CODEC.fieldOf("category").orElse(CookingBookCategory.MISC).forGetter(AbstractSmeltingRecipe::category),
+                        Ingredient.CODEC.fieldOf("ingredient").forGetter(AbstractSmeltingRecipe::ingredient),
+                        ItemStackTemplate.CODEC.fieldOf("result").forGetter(AbstractSmeltingRecipe::result),
+                        Codec.INT.fieldOf("cookingtime").orElse(defaultCookingTime).forGetter(AbstractSmeltingRecipe::cookingTime)
+                ).apply(instance, factory::create)),
+                StreamCodec.composite(
+                        ByteBufCodecs.STRING_UTF8, AbstractSmeltingRecipe::group,
+                        CookingBookCategory.STREAM_CODEC, AbstractSmeltingRecipe::category,
+                        Ingredient.CONTENTS_STREAM_CODEC, AbstractSmeltingRecipe::ingredient,
+                        ItemStackTemplate.STREAM_CODEC, AbstractSmeltingRecipe::result,
+                        ByteBufCodecs.INT, AbstractSmeltingRecipe::cookingTime,
+                        factory::create
+                )
+        );
     }
 }

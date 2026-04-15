@@ -11,37 +11,36 @@ import io.kalishak.galacticraftlegacy.world.entity.FallingParachest;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.model.object.chest.ChestModel;
 import net.minecraft.client.renderer.SubmitNodeCollector;
-import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.rendertype.RenderTypes;
-import net.minecraft.client.renderer.state.CameraRenderState;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.client.resources.model.Material;
-import net.minecraft.client.resources.model.MaterialSet;
+import net.minecraft.client.resources.model.sprite.SpriteGetter;
+import net.minecraft.client.resources.model.sprite.SpriteId;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.ChestBlock;
 
 public class FallingParachestRenderer extends EntityRenderer<FallingParachest, ParachestRenderState> implements ParachuteRenderable<ParachestRenderState> {
-    private final MaterialSet materials;
+    private final SpriteGetter spriteGetter;
     private final ChestModel chestModel;
     private final ParachuteModel<ParachestRenderState> parachuteModel;
 
     public FallingParachestRenderer(EntityRendererProvider.Context cxt) {
         super(cxt);
-        this.materials = cxt.getMaterials();
+        this.spriteGetter = cxt.getSprites();
         this.parachuteModel = new ParachuteModel<>(cxt.bakeLayer(GalacticraftModelLayers.PARACHUTE));
         this.chestModel = new ChestModel(cxt.bakeLayer(ModelLayers.CHEST));
         this.shadowRadius = 0.5F;
     }
 
     @Override
-    public void submit(ParachestRenderState renderState, PoseStack poseStack, SubmitNodeCollector nodeCollector, CameraRenderState cameraRenderState) {
+    public void submit(ParachestRenderState renderState, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, CameraRenderState camera) {
         poseStack.pushPose();
         poseStack.translate(0.5F, 0.5F, 0.5F);
         poseStack.mulPose(Axis.YP.rotationDegrees(-renderState.angle));
         //poseStack.translate(-1F, -1F, -1F);
-        nodeCollector.submitModel(
+        submitNodeCollector.submitModel(
                 this.chestModel,
                 0.0F,
                 poseStack,
@@ -49,7 +48,7 @@ public class FallingParachestRenderer extends EntityRenderer<FallingParachest, P
                 renderState.lightCoords,
                 OverlayTexture.NO_OVERLAY,
                 -1,
-                this.materials.get(GalacticraftSheets.PARACHEST),
+                this.spriteGetter.get(GalacticraftSheets.PARACHEST),
                 0,
                 null
         );
@@ -57,11 +56,11 @@ public class FallingParachestRenderer extends EntityRenderer<FallingParachest, P
         poseStack.pushPose();
         poseStack.translate(0.5D, 2.2D, 0.5D);
         poseStack.mulPose(Axis.ZP.rotationDegrees(180.0F));
-        renderParachute(poseStack, nodeCollector, -1, renderState);
+        renderParachute(poseStack, submitNodeCollector, -1, renderState);
         poseStack.popPose();
 
         poseStack.popPose();
-        super.submit(renderState, poseStack, nodeCollector, cameraRenderState);
+        super.submit(renderState, poseStack, submitNodeCollector, camera);
     }
 
     @Override
@@ -83,12 +82,12 @@ public class FallingParachestRenderer extends EntityRenderer<FallingParachest, P
     }
 
     @Override
-    public Material getParachuteMaterial(ParachestRenderState renderState) {
+    public SpriteId getParachuteMaterial(ParachestRenderState renderState) {
         return GalacticraftSheets.getParachuteMaterial(renderState.parachuteColor);
     }
 
     @Override
-    public MaterialSet materials() {
-        return this.materials;
+    public SpriteGetter spriteGetter() {
+        return this.spriteGetter;
     }
 }

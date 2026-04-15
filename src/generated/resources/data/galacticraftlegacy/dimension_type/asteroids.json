@@ -4,12 +4,16 @@
     "minecraft:gameplay/bed_rule": {
       "can_set_spawn": "never",
       "can_sleep": "never",
-      "explodes": true
+      "error_message": {
+        "translate": "block.galacticraftlegacy.bed.sleep_in_cryo_chamber"
+      }
     },
     "minecraft:gameplay/water_evaporates": true
   },
   "coordinate_scale": 1.0,
+  "default_clock": "galacticraftlegacy:asteroids",
   "has_ceiling": false,
+  "has_ender_dragon_fight": false,
   "has_skylight": true,
   "height": 256,
   "infiniburn": "#galacticraftlegacy:infiniburn_open_space",

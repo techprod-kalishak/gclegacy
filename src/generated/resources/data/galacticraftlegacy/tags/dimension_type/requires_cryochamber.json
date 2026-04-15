@@ -1,0 +1,24 @@
+{
+  "values": [
+    {
+      "id": "galacticraftlegacy:overworld_orbit",
+      "required": false
+    },
+    {
+      "id": "galacticraftlegacy:moon",
+      "required": false
+    },
+    {
+      "id": "galacticraftlegacy:mars",
+      "required": false
+    },
+    {
+      "id": "galacticraftlegacy:venus",
+      "required": false
+    },
+    {
+      "id": "galacticraftlegacy:asteroids",
+      "required": false
+    }
+  ]
+}

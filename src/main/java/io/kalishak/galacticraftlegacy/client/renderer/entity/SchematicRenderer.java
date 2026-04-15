@@ -14,7 +14,7 @@ import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.client.renderer.rendertype.RenderTypes;
-import net.minecraft.client.renderer.state.CameraRenderState;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -34,7 +34,7 @@ public class SchematicRenderer extends EntityRenderer<SchematicEntity, Schematic
     }
 
     @Override
-    public void submit(SchematicRenderState renderState, PoseStack poseStack, SubmitNodeCollector nodeCollector, CameraRenderState cameraRenderState) {
+    public void submit(SchematicRenderState renderState, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, CameraRenderState camera) {
         SchematicVariant schematicVariant = renderState.schematicVariant;
         
         if (schematicVariant != null) {
@@ -42,9 +42,9 @@ public class SchematicRenderer extends EntityRenderer<SchematicEntity, Schematic
             poseStack.mulPose(Axis.YP.rotationDegrees(180.0F - renderState.direction.get2DDataValue() * 90));
             TextureAtlasSprite schematicSprite = this.schematicAtlas.getSprite(schematicVariant.assetId());
             TextureAtlasSprite backSprite = this.schematicAtlas.getSprite(BACK_SPRITE_LOCATION);
-            render(poseStack, nodeCollector, RenderTypes.entitySolidZOffsetForward(backSprite.atlasLocation()), renderState.lightCoordsPerBlock, schematicSprite, backSprite);
+            render(poseStack, submitNodeCollector, RenderTypes.entitySolidZOffsetForward(backSprite.atlasLocation()), renderState.lightCoordsPerBlock, schematicSprite, backSprite);
             poseStack.popPose();
-            super.submit(renderState, poseStack, nodeCollector, cameraRenderState);
+            super.submit(renderState, poseStack, submitNodeCollector, camera);
         }
     }
 
@@ -57,7 +57,7 @@ public class SchematicRenderer extends EntityRenderer<SchematicEntity, Schematic
     public void extractRenderState(SchematicEntity schematicEntity, SchematicRenderState reusedState, float partialTick) {
         super.extractRenderState(schematicEntity, reusedState, partialTick);
         Direction direction = schematicEntity.getDirection();
-        SchematicVariant schematicVariant = schematicEntity.getSchematic().schematic().unwrap(schematicEntity.registryAccess()).orElseThrow().value();
+        SchematicVariant schematicVariant = schematicEntity.getSchematic().schematic().value();
         reusedState.direction = direction;
         reusedState.schematicVariant = schematicVariant;
         int width = 4;
@@ -86,7 +86,7 @@ public class SchematicRenderer extends EntityRenderer<SchematicEntity, Schematic
                     case EAST -> fixedPosZ = Mth.floor(schematicEntity.getZ() + offset);
                 }
 
-                reusedState.lightCoordsPerBlock[l + k * width] = LevelRenderer.getLightColor(level, new BlockPos(fixedPosX, fixedPosY, fixedPosZ));
+                reusedState.lightCoordsPerBlock[l + k * width] = LevelRenderer.getLightCoords(level, new BlockPos(fixedPosX, fixedPosY, fixedPosZ));
             }
         }
     }

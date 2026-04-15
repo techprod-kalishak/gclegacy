@@ -63,7 +63,7 @@ public class GearEquippedTrigger extends SimpleCriterionTrigger<GearEquippedTrig
             ItemPredicate[] predicates = new ItemPredicate[items.length];
 
             for (int i = 0; i < items.length; i++) {
-                predicates[i] = new ItemPredicate(Optional.of(HolderSet.direct(new ItemStack(items[i]).getItemHolder())), MinMaxBounds.Ints.ANY, DataComponentMatchers.ANY);
+                predicates[i] = new ItemPredicate(Optional.of(HolderSet.direct(new ItemStack(items[i]).typeHolder())), MinMaxBounds.Ints.ANY, DataComponentMatchers.ANY);
             }
 
             return hasItems(predicates);

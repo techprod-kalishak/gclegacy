@@ -4,6 +4,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.kalishak.galacticraftlegacy.world.item.FeatureTier;
 import net.minecraft.core.Holder;
+import net.minecraft.core.component.DataComponentGetter;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.ComponentSerialization;
@@ -11,8 +12,13 @@ import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.RegistryFixedCodec;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipProvider;
 
-public record SchematicVariant(FeatureTier tier, Identifier assetId, Component title) {
+import java.util.function.Consumer;
+
+public record SchematicVariant(FeatureTier tier, Identifier assetId, Component title) implements TooltipProvider {
     public static final Codec<SchematicVariant> DIRECT_CODEC = RecordCodecBuilder.create(instance -> instance.group(
             FeatureTier.CODEC.fieldOf("level").forGetter(SchematicVariant::tier),
             Identifier.CODEC.fieldOf("asset_id").forGetter(SchematicVariant::assetId),
@@ -29,4 +35,9 @@ public record SchematicVariant(FeatureTier tier, Identifier assetId, Component t
             GalacticraftRegistries.Keys.SCHEMATIC,
             DIRECT_STREAM_CODEC
     );
+
+    @Override
+    public void addToTooltip(Item.TooltipContext context, Consumer<Component> tooltipAdder, TooltipFlag flag, DataComponentGetter componentGetter) {
+        tooltipAdder.accept(this.title);
+    }
 }

@@ -15,6 +15,7 @@ public final class GalacticraftSounds {
 
     public static final DeferredHolder<SoundEvent, SoundEvent> SHUTTLE = REGISTRY.register("shuttle", () -> SoundEvent.createVariableRangeEvent(Constants.id("shuttle")));
     public static final DeferredHolder<SoundEvent, SoundEvent> MUSIC_SPACE_RACE = REGISTRY.register("spacerace", () -> SoundEvent.createVariableRangeEvent(Constants.id("spacerace")));
+    public static final DeferredHolder<SoundEvent, SoundEvent> AMBIENT_SPACE = REGISTRY.register("scary_scape", () -> SoundEvent.createVariableRangeEvent(Constants.id("scary_scape")));
 
     public static void init(IEventBus bus) {
         REGISTRY.register(bus);

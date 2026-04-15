@@ -1,7 +1,17 @@
 {
+  "scary_scape": {
+    "sounds": [
+      "galacticraftlegacy:ambience/scary_scape"
+    ]
+  },
   "shuttle": {
     "sounds": [
       "galacticraftlegacy:shuttle/shuttle"
+    ]
+  },
+  "spacerace": {
+    "sounds": [
+      "galacticraftlegacy:music/spacerace"
     ]
   }
 }

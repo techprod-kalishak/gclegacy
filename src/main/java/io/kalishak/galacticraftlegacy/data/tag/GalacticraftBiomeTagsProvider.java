@@ -21,15 +21,14 @@ public class GalacticraftBiomeTagsProvider extends KeyTagProvider<Biome> {
     @Override
     protected void addTags(HolderLookup.Provider provider) {
         tag(GalacticraftTags.Biomes.HAS_BASIC_FEATURES)
-                .addOptionalTag(GalacticraftTags.Biomes.IS_MOON);
+                .addTag(GalacticraftTags.Biomes.IS_MOON);
         tag(GalacticraftTags.Biomes.HAS_ADVANCED_FEATURES)
                 .addOptionalTag(GalacticraftTags.Biomes.IS_MARS);
         tag(GalacticraftTags.Biomes.HAS_ULTIMATE_FEATURES)
                 .addOptionalTag(GalacticraftTags.Biomes.IS_ASTEROIDS)
                 .addOptionalTag(GalacticraftTags.Biomes.IS_VENUS);
-
         tag(GalacticraftTags.Biomes.IS_MOON)
-                .addOptional(MoonBiomes.MOON_PLAINS)
-                .addOptional(MoonBiomes.MOON_CRATER_OCEAN);
+                .add(MoonBiomes.MOON_PLAINS)
+                .add(MoonBiomes.MOON_CRATER_OCEAN);
     }
 }

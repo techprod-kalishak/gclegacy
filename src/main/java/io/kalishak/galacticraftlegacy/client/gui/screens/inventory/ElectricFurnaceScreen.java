@@ -4,7 +4,7 @@ import io.kalishak.galacticraftlegacy.Constants;
 import io.kalishak.galacticraftlegacy.client.gui.screens.recipebook.ElectricFurnaceRecipeBookComponent;
 import io.kalishak.galacticraftlegacy.world.inventory.ElectricFurnaceMenu;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.ElectricFurnaceBlockEntity;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.navigation.ScreenPosition;
 import net.minecraft.client.gui.screens.recipebook.RecipeBookComponent;
 import net.minecraft.client.gui.screens.recipebook.SearchRecipeBookCategory;
@@ -55,8 +55,8 @@ public class ElectricFurnaceScreen extends AbstractMachineScreen<ElectricFurnace
     }
 
     @Override
-    public void renderSprites(GuiGraphics guiGraphics, int leftOffset, int topOffset, int energyCapacity) {
-        super.renderSprites(guiGraphics, leftOffset, topOffset, energyCapacity);
+    public void extractSprites(GuiGraphicsExtractor guiGraphics, int leftOffset, int topOffset, int energyCapacity) {
+        super.extractSprites(guiGraphics, leftOffset, topOffset, energyCapacity);
 
         int processProgress = Mth.ceil(this.menu.getBurnProgress() * 24.0F);
         guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, BURN_PROGRESS_SPRITE, 24, 16, 0, 0, leftOffset + 78, topOffset + 24, processProgress, 16);

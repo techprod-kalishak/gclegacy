@@ -53,7 +53,7 @@ public abstract class GearInventoryProvider implements ParachuteFalling {
         SpaceGearEquipment spaceGearEquipment = getGearEquipment();
         Holder<CelestialBodyLevelData> celestialBodyLevelData = serverLevel.getData(GalacticraftAttachments.CELESTIAL_BODY);
 
-        if (!gearOwner.getType().is(EntityTypeTags.UNDEAD)) {
+        if (!gearOwner.is(EntityTypeTags.UNDEAD)) {
             if (!mayBreath(gearOwner) && !depleteOxygen()) {
                 gearOwner.hurtServer(serverLevel, serverLevel.damageSources().source(GalacticraftDamageTypes.SUFFOCATION), 2.0F);
             }
@@ -165,7 +165,7 @@ public abstract class GearInventoryProvider implements ParachuteFalling {
     }
 
     public boolean mayBreath(LivingEntity livingEntity) {
-        if (livingEntity.getType().is(EntityTypeTags.UNDEAD)) {
+        if (livingEntity.is(EntityTypeTags.UNDEAD)) {
             return true;
         }
 

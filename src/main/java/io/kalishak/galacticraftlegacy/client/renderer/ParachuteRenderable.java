@@ -8,18 +8,18 @@ import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.resources.model.Material;
-import net.minecraft.client.resources.model.MaterialSet;
+import net.minecraft.client.resources.model.sprite.SpriteGetter;
+import net.minecraft.client.resources.model.sprite.SpriteId;
 
 public interface ParachuteRenderable<S extends EntityRenderState> {
     Model<S> getParachuteModel();
-    Material getParachuteMaterial(S renderState);
-    MaterialSet materials();
+    SpriteId getParachuteMaterial(S renderState);
+    SpriteGetter spriteGetter();
 
     default void renderParachute(PoseStack poseStack, SubmitNodeCollector nodeCollector, int packedLight, S renderState) {
-        Material material = getParachuteMaterial(renderState);
-        RenderType renderType = material.renderType(RenderTypes::entityCutout);
-        TextureAtlasSprite sprite = materials().get(material);
+        SpriteId spriteId = getParachuteMaterial(renderState);
+        RenderType renderType = spriteId.renderType(RenderTypes::entityCutout);
+        TextureAtlasSprite sprite = spriteGetter().get(spriteId);
 
         nodeCollector.submitModel(
                 getParachuteModel(),

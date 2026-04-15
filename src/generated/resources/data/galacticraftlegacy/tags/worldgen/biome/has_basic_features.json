@@ -1,8 +1,5 @@
 {
   "values": [
-    {
-      "id": "#galacticraftlegacy:is_moon",
-      "required": false
-    }
+    "#galacticraftlegacy:is_moon"
   ]
 }

@@ -13,7 +13,7 @@ import java.util.function.Supplier;
 
 public interface AttachmentHelper {
     static GearInventoryProvider getGearInventory(Entity entity) {
-        if (entity.getType().is(GalacticraftTags.EntityTypes.CAN_EQUIP_GEAR)) {
+        if (entity.is(GalacticraftTags.EntityTypes.CAN_EQUIP_GEAR)) {
             if (entity instanceof Player) {
                 return entity.getData(GalacticraftAttachments.PLAYER_SPACE_DATA);
             }

@@ -4,7 +4,7 @@ import io.kalishak.galacticraftlegacy.world.item.GalacticraftItems;
 import io.kalishak.galacticraftlegacy.world.item.crafting.display.ElectricFurnaceRecipeDisplay;
 import net.minecraft.core.Holder;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.item.crafting.display.RecipeDisplay;
 import net.minecraft.world.item.crafting.display.SlotDisplay;
@@ -12,7 +12,7 @@ import net.minecraft.world.item.crafting.display.SlotDisplay;
 import java.util.List;
 
 public class HeatingRecipe extends AbstractSmeltingRecipe {
-    public HeatingRecipe(String group, CookingBookCategory category, Ingredient ingredient, ItemStack result, int cookingTime) {
+    public HeatingRecipe(String group, CookingBookCategory category, Ingredient ingredient, ItemStackTemplate result, int cookingTime) {
         super(group, category, ingredient, result, cookingTime);
     }
 

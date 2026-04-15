@@ -1,11 +1,13 @@
 package io.kalishak.galacticraftlegacy.world.entity;
 
 import io.kalishak.galacticraftlegacy.attachment.GalacticraftAttachments;
+import io.kalishak.galacticraftlegacy.registry.SchematicVariant;
 import io.kalishak.galacticraftlegacy.world.item.GalacticraftItems;
 import io.kalishak.galacticraftlegacy.world.item.component.GalacticraftDataComponents;
 import io.kalishak.galacticraftlegacy.world.item.component.SchematicContent;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponentGetter;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.network.protocol.Packet;
@@ -39,10 +41,10 @@ public class SchematicEntity extends HangingEntity {
         super(GalacticraftEntityType.SCHEMATIC.get(), level, pos);
     }
 
-    public SchematicEntity(Level level, BlockPos blockPos, Direction direction, SchematicContent schematicHolder) {
+    public SchematicEntity(Level level, BlockPos blockPos, Direction direction, Holder<SchematicVariant> schematicHolder) {
         this(level, blockPos);
         setDirection(direction);
-        setSchematic(schematicHolder);
+        setSchematic(new SchematicContent(schematicHolder));
     }
 
     @Override
@@ -52,6 +54,10 @@ public class SchematicEntity extends HangingEntity {
 
     public void setSchematic(SchematicContent schematic) {
         setData(GalacticraftAttachments.DATA_SCHEMATIC, schematic);
+    }
+
+    public void setSchematic(Holder<SchematicVariant> schematic) {
+        setSchematic(new SchematicContent(schematic));
     }
 
     public SchematicContent getSchematic() {

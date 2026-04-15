@@ -192,7 +192,7 @@ public abstract class TieredRocket extends AbstractAutoRocket implements RocketT
     }
 
     @Override
-    public InteractionResult interact(Player player, InteractionHand hand) {
+    public InteractionResult interact(Player player, InteractionHand hand, Vec3 localization) {
         if (hand != InteractionHand.MAIN_HAND || getLaunchPhase() != LaunchPhase.LAUNCHED) {
             return InteractionResult.FAIL;
         }
@@ -207,7 +207,7 @@ public abstract class TieredRocket extends AbstractAutoRocket implements RocketT
             return InteractionResult.SUCCESS_SERVER;
         }
 
-        return super.interact(player, hand);
+        return super.interact(player, hand, localization);
     }
 
     @Override

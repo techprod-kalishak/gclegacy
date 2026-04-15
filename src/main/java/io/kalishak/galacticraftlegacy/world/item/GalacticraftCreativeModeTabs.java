@@ -4,14 +4,12 @@ import io.kalishak.galacticraftlegacy.Galacticraft;
 import io.kalishak.galacticraftlegacy.registry.GalacticraftRegistries;
 import io.kalishak.galacticraftlegacy.registry.SchematicVariant;
 import io.kalishak.galacticraftlegacy.world.item.component.GalacticraftDataComponents;
-import io.kalishak.galacticraftlegacy.world.item.component.SchematicContent;
 import io.kalishak.galacticraftlegacy.world.level.material.fluid.GalacticraftFluids;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.EitherHolder;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.material.Fluid;
@@ -234,7 +232,7 @@ public final class GalacticraftCreativeModeTabs {
     private static void generateSchematics(CreativeModeTab.Output output, HolderLookup.RegistryLookup<SchematicVariant> schematicLookup) {
         schematicLookup.listElements().sorted(SCHEMATIC_SORTER).forEach(holder -> {
             ItemStack itemstack = GalacticraftItems.SCHEMATIC.toStack();
-            itemstack.set(GalacticraftDataComponents.SCHEMATIC, new SchematicContent(new EitherHolder<>(holder)));
+            itemstack.set(GalacticraftDataComponents.SCHEMATIC, holder);
             output.accept(itemstack);
         });
     }

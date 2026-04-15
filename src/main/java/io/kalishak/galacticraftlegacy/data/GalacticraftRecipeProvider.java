@@ -15,6 +15,7 @@ import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.AbstractCookingRecipe;
+import net.minecraft.world.item.crafting.CookingBookCategory;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.ItemLike;
@@ -99,7 +100,7 @@ public class GalacticraftRecipeProvider extends RecipeProvider {
                         GalacticraftItems.STEEL_BOOTS,
                         GalacticraftItems.STEEL_HORSE_ARMOR,
                         GalacticraftItems.STEEL_NAUTILUS_ARMOR
-                ), RecipeCategory.TOOLS, GalacticraftItems.STEEL_NUGGET, 0.1F, 200)
+                ), RecipeCategory.TOOLS, CookingBookCategory.MISC, GalacticraftItems.STEEL_NUGGET, 0.1F, 200)
                 .unlockedBy(getHasName(GalacticraftItems.STEEL_SWORD), has(GalacticraftItems.STEEL_SWORD))
                 .unlockedBy(getHasName(GalacticraftItems.STEEL_SHOVEL), has(GalacticraftItems.STEEL_SHOVEL))
                 .unlockedBy(getHasName(GalacticraftItems.STEEL_PICKAXE), has(GalacticraftItems.STEEL_PICKAXE))
@@ -126,7 +127,7 @@ public class GalacticraftRecipeProvider extends RecipeProvider {
                                 GalacticraftItems.STEEL_BOOTS,
                                 GalacticraftItems.STEEL_HORSE_ARMOR,
                                 GalacticraftItems.STEEL_NAUTILUS_ARMOR
-                        ), RecipeCategory.TOOLS, GalacticraftItems.STEEL_NUGGET, 0.1F, 100)
+                        ), RecipeCategory.TOOLS, CookingBookCategory.MISC, GalacticraftItems.STEEL_NUGGET, 0.1F, 100)
                 .unlockedBy(getHasName(GalacticraftItems.STEEL_SWORD), has(GalacticraftItems.STEEL_SWORD))
                 .unlockedBy(getHasName(GalacticraftItems.STEEL_SHOVEL), has(GalacticraftItems.STEEL_SHOVEL))
                 .unlockedBy(getHasName(GalacticraftItems.STEEL_PICKAXE), has(GalacticraftItems.STEEL_PICKAXE))
@@ -176,7 +177,7 @@ public class GalacticraftRecipeProvider extends RecipeProvider {
                                 GalacticraftItems.DESH_CHESTPLATE,
                                 GalacticraftItems.DESH_LEGGINGS,
                                 GalacticraftItems.DESH_BOOTS
-                        ), RecipeCategory.TOOLS, GalacticraftItems.DESH_NUGGET, 0.1F, 200)
+                        ), RecipeCategory.TOOLS, CookingBookCategory.MISC, GalacticraftItems.DESH_NUGGET, 0.1F, 200)
                 .unlockedBy(getHasName(GalacticraftItems.DESH_SWORD), has(GalacticraftItems.DESH_SWORD))
                 .unlockedBy(getHasName(GalacticraftItems.DESH_SHOVEL), has(GalacticraftItems.DESH_SHOVEL))
                 .unlockedBy(getHasName(GalacticraftItems.DESH_PICKAXE), has(GalacticraftItems.DESH_PICKAXE))
@@ -199,7 +200,7 @@ public class GalacticraftRecipeProvider extends RecipeProvider {
                                 GalacticraftItems.DESH_CHESTPLATE,
                                 GalacticraftItems.DESH_LEGGINGS,
                                 GalacticraftItems.DESH_BOOTS
-                        ), RecipeCategory.TOOLS, GalacticraftItems.DESH_NUGGET, 0.1F, 100)
+                        ), RecipeCategory.TOOLS, CookingBookCategory.MISC, GalacticraftItems.DESH_NUGGET, 0.1F, 100)
                 .unlockedBy(getHasName(GalacticraftItems.DESH_SWORD), has(GalacticraftItems.DESH_SWORD))
                 .unlockedBy(getHasName(GalacticraftItems.DESH_SHOVEL), has(GalacticraftItems.DESH_SHOVEL))
                 .unlockedBy(getHasName(GalacticraftItems.DESH_PICKAXE), has(GalacticraftItems.DESH_PICKAXE))
@@ -247,7 +248,7 @@ public class GalacticraftRecipeProvider extends RecipeProvider {
                                 GalacticraftItems.TITANIUM_CHESTPLATE,
                                 GalacticraftItems.TITANIUM_LEGGINGS,
                                 GalacticraftItems.TITANIUM_BOOTS
-                        ), RecipeCategory.TOOLS, GalacticraftItems.TITANIUM_NUGGET, 0.1F, 200)
+                        ), RecipeCategory.TOOLS, CookingBookCategory.MISC, GalacticraftItems.TITANIUM_NUGGET, 0.1F, 200)
                 .unlockedBy(getHasName(GalacticraftItems.TITANIUM_SWORD), has(GalacticraftItems.TITANIUM_SWORD))
                 .unlockedBy(getHasName(GalacticraftItems.TITANIUM_SHOVEL), has(GalacticraftItems.TITANIUM_SHOVEL))
                 .unlockedBy(getHasName(GalacticraftItems.TITANIUM_PICKAXE), has(GalacticraftItems.TITANIUM_PICKAXE))
@@ -270,7 +271,7 @@ public class GalacticraftRecipeProvider extends RecipeProvider {
                                 GalacticraftItems.TITANIUM_CHESTPLATE,
                                 GalacticraftItems.TITANIUM_LEGGINGS,
                                 GalacticraftItems.TITANIUM_BOOTS
-                        ), RecipeCategory.TOOLS, GalacticraftItems.TITANIUM_NUGGET, 0.1F, 100)
+                        ), RecipeCategory.TOOLS, CookingBookCategory.MISC, GalacticraftItems.TITANIUM_NUGGET, 0.1F, 100)
                 .unlockedBy(getHasName(GalacticraftItems.TITANIUM_SWORD), has(GalacticraftItems.TITANIUM_SWORD))
                 .unlockedBy(getHasName(GalacticraftItems.TITANIUM_SHOVEL), has(GalacticraftItems.TITANIUM_SHOVEL))
                 .unlockedBy(getHasName(GalacticraftItems.TITANIUM_PICKAXE), has(GalacticraftItems.TITANIUM_PICKAXE))
@@ -282,32 +283,32 @@ public class GalacticraftRecipeProvider extends RecipeProvider {
                 .unlockedBy(getHasName(GalacticraftItems.TITANIUM_BOOTS), has(GalacticraftItems.TITANIUM_BOOTS))
                 .group("steel")
                 .save(this.output, Constants.key(Registries.RECIPE, getBlastingRecipeName(GalacticraftItems.TITANIUM_NUGGET)));
-        oreSmelting(ALUMINUM_SMELTABLE, RecipeCategory.MISC, GalacticraftItems.ALUMINUM_INGOT, 0.1F, 200, "aluminum_ingot");
-        oreBlasting(ALUMINUM_SMELTABLE, RecipeCategory.MISC, GalacticraftItems.ALUMINUM_INGOT, 0.1F, 100, "aluminum_ingot");
-        oreSmelting(DESH_SMELTABLE, RecipeCategory.MISC, GalacticraftItems.DESH_INGOT, 0.1F, 200, "desh_ingot");
-        oreBlasting(DESH_SMELTABLE, RecipeCategory.MISC, GalacticraftItems.DESH_INGOT, 0.1F, 100, "desh_ingot");
-        oreSmelting(LEAD_SMELTABLE, RecipeCategory.MISC, GalacticraftItems.LEAD_INGOT, 0.2F, 200, "lead_ingot");
-        oreBlasting(LEAD_SMELTABLE, RecipeCategory.MISC, GalacticraftItems.LEAD_INGOT, 0.2F, 100, "lead_ingot");
-        SimpleCookingRecipeBuilder.smelting(Ingredient.of(GalacticraftItems.RAW_STEEL), RecipeCategory.MISC, GalacticraftItems.STEEL_INGOT, 0.1F, 200)
+        oreSmelting(ALUMINUM_SMELTABLE, RecipeCategory.MISC, CookingBookCategory.MISC, GalacticraftItems.ALUMINUM_INGOT, 0.1F, 200, "aluminum_ingot");
+        oreBlasting(ALUMINUM_SMELTABLE, RecipeCategory.MISC, CookingBookCategory.MISC, GalacticraftItems.ALUMINUM_INGOT, 0.1F, 100, "aluminum_ingot");
+        oreSmelting(DESH_SMELTABLE, RecipeCategory.MISC, CookingBookCategory.MISC, GalacticraftItems.DESH_INGOT, 0.1F, 200, "desh_ingot");
+        oreBlasting(DESH_SMELTABLE, RecipeCategory.MISC, CookingBookCategory.MISC, GalacticraftItems.DESH_INGOT, 0.1F, 100, "desh_ingot");
+        oreSmelting(LEAD_SMELTABLE, RecipeCategory.MISC, CookingBookCategory.MISC, GalacticraftItems.LEAD_INGOT, 0.2F, 200, "lead_ingot");
+        oreBlasting(LEAD_SMELTABLE, RecipeCategory.MISC, CookingBookCategory.MISC, GalacticraftItems.LEAD_INGOT, 0.2F, 100, "lead_ingot");
+        SimpleCookingRecipeBuilder.smelting(Ingredient.of(GalacticraftItems.RAW_STEEL), RecipeCategory.MISC, CookingBookCategory.MISC, GalacticraftItems.STEEL_INGOT, 0.1F, 200)
                 .unlockedBy(getHasName(GalacticraftItems.RAW_STEEL), has(GalacticraftItems.RAW_STEEL))
                 .save(this.output, Constants.key(Registries.RECIPE, getSmeltingRecipeName(GalacticraftItems.STEEL_INGOT)));
-        SimpleCookingRecipeBuilder.blasting(Ingredient.of(GalacticraftItems.RAW_STEEL), RecipeCategory.MISC, GalacticraftItems.STEEL_INGOT, 0.1F, 100)
+        SimpleCookingRecipeBuilder.blasting(Ingredient.of(GalacticraftItems.RAW_STEEL), RecipeCategory.MISC, CookingBookCategory.MISC, GalacticraftItems.STEEL_INGOT, 0.1F, 100)
                 .unlockedBy(getHasName(GalacticraftItems.RAW_STEEL), has(GalacticraftItems.RAW_STEEL))
                 .save(this.output, Constants.key(Registries.RECIPE, getBlastingRecipeName(GalacticraftItems.STEEL_INGOT)));
-        oreSmelting(SILICON_SMELTABLE, RecipeCategory.MISC, GalacticraftItems.RAW_SILICON, 0.1F, 200, "raw_silicon");
-        oreBlasting(SILICON_SMELTABLE, RecipeCategory.MISC, GalacticraftItems.RAW_SILICON, 0.1F, 100, "raw_silicon");
-        oreSmelting(TIN_SMELTABLE, RecipeCategory.MISC, GalacticraftItems.TIN_INGOT, 0.1F, 200, "tin_ingot");
-        oreBlasting(TIN_SMELTABLE, RecipeCategory.MISC, GalacticraftItems.TIN_INGOT, 0.1F, 100, "tin_ingot");
-        oreSmelting(TITANIUM_SMELTABLE, RecipeCategory.MISC, GalacticraftItems.TITANIUM_INGOT, 0.2F, 200, "titanium_ingot");
-        oreBlasting(TITANIUM_SMELTABLE, RecipeCategory.MISC, GalacticraftItems.TITANIUM_INGOT, 0.2F, 100, "titanium_ingot");
-        SimpleCookingRecipeBuilder.smelting(Ingredient.of(GalacticraftItems.MOON_SAPPHIRE_ORE), RecipeCategory.MISC, GalacticraftItems.SAPPHIRE, 0.1F, 200)
+        oreSmelting(SILICON_SMELTABLE, RecipeCategory.MISC, CookingBookCategory.MISC, GalacticraftItems.RAW_SILICON, 0.1F, 200, "raw_silicon");
+        oreBlasting(SILICON_SMELTABLE, RecipeCategory.MISC, CookingBookCategory.MISC, GalacticraftItems.RAW_SILICON, 0.1F, 100, "raw_silicon");
+        oreSmelting(TIN_SMELTABLE, RecipeCategory.MISC, CookingBookCategory.MISC, GalacticraftItems.TIN_INGOT, 0.1F, 200, "tin_ingot");
+        oreBlasting(TIN_SMELTABLE, RecipeCategory.MISC, CookingBookCategory.MISC, GalacticraftItems.TIN_INGOT, 0.1F, 100, "tin_ingot");
+        oreSmelting(TITANIUM_SMELTABLE, RecipeCategory.MISC, CookingBookCategory.MISC, GalacticraftItems.TITANIUM_INGOT, 0.2F, 200, "titanium_ingot");
+        oreBlasting(TITANIUM_SMELTABLE, RecipeCategory.MISC, CookingBookCategory.MISC, GalacticraftItems.TITANIUM_INGOT, 0.2F, 100, "titanium_ingot");
+        SimpleCookingRecipeBuilder.smelting(Ingredient.of(GalacticraftItems.MOON_SAPPHIRE_ORE), RecipeCategory.MISC, CookingBookCategory.MISC, GalacticraftItems.SAPPHIRE, 0.1F, 200)
                 .unlockedBy(getHasName(GalacticraftItems.MOON_SAPPHIRE_ORE), has(GalacticraftItems.MOON_SAPPHIRE_ORE))
                 .save(this.output, Constants.key(Registries.RECIPE, getSmeltingRecipeName(GalacticraftItems.SAPPHIRE)));
-        SimpleCookingRecipeBuilder.blasting(Ingredient.of(GalacticraftItems.MOON_SAPPHIRE_ORE), RecipeCategory.MISC, GalacticraftItems.SAPPHIRE, 0.1F, 100)
+        SimpleCookingRecipeBuilder.blasting(Ingredient.of(GalacticraftItems.MOON_SAPPHIRE_ORE), RecipeCategory.MISC, CookingBookCategory.MISC, GalacticraftItems.SAPPHIRE, 0.1F, 100)
                 .unlockedBy(getHasName(GalacticraftItems.MOON_SAPPHIRE_ORE), has(GalacticraftItems.MOON_SAPPHIRE_ORE))
                 .save(this.output, Constants.key(Registries.RECIPE, getBlastingRecipeName(GalacticraftItems.SAPPHIRE)));
-        oreSmelting(COPPER_SMELTABLE, RecipeCategory.MISC, Items.COPPER_INGOT, 0.2F, 200, "copper_ingot");
-        oreBlasting(COPPER_SMELTABLE, RecipeCategory.MISC, Items.COPPER_INGOT, 0.2F, 100, "copper_ingot");
+        oreSmelting(COPPER_SMELTABLE, RecipeCategory.MISC, CookingBookCategory.MISC, Items.COPPER_INGOT, 0.2F, 200, "copper_ingot");
+        oreBlasting(COPPER_SMELTABLE, RecipeCategory.MISC, CookingBookCategory.MISC, Items.COPPER_INGOT, 0.2F, 100, "copper_ingot");
 
         parachute(GalacticraftItems.BLACK_PARACHUTE, Items.BLACK_WOOL);
         parachute(GalacticraftItems.BLUE_PARACHUTE, Items.BLUE_WOOL);
@@ -399,22 +400,22 @@ public class GalacticraftRecipeProvider extends RecipeProvider {
                 .unlockedBy(getHasName(GalacticraftItems.THERMAL_CLOTH), has(GalacticraftItems.THERMAL_CLOTH))
                 .save(this.output, Constants.key(Registries.RECIPE, getItemName(GalacticraftItems.THERMAL_PADDING_BOOTS)));
 
-        FabricatingRecipeBuilder.classic(GalacticraftItems.BASIC_WAFER.get(), 1, Ingredient.of(Items.REDSTONE_TORCH))
+        FabricatingRecipeBuilder.classic(GalacticraftItems.BASIC_WAFER, 1, Ingredient.of(Items.REDSTONE_TORCH))
                 .unlockedBy(getHasName(GalacticraftItems.RAW_SILICON), has(GalacticraftTags.Items.RAW_MATERIALS_SILICON))
                 .save(output, Constants.key(Registries.RECIPE, "basic_wafer"));
-        FabricatingRecipeBuilder.classic(GalacticraftItems.ADVANCED_WAFER.get(), 1, Ingredient.of(Items.REPEATER))
+        FabricatingRecipeBuilder.classic(GalacticraftItems.ADVANCED_WAFER, 1, Ingredient.of(Items.REPEATER))
                 .unlockedBy(getHasName(GalacticraftItems.RAW_SILICON), has(GalacticraftTags.Items.RAW_MATERIALS_SILICON))
                 .save(output, Constants.key(Registries.RECIPE, "advanced_wafer"));
-        FabricatingRecipeBuilder.classic(GalacticraftItems.SOLAR_WAFER.get(), 9, Ingredient.of(Items.LAPIS_LAZULI))
+        FabricatingRecipeBuilder.classic(GalacticraftItems.SOLAR_WAFER, 9, Ingredient.of(Items.LAPIS_LAZULI))
                 .unlockedBy(getHasName(GalacticraftItems.RAW_SILICON), has(GalacticraftTags.Items.RAW_MATERIALS_SILICON))
                 .save(output, Constants.key(Registries.RECIPE, "solar_panel"));
         GalacticraftBlockFamilies.getFamilies().forEach(blockFamily -> generateRecipes(blockFamily, FeatureFlags.DEFAULT_FLAGS));
     }
 
     @Override
-    protected <T extends AbstractCookingRecipe> void oreCooking(RecipeSerializer<T> serializer, AbstractCookingRecipe.Factory<T> recipeFactory, List<ItemLike> ingredients, RecipeCategory category, ItemLike result, float experience, int cookingTime, String group, String suffix) {
-        for(ItemLike itemlike : ingredients) {
-            SimpleCookingRecipeBuilder.generic(Ingredient.of(itemlike), category, result, experience, cookingTime, serializer, recipeFactory).group(group).unlockedBy(getHasName(itemlike), this.has(itemlike)).save(this.output, Constants.key(Registries.RECIPE, getItemName(result) + suffix + "_" + getItemName(itemlike)));
+    protected <T extends AbstractCookingRecipe> void oreCooking(AbstractCookingRecipe.Factory<T> recipeFactory, List<ItemLike> smeltables, RecipeCategory craftingCategory, CookingBookCategory cookingCategory, ItemLike result, float experience, int cookingTime, String group, String fromDesc) {
+        for(ItemLike itemlike : smeltables) {
+            SimpleCookingRecipeBuilder.generic(Ingredient.of(itemlike), craftingCategory, cookingCategory, result, experience, cookingTime, recipeFactory).group(group).unlockedBy(getHasName(itemlike), this.has(itemlike)).save(this.output, Constants.key(Registries.RECIPE, getItemName(result) + fromDesc + "_" + getItemName(itemlike)));
         }
     }
 
@@ -510,19 +511,19 @@ public class GalacticraftRecipeProvider extends RecipeProvider {
     }
 
     @Override
-    protected void colorWithDye(List<Item> dyes, List<Item> dyeableItems, @Nullable Item dye, String group, RecipeCategory category) {
+    protected void colorWithDye(List<Item> dyes, List<Item> dyedItems, @Nullable Item uncoloredItem, String groupName, RecipeCategory category) {
         for (int i = 0; i < dyes.size(); i++) {
             Item item = dyes.get(i);
-            Item item1 = dyeableItems.get(i);
-            Stream<Item> stream = dyeableItems.stream().filter(p_288265_ -> !p_288265_.equals(item1));
-            if (dye != null) {
-                stream = Stream.concat(stream, Stream.of(dye));
+            Item item1 = dyedItems.get(i);
+            Stream<Item> stream = dyedItems.stream().filter(p_288265_ -> !p_288265_.equals(item1));
+            if (uncoloredItem != null) {
+                stream = Stream.concat(stream, Stream.of(uncoloredItem));
             }
 
             this.shapeless(category, item1)
                     .requires(item)
                     .requires(Ingredient.of(stream))
-                    .group(group)
+                    .group(groupName)
                     .unlockedBy("has_needed_dye", this.has(item))
                     .save(this.output, Constants.key(Registries.RECIPE, "dye_" + getItemName(item1)));
         }
@@ -541,8 +542,8 @@ public class GalacticraftRecipeProvider extends RecipeProvider {
     }
 
     @Override
-    protected void nineBlockStorageRecipes(RecipeCategory unpackedCategory, ItemLike unpacked, RecipeCategory packedCategory, ItemLike packed) {
-        nineBlockStorageRecipes(unpackedCategory, unpacked, packedCategory, packed, getItemName(packed), null, getSimpleRecipeName(unpacked), null);
+    protected void nineBlockStorageRecipes(RecipeCategory unpackedFormCategory, ItemLike unpackedForm, RecipeCategory packedFormCategory, ItemLike packedForm) {
+        nineBlockStorageRecipes(unpackedFormCategory, unpackedForm, packedFormCategory, packedForm, getItemName(packedForm), null, getSimpleRecipeName(unpackedForm), null);
     }
 
     private static String getItemId(ItemLike item) {

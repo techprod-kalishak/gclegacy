@@ -3,7 +3,6 @@ package io.kalishak.galacticraftlegacy.world.level.material.fluid;
 import io.kalishak.galacticraftlegacy.Galacticraft;
 import io.kalishak.galacticraftlegacy.world.level.GalacticraftParticleTypes;
 import io.kalishak.galacticraftlegacy.world.level.block.GalacticraftBlocks;
-import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.Rarity;
 import net.neoforged.bus.api.IEventBus;

@@ -6,7 +6,7 @@ import io.kalishak.galacticraftlegacy.client.gui.screens.recipebook.SearchRecipe
 import io.kalishak.galacticraftlegacy.world.inventory.CircuitFabricatorMenu;
 import io.kalishak.galacticraftlegacy.world.item.GalacticraftItems;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.CircuitFabricatorBlockEntity;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.navigation.ScreenPosition;
 import net.minecraft.client.gui.screens.recipebook.RecipeBookComponent;
 import net.minecraft.client.renderer.RenderPipelines;
@@ -31,7 +31,6 @@ public class CircuitFabricatorScreen extends AbstractMachineScreen<CircuitFabric
         super(menu, new FabricatingRecipeBook(menu, TABS), playerInventory, title, TEXTURES);
         this.titleLabelX = (this.imageWidth - this.font.width(this.title)) / 2;
         this.inventoryLabelY = this.imageHeight / 2 - 24;
-        this.imageHeight = 192;
     }
 
     @Override
@@ -50,8 +49,8 @@ public class CircuitFabricatorScreen extends AbstractMachineScreen<CircuitFabric
     }
 
     @Override
-    public void renderSprites(GuiGraphics guiGraphics, int leftOffset, int topOffset, int energyCapacity) {
-        super.renderSprites(guiGraphics, leftOffset, topOffset, energyCapacity);
+    public void extractSprites(GuiGraphicsExtractor guiGraphics, int leftOffset, int topOffset, int energyCapacity) {
+        super.extractSprites(guiGraphics, leftOffset, topOffset, energyCapacity);
 
         if (this.menu.getProgress() > 0.0F) {
             int progressBarLength = Mth.ceil(this.menu.getProgress() * 24.0F);

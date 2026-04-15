@@ -1,13 +1,6 @@
 {
   "values": [
-    "#minecraft:universal",
-    {
-      "id": "galacticraftlegacy:moon_day",
-      "required": false
-    },
-    {
-      "id": "galacticraftlegacy:earth",
-      "required": false
-    }
+    "galacticraftlegacy:moon_day",
+    "galacticraftlegacy:earth"
   ]
 }

@@ -62,7 +62,7 @@ public final class GalacticraftAttachments {
     );
     public static final DeferredHolder<AttachmentType<?>, AttachmentType<SchematicContent>> DATA_SCHEMATIC = REGISTRY.register(
             "data_schematic",
-            () -> AttachmentType.builder(() -> SchematicContent.DEFAULT)
+            () -> AttachmentType.builder(SchematicContent::getDefault)
                     .serialize(SchematicContent.MAP_CODEC)
                     .sync(SchematicContent.STREAM_CODEC)
                     .build()

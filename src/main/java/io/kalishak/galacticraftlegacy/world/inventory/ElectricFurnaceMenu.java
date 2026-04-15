@@ -114,7 +114,7 @@ public class ElectricFurnaceMenu extends AbstractMachineMenu<ElectricFurnaceBloc
     }
 
     private boolean isFuel(ItemStack stack) {
-        FurnaceFuel furnaceFuel = stack.getItemHolder().getData(NeoForgeDataMaps.FURNACE_FUELS);
+        FurnaceFuel furnaceFuel = stack.typeHolder().getData(NeoForgeDataMaps.FURNACE_FUELS);
         return furnaceFuel != null && furnaceFuel.burnTime() > 0;
     }
 

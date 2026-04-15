@@ -16,6 +16,7 @@ import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 public class GalacticraftSpritesProvider extends SpriteSourceProvider {
+    public static final Identifier CELESTIAL_BODIES = Constants.id("celestial_bodies");
     public static final Identifier SCHEMATICS = Constants.id("schematics");
     public static final Identifier PARACHUTES = Constants.id("parachutes");
 
@@ -36,8 +37,10 @@ public class GalacticraftSpritesProvider extends SpriteSourceProvider {
                 ),
                 PalettedPermutations.DEFAULT_SEPARATOR
         ));
+        atlas(AtlasIds.CELESTIALS).addSource(new DirectoryLister("environment/celestial", ""));
         atlas(AtlasIds.CHESTS).addSource(new SingleFile(Constants.id("parachest")));
-        atlas(AtlasIds.GUI).addSource(new DirectoryLister(Galacticraft.MODID, ""));
+        atlas(AtlasIds.GUI).addSource(new DirectoryLister("gui/sprites", ""));
+        atlas(CELESTIAL_BODIES).addSource(new DirectoryLister("galaxy", "galaxy/"));
         atlas(PARACHUTES).addSource(new DirectoryLister("entity/equipment/galacticraftlegacy/parachute", "entity/equipment/galacticraftlegacy/parachute/"));
         atlas(SCHEMATICS).addSource(new DirectoryLister("schematic", "schematic/"));
     }

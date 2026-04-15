@@ -7,7 +7,9 @@ import io.kalishak.galacticraftlegacy.world.level.block.entity.wire.ColoredPipeB
 import io.kalishak.galacticraftlegacy.world.level.block.entity.wire.network.NetworkType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -60,9 +62,11 @@ public class ColoredPipeBlock extends AbstractWireBlock {
 
     @Override
     protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
-        if (stack.getItem() instanceof DyeItem dye) {
+        if (stack.is(ItemTags.DYES)) {
             if (!level.isClientSide()) {
-                BlockState newState = COLORED_PIPES_BY_DYE.get(dye.getDyeColor()).get().defaultBlockState();
+                DyeColor dyeColor = stack.getOrDefault(DataComponents.DYE, DyeColor.WHITE);
+
+                BlockState newState = COLORED_PIPES_BY_DYE.get(dyeColor).get().defaultBlockState();
 
                 if (newState != state) {
                     level.setBlock(pos, newState, ColoredPipeBlock.UPDATE_ALL);
@@ -70,7 +74,7 @@ public class ColoredPipeBlock extends AbstractWireBlock {
                     stack.consume(1, player);
 
                     if (level.getBlockEntity(pos) instanceof ColoredPipeBlockEntity coloredPipeBlockEntity) {
-                        coloredPipeBlockEntity.setColor(dye.getDyeColor());
+                        coloredPipeBlockEntity.setColor(dyeColor);
                         coloredPipeBlockEntity.updateNetwork();
                     }
                 }

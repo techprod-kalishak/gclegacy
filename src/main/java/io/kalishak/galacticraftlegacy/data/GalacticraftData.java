@@ -1,8 +1,8 @@
 package io.kalishak.galacticraftlegacy.data;
 
-import io.kalishak.galacticraftlegacy.Galacticraft;
 import io.kalishak.galacticraftlegacy.client.data.GalacticraftSoundProvider;
 import io.kalishak.galacticraftlegacy.client.data.models.GalacticraftEquipmentAssetProvider;
+import io.kalishak.galacticraftlegacy.data.loot.GalacticraftLootTableProvider;
 import io.kalishak.galacticraftlegacy.data.tag.*;
 import io.kalishak.galacticraftlegacy.data.worldgen.GalacticraftCarvers;
 import io.kalishak.galacticraftlegacy.registry.CelestialBodyLevelDataEntries;
@@ -21,16 +21,17 @@ import io.kalishak.galacticraftlegacy.world.level.levelgen.GalacticraftNoiseGene
 import io.kalishak.galacticraftlegacy.world.level.levelgen.features.GalacticraftFeatures;
 import io.kalishak.galacticraftlegacy.world.level.levelgen.placement.GalacticraftPlacements;
 import io.kalishak.galacticraftlegacy.world.timeline.GalacticraftTimelines;
+import io.kalishak.galacticraftlegacy.world.timeline.GalacticraftWorldClocks;
+import net.minecraft.DetectedVersion;
 import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.loot.LootTableProvider;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
-import net.neoforged.neoforge.common.data.DatapackBuiltinEntriesProvider;
+import net.minecraft.data.metadata.PackMetadataGenerator;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.packs.PackType;
+import net.minecraft.server.packs.metadata.pack.PackMetadataSection;
+import net.minecraft.util.InclusiveRange;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
-
-import java.util.List;
-import java.util.Set;
 
 public class GalacticraftData {
     private static final RegistrySetBuilder SET_BUILDER = new RegistrySetBuilder()
@@ -43,37 +44,35 @@ public class GalacticraftData {
             .add(Registries.TIMELINE, GalacticraftTimelines::bootstrap)
             .add(Registries.TRIM_MATERIAL, GalacticraftTrimMaterials::bootstrap)
             .add(Registries.NOISE_SETTINGS, GalacticraftNoiseGeneratorSettings::bootstrap)
+            .add(Registries.WORLD_CLOCK, GalacticraftWorldClocks::bootstrap)
             .add(NeoForgeRegistries.Keys.BIOME_MODIFIERS, GalacticraftBiomeModifiers::bootstrap)
             .add(GalacticraftRegistries.Keys.CHECKLIST, Checklist::bootstrap)
             .add(GalacticraftRegistries.Keys.SCHEMATIC, SchematicVariants::bootstrap)
             .add(GalacticraftRegistries.Keys.CELESTIAL_BODY_LEVEL_DATA, CelestialBodyLevelDataEntries::bootstrap);
 
     public static void gatherData(GatherDataEvent.Client event) {
+        event.createProvider(output -> new PackMetadataGenerator(output)
+                .add(PackMetadataSection.SERVER_TYPE, new PackMetadataSection(
+                        Component.translatable("pack.galacticraftlegacy.description"),
+                        new InclusiveRange<>(DetectedVersion.BUILT_IN.packVersion(PackType.SERVER_DATA)))));
+
         event.createProvider(GalacticraftSpritesProvider::new);
         event.createProvider(GalacticraftLanguageProvider::new);
         event.createProvider(GalacticraftModelProvider::new);
         event.createProvider(GalacticraftEquipmentAssetProvider::new);
         event.createProvider(GalacticraftSoundProvider::new);
 
+        event.createDatapackRegistryObjects(SET_BUILDER);
+        event.createProvider(GalacticraftLootTableProvider::create);
         event.createProvider(GalacticraftRecipeProvider.Runner::new);
-        event.createProvider((output, lookupProvider) -> new LootTableProvider(
-                output,
-                Set.of(),
-                List.of(new LootTableProvider.SubProviderEntry(GalacticraftBlockLootSubProvider::new, LootContextParamSets.BLOCK)),
-                lookupProvider)
-        );
-        event.createProvider(((output, lookupProvider) -> new DatapackBuiltinEntriesProvider(
-                output,
-                lookupProvider,
-                SET_BUILDER,
-                Set.of(Galacticraft.MODID)
-        )));
-        event.createProvider(GalacticraftItemTagsProvider::new);
         event.createProvider(GalacticraftBiomeTagsProvider::new);
         event.createProvider(GalacticraftBlockTagsProvider::new);
+        event.createProvider(GalacticraftChecklistTagsProvider::new);
         event.createProvider(GalacticraftDamageTypeTags::new);
+        event.createProvider(GalacticraftDimensionTypeTags::new);
         event.createProvider(GalacticraftEntityTypeTagsProvider::new);
         event.createProvider(GalacticraftFluidTagsProvider::new);
+        event.createProvider(GalacticraftItemTagsProvider::new);
         event.createProvider(GalacticraftTimelinesTagsProvider::new);
 
         // VanillaRegistries for lookup

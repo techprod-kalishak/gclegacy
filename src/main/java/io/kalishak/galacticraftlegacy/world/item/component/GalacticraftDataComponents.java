@@ -2,8 +2,10 @@ package io.kalishak.galacticraftlegacy.world.item.component;
 
 import com.mojang.serialization.Codec;
 import io.kalishak.galacticraftlegacy.Galacticraft;
+import io.kalishak.galacticraftlegacy.registry.SchematicVariant;
 import io.kalishak.galacticraftlegacy.world.item.KeyLock;
 import net.minecraft.core.GlobalPos;
+import net.minecraft.core.Holder;
 import net.minecraft.core.UUIDUtil;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.Registries;
@@ -43,9 +45,9 @@ public final class GalacticraftDataComponents {
             "key_lock",
             builder -> builder.persistent(KeyLock.CODEC).networkSynchronized(KeyLock.STREAM_CODEC).cacheEncoding()
     );
-    public static final DeferredHolder<DataComponentType<?>, DataComponentType<SchematicContent>> SCHEMATIC = REGISTRY.registerComponentType(
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<Holder<SchematicVariant>>> SCHEMATIC = REGISTRY.registerComponentType(
             "schematic",
-            builder -> builder.persistent(SchematicContent.CODEC).networkSynchronized(SchematicContent.STREAM_CODEC).ignoreSwapAnimation()
+            builder -> builder.persistent(SchematicVariant.CODEC).networkSynchronized(SchematicVariant.STREAM_CODEC).ignoreSwapAnimation()
     );
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<ShieldController>> SHIELD_CONTROLLER = REGISTRY.registerComponentType(
             "shield_controller",

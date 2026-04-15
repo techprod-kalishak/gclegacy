@@ -1,7 +1,7 @@
 package io.kalishak.galacticraftlegacy.client.gui.screens.inventory;
 
 import io.kalishak.galacticraftlegacy.Constants;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
@@ -22,14 +22,14 @@ public interface MachineScreen {
         return new Rectangle();
     }
 
-    default void renderSprites(GuiGraphics guiGraphics, int leftOffset, int topOffset, int energyCapacity) {
+    default void extractSprites(GuiGraphicsExtractor graphics, int leftOffset, int topOffset, int energyCapacity) {
         if (getEnergyStored() > 0) {
             Rectangle energyIndicator = offset(getEnergyIndicatorBounds(), leftOffset, topOffset);
-            guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, ENERGY_INDICATOR, energyIndicator.width, energyIndicator.height, 0, 0, energyIndicator.x, energyIndicator.y, energyIndicator.width, energyIndicator.height);
+            graphics.blitSprite(RenderPipelines.GUI_TEXTURED, ENERGY_INDICATOR, energyIndicator.width, energyIndicator.height, 0, 0, energyIndicator.x, energyIndicator.y, energyIndicator.width, energyIndicator.height);
 
             Rectangle energyBar = offset(getEnergyBarBounds(), leftOffset, topOffset);
             int length = Mth.ceil((float) getEnergyStored() / (float) energyCapacity * energyBar.width);
-            guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, ENERGY_BAR_SPRITE, energyBar.width, energyBar.height, 0, 0, energyBar.x, energyBar.y, length, energyBar.height);
+            graphics.blitSprite(RenderPipelines.GUI_TEXTURED, ENERGY_BAR_SPRITE, energyBar.width, energyBar.height, 0, 0, energyBar.x, energyBar.y, length, energyBar.height);
         }
     }
 

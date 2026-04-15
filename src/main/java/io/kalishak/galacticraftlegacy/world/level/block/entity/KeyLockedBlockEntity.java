@@ -91,10 +91,6 @@ public abstract class KeyLockedBlockEntity extends NamedBlockEntity implements R
         }
     }
 
-    public boolean canOpen(ItemStack itemStack, Player player) {
-        return player.isSpectator() || this.keyLock.canUnlock(itemStack, getLevel(), getBlockPos());
-    }
-
     public boolean canUnlock(ItemStack itemStack) {
         return this.keyLock.canUnlock(itemStack, getLevel(), getBlockPos());
     }

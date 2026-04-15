@@ -1,14 +1,14 @@
 package io.kalishak.galacticraftlegacy.world.item;
 
+import io.kalishak.galacticraftlegacy.registry.SchematicVariant;
 import io.kalishak.galacticraftlegacy.world.entity.SchematicEntity;
 import io.kalishak.galacticraftlegacy.world.item.component.GalacticraftDataComponents;
-import io.kalishak.galacticraftlegacy.world.item.component.SchematicContent;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Holder;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.HangingEntityItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
@@ -33,7 +33,7 @@ public class SchematicItem extends Item {
         }
 
         Level level = context.getLevel();
-        SchematicContent schematicHolder = itemInHand.getOrDefault(GalacticraftDataComponents.SCHEMATIC, SchematicContent.DEFAULT);
+        Holder<SchematicVariant> schematicHolder = itemInHand.get(GalacticraftDataComponents.SCHEMATIC);
         SchematicEntity schematicEntity = new SchematicEntity(level, relative, clickedFace, schematicHolder);
 
         EntityType.createDefaultStackConfig(level, itemInHand, player).accept(schematicEntity);

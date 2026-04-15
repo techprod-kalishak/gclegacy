@@ -1,6 +1,5 @@
-package io.kalishak.galacticraftlegacy.data;
+package io.kalishak.galacticraftlegacy.data.loot;
 
-import io.kalishak.galacticraftlegacy.Galacticraft;
 import io.kalishak.galacticraftlegacy.world.item.GalacticraftItems;
 import io.kalishak.galacticraftlegacy.world.level.block.GalacticraftBlocks;
 import net.minecraft.core.HolderLookup;

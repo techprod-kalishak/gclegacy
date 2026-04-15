@@ -5,7 +5,7 @@ import com.google.common.collect.Maps;
 import io.kalishak.galacticraftlegacy.Constants;
 import io.kalishak.galacticraftlegacy.galaxies.CelestialObject;
 import io.kalishak.galacticraftlegacy.galaxies.GalacticraftGalaxies;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.LevelLoadingScreen;
 import net.minecraft.client.multiplayer.LevelLoadTracker;
 import net.minecraft.resources.Identifier;
@@ -71,8 +71,8 @@ public class CelestialSelectionScreen extends LevelLoadingScreen {
     }
 
     @Override
-    public void renderBackground(GuiGraphics guiGraphics, int x, int y, float partialTicks) {
-        super.renderBackground(guiGraphics, x, y, partialTicks);
+    public void extractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
+        super.extractRenderState(graphics, mouseX, mouseY, a);
     }
 
     protected enum ViewType {

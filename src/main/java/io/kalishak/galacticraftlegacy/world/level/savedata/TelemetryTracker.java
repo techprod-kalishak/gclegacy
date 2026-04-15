@@ -2,6 +2,7 @@ package io.kalishak.galacticraftlegacy.world.level.savedata;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import io.kalishak.galacticraftlegacy.Constants;
 import io.kalishak.galacticraftlegacy.world.entity.Trackable;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.LaunchControllerBlockEntity;
 import net.minecraft.core.BlockPos;
@@ -27,7 +28,7 @@ import java.util.function.*;
 import java.util.stream.Collectors;
 
 public class TelemetryTracker extends SavedData {
-    public static final SavedDataType<TelemetryTracker> SAVE_DATA_ID = new SavedDataType<>("telemetry_trackers", TelemetryTracker::new, TelemetryTracker::codec);
+    public static final SavedDataType<TelemetryTracker> SAVE_DATA_ID = new SavedDataType<>(Constants.id("telemetry_trackers"), TelemetryTracker::new, TelemetryTracker::codec);
     private static final Logger LOGGER = LoggerFactory.getLogger(TelemetryTracker.class);
     private final @Nullable ServerLevel serverLevel;
     private final ResourceKey<Level> dimension;

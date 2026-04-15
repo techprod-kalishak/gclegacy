@@ -10,6 +10,11 @@
         "texture": "galacticraftlegacy:steel"
       }
     ],
+    "humanoid_baby": [
+      {
+        "texture": "galacticraftlegacy:steel"
+      }
+    ],
     "humanoid_leggings": [
       {
         "texture": "galacticraftlegacy:steel"

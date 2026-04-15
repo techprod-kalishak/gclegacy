@@ -6,7 +6,6 @@
   "group": "lead_ingot",
   "ingredient": "galacticraftlegacy:raw_lead",
   "result": {
-    "count": 1,
     "id": "galacticraftlegacy:lead_ingot"
   }
 }

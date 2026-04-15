@@ -10,9 +10,9 @@ import io.kalishak.galacticraftlegacy.world.item.KeyLock;
 import io.kalishak.galacticraftlegacy.world.item.component.GalacticraftDataComponents;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.special.SpecialModelRenderer;
-import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import org.joml.Vector3fc;
+import org.jspecify.annotations.Nullable;
 
 import java.util.function.Consumer;
 
@@ -31,21 +31,21 @@ public class KeySpecialRenderer implements SpecialModelRenderer<FeatureTier> {
     }
 
     @Override
-    public void submit(FeatureTier featureTier, ItemDisplayContext itemDisplayContext, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, int i, int i1, boolean b, int i2) {
+    public void submit(@Nullable FeatureTier argument, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, int lightCoords, int overlayCoords, boolean hasFoil, int outlineColor) {
         poseStack.pushPose();
         poseStack.translate(1.0D, -1.0D, -1.0D);
         submitNodeCollector.submitModelPart(
                 this.keyModel.root(),
                 poseStack,
-                this.keyModel.renderType(KeyModel.getTexture(featureTier)),
-                i,
-                i1,
+                this.keyModel.renderType(KeyModel.getTexture(argument)),
+                lightCoords,
+                overlayCoords,
                 null,
                 false,
-                b,
+                hasFoil,
                 -1,
                 null,
-                i2
+                outlineColor
         );
 
         poseStack.popPose();
@@ -58,7 +58,7 @@ public class KeySpecialRenderer implements SpecialModelRenderer<FeatureTier> {
         this.keyModel.root().getExtentsForGui(poseStack, consumer);
     }
 
-    public record Unbaked(FeatureTier featureTier) implements SpecialModelRenderer.Unbaked {
+    public record Unbaked(FeatureTier featureTier) implements SpecialModelRenderer.Unbaked<FeatureTier> {
         public static final MapCodec<Unbaked> MAP_CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
                 FeatureTier.CODEC.fieldOf("feature_tier").forGetter(Unbaked::featureTier)
         ).apply(instance, Unbaked::new));
@@ -69,7 +69,7 @@ public class KeySpecialRenderer implements SpecialModelRenderer<FeatureTier> {
         }
 
         @Override
-        public SpecialModelRenderer<?> bake(BakingContext bakingContext) {
+        public SpecialModelRenderer<FeatureTier> bake(BakingContext bakingContext) {
             return new KeySpecialRenderer(new KeyModel(bakingContext.entityModelSet().bakeLayer(GalacticraftModelLayers.KEY)));
         }
     }

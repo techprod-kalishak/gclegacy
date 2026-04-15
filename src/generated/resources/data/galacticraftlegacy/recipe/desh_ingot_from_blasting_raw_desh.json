@@ -6,7 +6,6 @@
   "group": "desh_ingot",
   "ingredient": "galacticraftlegacy:raw_desh",
   "result": {
-    "count": 1,
     "id": "galacticraftlegacy:desh_ingot"
   }
 }

@@ -14,8 +14,8 @@ import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.client.renderer.rendertype.RenderTypes;
-import net.minecraft.client.renderer.state.CameraRenderState;
-import net.minecraft.client.resources.model.Material;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
+import net.minecraft.client.resources.model.sprite.SpriteId;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Unit;
 import net.minecraft.world.phys.AABB;
@@ -45,8 +45,8 @@ public class FlagRenderer extends EntityRenderer<Flag, FlagRenderState> {
     @Override
     public void submit(FlagRenderState renderState, PoseStack poseStack, SubmitNodeCollector nodeCollector, CameraRenderState cameraRenderState) {
         FlagData flagData = renderState.flagData;
-        Material material = GalacticraftModelBakery.FLAG_BASE;
-        RenderType renderType = material.renderType(RenderTypes::entitySolid);
+        SpriteId spriteId = GalacticraftModelBakery.FLAG_BASE;
+        RenderType renderType = spriteId.renderType(RenderTypes::entitySolid);
 
         long seed = (renderState.id * 493286711L);
         seed *= seed * 4392167121L + seed * 98761L;

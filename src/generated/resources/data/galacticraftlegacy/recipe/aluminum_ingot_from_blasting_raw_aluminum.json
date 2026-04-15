@@ -6,7 +6,6 @@
   "group": "aluminum_ingot",
   "ingredient": "galacticraftlegacy:raw_aluminum",
   "result": {
-    "count": 1,
     "id": "galacticraftlegacy:aluminum_ingot"
   }
 }

@@ -18,23 +18,23 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
 import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.client.renderer.rendertype.RenderTypes;
-import net.minecraft.client.renderer.state.CameraRenderState;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.resources.model.Material;
-import net.minecraft.client.resources.model.MaterialSet;
+import net.minecraft.client.resources.model.sprite.SpriteGetter;
+import net.minecraft.client.resources.model.sprite.SpriteId;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import org.jspecify.annotations.Nullable;
 
 public class DungeonBlockRenderer implements BlockEntityRenderer<DungeonChestBlockEntity, DungeonBlockRenderState> {
-    private final MaterialSet materials;
+    private final SpriteGetter sprites;
     private final ChestModel chestModel;
     private final KeyModel keyModel;
 
     public DungeonBlockRenderer(BlockEntityRendererProvider.Context context) {
-        this.materials = context.materials();
+        this.sprites = context.sprites();
         this.chestModel = new ChestModel(context.bakeLayer(ModelLayers.CHEST));
         this.keyModel = new KeyModel(context.bakeLayer(GalacticraftModelLayers.KEY));
     }
@@ -56,7 +56,7 @@ public class DungeonBlockRenderer implements BlockEntityRenderer<DungeonChestBlo
     }
 
     @Override
-    public void submit(DungeonBlockRenderState renderState, PoseStack poseStack, SubmitNodeCollector nodeCollector, CameraRenderState cameraRenderState) {
+    public void submit(DungeonBlockRenderState renderState, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, CameraRenderState camera) {
         poseStack.pushPose();
         poseStack.translate(0.5F, 0.5F, 0.5F);
         poseStack.mulPose(Axis.YP.rotationDegrees(-renderState.angle));
@@ -64,10 +64,10 @@ public class DungeonBlockRenderer implements BlockEntityRenderer<DungeonChestBlo
         float openess = renderState.open;
         openess = 1.0F - openess;
         openess = 1.0F - openess * openess * openess;
-        Material material = GalacticraftSheets.getDungeonChestMaterial(renderState.featureTier);
+        SpriteId material = GalacticraftSheets.getDungeonChestMaterial(renderState.featureTier);
         RenderType renderType = material.renderType(RenderTypes::entityCutout);
-        TextureAtlasSprite sprite = this.materials.get(material);
-        nodeCollector.submitModel(
+        TextureAtlasSprite sprite = this.sprites.get(material);
+        submitNodeCollector.submitModel(
                 this.chestModel,
                 openess,
                 poseStack,
@@ -88,7 +88,7 @@ public class DungeonBlockRenderer implements BlockEntityRenderer<DungeonChestBlo
             poseStack.mulPose(Axis.XP.rotationDegrees(180.0F));
             poseStack.translate(0.4F, -1.1F, 0.0F);
 
-            nodeCollector.submitModelPart(
+            submitNodeCollector.submitModelPart(
                     this.keyModel.root(),
                     poseStack,
                     this.keyModel.renderType(KeyModel.getTexture(renderState.featureTier)),

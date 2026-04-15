@@ -46,7 +46,7 @@ public class EntityGearInventory extends GearInventoryProvider {
 
     @Override
     public boolean mayBreath(LivingEntity livingEntity) {
-        return livingEntity.getType().is(EntityTypeTags.UNDEAD) || super.mayBreath(livingEntity);
+        return livingEntity.is(EntityTypeTags.UNDEAD) || super.mayBreath(livingEntity);
     }
 
     public void markGuaranteedDrop(int index) {

@@ -4,9 +4,11 @@ import io.kalishak.galacticraftlegacy.attachment.AttachmentHelper;
 import io.kalishak.galacticraftlegacy.attachment.entity.GearInventoryProvider;
 import io.kalishak.galacticraftlegacy.config.EnergyUnit;
 import io.kalishak.galacticraftlegacy.data.GalacticraftTags;
+import io.kalishak.galacticraftlegacy.registry.SchematicVariant;
 import io.kalishak.galacticraftlegacy.world.entity.GearEquipmentSlot;
 import io.kalishak.galacticraftlegacy.world.item.component.*;
 import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.GalacticraftRecipeType;
+import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -49,7 +51,7 @@ public class NeoEventHandler {
     public void appendHoverText(AddAttributeTooltipsEvent event) {
         ItemStack stack = event.getStack();
 
-        if (stack.getItemHolder().unwrapKey().filter(key -> key.identifier().getNamespace().equals(Galacticraft.MODID)).isPresent()) {
+        if (stack.typeHolder().unwrapKey().filter(key -> key.identifier().getNamespace().equals(Galacticraft.MODID)).isPresent()) {
             if (event.shouldShow()) {
                 addTooltipIfPresent(stack, GalacticraftDataComponents.getTooltipProviders(), event.getContext(), event::addTooltipLines);
 
@@ -75,7 +77,7 @@ public class NeoEventHandler {
     public void entityCeased(VanillaGameEvent event) {
         Entity entity = event.getContext().sourceEntity();
 
-        if (entity != null && entity.getType().is(GalacticraftTags.EntityTypes.CAN_EQUIP_GEAR)) {
+        if (entity != null && entity.is(GalacticraftTags.EntityTypes.CAN_EQUIP_GEAR)) {
             if (!AttachmentHelper.hasGearInventory(entity)) {
                 return;
             }
@@ -95,7 +97,7 @@ public class NeoEventHandler {
     public void entityTick(EntityTickEvent.Pre event) {
         Entity entity = event.getEntity();
 
-        if (entity instanceof LivingEntity livingEntity && entity.getType().is(GalacticraftTags.EntityTypes.CAN_EQUIP_GEAR) && AttachmentHelper.hasGearInventory(entity)) {
+        if (entity instanceof LivingEntity livingEntity && entity.is(GalacticraftTags.EntityTypes.CAN_EQUIP_GEAR) && AttachmentHelper.hasGearInventory(entity)) {
             GearInventoryProvider gearInventoryProvider = AttachmentHelper.getGearInventory(entity);
 
             if (entity.level() instanceof ServerLevel serverLevel) {
@@ -112,7 +114,7 @@ public class NeoEventHandler {
         DamageSource source = event.getSource();
         boolean bypasses = source.is(GalacticraftTags.DamageTypes.BYPASSES_SHIELD_CONTROLLER);
 
-        if (entity.getType().is(GalacticraftTags.EntityTypes.CAN_EQUIP_GEAR) && AttachmentHelper.hasGearInventory(entity)) {
+        if (entity.is(GalacticraftTags.EntityTypes.CAN_EQUIP_GEAR) && AttachmentHelper.hasGearInventory(entity)) {
             ItemStack shieldItem = AttachmentHelper.getGearInventory(entity).getGearEquipment().get(GearEquipmentSlot.SHIELD);
 
             if (!shieldItem.isEmpty() && entity.level() instanceof ServerLevel serverLevel) {
@@ -144,6 +146,7 @@ public class NeoEventHandler {
         }
     }
 
+    @SuppressWarnings({"ConstantConditions", "unchecked"})
     private static void addTooltipIfPresent(ItemStack itemStack, Stream<DataComponentType<?>> components, AttributeTooltipContext cxt, Consumer<Component> consumer) {
         components.forEach(dataComponentType -> {
             if (itemStack.has(dataComponentType)) {
@@ -151,6 +154,8 @@ public class NeoEventHandler {
 
                 if (component instanceof TooltipProvider tooltipProvider) {
                     tooltipProvider.addToTooltip(cxt, consumer, cxt.flag(), itemStack);
+                } else if (dataComponentType == GalacticraftDataComponents.SCHEMATIC.get()) {
+                    consumer.accept(((Holder.Reference<SchematicVariant>) component).value().title());
                 }
             }
         });

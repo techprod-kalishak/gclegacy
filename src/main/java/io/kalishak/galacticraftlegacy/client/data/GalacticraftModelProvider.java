@@ -15,7 +15,6 @@ import io.kalishak.galacticraftlegacy.world.item.component.GalacticraftDataCompo
 import io.kalishak.galacticraftlegacy.world.item.equipment.trim.GalacticraftMaterialAssetGroup;
 import io.kalishak.galacticraftlegacy.world.item.equipment.trim.GalacticraftTrimMaterials;
 import io.kalishak.galacticraftlegacy.world.level.block.GalacticraftBlocks;
-import io.kalishak.galacticraftlegacy.world.level.block.wire.ColoredPipeBlock;
 import io.kalishak.galacticraftlegacy.world.level.block.wire.HeavyWireBlock;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
@@ -26,6 +25,7 @@ import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
 import net.minecraft.client.data.models.blockstates.PropertyDispatch;
 import net.minecraft.client.data.models.model.*;
 import net.minecraft.client.renderer.item.ItemModel;
+import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.Identifier;
@@ -97,7 +97,7 @@ public class GalacticraftModelProvider extends ModelProvider {
         blockModels.createTrivialBlock(
                 GalacticraftBlocks.OXYGEN_DETECTOR.get(),
                 TexturedModel.createDefault(
-                        block -> TextureMapping.column(ModelLocationUtils.getModelLocation(block, "_side"), Constants.id("block/machine_top")),
+                        block -> TextureMapping.column(TextureMapping.getBlockTexture(block, "_side"), new Material(Constants.id("block/machine_top"))),
                         ModelTemplates.CUBE_COLUMN
                 )
         );
@@ -230,7 +230,7 @@ public class GalacticraftModelProvider extends ModelProvider {
     private void grating(BlockModelGenerators blockModels, Block gratingBlock) {
         blockModels.registerSimpleFlatItemModel(gratingBlock.asItem());
 
-        Identifier textures = ModelLocationUtils.getModelLocation(gratingBlock);
+        Material textures = TextureMapping.getBlockTexture(gratingBlock);
         TextureMapping mapping = new TextureMapping().put(TextureSlot.PARTICLE,  textures).put(TextureSlot.TEXTURE, textures);
         Identifier modelId = ModelTemplates.create(TextureSlot.PARTICLE, TextureSlot.TEXTURE)
                 .extend()
@@ -242,15 +242,16 @@ public class GalacticraftModelProvider extends ModelProvider {
     }
 
     private void cheese(BlockModelGenerators blockModels, Block cheeseBlock) {
+        blockModels.createCakeBlock();
         blockModels.registerSimpleFlatItemModel(cheeseBlock.asItem());
         TextureMapping mainMapping = new TextureMapping()
-                .put(TextureSlot.PARTICLE, ModelLocationUtils.getModelLocation(cheeseBlock, "_side"))
-                .put(TextureSlot.BOTTOM, ModelLocationUtils.getModelLocation(cheeseBlock, "_top"))
-                .put(TextureSlot.TOP, ModelLocationUtils.getModelLocation(cheeseBlock, "_top"))
-                .put(TextureSlot.SIDE, ModelLocationUtils.getModelLocation(cheeseBlock, "_side"));
+                .put(TextureSlot.PARTICLE, TextureMapping.getBlockTexture(cheeseBlock, "_side"))
+                .put(TextureSlot.BOTTOM, TextureMapping.getBlockTexture(cheeseBlock, "_top"))
+                .put(TextureSlot.TOP, TextureMapping.getBlockTexture(cheeseBlock, "_top"))
+                .put(TextureSlot.SIDE, TextureMapping.getBlockTexture(cheeseBlock, "_side"));
         TextureMapping innerMapping = mainMapping
                 .copy()
-                .put(TextureSlot.INSIDE, ModelLocationUtils.getModelLocation(cheeseBlock, "_inner"));
+                .put(TextureSlot.INSIDE, TextureMapping.getBlockTexture(cheeseBlock, "_inner"));
         Identifier mainModel = ModelTemplates.create(TextureSlot.PARTICLE, TextureSlot.BOTTOM, TextureSlot.TOP, TextureSlot.SIDE)
                 .extend()
                 .parent(Identifier.withDefaultNamespace("block/cake"))
@@ -276,12 +277,11 @@ public class GalacticraftModelProvider extends ModelProvider {
 
     public void schematic(ItemModelGenerators gen, Item item) {
         Identifier itemModel = ModelLocationUtils.getModelLocation(item);
-        Identifier firstLayer = TextureMapping.getItemTexture(item);
         ItemModel.Unbaked tier1_model = ItemModelUtils.plainModel(gen.createFlatItemModel(item, "_tier_1", ModelTemplates.FLAT_ITEM));
         ItemModel.Unbaked tier2_model = ItemModelUtils.plainModel(gen.createFlatItemModel(item, "_tier_2", ModelTemplates.FLAT_ITEM));
         ItemModel.Unbaked tier3_model = ItemModelUtils.plainModel(gen.createFlatItemModel(item, "_tier_3", ModelTemplates.FLAT_ITEM));
 
-        ModelTemplates.FLAT_ITEM.create(itemModel, TextureMapping.layer0(firstLayer), gen.modelOutput);
+        ModelTemplates.FLAT_ITEM.create(itemModel, TextureMapping.layer0(item), gen.modelOutput);
 
         gen.itemModelOutput.accept(
                 item,
@@ -335,7 +335,7 @@ public class GalacticraftModelProvider extends ModelProvider {
 
     private void litMachine(BlockModelGenerators gen, Block block) {
         MultiVariant regularVariant = BlockModelGenerators.plainVariant(GalacticraftTexturedModel.SIMPLE_MACHINE.create(block, gen.modelOutput));
-        Identifier litTexture = TextureMapping.getBlockTexture(block, "_front_on");
+        Material litTexture = TextureMapping.getBlockTexture(block, "_front_on");
         MultiVariant litVariant = BlockModelGenerators.plainVariant(GalacticraftTexturedModel.SIMPLE_MACHINE.get(block).updateTextures(mapping -> mapping.put(TextureSlot.NORTH, litTexture)).createWithSuffix(block, "_on", gen.modelOutput));
         gen.blockStateOutput.accept(
                 MultiVariantGenerator.dispatch(block)
@@ -356,20 +356,12 @@ public class GalacticraftModelProvider extends ModelProvider {
         Identifier parent = Constants.id("block/pipe_" + (block instanceof HeavyWireBlock ? "dense_" : "") + "template");
         ExtendedModelTemplateBuilder builder = ExtendedModelTemplateBuilder.builder().parent(parent).requiredTextureSlot(TextureSlot.TEXTURE);
 
-        if (block instanceof ColoredPipeBlock) {
-            builder = builder.renderType("cutout");
-        }
-
         return builder.build().create(block, TextureMapping.defaultTexture(block), maker);
     }
 
     private Identifier generatePipeLegModel(Block block, Direction direction, BiConsumer<Identifier, ModelInstance> maker) {
         Identifier parent = Constants.id("block/pipe_" + (block instanceof HeavyWireBlock ? "dense_" : "") + "leg_template");
         ExtendedModelTemplateBuilder builder = ExtendedModelTemplateBuilder.builder().parent(parent).requiredTextureSlot(TextureSlot.TEXTURE);
-
-        if (block instanceof ColoredPipeBlock) {
-            builder = builder.renderType("cutout");
-        }
 
         return builder.build().createWithSuffix(block, "_" + direction.getName(), TextureMapping.defaultTexture(block), maker);
     }

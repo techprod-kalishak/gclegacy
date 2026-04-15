@@ -1,6 +1,5 @@
 {
   "parent": "galacticraftlegacy:block/pipe_template",
-  "render_type": "minecraft:cutout",
   "textures": {
     "texture": "galacticraftlegacy:block/red_pipe"
   }

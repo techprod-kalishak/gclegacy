@@ -7,14 +7,12 @@ import io.kalishak.galacticraftlegacy.world.level.block.entity.FlammableCauldron
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.cauldron.CauldronInteraction;
+import net.minecraft.core.cauldron.CauldronInteractions;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityReference;
 import net.minecraft.world.entity.InsideBlockEffectApplier;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
-import net.minecraft.world.entity.projectile.ProjectileDeflection;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
@@ -25,7 +23,6 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.fluids.CauldronFluidContent;
 import net.neoforged.neoforge.fluids.FluidStack;
@@ -37,14 +34,14 @@ import org.jspecify.annotations.Nullable;
 
 public class FlammableCauldronBlock extends AbstractCauldronBlock implements EntityBlock {
     public static final MapCodec<FlammableCauldronBlock> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
-            CauldronInteraction.CODEC.fieldOf("interactions").forGetter(flammableCauldronBlock -> flammableCauldronBlock.interactions),
+            CauldronInteractions.CODEC.fieldOf("interactions").forGetter(flammableCauldronBlock -> flammableCauldronBlock.interactions),
             BuiltInRegistries.FLUID.holderByNameCodec().fieldOf("fuel_in").forGetter(flammableCauldronBlock -> flammableCauldronBlock.fuelIn),
             propertiesCodec()
     ).apply(instance, FlammableCauldronBlock::new));
     public static final BooleanProperty FULL = BooleanProperty.create("full");
     private final Holder<Fluid> fuelIn;
 
-    public FlammableCauldronBlock(CauldronInteraction.InteractionMap interactions, Holder<Fluid> fuelIn, Properties properties) {
+    public FlammableCauldronBlock(CauldronInteraction.Dispatcher interactions, Holder<Fluid> fuelIn, Properties properties) {
         super(properties, interactions);
         this.fuelIn = fuelIn;
         registerDefaultState(this.stateDefinition.any().setValue(FULL, true));

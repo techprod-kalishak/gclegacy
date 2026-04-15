@@ -6,7 +6,6 @@
   "group": "tin_ingot",
   "ingredient": "galacticraftlegacy:raw_tin",
   "result": {
-    "count": 1,
     "id": "galacticraftlegacy:tin_ingot"
   }
 }

@@ -48,7 +48,6 @@ public class Galacticraft {
 
     public Galacticraft(IEventBus modEventBus, ModContainer modContainer) {
         GalacticraftAttachments.init(modEventBus);
-        GalacticraftAttributeTypes.init(modEventBus);
         GalacticraftBlocks.init(modEventBus);
         GalacticraftBlockEntityType.init(modEventBus);
         CelestialBodyType.init(modEventBus);
@@ -74,6 +73,7 @@ public class Galacticraft {
         modEventBus.addListener(this::setup);
         modEventBus.addListener(this::registerCauldronFluids);
 
+        GalacticraftCauldronInteraction.init(modEventBus);
         modEventBus.addListener(GalacticraftData::gatherData);
         modEventBus.addListener(GalacticraftNetworkHandler::registerPackets);
         modEventBus.addListener(GalacticraftDataMaps::registerDataMaps);
@@ -88,7 +88,6 @@ public class Galacticraft {
 
     private void setup(FMLCommonSetupEvent event) {
         event.enqueueWork(GalacticraftDispenserBehaviors::registerDispenseBehaviors);
-        event.enqueueWork(GalacticraftCauldronInteraction::registerCauldronInteractions);
     }
 
     private void registerCauldronFluids(RegisterCauldronFluidContentEvent event) {
