@@ -22,13 +22,14 @@ import net.minecraft.client.resources.model.sprite.AtlasManager;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.attribute.EnvironmentAttributeProbe;
 import org.joml.*;
+import org.jspecify.annotations.NonNull;
 
 import java.lang.Math;
 import java.util.OptionalDouble;
 import java.util.OptionalInt;
 
 public class MoonSkyRenderer extends SpaceSkyRenderer<MoonSkyRenderState> {
-    public static final MoonSkyRenderer INSTANCE = new MoonSkyRenderer();
+    //public static final MoonSkyRenderer INSTANCE = new MoonSkyRenderer();
     public static final Identifier ID = Constants.id("moon_sky");
     private GpuBuffer earthBuffer;
 
@@ -43,12 +44,12 @@ public class MoonSkyRenderer extends SpaceSkyRenderer<MoonSkyRenderState> {
     }
 
     @Override
-    protected MoonSkyRenderState createRenderState(SkyRenderState skyRenderState) {
+    protected MoonSkyRenderState createRenderState(@NonNull SkyRenderState skyRenderState) {
         return new MoonSkyRenderState(skyRenderState);
     }
 
     @Override
-    public void extractRenderState(float partialTicks, Camera camera, MoonSkyRenderState state, EnvironmentAttributeProbe attributeProbe) {
+    public void extractRenderState(float partialTicks, Camera camera, MoonSkyRenderState state, @NonNull EnvironmentAttributeProbe attributeProbe) {
         super.extractRenderState(partialTicks, camera, state, attributeProbe);
         state.earthAngle = attributeProbe.getValue(GalacticraftEnvironmentAttributes.EARTH_ANGLE.get(), partialTicks) * (float) (Math.PI / 180.0D);
         state.earthPhase = attributeProbe.getValue(GalacticraftEnvironmentAttributes.EARTH_PHASE.get(), partialTicks);

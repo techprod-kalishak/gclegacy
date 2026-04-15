@@ -24,7 +24,8 @@
       }
     },
     "minecraft:gameplay/water_evaporates": true,
-    "minecraft:visual/sky_color": "#9097ff"
+    "minecraft:visual/sky_color": "#9097ff",
+    "neoforge:custom_skybox": "galacticraftlegacy:moon_sky"
   },
   "coordinate_scale": 1.0,
   "default_clock": "galacticraftlegacy:moon",

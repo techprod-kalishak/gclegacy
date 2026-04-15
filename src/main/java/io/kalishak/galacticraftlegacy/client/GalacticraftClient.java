@@ -12,7 +12,6 @@ import io.kalishak.galacticraftlegacy.client.item.ColorByFluid;
 import io.kalishak.galacticraftlegacy.client.model.FlagModel;
 import io.kalishak.galacticraftlegacy.client.model.gear.OxygenGearModel;
 import io.kalishak.galacticraftlegacy.client.model.gear.ParachuteModel;
-import io.kalishak.galacticraftlegacy.client.renderer.environment.MoonSkyRenderer;
 import io.kalishak.galacticraftlegacy.client.renderer.blockentity.DungeonBlockRenderer;
 import io.kalishak.galacticraftlegacy.client.renderer.blockentity.ParachestBlockRenderer;
 import io.kalishak.galacticraftlegacy.client.renderer.entity.FallingParachestRenderer;
@@ -119,7 +118,7 @@ public class GalacticraftClient {
     }
 
     private void registerEnvironmentEffects(RegisterCustomEnvironmentEffectRendererEvent event) {
-        event.registerSkyboxRenderer(MoonSkyRenderer.ID, MoonSkyRenderer.INSTANCE);
+        //event.registerSkyboxRenderer(MoonSkyRenderer.ID, MoonSkyRenderer.INSTANCE);
     }
 
     private void registerFluidModels(RegisterFluidModelsEvent event) {

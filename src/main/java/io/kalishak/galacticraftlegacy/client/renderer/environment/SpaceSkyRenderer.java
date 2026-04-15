@@ -41,7 +41,7 @@ public abstract class SpaceSkyRenderer<S extends SpaceSkyRenderState> implements
     protected final RenderSystem.AutoStorageIndexBuffer quadIndices = RenderSystem.getSequentialBuffer(VertexFormat.Mode.QUADS);
     protected int starIndexCount;
 
-    static int starCount = ClientConfig.MORE_STARS.getAsBoolean() ? 5000 : 1500;
+    static int starCount = 1500;
 
     protected SpaceSkyRenderer() {
 
@@ -51,9 +51,9 @@ public abstract class SpaceSkyRenderer<S extends SpaceSkyRenderState> implements
 
     /**
      * Initialize after joining a world (I am too lazy, so I left it as it is lol)
-     * @param atlasManager
      */
     protected void init(AtlasManager atlasManager) {
+        SpaceSkyRenderer.starCount = ClientConfig.MORE_STARS.get() ? 5000 : 1500;
         this.celestialsAtlas = atlasManager.getAtlasOrThrow(AtlasIds.CELESTIALS);
         this.starBuffer = buildStars();
         this.sunBuffer = buildSunQuad(this.celestialsAtlas);
@@ -64,7 +64,6 @@ public abstract class SpaceSkyRenderer<S extends SpaceSkyRenderState> implements
         state.earthAngle = attributeProbe.getValue(GalacticraftEnvironmentAttributes.EARTH_ANGLE.get(), partialTicks) * (float) (Math.PI / 180.0D);
         state.starAngle = attributeProbe.getValue(EnvironmentAttributes.STAR_ANGLE, partialTicks) * (float) (Math.PI / 180.0D);
         state.starBrightness = attributeProbe.getValue(EnvironmentAttributes.STAR_BRIGHTNESS, partialTicks);
-        state.earthPhase = attributeProbe.getValue(GalacticraftEnvironmentAttributes.EARTH_PHASE.get(), partialTicks);
     }
 
     @Override
@@ -136,6 +135,7 @@ public abstract class SpaceSkyRenderer<S extends SpaceSkyRenderState> implements
         modelViewStack.popMatrix();
     }
 
+    @SuppressWarnings("ConstantConditions")
     protected void renderStars(float starBrightness, PoseStack poseStack) {
         Matrix4fStack modelViewStack = RenderSystem.getModelViewStack();
         modelViewStack.pushMatrix();
