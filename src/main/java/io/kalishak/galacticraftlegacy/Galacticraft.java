@@ -17,7 +17,6 @@ import io.kalishak.galacticraftlegacy.registry.GalacticraftRegistries;
 import io.kalishak.galacticraftlegacy.server.commands.GalacticraftCommands;
 import io.kalishak.galacticraftlegacy.galaxies.CelestialBodyType;
 import io.kalishak.galacticraftlegacy.sounds.GalacticraftSounds;
-import io.kalishak.galacticraftlegacy.world.attribute.GalacticraftAttributeTypes;
 import io.kalishak.galacticraftlegacy.world.attribute.GalacticraftEnvironmentAttributes;
 import io.kalishak.galacticraftlegacy.world.entity.GalacticraftEntityType;
 import io.kalishak.galacticraftlegacy.world.inventory.GalacticraftMenuType;
@@ -39,9 +38,6 @@ import io.kalishak.galacticraftlegacy.world.level.material.fluid.GalacticraftFlu
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.fluids.RegisterCauldronFluidContentEvent;
-import org.slf4j.Logger;
-
-import com.mojang.logging.LogUtils;
 
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
@@ -51,7 +47,6 @@ import net.neoforged.fml.ModContainer;
 @Mod(Galacticraft.MODID)
 public class Galacticraft {
     public static final String MODID = "galacticraftlegacy";
-    public static final Logger LOGGER = LogUtils.getLogger();
 
     public Galacticraft(IEventBus modEventBus, ModContainer modContainer) {
         GalacticraftAttachments.init(modEventBus);
