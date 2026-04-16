@@ -1,0 +1,32 @@
+{
+  "parent": "galacticraftlegacy:coal_power",
+  "criteria": {
+    "has_circuit_fabricator": {
+      "conditions": {
+        "items": [
+          {
+            "items": "galacticraftlegacy:circuit_fabricator"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.galacticraftlegacy.fabricated.description"
+    },
+    "icon": {
+      "id": "galacticraftlegacy:circuit_fabricator"
+    },
+    "title": {
+      "translate": "advancements.galacticraftlegacy.fabricated.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_circuit_fabricator"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

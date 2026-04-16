@@ -13,16 +13,16 @@ import io.kalishak.galacticraftlegacy.registry.SchematicVariant;
 import io.kalishak.galacticraftlegacy.world.item.KeyLock;
 import net.minecraft.core.GlobalPos;
 import net.minecraft.core.Holder;
-import net.minecraft.core.UUIDUtil;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.world.entity.EntityReference;
+import net.minecraft.world.entity.player.Player;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.fluids.SimpleFluidContent;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
-import java.util.UUID;
 import java.util.stream.Stream;
 
 public final class GalacticraftDataComponents {
@@ -68,9 +68,9 @@ public final class GalacticraftDataComponents {
             "structure_pos",
             builder -> builder.persistent(GlobalPos.CODEC).networkSynchronized(GlobalPos.STREAM_CODEC)
     );
-    public static final DeferredHolder<DataComponentType<?>, DataComponentType<UUID>> UUID = REGISTRY.registerComponentType(
-            "uuid",
-            builder -> builder.persistent(UUIDUtil.CODEC).networkSynchronized(UUIDUtil.STREAM_CODEC).cacheEncoding()
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<EntityReference<Player>>> ENTITY_REFERENCE = REGISTRY.registerComponentType(
+            "entity_reference",
+            builder -> builder.persistent(EntityReference.codec()).networkSynchronized(EntityReference.streamCodec()).cacheEncoding()
     );
 
     public static void init(IEventBus bus) {

@@ -1,0 +1,32 @@
+{
+  "parent": "galacticraftlegacy:wafers",
+  "criteria": {
+    "has_advanced_wafer": {
+      "conditions": {
+        "items": [
+          {
+            "items": "galacticraftlegacy:oxygen_detector"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.galacticraftlegacy.compressed.description"
+    },
+    "icon": {
+      "id": "minecraft:anvil"
+    },
+    "title": {
+      "translate": "advancements.galacticraftlegacy.compressed.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_advanced_wafer"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

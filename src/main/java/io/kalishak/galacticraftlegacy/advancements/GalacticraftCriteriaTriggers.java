@@ -29,6 +29,10 @@ public final class GalacticraftCriteriaTriggers {
             "bed_used_in_space",
             BedUsedInSpaceTrigger::new
     );
+    public static final DeferredHolder<CriterionTrigger<?>, LaunchRocketTrigger> LAUNCH_ROCKET = REGISTRY.register(
+            "launch_rocket",
+            LaunchRocketTrigger::new
+    );
 
     public static void init(IEventBus bus) {
         REGISTRY.register(bus);

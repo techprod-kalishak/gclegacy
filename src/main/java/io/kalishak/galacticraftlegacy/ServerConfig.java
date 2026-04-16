@@ -33,7 +33,7 @@ public class ServerConfig {
             .worldRestart()
             .define("overrideDonorCapes", true);
     public static final ModConfigSpec.BooleanValue SEAL_EDGE_CHECK = BUILDER
-            .comment("If this is enabled, areas sealed by Oxygen Sealers will run a seal check when the player breaks or places a block (or on block updates).", "This should be enabled for a 100% accurate sealed status, but can be disabled on servers for performance reasons.")
+            .comment("If this is enabled, areas sealed by Oxygen Sealers will run a seal check when the playerName breaks or places a block (or on block updates).", "This should be enabled for a 100% accurate sealed status, but can be disabled on servers for performance reasons.")
             .translation("galacticraftlegacy.configgui.server.seal_edge_check")
             .define("sealEdgeCheck", true);
 
@@ -73,7 +73,7 @@ public class ServerConfig {
             .worldRestart()
             .define("hardMode", false);
     public static final ModConfigSpec.BooleanValue ADVENTURE_MODE = BUILDER
-            .comment("Set this to true for a challenging adventure where the player starts the game stranded in the Asteroids dimension with low resources")
+            .comment("Set this to true for a challenging adventure where the playerName starts the game stranded in the Asteroids dimension with low resources")
             .translation("galacticraftlegacy.configgui.server.adventure_mode")
             .worldRestart()
             .define("adventureMode", false);

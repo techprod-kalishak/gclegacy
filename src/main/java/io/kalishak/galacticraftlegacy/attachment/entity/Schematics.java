@@ -9,14 +9,12 @@ package io.kalishak.galacticraftlegacy.attachment.entity;
 
 import com.mojang.serialization.Codec;
 import io.kalishak.galacticraftlegacy.registry.GalacticraftRegistries;
-import io.kalishak.galacticraftlegacy.attachment.GalacticraftAttachments;
-import io.kalishak.galacticraftlegacy.attachment.level.race.SpaceRaceTeam;
+import io.kalishak.galacticraftlegacy.world.score.race.SpaceRaceTeam;
 import io.kalishak.galacticraftlegacy.registry.SchematicVariant;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.world.entity.player.Player;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,20 +52,9 @@ public class Schematics {
         unlock(schematicId);
     }
 
-    /**
-     *
-     * @param player who unlocked the schematic
-     * @param schematicId unlocked schematic identifier
-     */
-    public void schematicUnlockedByMember(Player player, ResourceKey<SchematicVariant> schematicId) {
-        Schematics playerSchematics = player.getData(GalacticraftAttachments.PLAYER_SPACE_DATA).getSchematics();
-        playerSchematics.unlock(schematicId);
-        unlock(schematicId);
-    }
-
-    public void syncWithTeam(SpaceRaceTeam spaceRaceTeam) {
-        for (ResourceKey<SchematicVariant> schematicKey : spaceRaceTeam.getTeamUnlockedSchematics().unlockedSchematics) {
-            unlock(schematicKey);
+    public void updateSpaceRaceTeam(SpaceRaceTeam spaceRaceTeam) {
+        for (ResourceKey<SchematicVariant> schematicKey : this.unlockedSchematics) {
+            spaceRaceTeam.getUnlockedSchematics().unlock(schematicKey);
         }
     }
 

@@ -10,13 +10,16 @@ package io.kalishak.galacticraftlegacy.world.entity.vehicle.rocket;
 import com.mojang.serialization.Codec;
 import io.kalishak.galacticraftlegacy.attachment.GalacticraftAttachments;
 import io.kalishak.galacticraftlegacy.attachment.entity.PlayerSpaceData;
-import io.kalishak.galacticraftlegacy.attachment.level.race.FlagData;
-import io.kalishak.galacticraftlegacy.attachment.level.race.SpaceRaceManager;
-import io.kalishak.galacticraftlegacy.attachment.level.race.SpaceRaceTeam;
+import io.kalishak.galacticraftlegacy.world.entity.FlagData;
+import io.kalishak.galacticraftlegacy.world.score.race.SpaceRaceHooks;
+import io.kalishak.galacticraftlegacy.world.score.race.SpaceRaceScoreboard;
+import io.kalishak.galacticraftlegacy.world.score.race.SpaceRaceScoreboardSaveData;
+import io.kalishak.galacticraftlegacy.world.score.race.SpaceRaceTeam;
 import io.kalishak.galacticraftlegacy.codec.SerializableEnum;
 import io.kalishak.galacticraftlegacy.world.damagesource.GalacticraftDamageTypes;
 import io.kalishak.galacticraftlegacy.world.entity.Trackable;
 import io.netty.buffer.ByteBuf;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -319,10 +322,10 @@ public abstract class AbstractSpaceShip extends VehicleEntity implements Trackab
             Player owner = this.owner.getEntity(level(), Player.class);
 
             if (owner != null) {
-                SpaceRaceManager manager = SpaceRaceManager.getFromLevel(otherPlayer.level());
-                SpaceRaceTeam spaceRaceTeam = manager.getSpaceRaceTeamByPlayerId(owner.getUUID());
+                SpaceRaceScoreboard spaceRaceScoreboard = SpaceRaceHooks.getFromLevel(otherPlayer.level());
+                SpaceRaceTeam spaceRaceTeam = spaceRaceScoreboard.getPlayerSpaceRace(owner.getScoreboardName());
 
-                return spaceRaceTeam == null || spaceRaceTeam.hasMember(otherPlayer);
+                return spaceRaceTeam == null || spaceRaceTeam.getPlayers().contains(otherPlayer.getScoreboardName());
             }
         }
 
@@ -407,10 +410,16 @@ public abstract class AbstractSpaceShip extends VehicleEntity implements Trackab
         setTimeUntilLaunch(getTimeUntilLaunch() + delta);
     }
 
-    public FlagData getSpaceRaceTeamConeColor() {
+    public ChatFormatting getSpaceRaceTeamConeColor() {
         Player owner = this.owner.getEntity(level(), Player.class);
 
-        return SpaceRaceManager.getPlayerFlag(owner);
+        if (owner instanceof ServerPlayer serverPlayer) {
+            return SpaceRaceHooks.getSpaceRaceTeam(serverPlayer)
+                    .map(SpaceRaceTeam::getColor)
+                    .orElse(ChatFormatting.RED);
+        }
+
+        return ChatFormatting.WHITE;
     }
 
     public enum LaunchPhase implements SerializableEnum {

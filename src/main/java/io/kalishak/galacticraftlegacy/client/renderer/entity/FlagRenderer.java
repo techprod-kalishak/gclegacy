@@ -10,7 +10,7 @@ package io.kalishak.galacticraftlegacy.client.renderer.entity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import io.kalishak.galacticraftlegacy.Galacticraft;
-import io.kalishak.galacticraftlegacy.attachment.level.race.FlagData;
+import io.kalishak.galacticraftlegacy.world.entity.FlagData;
 import io.kalishak.galacticraftlegacy.client.model.FlagModel;
 import io.kalishak.galacticraftlegacy.client.model.geom.GalacticraftModelLayers;
 import io.kalishak.galacticraftlegacy.client.renderer.entity.state.FlagRenderState;

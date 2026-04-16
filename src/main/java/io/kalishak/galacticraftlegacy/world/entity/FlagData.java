@@ -5,7 +5,7 @@
  * See LICENSE file for more details
  */
 
-package io.kalishak.galacticraftlegacy.attachment.level.race;
+package io.kalishak.galacticraftlegacy.world.entity;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;

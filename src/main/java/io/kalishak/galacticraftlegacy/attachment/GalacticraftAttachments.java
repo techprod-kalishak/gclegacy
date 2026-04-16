@@ -14,7 +14,7 @@ import io.kalishak.galacticraftlegacy.attachment.entity.AdvancedMovement;
 import io.kalishak.galacticraftlegacy.attachment.entity.EntityGearInventory;
 import io.kalishak.galacticraftlegacy.attachment.entity.PlayerSpaceData;
 import io.kalishak.galacticraftlegacy.attachment.level.CelestialBodyLevelData;
-import io.kalishak.galacticraftlegacy.attachment.level.race.FlagData;
+import io.kalishak.galacticraftlegacy.world.entity.FlagData;
 import io.kalishak.galacticraftlegacy.world.item.component.SchematicContent;
 import net.minecraft.core.Holder;
 import net.neoforged.bus.api.IEventBus;

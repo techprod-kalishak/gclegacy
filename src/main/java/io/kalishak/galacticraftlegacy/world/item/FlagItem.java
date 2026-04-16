@@ -7,13 +7,11 @@
 
 package io.kalishak.galacticraftlegacy.world.item;
 
-import io.kalishak.galacticraftlegacy.attachment.GalacticraftAttachments;
-import io.kalishak.galacticraftlegacy.attachment.level.race.SpaceRaceManager;
-import io.kalishak.galacticraftlegacy.attachment.level.race.SpaceRaceTeam;
+import io.kalishak.galacticraftlegacy.world.entity.FlagData;
+import io.kalishak.galacticraftlegacy.world.score.race.SpaceRaceHooks;
 import io.kalishak.galacticraftlegacy.world.entity.Flag;
 import io.kalishak.galacticraftlegacy.world.item.component.FlagItemData;
 import io.kalishak.galacticraftlegacy.world.item.component.GalacticraftDataComponents;
-import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
@@ -62,7 +60,8 @@ public class FlagItem extends Item {
 
         if (hitresult.getType() == HitResult.Type.BLOCK) {
             Vec3 clickedPosition = hitresult.getLocation();
-            Flag flag = new Flag(level, SpaceRaceManager.getPlayerFlag(player), clickedPosition.x, clickedPosition.y, clickedPosition.z, (float) player.getY());
+            FlagData flagData = player instanceof ServerPlayer ? SpaceRaceHooks.getPlayerFlag((ServerPlayer) player) : FlagData.DEFAULT;
+            Flag flag = new Flag(level, flagData, clickedPosition.x, clickedPosition.y, clickedPosition.z, (float) player.getY());
 
             if (!flag.isAlive()) {
                 return InteractionResult.FAIL;
@@ -86,15 +85,11 @@ public class FlagItem extends Item {
         super.onCraftedBy(stack, player);
 
         if (player instanceof ServerPlayer serverPlayer) {
-            SpaceRaceManager manager = SpaceRaceManager.getFromLevel(serverPlayer.level());
-            SpaceRaceTeam team = manager.getSpaceRaceTeamByPlayerId(player.getUUID());
-
-            if (team != null) {
-                stack.set(GalacticraftDataComponents.FLAG, new FlagItemData(team.getFlagData(), team.getDisplayName()));
-                return;
-            }
+            SpaceRaceHooks.getSpaceRaceTeam(serverPlayer)
+                    .ifPresent(spaceRaceTeam -> stack.set(
+                            GalacticraftDataComponents.FLAG,
+                            new FlagItemData(spaceRaceTeam.getFlagData(), spaceRaceTeam.getDisplayName()))
+                    );
         }
-
-        stack.set(GalacticraftDataComponents.FLAG, new FlagItemData(player.getData(GalacticraftAttachments.PLAYER_SPACE_DATA).getPrivateFlagData(), Component.empty()));
     }
 }

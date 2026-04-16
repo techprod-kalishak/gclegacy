@@ -27,6 +27,14 @@ public class GalacticraftLanguageProvider extends LanguageProvider {
 
     @Override
     protected void addTranslations() {
+        addAdvancement("galacticraft", "Galacticraft", "Explore the Moon... and beyond!");
+        addAdvancement("coal_power", "Coal Power", "Craft a Coal Generator");
+        addAdvancement("fabricated", "Fabricated", "Craft a circuit fabricator to make wafers");
+        addAdvancement("wafers", "Tasty wafers", "Craft a basic wafer. (It's silicon so please don't eat it!)");
+        addAdvancement("golden_wafers", "Golden wafers", "Craft an advanced wafer. (You still can't eat it!)");
+        addAdvancement("compressed", "Compressed", "Craft a compressor");
+
+        add("pack.galacticraftlegacy.description", "Galacticraft Legacy data pack");
         add("item.galacticraftlegacy.tank.tooltip", "Oxygen Remaining: %s");
         add("galacticraftlegacy.networking_failed", "There was an error on the network thread: ");
         add("item.galacticraftlegacy.battery.tooltip", "Energy Stored: %s");
@@ -229,6 +237,45 @@ public class GalacticraftLanguageProvider extends LanguageProvider {
         add(GalacticraftTags.Fluids.FLOWS_GRATING, "Flows through Grating");
         add(GalacticraftTags.Items.PARACHUTE, "Parachute");
         add(GalacticraftTags.Items.WRENCH, "Wrench");
+
+        add("galacticraftlegacy.configuration.general", "General settings");
+        add("galacticraftlegacy.configgui.common.debug_mode", "Debug Mode");
+        add("galacticraftlegacy.configgui.common.dimensions_with_disabled_rockets", "Dimensions where rockets cannot launch");
+        add("galacticraftlegacy.configgui.common.disable_returning_rockets", "Rockets cannot reach Overworld");
+        add("galacticraftlegacy.configgui.common.force_overworld_respawn", "Always respawn in Overworld");
+        add("galacticraftlegacy.configgui.common.disable_landers", "Always fall with parachute");
+
+        add("galacticraftlegacy.configuration.environment", "Environmental settings");
+        add("galacticraftlegacy.configuration.gui", "User interface settings");
+        add("galacticraftlegacy.configgui.client.more_stars", "More stars");
+        add("galacticraftlegacy.configgui.client.disable_rocket_particles", "Remove rocket particles");
+        add("galacticraftlegacy.configgui.client.disable_vehicle_tpv", "Rocket does not change the camera view");
+        add("galacticraftlegacy.configgui.client.energy_unit", "Energy unit");
+        add("galacticraftlegacy.configgui.client.oxygen_tanks_pos", "Position of oxygen tanks in UI");
+        add("galacticraftlegacy.configgui.client.icons_rotation", "Moving celestial icons");
+        add("galacticraftlegacy.configuration.accessibility", "Accessibility settings");
+        add("galacticraftlegacy.configgui.client.scroll_sensitivity", "Scroll sensitivity");
+        add("galacticraftlegacy.configgui.client.invert_scroll", "Scroll inversion");
+        add("galacticraftlegacy.configgui.client.space_race_popup", "Space race pops-up");
+
+        add("galacticraftlegacy.configgui.server.world_borders", "Default world borders");
+        add("galacticraftlegacy.configgui.server.space_stations_permissions", "Space station requires invitation");
+        add("galacticraftlegacy.configgui.server.disable_space_station_creation", "Disable creation of space stations");
+        add("galacticraftlegacy.configgui.server.override_capes", "Override patron capes");
+        add("galacticraftlegacy.configgui.server.seal_edge_check", "Oxygen sealers checks");
+        add("galacticraftlegacy.configuration.difficulty", "Environmental settings");
+        add("galacticraftlegacy.configgui.server.disable_spaceship_explosion", "Rockets can explode");
+        add("galacticraftlegacy.configgui.server.disable_meteor_block_breaking", "Falling meteors don't break blocks");
+        add("galacticraftlegacy.configgui.server.meteor_spawn_multiplier", "Multiplier of spawned meteors");
+        add("galacticraftlegacy.configgui.server.solar_energy_multiplier", "Multiplier of generated energy from solar panels");
+        add("galacticraftlegacy.configgui.server.fuel_usage_multiplier", "Multiplier of fuel consumption");
+        add("galacticraftlegacy.configgui.server.quick_mode", "Quick mode");
+        add("galacticraftlegacy.configgui.server.hard_mode", "Hard mode");
+        add("galacticraftlegacy.configgui.server.adventure_mode", "Adventure mode");
+        add("galacticraftlegacy.configgui.server.adventure_mode_flags", "Adventure mode flags");
+        add("galacticraftlegacy.configuration.entities", "Entities settings");
+        add("galacticraftlegacy.configgui.server.suffocation_damage", "Amount of suffocation damage");
+        add("galacticraftlegacy.configgui.server.boss_health_modifier", "Increase bosses' health");
     }
 
     private <R extends ItemLike> void addWithDescription(Holder<R> entry, String name, String description) {
@@ -238,5 +285,10 @@ public class GalacticraftLanguageProvider extends LanguageProvider {
 
     private <R> void addKey(ResourceKey<R> resourceKey, String suffix, String translation) {
         add(Constants.translatable(resourceKey, suffix), translation);
+    }
+
+    private void addAdvancement(String id, String title, String description) {
+        add("advancements.galacticraftlegacy." + id + ".title", title);
+        add("advancements.galacticraftlegacy." + id + ".description", description);
     }
 }

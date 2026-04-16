@@ -9,6 +9,7 @@ package io.kalishak.galacticraftlegacy.data;
 
 import io.kalishak.galacticraftlegacy.client.data.GalacticraftSoundProvider;
 import io.kalishak.galacticraftlegacy.client.data.models.GalacticraftEquipmentAssetProvider;
+import io.kalishak.galacticraftlegacy.data.advancement.GalacticraftAdvancementProvider;
 import io.kalishak.galacticraftlegacy.data.loot.GalacticraftLootTableProvider;
 import io.kalishak.galacticraftlegacy.data.tag.*;
 import io.kalishak.galacticraftlegacy.data.worldgen.GalacticraftCarvers;
@@ -71,6 +72,7 @@ public class GalacticraftData {
 
         event.createDatapackRegistryObjects(SET_BUILDER);
         event.createProvider(GalacticraftLootTableProvider::create);
+        event.createProvider(GalacticraftAdvancementProvider::create);
         event.createProvider(GalacticraftRecipeProvider.Runner::new);
         event.createProvider(GalacticraftBiomeTagsProvider::new);
         event.createProvider(GalacticraftBlockTagsProvider::new);

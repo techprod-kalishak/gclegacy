@@ -8,9 +8,8 @@
 package io.kalishak.galacticraftlegacy.world.entity;
 
 import io.kalishak.galacticraftlegacy.attachment.GalacticraftAttachments;
-import io.kalishak.galacticraftlegacy.attachment.level.race.FlagData;
-import io.kalishak.galacticraftlegacy.attachment.level.race.SpaceRaceManager;
-import io.kalishak.galacticraftlegacy.attachment.level.race.SpaceRaceTeam;
+import io.kalishak.galacticraftlegacy.world.score.race.SpaceRaceHooks;
+import io.kalishak.galacticraftlegacy.world.score.race.SpaceRaceTeam;
 import io.kalishak.galacticraftlegacy.world.item.GalacticraftItems;
 import io.kalishak.galacticraftlegacy.world.item.component.FlagItemData;
 import io.kalishak.galacticraftlegacy.world.item.component.GalacticraftDataComponents;
@@ -63,12 +62,10 @@ public class Flag extends Entity {
         Component teamName = Component.empty();
 
         if (getOwner() instanceof ServerPlayer player) {
-            SpaceRaceManager manager = SpaceRaceManager.getFromLevel(player.level());
+            Optional<SpaceRaceTeam> team = SpaceRaceHooks.getSpaceRaceTeam(player);
 
-            SpaceRaceTeam team = manager.getSpaceRaceTeamByPlayerId(player.getUUID());
-
-            if (team != null) {
-                teamName = team.getDisplayName();
+            if (team.isPresent()) {
+                teamName = team.get().getDisplayName();
             }
         }
 
@@ -187,7 +184,7 @@ public class Flag extends Entity {
 
         if (!level().isClientSide() && (this.tickCount - 1) % 20 == 0) {
             if (getOwner() instanceof ServerPlayer player && distanceToSqr(player) < 50.0D) {
-                FlagData flagData = SpaceRaceManager.getPlayerFlag(player);
+                FlagData flagData = SpaceRaceHooks.getPlayerFlag(player);
                 setFlagData(flagData);
             }
         }

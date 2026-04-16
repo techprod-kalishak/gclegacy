@@ -37,7 +37,7 @@ public class BedUsedInSpaceTrigger extends SimpleCriterionTrigger<BedUsedInSpace
 
     public record TriggerInstance(Optional<ContextAwarePredicate> player, Holder<DimensionType> level, BlockPos bedPosition) implements SimpleCriterionTrigger.SimpleInstance {
         public static final Codec<TriggerInstance> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-                EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("player").forGetter(TriggerInstance::player),
+                EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("playerName").forGetter(TriggerInstance::player),
                 DimensionType.CODEC.fieldOf("level").forGetter(TriggerInstance::level),
                 BlockPos.CODEC.fieldOf("bed_position").forGetter(TriggerInstance::bedPosition)
         ).apply(instance, TriggerInstance::new));

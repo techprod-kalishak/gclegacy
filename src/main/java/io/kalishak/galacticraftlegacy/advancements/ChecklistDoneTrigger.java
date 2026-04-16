@@ -48,7 +48,7 @@ public class ChecklistDoneTrigger extends SimpleCriterionTrigger<ChecklistDoneTr
 
     public record TriggerInstance(Optional<ContextAwarePredicate> player, ResourceKey<ChecklistEntry> entry) implements SimpleCriterionTrigger.SimpleInstance {
         public static final Codec<TriggerInstance> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-                EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("player").forGetter(TriggerInstance::player),
+                EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("playerName").forGetter(TriggerInstance::player),
                 ResourceKey.codec(GalacticraftRegistries.Keys.CHECKLIST).fieldOf("entry").forGetter(TriggerInstance::entry)
         ).apply(instance, ChecklistDoneTrigger.TriggerInstance::new));
 

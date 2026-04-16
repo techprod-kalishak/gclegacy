@@ -1,0 +1,27 @@
+{
+  "criteria": {
+    "tick": {
+      "trigger": "minecraft:tick"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "background": "galacticraftlegacy:textures/gui/advancements/backgrounds/space",
+    "description": {
+      "translate": "advancements.galacticraftlegacy.galacticraft.description"
+    },
+    "icon": {
+      "id": "galacticraftlegacy:advanced_wafer"
+    },
+    "show_toast": false,
+    "title": {
+      "translate": "advancements.galacticraftlegacy.galacticraft.title"
+    }
+  },
+  "requirements": [
+    [
+      "tick"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

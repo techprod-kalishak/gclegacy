@@ -1,0 +1,32 @@
+{
+  "parent": "galacticraftlegacy:fabricated",
+  "criteria": {
+    "has_basic_wafer": {
+      "conditions": {
+        "items": [
+          {
+            "items": "galacticraftlegacy:basic_wafer"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.galacticraftlegacy.wafers.description"
+    },
+    "icon": {
+      "id": "galacticraftlegacy:basic_wafer"
+    },
+    "title": {
+      "translate": "advancements.galacticraftlegacy.wafers.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_basic_wafer"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

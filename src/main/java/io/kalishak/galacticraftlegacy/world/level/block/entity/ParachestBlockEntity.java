@@ -7,8 +7,9 @@
 
 package io.kalishak.galacticraftlegacy.world.level.block.entity;
 
-import io.kalishak.galacticraftlegacy.attachment.level.race.SpaceRaceManager;
-import io.kalishak.galacticraftlegacy.attachment.level.race.SpaceRaceTeam;
+import io.kalishak.galacticraftlegacy.world.score.race.SpaceRaceHooks;
+import io.kalishak.galacticraftlegacy.world.score.race.SpaceRaceScoreboard;
+import io.kalishak.galacticraftlegacy.world.score.race.SpaceRaceTeam;
 import io.kalishak.galacticraftlegacy.data.GalacticraftTags;
 import io.kalishak.galacticraftlegacy.transfer.ResourcefulHelper;
 import io.kalishak.galacticraftlegacy.transfer.capability.fluid.SingleTankResourceHandler;
@@ -17,18 +18,18 @@ import io.kalishak.galacticraftlegacy.world.item.component.GalacticraftDataCompo
 import io.kalishak.galacticraftlegacy.world.level.block.ParachestBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
-import net.minecraft.core.UUIDUtil;
 import net.minecraft.core.component.DataComponentGetter;
 import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Containers;
 import net.minecraft.world.LockCode;
 import net.minecraft.world.entity.ContainerUser;
+import net.minecraft.world.entity.EntityReference;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -53,12 +54,11 @@ import net.neoforged.neoforge.transfer.item.ItemUtil;
 import org.jspecify.annotations.Nullable;
 
 import java.util.List;
-import java.util.UUID;
 
 public class ParachestBlockEntity extends NamedBlockEntity implements LidBlockEntity {
     private FluidStack tank = FluidStack.EMPTY;
     private LockCode lockKey = LockCode.NO_LOCK;
-    private @Nullable UUID owner;
+    private @Nullable EntityReference<Player> owner;
     private final NonNullList<ItemStack> inventory;
     private DyeColor parachuteColor = DyeColor.RED;
 
@@ -164,7 +164,7 @@ public class ParachestBlockEntity extends NamedBlockEntity implements LidBlockEn
     protected void loadAdditional(ValueInput input) {
         super.loadAdditional(input);
         this.lockKey = LockCode.fromTag(input);
-        input.read("Owner", UUIDUtil.CODEC).ifPresent(owner -> this.owner = owner);
+        this.owner = EntityReference.read(input, "Owner");
         this.itemResources.deserialize(input);
         this.fluidResource.deserialize(input);
         this.parachuteColor = input.read("TeamColor", DyeColor.CODEC).orElse(DyeColor.RED);
@@ -174,7 +174,7 @@ public class ParachestBlockEntity extends NamedBlockEntity implements LidBlockEn
     protected void saveAdditional(ValueOutput output) {
         super.saveAdditional(output);
         this.lockKey.addToTag(output);
-        output.storeNullable("Owner", UUIDUtil.CODEC, this.owner);
+        this.owner.store(output, "Owner");
         this.itemResources.serialize(output);
         this.fluidResource.serialize(output);
 
@@ -224,23 +224,22 @@ public class ParachestBlockEntity extends NamedBlockEntity implements LidBlockEn
     public boolean canOpen(Player player) {
         boolean par = this.lockKey.canUnlock(player);
 
-        if (this.owner == null) {
-            return par;
-        } else if (this.owner.equals(player.getUUID())) {
+        if (this.owner == null || this.owner.getUUID().equals(player.getUUID())) {
             return par;
         }
 
-        if (player instanceof ServerPlayer serverPlayer) {
-            SpaceRaceManager manager = SpaceRaceManager.getFromLevel(serverPlayer.level());
+        if (this.level instanceof ServerLevel serverLevel) {
+            SpaceRaceScoreboard spaceRaceScoreboard = SpaceRaceHooks.getFromLevel(serverLevel);
+            Player owner = this.owner.getEntity(serverLevel, Player.class);
 
-            SpaceRaceTeam team = manager.getSpaceRaceTeamByPlayerId(this.owner);
+            if (owner != null) {
+                SpaceRaceTeam ownerTeam = spaceRaceScoreboard.getSpaceRaceTeam(owner.getScoreboardName());
 
-            if (team != null && team.hasMember(player)) {
-                return par;
+                return ownerTeam != null && ownerTeam.getPlayers().contains(player.getScoreboardName());
             }
-        } else return par;
+        }
 
-        return false;
+        return par;
     }
 
     public void startOpen(ContainerUser containerUser) {
@@ -296,7 +295,7 @@ public class ParachestBlockEntity extends NamedBlockEntity implements LidBlockEn
     protected void applyImplicitComponents(DataComponentGetter componentGetter) {
         super.applyImplicitComponents(componentGetter);
         this.lockKey = componentGetter.getOrDefault(DataComponents.LOCK, LockCode.NO_LOCK);
-        this.owner = componentGetter.get(GalacticraftDataComponents.UUID);
+        this.owner = componentGetter.get(GalacticraftDataComponents.ENTITY_REFERENCE);
         componentGetter.getOrDefault(DataComponents.CONTAINER, ItemContainerContents.EMPTY).copyInto(this.inventory);
         this.tank = componentGetter.getOrDefault(GalacticraftDataComponents.FLUID_TANK, SimpleFluidContent.EMPTY).copy();
     }
@@ -309,7 +308,7 @@ public class ParachestBlockEntity extends NamedBlockEntity implements LidBlockEn
         }
 
         if (this.owner != null) {
-            components.set(GalacticraftDataComponents.UUID, this.owner);
+            components.set(GalacticraftDataComponents.ENTITY_REFERENCE, this.owner);
         }
 
         components.set(DataComponents.CONTAINER, ItemContainerContents.fromItems(this.inventory));
