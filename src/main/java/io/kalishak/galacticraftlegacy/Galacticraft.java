@@ -9,6 +9,9 @@ package io.kalishak.galacticraftlegacy;
 
 import io.kalishak.galacticraftlegacy.advancements.GalacticraftCriteriaTriggers;
 import io.kalishak.galacticraftlegacy.attachment.GalacticraftAttachments;
+import io.kalishak.galacticraftlegacy.config.ClientConfig;
+import io.kalishak.galacticraftlegacy.config.CommonConfig;
+import io.kalishak.galacticraftlegacy.config.ServerConfig;
 import io.kalishak.galacticraftlegacy.data.GalacticraftData;
 import io.kalishak.galacticraftlegacy.data.datamap.GalacticraftDataMaps;
 import io.kalishak.galacticraftlegacy.galaxies.GalacticraftGalaxies;

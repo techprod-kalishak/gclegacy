@@ -7,7 +7,7 @@
 
 package io.kalishak.galacticraftlegacy.world.entity.vehicle.rocket;
 
-import io.kalishak.galacticraftlegacy.CommonConfig;
+import io.kalishak.galacticraftlegacy.config.CommonConfig;
 import io.kalishak.galacticraftlegacy.attachment.GalacticraftAttachments;
 import io.kalishak.galacticraftlegacy.galaxies.CelestialBody;
 import io.kalishak.galacticraftlegacy.galaxies.CelestialObject;

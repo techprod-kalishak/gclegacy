@@ -5,7 +5,7 @@
  * See LICENSE file for more details
  */
 
-package io.kalishak.galacticraftlegacy.config;
+package io.kalishak.galacticraftlegacy.config.values;
 
 import net.minecraft.util.Mth;
 

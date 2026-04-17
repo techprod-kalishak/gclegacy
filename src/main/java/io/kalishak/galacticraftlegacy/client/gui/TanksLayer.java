@@ -7,10 +7,11 @@
 
 package io.kalishak.galacticraftlegacy.client.gui;
 
-import io.kalishak.galacticraftlegacy.ClientConfig;
+import io.kalishak.galacticraftlegacy.config.ClientConfig;
 import io.kalishak.galacticraftlegacy.Constants;
 import io.kalishak.galacticraftlegacy.attachment.GalacticraftAttachments;
 import io.kalishak.galacticraftlegacy.attachment.level.CelestialBodyLevelData;
+import io.kalishak.galacticraftlegacy.config.values.OxygenTankPosition;
 import io.kalishak.galacticraftlegacy.world.entity.GearEquipmentSlot;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
@@ -34,7 +35,7 @@ public class TanksLayer extends GearLayer {
         if (isVisible(Minecraft.getInstance().level, Minecraft.getInstance().player)) {
             ItemStack tank = getStackFromSlot(GearEquipmentSlot.TANK);
             ItemStack additionalTank = getStackFromSlot(GearEquipmentSlot.ADDITIONAL_TANK);
-            ClientConfig.OxygenTankPosition pos = ClientConfig.OXYGEN_TANKS_POSITION.get();
+            OxygenTankPosition pos = ClientConfig.OXYGEN_TANKS_POSITION.get();
 
             int width = graphics.guiWidth();
             int height = graphics.guiHeight();

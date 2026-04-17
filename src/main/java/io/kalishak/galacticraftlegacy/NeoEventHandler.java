@@ -9,7 +9,8 @@ package io.kalishak.galacticraftlegacy;
 
 import io.kalishak.galacticraftlegacy.attachment.AttachmentHelper;
 import io.kalishak.galacticraftlegacy.attachment.entity.GearInventoryProvider;
-import io.kalishak.galacticraftlegacy.config.EnergyUnit;
+import io.kalishak.galacticraftlegacy.config.ClientConfig;
+import io.kalishak.galacticraftlegacy.config.values.EnergyUnit;
 import io.kalishak.galacticraftlegacy.data.GalacticraftTags;
 import io.kalishak.galacticraftlegacy.registry.SchematicVariant;
 import io.kalishak.galacticraftlegacy.world.entity.GearEquipmentSlot;

@@ -5,7 +5,7 @@
  * See LICENSE file for more details
  */
 
-package io.kalishak.galacticraftlegacy;
+package io.kalishak.galacticraftlegacy.config;
 
 import java.util.List;
 import java.util.Objects;
@@ -51,7 +51,7 @@ public class CommonConfig {
             .translation("galacticraftlegacy.configgui.common.disable_landers")
             .define("disableLanders", false);
 
-    static final ModConfigSpec SPEC = BUILDER.pop().build();
+    public static final ModConfigSpec SPEC = BUILDER.pop().build();
 
     private static boolean validateResourceKeys(final Object obj) {
         return obj instanceof String key && Identifier.tryParse(key) != null;

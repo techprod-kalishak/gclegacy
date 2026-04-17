@@ -9,6 +9,8 @@ package io.kalishak.galacticraftlegacy.world.entity;
 
 import io.kalishak.galacticraftlegacy.Galacticraft;
 import io.kalishak.galacticraftlegacy.Constants;
+import io.kalishak.galacticraftlegacy.world.entity.monster.EvolvedSkeleton;
+import io.kalishak.galacticraftlegacy.world.entity.monster.EvolvedZombie;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
@@ -16,6 +18,8 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
+
+import java.util.stream.Stream;
 
 public final class GalacticraftEntityType {
     private static final DeferredRegister<EntityType<?>> REGISTRY = DeferredRegister.create(Registries.ENTITY_TYPE, Galacticraft.MODID);
@@ -46,6 +50,29 @@ public final class GalacticraftEntityType {
                     .build(Constants.key(Registries.ENTITY_TYPE, "schematic"))
     );
 
+    //Evolved variants
+    public static final DeferredHolder<EntityType<?>, EntityType<EvolvedSkeleton>> EVOLVED_SKELETON = REGISTRY.register(
+            "evolved_skeleton",
+            () -> EntityType.Builder.<EvolvedSkeleton>of(EvolvedSkeleton::new, MobCategory.MONSTER)
+                    .sized(0.6F, 1.99F)
+                    .eyeHeight(1.74F)
+                    .ridingOffset(-0.7F)
+                    .clientTrackingRange(8)
+                    .notInPeaceful()
+                    .build(Constants.key(Registries.ENTITY_TYPE, "evolved_skeleton"))
+    );
+    public static final DeferredHolder<EntityType<?>, EntityType<EvolvedZombie>> EVOLVED_ZOMBIE = REGISTRY.register(
+            "evolved_zombie",
+            () -> EntityType.Builder.<EvolvedZombie>of(EvolvedZombie::new, MobCategory.MONSTER)
+                    .sized(0.6F, 1.95F)
+                    .eyeHeight(1.74F)
+                    .passengerAttachments(2.0125F)
+                    .ridingOffset(-0.7F)
+                    .clientTrackingRange(8)
+                    .notInPeaceful()
+                    .build(Constants.key(Registries.ENTITY_TYPE, "evolved_zombie"))
+    );
+
     public static void init(IEventBus bus) {
         REGISTRY.register(bus);
         bus.addListener(GalacticraftEntityType::registerCapabilities);
@@ -53,5 +80,9 @@ public final class GalacticraftEntityType {
 
     private static void registerCapabilities(RegisterCapabilitiesEvent event) {
         FallingParachest.registerCapabilities(event);
+    }
+
+    public static Stream<EntityType<?>> asStream() {
+        return REGISTRY.getEntries().stream().map(DeferredHolder::get);
     }
 }

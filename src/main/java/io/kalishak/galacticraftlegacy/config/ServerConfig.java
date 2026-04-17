@@ -5,8 +5,9 @@
  * See LICENSE file for more details
  */
 
-package io.kalishak.galacticraftlegacy;
+package io.kalishak.galacticraftlegacy.config;
 
+import io.kalishak.galacticraftlegacy.config.values.GameDifficulty;
 import net.neoforged.neoforge.common.ModConfigSpec;
 
 public class ServerConfig {
@@ -62,23 +63,18 @@ public class ServerConfig {
             .translation("galacticraftlegacy.configgui.server.fuel_usage_multiplier")
             .worldRestart()
             .defineInRange("fuelUsageMultiplier", 1.0D, 0.1D, 10.0D);
-    public static final ModConfigSpec.BooleanValue QUICK_GAME = BUILDER
-            .comment("Set this to true for less metal use in Galacticraft recipes (makes the game easier!)")
-            .translation("galacticraftlegacy.configgui.server.quick_mode")
+    public static final ModConfigSpec.EnumValue<GameDifficulty> GAME_DIFFICULTY = BUILDER
+            .comment(
+                    "Set this to QUICK for less metal use in Galacticraft recipes (makes the game easier!)",
+                    "Set this to HARD for increased difficulty in modpacks.",
+                    "Set this to ADVENTURE for a challenging adventure where the playerName starts the game stranded in the Asteroids dimension with low resources"
+            )
+            .translation("galacticraftlegacy.configgui.server.gamemode")
             .worldRestart()
-            .define("quickMode", false);
-    public static final ModConfigSpec.BooleanValue HARD_MODE = BUILDER
-            .comment("Set this to true for increased difficulty in modpacks.")
-            .translation("galacticraftlegacy.configgui.server.hard_mode")
-            .worldRestart()
-            .define("hardMode", false);
-    public static final ModConfigSpec.BooleanValue ADVENTURE_MODE = BUILDER
-            .comment("Set this to true for a challenging adventure where the playerName starts the game stranded in the Asteroids dimension with low resources")
-            .translation("galacticraftlegacy.configgui.server.adventure_mode")
-            .worldRestart()
-            .define("adventureMode", false);
+            .defineEnum("gamemode", GameDifficulty.NORMAL);
     public static final ModConfigSpec.IntValue ADVENTURE_MODE_FLAGS = BUILDER
             .comment(
+                    "Additional options for the adventure gamemode, these settings will be only applied once the config above will be set to ADVENTURE",
                     "Add together flags 8, 4, 2, 1 to enable the four elements of adventure game mode. The default is 15",
                     "1 = extended compressor recipes.",
                     "2 = mob drops and spawning.",
@@ -102,5 +98,5 @@ public class ServerConfig {
             .translation("galacticraftlegacy.configgui.server.boss_health_modifier")
             .defineInRange("bossHealthModifier", 1.0D, 0.1D, 10.0D);
 
-    static final ModConfigSpec SPEC = BUILDER.pop().build();
+    public static final ModConfigSpec SPEC = BUILDER.pop().build();
 }

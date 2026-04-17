@@ -7,7 +7,7 @@
 
 package io.kalishak.galacticraftlegacy;
 
-import io.kalishak.galacticraftlegacy.config.EnergyUnit;
+import io.kalishak.galacticraftlegacy.config.values.EnergyUnit;
 import io.kalishak.galacticraftlegacy.world.item.component.ItemAccessEnergyUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Registry;

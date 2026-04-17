@@ -79,7 +79,7 @@
   "galacticraftlegacy.configgui.client.icons_rotation": "Moving celestial icons",
   "galacticraftlegacy.configgui.client.invert_scroll": "Scroll inversion",
   "galacticraftlegacy.configgui.client.more_stars": "More stars",
-  "galacticraftlegacy.configgui.client.oxygen_tank_pos": "Position of oxygen tanks in UI",
+  "galacticraftlegacy.configgui.client.oxygen_tanks_pos": "Position of oxygen tanks in UI",
   "galacticraftlegacy.configgui.client.scroll_sensitivity": "Scroll sensitivity",
   "galacticraftlegacy.configgui.client.space_race_popup": "Space race pops-up",
   "galacticraftlegacy.configgui.common.debug_mode": "Debug Mode",

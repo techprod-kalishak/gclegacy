@@ -8,7 +8,7 @@
 package io.kalishak.galacticraftlegacy.world.entity.vehicle.rocket;
 
 import com.mojang.serialization.Codec;
-import io.kalishak.galacticraftlegacy.CommonConfig;
+import io.kalishak.galacticraftlegacy.config.CommonConfig;
 import io.kalishak.galacticraftlegacy.Galacticraft;
 import io.kalishak.galacticraftlegacy.codec.SerializableEnum;
 import io.kalishak.galacticraftlegacy.data.GalacticraftTags;

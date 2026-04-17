@@ -5,9 +5,10 @@
  * See LICENSE file for more details
  */
 
-package io.kalishak.galacticraftlegacy;
+package io.kalishak.galacticraftlegacy.config;
 
-import io.kalishak.galacticraftlegacy.config.EnergyUnit;
+import io.kalishak.galacticraftlegacy.config.values.EnergyUnit;
+import io.kalishak.galacticraftlegacy.config.values.OxygenTankPosition;
 import net.neoforged.neoforge.common.ModConfigSpec;
 
 public class ClientConfig {
@@ -54,36 +55,5 @@ public class ClientConfig {
             .translation("galacticraftlegacy.configgui.client.space_race_popup")
             .define("spaceRacePopup", false);
 
-    static final ModConfigSpec SPEC = BUILDER.pop().build();
-
-    public enum OxygenTankPosition {
-        TOP_RIGHT(true, true),
-        TOP_LEFT(true, false),
-        BOTTOM_RIGHT(false, true),
-        BOTTOM_LEFT(false, false);
-
-        private final boolean top;
-        private final boolean right;
-
-        OxygenTankPosition(boolean top, boolean right) {
-            this.top = top;
-            this.right = right;
-        }
-
-        public boolean onTop() {
-            return this.top;
-        }
-
-        public boolean onBottom() {
-            return !this.top;
-        }
-
-        public boolean onRight() {
-            return this.right;
-        }
-
-        public boolean onLeft() {
-            return !this.right;
-        }
-    }
+    public static final ModConfigSpec SPEC = BUILDER.pop().build();
 }

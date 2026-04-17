@@ -7,7 +7,7 @@
 
 package io.kalishak.galacticraftlegacy.client.gui;
 
-import io.kalishak.galacticraftlegacy.ClientConfig;
+import io.kalishak.galacticraftlegacy.config.ClientConfig;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.neoforged.neoforge.transfer.energy.EnergyHandler;

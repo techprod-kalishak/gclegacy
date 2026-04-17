@@ -7,9 +7,9 @@
 
 package io.kalishak.galacticraftlegacy.world.item.component;
 
-import io.kalishak.galacticraftlegacy.ClientConfig;
+import io.kalishak.galacticraftlegacy.config.ClientConfig;
 import io.kalishak.galacticraftlegacy.Constants;
-import io.kalishak.galacticraftlegacy.config.EnergyUnit;
+import io.kalishak.galacticraftlegacy.config.values.EnergyUnit;
 import net.minecraft.core.component.DataComponentGetter;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;

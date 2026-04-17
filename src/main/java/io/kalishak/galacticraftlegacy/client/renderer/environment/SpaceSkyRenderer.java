@@ -15,7 +15,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.textures.GpuTextureView;
 import com.mojang.blaze3d.vertex.*;
 import com.mojang.math.Axis;
-import io.kalishak.galacticraftlegacy.ClientConfig;
+import io.kalishak.galacticraftlegacy.config.ClientConfig;
 import io.kalishak.galacticraftlegacy.Constants;
 import io.kalishak.galacticraftlegacy.client.renderer.environment.state.SpaceSkyRenderState;
 import io.kalishak.galacticraftlegacy.world.attribute.GalacticraftEnvironmentAttributes;
