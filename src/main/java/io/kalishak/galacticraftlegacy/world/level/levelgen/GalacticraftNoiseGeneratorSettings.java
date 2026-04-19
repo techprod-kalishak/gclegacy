@@ -38,10 +38,10 @@ public final class GalacticraftNoiseGeneratorSettings {
                                 new Climate.ParameterPoint(
                                         Climate.Parameter.point(-2.0F),
                                         Climate.Parameter.point(0.0F),
-                                        Climate.Parameter.span(0.0F, 1.0F),
+                                        Climate.Parameter.span(-1.0F, 0.0F),
                                         Climate.Parameter.point(0.0F),
-                                        Climate.Parameter.point(1.0F),
-                                        Climate.Parameter.point(0.3F),
+                                        Climate.Parameter.point(-1.0F),
+                                        Climate.Parameter.point(-0.3F),
                                         0L
                                 )
                         ),
@@ -64,7 +64,7 @@ public final class GalacticraftNoiseGeneratorSettings {
                         0,
                         false,
                         false,
-                        true,
+                        false,
                         false
                 )
         );

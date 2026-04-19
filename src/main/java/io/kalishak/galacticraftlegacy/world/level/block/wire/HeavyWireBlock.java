@@ -23,7 +23,7 @@ public class HeavyWireBlock extends WireBlock {
     }
 
 //    @Override
-//    public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
+//    public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState unlitState, BlockEntityType<T> blockEntityType) {
 //        if (level instanceof ServerLevel serverLevel) {
 //            return createTickerHelper(
 //                    blockEntityType,

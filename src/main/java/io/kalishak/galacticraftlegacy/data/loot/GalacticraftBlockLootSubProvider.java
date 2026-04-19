@@ -31,6 +31,7 @@ public class GalacticraftBlockLootSubProvider extends BlockLootSubProvider {
         add(GalacticraftBlocks.CHEESE.get(), noDrop());
         add(GalacticraftBlocks.COAL_GENERATOR.get(), this::createNameableBlockEntityTable);
         add(GalacticraftBlocks.CIRCUIT_FABRICATOR.get(), this::createNameableBlockEntityTable);
+        add(GalacticraftBlocks.COMPRESSOR.get(), this::createNameableBlockEntityTable);
         add(GalacticraftBlocks.ELECTRIC_FURNACE.get(), this::createNameableBlockEntityTable);
         dropSelf(GalacticraftBlocks.OXYGEN_DETECTOR.get());
         dropSelf(GalacticraftBlocks.ALUMINUM_WIRE.get());
@@ -76,6 +77,9 @@ public class GalacticraftBlockLootSubProvider extends BlockLootSubProvider {
         dropOther(GalacticraftBlocks.OIL_CAULDRON.get(), Items.CAULDRON);
         dropOther(GalacticraftBlocks.FUEL_CAULDRON.get(), Items.CAULDRON);
         dropSelf(GalacticraftBlocks.UNLIT_TORCH.get());
+        dropSelf(GalacticraftBlocks.UNLIT_COPPER_TORCH.get());
+        dropSelf(GalacticraftBlocks.UNLIT_LANTERN.get());
+        GalacticraftBlocks.UNLIT_COPPER_LANTERN.forEach(this::dropSelf);
     }
 
     @Override

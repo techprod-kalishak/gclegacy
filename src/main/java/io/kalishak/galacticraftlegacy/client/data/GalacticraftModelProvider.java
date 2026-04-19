@@ -82,6 +82,7 @@ public class GalacticraftModelProvider extends ModelProvider {
         blockModels.createNonTemplateModelBlock(GalacticraftBlocks.OIL.get());
         blockModels.createNonTemplateModelBlock(GalacticraftBlocks.FUEL.get());
         blockModels.family(GalacticraftBlocks.MOON_BRICKS.get()).generateFor(GalacticraftBlockFamilies.MOON_BRICKS);
+        machine(blockModels, GalacticraftBlocks.COMPRESSOR.get());
 
         blockModels.createTrivialCube(GalacticraftBlocks.MOON_DIRT.get());
         blockModels.createRotatedMirroredVariantBlock(GalacticraftBlocks.MOON_TURF.get());
@@ -129,6 +130,9 @@ public class GalacticraftModelProvider extends ModelProvider {
         createCauldron(blockModels, GalacticraftBlocks.OIL_CAULDRON.get(), GalacticraftBlocks.OIL.get());
         createCauldron(blockModels, GalacticraftBlocks.FUEL_CAULDRON.get(), GalacticraftBlocks.FUEL.get());
         blockModels.createNormalTorch(GalacticraftBlocks.UNLIT_TORCH.get(), GalacticraftBlocks.UNLIT_WALL_TORCH.get());
+        blockModels.createNormalTorch(GalacticraftBlocks.UNLIT_COPPER_TORCH.get(), GalacticraftBlocks.UNLIT_COPPER_WALL_TORCH.get());
+        blockModels.createLantern(GalacticraftBlocks.UNLIT_LANTERN.get());
+        GalacticraftBlocks.UNLIT_COPPER_LANTERN.waxedMapping().forEach(blockModels::createCopperLantern);
 
         itemModels.generateFlatItem(GalacticraftItems.BATTERY.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(GalacticraftItems.INFINITE_BATTERY.get(), GalacticraftItems.BATTERY.get(), ModelTemplates.FLAT_ITEM);

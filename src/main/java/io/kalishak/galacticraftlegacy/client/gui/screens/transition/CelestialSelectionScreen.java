@@ -12,9 +12,9 @@ import com.google.common.collect.Maps;
 import io.kalishak.galacticraftlegacy.Constants;
 import io.kalishak.galacticraftlegacy.galaxies.CelestialObject;
 import io.kalishak.galacticraftlegacy.galaxies.GalacticraftGalaxies;
+import net.minecraft.client.GameNarrator;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
-import net.minecraft.client.gui.screens.LevelLoadingScreen;
-import net.minecraft.client.multiplayer.LevelLoadTracker;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
@@ -22,7 +22,7 @@ import net.minecraft.world.phys.Vec3;
 import java.util.List;
 import java.util.Map;
 
-public class CelestialSelectionScreen extends LevelLoadingScreen {
+public class CelestialSelectionScreen extends Screen {
     protected static final int MAX_SPACE_STATION_NAME_LENGTH = 32;
     protected float zoom = 0.0F;
     protected float planetZoom = 0.0F;
@@ -63,8 +63,8 @@ public class CelestialSelectionScreen extends LevelLoadingScreen {
     public boolean canCreateStations = false;
     protected List<CelestialObject> bodiesToRender = Lists.newArrayList();
 
-    public CelestialSelectionScreen(LevelLoadTracker loadTracker, boolean mapMode, List<CelestialObject> possibleBodies, boolean canCreateStations) {
-        super(loadTracker, Reason.OTHER);
+    public CelestialSelectionScreen(boolean mapMode, List<CelestialObject> possibleBodies, boolean canCreateStations) {
+        super(GameNarrator.NO_TITLE);
         this.mapMode = mapMode;
         this.possibleBodies = possibleBodies;
         this.canCreateStations = canCreateStations;

@@ -8,7 +8,7 @@
 package io.kalishak.galacticraftlegacy.world.level.block.machine;
 
 import com.mojang.serialization.MapCodec;
-import io.kalishak.galacticraftlegacy.world.level.savedata.TelemetryTracker;
+import io.kalishak.galacticraftlegacy.world.level.telemetry.TelemetryTracker;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.LaunchControllerBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -58,14 +58,10 @@ public class LaunchControllerBlock extends BaseEntityBlock {
         BlockEntity bentity = level.getBlockEntity(pos);
 
         if (bentity instanceof LaunchControllerBlockEntity launchController) {
-            launchController.setLevelBoundedBlockPosition(level.dimension());
-
             if (level instanceof ServerLevel serverLevel) {
-                TelemetryTracker tracker = serverLevel.getDataStorage().get(TelemetryTracker.SAVE_DATA_ID);
+                TelemetryTracker tracker = TelemetryTracker.get(serverLevel.getServer());
 
-                if (tracker != null) {
-                    tracker.addLaunchControllerAt(launchController.getLevelBoundedBlockPosition());
-                }
+                tracker.addLaunchControllerAt(level.dimension(), launchController.getBlockPos());
             }
         }
 

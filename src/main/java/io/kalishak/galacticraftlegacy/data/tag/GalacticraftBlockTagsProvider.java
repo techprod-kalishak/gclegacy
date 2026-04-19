@@ -12,7 +12,9 @@ import io.kalishak.galacticraftlegacy.data.GalacticraftTags;
 import io.kalishak.galacticraftlegacy.world.level.block.GalacticraftBlocks;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
+import net.minecraft.data.tags.TagAppender;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
@@ -40,17 +42,23 @@ public class GalacticraftBlockTagsProvider extends BlockTagsProvider {
                 .addTag(BlockTags.BASE_STONE_OVERWORLD)
                 .addTag(BlockTags.SAND)
                 .add(Blocks.SANDSTONE);
+        TagAppender<Block, Block> lanternTag = tag(BlockTags.LANTERNS)
+                .add(GalacticraftBlocks.UNLIT_LANTERN.get());
+        GalacticraftBlocks.UNLIT_COPPER_LANTERN.forEach(lanternTag::add);
         tag(GalacticraftTags.Blocks.MACHINE)
                 .addTag(GalacticraftTags.Blocks.MACHINE_BASIC)
                 .addTag(GalacticraftTags.Blocks.MACHINE_ADVANCED);
         tag(GalacticraftTags.Blocks.MACHINE_BASIC)
                 .add(GalacticraftBlocks.COAL_GENERATOR.get())
-                .add(GalacticraftBlocks.OXYGEN_DETECTOR.get());
+                .add(GalacticraftBlocks.OXYGEN_DETECTOR.get())
+                .add(GalacticraftBlocks.CIRCUIT_FABRICATOR.get())
+                .add(GalacticraftBlocks.COMPRESSOR.get());
         tag(GalacticraftTags.Blocks.MACHINE_ADVANCED)
                 .add(GalacticraftBlocks.ELECTRIC_FURNACE.get());
         tag(BlockTags.NEEDS_STONE_TOOL)
                 .add(GalacticraftBlocks.COAL_GENERATOR.get())
                 .add(GalacticraftBlocks.CIRCUIT_FABRICATOR.get())
+                .add(GalacticraftBlocks.COMPRESSOR.get())
                 .add(GalacticraftBlocks.ELECTRIC_FURNACE.get())
                 .add(GalacticraftBlocks.MOON_COPPER_ORE.get())
                 .add(GalacticraftBlocks.MOON_CHEESE_ORE.get())
@@ -64,6 +72,7 @@ public class GalacticraftBlockTagsProvider extends BlockTagsProvider {
                 .add(GalacticraftBlocks.DEEPSLATE_SILICON_ORE.get())
                 .add(GalacticraftBlocks.MOON_SAPPHIRE_ORE.get());
         tag(BlockTags.MINEABLE_WITH_PICKAXE)
+                .addTag(GalacticraftTags.Blocks.MACHINE)
                 .add(GalacticraftBlocks.MOON_ROCK.get())
                 .add(GalacticraftBlocks.MOON_COPPER_ORE.get())
                 .add(GalacticraftBlocks.MOON_CHEESE_ORE.get())
@@ -73,9 +82,6 @@ public class GalacticraftBlockTagsProvider extends BlockTagsProvider {
                 .add(GalacticraftBlocks.MOON_BRICK_SLAB.get())
                 .add(GalacticraftBlocks.MOON_BRICK_STAIRS.get())
                 .add(GalacticraftBlocks.MOON_BRICK_WALL.get())
-                .add(GalacticraftBlocks.COAL_GENERATOR.get())
-                .add(GalacticraftBlocks.CIRCUIT_FABRICATOR.get())
-                .add(GalacticraftBlocks.ELECTRIC_FURNACE.get())
                 .add(GalacticraftBlocks.ALUMINUM_ORE.get())
                 .add(GalacticraftBlocks.DEEPSLATE_ALUMINUM_ORE.get())
                 .add(GalacticraftBlocks.TIN_ORE.get())

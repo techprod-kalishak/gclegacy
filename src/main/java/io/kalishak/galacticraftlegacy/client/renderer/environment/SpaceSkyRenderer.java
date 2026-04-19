@@ -34,6 +34,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.attribute.EnvironmentAttributeProbe;
 import net.minecraft.world.attribute.EnvironmentAttributes;
 import net.neoforged.neoforge.client.CustomSkyboxRenderer;
+import net.neoforged.neoforge.client.event.TextureAtlasStitchedEvent;
 import org.joml.*;
 
 import java.lang.Math;
@@ -45,25 +46,22 @@ public abstract class SpaceSkyRenderer<S extends SpaceSkyRenderState> implements
     protected TextureAtlas celestialsAtlas;
     protected GpuBuffer starBuffer;
     protected GpuBuffer sunBuffer;
-    protected final RenderSystem.AutoStorageIndexBuffer quadIndices = RenderSystem.getSequentialBuffer(VertexFormat.Mode.QUADS);
+    protected RenderSystem.AutoStorageIndexBuffer quadIndices;
     protected int starIndexCount;
 
     static int starCount = 1500;
 
-    protected SpaceSkyRenderer() {
-
-    }
-
     protected abstract S createRenderState(SkyRenderState skyRenderState);
 
     /**
-     * Initialize after joining a world (I am too lazy, so I left it as it is lol)
+     * We will initialize it before rendering, let's c how it's gonna b
      */
     protected void init(AtlasManager atlasManager) {
         SpaceSkyRenderer.starCount = ClientConfig.MORE_STARS.get() ? 5000 : 1500;
         this.celestialsAtlas = atlasManager.getAtlasOrThrow(AtlasIds.CELESTIALS);
         this.starBuffer = buildStars();
         this.sunBuffer = buildSunQuad(this.celestialsAtlas);
+        this.quadIndices = RenderSystem.getSequentialBuffer(VertexFormat.Mode.QUADS);
     }
 
     public void extractRenderState(float partialTicks, Camera camera, S state, EnvironmentAttributeProbe attributeProbe) {

@@ -12,7 +12,7 @@ import io.kalishak.galacticraftlegacy.config.CommonConfig;
 import io.kalishak.galacticraftlegacy.Galacticraft;
 import io.kalishak.galacticraftlegacy.codec.SerializableEnum;
 import io.kalishak.galacticraftlegacy.data.GalacticraftTags;
-import io.kalishak.galacticraftlegacy.world.level.savedata.TelemetryTracker;
+import io.kalishak.galacticraftlegacy.world.level.telemetry.TelemetryTracker;
 import io.kalishak.galacticraftlegacy.sounds.RocketSoundInstance;
 import io.kalishak.galacticraftlegacy.transfer.capability.fluid.SingleTankResourceHandler;
 import io.kalishak.galacticraftlegacy.world.entity.DockingEntity;
@@ -22,6 +22,7 @@ import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.LandingPa
 import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.LaunchControllerBlockEntity;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.SoundboundEntity;
 import io.kalishak.galacticraftlegacy.world.level.material.fluid.GalacticraftFluids;
+import io.kalishak.galacticraftlegacy.world.level.telemetry.TelemetryTrackerSaveData;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
@@ -574,51 +575,49 @@ public abstract class AbstractAutoRocket extends AbstractSpaceShip implements La
 
     protected boolean setTarget(boolean simulate, int targetFrequency) {
         if (level() instanceof ServerLevel level) {
-            TelemetryTracker tracker = level.getDataStorage().get(TelemetryTracker.SAVE_DATA_ID);
+            TelemetryTracker tracker = TelemetryTracker.get(level.getServer());
 
-            if (tracker != null) {
-                List<LaunchControllerBlockEntity> launchControllers = tracker.getLaunchControllers();
-                LaunchControllerBlockEntity targetController = null;
+            List<LaunchControllerBlockEntity> launchControllers = tracker.getLaunchControllers();
+            LaunchControllerBlockEntity targetController = null;
 
-                for (LaunchControllerBlockEntity launchController : launchControllers) {
-                    if (launchController.getTargetFrequency() == targetFrequency) {
-                        targetController = launchController;
-                        break;
-                    }
+            for (LaunchControllerBlockEntity launchController : launchControllers) {
+                if (launchController.getTargetFrequency() == targetFrequency) {
+                    targetController = launchController;
+                    break;
                 }
+            }
 
-                if (targetController == null) {
-                    return false;
-                }
+            if (targetController == null) {
+                return false;
+            }
 
-                boolean targetSet = false;
+            boolean targetSet = false;
 
-                blockLoop: for (int x = -2; x <= 2; x++) {
-                    for (int z = -2; z <= 2; z++) {
-                        BlockPos pos = targetController.getBlockPos().offset(x, 0, z);
-                        BlockEntity blockEntity = level().getBlockEntity(pos);
+            blockLoop: for (int x = -2; x <= 2; x++) {
+                for (int z = -2; z <= 2; z++) {
+                    BlockPos pos = targetController.getBlockPos().offset(x, 0, z);
+                    BlockEntity blockEntity = level().getBlockEntity(pos);
 
-                        if (blockEntity instanceof LandingPad) {
-                            if (!simulate) {
-                                setTargetPos(new GlobalPos(targetController.getLevelKey(), pos));
+                    if (blockEntity instanceof LandingPad) {
+                        if (!simulate) {
+                            setTargetPos(new GlobalPos(targetController.getLevel().dimension(), pos));
 
-                                targetSet = true;
-                                break blockLoop;
-                            }
+                            targetSet = true;
+                            break blockLoop;
                         }
                     }
                 }
+            }
 
-                if (!targetSet) {
-                    if (!simulate) {
-                        setTargetPos(null);
-                    }
-
-                    return false;
+            if (!targetSet) {
+                if (!simulate) {
+                    setTargetPos(null);
                 }
 
-                return true;
+                return false;
             }
+
+            return true;
         } else LOGGER.warn("Tried to call AbstractAutoRocket#setTarget from the client!");
 
         return false;

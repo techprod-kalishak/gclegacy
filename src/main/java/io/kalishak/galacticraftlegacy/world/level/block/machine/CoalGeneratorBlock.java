@@ -51,7 +51,7 @@ public class CoalGeneratorBlock extends AbstractMachineBlock {
             return createTickerHelper(
                     blockEntityType,
                     GalacticraftBlockEntityType.COAL_GENERATOR.get(),
-                    (tickerLevel, tickerPos, tickerState, ticker) -> CoalGeneratorBlockEntity.serverTick(serverLevel, tickerPos, tickerState, ticker)
+                    (_, tickerPos, tickerState, ticker) -> CoalGeneratorBlockEntity.serverTick(serverLevel, tickerPos, tickerState, ticker)
             );
         }
 

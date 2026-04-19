@@ -46,6 +46,12 @@ public final class GalacticraftBlockEntityType {
                     GalacticraftBlocks.BLACK_PIPE.get()
             ))
     );
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<CompressorBlockEntity>> COMPRESSOR = REGISTRY.register(
+            "compressor",
+            () -> new BlockEntityType<>(CompressorBlockEntity::new, Set.of(
+                    GalacticraftBlocks.COMPRESSOR.get()
+            ))
+    );
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<DungeonChestBlockEntity>> DUNGEON_CHEST = REGISTRY.register(
             "dungeon_chest",
             () -> new BlockEntityType<>(DungeonChestBlockEntity::new, Set.of(

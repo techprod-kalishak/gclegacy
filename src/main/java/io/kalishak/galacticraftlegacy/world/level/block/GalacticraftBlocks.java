@@ -8,6 +8,7 @@
 package io.kalishak.galacticraftlegacy.world.level.block;
 
 import io.kalishak.galacticraftlegacy.Galacticraft;
+import io.kalishak.galacticraftlegacy.registry.deferred.DeferredWeatheringCopperBlocks;
 import io.kalishak.galacticraftlegacy.world.item.FeatureTier;
 import io.kalishak.galacticraftlegacy.world.level.block.cauldron.FlammableCauldronBlock;
 import io.kalishak.galacticraftlegacy.world.level.block.cauldron.GalacticraftCauldronInteraction;
@@ -628,7 +629,16 @@ public final class GalacticraftBlocks {
     //Ambient
     public static final DeferredBlock<UnlitTorchBlock> UNLIT_TORCH = REGISTRY.registerBlock(
             "unlit_torch",
-            UnlitTorchBlock::new,
+            properties -> new UnlitTorchBlock(Blocks.TORCH.defaultBlockState(), properties),
+            () -> BlockBehaviour.Properties.of()
+                    .noCollision()
+                    .instabreak()
+                    .sound(SoundType.WOOD)
+                    .pushReaction(PushReaction.DESTROY)
+    );
+    public static final DeferredBlock<UnlitTorchBlock> UNLIT_COPPER_TORCH = REGISTRY.registerBlock(
+            "unlit_copper_torch",
+            properties -> new UnlitTorchBlock(Blocks.COPPER_TORCH.defaultBlockState(), properties),
             () -> BlockBehaviour.Properties.of()
                     .noCollision()
                     .instabreak()
@@ -637,13 +647,47 @@ public final class GalacticraftBlocks {
     );
     public static final DeferredBlock<WallUnlitTorchBlock> UNLIT_WALL_TORCH = REGISTRY.registerBlock(
             "unlit_wall_torch",
-            WallUnlitTorchBlock::new,
+            properties -> new WallUnlitTorchBlock(Blocks.WALL_TORCH.defaultBlockState(), properties),
             () -> wallVariant(UNLIT_TORCH::value, true, properties -> properties
                     .noCollision()
                     .instabreak()
                     .sound(SoundType.WOOD)
                     .pushReaction(PushReaction.DESTROY)
             )
+    );
+    public static final DeferredBlock<WallUnlitTorchBlock> UNLIT_COPPER_WALL_TORCH = REGISTRY.registerBlock(
+            "unlit_wall_copper_torch",
+            properties -> new WallUnlitTorchBlock(Blocks.COPPER_WALL_TORCH.defaultBlockState(), properties),
+            () -> wallVariant(UNLIT_COPPER_TORCH::value, true, properties -> properties
+                    .noCollision()
+                    .instabreak()
+                    .sound(SoundType.WOOD)
+                    .pushReaction(PushReaction.DESTROY)
+            )
+    );
+    public static final DeferredBlock<UnlitLanternBlock> UNLIT_LANTERN = REGISTRY.registerBlock(
+            "unlit_lantern",
+            properties -> new UnlitLanternBlock(Blocks.LANTERN.defaultBlockState(), properties),
+            () -> BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.METAL)
+                    .forceSolidOn()
+                    .strength(3.5F)
+                    .sound(SoundType.LANTERN)
+                    .noOcclusion()
+                    .pushReaction(PushReaction.DESTROY)
+    );
+    public static final DeferredWeatheringCopperBlocks UNLIT_COPPER_LANTERN = DeferredWeatheringCopperBlocks.create(
+            "unlit_copper_lantern",
+            REGISTRY::registerBlock,
+            properties -> new UnlitLanternBlock(Blocks.COPPER_LANTERN.unaffected().defaultBlockState(), properties),
+            (weatherState, properties) -> new UnlitWeatheringLanternBlock(weatherState, Blocks.COPPER_LANTERN.unaffected().defaultBlockState(), properties),
+            _ -> BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.METAL)
+                    .forceSolidOn()
+                    .strength(3.5F)
+                    .sound(SoundType.LANTERN)
+                    .noOcclusion()
+                    .pushReaction(PushReaction.DESTROY)
     );
 
     // Machines
@@ -661,33 +705,22 @@ public final class GalacticraftBlocks {
     public static final DeferredBlock<CoalGeneratorBlock> COAL_GENERATOR = REGISTRY.registerBlock(
             "coal_generator",
             CoalGeneratorBlock::new,
-            () -> BlockBehaviour.Properties.of()
-                    .mapColor(MapColor.COLOR_BLACK)
-                    .instrument(NoteBlockInstrument.BASEDRUM)
-                    .sound(SoundType.METAL)
-                    .requiresCorrectToolForDrops()
-                    .strength(3.5F)
-                    .lightLevel(state -> state.getValue(BlockStateProperties.LIT) ? 13 : 0)
+            () -> litMachine(13)
     );
     public static final DeferredBlock<CircuitFabricatorBlock> CIRCUIT_FABRICATOR = REGISTRY.registerBlock(
             "circuit_fabricator",
             CircuitFabricatorBlock::new,
-            () -> BlockBehaviour.Properties.of()
-                    .mapColor(MapColor.COLOR_BLACK)
-                    .instrument(NoteBlockInstrument.BASEDRUM)
-                    .sound(SoundType.METAL)
-                    .requiresCorrectToolForDrops()
-                    .strength(3.5F)
+            GalacticraftBlocks::machine
+    );
+    public static final DeferredBlock<CompressorBlock> COMPRESSOR = REGISTRY.registerBlock(
+            "compressor",
+            CompressorBlock::new,
+            GalacticraftBlocks::machine
     );
     public static final DeferredBlock<ElectricFurnaceBlock> ELECTRIC_FURNACE = REGISTRY.registerBlock(
             "electric_furnace",
             ElectricFurnaceBlock::new,
-            () -> BlockBehaviour.Properties.of()
-                    .mapColor(MapColor.DEEPSLATE)
-                    .instrument(NoteBlockInstrument.BASEDRUM)
-                    .sound(SoundType.METAL)
-                    .requiresCorrectToolForDrops()
-                    .strength(4.0F)
+            GalacticraftBlocks::machine
     );
 
     private static BlockBehaviour.Properties wallVariant(Supplier<Block> baseBlock, boolean overrideDescription, UnaryOperator<BlockBehaviour.Properties> properties) {
@@ -697,6 +730,24 @@ public final class GalacticraftBlocks {
         }
 
         return properties.apply(wallProperties);
+    }
+
+    private static BlockBehaviour.Properties machine() {
+        return BlockBehaviour.Properties.of()
+                .mapColor(MapColor.DEEPSLATE)
+                .instrument(NoteBlockInstrument.BASEDRUM)
+                .sound(SoundType.METAL)
+                .requiresCorrectToolForDrops()
+                .strength(3.0F);
+    }
+    private static BlockBehaviour.Properties litMachine(int light) {
+        return BlockBehaviour.Properties.of()
+                .mapColor(MapColor.DEEPSLATE)
+                .instrument(NoteBlockInstrument.BASEDRUM)
+                .sound(SoundType.METAL)
+                .requiresCorrectToolForDrops()
+                .strength(3.0F)
+                .lightLevel(state -> state.getValue(BlockStateProperties.LIT) ? light : 0);
     }
 
     private static boolean never(BlockState blockState, BlockGetter blockGetter, BlockPos blockPos) {

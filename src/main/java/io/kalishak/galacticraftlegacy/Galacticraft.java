@@ -12,6 +12,7 @@ import io.kalishak.galacticraftlegacy.attachment.GalacticraftAttachments;
 import io.kalishak.galacticraftlegacy.config.ClientConfig;
 import io.kalishak.galacticraftlegacy.config.CommonConfig;
 import io.kalishak.galacticraftlegacy.config.ServerConfig;
+import io.kalishak.galacticraftlegacy.config.condition.GalacticraftConditions;
 import io.kalishak.galacticraftlegacy.data.GalacticraftData;
 import io.kalishak.galacticraftlegacy.data.datamap.GalacticraftDataMaps;
 import io.kalishak.galacticraftlegacy.galaxies.GalacticraftGalaxies;
@@ -38,6 +39,8 @@ import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlock
 import io.kalishak.galacticraftlegacy.world.level.levelgen.features.GalacticraftFeatures;
 import io.kalishak.galacticraftlegacy.world.level.material.fluid.GalacticraftFluidType;
 import io.kalishak.galacticraftlegacy.world.level.material.fluid.GalacticraftFluids;
+import io.kalishak.galacticraftlegacy.world.level.storage.loot.functions.GalacticraftLootFunctions;
+import io.kalishak.galacticraftlegacy.world.level.storage.loot.predicates.GalacticraftLootItemConditions;
 import io.kalishak.galacticraftlegacy.world.score.race.SpaceRaceHooks;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
@@ -57,6 +60,7 @@ public class Galacticraft {
         GalacticraftBlocks.init(modEventBus);
         GalacticraftBlockEntityType.init(modEventBus);
         CelestialBodyType.init(modEventBus);
+        GalacticraftConditions.init(modEventBus);
         GalacticraftCreativeModeTabs.init(modEventBus);
         GalacticraftCriteriaTriggers.init(modEventBus);
         GalacticraftDataComponents.init(modEventBus);
@@ -65,7 +69,10 @@ public class Galacticraft {
         GalacticraftFeatures.init(modEventBus);
         GalacticraftFluidType.init(modEventBus);
         GalacticraftFluids.init(modEventBus);
+        GalacticraftGalaxies.init(modEventBus);
         GalacticraftItems.init(modEventBus);
+        GalacticraftLootItemConditions.init(modEventBus);
+        GalacticraftLootFunctions.init(modEventBus);
         GalacticraftMenuType.init(modEventBus);
         GalacticraftParticleTypes.init(modEventBus);
         GalacticraftRecipeBookCategories.init(modEventBus);
@@ -73,8 +80,6 @@ public class Galacticraft {
         GalacticraftRecipeSerializer.init(modEventBus);
         GalacticraftRecipeType.init(modEventBus);
         GalacticraftSounds.init(modEventBus);
-
-        GalacticraftGalaxies.init(modEventBus);
 
         modEventBus.addListener(this::setup);
         modEventBus.addListener(this::registerCauldronFluids);

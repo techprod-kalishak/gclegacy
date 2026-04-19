@@ -28,20 +28,32 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.sprite.AtlasManager;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.attribute.EnvironmentAttributeProbe;
+import net.neoforged.neoforge.client.CustomSkyboxRenderer;
+import net.neoforged.neoforge.client.event.RegisterCustomEnvironmentEffectRendererEvent;
 import org.joml.*;
 import org.jspecify.annotations.NonNull;
 
 import java.lang.Math;
 import java.util.OptionalDouble;
 import java.util.OptionalInt;
+import java.util.function.BiConsumer;
 
 public class MoonSkyRenderer extends SpaceSkyRenderer<MoonSkyRenderState> {
-    //public static final MoonSkyRenderer INSTANCE = new MoonSkyRenderer();
-    public static final Identifier ID = Constants.id("moon_sky");
+    public static final Identifier ID = Constants.id("skybox/moon_sky");
     private GpuBuffer earthBuffer;
 
-    public MoonSkyRenderer() {
+    MoonSkyRenderer() {
+    }
 
+    /**
+     * To avoid accidental registration on server thread, we will now check what thread are we on.
+     * Don't ask.
+     * @param registry method to register custom skybox, see {@link RegisterCustomEnvironmentEffectRendererEvent#registerSkyboxRenderer(Identifier, CustomSkyboxRenderer)}
+     */
+    public static void create(BiConsumer<Identifier, CustomSkyboxRenderer> registry) {
+        if (RenderSystem.isOnRenderThread()) {
+            registry.accept(ID, new MoonSkyRenderer());
+        }
     }
 
     @Override

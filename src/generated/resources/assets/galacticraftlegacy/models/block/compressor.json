@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "down": "galacticraftlegacy:block/machine_top",
+    "east": "galacticraftlegacy:block/machine_energy_output",
+    "north": "galacticraftlegacy:block/compressor_front",
+    "particle": "galacticraftlegacy:block/machine_top",
+    "south": "galacticraftlegacy:block/machine_side",
+    "up": "galacticraftlegacy:block/machine_top",
+    "west": "galacticraftlegacy:block/machine_side"
+  }
+}

@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "galacticraftlegacy:oxygen_detector"
+            "items": "galacticraftlegacy:compressor"
           }
         ]
       },
@@ -17,7 +17,7 @@
       "translate": "advancements.galacticraftlegacy.compressed.description"
     },
     "icon": {
-      "id": "minecraft:anvil"
+      "id": "galacticraftlegacy:compressor"
     },
     "title": {
       "translate": "advancements.galacticraftlegacy.compressed.title"

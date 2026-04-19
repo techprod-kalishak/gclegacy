@@ -8,11 +8,13 @@
 package io.kalishak.galacticraftlegacy.world.level.block;
 
 import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.ScheduledTickAccess;
 import net.minecraft.world.level.block.*;
@@ -27,12 +29,15 @@ import org.jspecify.annotations.Nullable;
 import java.util.Map;
 
 public class WallUnlitTorchBlock extends UnlitTorchBlock {
-    public static final MapCodec<WallUnlitTorchBlock> CODEC = simpleCodec(WallUnlitTorchBlock::new);
+    public static final MapCodec<WallUnlitTorchBlock> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+            BlockState.CODEC.fieldOf("lit_state").forGetter(block -> block.litState),
+            propertiesCodec()
+    ).apply(instance, WallUnlitTorchBlock::new));
     public static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;
     private static final Map<Direction, VoxelShape> SHAPES = Shapes.rotateHorizontal(Block.boxZ(5.0F, 3.0F, 13.0F, 11.0F, 16.0F));
 
-    public WallUnlitTorchBlock(Properties properties) {
-        super(properties);
+    public WallUnlitTorchBlock(BlockState litState, Properties properties) {
+        super(litState, properties);
         registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH));
     }
 
@@ -90,5 +95,10 @@ public class WallUnlitTorchBlock extends UnlitTorchBlock {
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(FACING);
+    }
+
+    @Override
+    public BlockState getLitState(Level level, BlockState unlitState) {
+        return super.getLitState(level, unlitState).setValue(FACING, unlitState.getValue(FACING));
     }
 }

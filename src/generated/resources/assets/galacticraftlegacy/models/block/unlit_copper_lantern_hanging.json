@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/template_hanging_lantern",
+  "textures": {
+    "lantern": "galacticraftlegacy:block/unlit_copper_lantern"
+  }
+}

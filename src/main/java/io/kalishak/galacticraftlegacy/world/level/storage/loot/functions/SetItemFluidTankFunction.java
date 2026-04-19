@@ -19,6 +19,7 @@ import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.functions.LootItemConditionalFunction;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import net.neoforged.neoforge.fluids.FluidInstance;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.SimpleFluidContent;
 
@@ -27,7 +28,7 @@ import java.util.List;
 public class SetItemFluidTankFunction extends LootItemConditionalFunction {
     public static final MapCodec<SetItemFluidTankFunction> MAP_CODEC = RecordCodecBuilder.mapCodec(
             i -> commonFields(i)
-                    .and(BuiltInRegistries.FLUID.holderByNameCodec().fieldOf("fluid").forGetter(f -> f.fluid))
+                    .and(FluidInstance.FLUID_HOLDER_CODEC.fieldOf("fluid").forGetter(f -> f.fluid))
                     .and(IntProviders.CODEC.fieldOf("value").forGetter(f -> f.value)
             ).apply(i, SetItemFluidTankFunction::new)
     );

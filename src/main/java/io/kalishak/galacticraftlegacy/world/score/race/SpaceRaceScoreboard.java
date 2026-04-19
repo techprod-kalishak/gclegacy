@@ -21,12 +21,27 @@ public class SpaceRaceScoreboard {
     private final Object2ObjectMap<String, SpaceRaceTeam> teamsByName = new Object2ObjectOpenHashMap<>();
     private final Object2ObjectMap<String, SpaceRaceTeam> teamsByPlayer = new Object2ObjectOpenHashMap<>();
 
-    SpaceRaceScoreboard() {
+    protected SpaceRaceScoreboard() {
 
+    }
+
+    protected void copyFrom(SpaceRaceScoreboard scoreboard) {
+        this.teamsByName.putAll(scoreboard.teamsByName);
+        this.teamsByName.putAll(scoreboard.teamsByPlayer);
+        this.teamsByPlayer.putAll(scoreboard.teamsByName);
     }
 
     public @Nullable SpaceRaceTeam getPlayerSpaceRace(String name) {
         return this.teamsByName.get(name);
+    }
+
+    public SpaceRaceTeam addSpaceRace(String name) {
+        SpaceRaceTeam team = new SpaceRaceTeam(this, name);
+
+        this.teamsByName.put(name, team);
+        onTeamAdded(team);
+
+        return team;
     }
 
     public SpaceRaceTeam getOrCreatePlayerSpaceRace(String name) {

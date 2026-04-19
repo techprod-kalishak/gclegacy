@@ -12,14 +12,21 @@ import io.kalishak.galacticraftlegacy.attachment.entity.GearInventoryProvider;
 import io.kalishak.galacticraftlegacy.config.ClientConfig;
 import io.kalishak.galacticraftlegacy.config.values.EnergyUnit;
 import io.kalishak.galacticraftlegacy.data.GalacticraftTags;
+import io.kalishak.galacticraftlegacy.data.datamap.Extinguishable;
+import io.kalishak.galacticraftlegacy.data.datamap.GalacticraftDataMaps;
 import io.kalishak.galacticraftlegacy.registry.SchematicVariant;
 import io.kalishak.galacticraftlegacy.world.entity.GearEquipmentSlot;
 import io.kalishak.galacticraftlegacy.world.item.component.*;
 import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.GalacticraftRecipeType;
+import io.kalishak.galacticraftlegacy.world.level.OxygenHelper;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponentType;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -28,6 +35,12 @@ import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.TooltipProvider;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.CampfireBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.gamerules.GameRules;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -37,6 +50,7 @@ import net.neoforged.neoforge.event.AddAttributeTooltipsEvent;
 import net.neoforged.neoforge.event.OnDatapackSyncEvent;
 import net.neoforged.neoforge.event.VanillaGameEvent;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
+import net.neoforged.neoforge.event.level.BlockEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import net.neoforged.neoforge.transfer.ResourceHandler;
@@ -150,6 +164,40 @@ public class NeoEventHandler {
                 gearInventory.serverGearTick(serverLevel, player);
             } else {
                 gearInventory.clientGearTick(player.level(), player);
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public void onBlockPlaced(BlockEvent.EntityPlaceEvent event) {
+        LevelAccessor level = event.getLevel();
+
+        if (!level.isClientSide() && level instanceof Level) {
+            BlockPos placementPos = event.getPos();
+            BlockState newState = event.getPlacedBlock();
+            Holder<Block> blockToPlace = newState.typeHolder();
+            Extinguishable extinguishable = BuiltInRegistries.BLOCK.getData(GalacticraftDataMaps.EXTINGUISHED_WITHOUT_OXYGEN, blockToPlace.unwrapKey().orElseThrow());
+
+            if (extinguishable != null || newState.is(Blocks.CAMPFIRE)) {
+                if (!OxygenHelper.hasOxygenNearby((Level) level, placementPos, 1.0D, false)) {
+                    BlockState unlitState = null;
+
+                    if (newState.is(Blocks.CAMPFIRE)) {
+                        unlitState = Blocks.CAMPFIRE.defaultBlockState().setValue(CampfireBlock.LIT, false);
+                    } else if (extinguishable != null) {
+                        unlitState = extinguishable.unlitState();
+
+                        if (extinguishable.hasFacingProperty()) {
+                            unlitState = unlitState.setValue(BlockStateProperties.HORIZONTAL_FACING, newState.getValue(BlockStateProperties.HORIZONTAL_FACING));
+                        }
+                    }
+
+                    if (unlitState != null) {
+                        level.playSound(null, placementPos, SoundEvents.GENERIC_EXTINGUISH_FIRE, SoundSource.BLOCKS, 1.0F, 1.0F);
+                        level.setBlock(placementPos, unlitState, Block.UPDATE_ALL);
+                        event.setCanceled(true);
+                    }
+                }
             }
         }
     }

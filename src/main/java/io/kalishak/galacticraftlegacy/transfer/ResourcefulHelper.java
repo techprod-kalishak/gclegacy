@@ -128,7 +128,7 @@ public interface ResourcefulHelper {
             int submitted = clearOrCountMatching(resourceHandler, transformer, i, stackPredicate, maxAmount - clearedItems, simulate);
             R resource = resourceHandler.getResource(i);
 
-            if (submitted > 0 && !simulate && resource.isEmpty()) {
+            if (submitted > 0 && !simulate && !resource.isEmpty()) {
                 try (Transaction tx = Transaction.open(null)) {
                     if (resourceHandler.extract(i, resource, resourceHandler.getAmountAsInt(i), tx) > 0) {
                         tx.commit();

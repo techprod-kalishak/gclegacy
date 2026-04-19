@@ -12,6 +12,7 @@ import io.kalishak.galacticraftlegacy.Galacticraft;
 import io.kalishak.galacticraftlegacy.registry.SchematicVariant;
 import io.kalishak.galacticraftlegacy.registry.SchematicVariants;
 import io.kalishak.galacticraftlegacy.registry.deferred.DeferredItemRegister;
+import io.kalishak.galacticraftlegacy.registry.deferred.DeferredWeatheringCopperItems;
 import io.kalishak.galacticraftlegacy.transfer.capability.fluid.ItemAccessFluidTank;
 import io.kalishak.galacticraftlegacy.world.entity.GearEquipmentSlot;
 import io.kalishak.galacticraftlegacy.world.item.component.*;
@@ -30,6 +31,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.equipment.ArmorType;
 import net.minecraft.world.item.equipment.Equippable;
+import net.minecraft.world.level.block.Blocks;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
@@ -482,6 +484,7 @@ public final class GalacticraftItems {
     public static final DeferredItem<BlockItem> CHEESE = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.CHEESE);
     public static final DeferredItem<BlockItem> COAL_GENERATOR = REGISTRY.registerSimpleBlockItemWithDescription(GalacticraftBlocks.COAL_GENERATOR);
     public static final DeferredItem<BlockItem> CIRCUIT_FABRICATOR = REGISTRY.registerSimpleBlockItemWithDescription(GalacticraftBlocks.CIRCUIT_FABRICATOR);
+    public static final DeferredItem<BlockItem> COMPRESSOR = REGISTRY.registerSimpleBlockItemWithDescription(GalacticraftBlocks.COMPRESSOR);
     public static final DeferredItem<BlockItem> ELECTRIC_FURNACE = REGISTRY.registerSimpleBlockItemWithDescription(GalacticraftBlocks.ELECTRIC_FURNACE);
     public static final DeferredItem<BlockItem> MOON_DIRT = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.MOON_DIRT);
     public static final DeferredItem<BlockItem> MOON_TURF = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.MOON_TURF);
@@ -517,6 +520,17 @@ public final class GalacticraftItems {
                     properties
             )
     );
+    public static final DeferredItem<StandingAndWallBlockItem> UNLIT_COPPER_TORCH = REGISTRY.registerBlockItem(
+            GalacticraftBlocks.UNLIT_COPPER_TORCH,
+            (standingBlock, properties) -> new StandingAndWallBlockItem(
+                    standingBlock,
+                    GalacticraftBlocks.UNLIT_COPPER_WALL_TORCH.get(),
+                    Direction.DOWN,
+                    properties
+            )
+    );
+    public static final DeferredItem<BlockItem> UNLIT_LANTERN = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.UNLIT_LANTERN);
+    public static final DeferredWeatheringCopperItems UNLIT_COPPER_LANTERNS = DeferredWeatheringCopperItems.create(GalacticraftBlocks.UNLIT_COPPER_LANTERN, REGISTRY::registerSimpleBlockItem);
 
     public static void init(IEventBus bus) {
         REGISTRY.register(bus);

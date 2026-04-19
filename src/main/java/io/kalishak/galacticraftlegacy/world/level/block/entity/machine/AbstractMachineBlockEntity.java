@@ -54,7 +54,9 @@ public abstract class AbstractMachineBlockEntity extends NamedBlockEntity {
     protected final SimpleEnergyHandler energyHandler = new SimpleEnergyHandler(energyCapacity(), maxTransferRate()) {
         @Override
         protected void onEnergyChanged(int previousAmount) {
-            AbstractMachineBlockEntity.this.setData(GalacticraftAttachments.SYNC_ENERGY_STORAGE, new SyncedEnergyHandler(previousAmount));
+            if (!AbstractMachineBlockEntity.this.isRemoved()) {
+                AbstractMachineBlockEntity.this.setData(GalacticraftAttachments.SYNC_ENERGY_STORAGE, new SyncedEnergyHandler(previousAmount));
+            }
         }
     };
 

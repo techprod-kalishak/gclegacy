@@ -9,6 +9,8 @@ package io.kalishak.galacticraftlegacy.world.level.dimension;
 
 import io.kalishak.galacticraftlegacy.Constants;
 import io.kalishak.galacticraftlegacy.client.renderer.environment.MoonSkyRenderer;
+import io.kalishak.galacticraftlegacy.client.renderer.environment.SpaceCloudsRenderer;
+import io.kalishak.galacticraftlegacy.client.renderer.environment.SpaceWeatherRenderer;
 import io.kalishak.galacticraftlegacy.data.GalacticraftTags;
 import io.kalishak.galacticraftlegacy.world.attribute.GalacticraftWorldAttributes;
 import io.kalishak.galacticraftlegacy.world.level.biome.MoonBiomes;
@@ -81,6 +83,8 @@ public class GalacticraftDimensionTypes {
                         CardinalLighting.Type.DEFAULT,
                         EnvironmentAttributeMap.builder()
                                 .set(NeoForgeEnvironmentAttributes.CUSTOM_SKYBOX, MoonSkyRenderer.ID)
+                                .set(NeoForgeEnvironmentAttributes.CUSTOM_CLOUDS, SpaceCloudsRenderer.ID)
+                                .set(NeoForgeEnvironmentAttributes.CUSTOM_WEATHER_EFFECTS, SpaceWeatherRenderer.ID)
                                 .set(EnvironmentAttributes.SKY_COLOR, MoonBiomes.calculateSkyColor())
                                 .set(EnvironmentAttributes.BACKGROUND_MUSIC, GalacticraftWorldAttributes.MUSIC_SPACE)
                                 .set(EnvironmentAttributes.BED_RULE, GalacticraftWorldAttributes.BED_RULE_CRYO_CHAMBER)

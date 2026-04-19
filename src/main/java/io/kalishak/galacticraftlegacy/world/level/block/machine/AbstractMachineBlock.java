@@ -23,6 +23,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -38,7 +39,7 @@ import net.neoforged.neoforge.transfer.energy.EnergyHandler;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
-public abstract class AbstractMachineBlock extends BaseEntityBlock implements ConnectingBlock {
+public abstract class AbstractMachineBlock extends BaseEntityBlock implements ConnectingBlock, RotatedByToolBlock {
     public static final BooleanProperty LIT = BlockStateProperties.LIT; //Active
     public static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;
 
@@ -63,17 +64,7 @@ public abstract class AbstractMachineBlock extends BaseEntityBlock implements Co
 
     @Override
     protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
-        if (stack.is(GalacticraftItems.WRENCH) && !stack.nextDamageWillBreak()) {
-            state = rotate(state, player.isShiftKeyDown() ? Rotation.CLOCKWISE_90 : Rotation.COUNTERCLOCKWISE_90);
-            level.setBlock(pos, state, Block.UPDATE_ALL_IMMEDIATE);
-            level.gameEvent(GameEvent.BLOCK_CHANGE, pos, new GameEvent.Context(player, state));
-
-            stack.hurtAndBreak(1, player, hand);
-
-            return InteractionResult.SUCCESS;
-        }
-
-        return super.useItemOn(stack, state, level, pos, player, hand, hitResult);
+        return rotateWithWrench(stack, state, level, pos, player, hand);
     }
 
     @Override
@@ -102,7 +93,7 @@ public abstract class AbstractMachineBlock extends BaseEntityBlock implements Co
 
     @Override
     protected boolean hasAnalogOutputSignal(BlockState state) {
-        return super.hasAnalogOutputSignal(state);
+        return true;
     }
 
     @Override

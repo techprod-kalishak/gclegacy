@@ -24,7 +24,7 @@ public class SpaceRaceHooks {
 
     private static SpaceRaceScoreboard loadScoreboard(MinecraftServer server) {
         if (SpaceRaceHooks.instance == null) {
-            SpaceRaceScoreboardSaveData saveData = server.overworld().getDataStorage().computeIfAbsent(SpaceRaceScoreboardSaveData.TYPE);
+            SpaceRaceScoreboardSaveData saveData = server.getDataStorage().computeIfAbsent(SpaceRaceScoreboardSaveData.TYPE);
 
             SpaceRaceHooks.instance = new SpaceRaceScoreboard();
             saveData.getData().teams().forEach(SpaceRaceHooks.instance::loadSpaceRaceTeam);
@@ -35,7 +35,9 @@ public class SpaceRaceHooks {
 
     @SubscribeEvent
     public static void onServerStop(ServerStoppedEvent event) {
-        SpaceRaceHooks.instance = null;
+        if (SpaceRaceHooks.instance != null) {
+            event.getServer().getDataStorage().computeIfAbsent(SpaceRaceScoreboardSaveData.TYPE).setData(instance.packSpaceRaceTeams());
+        }
     }
 
     @SubscribeEvent
@@ -45,6 +47,10 @@ public class SpaceRaceHooks {
 
     public static @NonNull SpaceRaceScoreboard getFromLevel(ServerLevel serverLevel) {
         return SpaceRaceHooks.instance != null ? SpaceRaceHooks.instance : loadScoreboard(serverLevel.getServer());
+    }
+
+    public static @NonNull SpaceRaceScoreboard getFromServer(MinecraftServer server) {
+        return SpaceRaceHooks.instance != null ? SpaceRaceHooks.instance : loadScoreboard(server);
     }
 
     public static FlagData getPlayerFlag(ServerPlayer player) {

@@ -1,6 +1,8 @@
 {
   "values": [
     "galacticraftlegacy:coal_generator",
-    "galacticraftlegacy:oxygen_detector"
+    "galacticraftlegacy:oxygen_detector",
+    "galacticraftlegacy:circuit_fabricator",
+    "galacticraftlegacy:compressor"
   ]
 }

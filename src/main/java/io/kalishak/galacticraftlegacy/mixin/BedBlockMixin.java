@@ -38,6 +38,6 @@ public class BedBlockMixin {
             }
 
             cir.setReturnValue(InteractionResult.SUCCESS_SERVER);
-        } else cir.cancel();
+        }
     }
 }

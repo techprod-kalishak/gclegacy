@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/template_torch_wall",
+  "textures": {
+    "torch": "galacticraftlegacy:block/unlit_copper_torch"
+  }
+}

@@ -9,6 +9,7 @@ package io.kalishak.galacticraftlegacy.client.renderer.entity.layer.gear;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import io.kalishak.galacticraftlegacy.Constants;
+import io.kalishak.galacticraftlegacy.client.model.GalacticraftObjModelKeys;
 import io.kalishak.galacticraftlegacy.client.renderer.entity.state.GearRenderState;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.renderer.SubmitNodeCollector;
@@ -16,8 +17,8 @@ import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.EquipmentLayerRenderer;
 import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 import net.minecraft.client.resources.model.EquipmentAssetManager;
+import net.minecraft.client.resources.model.ModelManager;
 import net.minecraft.resources.Identifier;
-import net.neoforged.neoforge.client.ClientHooks;
 import net.neoforged.neoforge.client.model.obj.ObjModel;
 
 public class TelemetryModuleLayer<S extends LivingEntityRenderState, M extends EntityModel<S>> extends GearEquipmentLayer<S, M> {
@@ -32,5 +33,9 @@ public class TelemetryModuleLayer<S extends LivingEntityRenderState, M extends E
         if (getDataFromContext(renderState, GearRenderState.HAS_TELEMETRY, false)) {
 
         }
+    }
+
+    public ObjModel getObjModel(ModelManager modelManager) {
+        return modelManager.getStandaloneModel(GalacticraftObjModelKeys.TELEMETRY_MODULE_KEY);
     }
 }

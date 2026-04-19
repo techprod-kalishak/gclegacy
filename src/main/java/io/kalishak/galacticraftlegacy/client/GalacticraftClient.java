@@ -14,7 +14,7 @@ import io.kalishak.galacticraftlegacy.client.gui.SensorGlassesOverlay;
 import io.kalishak.galacticraftlegacy.client.gui.TanksLayer;
 import io.kalishak.galacticraftlegacy.client.gui.screens.inventory.*;
 import io.kalishak.galacticraftlegacy.client.gui.screens.recipebook.GalacticraftClientRecipeBookCategories;
-import io.kalishak.galacticraftlegacy.client.gui.screens.transition.CelestialSelectionScreen;
+import io.kalishak.galacticraftlegacy.client.gui.screens.transition.SpaceTravelLoadingScreen;
 import io.kalishak.galacticraftlegacy.client.item.ColorByFluid;
 import io.kalishak.galacticraftlegacy.client.model.FlagModel;
 import io.kalishak.galacticraftlegacy.client.model.gear.OxygenGearModel;
@@ -30,6 +30,9 @@ import io.kalishak.galacticraftlegacy.client.renderer.entity.FlagRenderer;
 import io.kalishak.galacticraftlegacy.client.renderer.entity.SchematicRenderer;
 import io.kalishak.galacticraftlegacy.client.renderer.entity.layer.gear.GearEquipmentLayer;
 import io.kalishak.galacticraftlegacy.client.renderer.entity.state.GearRenderState;
+import io.kalishak.galacticraftlegacy.client.renderer.environment.MoonSkyRenderer;
+import io.kalishak.galacticraftlegacy.client.renderer.environment.SpaceCloudsRenderer;
+import io.kalishak.galacticraftlegacy.client.renderer.environment.SpaceWeatherRenderer;
 import io.kalishak.galacticraftlegacy.client.renderer.item.KeyModel;
 import io.kalishak.galacticraftlegacy.client.renderer.item.properties.numeric.DungeonLocatorAngle;
 import io.kalishak.galacticraftlegacy.client.renderer.item.properties.range.FluidAmountProperty;
@@ -66,7 +69,6 @@ import net.neoforged.neoforge.common.NeoForge;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.List;
 import java.util.Set;
 
 @SuppressWarnings("unused")
@@ -125,7 +127,9 @@ public class GalacticraftClient {
     }
 
     private void registerEnvironmentEffects(RegisterCustomEnvironmentEffectRendererEvent event) {
-        //event.registerSkyboxRenderer(MoonSkyRenderer.ID, MoonSkyRenderer.INSTANCE);
+        MoonSkyRenderer.create(event::registerSkyboxRenderer);
+        SpaceCloudsRenderer.create(event::registerCloudRenderer);
+        SpaceWeatherRenderer.create(event::registerWeatherEffectRenderer);
     }
 
     private void registerFluidModels(RegisterFluidModelsEvent event) {
@@ -204,7 +208,7 @@ public class GalacticraftClient {
     }
 
     private void registerDimensionTransitionScreen(RegisterDimensionTransitionScreenEvent event) {
-        event.registerIncomingEffect(GalacticraftDimensions.MOON, (levelLoadTracker, reason) -> new CelestialSelectionScreen(levelLoadTracker, false, List.of(), true));
+        event.registerIncomingEffect(GalacticraftDimensions.MOON, SpaceTravelLoadingScreen::new);
     }
 
     private void registerTintSources(RegisterColorHandlersEvent.ItemTintSources event) {

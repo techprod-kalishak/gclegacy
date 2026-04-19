@@ -16,7 +16,7 @@ import java.util.List;
 
 public class SpaceRaceScoreboardSaveData extends SavedData {
     public static final SavedDataType<SpaceRaceScoreboardSaveData> TYPE = new SavedDataType<>(
-            Constants.id("space_rane_manager"),
+            Constants.id("space_race_manager"),
             SpaceRaceScoreboardSaveData::new,
             SpaceRaceScoreboardSaveData.Packed.CODEC.xmap(SpaceRaceScoreboardSaveData::new, SpaceRaceScoreboardSaveData::getData)
     );
@@ -34,8 +34,8 @@ public class SpaceRaceScoreboardSaveData extends SavedData {
         return this.data;
     }
 
-    public void setData(SpaceRaceScoreboardSaveData.Packed data) {
-        this.data = data;
+    public void setData(List<SpaceRaceTeam.Packed> teams) {
+        this.data = new Packed(teams);
         setDirty();
     }
 

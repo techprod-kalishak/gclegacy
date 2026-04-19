@@ -2,7 +2,7 @@
   "sources": [
     {
       "type": "minecraft:directory",
-      "prefix": "",
+      "prefix": "schematic/",
       "source": "schematic"
     }
   ]

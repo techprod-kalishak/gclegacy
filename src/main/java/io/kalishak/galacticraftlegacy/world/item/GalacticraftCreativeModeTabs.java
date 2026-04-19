@@ -181,6 +181,7 @@ public final class GalacticraftCreativeModeTabs {
         output.accept(GalacticraftItems.CHEESE);
         output.accept(GalacticraftItems.COAL_GENERATOR);
         output.accept(GalacticraftItems.CIRCUIT_FABRICATOR);
+        output.accept(GalacticraftItems.COMPRESSOR);
         output.accept(GalacticraftItems.ELECTRIC_FURNACE);
         output.accept(GalacticraftItems.OXYGEN_DETECTOR);
         output.accept(GalacticraftItems.ALUMINUM_WIRE);
@@ -213,6 +214,9 @@ public final class GalacticraftCreativeModeTabs {
         output.accept(GalacticraftItems.MOON_BRICK_SLAB);
         output.accept(GalacticraftItems.MOON_BRICK_WALL);
         output.accept(GalacticraftItems.UNLIT_TORCH);
+        output.accept(GalacticraftItems.UNLIT_COPPER_TORCH);
+        output.accept(GalacticraftItems.UNLIT_LANTERN);
+        GalacticraftItems.UNLIT_COPPER_LANTERNS.forEach(output::accept);
     }
 
     private static void emptyAndCharged(CreativeModeTab.Output output, ItemLike item) {

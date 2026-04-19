@@ -7,15 +7,15 @@
 
 package io.kalishak.galacticraftlegacy.world.entity;
 
-import io.kalishak.galacticraftlegacy.world.level.savedata.TelemetryTracker;
+import io.kalishak.galacticraftlegacy.world.level.telemetry.GloballyReferencedEntity;
+import io.kalishak.galacticraftlegacy.world.level.telemetry.TelemetryTracker;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.entity.UniquelyIdentifyable;
 
-import java.util.UUID;
-
-public interface Trackable {
+public interface Trackable<StoredEntityType extends UniquelyIdentifyable> {
     Level level();
-    UUID getUUID();
+    GloballyReferencedEntity<StoredEntityType> asReference();
 
     boolean isNewTrackable();
     void markAsTracked();
@@ -28,14 +28,12 @@ public interface Trackable {
 
     default boolean addToTracker() {
         if (isNewTrackable() && level() instanceof ServerLevel serverLevel) {
-            TelemetryTracker tracker = serverLevel.getDataStorage().get(TelemetryTracker.SAVE_DATA_ID);
+            TelemetryTracker tracker = TelemetryTracker.get(serverLevel.getServer());
 
-            if (tracker != null) {
-                tracker.add(this);
-                markAsTracked();
+            tracker.addTrackable(this);
+            markAsTracked();
 
-                return true;
-            }
+            return true;
         }
 
         return false;

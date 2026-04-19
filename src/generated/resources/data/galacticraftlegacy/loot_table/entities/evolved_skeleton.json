@@ -1,9 +1,4 @@
 {
-  "neoforge:conditions": [
-    {
-      "type": "neoforge:always"
-    }
-  ],
   "type": "minecraft:entity",
   "pools": [
     {
@@ -89,6 +84,42 @@
     },
     {
       "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 1.0,
+                "min": 0.0
+              },
+              "function": "minecraft:set_count"
+            },
+            {
+              "fluid": "galacticraftlegacy:oxygen",
+              "function": "galacticraftlegacy:fluid_tank",
+              "value": {
+                "type": "minecraft:uniform",
+                "max_inclusive": 500,
+                "min_inclusive": 0
+              }
+            }
+          ],
+          "name": "galacticraftlegacy:medium_oxygen_tank"
+        }
+      ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "galacticraftlegacy:game_difficulty",
+          "target_difficulty": "adventure"
+        }
+      ],
       "entries": [
         {
           "type": "minecraft:item",

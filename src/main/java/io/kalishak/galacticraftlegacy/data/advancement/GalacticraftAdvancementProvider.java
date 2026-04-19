@@ -45,7 +45,7 @@ public class GalacticraftAdvancementProvider {
                         GalacticraftItems.ADVANCED_WAFER,
                         Component.translatable("advancements.galacticraftlegacy.galacticraft.title"),
                         Component.translatable("advancements.galacticraftlegacy.galacticraft.description"),
-                        Constants.texture("gui/advancements/backgrounds/space"),
+                        Constants.id("gui/advancements/backgrounds/space"),
                         AdvancementType.TASK,
                         false,
                         false,
@@ -111,7 +111,7 @@ public class GalacticraftAdvancementProvider {
                 .save(output, Constants.id("golden_wafers"));
         AdvancementHolder compressed = Advancement.Builder.advancement()
                 .display(
-                        Items.ANVIL,
+                        GalacticraftItems.COMPRESSOR,
                         Component.translatable("advancements.galacticraftlegacy.compressed.title"),
                         Component.translatable("advancements.galacticraftlegacy.compressed.description"),
                         null,
@@ -120,7 +120,7 @@ public class GalacticraftAdvancementProvider {
                         true,
                         false
                 )
-                .addCriterion("has_advanced_wafer", InventoryChangeTrigger.TriggerInstance.hasItems(GalacticraftItems.OXYGEN_DETECTOR))
+                .addCriterion("has_advanced_wafer", InventoryChangeTrigger.TriggerInstance.hasItems(GalacticraftItems.COMPRESSOR))
                 .parent(wafers)
                 .save(output, Constants.id("compressed"));
     }

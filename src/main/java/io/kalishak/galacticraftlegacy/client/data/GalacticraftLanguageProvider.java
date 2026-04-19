@@ -42,6 +42,7 @@ public class GalacticraftLanguageProvider extends LanguageProvider {
         add("item.galacticraftlegacy.fluid_tank.tooltip", "Fluid in tank %s: %s");
         add("itemGroup.galacticraftlegacy.blocks", "Galacticraft Legacy Blocks");
         add("itemGroup.galacticraftlegacy.items", "Galacticraft Legacy Items");
+        add("galacticraftlegacy.space_travel.loading", "That's one small step for a player, one giant leap for the server");
 
         add("block.galacticraftlegacy.bed.sleep_in_cryo_chamber", "I should sleep in a Cryo-chamber");
 
@@ -76,7 +77,7 @@ public class GalacticraftLanguageProvider extends LanguageProvider {
         addBlock(GalacticraftBlocks.FUEL_CAULDRON, "Fuel Cauldron");
         addWithDescription(GalacticraftBlocks.COAL_GENERATOR, "Coal Generator", "Coal generator will burn coal (or a Coal Block) for energy. The simplest but least efficient energy production method.");
         addWithDescription(GalacticraftBlocks.CIRCUIT_FABRICATOR, "Circuit Fabricator", "Circuit Fabricator will process basic materials into silicon wafers, used for advanced machines.");
-        //addWithDescription(GalacticraftBlocks.COMPRESSOR, "Compressor", "Compressor will process ingots into their compressed equivalents. The most essential machine in Galacticraft!");
+        addWithDescription(GalacticraftBlocks.COMPRESSOR, "Compressor", "Compressor will process ingots into their compressed equivalents. The most essential machine in Galacticraft!");
         //addWithDescription(GalacticraftBlocks.ELECTIRC_COMPRESSOR, "Compressor", "Electric Compressor will process ingots into their compressed equivalents. Compresses two at a time, making it more effective than its predecessor.");
         addWithDescription(GalacticraftBlocks.ELECTRIC_FURNACE, "Electric Furnace", "Electric Furnace is used as a faster alternative to traditional coal furnaces");
         //ddWithDescription(GalacticraftBlocks.ELECTRIC_ARC_FURNACE, "Electric Arc Furnace", "Electric Arc Furnace is used as a better and faster alternative to both traditional coal and electric furnaces: double output from ores!");
@@ -114,6 +115,16 @@ public class GalacticraftLanguageProvider extends LanguageProvider {
         addBlock(GalacticraftBlocks.MARS_DUNGEON_CHEST, "Mars Dungeon Chest");
         addBlock(GalacticraftBlocks.VENUS_DUNGEON_CHEST, "Venus Dungeon Chest");
         addBlock(GalacticraftBlocks.UNLIT_TORCH, "Unlit Torch");
+        addBlock(GalacticraftBlocks.UNLIT_COPPER_TORCH, "Unlit Copper Torch");
+        addBlock(GalacticraftBlocks.UNLIT_LANTERN, "Unlit Lantern");
+        addBlock(GalacticraftBlocks.UNLIT_COPPER_LANTERN.unaffected(), "Unlit Copper Lantern");
+        addBlock(GalacticraftBlocks.UNLIT_COPPER_LANTERN.exposed(), "Unlit Exposed Copper Lantern");
+        addBlock(GalacticraftBlocks.UNLIT_COPPER_LANTERN.weathered(), "Unlit Weathered Copper Lantern");
+        addBlock(GalacticraftBlocks.UNLIT_COPPER_LANTERN.oxidized(), "Unlit Oxidized Copper Lantern");
+        addBlock(GalacticraftBlocks.UNLIT_COPPER_LANTERN.waxed(), "Unlit Waxed Copper Lantern");
+        addBlock(GalacticraftBlocks.UNLIT_COPPER_LANTERN.waxedExposed(), "Unlit Waxed Exposed Copper Lantern");
+        addBlock(GalacticraftBlocks.UNLIT_COPPER_LANTERN.waxedWeathered(), "Unlit Waxed Weathered Copper Lantern");
+        addBlock(GalacticraftBlocks.UNLIT_COPPER_LANTERN.waxedOxidized(), "Unlit Waxed Oxidized Copper Lantern");
 
         addEntityType(GalacticraftEntityType.FLAG, "Flag");
         addEntityType(GalacticraftEntityType.FALLING_PARACHEST, "Parachest");
