@@ -717,6 +717,11 @@ public final class GalacticraftBlocks {
             CompressorBlock::new,
             GalacticraftBlocks::machine
     );
+    public static final DeferredBlock<CompressorBlock> ELECTRIC_COMPRESSOR = REGISTRY.registerBlock(
+            "electric_compressor",
+            ElectricCompressorBlock::new,
+            GalacticraftBlocks::machine
+    );
     public static final DeferredBlock<ElectricFurnaceBlock> ELECTRIC_FURNACE = REGISTRY.registerBlock(
             "electric_furnace",
             ElectricFurnaceBlock::new,

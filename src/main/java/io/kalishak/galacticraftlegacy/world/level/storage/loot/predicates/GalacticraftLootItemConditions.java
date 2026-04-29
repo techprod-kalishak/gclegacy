@@ -19,16 +19,16 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 public class GalacticraftLootItemConditions {
     private static final DeferredRegister<MapCodec<? extends LootItemCondition>> REGISTRY = DeferredRegister.create(Registries.LOOT_CONDITION_TYPE, Galacticraft.MODID);
 
-    public static LootItemCondition withQuickMode() {
-        return new GameDifficultyLootItemCondition(GameDifficulty.QUICK);
+    public static LootItemCondition.Builder withQuickMode() {
+        return () -> new GameDifficultyLootItemCondition(GameDifficulty.QUICK);
     }
 
-    public static LootItemCondition withHardMode() {
-        return new GameDifficultyLootItemCondition(GameDifficulty.HARD);
+    public static LootItemCondition.Builder withHardMode() {
+        return () -> new GameDifficultyLootItemCondition(GameDifficulty.HARD);
     }
 
-    public static LootItemCondition withAdventureMode() {
-        return new GameDifficultyLootItemCondition(GameDifficulty.ADVENTURE);
+    public static LootItemCondition.Builder withAdventureMode() {
+        return () -> new GameDifficultyLootItemCondition(GameDifficulty.ADVENTURE);
     }
 
     public static final DeferredHolder<MapCodec<? extends LootItemCondition>, MapCodec<GameDifficultyLootItemCondition>> GAME_DIFFICULTY = REGISTRY.register(

@@ -1,12 +1,6 @@
 {
   "values": [
-    {
-      "id": "galacticraftlegacy:overworld_orbit",
-      "required": false
-    },
-    {
-      "id": "galacticraftlegacy:asteroids",
-      "required": false
-    }
+    "galacticraftlegacy:overworld_orbit",
+    "galacticraftlegacy:asteroids"
   ]
 }

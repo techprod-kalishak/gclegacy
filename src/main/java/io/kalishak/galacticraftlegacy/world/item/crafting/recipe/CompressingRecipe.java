@@ -7,14 +7,10 @@
 
 package io.kalishak.galacticraftlegacy.world.item.crafting.recipe;
 
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.kalishak.galacticraftlegacy.world.item.crafting.StaticRecipePattern;
 import io.kalishak.galacticraftlegacy.world.item.crafting.display.CompressorRecipeDisplay;
 import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.input.CompressingRecipeInput;
 import net.minecraft.core.Holder;
-import net.minecraft.network.codec.ByteBufCodecs;
-import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemStackTemplate;
@@ -31,15 +27,13 @@ public abstract class CompressingRecipe implements Recipe<CompressingRecipeInput
     public final StaticRecipePattern pattern;
     protected final String group;
     protected final ItemStackTemplate result;
-    protected final float experience;
     protected final int compressingTime;
     protected @Nullable PlacementInfo placementInfo;
 
-    protected CompressingRecipe(String group, StaticRecipePattern pattern, ItemStackTemplate result, float experience, int compressingTime) {
+    protected CompressingRecipe(String group, StaticRecipePattern pattern, ItemStackTemplate result, int compressingTime) {
         this.group = group;
         this.pattern = pattern;
         this.result = result;
-        this.experience = experience;
         this.compressingTime = compressingTime;
     }
 
@@ -63,10 +57,6 @@ public abstract class CompressingRecipe implements Recipe<CompressingRecipeInput
 
     protected abstract SlotDisplay energySource();
 
-    public float experience() {
-        return this.experience;
-    }
-
     public int compressingTime() {
         return this.compressingTime;
     }
@@ -82,6 +72,10 @@ public abstract class CompressingRecipe implements Recipe<CompressingRecipeInput
 
     public List<Optional<Ingredient>> ingredients() {
         return this.pattern.ingredients();
+    }
+
+    public ItemStackTemplate result() {
+        return this.result;
     }
 
     @Override
@@ -112,33 +106,8 @@ public abstract class CompressingRecipe implements Recipe<CompressingRecipeInput
                         energySource(),
                         new SlotDisplay.ItemStackSlotDisplay(this.result),
                         new SlotDisplay.ItemSlotDisplay(icon()),
-                        experience(),
+                        this instanceof AnvilCompressingRecipe anvilCompressingRecipe ? anvilCompressingRecipe.experience() : 0.0F,
                         compressingTime()
-                )
-        );
-    }
-
-    @FunctionalInterface
-    public interface Factory<T extends CompressingRecipe> {
-        T create(String group, StaticRecipePattern pattern, ItemStackTemplate result, float experience, int compressingTime);
-    }
-
-    public static <T extends CompressingRecipe> RecipeSerializer<T> recipeSerializer(Factory<T> factory, int defaultCompressingTime) {
-        return new RecipeSerializer<>(
-                RecordCodecBuilder.mapCodec(instance -> instance.group(
-                        Codec.STRING.optionalFieldOf("group", "").forGetter(CompressingRecipe::group),
-                        StaticRecipePattern.MAP_CODEC.forGetter(compressingRecipe -> compressingRecipe.pattern),
-                        ItemStackTemplate.CODEC.fieldOf("result").forGetter(compressingRecipe -> compressingRecipe.result),
-                        Codec.FLOAT.optionalFieldOf("experience", 0.0F).forGetter(CompressingRecipe::experience),
-                        Codec.INT.optionalFieldOf("compressing_time", defaultCompressingTime).forGetter(CompressingRecipe::compressingTime)
-                ).apply(instance, factory::create)),
-                StreamCodec.composite(
-                        ByteBufCodecs.STRING_UTF8, CompressingRecipe::group,
-                        StaticRecipePattern.STREAM_CODEC, compressingRecipe -> compressingRecipe.pattern,
-                        ItemStackTemplate.STREAM_CODEC, compressingRecipe -> compressingRecipe.result,
-                        ByteBufCodecs.FLOAT, CompressingRecipe::experience,
-                        ByteBufCodecs.VAR_INT, CompressingRecipe::compressingTime,
-                        factory::create
                 )
         );
     }

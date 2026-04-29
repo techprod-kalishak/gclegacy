@@ -1,6 +1,7 @@
 {
   "ambient_light": 0.0,
   "attributes": {
+    "galacticraftlegacy:gameplay/gravity": 0.065,
     "minecraft:gameplay/bed_rule": {
       "can_set_spawn": "never",
       "can_sleep": "never",

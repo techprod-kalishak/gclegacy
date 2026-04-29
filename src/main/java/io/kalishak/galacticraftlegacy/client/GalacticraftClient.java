@@ -21,13 +21,11 @@ import io.kalishak.galacticraftlegacy.client.model.gear.OxygenGearModel;
 import io.kalishak.galacticraftlegacy.client.model.gear.ParachuteModel;
 import io.kalishak.galacticraftlegacy.client.renderer.blockentity.DungeonBlockRenderer;
 import io.kalishak.galacticraftlegacy.client.renderer.blockentity.ParachestBlockRenderer;
-import io.kalishak.galacticraftlegacy.client.renderer.entity.FallingParachestRenderer;
+import io.kalishak.galacticraftlegacy.client.renderer.entity.*;
 import io.kalishak.galacticraftlegacy.client.renderer.entity.layer.gear.OxygenMaskLayer;
 import io.kalishak.galacticraftlegacy.client.model.gear.OxygenTankModel;
 import io.kalishak.galacticraftlegacy.client.model.geom.GalacticraftModelLayers;
 import io.kalishak.galacticraftlegacy.client.renderer.GalacticraftSheets;
-import io.kalishak.galacticraftlegacy.client.renderer.entity.FlagRenderer;
-import io.kalishak.galacticraftlegacy.client.renderer.entity.SchematicRenderer;
 import io.kalishak.galacticraftlegacy.client.renderer.entity.layer.gear.GearEquipmentLayer;
 import io.kalishak.galacticraftlegacy.client.renderer.entity.state.GearRenderState;
 import io.kalishak.galacticraftlegacy.client.renderer.environment.MoonSkyRenderer;
@@ -171,6 +169,8 @@ public class GalacticraftClient {
         event.registerEntityRenderer(GalacticraftEntityType.FLAG.get(), FlagRenderer::new);
         event.registerEntityRenderer(GalacticraftEntityType.SCHEMATIC.get(), SchematicRenderer::new);
         event.registerEntityRenderer(GalacticraftEntityType.FALLING_PARACHEST.get(), FallingParachestRenderer::new);
+        event.registerEntityRenderer(GalacticraftEntityType.EVOLVED_SKELETON.get(), EvolvedSkeletonRenderer::new);
+        event.registerEntityRenderer(GalacticraftEntityType.EVOLVED_ZOMBIE.get(), EvolvedZombieRenderer::new);
 
         event.registerBlockEntityRenderer(GalacticraftBlockEntityType.PARACHEST.get(), ParachestBlockRenderer::new);
         event.registerBlockEntityRenderer(GalacticraftBlockEntityType.DUNGEON_CHEST.get(), DungeonBlockRenderer::new);

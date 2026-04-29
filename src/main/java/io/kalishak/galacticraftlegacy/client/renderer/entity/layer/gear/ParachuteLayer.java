@@ -14,6 +14,7 @@ import io.kalishak.galacticraftlegacy.client.renderer.GalacticraftSheets;
 import io.kalishak.galacticraftlegacy.client.renderer.ParachuteRenderable;
 import io.kalishak.galacticraftlegacy.client.renderer.entity.state.GearRenderState;
 import io.kalishak.galacticraftlegacy.world.item.GearEquipmentAssets;
+import io.kalishak.galacticraftlegacy.world.item.component.GearEquippable;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.Model;
 import net.minecraft.client.model.geom.EntityModelSet;
@@ -24,9 +25,9 @@ import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 import net.minecraft.client.resources.model.EquipmentAssetManager;
 import net.minecraft.client.resources.model.sprite.SpriteGetter;
 import net.minecraft.client.resources.model.sprite.SpriteId;
-import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.DyeColor;
-import net.minecraft.world.item.equipment.EquipmentAsset;
+import net.minecraft.world.item.ItemStack;
 
 public class ParachuteLayer<S extends LivingEntityRenderState, M extends EntityModel<S>> extends GearEquipmentLayer<S, M> implements ParachuteRenderable<S> {
     private final SpriteGetter materials;
@@ -38,7 +39,9 @@ public class ParachuteLayer<S extends LivingEntityRenderState, M extends EntityM
 
     @Override
     public void submit(PoseStack poseStack, SubmitNodeCollector nodeCollector, int packedLight, S renderState, float yRot, float xRot) {
-        if (getDataFromContext(renderState, GearRenderState.IS_PARACHUTE_VISIBLE, false)) {
+        ItemStack stack = extractFromRenderState(renderState, GearRenderState.PARACHUTE, GearRenderState::parachute);
+
+        if (!stack.isEmpty()) {
             renderParachute(poseStack, nodeCollector, packedLight, renderState);
         }
     }
@@ -50,8 +53,10 @@ public class ParachuteLayer<S extends LivingEntityRenderState, M extends EntityM
 
     @Override
     public SpriteId getParachuteMaterial(S renderState) {
-        ResourceKey<EquipmentAsset> equipmentAsset = getDataFromContext(renderState, GearRenderState.PARACHUTE, GearEquipmentAssets.PARACHUTES.get(DyeColor.RED));
-        return new SpriteId(GalacticraftSheets.PARACHUTE_SHEET, equipmentAsset.identifier());
+        ItemStack stack = extractFromRenderState(renderState, GearRenderState.PARACHUTE, GearRenderState::parachute);
+        Identifier path = GearEquippable.extractAssetId(stack).orElse(GearEquipmentAssets.PARACHUTES.get(DyeColor.RED)).identifier();
+
+        return new SpriteId(GalacticraftSheets.PARACHUTE_SHEET, path);
     }
 
     @Override

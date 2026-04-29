@@ -14,6 +14,7 @@ import io.kalishak.galacticraftlegacy.registry.SchematicVariants;
 import io.kalishak.galacticraftlegacy.registry.deferred.DeferredItemRegister;
 import io.kalishak.galacticraftlegacy.registry.deferred.DeferredWeatheringCopperItems;
 import io.kalishak.galacticraftlegacy.transfer.capability.fluid.ItemAccessFluidTank;
+import io.kalishak.galacticraftlegacy.world.entity.GalacticraftEntityType;
 import io.kalishak.galacticraftlegacy.world.entity.GearEquipmentSlot;
 import io.kalishak.galacticraftlegacy.world.item.component.*;
 import io.kalishak.galacticraftlegacy.world.item.equipment.GalacticraftArmorMaterials;
@@ -63,41 +64,49 @@ public final class GalacticraftItems {
             "thermal_cap",
             GearItem::new,
             () -> GearItem.thermalPiece(GearEquipmentSlot.THERMAL_CAP, GearEquipmentAssets.THERMAL)
+                    .component(GalacticraftDataComponents.TEMPERATURE_MODIFIER, -1.0F)
     );
     public static final DeferredItem<GearItem> THERMAL_PADDING_CHESTPIECE = REGISTRY.registerItem(
             "thermal_shirt",
             GearItem::new,
             () -> GearItem.thermalPiece(GearEquipmentSlot.THERMAL_SHIRT, GearEquipmentAssets.THERMAL)
+                    .component(GalacticraftDataComponents.TEMPERATURE_MODIFIER, -1.0F)
     );
     public static final DeferredItem<GearItem> THERMAL_PADDING_LEGGINGS = REGISTRY.registerItem(
             "thermal_leggings",
             GearItem::new,
             () -> GearItem.thermalPiece(GearEquipmentSlot.THERMAL_LEGGINGS, GearEquipmentAssets.THERMAL)
+                    .component(GalacticraftDataComponents.TEMPERATURE_MODIFIER, -1.0F)
     );
     public static final DeferredItem<GearItem> THERMAL_PADDING_BOOTS = REGISTRY.registerItem(
             "thermal_socks",
             GearItem::new,
             () -> GearItem.thermalPiece(GearEquipmentSlot.THERMAL_SOCKS, GearEquipmentAssets.THERMAL)
+                    .component(GalacticraftDataComponents.TEMPERATURE_MODIFIER, -1.0F)
     );
     public static final DeferredItem<GearItem> ISOTHERMAL_HELM = REGISTRY.registerItem(
             "isothermal_cap",
             GearItem::new,
             () -> GearItem.thermalPiece(GearEquipmentSlot.THERMAL_CAP, GearEquipmentAssets.ISOTHERMAL)
+                    .component(GalacticraftDataComponents.TEMPERATURE_MODIFIER, 1.0F)
     );
     public static final DeferredItem<GearItem> ISOTHERMAL_CHESTPIECE = REGISTRY.registerItem(
             "isothermal_shirt",
             GearItem::new,
             () -> GearItem.thermalPiece(GearEquipmentSlot.THERMAL_SHIRT, GearEquipmentAssets.ISOTHERMAL)
+                    .component(GalacticraftDataComponents.TEMPERATURE_MODIFIER, 1.0F)
     );
     public static final DeferredItem<GearItem> ISOTHERMAL_LEGGINGS = REGISTRY.registerItem(
             "isothermal_leggings",
             GearItem::new,
             () -> GearItem.thermalPiece(GearEquipmentSlot.THERMAL_LEGGINGS, GearEquipmentAssets.ISOTHERMAL)
+                    .component(GalacticraftDataComponents.TEMPERATURE_MODIFIER, 1.0F)
     );
     public static final DeferredItem<GearItem> ISOTHERMAL_BOOTS = REGISTRY.registerItem(
             "isothermal_socks",
             GearItem::new,
             () -> GearItem.thermalPiece(GearEquipmentSlot.THERMAL_SOCKS, GearEquipmentAssets.ISOTHERMAL)
+                    .component(GalacticraftDataComponents.TEMPERATURE_MODIFIER, 1.0F)
     );
     public static final DeferredItem<GearItem> LIGHT_TANK = REGISTRY.registerItem(
             "light_oxygen_tank",
@@ -460,6 +469,47 @@ public final class GalacticraftItems {
             "venus_dungeon_key",
             properties -> properties.stacksTo(1).component(GalacticraftDataComponents.KEY_LOCK, KeyLock.preGenTier(FeatureTier.TIER_3))
     );
+    public static final DeferredItem<Item> TIN_CANISTER = REGISTRY.registerSimpleItem(
+            "tin_canister"
+    );
+    public static final DeferredItem<Item> DEHYDRATED_APPLE = REGISTRY.registerSimpleItem(
+            "dehydrated_apple",
+            () -> CannedFood.createProperties(GalacticraftFoods.DEHYDRATED_APPLE)
+    );
+    public static final DeferredItem<Item> DEHYDRATED_CARROT = REGISTRY.registerSimpleItem(
+            "dehydrated_carrot",
+            () -> CannedFood.createProperties(GalacticraftFoods.DEHYDRATED_CARROT)
+    );
+    public static final DeferredItem<Item> DEHYDRATED_MELON = REGISTRY.registerSimpleItem(
+            "dehydrated_melon",
+            () -> CannedFood.createProperties(GalacticraftFoods.DEHYDRATED_MELON)
+    );
+    public static final DeferredItem<Item> DEHYDRATED_PUMPKIN = REGISTRY.registerSimpleItem(
+            "dehydrated_pumpkin",
+            () -> CannedFood.createProperties(GalacticraftFoods.DEHYDRATED_PUMPKIN)
+    );
+    public static final DeferredItem<Item> DEHYDRATED_POTATO = REGISTRY.registerSimpleItem(
+            "dehydrated_potato",
+            () -> CannedFood.createProperties(GalacticraftFoods.DEHYDRATED_POTATO)
+    );
+    public static final DeferredItem<Item> DEHYDRATED_BEETROOT = REGISTRY.registerSimpleItem(
+            "dehydrated_beetroot",
+            () -> CannedFood.createProperties(GalacticraftFoods.DEHYDRATED_BEET)
+    );
+    public static final DeferredItem<Item> CANNED_BEEF = REGISTRY.registerSimpleItem(
+            "canned_beef",
+            () -> CannedFood.createProperties(GalacticraftFoods.CANNED_BEEF)
+    );
+    public static final DeferredItem<SpawnEggItem> EVOLVED_SKELETON_SPAWN_EGG = REGISTRY.registerItem(
+            "evolved_skeleton_spawn_egg",
+            SpawnEggItem::new,
+            () -> new Item.Properties().spawnEgg(GalacticraftEntityType.EVOLVED_SKELETON.get())
+    );
+    public static final DeferredItem<SpawnEggItem> EVOLVED_ZOMBIE_SPAWN_EGG = REGISTRY.registerItem(
+            "evolved_zombie_spawn_egg",
+            SpawnEggItem::new,
+            () -> new Item.Properties().spawnEgg(GalacticraftEntityType.EVOLVED_ZOMBIE.get())
+    );
 
     public static final DeferredItem<BlockItem> ALUMINUM_WIRE = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.ALUMINUM_WIRE);
     public static final DeferredItem<BlockItem> HEAVY_ALUMINUM_WIRE = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.HEAVY_ALUMINUM_WIRE);
@@ -485,6 +535,7 @@ public final class GalacticraftItems {
     public static final DeferredItem<BlockItem> COAL_GENERATOR = REGISTRY.registerSimpleBlockItemWithDescription(GalacticraftBlocks.COAL_GENERATOR);
     public static final DeferredItem<BlockItem> CIRCUIT_FABRICATOR = REGISTRY.registerSimpleBlockItemWithDescription(GalacticraftBlocks.CIRCUIT_FABRICATOR);
     public static final DeferredItem<BlockItem> COMPRESSOR = REGISTRY.registerSimpleBlockItemWithDescription(GalacticraftBlocks.COMPRESSOR);
+    public static final DeferredItem<BlockItem> ELECTRIC_COMPRESSOR = REGISTRY.registerSimpleBlockItemWithDescription(GalacticraftBlocks.ELECTRIC_COMPRESSOR);
     public static final DeferredItem<BlockItem> ELECTRIC_FURNACE = REGISTRY.registerSimpleBlockItemWithDescription(GalacticraftBlocks.ELECTRIC_FURNACE);
     public static final DeferredItem<BlockItem> MOON_DIRT = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.MOON_DIRT);
     public static final DeferredItem<BlockItem> MOON_TURF = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.MOON_TURF);

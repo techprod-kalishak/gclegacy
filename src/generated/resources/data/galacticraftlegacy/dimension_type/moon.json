@@ -1,6 +1,7 @@
 {
   "ambient_light": 0.0,
   "attributes": {
+    "galacticraftlegacy:gameplay/gravity": 0.03,
     "minecraft:audio/ambient_sounds": {
       "mood": {
         "block_search_extent": 8,
@@ -40,6 +41,6 @@
   "min_y": 0,
   "monster_spawn_block_light_limit": 15,
   "monster_spawn_light_level": 5,
-  "skybox": "end",
+  "skybox": "none",
   "timelines": "#galacticraftlegacy:in_moon"
 }

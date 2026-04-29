@@ -9,7 +9,7 @@ package io.kalishak.galacticraftlegacy.world.entity.monster;
 
 import io.kalishak.galacticraftlegacy.transfer.entity.SpaceGearEquipment;
 import io.kalishak.galacticraftlegacy.world.entity.GalacticraftEntityType;
-import io.kalishak.galacticraftlegacy.world.entity.TumblingEntity;
+import io.kalishak.galacticraftlegacy.world.entity.SpaceEntity;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -24,7 +24,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 
-public class EvolvedSkeleton extends Skeleton implements TumblingEntity {
+public class EvolvedSkeleton extends Skeleton implements SpaceEntity {
     private static final EntityDataAccessor<Float> DATA_PITCH_ID = SynchedEntityData.defineId(EvolvedSkeleton.class, EntityDataSerializers.FLOAT);
     private final SpaceGearEquipment gear = new SpaceGearEquipment();
     private float tumbling = 0.0F;
@@ -80,6 +80,13 @@ public class EvolvedSkeleton extends Skeleton implements TumblingEntity {
                         this.tumbleAngle = 0.0F;
                 }
             }
+        }
+    }
+
+    @Override
+    public void jumpFromGround() {
+        if (!SpaceEntity.spaceJump(this, this::getJumpPower)) {
+            super.jumpFromGround();
         }
     }
 

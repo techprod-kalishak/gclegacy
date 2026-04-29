@@ -10,6 +10,7 @@ package io.kalishak.galacticraftlegacy.client.renderer.entity.layer.gear;
 import io.kalishak.galacticraftlegacy.EnumExtensions;
 import io.kalishak.galacticraftlegacy.client.model.gear.*;
 import io.kalishak.galacticraftlegacy.client.model.geom.GalacticraftModelLayers;
+import io.kalishak.galacticraftlegacy.client.renderer.entity.state.GearRenderState;
 import io.kalishak.galacticraftlegacy.world.entity.GearEquipmentSlot;
 import io.kalishak.galacticraftlegacy.world.item.component.GearEquippable;
 import net.minecraft.client.model.EntityModel;
@@ -34,6 +35,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.context.ContextKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.PlayerModelType;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.equipment.EquipmentAsset;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
@@ -107,6 +109,16 @@ public abstract class GearEquipmentLayer<S extends LivingEntityRenderState, M ex
 //        if (renderer instanceof WolfRenderer wolfRenderer) {
 //            renderer.addLayer((RenderLayer<S, M>) new ThermalWolfJacketLayer(wolfRenderer, modelSet, layerRenderer, equipmentAssets));
 //        }
+    }
+
+    protected ItemStack extractFromRenderState(S renderState, ContextKey<ItemStack> contextKey, Function<GearRenderState, ItemStack> callback) {
+        ItemStack stack = renderState.getRenderDataOrDefault(contextKey, ItemStack.EMPTY);
+
+        if (stack.isEmpty() && renderState instanceof GearRenderState gearRenderState) {
+            stack = callback.apply(gearRenderState);
+        }
+
+        return stack;
     }
 
     public EquipmentAssetManager getEquipmentAssetManager() {

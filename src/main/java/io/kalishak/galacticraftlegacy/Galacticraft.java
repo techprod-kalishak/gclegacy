@@ -29,6 +29,7 @@ import io.kalishak.galacticraftlegacy.world.item.component.GalacticraftDataCompo
 import io.kalishak.galacticraftlegacy.world.item.GalacticraftItems;
 import io.kalishak.galacticraftlegacy.world.item.crafting.GalacticraftRecipeBookCategories;
 import io.kalishak.galacticraftlegacy.world.item.crafting.display.GalacticraftRecipeDisplay;
+import io.kalishak.galacticraftlegacy.world.item.crafting.display.GalacticraftSlotDisplays;
 import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.GalacticraftRecipeSerializer;
 import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.GalacticraftRecipeType;
 import io.kalishak.galacticraftlegacy.world.level.GalacticraftParticleTypes;
@@ -80,6 +81,7 @@ public class Galacticraft {
         GalacticraftRecipeSerializer.init(modEventBus);
         GalacticraftRecipeType.init(modEventBus);
         GalacticraftSounds.init(modEventBus);
+        GalacticraftSlotDisplays.init(modEventBus);
 
         modEventBus.addListener(this::setup);
         modEventBus.addListener(this::registerCauldronFluids);

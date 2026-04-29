@@ -406,6 +406,14 @@ public class GalacticraftRecipeProvider extends RecipeProvider {
                 .pattern("# #")
                 .unlockedBy(getHasName(GalacticraftItems.THERMAL_CLOTH), has(GalacticraftItems.THERMAL_CLOTH))
                 .save(this.output, Constants.key(Registries.RECIPE, getItemName(GalacticraftItems.THERMAL_PADDING_BOOTS)));
+        ShapedRecipeBuilder.shaped(this.items, RecipeCategory.MISC, GalacticraftItems.TIN_CANISTER, 2)
+                .define('#', GalacticraftTags.Items.INGOTS_TIN)
+                .pattern("# #")
+                .pattern("# #")
+                .pattern("###")
+                .unlockedBy(getHasName(GalacticraftItems.TIN_INGOT), has(GalacticraftTags.Items.INGOTS_TIN))
+                .save(this.output, Constants.key(Registries.RECIPE, getItemName(GalacticraftItems.TIN_CANISTER)));
+
 
         FabricatingRecipeBuilder.classic(GalacticraftItems.BASIC_WAFER, 1, Ingredient.of(Items.REDSTONE_TORCH))
                 .unlockedBy(getHasName(GalacticraftItems.RAW_SILICON), has(GalacticraftTags.Items.RAW_MATERIALS_SILICON))

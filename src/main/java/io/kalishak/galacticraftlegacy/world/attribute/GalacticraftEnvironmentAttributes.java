@@ -10,6 +10,7 @@ package io.kalishak.galacticraftlegacy.world.attribute;
 import io.kalishak.galacticraftlegacy.Galacticraft;
 import io.kalishak.galacticraftlegacy.world.level.EarthPhase;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.world.attribute.AttributeRange;
 import net.minecraft.world.attribute.AttributeType;
 import net.minecraft.world.attribute.AttributeTypes;
 import net.minecraft.world.attribute.EnvironmentAttribute;
@@ -22,17 +23,25 @@ public final class GalacticraftEnvironmentAttributes {
 
     public static final DeferredHolder<EnvironmentAttribute<?>, EnvironmentAttribute<Float>> EARTH_ANGLE = REGISTRY.register(
             "visual/earth_angle",
-            () -> EnvironmentAttribute.builder(AttributeTypes.ANGLE_DEGREES)
+            EnvironmentAttribute.builder(AttributeTypes.ANGLE_DEGREES)
                     .defaultValue(0.0F)
                     .syncable()
-                    .build()
+                    ::build
     );
     public static final DeferredHolder<EnvironmentAttribute<?>, EnvironmentAttribute<EarthPhase>> EARTH_PHASE = REGISTRY.register(
             "visual/earth_phase",
-            () -> EnvironmentAttribute.builder(GalacticraftAttributeTypes.EARTH_PHASE)
+            EnvironmentAttribute.builder(GalacticraftAttributeTypes.EARTH_PHASE)
                     .defaultValue(EarthPhase.FULL_EARTH)
                     .syncable()
-                    .build()
+                    ::build
+    );
+    public static final DeferredHolder<EnvironmentAttribute<?>, EnvironmentAttribute<Float>> GRAVITY = REGISTRY.register(
+            "gameplay/gravity",
+            EnvironmentAttribute.builder(AttributeTypes.FLOAT)
+                    .defaultValue(0.08F)
+                    .valueRange(AttributeRange.ofFloat(-1.0F, 1.0F))
+                    .syncable()
+                    ::build
     );
 
     public static void init(IEventBus bus) {

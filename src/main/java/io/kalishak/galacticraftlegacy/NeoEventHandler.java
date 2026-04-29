@@ -49,6 +49,9 @@ import net.neoforged.neoforge.common.util.AttributeTooltipContext;
 import net.neoforged.neoforge.event.AddAttributeTooltipsEvent;
 import net.neoforged.neoforge.event.OnDatapackSyncEvent;
 import net.neoforged.neoforge.event.VanillaGameEvent;
+import net.neoforged.neoforge.event.entity.EntityEvent;
+import net.neoforged.neoforge.event.entity.EntityLeaveLevelEvent;
+import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
@@ -96,20 +99,20 @@ public class NeoEventHandler {
     }
 
     @SubscribeEvent
-    public void entityCeased(VanillaGameEvent event) {
-        Entity entity = event.getContext().sourceEntity();
+    public void onEntityDeath(LivingDeathEvent event) {
+        LivingEntity victim = event.getEntity();
+        DamageSource damageSource = event.getSource();
 
-        if (entity != null && entity.is(GalacticraftTags.EntityTypes.CAN_EQUIP_GEAR)) {
-            if (!AttachmentHelper.hasGearInventory(entity)) {
-                return;
-            }
+        if (victim.is(GalacticraftTags.EntityTypes.CAN_EQUIP_GEAR)) {
+            if (AttachmentHelper.hasGearInventory(victim)) {
+                GearInventoryProvider provider = AttachmentHelper.getGearInventory(victim);
 
-            if (event.getVanillaEvent() == GameEvent.ENTITY_DIE) {
-                Level level = event.getLevel();
-                GearInventoryProvider provider = AttachmentHelper.getGearInventory(entity);
+                if (victim.level() instanceof ServerLevel serverLevel) {
+                    GameRules gameRules = serverLevel.getGameRules();
 
-                if ((entity instanceof Player && level instanceof ServerLevel serverLevel && !serverLevel.getGameRules().get(GameRules.KEEP_INVENTORY)) || entity instanceof LivingEntity) {
-                    provider.dropAll((LivingEntity) entity);
+                    if ((victim instanceof Player && !gameRules.get(GameRules.KEEP_INVENTORY)) || gameRules.get(GameRules.ENTITY_DROPS)) {
+                        provider.dropAll(serverLevel, victim, damageSource);
+                    }
                 }
             }
         }

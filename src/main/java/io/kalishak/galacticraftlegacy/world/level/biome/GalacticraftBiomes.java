@@ -8,6 +8,7 @@
 package io.kalishak.galacticraftlegacy.world.level.biome;
 
 import io.kalishak.galacticraftlegacy.Constants;
+import io.kalishak.galacticraftlegacy.world.entity.GalacticraftEntityType;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
@@ -35,14 +36,13 @@ public interface GalacticraftBiomes {
         return new Biome.BiomeBuilder()
                 .hasPrecipitation(false)
                 .temperature(-2.0F)
-                .downfall(downfall)
-                .setAttribute(EnvironmentAttributes.WATER_EVAPORATES, true);
+                .downfall(downfall);
     }
 
     static void evolvedMonsters(MobSpawnSettings.Builder builder, int zombieWeight, int skeletonWeight) {
         builder.addSpawn(MobCategory.MONSTER, 100, new MobSpawnSettings.SpawnerData(EntityType.SPIDER, 4, 4));
-        builder.addSpawn(MobCategory.MONSTER, zombieWeight, new MobSpawnSettings.SpawnerData(EntityType.ZOMBIE, 4, 4));
-        builder.addSpawn(MobCategory.MONSTER, skeletonWeight, new MobSpawnSettings.SpawnerData(EntityType.SKELETON, 4, 4));
+        builder.addSpawn(MobCategory.MONSTER, zombieWeight, new MobSpawnSettings.SpawnerData(GalacticraftEntityType.EVOLVED_ZOMBIE.get(), 4, 4));
+        builder.addSpawn(MobCategory.MONSTER, skeletonWeight, new MobSpawnSettings.SpawnerData(GalacticraftEntityType.EVOLVED_SKELETON.get(), 4, 4));
         builder.addSpawn(MobCategory.MONSTER, 10, new MobSpawnSettings.SpawnerData(EntityType.ENDERMAN, 1, 4));
         builder.addSpawn(MobCategory.MONSTER, 5, new MobSpawnSettings.SpawnerData(EntityType.WITCH, 1, 1));
     }

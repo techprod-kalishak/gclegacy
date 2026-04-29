@@ -16,6 +16,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
+import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -76,10 +77,16 @@ public final class GalacticraftEntityType {
     public static void init(IEventBus bus) {
         REGISTRY.register(bus);
         bus.addListener(GalacticraftEntityType::registerCapabilities);
+        bus.addListener(GalacticraftEntityType::registerAttributes);
     }
 
     private static void registerCapabilities(RegisterCapabilitiesEvent event) {
         FallingParachest.registerCapabilities(event);
+    }
+
+    public static void registerAttributes(EntityAttributeCreationEvent event) {
+        event.put(EVOLVED_SKELETON.get(), EvolvedSkeleton.createAttributes().build());
+        event.put(EVOLVED_ZOMBIE.get(), EvolvedZombie.createAttributes().build());
     }
 
     public static Stream<EntityType<?>> asStream() {

@@ -22,6 +22,7 @@ import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.resources.model.EquipmentAssetManager;
 import net.minecraft.resources.Identifier;
+import net.minecraft.world.item.ItemStack;
 
 public class OxygenGearLayer<S extends LivingEntityRenderState, M extends EntityModel<S>> extends GearEquipmentLayer<S, M> {
     public static final Identifier TEXTURES = Constants.texture("entity/equipment/gear/oxygen_gear.png");
@@ -32,8 +33,9 @@ public class OxygenGearLayer<S extends LivingEntityRenderState, M extends Entity
 
     @Override
     public void submit(PoseStack poseStack, SubmitNodeCollector nodeCollector, int packedLight, S renderState, float yRot, float xRot) {
-        if (getDataFromContext(renderState, GearRenderState.HAS_OXYGEN_GEAR, false)) {
+        ItemStack stack = extractFromRenderState(renderState, GearRenderState.OXYGEN_GEAR, GearRenderState::oxygenGear);
 
+        if (!stack.isEmpty()) {
             for (int i = 0; i < 7; i++) {
                 for (int j = 0; j < 2; j++) {
                     poseStack.pushPose();

@@ -12,6 +12,7 @@ import io.kalishak.galacticraftlegacy.client.renderer.environment.MoonSkyRendere
 import io.kalishak.galacticraftlegacy.client.renderer.environment.SpaceCloudsRenderer;
 import io.kalishak.galacticraftlegacy.client.renderer.environment.SpaceWeatherRenderer;
 import io.kalishak.galacticraftlegacy.data.GalacticraftTags;
+import io.kalishak.galacticraftlegacy.world.attribute.GalacticraftEnvironmentAttributes;
 import io.kalishak.galacticraftlegacy.world.attribute.GalacticraftWorldAttributes;
 import io.kalishak.galacticraftlegacy.world.level.biome.MoonBiomes;
 import io.kalishak.galacticraftlegacy.world.timeline.GalacticraftWorldClocks;
@@ -60,6 +61,7 @@ public class GalacticraftDimensionTypes {
                         EnvironmentAttributeMap.builder()
                                 .set(EnvironmentAttributes.BED_RULE, GalacticraftWorldAttributes.BED_RULE_CRYO_CHAMBER)
                                 .set(EnvironmentAttributes.WATER_EVAPORATES, true)
+                                .set(GalacticraftEnvironmentAttributes.GRAVITY.get(), 0.01F)
                                 .build(),
                         timelineHolderGetter.getOrThrow(GalacticraftTags.Timelines.IN_ORBIT),
                         Optional.empty()
@@ -79,7 +81,7 @@ public class GalacticraftDimensionTypes {
                         GalacticraftTags.Blocks.INFINIBURN_OPEN_SPACE,
                         0.0F,
                         new DimensionType.MonsterSettings(ConstantInt.of(5), 15),
-                        DimensionType.Skybox.END,
+                        DimensionType.Skybox.NONE,
                         CardinalLighting.Type.DEFAULT,
                         EnvironmentAttributeMap.builder()
                                 .set(NeoForgeEnvironmentAttributes.CUSTOM_SKYBOX, MoonSkyRenderer.ID)
@@ -90,6 +92,7 @@ public class GalacticraftDimensionTypes {
                                 .set(EnvironmentAttributes.BED_RULE, GalacticraftWorldAttributes.BED_RULE_CRYO_CHAMBER)
                                 .set(EnvironmentAttributes.AMBIENT_SOUNDS, GalacticraftWorldAttributes.AMBIENT_SOUNDS_SPACE)
                                 .set(EnvironmentAttributes.WATER_EVAPORATES, true)
+                                .set(GalacticraftEnvironmentAttributes.GRAVITY.get(), 0.03F)
                                 .build(),
                         timelineHolderGetter.getOrThrow(GalacticraftTags.Timelines.IN_MOON),
                         worldClocks.get(GalacticraftWorldClocks.MOON).map(IHolderExtension::getDelegate)
@@ -114,6 +117,7 @@ public class GalacticraftDimensionTypes {
                         EnvironmentAttributeMap.builder()
                                 .set(EnvironmentAttributes.BED_RULE, GalacticraftWorldAttributes.BED_RULE_CRYO_CHAMBER)
                                 .set(EnvironmentAttributes.WATER_EVAPORATES, true)
+                                .set(GalacticraftEnvironmentAttributes.GRAVITY.get(), 0.04F)
                                 .build(),
                         timelineHolderGetter.getOrThrow(GalacticraftTags.Timelines.IN_MARS),
                         worldClocks.get(GalacticraftWorldClocks.MARS).map(IHolderExtension::getDelegate)
@@ -133,11 +137,12 @@ public class GalacticraftDimensionTypes {
                         GalacticraftTags.Blocks.INFINIBURN_OPEN_SPACE,
                         0.0F,
                         new DimensionType.MonsterSettings(ConstantInt.ZERO, 0),
-                        DimensionType.Skybox.END,
+                        DimensionType.Skybox.NONE,
                         CardinalLighting.Type.DEFAULT,
                         EnvironmentAttributeMap.builder()
                                 .set(EnvironmentAttributes.BED_RULE, GalacticraftWorldAttributes.BED_RULE_CRYO_CHAMBER)
                                 .set(EnvironmentAttributes.WATER_EVAPORATES, true)
+                                .set(GalacticraftEnvironmentAttributes.GRAVITY.get(), 0.01F)
                                 .build(),
                         timelineHolderGetter.getOrThrow(GalacticraftTags.Timelines.IN_ASTEROIDS),
                         worldClocks.get(GalacticraftWorldClocks.ASTEROIDS).map(IHolderExtension::getDelegate)
@@ -162,6 +167,7 @@ public class GalacticraftDimensionTypes {
                         EnvironmentAttributeMap.builder()
                                 .set(EnvironmentAttributes.BED_RULE, GalacticraftWorldAttributes.BED_RULE_CRYO_CHAMBER)
                                 .set(EnvironmentAttributes.WATER_EVAPORATES, true)
+                                .set(GalacticraftEnvironmentAttributes.GRAVITY.get(), 0.065F)
                                 .build(),
                         timelineHolderGetter.getOrThrow(GalacticraftTags.Timelines.IN_VENUS),
                         worldClocks.get(GalacticraftWorldClocks.VENUS).map(IHolderExtension::getDelegate)

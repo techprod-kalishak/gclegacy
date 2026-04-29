@@ -17,6 +17,7 @@ import net.minecraft.world.item.crafting.display.RecipeDisplay;
 import net.minecraft.world.item.crafting.display.SlotDisplay;
 
 import java.util.List;
+import java.util.Optional;
 
 public record CompressorRecipeDisplay(int width, int height, List<SlotDisplay> ingredients, SlotDisplay energySource, SlotDisplay result, SlotDisplay craftingStation, float experience, int compressingTime) implements RecipeDisplay {
     public static final MapCodec<CompressorRecipeDisplay> MAP_CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(

@@ -129,6 +129,8 @@ public class GalacticraftLanguageProvider extends LanguageProvider {
         addEntityType(GalacticraftEntityType.FLAG, "Flag");
         addEntityType(GalacticraftEntityType.FALLING_PARACHEST, "Parachest");
         addEntityType(GalacticraftEntityType.SCHEMATIC, "Schematic");
+        addEntityType(GalacticraftEntityType.EVOLVED_SKELETON, "Evolved Skeleton");
+        addEntityType(GalacticraftEntityType.EVOLVED_ZOMBIE, "Evolved Zombie");
 
         addItem(GalacticraftItems.BATTERY, "Battery");
         addItem(GalacticraftItems.INFINITE_BATTERY, "Battery");
@@ -232,6 +234,17 @@ public class GalacticraftLanguageProvider extends LanguageProvider {
         addItem(GalacticraftItems.MOON_DUNGEON_KEY, "Moon Dungeon Key");
         addItem(GalacticraftItems.MARS_DUNGEON_KEY, "Mars Dungeon Key");
         addItem(GalacticraftItems.VENUS_DUNGEON_KEY, "Venus Dungeon Key");
+        addItem(GalacticraftItems.DEHYDRATED_APPLE, "Dehydrated Apple");
+        addItem(GalacticraftItems.DEHYDRATED_CARROT, "Dehydrated Carrot");
+        addItem(GalacticraftItems.DEHYDRATED_MELON, "Dehydrated Melon");
+        addItem(GalacticraftItems.DEHYDRATED_PUMPKIN, "Dehydrated Pumpkin");
+        addItem(GalacticraftItems.DEHYDRATED_POTATO, "Dehydrated Potato");
+        addItem(GalacticraftItems.DEHYDRATED_BEETROOT, "Dehydrated Beetroot");
+        addItem(GalacticraftItems.CANNED_BEEF, "Canned Beef");
+        addItem(GalacticraftItems.TIN_CANISTER, "Tin Canister");
+
+        addItem(GalacticraftItems.EVOLVED_SKELETON_SPAWN_EGG, "Evolved Skeleton Spawn Egg");
+        addItem(GalacticraftItems.EVOLVED_ZOMBIE_SPAWN_EGG, "Evolved Zombie Spawn Egg");
 
         addKey(SchematicVariants.ASTRO_MINER, "title", "Astro Miner");
         addKey(SchematicVariants.CARGO_ROCKET, "title", "Cargo Rocket");

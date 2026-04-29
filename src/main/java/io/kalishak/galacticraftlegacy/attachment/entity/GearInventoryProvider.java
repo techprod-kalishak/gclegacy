@@ -23,6 +23,7 @@ import net.minecraft.core.component.DataComponents;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.util.Mth;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -38,10 +39,11 @@ import net.neoforged.neoforge.transfer.fluid.FluidResource;
 import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.neoforged.neoforge.transfer.item.LivingEntityEquipmentWrapper;
 import net.neoforged.neoforge.transfer.transaction.Transaction;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
-@ParametersAreNonnullByDefault
 public abstract class GearInventoryProvider implements ParachuteFalling {
     protected final SpaceGearEquipment gearEquipment;
     protected int parachuteFallingTicks;
@@ -50,7 +52,7 @@ public abstract class GearInventoryProvider implements ParachuteFalling {
         this.gearEquipment = gearEquipment;
     }
 
-    public abstract void dropAll(LivingEntity entity);
+    public abstract void dropAll(ServerLevel level, @NonNull LivingEntity gearOwner, @Nullable DamageSource cause);
 
     public abstract float getThermalArmorEffectiveness();
 

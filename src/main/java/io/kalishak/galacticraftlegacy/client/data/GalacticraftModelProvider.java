@@ -83,6 +83,7 @@ public class GalacticraftModelProvider extends ModelProvider {
         blockModels.createNonTemplateModelBlock(GalacticraftBlocks.FUEL.get());
         blockModels.family(GalacticraftBlocks.MOON_BRICKS.get()).generateFor(GalacticraftBlockFamilies.MOON_BRICKS);
         machine(blockModels, GalacticraftBlocks.COMPRESSOR.get());
+        machine(blockModels, GalacticraftBlocks.ELECTRIC_COMPRESSOR.get());
 
         blockModels.createTrivialCube(GalacticraftBlocks.MOON_DIRT.get());
         blockModels.createRotatedMirroredVariantBlock(GalacticraftBlocks.MOON_TURF.get());
@@ -236,6 +237,16 @@ public class GalacticraftModelProvider extends ModelProvider {
         createKey(itemModels, GalacticraftItems.MOON_DUNGEON_KEY.get(), FeatureTier.TIER_1);
         createKey(itemModels, GalacticraftItems.MARS_DUNGEON_KEY.get(), FeatureTier.TIER_2);
         createKey(itemModels, GalacticraftItems.VENUS_DUNGEON_KEY.get(), FeatureTier.TIER_3);
+        itemModels.generateFlatItem(GalacticraftItems.DEHYDRATED_APPLE.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.DEHYDRATED_CARROT.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.DEHYDRATED_MELON.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.DEHYDRATED_PUMPKIN.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.DEHYDRATED_POTATO.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.DEHYDRATED_BEETROOT.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.CANNED_BEEF.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.TIN_CANISTER.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.EVOLVED_SKELETON_SPAWN_EGG.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.EVOLVED_ZOMBIE_SPAWN_EGG.get(), ModelTemplates.FLAT_ITEM);
     }
 
     private void grating(BlockModelGenerators blockModels, Block gratingBlock) {

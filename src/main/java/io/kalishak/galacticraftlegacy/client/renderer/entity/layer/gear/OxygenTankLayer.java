@@ -13,6 +13,8 @@ import io.kalishak.galacticraftlegacy.client.model.gear.GearEquipmentModel;
 import io.kalishak.galacticraftlegacy.client.model.gear.OxygenTankModel;
 import io.kalishak.galacticraftlegacy.client.model.geom.GalacticraftModelLayers;
 import io.kalishak.galacticraftlegacy.client.renderer.entity.state.GearRenderState;
+import io.kalishak.galacticraftlegacy.world.item.GalacticraftItems;
+import io.kalishak.galacticraftlegacy.world.item.component.GearEquippable;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.Model;
 import net.minecraft.client.model.geom.EntityModelSet;
@@ -23,8 +25,7 @@ import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.resources.model.EquipmentAssetManager;
 import net.minecraft.resources.Identifier;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.world.item.equipment.EquipmentAsset;
+import net.minecraft.world.item.ItemStack;
 
 /**
  * This can be extended of additional expansion tanks.
@@ -41,42 +42,36 @@ public class OxygenTankLayer<S extends LivingEntityRenderState, M extends Entity
 
     @Override
     public void submit(PoseStack poseStack, SubmitNodeCollector nodeCollector, int packedLight, S renderState, float yRot, float xRot) {
-        Model<S> leftTank;
-        Model<S> rightTank;
+        ItemStack leftTankStack = extractFromRenderState(renderState, GearRenderState.TANK, GearRenderState::leftTank);
+        ItemStack rightTankStack = extractFromRenderState(renderState, GearRenderState.ADDITIONAL_TANK, GearRenderState::rightTank);
 
-        ResourceKey<EquipmentAsset> leftTankAsset = getDataFromContext(renderState, GearRenderState.LEFT_TANK);
-        ResourceKey<EquipmentAsset> rightTankAsset = getDataFromContext(renderState, GearRenderState.RIGHT_TANK);
-
-        if (leftTankAsset != null) {
-            Identifier textures = getGearTextures(leftTankAsset, EnumExtensions.LAYER_TYPE_TANK.getValue());
-            leftTank = chooseTankModel(textures);
+        GearEquippable.extractAssetId(leftTankStack).ifPresent(asset -> {
+            Identifier textures = getGearTextures(asset, EnumExtensions.LAYER_TYPE_TANK.getValue());
+            Model<S> leftTank = chooseTankModel(leftTankStack);
 
             poseStack.pushPose();
             poseStack.translate(0.12F, 0.2F, 0.2F);
             nodeCollector.submitModel(leftTank, renderState, poseStack, leftTank.renderType(textures), packedLight, OverlayTexture.NO_OVERLAY, renderState.outlineColor, null);
             poseStack.popPose();
-        }
+        });
 
-        if (rightTankAsset != null) {
-            Identifier textures = getGearTextures(rightTankAsset, EnumExtensions.LAYER_TYPE_TANK.getValue());
-            rightTank = chooseTankModel(textures);
+        GearEquippable.extractAssetId(rightTankStack).ifPresent(asset -> {
+            Identifier textures = getGearTextures(asset, EnumExtensions.LAYER_TYPE_TANK.getValue());
+            Model<S> rightTank = chooseTankModel(rightTankStack);
 
             poseStack.pushPose();
             poseStack.translate(-0.175F, 0.2F, 0.2F);
             nodeCollector.submitModel(rightTank, renderState, poseStack, rightTank.renderType(textures), packedLight, OverlayTexture.NO_OVERLAY, renderState.outlineColor, null);
             poseStack.popPose();
-        }
+        });
     }
 
-    //TODO bruh look at ts
-    protected Model<S> chooseTankModel(Identifier textures) {
-        String path = textures.getPath();
-
+    private Model<S> chooseTankModel(ItemStack stack) {
         Model<S> model = this.model;
 
-        if (path.contains("medium")) {
+        if (stack.is(GalacticraftItems.MEDIUM_TANK)) {
             model = this.mediumTank;
-        } else if (path.contains("light")) {
+        } else if (stack.is(GalacticraftItems.LIGHT_TANK)) {
             model = this.lightTank;
         }
 

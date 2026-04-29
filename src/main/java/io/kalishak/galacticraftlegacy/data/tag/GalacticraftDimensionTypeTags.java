@@ -24,20 +24,19 @@ public class GalacticraftDimensionTypeTags extends KeyTagProvider<DimensionType>
         super(output, Registries.DIMENSION_TYPE, lookupProvider, Galacticraft.MODID);
     }
 
-    //todo tf is this not working
     @Override
     protected void addTags(HolderLookup.Provider registries) {
         tag(GalacticraftTags.DimensionTypes.HAS_DISABLED_ROCKETS)
                 .add(BuiltinDimensionTypes.NETHER)
                 .add(BuiltinDimensionTypes.END);
         tag(GalacticraftTags.DimensionTypes.OPEN_SPACE)
-                .addOptional(GalacticraftDimensionTypes.OVERWORLD_ORBIT)
-                .addOptional(GalacticraftDimensionTypes.ASTEROIDS);
+                .add(GalacticraftDimensionTypes.OVERWORLD_ORBIT)
+                .add(GalacticraftDimensionTypes.ASTEROIDS);
         tag(GalacticraftTags.DimensionTypes.REQUIRES_CRYOCHAMBER)
-                .addOptional(GalacticraftDimensionTypes.OVERWORLD_ORBIT)
-                .addOptional(GalacticraftDimensionTypes.MOON)
-                .addOptional(GalacticraftDimensionTypes.MARS)
-                .addOptional(GalacticraftDimensionTypes.VENUS)
-                .addOptional(GalacticraftDimensionTypes.ASTEROIDS);
+                .add(GalacticraftDimensionTypes.OVERWORLD_ORBIT)
+                .add(GalacticraftDimensionTypes.MOON)
+                .add(GalacticraftDimensionTypes.MARS)
+                .add(GalacticraftDimensionTypes.VENUS)
+                .add(GalacticraftDimensionTypes.ASTEROIDS);
     }
 }

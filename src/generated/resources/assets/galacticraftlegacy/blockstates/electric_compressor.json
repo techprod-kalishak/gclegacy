@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "galacticraftlegacy:block/electric_compressor",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "galacticraftlegacy:block/electric_compressor"
+    },
+    "facing=south": {
+      "model": "galacticraftlegacy:block/electric_compressor",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "galacticraftlegacy:block/electric_compressor",
+      "y": 270
+    }
+  }
+}

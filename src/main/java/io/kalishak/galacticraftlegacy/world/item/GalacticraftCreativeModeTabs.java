@@ -12,16 +12,19 @@ import io.kalishak.galacticraftlegacy.registry.GalacticraftRegistries;
 import io.kalishak.galacticraftlegacy.registry.SchematicVariant;
 import io.kalishak.galacticraftlegacy.world.item.component.GalacticraftDataComponents;
 import io.kalishak.galacticraftlegacy.world.level.material.fluid.GalacticraftFluids;
+import net.minecraft.client.data.models.model.ModelTemplates;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.material.Fluid;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.SimpleFluidContent;
 import net.neoforged.neoforge.registries.DeferredHolder;
@@ -59,6 +62,7 @@ public final class GalacticraftCreativeModeTabs {
 
     public static void init(IEventBus bus) {
         REGISTRY.register(bus);
+        bus.addListener(GalacticraftCreativeModeTabs::populateVanillaCreativeTabs);
     }
 
     private static void buildItems(CreativeModeTab.ItemDisplayParameters itemDisplayParameters, CreativeModeTab.Output output) {
@@ -149,7 +153,6 @@ public final class GalacticraftCreativeModeTabs {
         output.accept(GalacticraftItems.ALUMINUM_INGOT);
         output.accept(GalacticraftItems.RAW_TIN);
         output.accept(GalacticraftItems.TIN_INGOT);
-        output.accept(GalacticraftItems.CHEESE_CHUNK);
         output.accept(GalacticraftItems.SAPPHIRE);
         output.accept(GalacticraftItems.RAW_LEAD);
         output.accept(GalacticraftItems.LEAD_INGOT);
@@ -163,6 +166,15 @@ public final class GalacticraftCreativeModeTabs {
         emptyAndFilled(output, GalacticraftItems.FLUID_TANK, GalacticraftFluids.FUEL);
         output.accept(GalacticraftItems.OIL_BUCKET);
         output.accept(GalacticraftItems.FUEL_BUCKET);
+        output.accept(GalacticraftItems.CHEESE_CHUNK);
+        output.accept(GalacticraftItems.DEHYDRATED_APPLE);
+        output.accept(GalacticraftItems.DEHYDRATED_CARROT);
+        output.accept(GalacticraftItems.DEHYDRATED_MELON);
+        output.accept(GalacticraftItems.DEHYDRATED_PUMPKIN);
+        output.accept(GalacticraftItems.DEHYDRATED_POTATO);
+        output.accept(GalacticraftItems.DEHYDRATED_BEETROOT);
+        output.accept(GalacticraftItems.CANNED_BEEF);
+        output.accept(GalacticraftItems.TIN_CANISTER);
     }
 
     private static void buildBlocks(CreativeModeTab.ItemDisplayParameters itemDisplayParameters, CreativeModeTab.Output output) {
@@ -217,6 +229,13 @@ public final class GalacticraftCreativeModeTabs {
         output.accept(GalacticraftItems.UNLIT_COPPER_TORCH);
         output.accept(GalacticraftItems.UNLIT_LANTERN);
         GalacticraftItems.UNLIT_COPPER_LANTERNS.forEach(output::accept);
+    }
+
+    private static void populateVanillaCreativeTabs(BuildCreativeModeTabContentsEvent event) {
+        if (event.getTabKey().equals(CreativeModeTabs.SPAWN_EGGS)) {
+            event.accept(GalacticraftItems.EVOLVED_SKELETON_SPAWN_EGG);
+            event.accept(GalacticraftItems.EVOLVED_ZOMBIE_SPAWN_EGG);
+        }
     }
 
     private static void emptyAndCharged(CreativeModeTab.Output output, ItemLike item) {

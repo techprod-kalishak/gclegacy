@@ -11,18 +11,25 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.kalishak.galacticraftlegacy.attachment.GalacticraftAttachments;
 import io.kalishak.galacticraftlegacy.transfer.entity.SpaceGearEquipment;
+import io.kalishak.galacticraftlegacy.world.entity.GearEquipmentSlot;
+import io.kalishak.galacticraftlegacy.world.item.component.GalacticraftDataComponents;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.gamerules.GameRules;
 import net.neoforged.neoforge.attachment.IAttachmentHolder;
 import net.neoforged.neoforge.transfer.item.ItemResource;
 import org.jetbrains.annotations.ApiStatus;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
+
+import java.util.List;
 
 public class PlayerSpaceData extends GearInventoryProvider {
     public static final MapCodec<PlayerSpaceData> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
@@ -56,23 +63,24 @@ public class PlayerSpaceData extends GearInventoryProvider {
     }
 
     @Override
-    public void dropAll(@NonNull LivingEntity entity) {
-        this.gearEquipment.dropAll(entity);
+    public void dropAll(ServerLevel level, @NonNull LivingEntity gearOwner, @Nullable DamageSource cause) {
+        this.gearEquipment.dropAll(gearOwner);
     }
 
     @Override
+    @SuppressWarnings("ConstantConditions")
     public float getThermalArmorEffectiveness() {
-        int effectiveness = 4;
+        List<ItemStack> thermal = List.of(
+                getGearEquipment().get(GearEquipmentSlot.THERMAL_CAP),
+                getGearEquipment().get(GearEquipmentSlot.THERMAL_SHIRT),
+                getGearEquipment().get(GearEquipmentSlot.THERMAL_LEGGINGS),
+                getGearEquipment().get(GearEquipmentSlot.THERMAL_SOCKS)
+        );
 
-        for (int i = 0; i < 4; i++) {
-            ItemResource resource = this.gearEquipment.getResource(i);
-
-            if (resource.isEmpty()) {
-                effectiveness--;
-            }
-        }
-
-        return effectiveness / 4.0F;
+        return (float) thermal.stream()
+                .filter(stack -> stack.has(GalacticraftDataComponents.TEMPERATURE_MODIFIER))
+                .mapToDouble(stack -> stack.get(GalacticraftDataComponents.TEMPERATURE_MODIFIER).doubleValue())
+                .sum() / 4.0F;
     }
 
     @Override

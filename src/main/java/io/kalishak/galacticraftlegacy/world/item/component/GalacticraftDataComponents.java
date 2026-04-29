@@ -28,9 +28,17 @@ import java.util.stream.Stream;
 public final class GalacticraftDataComponents {
     private static final DeferredRegister.DataComponents REGISTRY = DeferredRegister.createDataComponents(Registries.DATA_COMPONENT_TYPE, Galacticraft.MODID);
 
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<CannedFood.CannedComponent>> CANNED_FOOD = REGISTRY.registerComponentType(
+            "canned_food",
+            builder -> builder.persistent(CannedFood.CannedComponent.CODEC).networkSynchronized(CannedFood.CannedComponent.STREAM_CODEC).cacheEncoding()
+    );
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<ImmutableItemCapacitor>> ENERGY_CAPACITOR = REGISTRY.registerComponentType(
             "energy_capacitor",
             builder -> builder.persistent(ImmutableItemCapacitor.CODEC).networkSynchronized(ImmutableItemCapacitor.STREAM_CODEC)
+    );
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<EntityReference<Player>>> ENTITY_REFERENCE = REGISTRY.registerComponentType(
+            "entity_reference",
+            builder -> builder.persistent(EntityReference.codec()).networkSynchronized(EntityReference.streamCodec()).cacheEncoding()
     );
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<FlagItemData>> FLAG = REGISTRY.registerComponentType(
             "flag",
@@ -68,9 +76,9 @@ public final class GalacticraftDataComponents {
             "structure_pos",
             builder -> builder.persistent(GlobalPos.CODEC).networkSynchronized(GlobalPos.STREAM_CODEC)
     );
-    public static final DeferredHolder<DataComponentType<?>, DataComponentType<EntityReference<Player>>> ENTITY_REFERENCE = REGISTRY.registerComponentType(
-            "entity_reference",
-            builder -> builder.persistent(EntityReference.codec()).networkSynchronized(EntityReference.streamCodec()).cacheEncoding()
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<Float>> TEMPERATURE_MODIFIER = REGISTRY.registerComponentType(
+            "temperature_modifier",
+            builder -> builder.persistent(Codec.FLOAT).networkSynchronized(ByteBufCodecs.FLOAT)
     );
 
     public static void init(IEventBus bus) {

@@ -25,6 +25,7 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.resources.model.EquipmentAssetManager;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.item.ItemStack;
 
 public class OxygenMaskLayer<S extends LivingEntityRenderState, M extends EntityModel<S>> extends GearEquipmentLayer<S, M> {
     public static final Identifier TEXTURES = Constants.texture("entity/equipment/gear/oxygen_mask.png");
@@ -45,7 +46,9 @@ public class OxygenMaskLayer<S extends LivingEntityRenderState, M extends Entity
 
     @Override
     public void submit(PoseStack poseStack, SubmitNodeCollector nodeCollector, int packedLight, S renderState, float yRot, float xRot) {
-        if (getDataFromContext(renderState, GearRenderState.HAS_OXYGEN_MASK, false)) {
+        ItemStack stack = extractFromRenderState(renderState, GearRenderState.OXYGEN_MASK, GearRenderState::oxygenMask);
+
+        if (!stack.isEmpty()) {
             poseStack.pushPose();
             poseStack.translate(0.0F, renderState.entityType.equals(EntityType.CREEPER) ? 0.39F : 0.02F, 0.0F);
             poseStack.scale(0.57F, 0.57F, 0.57F);

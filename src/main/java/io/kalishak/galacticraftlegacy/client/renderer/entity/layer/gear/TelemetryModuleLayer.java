@@ -19,6 +19,7 @@ import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 import net.minecraft.client.resources.model.EquipmentAssetManager;
 import net.minecraft.client.resources.model.ModelManager;
 import net.minecraft.resources.Identifier;
+import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.client.model.obj.ObjModel;
 
 public class TelemetryModuleLayer<S extends LivingEntityRenderState, M extends EntityModel<S>> extends GearEquipmentLayer<S, M> {
@@ -30,7 +31,9 @@ public class TelemetryModuleLayer<S extends LivingEntityRenderState, M extends E
 
     @Override
     public void submit(PoseStack poseStack, SubmitNodeCollector nodeCollector, int packedLight, S renderState, float yRot, float xRot) {
-        if (getDataFromContext(renderState, GearRenderState.HAS_TELEMETRY, false)) {
+        ItemStack stack = extractFromRenderState(renderState, GearRenderState.TELEMETRY_MODULE, GearRenderState::telemetryModule);
+
+        if (!stack.isEmpty()) {
 
         }
     }

@@ -1,24 +1,9 @@
 {
   "values": [
-    {
-      "id": "galacticraftlegacy:overworld_orbit",
-      "required": false
-    },
-    {
-      "id": "galacticraftlegacy:moon",
-      "required": false
-    },
-    {
-      "id": "galacticraftlegacy:mars",
-      "required": false
-    },
-    {
-      "id": "galacticraftlegacy:venus",
-      "required": false
-    },
-    {
-      "id": "galacticraftlegacy:asteroids",
-      "required": false
-    }
+    "galacticraftlegacy:overworld_orbit",
+    "galacticraftlegacy:moon",
+    "galacticraftlegacy:mars",
+    "galacticraftlegacy:venus",
+    "galacticraftlegacy:asteroids"
   ]
 }

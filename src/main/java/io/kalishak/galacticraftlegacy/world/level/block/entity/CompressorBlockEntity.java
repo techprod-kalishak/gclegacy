@@ -118,10 +118,10 @@ public class CompressorBlockEntity extends NamedBlockEntity implements StackedCo
     protected void loadAdditional(ValueInput input) {
         super.loadAdditional(input);
         this.innerResourceHandler.deserialize(input);
-        this.cookingTimer = input.getIntOr("cooking_time_spent", (short)0);
-        this.cookingTotalTime = input.getIntOr("cooking_total_time", (short)0);
-        this.litTimeRemaining = input.getIntOr("lit_time_remaining", (short)0);
-        this.litTotalTime = input.getIntOr("lit_total_time", (short)0);
+        this.cookingTimer = input.getIntOr("cooking_time_spent", (short) 0);
+        this.cookingTotalTime = input.getIntOr("cooking_total_time", (short) 0);
+        this.litTimeRemaining = input.getIntOr("lit_time_remaining", (short) 0);
+        this.litTotalTime = input.getIntOr("lit_total_time", (short) 0);
         this.recipesUsed.clear();
         this.recipesUsed.putAll(input.read("RecipesUsed", RECIPES_USED_CODEC).orElse(Map.of()));
     }

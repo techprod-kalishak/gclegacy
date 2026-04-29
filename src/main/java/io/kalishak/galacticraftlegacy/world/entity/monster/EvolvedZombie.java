@@ -9,6 +9,10 @@ package io.kalishak.galacticraftlegacy.world.entity.monster;
 
 import io.kalishak.galacticraftlegacy.transfer.entity.SpaceGearEquipment;
 import io.kalishak.galacticraftlegacy.world.entity.GalacticraftEntityType;
+import io.kalishak.galacticraftlegacy.world.entity.SpaceEntity;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.EntityType;
@@ -20,8 +24,11 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 
-public class EvolvedZombie extends Zombie {
+public class EvolvedZombie extends Zombie implements SpaceEntity {
+    private static final EntityDataAccessor<Float> DATA_PITCH_ID = SynchedEntityData.defineId(EvolvedZombie.class, EntityDataSerializers.FLOAT);
     private final SpaceGearEquipment gear = new SpaceGearEquipment();
+    private float tumbling = 0.0F;
+    private float tumbleAngle = 0.0F;
 
     public EvolvedZombie(EntityType<? extends EvolvedZombie> type, Level level) {
         super(type, level);
@@ -33,17 +40,58 @@ public class EvolvedZombie extends Zombie {
 
     public static AttributeSupplier.Builder createAttributes() {
         return Monster.createMonsterAttributes()
+                .add(Attributes.MAX_HEALTH, 30.0F)
                 .add(Attributes.FOLLOW_RANGE, 35.0)
-                .add(Attributes.MOVEMENT_SPEED, 0.20F)
+                .add(Attributes.MOVEMENT_SPEED, 0.26F)
                 .add(Attributes.ATTACK_DAMAGE, 3.5)
                 .add(Attributes.ARMOR, 2.0)
                 .add(Attributes.SPAWN_REINFORCEMENTS_CHANCE);
     }
 
     @Override
+    protected void defineSynchedData(SynchedEntityData.Builder entityData) {
+        super.defineSynchedData(entityData);
+        this.entityData.set(DATA_PITCH_ID, 0.0F);
+    }
+
+    public float getSpinY() {
+        return this.entityData.get(DATA_PITCH_ID);
+    }
+
+    public void setSpinY(float pitch) {
+        this.entityData.set(DATA_PITCH_ID, pitch);
+    }
+
+    @Override
     public void tick() {
         super.tick();
         this.gear.tick(this);
+
+        if (isAlive()) {
+            if (this.tumbling != 0.0F && onGround()) {
+                this.tumbling = 0.0F;
+            }
+
+            if (!level().isClientSide()) {
+                setSpinY(this.tumbling);
+            } else {
+                this.tumbling = getSpinY();
+                this.tumbleAngle -= this.tumbling;
+
+                if (this.tumbling == 0.0F && this.tumbleAngle != 0.0F) {
+                    this.tumbleAngle *= 0.8F;
+                    if (Math.abs(this.tumbleAngle) < 1.0F)
+                        this.tumbleAngle = 0.0F;
+                }
+            }
+        }
+    }
+
+    @Override
+    public void jumpFromGround() {
+        if (!SpaceEntity.spaceJump(this, this::getJumpPower)) {
+            super.jumpFromGround();
+        }
     }
 
     @Override
@@ -56,11 +104,38 @@ public class EvolvedZombie extends Zombie {
     protected void addAdditionalSaveData(ValueOutput output) {
         super.addAdditionalSaveData(output);
         this.gear.serialize(output);
+        output.putFloat("Tumbling", this.tumbling);
     }
 
     @Override
     protected void readAdditionalSaveData(ValueInput input) {
         super.readAdditionalSaveData(input);
         this.gear.deserialize(input);
+        this.tumbling = input.getFloatOr("Tumbling", 0.0F);
+    }
+
+    @Override
+    public void setTumbling(float tumbling) {
+        if (tumbling != 0.0F && this.tumbling == 0.0F) {
+            this.tumbling = (this.random.nextFloat() + 0.5F) * tumbling;
+        } else {
+            this.tumbling = 0.0F;
+        }
+    }
+
+    @Override
+    public float getTumblingAngle(float partialTicks) {
+        float angle = this.tumbleAngle - partialTicks * this.tumbling;
+        if (angle > 360.0F) {
+            this.tumbleAngle -= 360.0F;
+            angle -= 360.0F;
+        }
+
+        if (angle < 0F) {
+            this.tumbleAngle += 360.0F;
+            angle += 360.0F;
+        }
+
+        return angle;
     }
 }

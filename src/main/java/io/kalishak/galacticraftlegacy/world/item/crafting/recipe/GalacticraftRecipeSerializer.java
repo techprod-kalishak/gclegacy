@@ -23,11 +23,11 @@ public final class GalacticraftRecipeSerializer {
     );
     public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<AnvilCompressingRecipe>> COMPRESSING = REGISTRY.register(
             "compressing",
-            () -> CompressingRecipe.recipeSerializer(AnvilCompressingRecipe::new, 200)
+            () -> new RecipeSerializer<>(AnvilCompressingRecipe.CODEC, AnvilCompressingRecipe.STREAM_CODEC)
     );
     public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<ElectricCompressingRecipe>> ELECTRIC_COMPRESSING = REGISTRY.register(
             "electric_compressing",
-            () -> CompressingRecipe.recipeSerializer(ElectricCompressingRecipe::new, 100)
+            () -> new RecipeSerializer<>(ElectricCompressingRecipe.CODEC, ElectricCompressingRecipe.STREAM_CODEC)
     );
     public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<HeatingRecipe>> HEATING = REGISTRY.register(
             "heating",
