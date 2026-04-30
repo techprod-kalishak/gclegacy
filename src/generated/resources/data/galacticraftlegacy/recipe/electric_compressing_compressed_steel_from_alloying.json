@@ -1,0 +1,16 @@
+{
+  "type": "galacticraftlegacy:electric_compressing",
+  "compressing_time": 100,
+  "pattern": {
+    "key": {
+      "#": "#galacticraftlegacy:plates/iron",
+      "X": "minecraft:coal"
+    },
+    "pattern": [
+      "#X"
+    ]
+  },
+  "result": {
+    "id": "galacticraftlegacy:compressed_steel"
+  }
+}

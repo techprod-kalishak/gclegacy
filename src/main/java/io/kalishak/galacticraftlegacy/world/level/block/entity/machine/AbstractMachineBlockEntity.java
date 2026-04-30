@@ -78,18 +78,18 @@ public abstract class AbstractMachineBlockEntity extends NamedBlockEntity {
         );
     }
 
-    protected static <M extends AbstractMachineBlockEntity> boolean energyTransferTick(M machine, boolean isOperating, boolean enableLeak, int energyBasePerOperation, @Nullable Transaction tx) {
-        ItemResource battery = machine.innerResourceHandler.getResource(machine.getBatterySlotIndex());
+    protected static boolean energyTransferTick(ResourceHandler<ItemResource> itemResourceHandler, EnergyHandler energyHandler, boolean isOperating, boolean enableLeak, int energyBasePerOperation, int batterySlotIndex, int maxTransferRate, @Nullable Transaction tx) {
+        ItemResource battery = itemResourceHandler.getResource(batterySlotIndex);
         boolean doCommit = false;
 
         if (!battery.isEmpty()) {
-            EnergyHandler itemCapacitor = battery.toStack().getCapability(Capabilities.Energy.ITEM, ItemAccess.forHandlerIndex(machine.innerResourceHandler, machine.getBatterySlotIndex()));
+            EnergyHandler itemCapacitor = battery.toStack().getCapability(Capabilities.Energy.ITEM, ItemAccess.forHandlerIndex(itemResourceHandler, batterySlotIndex));
 
             if (itemCapacitor != null && itemCapacitor.getAmountAsInt() > 0) {
-                int toMove = Math.min(machine.energyHandler.getCapacityAsInt() - machine.energyHandler.getAmountAsInt(), Math.min(itemCapacitor.getAmountAsInt(), machine.maxTransferRate()));
+                int toMove = Math.min(energyHandler.getCapacityAsInt() - energyHandler.getAmountAsInt(), Math.min(itemCapacitor.getAmountAsInt(), maxTransferRate));
 
                 try (Transaction childTx = Transaction.open(tx)) {
-                    if (EnergyHandlerUtil.move(itemCapacitor, machine.energyHandler, toMove, childTx) > 0) {
+                    if (EnergyHandlerUtil.move(itemCapacitor, energyHandler, toMove, childTx) > 0) {
                         childTx.commit();
                         doCommit = true;
                     }
@@ -107,7 +107,7 @@ public abstract class AbstractMachineBlockEntity extends NamedBlockEntity {
 
         if (toExtract > 0) {
             try (Transaction childTx = Transaction.open(tx)) {
-                if (machine.energyHandler.extract(toExtract, childTx) > 0) {
+                if (energyHandler.extract(toExtract, childTx) > 0) {
                     childTx.commit();
                     doCommit = true;
                 }
@@ -115,6 +115,19 @@ public abstract class AbstractMachineBlockEntity extends NamedBlockEntity {
         }
 
         return doCommit;
+    }
+
+    protected static <M extends AbstractMachineBlockEntity> boolean energyTransferTick(M machine, boolean isOperating, boolean enableLeak, int energyBasePerOperation, @Nullable Transaction tx) {
+        return energyTransferTick(
+                machine.innerResourceHandler,
+                machine.energyHandler,
+                isOperating,
+                enableLeak,
+                energyBasePerOperation,
+                machine.getBatterySlotIndex(),
+                machine.maxTransferRate(),
+                tx
+        );
     }
 
     /**

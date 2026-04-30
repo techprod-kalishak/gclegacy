@@ -109,6 +109,19 @@ public final class GalacticraftCreativeModeTabs {
         output.accept(GalacticraftItems.WRENCH);
         output.accept(GalacticraftItems.RAW_SILICON);
         output.accept(GalacticraftItems.RAW_STEEL);
+        output.accept(GalacticraftItems.COMPRESSED_ALUMINUM);
+        output.accept(GalacticraftItems.COMPRESSED_BRONZE);
+        output.accept(GalacticraftItems.COMPRESSED_COPPER);
+        output.accept(GalacticraftItems.COMPRESSED_DESH);
+        output.accept(GalacticraftItems.COMPRESSED_IRON);
+        output.accept(GalacticraftItems.COMPRESSED_METEORIC_IRON);
+        output.accept(GalacticraftItems.COMPRESSED_TIN);
+        output.accept(GalacticraftItems.COMPRESSED_TITANIUM);
+        output.accept(GalacticraftItems.COMPRESSED_STEEL);
+        output.accept(GalacticraftItems.HEAVY_DUTY_PLATE);
+        output.accept(GalacticraftItems.HEAVY_DUTY_PLATE_TIER_2);
+        output.accept(GalacticraftItems.HEAVY_DUTY_PLATE_TIER_3);
+        
         output.accept(GalacticraftItems.STEEL_INGOT);
         output.accept(GalacticraftItems.STEEL_NUGGET);
         output.accept(GalacticraftItems.STEEL_SWORD);

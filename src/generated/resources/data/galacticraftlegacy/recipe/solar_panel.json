@@ -1,5 +1,6 @@
 {
   "type": "galacticraftlegacy:circuit",
+  "category": "basic",
   "ingredients": "minecraft:lapis_lazuli",
   "result": {
     "count": 9,

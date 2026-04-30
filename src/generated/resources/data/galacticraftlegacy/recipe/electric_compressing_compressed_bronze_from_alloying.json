@@ -1,0 +1,17 @@
+{
+  "type": "galacticraftlegacy:electric_compressing",
+  "compressing_time": 100,
+  "pattern": {
+    "key": {
+      "#": "#galacticraftlegacy:plates/copper",
+      "X": "#galacticraftlegacy:plates/tin"
+    },
+    "pattern": [
+      "#X"
+    ]
+  },
+  "result": {
+    "count": 2,
+    "id": "galacticraftlegacy:compressed_bronze"
+  }
+}

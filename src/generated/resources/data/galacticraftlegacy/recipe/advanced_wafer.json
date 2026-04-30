@@ -1,5 +1,6 @@
 {
   "type": "galacticraftlegacy:circuit",
+  "category": "advanced",
   "ingredients": "minecraft:repeater",
   "result": {
     "id": "galacticraftlegacy:advanced_wafer"

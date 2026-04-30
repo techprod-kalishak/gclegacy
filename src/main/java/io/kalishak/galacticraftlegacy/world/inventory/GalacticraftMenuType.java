@@ -22,7 +22,9 @@ public final class GalacticraftMenuType {
     public static final DeferredHolder<MenuType<?>, MenuType<GearInventoryMenu>> GEAR = REGISTRY.register("gear", () -> IMenuTypeExtension.create(GearInventoryMenu::new));
     public static final DeferredHolder<MenuType<?>, MenuType<CircuitFabricatorMenu>> CIRCUIT_FABRICATOR = REGISTRY.register("circuit_fabricator", () -> IMenuTypeExtension.create(CircuitFabricatorMenu::new));
     public static final DeferredHolder<MenuType<?>, MenuType<CoalGeneratorMenu>> COAL_GENERATOR = REGISTRY.register("coal_generator", () -> IMenuTypeExtension.create(CoalGeneratorMenu::new));
+    public static final DeferredHolder<MenuType<?>, MenuType<CompressorMenu>> COMPRESSOR = REGISTRY.register("compressor", () -> IMenuTypeExtension.create(CompressorMenu::new));
     public static final DeferredHolder<MenuType<?>, MenuType<DungeonChestMenu>> DUNGEON_CHEST = REGISTRY.register("refinery", () -> IMenuTypeExtension.create(DungeonChestMenu::new));
+    public static final DeferredHolder<MenuType<?>, MenuType<ElectricCompressorMenu>> ELECTRIC_COMPRESSOR = REGISTRY.register("electric_compressor", () -> IMenuTypeExtension.create(ElectricCompressorMenu::new));
     public static final DeferredHolder<MenuType<?>, MenuType<ParachestMenu>> PARACHEST = REGISTRY.register("parachest", () -> IMenuTypeExtension.create(ParachestMenu::new));
 
     public static void init(IEventBus bus) {

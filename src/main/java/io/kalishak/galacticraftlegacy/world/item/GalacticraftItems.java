@@ -255,6 +255,7 @@ public final class GalacticraftItems {
     );
     public static final DeferredItem<Item> ALUMINUM_INGOT = REGISTRY.registerSimpleItem("aluminum_ingot");
     public static final DeferredItem<Item> RAW_ALUMINUM = REGISTRY.registerSimpleItem("raw_aluminum");
+    public static final DeferredItem<Item> RAW_METEORIC_IRON = REGISTRY.registerSimpleItem("raw_meteoric_iron");
     public static final DeferredItem<Item> TIN_INGOT = REGISTRY.registerSimpleItem("tin_ingot");
     public static final DeferredItem<Item> RAW_TIN = REGISTRY.registerSimpleItem("raw_tin");
     public static final DeferredItem<Item> RAW_SILICON = REGISTRY.registerSimpleItem("raw_silicon");
@@ -500,6 +501,18 @@ public final class GalacticraftItems {
             "canned_beef",
             () -> CannedFood.createProperties(GalacticraftFoods.CANNED_BEEF)
     );
+    public static final DeferredItem<Item> COMPRESSED_ALUMINUM = REGISTRY.registerSimpleItem("compressed_aluminum");
+    public static final DeferredItem<Item> COMPRESSED_BRONZE = REGISTRY.registerSimpleItem("compressed_bronze");
+    public static final DeferredItem<Item> COMPRESSED_COPPER = REGISTRY.registerSimpleItem("compressed_copper");
+    public static final DeferredItem<Item> COMPRESSED_DESH = REGISTRY.registerSimpleItem("compressed_desh");
+    public static final DeferredItem<Item> COMPRESSED_IRON = REGISTRY.registerSimpleItem("compressed_iron");
+    public static final DeferredItem<Item> COMPRESSED_METEORIC_IRON = REGISTRY.registerSimpleItem("compressed_meteoric_iron");
+    public static final DeferredItem<Item> COMPRESSED_TIN = REGISTRY.registerSimpleItem("compressed_tin");
+    public static final DeferredItem<Item> COMPRESSED_TITANIUM = REGISTRY.registerSimpleItem("compressed_titanium");
+    public static final DeferredItem<Item> COMPRESSED_STEEL = REGISTRY.registerSimpleItem("compressed_steel");
+    public static final DeferredItem<Item> HEAVY_DUTY_PLATE = REGISTRY.registerSimpleItem("heavy_duty_plate");
+    public static final DeferredItem<Item> HEAVY_DUTY_PLATE_TIER_2 = REGISTRY.registerSimpleItem("heavy_duty_plate_tier_2");
+    public static final DeferredItem<Item> HEAVY_DUTY_PLATE_TIER_3 = REGISTRY.registerSimpleItem("heavy_duty_plate_tier_3");
     public static final DeferredItem<SpawnEggItem> EVOLVED_SKELETON_SPAWN_EGG = REGISTRY.registerItem(
             "evolved_skeleton_spawn_egg",
             SpawnEggItem::new,

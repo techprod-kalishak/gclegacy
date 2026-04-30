@@ -1,0 +1,13 @@
+{
+  "type": "galacticraftlegacy:compressing",
+  "experience": 0.2,
+  "key": {
+    "#": "#c:ingots/iron"
+  },
+  "pattern": [
+    "##"
+  ],
+  "result": {
+    "id": "galacticraftlegacy:compressed_iron"
+  }
+}

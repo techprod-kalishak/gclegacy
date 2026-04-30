@@ -1,0 +1,17 @@
+{
+  "type": "galacticraftlegacy:compressing",
+  "experience": 0.3,
+  "key": {
+    "A": "#galacticraftlegacy:plates/aluminum",
+    "B": "#galacticraftlegacy:plates/bronze",
+    "S": "#galacticraftlegacy:plates/steel"
+  },
+  "pattern": [
+    "SAB",
+    "SAB"
+  ],
+  "result": {
+    "count": 2,
+    "id": "galacticraftlegacy:heavy_duty_plate"
+  }
+}

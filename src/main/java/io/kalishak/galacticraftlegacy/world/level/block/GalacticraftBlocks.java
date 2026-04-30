@@ -14,6 +14,7 @@ import io.kalishak.galacticraftlegacy.world.level.block.cauldron.FlammableCauldr
 import io.kalishak.galacticraftlegacy.world.level.block.cauldron.GalacticraftCauldronInteraction;
 import io.kalishak.galacticraftlegacy.world.level.block.machine.CircuitFabricatorBlock;
 import io.kalishak.galacticraftlegacy.world.level.block.machine.CoalGeneratorBlock;
+import io.kalishak.galacticraftlegacy.world.level.block.machine.ElectricCompressorBlock;
 import io.kalishak.galacticraftlegacy.world.level.block.machine.ElectricFurnaceBlock;
 import io.kalishak.galacticraftlegacy.world.level.block.wire.WireBlock;
 import io.kalishak.galacticraftlegacy.world.level.block.wire.ColoredPipeBlock;

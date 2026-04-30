@@ -9,7 +9,7 @@ package io.kalishak.galacticraftlegacy.world.level.block;
 
 import com.mojang.serialization.MapCodec;
 import io.kalishak.galacticraftlegacy.transfer.ResourcefulHelper;
-import io.kalishak.galacticraftlegacy.world.level.block.entity.CompressorBlockEntity;
+import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.CompressorBlockEntity;
 import io.kalishak.galacticraftlegacy.world.level.block.machine.RotatedByToolBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

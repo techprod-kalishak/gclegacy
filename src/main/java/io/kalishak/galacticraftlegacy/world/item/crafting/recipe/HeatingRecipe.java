@@ -19,8 +19,8 @@ import net.minecraft.world.item.crafting.display.SlotDisplay;
 import java.util.List;
 
 public class HeatingRecipe extends AbstractSmeltingRecipe {
-    public HeatingRecipe(String group, CookingBookCategory category, Ingredient ingredient, ItemStackTemplate result, int cookingTime) {
-        super(group, category, ingredient, result, cookingTime);
+    public HeatingRecipe(CommonInfo commonInfo, AbstractCookingRecipe.CookingBookInfo cookingBookInfo, Ingredient ingredient, ItemStackTemplate result, int cookingTime) {
+        super(commonInfo, cookingBookInfo, ingredient, result, cookingTime);
     }
 
     @Override

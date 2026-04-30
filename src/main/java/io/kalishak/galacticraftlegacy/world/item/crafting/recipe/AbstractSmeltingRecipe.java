@@ -8,14 +8,11 @@
 package io.kalishak.galacticraftlegacy.world.item.crafting.recipe;
 
 import com.mojang.serialization.Codec;
-import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.kalishak.galacticraftlegacy.world.item.crafting.GalacticraftRecipeBookCategories;
 import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.input.SimpleResourceInput;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.Item;
@@ -34,13 +31,13 @@ import java.util.List;
  * A copy of {@link AbstractCookingRecipe} with {@link net.neoforged.neoforge.transfer.ResourceHandler} backed input
  */
 public abstract class AbstractSmeltingRecipe extends MachineRecipe<SimpleResourceInput> {
-    protected final CookingBookCategory category;
+    protected final AbstractCookingRecipe.CookingBookInfo cookingCategory;
     protected final Ingredient ingredient;
     protected final int cookingTime;
 
-    protected AbstractSmeltingRecipe(String group, CookingBookCategory category, Ingredient ingredient, ItemStackTemplate result, int cookingTime) {
-        super(group, result);
-        this.category = category;
+    protected AbstractSmeltingRecipe(CommonInfo commonInfo, AbstractCookingRecipe.CookingBookInfo cookingCategory, Ingredient ingredient, ItemStackTemplate result, int cookingTime) {
+        super(commonInfo, result);
+        this.cookingCategory = cookingCategory;
         this.ingredient = ingredient;
         this.cookingTime = cookingTime;
     }
@@ -105,7 +102,12 @@ public abstract class AbstractSmeltingRecipe extends MachineRecipe<SimpleResourc
     }
 
     public CookingBookCategory category() {
-        return this.category;
+        return this.cookingCategory.category();
+    }
+
+    @Override
+    public String group() {
+        return this.cookingCategory.group();
     }
 
     protected abstract Holder<Item> icon();
@@ -115,21 +117,21 @@ public abstract class AbstractSmeltingRecipe extends MachineRecipe<SimpleResourc
 
     @FunctionalInterface
     public interface Factory<T extends AbstractSmeltingRecipe> {
-        T create(String group, CookingBookCategory category, Ingredient ingredient, ItemStackTemplate result, int cookingTime);
+        T create(CommonInfo commonInfo, AbstractCookingRecipe.CookingBookInfo cookingBookInfo, Ingredient ingredient, ItemStackTemplate result, int cookingTime);
     }
 
     public static <T extends AbstractSmeltingRecipe> RecipeSerializer<T> recipeSerializer(Factory<T> factory, int defaultCookingTime) {
         return new RecipeSerializer<>(
                 RecordCodecBuilder.mapCodec(instance -> instance.group(
-                        Codec.STRING.optionalFieldOf("group", "").forGetter(AbstractSmeltingRecipe::group),
-                        CookingBookCategory.CODEC.fieldOf("category").orElse(CookingBookCategory.MISC).forGetter(AbstractSmeltingRecipe::category),
+                        CommonInfo.MAP_CODEC.forGetter(x -> x.commonInfo),
+                        AbstractCookingRecipe.CookingBookInfo.MAP_CODEC.forGetter(x -> x.cookingCategory),
                         Ingredient.CODEC.fieldOf("ingredient").forGetter(AbstractSmeltingRecipe::ingredient),
                         ItemStackTemplate.CODEC.fieldOf("result").forGetter(AbstractSmeltingRecipe::result),
                         Codec.INT.fieldOf("cookingtime").orElse(defaultCookingTime).forGetter(AbstractSmeltingRecipe::cookingTime)
                 ).apply(instance, factory::create)),
                 StreamCodec.composite(
-                        ByteBufCodecs.STRING_UTF8, AbstractSmeltingRecipe::group,
-                        CookingBookCategory.STREAM_CODEC, AbstractSmeltingRecipe::category,
+                        CommonInfo.STREAM_CODEC, x -> x.commonInfo,
+                        AbstractCookingRecipe.CookingBookInfo.STREAM_CODEC, x -> x.cookingCategory,
                         Ingredient.CONTENTS_STREAM_CODEC, AbstractSmeltingRecipe::ingredient,
                         ItemStackTemplate.STREAM_CODEC, AbstractSmeltingRecipe::result,
                         ByteBufCodecs.INT, AbstractSmeltingRecipe::cookingTime,

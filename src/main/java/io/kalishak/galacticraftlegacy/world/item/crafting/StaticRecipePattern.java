@@ -161,9 +161,7 @@ public class StaticRecipePattern {
     }
 
     public boolean matches(CompressingRecipeInput input) {
-        if (input.ingredientCount() != this.ingredientCount) {
-            return false;
-        } else {
+        if (input.ingredientCount() == this.ingredientCount) {
             if (input.width() == this.width && input.height() == this.height) {
                 if (!this.symmetrical && matches(input, true)) {
                     return true;
@@ -171,9 +169,9 @@ public class StaticRecipePattern {
 
                 return matches(input, false);
             }
-
-            return false;
         }
+
+        return false;
     }
 
     private boolean matches(CompressingRecipeInput input, boolean symmetrical) {

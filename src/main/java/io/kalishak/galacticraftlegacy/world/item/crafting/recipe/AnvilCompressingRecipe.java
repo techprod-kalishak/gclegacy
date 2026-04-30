@@ -26,24 +26,26 @@ import net.minecraft.world.item.crafting.display.SlotDisplay;
 
 public class AnvilCompressingRecipe extends CompressingRecipe {
     public static final MapCodec<AnvilCompressingRecipe> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+            CommonInfo.MAP_CODEC.forGetter(compressingRecipe -> compressingRecipe.commonInfo),
             Codec.STRING.optionalFieldOf("group", "").forGetter(AnvilCompressingRecipe::group),
-            StaticRecipePattern.MAP_CODEC.fieldOf("pattern").forGetter(compressingRecipe -> compressingRecipe.pattern),
+            StaticRecipePattern.MAP_CODEC.forGetter(compressingRecipe -> compressingRecipe.pattern),
             ItemStackTemplate.CODEC.fieldOf("result").forGetter(AnvilCompressingRecipe::result),
-            Codec.FLOAT.optionalFieldOf("experience", 0.0F).forGetter(AnvilCompressingRecipe::experience),
-            Codec.INT.optionalFieldOf("compressing_time", 200).forGetter(AnvilCompressingRecipe::compressingTime)
+            Codec.INT.optionalFieldOf("compressing_time", 200).forGetter(AnvilCompressingRecipe::compressingTime),
+            Codec.FLOAT.optionalFieldOf("experience", 0.0F).forGetter(AnvilCompressingRecipe::experience)
     ).apply(instance, AnvilCompressingRecipe::new));
     public static final StreamCodec<RegistryFriendlyByteBuf, AnvilCompressingRecipe> STREAM_CODEC = StreamCodec.composite(
+            CommonInfo.STREAM_CODEC, compressingRecipe -> compressingRecipe.commonInfo,
             ByteBufCodecs.STRING_UTF8, AnvilCompressingRecipe::group,
             StaticRecipePattern.STREAM_CODEC, compressingRecipe -> compressingRecipe.pattern,
             ItemStackTemplate.STREAM_CODEC, AnvilCompressingRecipe::result,
-            ByteBufCodecs.FLOAT, AnvilCompressingRecipe::experience,
             ByteBufCodecs.INT, AnvilCompressingRecipe::compressingTime,
+            ByteBufCodecs.FLOAT, AnvilCompressingRecipe::experience,
             AnvilCompressingRecipe::new
     );
     private final float experience;
 
-    protected AnvilCompressingRecipe(String group, StaticRecipePattern pattern, ItemStackTemplate result, float experience, int compressingTime) {
-        super(group, pattern, result, compressingTime);
+    public AnvilCompressingRecipe(CommonInfo commonInfo, String group, StaticRecipePattern pattern, ItemStackTemplate result, int compressingTime, float experience) {
+        super(commonInfo, group, pattern, result, compressingTime);
         this.experience = experience;
     }
 

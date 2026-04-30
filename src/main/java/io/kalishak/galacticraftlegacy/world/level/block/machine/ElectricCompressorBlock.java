@@ -1,5 +1,13 @@
-package io.kalishak.galacticraftlegacy.world.level.block;
+/*
+ * Copyright (c) 2026 Kalishak
+ *
+ * Licensed under the MIT license
+ * See LICENSE file for more details
+ */
 
+package io.kalishak.galacticraftlegacy.world.level.block.machine;
+
+import io.kalishak.galacticraftlegacy.world.level.block.CompressorBlock;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;

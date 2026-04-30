@@ -21,18 +21,18 @@ import org.jspecify.annotations.Nullable;
  * @param <I> Input backed by {@link net.neoforged.neoforge.transfer.ResourceHandler}
  */
 public abstract class MachineRecipe<I extends ResourceHandlerInput> implements Recipe<I> {
-    protected final String group;
+    protected final Recipe.CommonInfo commonInfo;
     protected final ItemStackTemplate result;
     protected @Nullable PlacementInfo placementInfo;
 
-    protected MachineRecipe(String group, ItemStackTemplate result) {
-        this.group = group;
+    protected MachineRecipe(Recipe.CommonInfo commonInfo, ItemStackTemplate result) {
+        this.commonInfo = commonInfo;
         this.result = result;
     }
 
     @Override
     public boolean showNotification() {
-        return true;
+        return this.commonInfo.showNotification();
     }
 
     @Override
@@ -40,11 +40,6 @@ public abstract class MachineRecipe<I extends ResourceHandlerInput> implements R
 
     @Override
     public abstract RecipeType<? extends MachineRecipe<I>> getType();
-
-    @Override
-    public String group() {
-        return this.group;
-    }
 
     /**
      * Use {@link #disassembleIngredients(I, Transaction, HolderGetter.Provider, boolean)} instead.

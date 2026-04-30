@@ -1,5 +1,6 @@
 {
   "type": "galacticraftlegacy:circuit",
+  "category": "basic",
   "ingredients": "minecraft:redstone_torch",
   "result": {
     "id": "galacticraftlegacy:basic_wafer"

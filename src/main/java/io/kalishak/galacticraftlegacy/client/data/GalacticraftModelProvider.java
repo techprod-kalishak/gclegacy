@@ -247,6 +247,19 @@ public class GalacticraftModelProvider extends ModelProvider {
         itemModels.generateFlatItem(GalacticraftItems.TIN_CANISTER.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(GalacticraftItems.EVOLVED_SKELETON_SPAWN_EGG.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(GalacticraftItems.EVOLVED_ZOMBIE_SPAWN_EGG.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.RAW_METEORIC_IRON.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.COMPRESSED_ALUMINUM.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.COMPRESSED_BRONZE.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.COMPRESSED_COPPER.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.COMPRESSED_DESH.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.COMPRESSED_IRON.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.COMPRESSED_METEORIC_IRON.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.COMPRESSED_TIN.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.COMPRESSED_TITANIUM.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.COMPRESSED_STEEL.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.HEAVY_DUTY_PLATE.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.HEAVY_DUTY_PLATE_TIER_2.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.HEAVY_DUTY_PLATE_TIER_3.get(), ModelTemplates.FLAT_ITEM);
     }
 
     private void grating(BlockModelGenerators blockModels, Block gratingBlock) {

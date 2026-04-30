@@ -1,0 +1,15 @@
+{
+  "type": "galacticraftlegacy:electric_compressing",
+  "compressing_time": 100,
+  "pattern": {
+    "key": {
+      "#": "#galacticraftlegacy:ingots/tin"
+    },
+    "pattern": [
+      "##"
+    ]
+  },
+  "result": {
+    "id": "galacticraftlegacy:compressed_tin"
+  }
+}

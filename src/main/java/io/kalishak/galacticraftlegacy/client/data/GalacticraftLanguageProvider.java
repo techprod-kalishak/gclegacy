@@ -173,6 +173,7 @@ public class GalacticraftLanguageProvider extends LanguageProvider {
         addItem(GalacticraftItems.WRENCH, "Standard Wrench");
         addItem(GalacticraftItems.ALUMINUM_INGOT, "Aluminum Ingot");
         addItem(GalacticraftItems.RAW_ALUMINUM, "Raw Aluminum");
+        addItem(GalacticraftItems.RAW_METEORIC_IRON, "Raw Meteoric Iron");
         addItem(GalacticraftItems.TIN_INGOT, "Tin Ingot");
         addItem(GalacticraftItems.RAW_TIN, "Raw Tin");
         addItem(GalacticraftItems.RAW_SILICON, "Silicon");
@@ -242,6 +243,18 @@ public class GalacticraftLanguageProvider extends LanguageProvider {
         addItem(GalacticraftItems.DEHYDRATED_BEETROOT, "Dehydrated Beetroot");
         addItem(GalacticraftItems.CANNED_BEEF, "Canned Beef");
         addItem(GalacticraftItems.TIN_CANISTER, "Tin Canister");
+        addItem(GalacticraftItems.COMPRESSED_ALUMINUM, "Compressed Aluminum");
+        addItem(GalacticraftItems.COMPRESSED_BRONZE, "Compressed Bronze");
+        addItem(GalacticraftItems.COMPRESSED_COPPER, "Compressed Copper");
+        addItem(GalacticraftItems.COMPRESSED_DESH, "Compressed Desh");
+        addItem(GalacticraftItems.COMPRESSED_IRON, "Compressed Iron");
+        addItem(GalacticraftItems.COMPRESSED_METEORIC_IRON, "Compressed Meteoric Iron");
+        addItem(GalacticraftItems.COMPRESSED_TIN, "Compressed Tin");
+        addItem(GalacticraftItems.COMPRESSED_TITANIUM, "Compressed Titanium");
+        addItem(GalacticraftItems.COMPRESSED_STEEL, "Compressed Steel");
+        addItem(GalacticraftItems.HEAVY_DUTY_PLATE, "Heavy Duty Plate");
+        addItem(GalacticraftItems.HEAVY_DUTY_PLATE_TIER_2, "Heavy Duty Plate Tier 2");
+        addItem(GalacticraftItems.HEAVY_DUTY_PLATE_TIER_3, "Heavy Duty Plate Tier 3");
 
         addItem(GalacticraftItems.EVOLVED_SKELETON_SPAWN_EGG, "Evolved Skeleton Spawn Egg");
         addItem(GalacticraftItems.EVOLVED_ZOMBIE_SPAWN_EGG, "Evolved Zombie Spawn Egg");

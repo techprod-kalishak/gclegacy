@@ -25,12 +25,14 @@ import java.util.Optional;
 
 public abstract class CompressingRecipe implements Recipe<CompressingRecipeInput> {
     public final StaticRecipePattern pattern;
+    protected final CommonInfo commonInfo;
     protected final String group;
     protected final ItemStackTemplate result;
     protected final int compressingTime;
     protected @Nullable PlacementInfo placementInfo;
 
-    protected CompressingRecipe(String group, StaticRecipePattern pattern, ItemStackTemplate result, int compressingTime) {
+    protected CompressingRecipe(CommonInfo commonInfo, String group, StaticRecipePattern pattern, ItemStackTemplate result, int compressingTime) {
+        this.commonInfo = commonInfo;
         this.group = group;
         this.pattern = pattern;
         this.result = result;
@@ -39,7 +41,7 @@ public abstract class CompressingRecipe implements Recipe<CompressingRecipeInput
 
     @Override
     public boolean showNotification() {
-        return true;
+        return this.commonInfo.showNotification();
     }
 
     @Override
@@ -110,5 +112,10 @@ public abstract class CompressingRecipe implements Recipe<CompressingRecipeInput
                         compressingTime()
                 )
         );
+    }
+
+    @FunctionalInterface
+    public interface Factory<T extends CompressingRecipe> {
+        T create(CommonInfo commonInfo, String group, StaticRecipePattern pattern, ItemStackTemplate result, int compressingTime, float experience);
     }
 }

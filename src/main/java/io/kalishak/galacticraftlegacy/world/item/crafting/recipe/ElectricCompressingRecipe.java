@@ -28,12 +28,14 @@ import net.minecraft.world.item.crafting.display.SlotDisplay;
 
 public class ElectricCompressingRecipe extends CompressingRecipe {
     public static final MapCodec<ElectricCompressingRecipe> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+            CommonInfo.MAP_CODEC.forGetter(compressingRecipe -> compressingRecipe.commonInfo),
             Codec.STRING.optionalFieldOf("group", "").forGetter(ElectricCompressingRecipe::group),
             StaticRecipePattern.MAP_CODEC.fieldOf("pattern").forGetter(compressingRecipe -> compressingRecipe.pattern),
             ItemStackTemplate.CODEC.fieldOf("result").forGetter(ElectricCompressingRecipe::result),
             Codec.INT.optionalFieldOf("compressing_time", 200).forGetter(ElectricCompressingRecipe::compressingTime)
     ).apply(instance, ElectricCompressingRecipe::new));
     public static final StreamCodec<RegistryFriendlyByteBuf, ElectricCompressingRecipe> STREAM_CODEC = StreamCodec.composite(
+            CommonInfo.STREAM_CODEC, compressingRecipe -> compressingRecipe.commonInfo,
             ByteBufCodecs.STRING_UTF8, ElectricCompressingRecipe::group,
             StaticRecipePattern.STREAM_CODEC, compressingRecipe -> compressingRecipe.pattern,
             ItemStackTemplate.STREAM_CODEC, ElectricCompressingRecipe::result,
@@ -41,8 +43,8 @@ public class ElectricCompressingRecipe extends CompressingRecipe {
             ElectricCompressingRecipe::new
     );
 
-    public ElectricCompressingRecipe(String group, StaticRecipePattern pattern, ItemStackTemplate result, int compressingTime) {
-        super(group, pattern, result, compressingTime);
+    public ElectricCompressingRecipe(CommonInfo commonInfo, String group, StaticRecipePattern pattern, ItemStackTemplate result, int compressingTime) {
+        super(commonInfo, group, pattern, result, compressingTime);
     }
 
     @Override

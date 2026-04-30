@@ -12,6 +12,7 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.kalishak.galacticraftlegacy.data.GalacticraftTags;
 import io.kalishak.galacticraftlegacy.world.item.GalacticraftItems;
+import io.kalishak.galacticraftlegacy.world.item.crafting.FabricatingBookCategory;
 import io.kalishak.galacticraftlegacy.world.item.crafting.GalacticraftRecipeBookCategories;
 import io.kalishak.galacticraftlegacy.world.item.crafting.display.CircutFabricatorRecipeDisplay;
 import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.input.SimpleResourceInput;
@@ -41,26 +42,26 @@ import java.util.List;
 
 public class CircuitRecipe extends MachineRecipe<SimpleResourceInput> {
     public static final MapCodec<CircuitRecipe> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
-            Codec.STRING.optionalFieldOf("group", "").forGetter(CircuitRecipe::group),
+            CommonInfo.MAP_CODEC.forGetter(circuitRecipe -> circuitRecipe.commonInfo),
+            FabricatingBookInfo.MAP_CODEC.forGetter(circuitRecipe -> circuitRecipe.bookInfo),
             Ingredient.CODEC.fieldOf("ingredients").forGetter(circuitRecipe -> circuitRecipe.ingredient),
-            ItemStackTemplate.CODEC.fieldOf("result").forGetter(CircuitRecipe::result),
-            Codec.BOOL.optionalFieldOf("is_classic_recipe", true).forGetter(CircuitRecipe::isClassicRecipe)
+            ItemStackTemplate.CODEC.fieldOf("result").forGetter(CircuitRecipe::result)
     ).apply(instance, CircuitRecipe::new));
     public static final StreamCodec<RegistryFriendlyByteBuf, CircuitRecipe> STREAM_CODEC = StreamCodec.composite(
-            ByteBufCodecs.STRING_UTF8, CircuitRecipe::group,
+            CommonInfo.STREAM_CODEC, circuitRecipe -> circuitRecipe.commonInfo,
+            FabricatingBookInfo.STREAM_CODEC, circuitRecipe -> circuitRecipe.bookInfo,
             Ingredient.CONTENTS_STREAM_CODEC, circuitRecipe -> circuitRecipe.ingredient,
             ItemStackTemplate.STREAM_CODEC, CircuitRecipe::result,
-            ByteBufCodecs.BOOL, CircuitRecipe::isClassicRecipe,
             CircuitRecipe::new
     );
 
+    private final FabricatingBookInfo bookInfo;
     private final Ingredient ingredient;
-    private final boolean isClassicRecipe; //TODO make it usable
 
-    public CircuitRecipe(String group, Ingredient ingredient, ItemStackTemplate result, boolean isClassicRecipe) {
-        super(group, result);
+    public CircuitRecipe(CommonInfo commonInfo, FabricatingBookInfo bookInfo, Ingredient ingredient, ItemStackTemplate result) {
+        super(commonInfo, result);
+        this.bookInfo = bookInfo;
         this.ingredient = ingredient;
-        this.isClassicRecipe = isClassicRecipe;
     }
 
     @Override
@@ -105,6 +106,11 @@ public class CircuitRecipe extends MachineRecipe<SimpleResourceInput> {
         return this.ingredient.acceptsItem(input.getItem(CircuitFabricatorBlockEntity.SLOT_INGREDIENT).typeHolder());
     }
 
+    @Override
+    public String group() {
+        return this.bookInfo.group;
+    }
+
     private static NonNullList<Ingredient> withBase(HolderGetter<Item> itemHolderGetter, Ingredient mainIngredient) {
         HolderSet<Item> siliconTag = itemHolderGetter.getOrThrow(GalacticraftTags.Items.RAW_MATERIALS_SILICON);
         NonNullList<Ingredient> list = NonNullList.withSize(5, Ingredient.of(Items.STONE));
@@ -144,7 +150,8 @@ public class CircuitRecipe extends MachineRecipe<SimpleResourceInput> {
         );
     }
 
-    private boolean isClassicRecipe() {
-        return this.isClassicRecipe;
+    public record FabricatingBookInfo(FabricatingBookCategory category, String group) implements Recipe.BookInfo<FabricatingBookCategory> {
+        public static final MapCodec<FabricatingBookInfo> MAP_CODEC = Recipe.BookInfo.mapCodec(FabricatingBookCategory.CODEC, FabricatingBookCategory.MISC, FabricatingBookInfo::new);
+        public static final StreamCodec<RegistryFriendlyByteBuf, FabricatingBookInfo> STREAM_CODEC = Recipe.BookInfo.streamCodec(FabricatingBookCategory.STREAM_CODEC, FabricatingBookInfo::new);
     }
 }

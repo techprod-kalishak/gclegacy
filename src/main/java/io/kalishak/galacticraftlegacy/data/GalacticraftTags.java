@@ -107,6 +107,7 @@ public final class GalacticraftTags {
     public static class Items {
         public static final TagKey<Item> GEMS_SAPPHIRE = tagKey(Registries.ITEM, "gems/sapphire");
         public static final TagKey<Item> INGOTS_ALUMINUM = tagKey(Registries.ITEM, "ingots/aluminum");
+        public static final TagKey<Item> INGOTS_BRONZE = tagKey(Registries.ITEM, "ingots/bronze");
         public static final TagKey<Item> INGOTS_DESH = tagKey(Registries.ITEM, "ingots/desh");
         public static final TagKey<Item> INGOTS_STEEL = tagKey(Registries.ITEM, "ingots/steel");
         public static final TagKey<Item> INGOTS_TIN = tagKey(Registries.ITEM, "ingots/tin");
@@ -117,6 +118,19 @@ public final class GalacticraftTags {
         public static final TagKey<Item> NUGGETS_STEEL = tagKey(Registries.ITEM, "nuggets/steel");
         public static final TagKey<Item> NUGGETS_TITANIUM = tagKey(Registries.ITEM, "nuggets/titanium");
         public static final TagKey<Item> PARACHUTE = tagKey(Registries.ITEM, "parachute");
+        public static final TagKey<Item> PLATES = tagKey(Registries.ITEM, "plates");
+        public static final TagKey<Item> PLATE_ALUMINUM = tagKey(Registries.ITEM, "plates/aluminum");
+        public static final TagKey<Item> PLATE_BRONZE = tagKey(Registries.ITEM, "plates/bronze");
+        public static final TagKey<Item> PLATE_COPPER = tagKey(Registries.ITEM, "plates/copper");
+        public static final TagKey<Item> PLATE_DESH = tagKey(Registries.ITEM, "plates/desh");
+        public static final TagKey<Item> PLATE_IRON = tagKey(Registries.ITEM, "plates/iron");
+        public static final TagKey<Item> PLATE_METEORIC_IRON = tagKey(Registries.ITEM, "plates/meteoric_iron");
+        public static final TagKey<Item> PLATE_TIN = tagKey(Registries.ITEM, "plates/tin");
+        public static final TagKey<Item> PLATE_TITANIUM = tagKey(Registries.ITEM, "plates/titanium");
+        public static final TagKey<Item> PLATE_STEEL = tagKey(Registries.ITEM, "plates/steel");
+        public static final TagKey<Item> PLATE_HEAVY_DUTY = tagKey(Registries.ITEM, "plates/heavy_duty");
+        public static final TagKey<Item> PLATE_HEAVY_DUTY_2 = tagKey(Registries.ITEM, "plates/heavy_duty_tier_2");
+        public static final TagKey<Item> PLATE_HEAVY_DUTY_3 = tagKey(Registries.ITEM, "plates/heavy_duty_tier_3");
         public static final TagKey<Item> ORES_ALUMINUM = tagKey(Registries.ITEM, "ores/aluminum");
         public static final TagKey<Item> ORES_CHEESE = tagKey(Registries.ITEM, "ores/cheese");
         public static final TagKey<Item> ORES_SAPPHIRE = tagKey(Registries.ITEM, "ores/sapphire");
@@ -125,6 +139,7 @@ public final class GalacticraftTags {
         public static final TagKey<Item> RAW_MATERIALS_ALUMINUM = tagKey(Registries.ITEM, "raw_materials/aluminum");
         public static final TagKey<Item> RAW_MATERIALS_CHEESE = tagKey(Registries.ITEM, "raw_materials/cheese");
         public static final TagKey<Item> RAW_MATERIALS_DESH = tagKey(Registries.ITEM, "raw_materials/desh");
+        public static final TagKey<Item> RAW_MATERIALS_METEORIC_IRON = tagKey(Registries.ITEM, "raw_materials/meteoric_iron");
         public static final TagKey<Item> RAW_MATERIALS_LEAD = tagKey(Registries.ITEM, "raw_materials/lead");
         public static final TagKey<Item> RAW_MATERIALS_SILICON = tagKey(Registries.ITEM, "raw_materials/silicon");
         public static final TagKey<Item> RAW_MATERIALS_STEEL = tagKey(Registries.ITEM, "raw_materials/steel");

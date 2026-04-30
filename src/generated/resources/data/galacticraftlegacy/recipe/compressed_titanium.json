@@ -1,0 +1,13 @@
+{
+  "type": "galacticraftlegacy:compressing",
+  "experience": 0.3,
+  "key": {
+    "#": "#galacticraftlegacy:ingots/titanium"
+  },
+  "pattern": [
+    "##"
+  ],
+  "result": {
+    "id": "galacticraftlegacy:compressed_titanium"
+  }
+}

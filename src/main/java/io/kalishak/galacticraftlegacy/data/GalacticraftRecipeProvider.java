@@ -9,8 +9,11 @@ package io.kalishak.galacticraftlegacy.data;
 
 import io.kalishak.galacticraftlegacy.Constants;
 import io.kalishak.galacticraftlegacy.client.data.GalacticraftBlockFamilies;
+import io.kalishak.galacticraftlegacy.data.recipes.builder.CompressingRecipeBuilder;
 import io.kalishak.galacticraftlegacy.data.recipes.builder.FabricatingRecipeBuilder;
 import io.kalishak.galacticraftlegacy.world.item.GalacticraftItems;
+import io.kalishak.galacticraftlegacy.world.item.crafting.FabricatingBookCategory;
+import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -26,10 +29,12 @@ import net.minecraft.world.item.crafting.CookingBookCategory;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.ItemLike;
+import net.neoforged.neoforge.common.Tags;
 import org.jspecify.annotations.Nullable;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.function.UnaryOperator;
 import java.util.stream.Stream;
 
 public class GalacticraftRecipeProvider extends RecipeProvider {
@@ -415,16 +420,122 @@ public class GalacticraftRecipeProvider extends RecipeProvider {
                 .save(this.output, Constants.key(Registries.RECIPE, getItemName(GalacticraftItems.TIN_CANISTER)));
 
 
-        FabricatingRecipeBuilder.classic(GalacticraftItems.BASIC_WAFER, 1, Ingredient.of(Items.REDSTONE_TORCH))
+        FabricatingRecipeBuilder.classic(GalacticraftItems.BASIC_WAFER, 1, Ingredient.of(Items.REDSTONE_TORCH), FabricatingBookCategory.BASIC)
                 .unlockedBy(getHasName(GalacticraftItems.RAW_SILICON), has(GalacticraftTags.Items.RAW_MATERIALS_SILICON))
                 .save(output, Constants.key(Registries.RECIPE, "basic_wafer"));
-        FabricatingRecipeBuilder.classic(GalacticraftItems.ADVANCED_WAFER, 1, Ingredient.of(Items.REPEATER))
+        FabricatingRecipeBuilder.classic(GalacticraftItems.ADVANCED_WAFER, 1, Ingredient.of(Items.REPEATER), FabricatingBookCategory.ADVANCED)
                 .unlockedBy(getHasName(GalacticraftItems.RAW_SILICON), has(GalacticraftTags.Items.RAW_MATERIALS_SILICON))
                 .save(output, Constants.key(Registries.RECIPE, "advanced_wafer"));
-        FabricatingRecipeBuilder.classic(GalacticraftItems.SOLAR_WAFER, 9, Ingredient.of(Items.LAPIS_LAZULI))
+        FabricatingRecipeBuilder.classic(GalacticraftItems.SOLAR_WAFER, 9, Ingredient.of(Items.LAPIS_LAZULI), FabricatingBookCategory.BASIC)
                 .unlockedBy(getHasName(GalacticraftItems.RAW_SILICON), has(GalacticraftTags.Items.RAW_MATERIALS_SILICON))
                 .save(output, Constants.key(Registries.RECIPE, "solar_panel"));
+        compressing(GalacticraftItems.COMPRESSED_ALUMINUM, 0.1F, builder -> builder
+                .define('#', GalacticraftTags.Items.INGOTS_ALUMINUM)
+                .pattern("##")
+                .unlockedBy(getHasName(GalacticraftItems.ALUMINUM_INGOT), has(GalacticraftTags.Items.INGOTS_ALUMINUM))
+        );
+        compressing(GalacticraftItems.COMPRESSED_BRONZE, 0.1F, builder -> builder
+                .define('#', GalacticraftTags.Items.INGOTS_BRONZE)
+                .pattern("##")
+                .unlockedBy("has_bronze_ingot", has(GalacticraftTags.Items.INGOTS_BRONZE))
+        );
+        compressing(GalacticraftItems.COMPRESSED_BRONZE, 2, 0.1F, builder -> builder
+                .define('#', GalacticraftTags.Items.PLATE_COPPER)
+                .define('X', GalacticraftTags.Items.PLATE_TIN)
+                .pattern("#X")
+                .unlockedBy(getHasName(GalacticraftItems.COMPRESSED_COPPER), has(GalacticraftTags.Items.PLATE_COPPER))
+                .unlockedBy(getHasName(GalacticraftItems.COMPRESSED_TIN), has(GalacticraftTags.Items.PLATE_TIN)),
+                "_from_alloying"
+        );
+        compressing(GalacticraftItems.COMPRESSED_COPPER, 0.1F, builder -> builder
+                .define('#', Tags.Items.INGOTS_COPPER)
+                .pattern("##")
+                .unlockedBy(getHasName(Items.COPPER_INGOT), has(Tags.Items.INGOTS_COPPER))
+        );
+        compressing(GalacticraftItems.COMPRESSED_DESH, 0.1F, builder -> builder
+                .define('#', GalacticraftTags.Items.INGOTS_DESH)
+                .pattern("##")
+                .unlockedBy(getHasName(GalacticraftItems.DESH_INGOT), has(GalacticraftTags.Items.INGOTS_DESH))
+        );
+        compressing(GalacticraftItems.COMPRESSED_IRON, 0.2F, builder -> builder
+                .define('#', Tags.Items.INGOTS_IRON)
+                .pattern("##")
+                .unlockedBy(getHasName(Items.IRON_INGOT), has(Tags.Items.INGOTS_IRON))
+        );
+        compressing(GalacticraftItems.COMPRESSED_METEORIC_IRON, 0.3F, builder -> builder
+                .define('#', GalacticraftTags.Items.RAW_MATERIALS_METEORIC_IRON)
+                .pattern("##")
+                .unlockedBy(getHasName(GalacticraftItems.RAW_METEORIC_IRON), has(GalacticraftTags.Items.RAW_MATERIALS_METEORIC_IRON))
+        );
+        compressing(GalacticraftItems.COMPRESSED_TIN, 0.1F, builder -> builder
+                .define('#', GalacticraftTags.Items.INGOTS_TIN)
+                .pattern("##")
+                .unlockedBy(getHasName(GalacticraftItems.TIN_INGOT), has(GalacticraftTags.Items.INGOTS_TIN))
+        );
+        compressing(GalacticraftItems.COMPRESSED_TITANIUM, 0.3F, builder -> builder
+                .define('#', GalacticraftTags.Items.INGOTS_TITANIUM)
+                .pattern("##")
+                .unlockedBy(getHasName(GalacticraftItems.TITANIUM_INGOT), has(GalacticraftTags.Items.INGOTS_TITANIUM))
+        );
+        compressing(GalacticraftItems.COMPRESSED_STEEL, 0.1F, builder -> builder
+                .define('#', GalacticraftTags.Items.INGOTS_STEEL)
+                .pattern("##")
+                .unlockedBy(getHasName(GalacticraftItems.STEEL_INGOT), has(GalacticraftTags.Items.INGOTS_STEEL))
+        );
+        compressing(GalacticraftItems.COMPRESSED_STEEL, 0.1F, builder -> builder
+                .define('#', GalacticraftTags.Items.PLATE_IRON)
+                .define('X', Items.COAL)
+                .pattern("#X")
+                .unlockedBy(getHasName(GalacticraftItems.COMPRESSED_IRON), has(GalacticraftTags.Items.PLATE_IRON))
+                .unlockedBy(getHasName(Items.COAL), has(Items.COAL)),
+                "_from_alloying"
+        );
+        compressing(GalacticraftItems.HEAVY_DUTY_PLATE, 2, 0.3F, builder -> builder
+                .define('A', GalacticraftTags.Items.PLATE_ALUMINUM)
+                .define('B', GalacticraftTags.Items.PLATE_BRONZE)
+                .define('S', GalacticraftTags.Items.PLATE_STEEL)
+                .pattern("SAB")
+                .pattern("SAB")
+                .unlockedBy(getHasName(GalacticraftItems.COMPRESSED_ALUMINUM), has(GalacticraftTags.Items.PLATE_ALUMINUM))
+                .unlockedBy(getHasName(GalacticraftItems.COMPRESSED_BRONZE), has(GalacticraftTags.Items.PLATE_BRONZE))
+                .unlockedBy(getHasName(GalacticraftItems.COMPRESSED_STEEL), has(GalacticraftTags.Items.PLATE_STEEL))
+        );
+        compressing(GalacticraftItems.HEAVY_DUTY_PLATE_TIER_2, 1, 0.3F, builder -> builder
+                .define('#', GalacticraftTags.Items.PLATE_HEAVY_DUTY)
+                .define('M', GalacticraftTags.Items.PLATE_METEORIC_IRON)
+                .pattern("#M")
+                .unlockedBy(getHasName(GalacticraftItems.HEAVY_DUTY_PLATE), has(GalacticraftTags.Items.PLATE_HEAVY_DUTY))
+                .unlockedBy(getHasName(GalacticraftItems.COMPRESSED_METEORIC_IRON), has(GalacticraftTags.Items.PLATE_METEORIC_IRON))
+        );
+        compressing(GalacticraftItems.HEAVY_DUTY_PLATE_TIER_3, 1, 0.3F, builder -> builder
+                .define('#', GalacticraftTags.Items.PLATE_HEAVY_DUTY)
+                .define('D', GalacticraftTags.Items.PLATE_DESH)
+                .pattern("#D")
+                .unlockedBy(getHasName(GalacticraftItems.HEAVY_DUTY_PLATE_TIER_2), has(GalacticraftTags.Items.PLATE_HEAVY_DUTY_2))
+                .unlockedBy(getHasName(GalacticraftItems.COMPRESSED_DESH), has(GalacticraftTags.Items.PLATE_DESH))
+        );
         GalacticraftBlockFamilies.getFamilies().forEach(blockFamily -> generateRecipes(blockFamily, FeatureFlags.DEFAULT_FLAGS));
+    }
+
+    protected void compressing(ItemLike result, int count, float experience, UnaryOperator<CompressingRecipeBuilder> commonRecipeBuilder) {
+        compressing(result, count, experience, commonRecipeBuilder, "");
+    }
+
+    protected void compressing(ItemLike result, float experience, UnaryOperator<CompressingRecipeBuilder> commonRecipeBuilder) {
+        compressing(result, 1, experience, commonRecipeBuilder, "");
+    }
+
+    protected void compressing(ItemLike result, float experience, UnaryOperator<CompressingRecipeBuilder> commonRecipeBuilder, String suffix) {
+        compressing(result, 1, experience, commonRecipeBuilder, suffix);
+    }
+
+    protected void compressing(ItemLike result, int count, float experience, UnaryOperator<CompressingRecipeBuilder> commonRecipeBuilder, String suffix) {
+        commonRecipeBuilder
+                .apply(CompressingRecipeBuilder.classic(this.items, RecipeCategory.MISC, result, count, 200, experience))
+                .save(this.output, Constants.key(Registries.RECIPE, getItemName(result) + suffix));
+        commonRecipeBuilder
+                .apply(CompressingRecipeBuilder.electric(this.items, RecipeCategory.MISC, result, count, 100))
+                .save(this.output, Constants.key(Registries.RECIPE, "electric_compressing_" + getItemName(result) + suffix));
     }
 
     @Override

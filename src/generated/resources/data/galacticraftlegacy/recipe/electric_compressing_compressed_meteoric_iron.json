@@ -1,0 +1,15 @@
+{
+  "type": "galacticraftlegacy:electric_compressing",
+  "compressing_time": 100,
+  "pattern": {
+    "key": {
+      "#": "#galacticraftlegacy:raw_materials/meteoric_iron"
+    },
+    "pattern": [
+      "##"
+    ]
+  },
+  "result": {
+    "id": "galacticraftlegacy:compressed_meteoric_iron"
+  }
+}

@@ -60,6 +60,12 @@ public final class GalacticraftBlockEntityType {
                     GalacticraftBlocks.VENUS_DUNGEON_CHEST.get()
             ))
     );
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<ElectricCompressorBlockEntity>> ELECTRIC_COMPRESSOR = REGISTRY.register(
+            "electric_compressor",
+            () -> new BlockEntityType<>(ElectricCompressorBlockEntity::new, Set.of(
+                    GalacticraftBlocks.ELECTRIC_COMPRESSOR.get()
+            ))
+    );
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<FlammableCauldronBlockEntity>> FLAMMABLE_CAULDRON = REGISTRY.register(
             "flammable_cauldron",
             () -> new BlockEntityType<>(FlammableCauldronBlockEntity::new, Set.of(

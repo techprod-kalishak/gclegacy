@@ -11,17 +11,14 @@ import io.kalishak.galacticraftlegacy.world.item.GalacticraftItems;
 import net.minecraft.core.Holder;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStackTemplate;
-import net.minecraft.world.item.crafting.CookingBookCategory;
-import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.item.crafting.display.RecipeDisplay;
 
 import java.util.List;
 
 public class ArcHeatingRecipe extends AbstractSmeltingRecipe {
-    public ArcHeatingRecipe(String group, CookingBookCategory category, Ingredient ingredient, ItemStackTemplate result, int cookingTime) {
-        super(group, category, ingredient, result, cookingTime);
+    public ArcHeatingRecipe(CommonInfo commonInfo, AbstractCookingRecipe.CookingBookInfo cookingBookInfo, Ingredient ingredient, ItemStackTemplate result, int cookingTime) {
+        super(commonInfo, cookingBookInfo, ingredient, result, cookingTime);
     }
 
     @Override

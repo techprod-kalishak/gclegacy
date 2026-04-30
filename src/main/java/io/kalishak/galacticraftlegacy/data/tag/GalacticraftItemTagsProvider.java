@@ -95,6 +95,19 @@ public class GalacticraftItemTagsProvider extends ItemTagsProvider {
                 .addTag(GalacticraftTags.Items.NUGGETS_LEAD)
                 .addTag(GalacticraftTags.Items.NUGGETS_STEEL)
                 .addTag(GalacticraftTags.Items.NUGGETS_TITANIUM);
+        tag(GalacticraftTags.Items.PLATES)
+                .addTag(GalacticraftTags.Items.PLATE_ALUMINUM)
+                .addTag(GalacticraftTags.Items.PLATE_BRONZE)
+                .addTag(GalacticraftTags.Items.PLATE_COPPER)
+                .addTag(GalacticraftTags.Items.PLATE_DESH)
+                .addTag(GalacticraftTags.Items.PLATE_IRON)
+                .addTag(GalacticraftTags.Items.PLATE_METEORIC_IRON)
+                .addTag(GalacticraftTags.Items.PLATE_TIN)
+                .addTag(GalacticraftTags.Items.PLATE_TITANIUM)
+                .addTag(GalacticraftTags.Items.PLATE_STEEL)
+                .addTag(GalacticraftTags.Items.PLATE_HEAVY_DUTY)
+                .addTag(GalacticraftTags.Items.PLATE_HEAVY_DUTY_2)
+                .addTag(GalacticraftTags.Items.PLATE_HEAVY_DUTY_3);
         tag(Tags.Items.RAW_MATERIALS)
                 .addTag(GalacticraftTags.Items.RAW_MATERIALS_CHEESE)
                 .addTag(GalacticraftTags.Items.RAW_MATERIALS_ALUMINUM)
@@ -143,6 +156,30 @@ public class GalacticraftItemTagsProvider extends ItemTagsProvider {
                 .add(GalacticraftItems.RED_PARACHUTE.get())
                 .add(GalacticraftItems.WHITE_PARACHUTE.get())
                 .add(GalacticraftItems.YELLOW_PARACHUTE.get());
+        tag(GalacticraftTags.Items.PLATE_ALUMINUM)
+                .add(GalacticraftItems.COMPRESSED_ALUMINUM.get());
+        tag(GalacticraftTags.Items.PLATE_BRONZE)
+                .add(GalacticraftItems.COMPRESSED_BRONZE.get());
+        tag(GalacticraftTags.Items.PLATE_COPPER)
+                .add(GalacticraftItems.COMPRESSED_COPPER.get());
+        tag(GalacticraftTags.Items.PLATE_DESH)
+                .add(GalacticraftItems.COMPRESSED_DESH.get());
+        tag(GalacticraftTags.Items.PLATE_IRON)
+                .add(GalacticraftItems.COMPRESSED_IRON.get());
+        tag(GalacticraftTags.Items.PLATE_METEORIC_IRON)
+                .add(GalacticraftItems.COMPRESSED_METEORIC_IRON.get());
+        tag(GalacticraftTags.Items.PLATE_TIN)
+                .add(GalacticraftItems.COMPRESSED_TIN.get());
+        tag(GalacticraftTags.Items.PLATE_TITANIUM)
+                .add(GalacticraftItems.COMPRESSED_TITANIUM.get());
+        tag(GalacticraftTags.Items.PLATE_STEEL)
+                .add(GalacticraftItems.COMPRESSED_STEEL.get());
+        tag(GalacticraftTags.Items.PLATE_HEAVY_DUTY)
+                .add(GalacticraftItems.HEAVY_DUTY_PLATE.get());
+        tag(GalacticraftTags.Items.PLATE_HEAVY_DUTY_2)
+                .add(GalacticraftItems.HEAVY_DUTY_PLATE_TIER_2.get());
+        tag(GalacticraftTags.Items.PLATE_HEAVY_DUTY_3)
+                .add(GalacticraftItems.HEAVY_DUTY_PLATE_TIER_3.get());
         tag(GalacticraftTags.Items.ORES_ALUMINUM)
                 .add(GalacticraftItems.ALUMINUM_ORE.get())
                 .add(GalacticraftItems.DEEPSLATE_ALUMINUM_ORE.get());
@@ -175,6 +212,8 @@ public class GalacticraftItemTagsProvider extends ItemTagsProvider {
                 .add(GalacticraftItems.RAW_DESH.get());
         tag(GalacticraftTags.Items.RAW_MATERIALS_LEAD)
                 .add(GalacticraftItems.RAW_LEAD.get());
+        tag(GalacticraftTags.Items.RAW_MATERIALS_METEORIC_IRON)
+                .add(GalacticraftItems.RAW_METEORIC_IRON.get());
         tag(GalacticraftTags.Items.RAW_MATERIALS_SILICON)
                 .add(GalacticraftItems.RAW_SILICON.get());
         tag(GalacticraftTags.Items.RAW_MATERIALS_STEEL)

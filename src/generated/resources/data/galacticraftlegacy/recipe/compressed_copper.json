@@ -1,0 +1,13 @@
+{
+  "type": "galacticraftlegacy:compressing",
+  "experience": 0.1,
+  "key": {
+    "#": "#c:ingots/copper"
+  },
+  "pattern": [
+    "##"
+  ],
+  "result": {
+    "id": "galacticraftlegacy:compressed_copper"
+  }
+}
