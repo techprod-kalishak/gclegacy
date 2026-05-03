@@ -7,7 +7,7 @@
 
 package io.kalishak.galacticraftlegacy.world.level.block.entity.machine;
 
-import io.kalishak.galacticraftlegacy.world.inventory.CircuitFabricatorMenu;
+import io.kalishak.galacticraftlegacy.world.inventory.machine.CircuitFabricatorMenu;
 import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.CircuitRecipe;
 import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.GalacticraftRecipeType;
 import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.input.SimpleResourceInput;

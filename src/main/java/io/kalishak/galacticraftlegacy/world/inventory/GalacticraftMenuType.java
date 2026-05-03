@@ -8,6 +8,7 @@
 package io.kalishak.galacticraftlegacy.world.inventory;
 
 import io.kalishak.galacticraftlegacy.Galacticraft;
+import io.kalishak.galacticraftlegacy.world.inventory.machine.*;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.inventory.MenuType;
 import net.neoforged.bus.api.IEventBus;

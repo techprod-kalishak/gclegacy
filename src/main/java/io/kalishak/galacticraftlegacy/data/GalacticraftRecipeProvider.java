@@ -75,7 +75,7 @@ public class GalacticraftRecipeProvider extends RecipeProvider {
 
     @Override
     protected void buildRecipes() {
-        toolSet(GalacticraftTags.Items.INGOTS_STEEL,
+        toolSet(GalacticraftTags.Items.PLATE_STEEL,
                 GalacticraftItems.STEEL_SWORD,
                 GalacticraftItems.STEEL_SPEAR,
                 GalacticraftItems.STEEL_SHOVEL,
@@ -83,7 +83,7 @@ public class GalacticraftRecipeProvider extends RecipeProvider {
                 GalacticraftItems.STEEL_AXE,
                 GalacticraftItems.STEEL_HOE
         );
-        armorSet(GalacticraftTags.Items.INGOTS_STEEL,
+        armorSet(GalacticraftTags.Items.PLATE_STEEL,
                 GalacticraftItems.STEEL_HELMET,
                 GalacticraftItems.STEEL_CHESTPLATE,
                 GalacticraftItems.STEEL_LEGGINGS,

@@ -202,6 +202,8 @@ public class GalacticraftClient {
         event.register(GalacticraftMenuType.ARC_FURNACE.get(), ElectricFurnaceScreen::new);
         event.register(GalacticraftMenuType.COAL_GENERATOR.get(), CoalGeneratorScreen::new);
         event.register(GalacticraftMenuType.CIRCUIT_FABRICATOR.get(), CircuitFabricatorScreen::new);
+        event.register(GalacticraftMenuType.COMPRESSOR.get(), CompressorScreen::new);
+        event.register(GalacticraftMenuType.ELECTRIC_COMPRESSOR.get(), ElectricCompressorScreen::new);
         event.register(GalacticraftMenuType.GEAR.get(), GearInventoryScreen::new);
         event.register(GalacticraftMenuType.PARACHEST.get(), ParachestScreen::new);
         event.register(GalacticraftMenuType.DUNGEON_CHEST.get(), DungeonChestScreen::new);

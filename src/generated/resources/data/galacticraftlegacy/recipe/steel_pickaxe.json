@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "equipment",
   "key": {
-    "I": "#galacticraftlegacy:ingots/steel",
+    "I": "#galacticraftlegacy:plates/steel",
     "S": "minecraft:stick"
   },
   "pattern": [

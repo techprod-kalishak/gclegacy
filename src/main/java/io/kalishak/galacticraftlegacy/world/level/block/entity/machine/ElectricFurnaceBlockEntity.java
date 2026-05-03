@@ -9,7 +9,7 @@ package io.kalishak.galacticraftlegacy.world.level.block.entity.machine;
 
 import com.google.common.collect.Lists;
 import com.mojang.serialization.Codec;
-import io.kalishak.galacticraftlegacy.world.inventory.ElectricFurnaceMenu;
+import io.kalishak.galacticraftlegacy.world.inventory.machine.ElectricFurnaceMenu;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityType;
 import it.unimi.dsi.fastutil.objects.Reference2IntMap;
 import it.unimi.dsi.fastutil.objects.Reference2IntOpenHashMap;

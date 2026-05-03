@@ -21,10 +21,7 @@ import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidType;
-import net.neoforged.neoforge.transfer.EmptyResourceHandler;
-import net.neoforged.neoforge.transfer.ResourceHandler;
-import net.neoforged.neoforge.transfer.ResourceHandlerUtil;
-import net.neoforged.neoforge.transfer.VoidingResourceHandler;
+import net.neoforged.neoforge.transfer.*;
 import net.neoforged.neoforge.transfer.access.ItemAccess;
 import net.neoforged.neoforge.transfer.energy.EmptyEnergyHandler;
 import net.neoforged.neoforge.transfer.energy.EnergyHandler;
@@ -41,6 +38,9 @@ import java.util.List;
 import java.util.function.*;
 
 public interface ResourcefulHelper {
+    static <R extends Resource> void notPlaceable(int index, R resource, int amount) {
+    }
+
     static int getRedstoneSignalFromBlockEntity(Level level, BlockPos pos, BlockState state, @Nullable Direction side) {
         BlockEntity blockEntity = level.getBlockEntity(pos);
 

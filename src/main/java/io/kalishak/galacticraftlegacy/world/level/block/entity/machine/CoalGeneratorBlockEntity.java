@@ -7,7 +7,7 @@
 
 package io.kalishak.galacticraftlegacy.world.level.block.entity.machine;
 
-import io.kalishak.galacticraftlegacy.world.inventory.CoalGeneratorMenu;
+import io.kalishak.galacticraftlegacy.world.inventory.machine.CoalGeneratorMenu;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityType;
 import io.kalishak.galacticraftlegacy.world.level.block.machine.AbstractMachineBlock;
 import io.kalishak.galacticraftlegacy.world.level.block.GalacticraftBlocks;

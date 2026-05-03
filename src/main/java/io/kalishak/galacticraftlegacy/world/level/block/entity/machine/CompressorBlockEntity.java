@@ -7,7 +7,7 @@
 
 package io.kalishak.galacticraftlegacy.world.level.block.entity.machine;
 
-import io.kalishak.galacticraftlegacy.world.inventory.CompressorMenu;
+import io.kalishak.galacticraftlegacy.world.inventory.machine.CompressorMenu;
 import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.CompressingRecipe;
 import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.GalacticraftRecipeType;
 import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.input.CompressingRecipeInput;
@@ -44,16 +44,16 @@ public class CompressorBlockEntity extends AbstractCompressorBlockEntity {
         @Override
         public int get(int dataId) {
             return switch (dataId) {
-                case 0 -> {
+                case AbstractCompressorBlockEntity.DATA_SLOT_COMPRESSING_TIMER -> CompressorBlockEntity.this.compressingTimer;
+                case AbstractCompressorBlockEntity.DATA_SLOT_COMPRESSING_TIME_TOTAL -> CompressorBlockEntity.this.compressingTotalTime;
+                case AbstractCompressorBlockEntity.DATA_SLOT_LIT_TIMER -> {
                     if (fuelTotalTime > Short.MAX_VALUE) {
                         yield Mth.floor(((double) fuelTimeRemaining / fuelTotalTime) * Short.MAX_VALUE);
                     }
 
                     yield CompressorBlockEntity.this.fuelTimeRemaining;
                 }
-                case 1 -> Math.min(CompressorBlockEntity.this.fuelTotalTime, Short.MAX_VALUE);
-                case 2 -> CompressorBlockEntity.this.compressingTimer;
-                case 3 -> CompressorBlockEntity.this.compressingTotalTime;
+                case AbstractCompressorBlockEntity.DATA_SLOT_LIT_TIME_TOTAL -> Math.min(CompressorBlockEntity.this.fuelTotalTime, Short.MAX_VALUE);
                 default -> 0;
             };
         }
@@ -61,10 +61,10 @@ public class CompressorBlockEntity extends AbstractCompressorBlockEntity {
         @Override
         public void set(int dataId, int value) {
             switch (dataId) {
-                case 0 -> CompressorBlockEntity.this.fuelTimeRemaining = value;
-                case 1 -> CompressorBlockEntity.this.fuelTotalTime = value;
-                case 2 -> CompressorBlockEntity.this.compressingTimer = value;
-                case 3 -> CompressorBlockEntity.this.compressingTotalTime = value;
+                case AbstractCompressorBlockEntity.DATA_SLOT_COMPRESSING_TIMER -> CompressorBlockEntity.this.compressingTimer = value;
+                case AbstractCompressorBlockEntity.DATA_SLOT_COMPRESSING_TIME_TOTAL -> CompressorBlockEntity.this.compressingTotalTime = value;
+                case AbstractCompressorBlockEntity.DATA_SLOT_LIT_TIMER -> CompressorBlockEntity.this.fuelTimeRemaining = value;
+                case AbstractCompressorBlockEntity.DATA_SLOT_LIT_TIME_TOTAL -> CompressorBlockEntity.this.fuelTotalTime = value;
             }
         }
 
@@ -105,8 +105,8 @@ public class CompressorBlockEntity extends AbstractCompressorBlockEntity {
             isLit = false;
         }
 
-        ItemStack fuel = compressor.items.get(9);
-        NonNullList<ItemStack> ingredients = NonNullList.copyOf(compressor.items.subList(0, 9));
+        ItemStack fuel = compressor.items.get(FUEL_SLOT);
+        NonNullList<ItemStack> ingredients = NonNullList.copyOf(compressor.items.subList(CRAFTING_SLOT_START, CRAFTING_SLOT_END));
 
         boolean hasIngredients = !ingredients.isEmpty();
         boolean hasFuel = !fuel.isEmpty();
@@ -119,8 +119,8 @@ public class CompressorBlockEntity extends AbstractCompressorBlockEntity {
 
                 if (recipe != null) {
                     ItemStack recipeResult = recipe.value().assemble(input);
-                    ItemResource resourceInResultSlot = compressor.innerResourceHandler.getResource(10);
-                    int maxStackSize = compressor.innerResourceHandler.getCapacityAsInt(10, resourceInResultSlot);
+                    ItemResource resourceInResultSlot = compressor.innerResourceHandler.getResource(RESULT_SLOT);
+                    int maxStackSize = compressor.innerResourceHandler.getCapacityAsInt(RESULT_SLOT, resourceInResultSlot);
 
                     if (!recipeResult.isEmpty() && canCompress(compressor.innerResourceHandler, maxStackSize, recipeResult)) {
                         if (!isLit) {
@@ -193,7 +193,7 @@ public class CompressorBlockEntity extends AbstractCompressorBlockEntity {
 
     @Override
     public @Nullable AbstractContainerMenu createMenu(int containerId, Inventory inventory, Player player) {
-        return new CompressorMenu(containerId, inventory, this.dataAccess);
+        return new CompressorMenu(containerId, inventory, this, this.dataAccess);
     }
 
     @Override

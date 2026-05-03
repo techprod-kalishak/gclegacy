@@ -10,7 +10,7 @@ package io.kalishak.galacticraftlegacy.client.gui.screens.inventory;
 import io.kalishak.galacticraftlegacy.attachment.GalacticraftAttachments;
 import io.kalishak.galacticraftlegacy.attachment.block.SyncedEnergyHandler;
 import io.kalishak.galacticraftlegacy.client.gui.ClientResourceHandlerTextUtils;
-import io.kalishak.galacticraftlegacy.world.inventory.AbstractMachineMenu;
+import io.kalishak.galacticraftlegacy.world.inventory.machine.AbstractMachineMenu;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.AbstractMachineBlockEntity;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphicsExtractor;

@@ -5,9 +5,10 @@
  * See LICENSE file for more details
  */
 
-package io.kalishak.galacticraftlegacy.world.inventory;
+package io.kalishak.galacticraftlegacy.world.inventory.machine;
 
 import io.kalishak.galacticraftlegacy.transfer.ResourcefulHelper;
+import io.kalishak.galacticraftlegacy.world.inventory.GalacticraftMenuType;
 import io.kalishak.galacticraftlegacy.world.inventory.slot.FuelHandlerSlot;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.CoalGeneratorBlockEntity;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityType;

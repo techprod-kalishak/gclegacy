@@ -7,7 +7,7 @@
 
 package io.kalishak.galacticraftlegacy.world.inventory.slot;
 
-import io.kalishak.galacticraftlegacy.world.inventory.CoalGeneratorMenu;
+import io.kalishak.galacticraftlegacy.world.inventory.machine.CoalGeneratorMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.neoforged.neoforge.transfer.IndexModifier;

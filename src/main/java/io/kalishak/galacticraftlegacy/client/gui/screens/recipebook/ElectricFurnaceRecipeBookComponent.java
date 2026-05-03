@@ -8,7 +8,7 @@
 package io.kalishak.galacticraftlegacy.client.gui.screens.recipebook;
 
 import io.kalishak.galacticraftlegacy.Constants;
-import io.kalishak.galacticraftlegacy.world.inventory.ElectricFurnaceMenu;
+import io.kalishak.galacticraftlegacy.world.inventory.machine.ElectricFurnaceMenu;
 import net.minecraft.client.gui.components.WidgetSprites;
 import net.minecraft.client.gui.screens.recipebook.GhostSlots;
 import net.minecraft.client.gui.screens.recipebook.RecipeBookComponent;
@@ -46,8 +46,8 @@ public class ElectricFurnaceRecipeBookComponent extends RecipeBookComponent<Elec
     }
 
     @Override
-    protected void selectMatchingRecipes(RecipeCollection possibleRecipes, StackedItemContents stackedItemContents) {
-        possibleRecipes.selectRecipes(stackedItemContents, recipeDisplay -> recipeDisplay instanceof FurnaceRecipeDisplay);
+    protected void selectMatchingRecipes(RecipeCollection collection, StackedItemContents stackedItemContents) {
+        collection.selectRecipes(stackedItemContents, recipeDisplay -> recipeDisplay instanceof FurnaceRecipeDisplay);
     }
 
     @Override

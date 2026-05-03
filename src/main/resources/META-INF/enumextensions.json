@@ -10,6 +10,15 @@
       }
     },
     {
+      "enum": "net/minecraft/world/inventory/RecipeBookType",
+      "name": "GALACTICRAFTLEGACY_COMPRESSING",
+      "constructor": "()V",
+      "parameters": {
+        "class": "io/kalishak/galacticraftlegacy/EnumExtensions",
+        "field": "RECIPE_BOOK_TYPE_COMPRESSING"
+      }
+    },
+    {
       "enum": "net/minecraft/world/damagesource/DamageScaling",
       "name": "GALACTICRAFTLEGACY_BY_CELESTIAL_BODY",
       "constructor": "(Ljava/lang/String;Lnet/neoforged/neoforge/common/damagesource/IScalingFunction;)V",

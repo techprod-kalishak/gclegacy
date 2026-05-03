@@ -8,7 +8,7 @@
 package io.kalishak.galacticraftlegacy.client.gui.screens.recipebook;
 
 import io.kalishak.galacticraftlegacy.Constants;
-import io.kalishak.galacticraftlegacy.world.inventory.CircuitFabricatorMenu;
+import io.kalishak.galacticraftlegacy.world.inventory.machine.CircuitFabricatorMenu;
 import io.kalishak.galacticraftlegacy.world.item.crafting.display.CircutFabricatorRecipeDisplay;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.CircuitFabricatorBlockEntity;
 import net.minecraft.client.gui.components.WidgetSprites;

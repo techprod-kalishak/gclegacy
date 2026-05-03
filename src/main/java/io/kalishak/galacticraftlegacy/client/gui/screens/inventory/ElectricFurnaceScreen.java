@@ -9,7 +9,7 @@ package io.kalishak.galacticraftlegacy.client.gui.screens.inventory;
 
 import io.kalishak.galacticraftlegacy.Constants;
 import io.kalishak.galacticraftlegacy.client.gui.screens.recipebook.ElectricFurnaceRecipeBookComponent;
-import io.kalishak.galacticraftlegacy.world.inventory.ElectricFurnaceMenu;
+import io.kalishak.galacticraftlegacy.world.inventory.machine.ElectricFurnaceMenu;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.ElectricFurnaceBlockEntity;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.navigation.ScreenPosition;

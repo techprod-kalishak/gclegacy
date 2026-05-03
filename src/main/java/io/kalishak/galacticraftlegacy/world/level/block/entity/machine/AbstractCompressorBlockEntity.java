@@ -47,6 +47,14 @@ import org.jspecify.annotations.Nullable;
 import java.util.Map;
 
 public abstract class AbstractCompressorBlockEntity extends NamedBlockEntity implements StackedContentsCompatible, RecipeCraftingHolder {
+    public static final int CRAFTING_SLOT_START = 0;
+    public static final int CRAFTING_SLOT_END = 8;
+    public static final int RESULT_SLOT = 9;
+    public static final int FUEL_SLOT = 10;
+    public static final int DATA_SLOT_COMPRESSING_TIMER = 0;
+    public static final int DATA_SLOT_COMPRESSING_TIME_TOTAL = 1;
+    public static final int DATA_SLOT_LIT_TIMER = 2;
+    public static final int DATA_SLOT_LIT_TIME_TOTAL = 3;
     protected static final Codec<Map<ResourceKey<Recipe<?>>, Integer>> RECIPES_USED_CODEC = Codec.unboundedMap(Recipe.KEY_CODEC, Codec.INT);
     protected final NonNullList<ItemStack> items = NonNullList.withSize(11, ItemStack.EMPTY);
     protected final ItemStacksResourceHandler innerResourceHandler = new ItemStacksResourceHandler(this.items);

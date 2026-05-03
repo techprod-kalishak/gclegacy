@@ -9,7 +9,7 @@ package io.kalishak.galacticraftlegacy.client.gui.screens.inventory;
 
 import io.kalishak.galacticraftlegacy.Galacticraft;
 import io.kalishak.galacticraftlegacy.client.gui.ClientResourceHandlerTextUtils;
-import io.kalishak.galacticraftlegacy.world.inventory.CoalGeneratorMenu;
+import io.kalishak.galacticraftlegacy.world.inventory.machine.CoalGeneratorMenu;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.CoalGeneratorBlockEntity;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;

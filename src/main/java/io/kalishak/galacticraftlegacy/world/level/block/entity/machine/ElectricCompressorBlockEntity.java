@@ -7,7 +7,7 @@
 
 package io.kalishak.galacticraftlegacy.world.level.block.entity.machine;
 
-import io.kalishak.galacticraftlegacy.world.inventory.ElectricCompressorMenu;
+import io.kalishak.galacticraftlegacy.world.inventory.machine.ElectricCompressorMenu;
 import io.kalishak.galacticraftlegacy.world.item.component.GalacticraftDataComponents;
 import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.CompressingRecipe;
 import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.GalacticraftRecipeType;
@@ -42,8 +42,8 @@ public class ElectricCompressorBlockEntity extends AbstractCompressorBlockEntity
         @Override
         public int get(int dataId) {
             return switch (dataId) {
-                case 0 -> ElectricCompressorBlockEntity.this.compressingTimer;
-                case 1 -> ElectricCompressorBlockEntity.this.compressingTotalTime;
+                case AbstractCompressorBlockEntity.DATA_SLOT_COMPRESSING_TIMER -> ElectricCompressorBlockEntity.this.compressingTimer;
+                case AbstractCompressorBlockEntity.DATA_SLOT_COMPRESSING_TIME_TOTAL -> ElectricCompressorBlockEntity.this.compressingTotalTime;
                 default -> 0;
             };
         }
@@ -51,8 +51,8 @@ public class ElectricCompressorBlockEntity extends AbstractCompressorBlockEntity
         @Override
         public void set(int dataId, int value) {
             switch (dataId) {
-                case 0 -> ElectricCompressorBlockEntity.this.compressingTimer = value;
-                case 1 -> ElectricCompressorBlockEntity.this.compressingTotalTime = value;
+                case AbstractCompressorBlockEntity.DATA_SLOT_COMPRESSING_TIMER -> ElectricCompressorBlockEntity.this.compressingTimer = value;
+                case AbstractCompressorBlockEntity.DATA_SLOT_COMPRESSING_TIME_TOTAL -> ElectricCompressorBlockEntity.this.compressingTotalTime = value;
             }
         }
 
@@ -150,6 +150,6 @@ public class ElectricCompressorBlockEntity extends AbstractCompressorBlockEntity
 
     @Override
     public @Nullable AbstractContainerMenu createMenu(int containerId, Inventory inventory, Player player) {
-        return new ElectricCompressorMenu(containerId, inventory, this.dataAccess);
+        return new ElectricCompressorMenu(containerId, inventory, this, this.dataAccess);
     }
 }

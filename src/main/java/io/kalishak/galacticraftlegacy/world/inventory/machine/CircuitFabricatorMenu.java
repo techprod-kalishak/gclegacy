@@ -5,12 +5,13 @@
  * See LICENSE file for more details
  */
 
-package io.kalishak.galacticraftlegacy.world.inventory;
+package io.kalishak.galacticraftlegacy.world.inventory.machine;
 
 import com.google.common.base.Predicates;
 import io.kalishak.galacticraftlegacy.EnumExtensions;
 import io.kalishak.galacticraftlegacy.data.GalacticraftTags;
 import io.kalishak.galacticraftlegacy.transfer.ResourcefulHelper;
+import io.kalishak.galacticraftlegacy.world.inventory.GalacticraftMenuType;
 import io.kalishak.galacticraftlegacy.world.inventory.slot.CapabilityHandlerSlot;
 import io.kalishak.galacticraftlegacy.world.inventory.slot.MutableHandlerSlot;
 import io.kalishak.galacticraftlegacy.world.item.component.ItemAccessEnergyUtils;

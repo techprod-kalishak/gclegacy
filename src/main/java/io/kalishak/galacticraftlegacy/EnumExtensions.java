@@ -23,6 +23,7 @@ import java.util.Optional;
 
 public class EnumExtensions {
     public static final EnumProxy<RecipeBookType> RECIPE_BOOK_TYPE_FABRICATING = new EnumProxy<>(RecipeBookType.class);
+    public static final EnumProxy<RecipeBookType> RECIPE_BOOK_TYPE_COMPRESSING = new EnumProxy<>(RecipeBookType.class);
 
     public static final EnumProxy<DamageScaling> DAMAGE_SCALING_BY_CELESTIAL_BODY = new EnumProxy<>(DamageScaling.class, "galacticraftlegacy:by_celestial_body", (IScalingFunction) (source, target, amount, difficulty) -> {
         GearInventoryProvider inventoryProvider = AttachmentHelper.getGearInventory(target);
