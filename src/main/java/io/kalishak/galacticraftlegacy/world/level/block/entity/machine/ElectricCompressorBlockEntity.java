@@ -7,6 +7,8 @@
 
 package io.kalishak.galacticraftlegacy.world.level.block.entity.machine;
 
+import io.kalishak.galacticraftlegacy.attachment.GalacticraftAttachments;
+import io.kalishak.galacticraftlegacy.attachment.block.SyncedEnergyHandler;
 import io.kalishak.galacticraftlegacy.world.inventory.machine.ElectricCompressorMenu;
 import io.kalishak.galacticraftlegacy.world.item.component.GalacticraftDataComponents;
 import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.CompressingRecipe;
@@ -37,7 +39,14 @@ import net.neoforged.neoforge.transfer.transaction.Transaction;
 import org.jspecify.annotations.Nullable;
 
 public class ElectricCompressorBlockEntity extends AbstractCompressorBlockEntity {
-    private final SimpleEnergyHandler capacitor = new SimpleEnergyHandler(25000, 250);
+    private final SimpleEnergyHandler capacitor = new SimpleEnergyHandler(25000, 250) {
+        @Override
+        protected void onEnergyChanged(int previousAmount) {
+            if (!ElectricCompressorBlockEntity.this.isRemoved()) {
+                ElectricCompressorBlockEntity.this.setData(GalacticraftAttachments.SYNC_ENERGY_STORAGE, new SyncedEnergyHandler(previousAmount));
+            }
+        }
+    };
     protected final ContainerData dataAccess = new ContainerData() {
         @Override
         public int get(int dataId) {

@@ -49,7 +49,8 @@ import java.util.Map;
 public abstract class AbstractCompressorBlockEntity extends NamedBlockEntity implements StackedContentsCompatible, RecipeCraftingHolder {
     public static final int CRAFTING_SLOT_START = 0;
     public static final int CRAFTING_SLOT_END = 8;
-    public static final int RESULT_SLOT = 9;
+    public static final int RESULT_SLOT_START = 9;
+    public static final int RESULT_SLOT_END = 10;
     public static final int FUEL_SLOT = 10;
     public static final int DATA_SLOT_COMPRESSING_TIMER = 0;
     public static final int DATA_SLOT_COMPRESSING_TIME_TOTAL = 1;

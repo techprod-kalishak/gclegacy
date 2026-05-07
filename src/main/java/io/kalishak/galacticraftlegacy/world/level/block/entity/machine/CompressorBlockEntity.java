@@ -79,6 +79,20 @@ public class CompressorBlockEntity extends AbstractCompressorBlockEntity {
     }
 
     @Override
+    public void set(int index, ItemResource resource, int amount) {
+        ItemStack oldStack = this.items.get(index);
+        ItemStack newStack = resource.toStack(amount);
+        boolean same = !resource.isEmpty() && ItemStack.isSameItemSameComponents(oldStack, newStack);
+        super.set(index, resource, amount);
+
+        if (index == FUEL_SLOT && !same && this.level instanceof ServerLevel serverLevel) {
+            this.fuelTotalTime = CompressorBlockEntity.fuelDuration(serverLevel, newStack);
+            this.fuelTimeRemaining = 0;
+            this.setChanged();
+        }
+    }
+
+    @Override
     protected void loadAdditional(ValueInput input) {
         super.loadAdditional(input);
         this.fuelTimeRemaining = input.getIntOr("FuelTimeRemaining", (short) 0);
@@ -119,8 +133,8 @@ public class CompressorBlockEntity extends AbstractCompressorBlockEntity {
 
                 if (recipe != null) {
                     ItemStack recipeResult = recipe.value().assemble(input);
-                    ItemResource resourceInResultSlot = compressor.innerResourceHandler.getResource(RESULT_SLOT);
-                    int maxStackSize = compressor.innerResourceHandler.getCapacityAsInt(RESULT_SLOT, resourceInResultSlot);
+                    ItemResource resourceInResultSlot = compressor.innerResourceHandler.getResource(RESULT_SLOT_START);
+                    int maxStackSize = compressor.innerResourceHandler.getCapacityAsInt(RESULT_SLOT_START, resourceInResultSlot);
 
                     if (!recipeResult.isEmpty() && canCompress(compressor.innerResourceHandler, maxStackSize, recipeResult)) {
                         if (!isLit) {

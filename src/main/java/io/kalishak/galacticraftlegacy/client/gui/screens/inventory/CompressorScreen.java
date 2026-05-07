@@ -13,23 +13,19 @@ import io.kalishak.galacticraftlegacy.world.inventory.machine.CompressorMenu;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.navigation.ScreenPosition;
 import net.minecraft.client.gui.screens.inventory.AbstractRecipeBookScreen;
-import net.minecraft.client.gui.screens.recipebook.RecipeBookComponent;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
 
-import java.util.List;
-
 public class CompressorScreen extends AbstractRecipeBookScreen<CompressorMenu> {
     private static final Identifier TEXTURES = Constants.id("textures/gui/container/compressor.png");
     private static final Identifier LIT_PROGRESS_SPRITE = Identifier.withDefaultNamespace("container/furnace/lit_progress");
     private static final Identifier PROGRESS_SPRITE = Constants.id("container/compressor/compressing");
-    private static final List<RecipeBookComponent.TabInfo> TABS = List.of();
 
     public CompressorScreen(CompressorMenu menu, Inventory inventory, Component title) {
-        super(menu, new CompressorRecipeBookComponent(menu, TABS), inventory, title);
+        super(menu, new CompressorRecipeBookComponent(menu, false), inventory, title);
     }
 
     @Override
@@ -40,7 +36,7 @@ public class CompressorScreen extends AbstractRecipeBookScreen<CompressorMenu> {
 
     @Override
     protected ScreenPosition getRecipeBookButtonPosition() {
-        return new ScreenPosition(this.leftPos + 20, this.height / 2 - 49);
+        return new ScreenPosition(this.leftPos + 60, this.height / 2 - 49);
     }
 
     @Override

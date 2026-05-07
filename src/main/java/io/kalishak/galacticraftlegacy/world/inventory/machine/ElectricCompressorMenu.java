@@ -9,7 +9,7 @@ package io.kalishak.galacticraftlegacy.world.inventory.machine;
 
 import io.kalishak.galacticraftlegacy.transfer.ResourcefulHelper;
 import io.kalishak.galacticraftlegacy.world.inventory.GalacticraftMenuType;
-import io.kalishak.galacticraftlegacy.world.inventory.slot.FuelHandlerSlot;
+import io.kalishak.galacticraftlegacy.world.inventory.slot.CapabilityHandlerSlot;
 import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.ElectricCompressingRecipe;
 import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.input.CompressingRecipeInput;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityType;
@@ -38,14 +38,23 @@ public class ElectricCompressorMenu extends AbstractCompressorMenu<ElectricCompr
 
         ResourceHandler<ItemResource> resourceHandler = ResourcefulHelper.getResourceHandler(Capabilities.Item.BLOCK, ItemResource.EMPTY, compressor, null);
         addCompressorGrid(resourceHandler, compressor::set, 19, 18);
-        addSlot(new ResourceHandlerSlot(resourceHandler, ResourcefulHelper::notPlaceable, 9, 138, 38));
-        addSlot(new FuelHandlerSlot(resourceHandler, compressor::set, 10, 55, 75));
+        addSlot(new ResourceHandlerSlot(resourceHandler, ResourcefulHelper::notPlaceable, 9, 138, 30));
+        //addSlot(new ResourceHandlerSlot(resourceHandler, ResourcefulHelper::notPlaceable, 11, 138, 48));
+        addSlot(new CapabilityHandlerSlot<>(resourceHandler, compressor::set, Capabilities.Energy.ITEM, 10, 55, 75));
 
-        addStandardInventorySlots(playerInventory, 8, 110);
+        addStandardInventorySlots(playerInventory, 8, 117);
     }
 
     public ElectricCompressorMenu(int containerId, Inventory playerInventory, RegistryFriendlyByteBuf data) {
         this(containerId, playerInventory, ResourcefulHelper.readBlockEntity(GalacticraftBlockEntityType.ELECTRIC_COMPRESSOR.get(), playerInventory.player.level(), data), new SimpleContainerData(4));
+    }
+
+    public int getEnergyCapacity() {
+        return ResourcefulHelper.getEnergyHandler(this.compressor, null).getCapacityAsInt();
+    }
+
+    public ElectricCompressorBlockEntity getMachine() {
+        return this.compressor;
     }
 
     @Override

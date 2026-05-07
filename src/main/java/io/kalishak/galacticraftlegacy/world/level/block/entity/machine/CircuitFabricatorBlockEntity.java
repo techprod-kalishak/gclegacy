@@ -23,10 +23,8 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
-import net.minecraft.world.inventory.RecipeCraftingHolder;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
-import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
@@ -40,7 +38,7 @@ import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.neoforged.neoforge.transfer.transaction.Transaction;
 import org.jspecify.annotations.Nullable;
 
-public class CircuitFabricatorBlockEntity extends AbstractMachineBlockEntity implements RecipeCraftingHolder {
+public class CircuitFabricatorBlockEntity extends RecipeMachineBlockEntity<SimpleResourceInput, CircuitRecipe> {
     public static final int DATA_PROCESS_PROGRESS = 0;
     public static final int DATA_PROGRESS_TIME_TOTAL = 1;
     public static final int PROCESS_RETRACT_SPEED = 2;
@@ -77,10 +75,9 @@ public class CircuitFabricatorBlockEntity extends AbstractMachineBlockEntity imp
             return 2;
         }
     };
-    private final RecipeManager.CachedCheck<SimpleResourceInput, CircuitRecipe> quickCheck = RecipeManager.createCheck(GalacticraftRecipeType.CIRCUIT.get());
 
     public CircuitFabricatorBlockEntity(BlockPos pos, BlockState blockState) {
-        super(GalacticraftBlockEntityType.CIRCUIT_FABRICATOR.get(), pos, blockState);
+        super(GalacticraftBlockEntityType.CIRCUIT_FABRICATOR.get(), pos, blockState, GalacticraftRecipeType.CIRCUIT.get());
     }
 
     public static void serverTick(ServerLevel serverLevel, BlockPos tickerPos, BlockState tickerState, CircuitFabricatorBlockEntity circuitFabricator) {
@@ -204,18 +201,18 @@ public class CircuitFabricatorBlockEntity extends AbstractMachineBlockEntity imp
 
     @Override
     public void set(int index, ItemResource resource, int amount) {
-        super.set(index, resource, amount);
-
         if (hasRequiredIngredients(this, SLOT_DIAMOND, SLOT_OUTPUT)) {
             if (this.level instanceof ServerLevel serverLevel) {
                 if (checkRecipe(this, serverLevel) && this.processTimeTotal == 0) {
                     this.processProgress = 0;
                     this.processTimeTotal = 400;
+
+                    setChanged();
                 }
             }
         }
 
-        setChanged();
+        super.set(index, resource, amount);
     }
 
     @Override
@@ -236,15 +233,5 @@ public class CircuitFabricatorBlockEntity extends AbstractMachineBlockEntity imp
     @Override
     public @Nullable AbstractContainerMenu createMenu(int containerId, Inventory playerInventory, Player player) {
         return new CircuitFabricatorMenu(containerId, playerInventory, this, this.containerData);
-    }
-
-    @Override
-    public void setRecipeUsed(@Nullable RecipeHolder<?> recipe) {
-
-    }
-
-    @Override
-    public @Nullable RecipeHolder<?> getRecipeUsed() {
-        return null;
     }
 }

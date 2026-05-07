@@ -31,6 +31,8 @@ public abstract class AbstractCompressorMenu<Compressor extends AbstractCompress
         super(menuType, containerId);
         this.compressor = compressor;
         this.dataAccess = dataAccess;
+
+        addDataSlots(dataAccess);
     }
 
     protected void addCompressorGrid(ResourceHandler<ItemResource> handler, IndexModifier<ItemResource> setter, int left, int top) {

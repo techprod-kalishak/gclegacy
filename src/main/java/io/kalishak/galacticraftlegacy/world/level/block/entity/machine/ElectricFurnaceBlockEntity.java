@@ -7,26 +7,17 @@
 
 package io.kalishak.galacticraftlegacy.world.level.block.entity.machine;
 
-import com.google.common.collect.Lists;
-import com.mojang.serialization.Codec;
 import io.kalishak.galacticraftlegacy.world.inventory.machine.ElectricFurnaceMenu;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityType;
-import it.unimi.dsi.fastutil.objects.Reference2IntMap;
-import it.unimi.dsi.fastutil.objects.Reference2IntOpenHashMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.StackedItemContents;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
-import net.minecraft.world.inventory.RecipeCraftingHolder;
-import net.minecraft.world.inventory.StackedContentsCompatible;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.block.AbstractFurnaceBlock;
@@ -34,7 +25,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
-import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.transfer.DelegatingResourceHandler;
@@ -47,14 +37,10 @@ import net.neoforged.neoforge.transfer.item.ItemUtil;
 import net.neoforged.neoforge.transfer.transaction.Transaction;
 import org.jspecify.annotations.Nullable;
 
-import java.util.List;
-import java.util.Map;
-
-public class ElectricFurnaceBlockEntity extends AbstractMachineBlockEntity implements RecipeCraftingHolder, StackedContentsCompatible {
+public class ElectricFurnaceBlockEntity extends RecipeMachineBlockEntity<SingleRecipeInput, SmeltingRecipe> {
     public static final int SLOT_INPUT = 0;
     public static final int SLOT_BATTERY = 1;
     public static final int SLOT_RESULT = 2;
-    private static final Codec<Map<ResourceKey<Recipe<?>>, Integer>> RECIPES_USED_CODEC = Codec.unboundedMap(Recipe.KEY_CODEC, Codec.INT);
     int cookingTimer;
     int cookingTotalTime;
     private final ContainerData dataAccess = new ContainerData() {
@@ -80,12 +66,9 @@ public class ElectricFurnaceBlockEntity extends AbstractMachineBlockEntity imple
             return 2;
         }
     };
-    private final Reference2IntOpenHashMap<ResourceKey<Recipe<?>>> recipesUsed = new Reference2IntOpenHashMap<>();
-    private final RecipeManager.CachedCheck<SingleRecipeInput, SmeltingRecipe> quickCheck;
 
     public ElectricFurnaceBlockEntity(BlockPos pos, BlockState blockState) {
-        super(GalacticraftBlockEntityType.ELECTRIC_FURNACE.get(), pos, blockState);
-        this.quickCheck = RecipeManager.createCheck(RecipeType.SMELTING);
+        super(GalacticraftBlockEntityType.ELECTRIC_FURNACE.get(), pos, blockState, RecipeType.SMELTING);
     }
 
     public static void registerCapabilities(RegisterCapabilitiesEvent event) {
@@ -126,8 +109,6 @@ public class ElectricFurnaceBlockEntity extends AbstractMachineBlockEntity imple
         super.loadAdditional(valueInput);
         this.cookingTimer = valueInput.getIntOr("CookingTimeSpent", (short) 0);
         this.cookingTotalTime = valueInput.getIntOr("CookingTotalTime", (short) 0);
-        this.recipesUsed.clear();
-        this.recipesUsed.putAll(valueInput.read("RecipesUsed", RECIPES_USED_CODEC).orElse(Map.of()));
     }
 
     @Override
@@ -135,7 +116,6 @@ public class ElectricFurnaceBlockEntity extends AbstractMachineBlockEntity imple
         super.saveAdditional(valueOutput);
         valueOutput.putInt("CookingTimeSpent", this.cookingTimer);
         valueOutput.putInt("CookingTotalTime", this.cookingTotalTime);
-        valueOutput.store("RecipesUsed", RECIPES_USED_CODEC, this.recipesUsed);
     }
 
     @Override
@@ -160,7 +140,6 @@ public class ElectricFurnaceBlockEntity extends AbstractMachineBlockEntity imple
 
     @Override
     public void set(int index, ItemResource resource, int amount) {
-
         if (index == SLOT_INPUT) {
             ItemStack stack = ItemUtil.getStack(this.innerResourceHandler, index);
 
@@ -271,60 +250,5 @@ public class ElectricFurnaceBlockEntity extends AbstractMachineBlockEntity imple
         }
 
         return false;
-    }
-
-    @Override
-    public @Nullable RecipeHolder<?> getRecipeUsed() {
-        return null;
-    }
-
-    @Override
-    public void setRecipeUsed(@Nullable RecipeHolder<?> recipe) {
-        if (recipe != null) {
-            ResourceKey<Recipe<?>> recipeKey = recipe.id();
-            this.recipesUsed.addTo(recipeKey, 1);
-        }
-    }
-
-    @Override
-    public void awardUsedRecipes(Player player, List<ItemStack> items) {
-
-    }
-
-    public void awardUsedRecipes(ServerPlayer player) {
-        List<RecipeHolder<?>> list = this.getRecipesToAward(player.level(), player.position());
-        player.awardRecipes(list);
-
-        for (RecipeHolder<?> recipeholder : list) {
-            player.triggerRecipeCrafted(recipeholder, this.items);
-        }
-
-        this.recipesUsed.clear();
-    }
-
-    public List<RecipeHolder<?>> getRecipesToAward(ServerLevel level, Vec3 popVec) {
-        List<RecipeHolder<?>> list = Lists.newArrayList();
-
-        for (Reference2IntMap.Entry<ResourceKey<Recipe<?>>> entry : this.recipesUsed.reference2IntEntrySet()) {
-            level.recipeAccess().byKey(entry.getKey()).ifPresent(list::add);
-        }
-
-        return list;
-    }
-
-    @Override
-    public void fillStackedContents(StackedItemContents stackedContents) {
-        for (int i = 0; i < size(); i++) {
-            stackedContents.accountStack(ItemUtil.getStack(this.innerResourceHandler, i));
-        }
-    }
-
-    @Override
-    public void preRemoveSideEffects(BlockPos pos, BlockState state) {
-        super.preRemoveSideEffects(pos, state);
-
-        if (this.level instanceof ServerLevel serverlevel) {
-            getRecipesToAward(serverlevel, Vec3.atCenterOf(pos));
-        }
     }
 }

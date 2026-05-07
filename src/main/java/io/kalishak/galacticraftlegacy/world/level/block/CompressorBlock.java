@@ -39,7 +39,7 @@ public class CompressorBlock extends BaseEntityBlock implements RotatedByToolBlo
     }
 
     @Override
-    protected MapCodec<CompressorBlock> codec() {
+    protected MapCodec<? extends CompressorBlock> codec() {
         return CODEC;
     }
 
