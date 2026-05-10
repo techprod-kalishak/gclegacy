@@ -12,7 +12,7 @@ import io.kalishak.galacticraftlegacy.world.inventory.machine.AbstractCompressor
 import io.kalishak.galacticraftlegacy.world.item.GalacticraftItems;
 import io.kalishak.galacticraftlegacy.world.item.crafting.GalacticraftRecipeBookCategories;
 import io.kalishak.galacticraftlegacy.world.item.crafting.display.CompressorRecipeDisplay;
-import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.AbstractCompressorBlockEntity;
+import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.AlloyCompressor;
 import net.minecraft.client.gui.components.WidgetSprites;
 import net.minecraft.client.gui.screens.recipebook.GhostSlots;
 import net.minecraft.client.gui.screens.recipebook.RecipeBookComponent;
@@ -29,7 +29,7 @@ import net.minecraft.world.item.crafting.display.RecipeDisplay;
 import java.util.List;
 import java.util.Optional;
 
-public class CompressorRecipeBookComponent extends RecipeBookComponent<AbstractCompressorMenu<?>> {
+public class CompressorRecipeBookComponent extends RecipeBookComponent<AbstractCompressorMenu> {
     private static final WidgetSprites FILTER_SPRITES = new WidgetSprites(
             Constants.id("recipe_book/compressor_filter_enabled"),
             Constants.id("recipe_book/compressor_filter_disabled"),
@@ -37,7 +37,7 @@ public class CompressorRecipeBookComponent extends RecipeBookComponent<AbstractC
             Constants.id("recipe_book/compressor_filter_disabled_highlighted")
     );
 
-    public CompressorRecipeBookComponent(AbstractCompressorMenu<?> menu, boolean electric) {
+    public CompressorRecipeBookComponent(AbstractCompressorMenu menu, boolean electric) {
         super(menu, createTabs(electric));
     }
 
@@ -55,7 +55,7 @@ public class CompressorRecipeBookComponent extends RecipeBookComponent<AbstractC
 
     @Override
     protected boolean isCraftingSlot(Slot slot) {
-        return slot.index < AbstractCompressorBlockEntity.RESULT_SLOT_START;
+        return slot.index < AlloyCompressor.RESULT_SLOT_START;
     }
 
     @Override
@@ -70,7 +70,7 @@ public class CompressorRecipeBookComponent extends RecipeBookComponent<AbstractC
 
     @Override
     protected void fillGhostRecipe(GhostSlots ghostSlots, RecipeDisplay recipe, ContextMap context) {
-        ghostSlots.setResult(this.menu.getSlot(AbstractCompressorBlockEntity.RESULT_SLOT_START), context, recipe.result());
+        ghostSlots.setResult(this.menu.getSlot(AlloyCompressor.RESULT_SLOT_START), context, recipe.result());
 
         if (recipe instanceof CompressorRecipeDisplay compressorRecipeDisplay) {
             List<Slot> craftingSlots = this.menu.slots.subList(0, 8);

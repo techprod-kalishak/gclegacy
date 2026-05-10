@@ -9,7 +9,6 @@ package io.kalishak.galacticraftlegacy.world.item;
 
 import io.kalishak.galacticraftlegacy.Constants;
 import io.kalishak.galacticraftlegacy.Galacticraft;
-import io.kalishak.galacticraftlegacy.registry.SchematicVariant;
 import io.kalishak.galacticraftlegacy.registry.SchematicVariants;
 import io.kalishak.galacticraftlegacy.registry.deferred.DeferredItemRegister;
 import io.kalishak.galacticraftlegacy.registry.deferred.DeferredWeatheringCopperItems;
@@ -32,7 +31,6 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.equipment.ArmorType;
 import net.minecraft.world.item.equipment.Equippable;
-import net.minecraft.world.level.block.Blocks;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
@@ -63,50 +61,42 @@ public final class GalacticraftItems {
     public static final DeferredItem<GearItem> THERMAL_PADDING_HELM = REGISTRY.registerItem(
             "thermal_cap",
             GearItem::new,
-            () -> GearItem.thermalPiece(GearEquipmentSlot.THERMAL_CAP, GearEquipmentAssets.THERMAL)
-                    .component(GalacticraftDataComponents.TEMPERATURE_MODIFIER, -1.0F)
+            () -> GearItem.thermalPiece(GearEquipmentSlot.THERMAL_CAP, GearEquipmentAssets.THERMAL, -0.25F)
     );
     public static final DeferredItem<GearItem> THERMAL_PADDING_CHESTPIECE = REGISTRY.registerItem(
             "thermal_shirt",
             GearItem::new,
-            () -> GearItem.thermalPiece(GearEquipmentSlot.THERMAL_SHIRT, GearEquipmentAssets.THERMAL)
-                    .component(GalacticraftDataComponents.TEMPERATURE_MODIFIER, -1.0F)
+            () -> GearItem.thermalPiece(GearEquipmentSlot.THERMAL_SHIRT, GearEquipmentAssets.THERMAL, -0.25F)
     );
     public static final DeferredItem<GearItem> THERMAL_PADDING_LEGGINGS = REGISTRY.registerItem(
             "thermal_leggings",
             GearItem::new,
-            () -> GearItem.thermalPiece(GearEquipmentSlot.THERMAL_LEGGINGS, GearEquipmentAssets.THERMAL)
-                    .component(GalacticraftDataComponents.TEMPERATURE_MODIFIER, -1.0F)
+            () -> GearItem.thermalPiece(GearEquipmentSlot.THERMAL_LEGGINGS, GearEquipmentAssets.THERMAL, -0.25F)
     );
     public static final DeferredItem<GearItem> THERMAL_PADDING_BOOTS = REGISTRY.registerItem(
             "thermal_socks",
             GearItem::new,
-            () -> GearItem.thermalPiece(GearEquipmentSlot.THERMAL_SOCKS, GearEquipmentAssets.THERMAL)
-                    .component(GalacticraftDataComponents.TEMPERATURE_MODIFIER, -1.0F)
+            () -> GearItem.thermalPiece(GearEquipmentSlot.THERMAL_SOCKS, GearEquipmentAssets.THERMAL, -0.25F)
     );
     public static final DeferredItem<GearItem> ISOTHERMAL_HELM = REGISTRY.registerItem(
             "isothermal_cap",
             GearItem::new,
-            () -> GearItem.thermalPiece(GearEquipmentSlot.THERMAL_CAP, GearEquipmentAssets.ISOTHERMAL)
-                    .component(GalacticraftDataComponents.TEMPERATURE_MODIFIER, 1.0F)
+            () -> GearItem.thermalPiece(GearEquipmentSlot.THERMAL_CAP, GearEquipmentAssets.ISOTHERMAL, 0.25F)
     );
     public static final DeferredItem<GearItem> ISOTHERMAL_CHESTPIECE = REGISTRY.registerItem(
             "isothermal_shirt",
             GearItem::new,
-            () -> GearItem.thermalPiece(GearEquipmentSlot.THERMAL_SHIRT, GearEquipmentAssets.ISOTHERMAL)
-                    .component(GalacticraftDataComponents.TEMPERATURE_MODIFIER, 1.0F)
+            () -> GearItem.thermalPiece(GearEquipmentSlot.THERMAL_SHIRT, GearEquipmentAssets.ISOTHERMAL, 0.25F)
     );
     public static final DeferredItem<GearItem> ISOTHERMAL_LEGGINGS = REGISTRY.registerItem(
             "isothermal_leggings",
             GearItem::new,
-            () -> GearItem.thermalPiece(GearEquipmentSlot.THERMAL_LEGGINGS, GearEquipmentAssets.ISOTHERMAL)
-                    .component(GalacticraftDataComponents.TEMPERATURE_MODIFIER, 1.0F)
+            () -> GearItem.thermalPiece(GearEquipmentSlot.THERMAL_LEGGINGS, GearEquipmentAssets.ISOTHERMAL, 0.25F)
     );
     public static final DeferredItem<GearItem> ISOTHERMAL_BOOTS = REGISTRY.registerItem(
             "isothermal_socks",
             GearItem::new,
-            () -> GearItem.thermalPiece(GearEquipmentSlot.THERMAL_SOCKS, GearEquipmentAssets.ISOTHERMAL)
-                    .component(GalacticraftDataComponents.TEMPERATURE_MODIFIER, 1.0F)
+            () -> GearItem.thermalPiece(GearEquipmentSlot.THERMAL_SOCKS, GearEquipmentAssets.ISOTHERMAL, 0.25F)
     );
     public static final DeferredItem<GearItem> LIGHT_TANK = REGISTRY.registerItem(
             "light_oxygen_tank",

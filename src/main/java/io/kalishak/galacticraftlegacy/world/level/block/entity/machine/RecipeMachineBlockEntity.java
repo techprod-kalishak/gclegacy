@@ -15,12 +15,15 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.StackedItemContents;
 import net.minecraft.world.inventory.RecipeCraftingHolder;
 import net.minecraft.world.inventory.StackedContentsCompatible;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
+import net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
@@ -33,13 +36,23 @@ import java.util.List;
 import java.util.Map;
 
 public abstract class RecipeMachineBlockEntity<I extends RecipeInput, R extends Recipe<I>> extends AbstractMachineBlockEntity implements RecipeCraftingHolder, StackedContentsCompatible {
-    protected static final Codec<Map<ResourceKey<Recipe<?>>, Integer>> RECIPES_USED_CODEC = Codec.unboundedMap(Recipe.KEY_CODEC, Codec.INT);
+    public static final Codec<Map<ResourceKey<Recipe<?>>, Integer>> RECIPES_USED_CODEC = Codec.unboundedMap(Recipe.KEY_CODEC, Codec.INT);
     protected final Reference2IntOpenHashMap<ResourceKey<Recipe<?>>> recipesUsed = new Reference2IntOpenHashMap<>();
     protected final RecipeManager.CachedCheck<I, R> quickCheck;
 
     protected RecipeMachineBlockEntity(BlockEntityType<?> entityType, BlockPos pos, BlockState state, RecipeType<R> recipeType) {
         super(entityType, pos, state);
         this.quickCheck = RecipeManager.createCheck(recipeType);
+    }
+
+    public static void createExperience(ServerLevel level, Vec3 position, int amount, float value) {
+        int xpReward = Mth.floor(amount * value);
+        float xpFraction = Mth.frac(amount * value);
+        if (xpFraction != 0.0F && level.getRandom().nextFloat() < xpFraction) {
+            xpReward++;
+        }
+
+        ExperienceOrb.award(level, position, xpReward);
     }
 
     @Override
@@ -96,9 +109,7 @@ public abstract class RecipeMachineBlockEntity<I extends RecipeInput, R extends 
 
     @Override
     public void fillStackedContents(StackedItemContents stackedContents) {
-        for (int i = 0; i < size(); i++) {
-            stackedContents.accountStack(ItemUtil.getStack(this.innerResourceHandler, i));
-        }
+        this.items.forEach(stackedContents::accountStack);
     }
 
     @Override

@@ -7,7 +7,7 @@
 
 package io.kalishak.galacticraftlegacy.world.inventory.slot;
 
-import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.ElectricFurnaceBlockEntity;
+import io.kalishak.galacticraftlegacy.transfer.ResourcefulHelper;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -16,16 +16,17 @@ import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.neoforged.neoforge.transfer.item.ResourceHandlerSlot;
 
 import java.util.Optional;
+import java.util.function.Consumer;
 
 public class ResultResourceHandlerSlot extends ResourceHandlerSlot {
     private final Player player;
-    private final ElectricFurnaceBlockEntity machine;
+    private final Consumer<ServerPlayer> recipeAwards;
     private int removeCount;
 
-    public ResultResourceHandlerSlot(Player player, ResourceHandler<ItemResource> handler, ElectricFurnaceBlockEntity machine, int index, int xPosition, int yPosition) {
-        super(handler, machine::set, index, xPosition, yPosition);
+    public ResultResourceHandlerSlot(Player player, ResourceHandler<ItemResource> handler, Consumer<ServerPlayer> recipeAwards, int index, int xPosition, int yPosition) {
+        super(handler, ResourcefulHelper::notPlaceable, index, xPosition, yPosition);
         this.player = player;
-        this.machine = machine;
+        this.recipeAwards = recipeAwards;
     }
 
     @Override
@@ -61,7 +62,7 @@ public class ResultResourceHandlerSlot extends ResourceHandlerSlot {
         stack.onCraftedBy(this.player, this.removeCount);
 
         if (this.player instanceof ServerPlayer serverPlayer) {
-            this.machine.awardUsedRecipes(serverPlayer);
+            this.recipeAwards.accept(serverPlayer);
         }
     }
 }

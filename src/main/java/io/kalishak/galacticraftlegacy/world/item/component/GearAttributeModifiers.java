@@ -7,10 +7,12 @@
 
 package io.kalishak.galacticraftlegacy.world.item.component;
 
+import com.google.common.collect.ImmutableList;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.kalishak.galacticraftlegacy.codec.SerializableEnum;
+import io.kalishak.galacticraftlegacy.world.entity.GearEquipmentSlot;
 import io.kalishak.galacticraftlegacy.world.entity.GearEquipmentSlotGroup;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.ChatFormatting;
@@ -22,37 +24,111 @@ import net.minecraft.network.chat.ComponentSerialization;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.Identifier;
-import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
+import org.apache.logging.log4j.util.TriConsumer;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
-import org.w3c.dom.Attr;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.List;
 import java.util.Locale;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 /**
  * Based on vanilla {@link net.minecraft.world.item.component.ItemAttributeModifiers} but for GearEquipment
  * @param modifiers List of attribute modifiers
  */
-public record GearAttributeModifier(List<GearAttributeModifier.Entry> modifiers) {
-    public static final GearAttributeModifier EMPTY = new GearAttributeModifier(List.of());
-    public static final Codec<GearAttributeModifier> CODEC = Entry.CODEC
+public record GearAttributeModifiers(List<GearAttributeModifiers.Entry> modifiers) {
+    public static final GearAttributeModifiers EMPTY = new GearAttributeModifiers(List.of());
+    public static final Codec<GearAttributeModifiers> CODEC = Entry.CODEC
             .listOf()
-            .xmap(GearAttributeModifier::new, GearAttributeModifier::modifiers);
-    public static final StreamCodec<RegistryFriendlyByteBuf, GearAttributeModifier> STREAM_CODEC = StreamCodec.composite(
-            Entry.STREAM_CODEC.apply(ByteBufCodecs.list()), GearAttributeModifier::modifiers,
-            GearAttributeModifier::new
+            .xmap(GearAttributeModifiers::new, GearAttributeModifiers::modifiers);
+    public static final StreamCodec<RegistryFriendlyByteBuf, GearAttributeModifiers> STREAM_CODEC = StreamCodec.composite(
+            Entry.STREAM_CODEC.apply(ByteBufCodecs.list()), GearAttributeModifiers::modifiers,
+            GearAttributeModifiers::new
     );
     public static final DecimalFormat ATTRIBUTE_MODIFIER_FORMAT = new DecimalFormat("#.##", DecimalFormatSymbols.getInstance(Locale.ROOT));
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public GearAttributeModifiers withModifierAdded(Holder<Attribute> attribute, AttributeModifier modifier, GearEquipmentSlotGroup slot) {
+        ImmutableList.Builder<Entry> newModifiers = ImmutableList.builderWithExpectedSize(this.modifiers.size() + 1);
+
+        this.modifiers.stream().filter(entry -> !entry.matches(attribute, modifier.id())).forEach(newModifiers::add);
+        newModifiers.add(new Entry(attribute, modifier, slot));
+        return new GearAttributeModifiers(newModifiers.build());
+    }
+
+    public void forEach(GearEquipmentSlotGroup slot, TriConsumer<Holder<Attribute>, AttributeModifier, Display> consumer) {
+        this.modifiers.stream().filter(entry -> entry.slot.equals(slot)).forEach(entry -> consumer.accept(entry.attribute, entry.modifier, entry.display));
+    }
+
+    public void forEach(GearEquipmentSlotGroup slot, BiConsumer<Holder<Attribute>, AttributeModifier> consumer) {
+        this.modifiers.stream().filter(entry -> entry.slot.equals(slot)).forEach(entry -> consumer.accept(entry.attribute, entry.modifier));
+    }
+
+    public void forEach(GearEquipmentSlot slot, TriConsumer<Holder<Attribute>, AttributeModifier, Display> consumer) {
+        this.modifiers.stream().filter(entry -> entry.slot.test(slot)).forEach(entry -> consumer.accept(entry.attribute, entry.modifier, entry.display));
+    }
+
+    public double compute(Holder<Attribute> attribute, double baseValue, GearEquipmentSlot slot) {
+        double value = baseValue;
+
+        for (Entry entry : this.modifiers) {
+            if (entry.slot.test(slot) && entry.attribute == attribute) {
+                double amount = entry.modifier.amount();
+
+                value += switch (entry.modifier.operation()) {
+                    case ADD_VALUE -> amount;
+                    case ADD_MULTIPLIED_BASE -> amount * baseValue;
+                    case ADD_MULTIPLIED_TOTAL -> amount * value;
+                };
+            }
+        }
+
+        return value;
+    }
+
+    public double compute(Holder<Attribute> attribute, double baseValue, @Nullable GearEquippable equippable) {
+        if (equippable != null) {
+            return compute(attribute, baseValue, equippable.gearSlot());
+        }
+
+        return baseValue;
+    }
+
+    public static class Builder {
+        private final ImmutableList.Builder<GearAttributeModifiers.Entry> entries = ImmutableList.builder();
+
+        private Builder() {
+
+        }
+
+        public Builder add(Holder<Attribute> attribute, AttributeModifier modifier, GearEquipmentSlotGroup slot) {
+            this.entries.add(new GearAttributeModifiers.Entry(attribute, modifier, slot));
+            return this;
+        }
+
+        public Builder add(Holder<Attribute> attribute, AttributeModifier modifier, GearEquipmentSlotGroup slot, Display display) {
+            this.entries.add(new GearAttributeModifiers.Entry(attribute, modifier, slot, display));
+            return this;
+        }
+
+        public GearAttributeModifiers build() {
+            return new GearAttributeModifiers(this.entries.build());
+        }
+    }
 
     public interface Display {
         Codec<Display> CODEC = Type.CODEC.dispatch("type", Display::type, type -> type.codec);

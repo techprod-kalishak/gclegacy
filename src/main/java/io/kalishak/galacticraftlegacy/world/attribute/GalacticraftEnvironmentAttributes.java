@@ -11,7 +11,6 @@ import io.kalishak.galacticraftlegacy.Galacticraft;
 import io.kalishak.galacticraftlegacy.world.level.EarthPhase;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.attribute.AttributeRange;
-import net.minecraft.world.attribute.AttributeType;
 import net.minecraft.world.attribute.AttributeTypes;
 import net.minecraft.world.attribute.EnvironmentAttribute;
 import net.neoforged.bus.api.IEventBus;

@@ -26,7 +26,7 @@ import java.awt.*;
 
 public class ElectricCompressorScreen extends AbstractRecipeBookScreen<ElectricCompressorMenu> implements MachineScreen {
     private static final Identifier PROGRESS_SPRITE = Constants.id("container/compressor/compressing");
-    public static final Identifier TEXTURES = Identifier.fromNamespaceAndPath(Galacticraft.MODID, "textures/gui/container/compressor.png");
+    public static final Identifier TEXTURES = Identifier.fromNamespaceAndPath(Galacticraft.MODID, "textures/gui/container/electric_compressor.png");
 
     public ElectricCompressorScreen(ElectricCompressorMenu menu, Inventory inventory, Component title) {
         super(menu, new CompressorRecipeBookComponent(menu, true), inventory, title);
@@ -40,7 +40,7 @@ public class ElectricCompressorScreen extends AbstractRecipeBookScreen<ElectricC
 
     @Override
     protected ScreenPosition getRecipeBookButtonPosition() {
-        return new ScreenPosition(this.leftPos + 60, this.height / 2 - 51);
+        return new ScreenPosition(this.leftPos + 96, this.height / 2 - 21);
     }
 
     @Override

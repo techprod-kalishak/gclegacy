@@ -36,7 +36,7 @@ public class CompressorScreen extends AbstractRecipeBookScreen<CompressorMenu> {
 
     @Override
     protected ScreenPosition getRecipeBookButtonPosition() {
-        return new ScreenPosition(this.leftPos + 60, this.height / 2 - 49);
+        return new ScreenPosition(this.leftPos + 96, this.height / 2 - 21);
     }
 
     @Override

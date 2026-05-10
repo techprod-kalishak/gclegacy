@@ -119,6 +119,8 @@ public final class GalacticraftBlockEntityType {
 
     private static void registerCapabilities(RegisterCapabilitiesEvent event) {
         CoalGeneratorBlockEntity.registerCapabilities(event);
+        CompressorBlockEntity.registerItemCapabilities(event);
+        ElectricCompressorBlockEntity.registerCapabilities(event);
         CircuitFabricatorBlockEntity.registerCapabilities(event);
         ElectricFurnaceBlockEntity.registerCapabilities(event);
         ParachestBlockEntity.registerCapabilities(event);

@@ -39,7 +39,7 @@ public class ElectricFurnaceMenu extends AbstractMachineMenu<ElectricFurnaceBloc
 
         addSlot(new ResourceHandlerSlot(this.resourceHandler, machine::set, 0, 56, 25));
         addSlot(new CapabilityHandlerSlot<>(this.resourceHandler, machine::set, Capabilities.Energy.ITEM, 1, 8, 49));
-        addSlot(new ResultResourceHandlerSlot(playerInventory.player, this.resourceHandler, machine, 2, 109, 25));
+        addSlot(new ResultResourceHandlerSlot(playerInventory.player, this.resourceHandler, machine::awardUsedRecipes, 2, 109, 25));
         addStandardInventorySlots(playerInventory, 8, 84);
     }
 

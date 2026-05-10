@@ -9,6 +9,8 @@ package io.kalishak.galacticraftlegacy.world.level.block;
 
 import com.mojang.serialization.MapCodec;
 import io.kalishak.galacticraftlegacy.transfer.ResourcefulHelper;
+import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityType;
+import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.AlloyCompressor;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.CompressorBlockEntity;
 import io.kalishak.galacticraftlegacy.world.level.block.machine.RotatedByToolBlock;
 import net.minecraft.core.BlockPos;
@@ -23,8 +25,12 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jspecify.annotations.Nullable;
@@ -32,10 +38,11 @@ import org.jspecify.annotations.Nullable;
 public class CompressorBlock extends BaseEntityBlock implements RotatedByToolBlock {
     public static final MapCodec<CompressorBlock> CODEC = simpleCodec(CompressorBlock::new);
     public static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;
+    public static final BooleanProperty LIT = BlockStateProperties.LIT;
 
     public CompressorBlock(Properties properties) {
         super(properties);
-        registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH));
+        registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(LIT, false));
     }
 
     @Override
@@ -48,7 +55,7 @@ public class CompressorBlock extends BaseEntityBlock implements RotatedByToolBlo
         if (!level.isClientSide()) {
             BlockEntity blockEntity = level.getBlockEntity(pos);
 
-            if (blockEntity instanceof CompressorBlockEntity compressor) {
+            if (blockEntity instanceof AlloyCompressor compressor) {
                 player.openMenu(compressor, pos);
             }
         }
@@ -98,6 +105,13 @@ public class CompressorBlock extends BaseEntityBlock implements RotatedByToolBlo
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING);
+        builder.add(FACING, LIT);
+    }
+
+    @Override
+    public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState, BlockEntityType<T> type) {
+        return level instanceof ServerLevel serverLevel
+                ? createTickerHelper(type, GalacticraftBlockEntityType.COMPRESSOR.get(), (_, pos, state, blockEntity) -> CompressorBlockEntity.serverTick(serverLevel, pos, state, blockEntity))
+                : null;
     }
 }

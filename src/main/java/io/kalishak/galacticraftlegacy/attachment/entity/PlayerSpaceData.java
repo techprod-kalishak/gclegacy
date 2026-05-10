@@ -12,6 +12,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.kalishak.galacticraftlegacy.attachment.GalacticraftAttachments;
 import io.kalishak.galacticraftlegacy.transfer.entity.SpaceGearEquipment;
 import io.kalishak.galacticraftlegacy.world.entity.GearEquipmentSlot;
+import io.kalishak.galacticraftlegacy.world.entity.ai.attributes.GalacticraftAttributes;
 import io.kalishak.galacticraftlegacy.world.item.component.GalacticraftDataComponents;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -78,8 +79,8 @@ public class PlayerSpaceData extends GearInventoryProvider {
         );
 
         return (float) thermal.stream()
-                .filter(stack -> stack.has(GalacticraftDataComponents.TEMPERATURE_MODIFIER))
-                .mapToDouble(stack -> stack.get(GalacticraftDataComponents.TEMPERATURE_MODIFIER).doubleValue())
+                .filter(stack -> stack.has(GalacticraftDataComponents.GEAR_ATTRIBUTE_MODIFIERS))
+                .mapToDouble(stack -> stack.get(GalacticraftDataComponents.GEAR_ATTRIBUTE_MODIFIERS).compute(GalacticraftAttributes.THERMAL_PROTECTION, 0.0D, stack.get(GalacticraftDataComponents.GEAR_EQUIPPABLE)))
                 .sum() / 4.0F;
     }
 

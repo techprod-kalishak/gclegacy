@@ -7,19 +7,22 @@
 
 package io.kalishak.galacticraftlegacy.world.item.gear;
 
+import io.kalishak.galacticraftlegacy.Constants;
 import io.kalishak.galacticraftlegacy.attachment.entity.GearInventoryProvider;
 import io.kalishak.galacticraftlegacy.world.entity.GearEquipmentSlot;
-import io.kalishak.galacticraftlegacy.world.item.GalacticraftAttributes;
+import io.kalishak.galacticraftlegacy.world.entity.GearEquipmentSlotGroup;
+import io.kalishak.galacticraftlegacy.world.entity.ai.attributes.GalacticraftAttributes;
 import io.kalishak.galacticraftlegacy.world.item.component.GalacticraftDataComponents;
+import io.kalishak.galacticraftlegacy.world.item.component.GearAttributeModifiers;
 import io.kalishak.galacticraftlegacy.world.item.component.GearEquippable;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.item.equipment.EquipmentAsset;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.fluids.FluidStack;
@@ -42,11 +45,24 @@ public  class GearItem extends Item {
                 .component(GalacticraftDataComponents.FLUID_TANK, SimpleFluidContent.copyOf(FluidStack.EMPTY));
     }
 
-    public static Properties thermalPiece(GearEquipmentSlot slot, ResourceKey<EquipmentAsset> assetId) {
+    public static Properties thermalPiece(GearEquipmentSlot slot, ResourceKey<EquipmentAsset> assetId, float thermal) {
         return new Properties()
                 .stacksTo(1)
-                .component(GalacticraftDataComponents.GEAR_EQUIPPABLE, GearEquippable.thermal(slot, assetId));
-                //TODO add temperature modifer .attributes(ItemAttributeModifiers.EMPTY);
+                .component(GalacticraftDataComponents.GEAR_EQUIPPABLE, GearEquippable.thermal(slot, assetId))
+                .component(
+                        GalacticraftDataComponents.GEAR_ATTRIBUTE_MODIFIERS,
+                        GearAttributeModifiers.builder()
+                                .add(
+                                        GalacticraftAttributes.THERMAL_PROTECTION,
+                                        new AttributeModifier(
+                                                Constants.id("thermal_protection"),
+                                                thermal,
+                                                AttributeModifier.Operation.ADD_VALUE
+                                        ),
+                                        GearEquipmentSlotGroup.THERMAL
+                                )
+                                .build()
+                );
     }
     public static Properties parachute(DyeColor color) {
         return new Properties()

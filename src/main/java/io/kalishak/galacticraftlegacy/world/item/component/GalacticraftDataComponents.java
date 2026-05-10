@@ -48,6 +48,10 @@ public final class GalacticraftDataComponents {
             "fluid_tank",
             builder -> builder.persistent(SimpleFluidContent.CODEC).networkSynchronized(SimpleFluidContent.STREAM_CODEC)
     );
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<GearAttributeModifiers>> GEAR_ATTRIBUTE_MODIFIERS = REGISTRY.registerComponentType(
+            "gear_attribute_modifiers",
+            builder -> builder.persistent(GearAttributeModifiers.CODEC).networkSynchronized(GearAttributeModifiers.STREAM_CODEC).cacheEncoding()
+    );
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<GearEquippable>> GEAR_EQUIPPABLE = REGISTRY.registerComponentType(
             "gear_equippable",
             builder -> builder.persistent(GearEquippable.CODEC).networkSynchronized(GearEquippable.STREAM_CODEC).cacheEncoding()
@@ -75,10 +79,6 @@ public final class GalacticraftDataComponents {
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<GlobalPos>> STRUCTURE_POS = REGISTRY.registerComponentType(
             "structure_pos",
             builder -> builder.persistent(GlobalPos.CODEC).networkSynchronized(GlobalPos.STREAM_CODEC)
-    );
-    public static final DeferredHolder<DataComponentType<?>, DataComponentType<Float>> TEMPERATURE_MODIFIER = REGISTRY.registerComponentType(
-            "temperature_modifier",
-            builder -> builder.persistent(Codec.FLOAT).networkSynchronized(ByteBufCodecs.FLOAT)
     );
 
     public static void init(IEventBus bus) {

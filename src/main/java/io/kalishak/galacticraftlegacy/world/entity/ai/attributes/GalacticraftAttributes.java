@@ -5,7 +5,7 @@
  * See LICENSE file for more details
  */
 
-package io.kalishak.galacticraftlegacy.world.item;
+package io.kalishak.galacticraftlegacy.world.entity.ai.attributes;
 
 import io.kalishak.galacticraftlegacy.Galacticraft;
 import net.minecraft.core.registries.Registries;
@@ -21,7 +21,7 @@ public class GalacticraftAttributes {
 
     public static final DeferredHolder<Attribute, Attribute> THERMAL_PROTECTION = REGISTRY.register(
             "thermal_protection",
-            () -> new PercentageAttribute("thermal_protection", 0.0D, -25.0D, 25.0D)
+            () -> new PercentageAttribute("thermal_protection", 0.0D, -0.25D, 0.25D)
     );
     public static final DeferredHolder<Attribute, Attribute> CORROSION_PROTECTION = REGISTRY.register(
             "corrosion_protection",

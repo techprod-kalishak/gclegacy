@@ -10,9 +10,11 @@ package io.kalishak.galacticraftlegacy.world.inventory.machine;
 import io.kalishak.galacticraftlegacy.transfer.ResourcefulHelper;
 import io.kalishak.galacticraftlegacy.world.inventory.GalacticraftMenuType;
 import io.kalishak.galacticraftlegacy.world.inventory.slot.CapabilityHandlerSlot;
+import io.kalishak.galacticraftlegacy.world.inventory.slot.ResultResourceHandlerSlot;
 import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.ElectricCompressingRecipe;
 import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.input.CompressingRecipeInput;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityType;
+import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.AlloyCompressor;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.ElectricCompressorBlockEntity;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.recipebook.ServerPlaceRecipe;
@@ -25,22 +27,19 @@ import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.neoforged.neoforge.capabilities.Capabilities;
-import net.neoforged.neoforge.transfer.ResourceHandler;
-import net.neoforged.neoforge.transfer.item.ItemResource;
-import net.neoforged.neoforge.transfer.item.ResourceHandlerSlot;
 
 import java.util.List;
 
-public class ElectricCompressorMenu extends AbstractCompressorMenu<ElectricCompressorBlockEntity> {
+public class ElectricCompressorMenu extends AbstractCompressorMenu {
     public ElectricCompressorMenu(int containerId, Inventory playerInventory, ElectricCompressorBlockEntity compressor, ContainerData dataAccess) {
         super(GalacticraftMenuType.ELECTRIC_COMPRESSOR.get(), containerId, playerInventory, compressor, dataAccess);
 
-        ResourceHandler<ItemResource> resourceHandler = ResourcefulHelper.getResourceHandler(Capabilities.Item.BLOCK, ItemResource.EMPTY, compressor, null);
-        addCompressorGrid(resourceHandler, compressor::set, 19, 18);
-        addSlot(new ResourceHandlerSlot(resourceHandler, ResourcefulHelper::notPlaceable, 9, 138, 30));
-        //addSlot(new ResourceHandlerSlot(resourceHandler, ResourcefulHelper::notPlaceable, 11, 138, 48));
-        addSlot(new CapabilityHandlerSlot<>(resourceHandler, compressor::set, Capabilities.Energy.ITEM, 10, 55, 75));
+        addCompressorGrid(this.compressorInventory, compressor::set, 19, 18);
+        addSlot(new CapabilityHandlerSlot<>(this.compressorInventory, compressor::set, Capabilities.Energy.ITEM, AlloyCompressor.FUEL_SLOT, 55, 75));
+        addSlot(new ResultResourceHandlerSlot(playerInventory.player, this.compressorInventory, _ -> {}, AlloyCompressor.RESULT_SLOT_START, 138, 30));
+        addSlot(new ResultResourceHandlerSlot(playerInventory.player, this.compressorInventory, _ -> {}, AlloyCompressor.RESULT_SLOT_END, 138, 48));
 
         addStandardInventorySlots(playerInventory, 8, 117);
     }
@@ -50,11 +49,11 @@ public class ElectricCompressorMenu extends AbstractCompressorMenu<ElectricCompr
     }
 
     public int getEnergyCapacity() {
-        return ResourcefulHelper.getEnergyHandler(this.compressor, null).getCapacityAsInt();
+        return ResourcefulHelper.getEnergyHandler((BlockEntity) this.compressor, null).getCapacityAsInt();
     }
 
     public ElectricCompressorBlockEntity getMachine() {
-        return this.compressor;
+        return (ElectricCompressorBlockEntity) this.compressor;
     }
 
     @Override
@@ -64,7 +63,19 @@ public class ElectricCompressorMenu extends AbstractCompressorMenu<ElectricCompr
 
     @Override
     public PostPlaceAction handlePlacement(boolean useMaxItems, boolean allowDroppingItemsToClear, RecipeHolder<?> recipe, ServerLevel level, Inventory inventory) {
-        final List<Slot> slotsToClear = this.slots.subList(0, 9);
+        final List<Slot> slotsToClear = List.of(
+                getSlot(0), //CRAFTING_SLOT_START
+                getSlot(1),
+                getSlot(2),
+                getSlot(3),
+                getSlot(4),
+                getSlot(5),
+                getSlot(6),
+                getSlot(7),
+                getSlot(8), //CRAFTING_SLOT_END
+                getSlot(AlloyCompressor.RESULT_SLOT_START)
+        );
+
         return ServerPlaceRecipe.placeRecipe(new ServerPlaceRecipe.CraftingMenuAccess<>() {
             @Override
             public void fillCraftSlotsStackedContents(StackedItemContents stackedContents) {
@@ -78,8 +89,8 @@ public class ElectricCompressorMenu extends AbstractCompressorMenu<ElectricCompr
 
             @Override
             public boolean recipeMatches(RecipeHolder<ElectricCompressingRecipe> recipe) {
-                return recipe.value().matches(new CompressingRecipeInput(3, 3, () -> ResourcefulHelper.getResourceHandler(Capabilities.Item.BLOCK, ItemResource.EMPTY, ElectricCompressorMenu.this.compressor, null)), level);
+                return recipe.value().matches(new CompressingRecipeInput(3, 3, () -> ElectricCompressorMenu.this.compressorInventory), level);
             }
-        }, 3, 3, this.slots.subList(0, 8), slotsToClear, inventory, (RecipeHolder<ElectricCompressingRecipe>) recipe, useMaxItems, allowDroppingItemsToClear);
+        }, 3, 3, this.slots.subList(AlloyCompressor.CRAFTING_SLOT_START, AlloyCompressor.CRAFTING_SLOT_END), slotsToClear, inventory, (RecipeHolder<ElectricCompressingRecipe>) recipe, useMaxItems, allowDroppingItemsToClear);
     }
 }

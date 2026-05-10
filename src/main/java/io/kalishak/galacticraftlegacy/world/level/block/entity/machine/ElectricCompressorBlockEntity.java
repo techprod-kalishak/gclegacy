@@ -7,18 +7,13 @@
 
 package io.kalishak.galacticraftlegacy.world.level.block.entity.machine;
 
-import io.kalishak.galacticraftlegacy.attachment.GalacticraftAttachments;
-import io.kalishak.galacticraftlegacy.attachment.block.SyncedEnergyHandler;
 import io.kalishak.galacticraftlegacy.world.inventory.machine.ElectricCompressorMenu;
-import io.kalishak.galacticraftlegacy.world.item.component.GalacticraftDataComponents;
-import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.CompressingRecipe;
+import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.ElectricCompressingRecipe;
 import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.GalacticraftRecipeType;
 import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.input.CompressingRecipeInput;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityType;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.NonNullList;
-import net.minecraft.core.component.DataComponentGetter;
-import net.minecraft.core.component.DataComponentMap;
+import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
@@ -29,30 +24,24 @@ import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
+import net.neoforged.neoforge.transfer.DelegatingResourceHandler;
+import net.neoforged.neoforge.transfer.RangedResourceHandler;
 import net.neoforged.neoforge.transfer.ResourceHandler;
-import net.neoforged.neoforge.transfer.energy.SimpleEnergyHandler;
 import net.neoforged.neoforge.transfer.item.ItemResource;
-import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
 import net.neoforged.neoforge.transfer.transaction.Transaction;
 import org.jspecify.annotations.Nullable;
 
-public class ElectricCompressorBlockEntity extends AbstractCompressorBlockEntity {
-    private final SimpleEnergyHandler capacitor = new SimpleEnergyHandler(25000, 250) {
-        @Override
-        protected void onEnergyChanged(int previousAmount) {
-            if (!ElectricCompressorBlockEntity.this.isRemoved()) {
-                ElectricCompressorBlockEntity.this.setData(GalacticraftAttachments.SYNC_ENERGY_STORAGE, new SyncedEnergyHandler(previousAmount));
-            }
-        }
-    };
-    protected final ContainerData dataAccess = new ContainerData() {
+public class ElectricCompressorBlockEntity extends RecipeMachineBlockEntity<CompressingRecipeInput, ElectricCompressingRecipe> implements AlloyCompressor {
+    private int compressingTimer;
+    private int compressingTotalTime;
+    private final ContainerData dataAccess = new ContainerData() {
         @Override
         public int get(int dataId) {
             return switch (dataId) {
-                case AbstractCompressorBlockEntity.DATA_SLOT_COMPRESSING_TIMER -> ElectricCompressorBlockEntity.this.compressingTimer;
-                case AbstractCompressorBlockEntity.DATA_SLOT_COMPRESSING_TIME_TOTAL -> ElectricCompressorBlockEntity.this.compressingTotalTime;
+                case AlloyCompressor.DATA_SLOT_COMPRESSING_TIMER -> ElectricCompressorBlockEntity.this.compressingTimer;
+                case AlloyCompressor.DATA_SLOT_COMPRESSING_TIME_TOTAL -> ElectricCompressorBlockEntity.this.compressingTotalTime;
                 default -> 0;
             };
         }
@@ -60,8 +49,8 @@ public class ElectricCompressorBlockEntity extends AbstractCompressorBlockEntity
         @Override
         public void set(int dataId, int value) {
             switch (dataId) {
-                case AbstractCompressorBlockEntity.DATA_SLOT_COMPRESSING_TIMER -> ElectricCompressorBlockEntity.this.compressingTimer = value;
-                case AbstractCompressorBlockEntity.DATA_SLOT_COMPRESSING_TIME_TOTAL -> ElectricCompressorBlockEntity.this.compressingTotalTime = value;
+                case AlloyCompressor.DATA_SLOT_COMPRESSING_TIMER -> ElectricCompressorBlockEntity.this.compressingTimer = value;
+                case AlloyCompressor.DATA_SLOT_COMPRESSING_TIME_TOTAL -> ElectricCompressorBlockEntity.this.compressingTotalTime = value;
             }
         }
 
@@ -75,46 +64,59 @@ public class ElectricCompressorBlockEntity extends AbstractCompressorBlockEntity
         super(GalacticraftBlockEntityType.ELECTRIC_COMPRESSOR.get(), pos, blockState, GalacticraftRecipeType.ELECTRIC_COMPRESSING.get());
     }
 
+    public static void registerCapabilities(RegisterCapabilitiesEvent event) {
+        registerSingleEnergyInputEnergyHandler(Direction.EAST, GalacticraftBlockEntityType.ELECTRIC_COMPRESSOR.get(), event);
+        event.registerBlockEntity(
+                Capabilities.Item.BLOCK,
+                GalacticraftBlockEntityType.ELECTRIC_COMPRESSOR.get(),
+                (blockEntity, cxt) -> {
+                    if (cxt != null && cxt.getAxis().isVertical()) {
+                        return cxt == Direction.UP
+                                ? RangedResourceHandler.of(() -> blockEntity.innerResourceHandler, CRAFTING_SLOT_START, FUEL_SLOT)
+                                : RangedResourceHandler.of(() -> blockEntity.innerResourceHandler, RESULT_SLOT_START, RESULT_SLOT_END);
+                    }
+
+                    return new DelegatingResourceHandler<>(() -> blockEntity.innerResourceHandler);
+                }
+        );
+    }
+
     public static void serverTick(ServerLevel level, BlockPos pos, BlockState state, ElectricCompressorBlockEntity compressor) {
-        AbstractMachineBlockEntity.energyTransferTick(compressor.innerResourceHandler, compressor.capacitor, compressor.compressingTimer > 0, false, AbstractMachineBlockEntity.BASIC_MACHINE_MAX_TRANSFER_RATE, 11, 250, null);
+        AbstractMachineBlockEntity.energyTransferTick(compressor.innerResourceHandler, compressor.energyHandler, compressor.compressingTimer > 0, false, AbstractMachineBlockEntity.BASIC_MACHINE_MAX_TRANSFER_RATE, AlloyCompressor.FUEL_SLOT, 250, null);
         boolean changed = false;
 
-        int currentEnergy = compressor.capacitor.getAmountAsInt();
-        NonNullList<ItemStack> ingredients = NonNullList.copyOf(compressor.items.subList(0, 9));
-
-        boolean hasIngredients = !ingredients.isEmpty();
+        int currentEnergy = compressor.energyHandler.getAmountAsInt();
+        ResourceHandler<ItemResource> ingredients = RangedResourceHandler.of(() -> compressor.innerResourceHandler, AlloyCompressor.CRAFTING_SLOT_START, AlloyCompressor.CRAFTING_SLOT_END);
         boolean hasFuel = currentEnergy > 0;
 
         if (hasFuel) {
+            CompressingRecipeInput input = new CompressingRecipeInput(3, 3, ingredients);
+            RecipeHolder<ElectricCompressingRecipe> recipe = compressor.quickCheck.getRecipeFor(input, level).orElse(null);
+            boolean hasIngredients = recipe != null;
+
             if (hasIngredients) {
-                ResourceHandler<ItemResource> ingredientsHandler = new ItemStacksResourceHandler(ingredients);
-                CompressingRecipeInput input = new CompressingRecipeInput(3, 3, () -> ingredientsHandler);
-                RecipeHolder<? extends CompressingRecipe> recipe = compressor.quickCheck.getRecipeFor(input, level).orElse(null);
-
-                if (recipe != null) {
-                    try (Transaction tx = Transaction.open(null)) {
-                        if (compressor.capacitor.extract(25, tx) > 0) {
-                            tx.commit();
-                        }
+                try (Transaction tx = Transaction.open(null)) {
+                    if (compressor.energyHandler.extract(25, tx) > 0) {
+                        tx.commit();
                     }
+                }
 
-                    ItemStack recipeResult = recipe.value().assemble(input);
-                    ItemResource resourceInResultSlot = compressor.innerResourceHandler.getResource(10);
-                    int maxStackSize = compressor.innerResourceHandler.getCapacityAsInt(10, resourceInResultSlot);
+                ItemStack recipeResult = recipe.value().assemble(input);
+                ItemResource resourceInResultSlot = compressor.innerResourceHandler.getResource(10);
+                int maxStackSize = compressor.innerResourceHandler.getCapacityAsInt(10, resourceInResultSlot);
 
-                    if (!recipeResult.isEmpty() && canCompress(compressor.innerResourceHandler, maxStackSize, recipeResult)) {
-                        compressor.compressingTimer++;
+                if (!recipeResult.isEmpty() && AlloyCompressor.canCompress(compressor.innerResourceHandler, maxStackSize, recipeResult)) {
+                    compressor.compressingTimer++;
 
-                        if (compressor.compressingTimer == compressor.compressingTotalTime) {
-                            compressor.compressingTimer = 0;
-                            compressor.compressingTotalTime = recipe.value().compressingTime();
-                            compress(compressor.innerResourceHandler, ingredients, recipeResult);
-                            compressor.setRecipeUsed(recipe);
-                            changed = true;
-                        }
-                    } else {
+                    if (compressor.compressingTimer == compressor.compressingTotalTime) {
                         compressor.compressingTimer = 0;
+                        compressor.compressingTotalTime = recipe.value().compressingTime();
+                        AlloyCompressor.compress(compressor.innerResourceHandler, ingredients, recipeResult);
+                        compressor.setRecipeUsed(recipe);
+                        changed = true;
                     }
+                } else {
+                    compressor.compressingTimer = 0;
                 }
             } else {
                 compressor.compressingTimer = 0;
@@ -129,27 +131,13 @@ public class ElectricCompressorBlockEntity extends AbstractCompressorBlockEntity
     }
 
     @Override
-    protected void loadAdditional(ValueInput input) {
-        super.loadAdditional(input);
-        this.capacitor.deserialize(input);
+    protected int getBatterySlotIndex() {
+        return AlloyCompressor.FUEL_SLOT;
     }
 
     @Override
-    protected void saveAdditional(ValueOutput output) {
-        super.saveAdditional(output);
-        this.capacitor.serialize(output);
-    }
-
-    @Override
-    protected void applyImplicitComponents(DataComponentGetter componentGetter) {
-        super.applyImplicitComponents(componentGetter);
-        this.capacitor.set(componentGetter.getOrDefault(GalacticraftDataComponents.STORED_ENERGY, 0));
-    }
-
-    @Override
-    protected void collectImplicitComponents(DataComponentMap.Builder components) {
-        super.collectImplicitComponents(components);
-        components.set(GalacticraftDataComponents.STORED_ENERGY, this.capacitor.getAmountAsInt());
+    protected int size() {
+        return AlloyCompressor.INVENTORY_SIZE_ADVANCED;
     }
 
     @Override
