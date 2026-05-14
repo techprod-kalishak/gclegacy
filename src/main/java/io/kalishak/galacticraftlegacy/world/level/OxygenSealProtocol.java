@@ -7,15 +7,20 @@
 
 package io.kalishak.galacticraftlegacy.world.level;
 
+import io.kalishak.galacticraftlegacy.config.CommonConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+@SuppressWarnings("unused")
 public class OxygenSealProtocol extends Thread {
+    private static final Logger LOGGER = LoggerFactory.getLogger(OxygenSealProtocol.class);
     public static AtomicBoolean isLoopInRunning = new AtomicBoolean();
     private static int buckets;
     private static int checkedSize;
@@ -48,6 +53,7 @@ public class OxygenSealProtocol extends Thread {
         }
 
         start();
+        CommonConfig.debug(LOGGER::debug, "Starting OxygenSealProtocol on thread");
     }
 
     @Override
@@ -59,7 +65,7 @@ public class OxygenSealProtocol extends Thread {
     public static class CountedBucket {
         private int maxSize = 64;
         private int currentSize = 0;
-        private int[] contents = new int[maxSize];
+        private int[] contents = new int[this.maxSize];
 
         public void add(int index) {
             if (contains(index)) {

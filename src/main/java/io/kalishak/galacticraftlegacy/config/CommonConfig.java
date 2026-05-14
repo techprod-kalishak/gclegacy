@@ -7,15 +7,18 @@
 
 package io.kalishak.galacticraftlegacy.config;
 
-import java.util.List;
-import java.util.Objects;
-
+import net.minecraft.SharedConstants;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.dimension.BuiltinDimensionTypes;
 import net.neoforged.neoforge.common.ModConfigSpec;
+
+import java.util.List;
+import java.util.Objects;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 public class CommonConfig {
     private static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
@@ -59,5 +62,21 @@ public class CommonConfig {
 
     public static List<ResourceKey<Level>> getDimensions() {
         return DIMENSIONS_WITH_DISABLED_ROCKETS.get().stream().map(Identifier::tryParse).filter(Objects::nonNull).map(key -> ResourceKey.create(Registries.DIMENSION, key)).toList();
+    }
+
+    public static boolean showDebug() {
+        return SharedConstants.DEBUG_ENABLED && DEBUG_MODE.get();
+    }
+
+    public static void debug(Consumer<String> messageGetter, String message) {
+        if (showDebug()) messageGetter.accept(message);
+    }
+
+    public static void debug(BiConsumer<String, Object> messageGetter, String message, Object o) {
+        if (showDebug()) messageGetter.accept(message, o);
+    }
+
+    public static void debug(BiConsumer<String, Object[]> messageGetter, String message, Object... o) {
+        if (showDebug()) messageGetter.accept(message, o);
     }
 }

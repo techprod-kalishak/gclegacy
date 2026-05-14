@@ -8,7 +8,6 @@
 package io.kalishak.galacticraftlegacy.world.level.block;
 
 import com.mojang.serialization.MapCodec;
-import io.kalishak.galacticraftlegacy.transfer.ResourcefulHelper;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityType;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.AlloyCompressor;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.CompressorBlockEntity;
@@ -85,7 +84,9 @@ public class CompressorBlock extends BaseEntityBlock implements RotatedByToolBlo
 
     @Override
     protected int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos, Direction direction) {
-        return ResourcefulHelper.getRedstoneSignalFromBlockEntity(level, pos, state, direction);
+        BlockEntity blockEntity = level.getBlockEntity(pos);
+
+        return blockEntity instanceof CompressorBlockEntity compressor ? CompressorBlockEntity.signalFromCompression(compressor) : 0;
     }
 
     @Override

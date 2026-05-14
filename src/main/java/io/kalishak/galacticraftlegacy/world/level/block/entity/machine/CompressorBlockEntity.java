@@ -32,6 +32,8 @@ import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.Containers;
 import net.minecraft.world.entity.player.Inventory;
@@ -54,7 +56,6 @@ import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.registries.datamaps.builtin.FurnaceFuel;
 import net.neoforged.neoforge.registries.datamaps.builtin.NeoForgeDataMaps;
-import net.neoforged.neoforge.transfer.DelegatingResourceHandler;
 import net.neoforged.neoforge.transfer.RangedResourceHandler;
 import net.neoforged.neoforge.transfer.ResourceHandler;
 import net.neoforged.neoforge.transfer.item.ItemResource;
@@ -66,7 +67,7 @@ import java.util.List;
 import java.util.Map;
 
 public class CompressorBlockEntity extends NamedBlockEntity implements AlloyCompressor {
-    protected final NonNullList<ItemStack> items = NonNullList.withSize(12, ItemStack.EMPTY);
+    protected final NonNullList<ItemStack> items = NonNullList.withSize(AlloyCompressor.INVENTORY_SIZE_BASIC, ItemStack.EMPTY);
     protected final ItemStacksResourceHandler innerResourceHandler = new ItemStacksResourceHandler(this.items);
     protected int compressingTimer;
     protected int compressingTotalTime;
@@ -79,8 +80,8 @@ public class CompressorBlockEntity extends NamedBlockEntity implements AlloyComp
                 case AlloyCompressor.DATA_SLOT_COMPRESSING_TIMER -> CompressorBlockEntity.this.compressingTimer;
                 case AlloyCompressor.DATA_SLOT_COMPRESSING_TIME_TOTAL -> CompressorBlockEntity.this.compressingTotalTime;
                 case AlloyCompressor.DATA_SLOT_LIT_TIMER -> {
-                    if (fuelTotalTime > Short.MAX_VALUE) {
-                        yield Mth.floor(((double) fuelTimeRemaining / fuelTotalTime) * Short.MAX_VALUE);
+                    if (CompressorBlockEntity.this.fuelTotalTime > Short.MAX_VALUE) {
+                        yield Mth.floor(((double) CompressorBlockEntity.this.fuelTimeRemaining / CompressorBlockEntity.this.fuelTotalTime) * Short.MAX_VALUE);
                     }
 
                     yield CompressorBlockEntity.this.fuelTimeRemaining;
@@ -118,12 +119,16 @@ public class CompressorBlockEntity extends NamedBlockEntity implements AlloyComp
                 GalacticraftBlockEntityType.COMPRESSOR.get(),
                 (blockEntity, cxt) -> {
                     if (cxt != null && cxt.getAxis().isVertical()) {
-                        return cxt == Direction.UP
-                                ? RangedResourceHandler.of(() -> blockEntity.innerResourceHandler, CRAFTING_SLOT_START, FUEL_SLOT)
-                                : RangedResourceHandler.of(() -> blockEntity.innerResourceHandler, RESULT_SLOT_START, RESULT_SLOT_END);
+                        if (cxt.getAxis().isVertical()) {
+                            return cxt == Direction.UP
+                                    ? RangedResourceHandler.of(() -> blockEntity.innerResourceHandler, CRAFTING_SLOT_START, CRAFTING_SLOT_END)
+                                    : RangedResourceHandler.of(() -> blockEntity.innerResourceHandler, RESULT_SLOT_START, RESULT_SLOT_END);
+                        }
+
+                        return RangedResourceHandler.ofSingleIndex(() -> blockEntity.innerResourceHandler, FUEL_SLOT);
                     }
 
-                    return new DelegatingResourceHandler<>(() -> blockEntity.innerResourceHandler);
+                    return blockEntity.innerResourceHandler;
                 }
         );
     }
@@ -177,6 +182,7 @@ public class CompressorBlockEntity extends NamedBlockEntity implements AlloyComp
                             compressor.compressingTotalTime = recipe.value().compressingTime();
                             AlloyCompressor.compress(compressor.innerResourceHandler, ingredients, recipeResult);
                             compressor.setRecipeUsed(recipe);
+                            level.playSound(null, pos, SoundEvents.ANVIL_USE, SoundSource.BLOCKS);
                             changed = true;
                         }
                     } else {
@@ -199,6 +205,10 @@ public class CompressorBlockEntity extends NamedBlockEntity implements AlloyComp
         if (changed) {
             setChanged(level, pos, state);
         }
+    }
+
+    public static int signalFromCompression(CompressorBlockEntity compressor) {
+        return compressor.compressingTimer == compressor.compressingTotalTime ? 13 : 0;
     }
 
     protected static int fuelDuration(Level level, ItemResource resource) {
@@ -286,6 +296,14 @@ public class CompressorBlockEntity extends NamedBlockEntity implements AlloyComp
     @Override
     public @Nullable Packet<ClientGamePacketListener> getUpdatePacket() {
         return ClientboundBlockEntityDataPacket.create(this);
+    }
+
+    @Override
+    public void setRecipeUsed(@Nullable RecipeHolder<?> recipeUsed) {
+        if (recipeUsed != null) {
+            ResourceKey<Recipe<?>> id = recipeUsed.id();
+            this.recipesUsed.addTo(id, 1);
+        }
     }
 
     public void awardUsedRecipes(ServerPlayer player) {

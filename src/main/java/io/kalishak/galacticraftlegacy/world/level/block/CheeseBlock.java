@@ -61,7 +61,7 @@ public class CheeseBlock extends Block {
 
             stack.hurtAndBreak(1, player, hand);
             level.playSound(null, pos, SoundEvents.COBWEB_BREAK, SoundSource.BLOCKS, 1.0F, 1.0F);
-            popResource(level, pos, stack);
+            popResource(level, pos, cheeseSlice);
 
             return InteractionResult.SUCCESS_SERVER;
         }
