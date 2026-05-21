@@ -7,7 +7,7 @@
 
 package io.kalishak.galacticraftlegacy.world.level.block.entity.wire;
 
-import io.kalishak.galacticraftlegacy.world.level.node.NodeNetwork;
+import io.kalishak.galacticraftlegacy.transfer.node.FluidNodeNetwork;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -56,7 +56,7 @@ public class WireBlockEntity extends AbstractConnectableBlockEntity {
     }
 
     @Override
-    public void addNetwork(NodeNetwork network) {
+    public void addNetwork(FluidNodeNetwork network) {
         this.network = network;
     }
 

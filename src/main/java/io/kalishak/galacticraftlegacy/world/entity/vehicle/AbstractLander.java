@@ -22,12 +22,12 @@ public abstract class AbstractLander extends MovingEntity {
     protected FluidStack fuelStack = FluidStack.EMPTY;
     protected final SingleTankResourceHandler tankResourceHandler = new SingleTankResourceHandler() {
         @Override
-        protected FluidStack getFluidStack() {
+        public FluidStack getFluidStack() {
             return AbstractLander.this.fuelStack;
         }
 
         @Override
-        protected void setFluidStack(FluidStack stack) {
+        public void setFluidStack(FluidStack stack) {
             AbstractLander.this.fuelStack = stack;
         }
 

@@ -65,12 +65,12 @@ public class ParachestBlockEntity extends NamedBlockEntity implements LidBlockEn
     private final ItemStacksResourceHandler itemResources;
     private final SingleTankResourceHandler fluidResource = new SingleTankResourceHandler() {
         @Override
-        protected FluidStack getFluidStack() {
+        public FluidStack getFluidStack() {
             return ParachestBlockEntity.this.tank;
         }
 
         @Override
-        protected void setFluidStack(FluidStack stack) {
+        public void setFluidStack(FluidStack stack) {
             ParachestBlockEntity.this.tank = stack;
         }
 

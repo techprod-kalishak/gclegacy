@@ -177,12 +177,15 @@ public class CompressorBlockEntity extends NamedBlockEntity implements AlloyComp
                     if (isLit) {
                         compressor.compressingTimer++;
 
+                        if (compressor.compressingTimer % 40 == 0) {
+                            level.playSound(null, pos, SoundEvents.ANVIL_FALL, SoundSource.BLOCKS, 0.3F, level.getRandom().nextFloat() * 0.1F + 0.9F);
+                        }
+
                         if (compressor.compressingTimer == compressor.compressingTotalTime) {
                             compressor.compressingTimer = 0;
                             compressor.compressingTotalTime = recipe.value().compressingTime();
                             AlloyCompressor.compress(compressor.innerResourceHandler, ingredients, recipeResult);
                             compressor.setRecipeUsed(recipe);
-                            level.playSound(null, pos, SoundEvents.ANVIL_USE, SoundSource.BLOCKS);
                             changed = true;
                         }
                     } else {

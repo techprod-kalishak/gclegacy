@@ -25,12 +25,12 @@ public class FlammableCauldronBlockEntity extends BlockEntity {
     private FluidStack stack = FluidStack.EMPTY;
     private final SingleTankResourceHandler handler = new SingleTankResourceHandler() {
         @Override
-        protected FluidStack getFluidStack() {
+        public FluidStack getFluidStack() {
             return FlammableCauldronBlockEntity.this.stack;
         }
 
         @Override
-        protected void setFluidStack(FluidStack stack) {
+        public void setFluidStack(FluidStack stack) {
             FlammableCauldronBlockEntity.this.stack = stack;
         }
 

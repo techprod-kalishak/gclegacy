@@ -59,12 +59,12 @@ public class FallingParachest extends FallingBlockEntity implements ParachuteFal
     private final ItemStacksResourceHandler itemResources;
     private final SingleTankResourceHandler fluidResource = new SingleTankResourceHandler() {
         @Override
-        protected FluidStack getFluidStack() {
+        public FluidStack getFluidStack() {
             return FallingParachest.this.fuelTank;
         }
 
         @Override
-        protected void setFluidStack(FluidStack stack) {
+        public void setFluidStack(FluidStack stack) {
             FallingParachest.this.fuelTank = stack;
         }
 

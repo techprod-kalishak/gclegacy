@@ -20,10 +20,10 @@ import net.neoforged.neoforge.transfer.transaction.TransactionContext;
 import java.util.Objects;
 
 public abstract class SingleTankResourceHandler extends SnapshotJournal<FluidStack> implements ResourceHandler<FluidResource>, ValueIOSerializable {
-    public static final String VALUE_IO_KEY = "fluid_stack";
+    public static final String VALUE_IO_KEY = "FluidStack";
 
-    protected abstract FluidStack getFluidStack();
-    protected abstract void setFluidStack(FluidStack stack);
+    public abstract FluidStack getFluidStack();
+    public abstract void setFluidStack(FluidStack stack);
 
     protected boolean isValid(FluidResource resource) {
         return true;
@@ -93,19 +93,23 @@ public abstract class SingleTankResourceHandler extends SnapshotJournal<FluidSta
     }
 
     @Override
-    public FluidResource getResource(int index) {
+    public final FluidResource getResource(int index) {
         Objects.checkIndex(index, size());
         return FluidResource.of(getFluidStack());
     }
 
     @Override
-    public long getAmountAsLong(int index) {
+    public final long getAmountAsLong(int index) {
         Objects.checkIndex(index, size());
         return getFluidStack().getAmount();
     }
 
+    public int getAmount() {
+        return (int) getAmountAsLong(0);
+    }
+
     @Override
-    public long getCapacityAsLong(int index, FluidResource resource) {
+    public final long getCapacityAsLong(int index, FluidResource resource) {
         Objects.checkIndex(index, size());
         return resource.isEmpty() || isValid(resource) ? getCapacity(resource) : 0;
     }

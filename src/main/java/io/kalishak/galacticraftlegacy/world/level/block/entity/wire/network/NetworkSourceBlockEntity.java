@@ -7,12 +7,12 @@
 
 package io.kalishak.galacticraftlegacy.world.level.block.entity.wire.network;
 
-import io.kalishak.galacticraftlegacy.world.level.node.NodeNetwork;
+import io.kalishak.galacticraftlegacy.transfer.node.FluidNodeNetwork;
 
-public interface NetworkSourceBlockEntity<N extends NodeNetwork> {
-    N getNetwork();
+public interface NetworkSourceBlockEntity {
+    FluidNodeNetwork getNetwork();
 
     boolean hasNetwork();
 
-    void addNetwork(N network);
+    void addNetwork(FluidNodeNetwork network);
 }

@@ -14,6 +14,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import net.neoforged.neoforge.event.server.ServerStoppedEvent;
+import net.neoforged.neoforge.event.server.ServerStoppingEvent;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
@@ -33,15 +34,13 @@ public class SpaceRaceHooks {
         return SpaceRaceHooks.instance;
     }
 
-    @SubscribeEvent
-    public static void onServerStop(ServerStoppedEvent event) {
+    public static void onServerStop(ServerStoppingEvent event) {
         if (SpaceRaceHooks.instance != null) {
             event.getServer().getDataStorage().computeIfAbsent(SpaceRaceScoreboardSaveData.TYPE).setData(instance.packSpaceRaceTeams());
         }
     }
 
-    @SubscribeEvent
-    public static void onServerInit(ServerStartingEvent event) {
+    public static void onServerLoad(ServerStartingEvent event) {
         loadScoreboard(event.getServer());
     }
 

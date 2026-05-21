@@ -7,9 +7,9 @@
 
 package io.kalishak.galacticraftlegacy.world.level.block.entity.wire;
 
+import io.kalishak.galacticraftlegacy.transfer.node.FluidNodeNetwork;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.wire.network.NetworkType;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.wire.network.TransmitterBlockEntity;
-import io.kalishak.galacticraftlegacy.world.level.node.NodeNetwork;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.Level;
@@ -22,8 +22,8 @@ import org.jspecify.annotations.Nullable;
 
 import java.util.Set;
 
-public abstract class AbstractConnectableBlockEntity<N extends NodeNetwork> extends BlockEntity implements TransmitterBlockEntity<N> {
-    protected @Nullable N network;
+public abstract class AbstractConnectableBlockEntity extends BlockEntity implements TransmitterBlockEntity {
+    protected @Nullable FluidNodeNetwork network;
     protected Set<BlockEntity> surroundingBlockEntities;
     protected boolean isValid = true;
 
@@ -32,7 +32,7 @@ public abstract class AbstractConnectableBlockEntity<N extends NodeNetwork> exte
     }
 
     @Override
-    public N getNetwork() {
+    public FluidNodeNetwork getNetwork() {
         if (!hasNetwork()) {
             resetNetwork();
         }

@@ -84,12 +84,12 @@ public abstract class AbstractAutoRocket extends AbstractSpaceShip implements La
     protected final @Nullable ItemStacksResourceHandler itemStacksResourceHandler;
     protected final SingleTankResourceHandler tankResourceHandler = new SingleTankResourceHandler() {
         @Override
-        protected FluidStack getFluidStack() {
+        public FluidStack getFluidStack() {
             return AbstractAutoRocket.this.fuel;
         }
 
         @Override
-        protected void setFluidStack(FluidStack stack) {
+        public void setFluidStack(FluidStack stack) {
             AbstractAutoRocket.this.fuel = stack;
         }
 

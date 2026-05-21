@@ -42,7 +42,6 @@ import io.kalishak.galacticraftlegacy.world.level.material.fluid.GalacticraftFlu
 import io.kalishak.galacticraftlegacy.world.level.material.fluid.GalacticraftFluids;
 import io.kalishak.galacticraftlegacy.world.level.storage.loot.functions.GalacticraftLootFunctions;
 import io.kalishak.galacticraftlegacy.world.level.storage.loot.predicates.GalacticraftLootItemConditions;
-import io.kalishak.galacticraftlegacy.world.score.race.SpaceRaceHooks;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.fluids.RegisterCauldronFluidContentEvent;
@@ -93,7 +92,6 @@ public class Galacticraft {
         modEventBus.register(GalacticraftRegistries.class);
 
         NeoForge.EVENT_BUS.register(new NeoEventHandler());
-        NeoForge.EVENT_BUS.register(SpaceRaceHooks.class);
         NeoForge.EVENT_BUS.addListener(GalacticraftCommands::registerCommands);
         modContainer.registerConfig(ModConfig.Type.SERVER, ServerConfig.SPEC);
         modContainer.registerConfig(ModConfig.Type.COMMON, CommonConfig.SPEC);

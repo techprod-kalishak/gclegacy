@@ -15,10 +15,12 @@ import io.kalishak.galacticraftlegacy.data.GalacticraftTags;
 import io.kalishak.galacticraftlegacy.data.datamap.Extinguishable;
 import io.kalishak.galacticraftlegacy.data.datamap.GalacticraftDataMaps;
 import io.kalishak.galacticraftlegacy.registry.SchematicVariant;
+import io.kalishak.galacticraftlegacy.transfer.node.FluidNodeNetwork;
 import io.kalishak.galacticraftlegacy.world.entity.GearEquipmentSlot;
 import io.kalishak.galacticraftlegacy.world.item.component.*;
 import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.GalacticraftRecipeType;
 import io.kalishak.galacticraftlegacy.world.level.OxygenHelper;
+import io.kalishak.galacticraftlegacy.world.score.race.SpaceRaceHooks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponentType;
@@ -54,6 +56,8 @@ import net.neoforged.neoforge.event.entity.EntityLeaveLevelEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
+import net.neoforged.neoforge.event.server.ServerStartingEvent;
+import net.neoforged.neoforge.event.server.ServerStoppingEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import net.neoforged.neoforge.transfer.ResourceHandler;
@@ -204,6 +208,19 @@ public class NeoEventHandler {
             }
         }
     }
+
+    @SubscribeEvent
+    public void onServerLoad(ServerStartingEvent event) {
+        SpaceRaceHooks.onServerLoad(event);
+        FluidNodeNetwork.onServerLoad(event);
+    }
+
+    @SubscribeEvent
+    public void onServerStop(ServerStoppingEvent event) {
+        SpaceRaceHooks.onServerStop(event);
+        FluidNodeNetwork.onServerStop(event);
+    }
+
 
     @SuppressWarnings({"ConstantConditions", "unchecked"})
     private static void addTooltipIfPresent(ItemStack itemStack, Stream<DataComponentType<?>> components, AttributeTooltipContext cxt, Consumer<Component> consumer) {
