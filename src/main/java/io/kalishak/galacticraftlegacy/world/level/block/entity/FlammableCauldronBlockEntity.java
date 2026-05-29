@@ -20,22 +20,23 @@ import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.transfer.fluid.FluidResource;
+import org.jspecify.annotations.NonNull;
 
 public class FlammableCauldronBlockEntity extends BlockEntity {
     private FluidStack stack = FluidStack.EMPTY;
     private final SingleTankResourceHandler handler = new SingleTankResourceHandler() {
         @Override
-        public FluidStack getFluidStack() {
+        public @NonNull FluidStack getFluidStack() {
             return FlammableCauldronBlockEntity.this.stack;
         }
 
         @Override
-        public void setFluidStack(FluidStack stack) {
+        public void setFluidStack(@NonNull FluidStack stack) {
             FlammableCauldronBlockEntity.this.stack = stack;
         }
 
         @Override
-        protected int getCapacity(FluidResource resource) {
+        public int getCapacity() {
             return FluidType.BUCKET_VOLUME;
         }
 

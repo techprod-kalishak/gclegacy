@@ -16,24 +16,24 @@ import net.neoforged.neoforge.transfer.TransferPreconditions;
 import net.neoforged.neoforge.transfer.fluid.FluidResource;
 import net.neoforged.neoforge.transfer.transaction.SnapshotJournal;
 import net.neoforged.neoforge.transfer.transaction.TransactionContext;
+import org.jspecify.annotations.NonNull;
 
 import java.util.Objects;
 
 public abstract class SingleTankResourceHandler extends SnapshotJournal<FluidStack> implements ResourceHandler<FluidResource>, ValueIOSerializable {
     public static final String VALUE_IO_KEY = "FluidStack";
 
-    public abstract FluidStack getFluidStack();
-    public abstract void setFluidStack(FluidStack stack);
+    public abstract @NonNull FluidStack getFluidStack();
+    public abstract void setFluidStack(@NonNull FluidStack stack);
 
     protected boolean isValid(FluidResource resource) {
         return true;
     }
 
     protected void notifyChange() {
-
     }
 
-    protected abstract int getCapacity(FluidResource resource);
+    public abstract int getCapacity();
 
     @Override
     public final int size() {
@@ -48,7 +48,7 @@ public abstract class SingleTankResourceHandler extends SnapshotJournal<FluidSta
         FluidStack currentStack = getFluidStack();
 
         if ((currentStack.isEmpty() || resource.matches(currentStack)) && isValid(resource)) {
-            int inserted = Math.min(amount, getCapacity(resource) - currentStack.getAmount());
+            int inserted = Math.min(amount, getCapacity() - currentStack.getAmount());
 
             if (inserted > 0) {
                 updateSnapshots(transaction);
@@ -94,8 +94,11 @@ public abstract class SingleTankResourceHandler extends SnapshotJournal<FluidSta
 
     @Override
     public final FluidResource getResource(int index) {
-        Objects.checkIndex(index, size());
         return FluidResource.of(getFluidStack());
+    }
+
+    public FluidResource getResource() {
+        return getResource(0);
     }
 
     @Override
@@ -105,20 +108,17 @@ public abstract class SingleTankResourceHandler extends SnapshotJournal<FluidSta
     }
 
     public int getAmount() {
-        return (int) getAmountAsLong(0);
+        return getAmountAsInt(0);
     }
 
     @Override
     public final long getCapacityAsLong(int index, FluidResource resource) {
-        Objects.checkIndex(index, size());
-        return resource.isEmpty() || isValid(resource) ? getCapacity(resource) : 0;
+        return resource.isEmpty() || isValid(resource) ? getCapacity() : 0;
     }
 
     @Override
     public boolean isValid(int index, FluidResource resource) {
-        Objects.checkIndex(index, size());
         TransferPreconditions.checkNonEmpty(resource);
-
         return isValid(resource);
     }
 

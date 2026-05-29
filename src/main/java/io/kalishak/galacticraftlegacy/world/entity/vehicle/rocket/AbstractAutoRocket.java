@@ -22,7 +22,6 @@ import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.LandingPa
 import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.LaunchControllerBlockEntity;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.SoundboundEntity;
 import io.kalishak.galacticraftlegacy.world.level.material.fluid.GalacticraftFluids;
-import io.kalishak.galacticraftlegacy.world.level.telemetry.TelemetryTrackerSaveData;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
@@ -84,17 +83,17 @@ public abstract class AbstractAutoRocket extends AbstractSpaceShip implements La
     protected final @Nullable ItemStacksResourceHandler itemStacksResourceHandler;
     protected final SingleTankResourceHandler tankResourceHandler = new SingleTankResourceHandler() {
         @Override
-        public FluidStack getFluidStack() {
+        public @NonNull FluidStack getFluidStack() {
             return AbstractAutoRocket.this.fuel;
         }
 
         @Override
-        public void setFluidStack(FluidStack stack) {
+        public void setFluidStack(@NonNull FluidStack stack) {
             AbstractAutoRocket.this.fuel = stack;
         }
 
         @Override
-        protected int getCapacity(FluidResource resource) {
+        public int getCapacity() {
             return FluidType.BUCKET_VOLUME * 8;
         }
     };

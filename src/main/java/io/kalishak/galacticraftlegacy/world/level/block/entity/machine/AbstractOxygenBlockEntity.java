@@ -1,7 +1,14 @@
+/*
+ * Copyright (c) 2026 Kalishak
+ *
+ * Licensed under the MIT license
+ * See LICENSE file for more details
+ */
+
 package io.kalishak.galacticraftlegacy.world.level.block.entity.machine;
 
 import io.kalishak.galacticraftlegacy.transfer.ResourcefulHelper;
-import io.kalishak.galacticraftlegacy.transfer.capability.fluid.OxygenResourceHandler;
+import io.kalishak.galacticraftlegacy.transfer.capability.fluid.LimitedFluidResourceHandler;
 import io.kalishak.galacticraftlegacy.transfer.node.FluidNodeNetwork;
 import io.kalishak.galacticraftlegacy.transfer.node.object.OxygenConsumer;
 import io.kalishak.galacticraftlegacy.world.item.component.GalacticraftDataComponents;
@@ -27,20 +34,16 @@ public abstract class AbstractOxygenBlockEntity extends AbstractMachineBlockEnti
     protected static final int OXYGEN_CAPACITY = 16000;
     protected static final FluidResource OXYGEN_RESOURCE = FluidResource.of(GalacticraftFluids.OXYGEN);
     protected final int oxygenPerTick;
-    protected final OxygenResourceHandler oxygenHandler;
+    protected final LimitedFluidResourceHandler oxygenHandler;
     protected int lastOxygenAmount;
 
-    protected AbstractOxygenBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState blockState, int oxygenPerTick) {
+    protected AbstractOxygenBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState blockState, int oxygenPerTick, int capacity) {
         super(type, pos, blockState);
         this.oxygenPerTick = oxygenPerTick;
-        this.oxygenHandler = new OxygenResourceHandler(oxygenPerTick, oxygenPerTick);
+        this.oxygenHandler = new LimitedFluidResourceHandler(oxygenPerTick, oxygenPerTick, capacity);
     }
 
     protected static void oxygenServerTick(ServerLevel level, BlockPos worldPosition, BlockState blockState, AbstractOxygenBlockEntity entity, @Nullable Transaction tx) {
-        if (OxygenResourceHandler.lastOxygenRequestTick > 0) {
-            OxygenResourceHandler.lastOxygenRequestTick--;
-        }
-
         if (entity.isOxygenConsumer()) {
             try (Transaction childTx = Transaction.open(tx)) {
                 int snapshot = entity.oxygenHandler.getAmount();

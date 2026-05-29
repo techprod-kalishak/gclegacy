@@ -51,6 +51,7 @@ import net.neoforged.neoforge.transfer.fluid.FluidResource;
 import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
 import net.neoforged.neoforge.transfer.item.ItemUtil;
+import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
 import java.util.List;
@@ -65,18 +66,18 @@ public class ParachestBlockEntity extends NamedBlockEntity implements LidBlockEn
     private final ItemStacksResourceHandler itemResources;
     private final SingleTankResourceHandler fluidResource = new SingleTankResourceHandler() {
         @Override
-        public FluidStack getFluidStack() {
+        public @NonNull FluidStack getFluidStack() {
             return ParachestBlockEntity.this.tank;
         }
 
         @Override
-        public void setFluidStack(FluidStack stack) {
+        public void setFluidStack(@NonNull FluidStack stack) {
             ParachestBlockEntity.this.tank = stack;
         }
 
         @Override
-        protected int getCapacity(FluidResource resource) {
-            return resource.is(GalacticraftTags.Fluids.IS_FUEL) ? 8 * FluidType.BUCKET_VOLUME : 0;
+        public int getCapacity() {
+            return FluidType.BUCKET_VOLUME * 8;
         }
 
         @Override

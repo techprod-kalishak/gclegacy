@@ -13,7 +13,7 @@ import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.fluids.FluidStack;
-import net.neoforged.neoforge.transfer.fluid.FluidResource;
+import org.jspecify.annotations.NonNull;
 
 import java.util.UUID;
 
@@ -22,17 +22,17 @@ public abstract class AbstractLander extends MovingEntity {
     protected FluidStack fuelStack = FluidStack.EMPTY;
     protected final SingleTankResourceHandler tankResourceHandler = new SingleTankResourceHandler() {
         @Override
-        public FluidStack getFluidStack() {
+        public @NonNull FluidStack getFluidStack() {
             return AbstractLander.this.fuelStack;
         }
 
         @Override
-        public void setFluidStack(FluidStack stack) {
+        public void setFluidStack(@NonNull FluidStack stack) {
             AbstractLander.this.fuelStack = stack;
         }
 
         @Override
-        protected int getCapacity(FluidResource resource) {
+        public int getCapacity() {
             return FUEL_CAPACITY;
         }
     };

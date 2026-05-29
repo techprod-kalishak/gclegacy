@@ -44,7 +44,7 @@ import oshi.util.tuples.Pair;
 
 import java.util.*;
 
-public class FluidNodeNetwork implements NodeNetwork {
+public class FluidNodeNetwork extends NodeNetwork {
     private static final Map<ResourceKey<Level>, List<FluidNodeNetwork>> networkRegistry = new HashMap<>();
 
     protected final Map<BlockPos, Acceptor> acceptors = Maps.newHashMap();

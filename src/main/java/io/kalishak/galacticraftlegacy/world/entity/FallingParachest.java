@@ -47,6 +47,7 @@ import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.transfer.fluid.FluidResource;
 import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
+import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 
@@ -59,18 +60,18 @@ public class FallingParachest extends FallingBlockEntity implements ParachuteFal
     private final ItemStacksResourceHandler itemResources;
     private final SingleTankResourceHandler fluidResource = new SingleTankResourceHandler() {
         @Override
-        public FluidStack getFluidStack() {
+        public @NonNull FluidStack getFluidStack() {
             return FallingParachest.this.fuelTank;
         }
 
         @Override
-        public void setFluidStack(FluidStack stack) {
+        public void setFluidStack(@NonNull FluidStack stack) {
             FallingParachest.this.fuelTank = stack;
         }
 
         @Override
-        protected int getCapacity(FluidResource resource) {
-            return resource.is(GalacticraftTags.Fluids.IS_FUEL) ? 8 * FluidType.BUCKET_VOLUME : 0;
+        public int getCapacity() {
+            return 8 * FluidType.BUCKET_VOLUME;
         }
     };
 

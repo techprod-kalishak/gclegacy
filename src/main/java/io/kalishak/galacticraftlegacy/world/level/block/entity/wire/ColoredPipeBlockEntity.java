@@ -10,6 +10,7 @@ package io.kalishak.galacticraftlegacy.world.level.block.entity.wire;
 import com.mojang.serialization.Codec;
 import io.kalishak.galacticraftlegacy.attachment.GalacticraftAttachments;
 import io.kalishak.galacticraftlegacy.codec.SerializableEnum;
+import io.kalishak.galacticraftlegacy.transfer.capability.fluid.LimitedFluidResourceHandler;
 import io.kalishak.galacticraftlegacy.transfer.node.FluidNodeNetwork;
 import io.kalishak.galacticraftlegacy.world.level.OxygenHelper;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.wire.network.ResourceTransmitter;
@@ -42,22 +43,7 @@ public class ColoredPipeBlockEntity extends AbstractConnectableBlockEntity imple
     private ConnectionState connectionState = ConnectionState.DEFAULT;
     private FluidStack stack = FluidStack.EMPTY;
     private DyeColor color = DyeColor.WHITE;
-    private final SingleTankResourceHandler fluidHandler = new SingleTankResourceHandler() {
-        @Override
-        public FluidStack getFluidStack() {
-            return ColoredPipeBlockEntity.this.stack;
-        }
-
-        @Override
-        public void setFluidStack(FluidStack stack) {
-            ColoredPipeBlockEntity.this.stack = stack;
-        }
-
-        @Override
-        protected int getCapacity(FluidResource resource) {
-            return ColoredPipeBlockEntity.this.getCapacity();
-        }
-
+    private final SingleTankResourceHandler fluidHandler = new LimitedFluidResourceHandler(50, 2500) {
         @Override
         protected void notifyChange() {
             ColoredPipeBlockEntity.this.setData(GalacticraftAttachments.SYNC_FLUID_STACK, getFluidStack());
