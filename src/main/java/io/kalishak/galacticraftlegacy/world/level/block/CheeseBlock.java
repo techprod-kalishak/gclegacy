@@ -32,6 +32,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
+@SuppressWarnings("deprecation")
 public class CheeseBlock extends Block {
     public static final IntegerProperty BITES = BlockStateProperties.BITES;
     private static final VoxelShape[] SHAPES = Block.boxes(6, (bite) -> Block.box(1 + bite * 2, 0.0F, 1.0F, 15.0F, 8.0F, 15.0F));

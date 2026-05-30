@@ -7,6 +7,7 @@
 
 package io.kalishak.galacticraftlegacy.network.handler.client;
 
+import io.kalishak.galacticraftlegacy.Constants;
 import io.kalishak.galacticraftlegacy.client.gui.screens.inventory.GearInventoryScreen;
 import io.kalishak.galacticraftlegacy.network.payload.ToggleGearInventoryPayload;
 import net.minecraft.client.Minecraft;
@@ -27,9 +28,6 @@ public class ToggleGearInventoryClientHandler {
             } else {
                 mc.setScreen(null);
             }
-        }).exceptionally(e -> {
-            cxt.disconnect(Component.translatable("galacticraftlegacy.networking_failed"));
-            return null;
-        });
+        }).exceptionally(e -> Constants.networkFailureMessage(cxt::disconnect, e));
     }
 }

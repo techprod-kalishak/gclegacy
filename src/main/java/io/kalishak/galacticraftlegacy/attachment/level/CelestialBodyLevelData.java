@@ -10,10 +10,7 @@ package io.kalishak.galacticraftlegacy.attachment.level;
 import com.google.common.collect.ImmutableMap;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import io.kalishak.galacticraftlegacy.codec.CodecUtils;
-import io.kalishak.galacticraftlegacy.galaxies.CelestialBody;
 import io.kalishak.galacticraftlegacy.galaxies.CelestialObject;
-import io.kalishak.galacticraftlegacy.galaxies.GalacticraftGalaxies;
 import io.kalishak.galacticraftlegacy.registry.CelestialBodyLevelDataEntries;
 import io.kalishak.galacticraftlegacy.registry.GalacticraftRegistries;
 import io.kalishak.galacticraftlegacy.galaxies.environment.AtmosphereInfo;
@@ -25,11 +22,9 @@ import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.RegistryFixedCodec;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.attachment.IAttachmentHolder;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**

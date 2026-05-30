@@ -39,19 +39,19 @@ public class WireBlock extends AbstractWireBlock {
 
     @Override
     public @Nullable BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return null;//new WireBlockEntity(blockPos, blockState);
+        return new WireBlockEntity(blockPos, blockState);
     }
 
-//    @Override
-//    public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState unlitState, BlockEntityType<T> blockEntityType) {
-//        if (level instanceof ServerLevel serverLevel) {
-//            return createTickerHelper(
-//                    blockEntityType,
-//                    GalacticraftBlockEntityType.WIRE.get(),
-//                    (l, wirePos, wireState, wire) -> WireBlockEntity.serverTick(serverLevel, wirePos, wireState, wire)
-//            );
-//        }
-//
-//        return null;
-//    }
+    @Override
+    public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState unlitState, BlockEntityType<T> blockEntityType) {
+        if (level instanceof ServerLevel serverLevel) {
+            return createTickerHelper(
+                    blockEntityType,
+                    GalacticraftBlockEntityType.WIRE.get(),
+                    (l, wirePos, wireState, wire) -> WireBlockEntity.serverTick(serverLevel, wirePos, wireState, wire)
+            );
+        }
+
+        return null;
+    }
 }

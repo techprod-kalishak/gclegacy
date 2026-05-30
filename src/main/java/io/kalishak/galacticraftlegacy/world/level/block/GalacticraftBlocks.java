@@ -12,10 +12,7 @@ import io.kalishak.galacticraftlegacy.registry.deferred.DeferredWeatheringCopper
 import io.kalishak.galacticraftlegacy.world.item.FeatureTier;
 import io.kalishak.galacticraftlegacy.world.level.block.cauldron.FlammableCauldronBlock;
 import io.kalishak.galacticraftlegacy.world.level.block.cauldron.GalacticraftCauldronInteraction;
-import io.kalishak.galacticraftlegacy.world.level.block.machine.CircuitFabricatorBlock;
-import io.kalishak.galacticraftlegacy.world.level.block.machine.CoalGeneratorBlock;
-import io.kalishak.galacticraftlegacy.world.level.block.machine.ElectricCompressorBlock;
-import io.kalishak.galacticraftlegacy.world.level.block.machine.ElectricFurnaceBlock;
+import io.kalishak.galacticraftlegacy.world.level.block.machine.*;
 import io.kalishak.galacticraftlegacy.world.level.block.wire.WireBlock;
 import io.kalishak.galacticraftlegacy.world.level.block.wire.ColoredPipeBlock;
 import io.kalishak.galacticraftlegacy.world.level.block.wire.HeavyWireBlock;
@@ -727,6 +724,16 @@ public final class GalacticraftBlocks {
             "electric_furnace",
             ElectricFurnaceBlock::new,
             GalacticraftBlocks::machine
+    );
+    public static final DeferredBlock<OxygenCollectorBlock> OXYGEN_COLLECTOR = REGISTRY.registerBlock(
+            "oxygen_collector",
+            OxygenCollectorBlock::new,
+            () -> BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.METAL)
+                    .instrument(NoteBlockInstrument.XYLOPHONE)
+                    .sound(SoundType.METAL)
+                    .requiresCorrectToolForDrops()
+                    .strength(1.0F)
     );
 
     private static BlockBehaviour.Properties wallVariant(Supplier<Block> baseBlock, boolean overrideDescription, UnaryOperator<BlockBehaviour.Properties> properties) {

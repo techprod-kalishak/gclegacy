@@ -207,8 +207,10 @@ public final class GalacticraftCreativeModeTabs {
         output.accept(GalacticraftItems.COAL_GENERATOR);
         output.accept(GalacticraftItems.CIRCUIT_FABRICATOR);
         output.accept(GalacticraftItems.COMPRESSOR);
+        output.accept(GalacticraftItems.ELECTRIC_COMPRESSOR);
         output.accept(GalacticraftItems.ELECTRIC_FURNACE);
         output.accept(GalacticraftItems.OXYGEN_DETECTOR);
+        output.accept(GalacticraftItems.OXYGEN_COLLECTOR);
         output.accept(GalacticraftItems.ALUMINUM_WIRE);
         output.accept(GalacticraftItems.HEAVY_ALUMINUM_WIRE);
         output.accept(GalacticraftItems.WHITE_PIPE);

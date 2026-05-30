@@ -7,7 +7,7 @@
 
 package io.kalishak.galacticraftlegacy.world.level.block.entity.wire;
 
-import io.kalishak.galacticraftlegacy.transfer.node.FluidNodeNetwork;
+import io.kalishak.galacticraftlegacy.transfer.node.NodeNetwork;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.wire.network.NetworkType;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.wire.network.TransmitterBlockEntity;
 import net.minecraft.core.BlockPos;
@@ -23,7 +23,7 @@ import org.jspecify.annotations.Nullable;
 import java.util.Set;
 
 public abstract class AbstractConnectableBlockEntity extends BlockEntity implements TransmitterBlockEntity {
-    protected @Nullable FluidNodeNetwork network;
+    protected @Nullable NodeNetwork network;
     protected Set<BlockEntity> surroundingBlockEntities;
     protected boolean isValid = true;
 
@@ -32,7 +32,7 @@ public abstract class AbstractConnectableBlockEntity extends BlockEntity impleme
     }
 
     @Override
-    public FluidNodeNetwork getNetwork() {
+    public NodeNetwork getNetwork(@Nullable Direction side) {
         if (!hasNetwork()) {
             resetNetwork();
         }
@@ -53,23 +53,23 @@ public abstract class AbstractConnectableBlockEntity extends BlockEntity impleme
 
     @Override
     public void updateNetwork() {
-//        if (this.level != null && !this.level.isClientSide()) {
-//            for (Direction direction : Direction.values()) {
-//                BlockPos neighbourPos = getBlockPos().relative(direction);
-//                BlockEntity neighbourBlockEntity = this.level.getBlockEntity(neighbourPos);
-//
-//                if (neighbourBlockEntity instanceof TransmitterBlockEntity neighbourTransmitter) {
-//                    if (neighbourTransmitter.hasNetwork() && canConnect(direction.getOpposite(), neighbourTransmitter.getNetwork().getType())) {
-//                        if (!hasNetwork()) {
-//                            addNetwork(neighbourTransmitter.getNetwork());
-//                            getNetwork().addConnection(this);
-//                        } else if (!getNetwork().equals(neighbourTransmitter.getNetwork())) {
-//                            addNetwork(getNetwork().merge(neighbourTransmitter.getNetwork()));
-//                        }
-//                    }
-//                }
-//            }
-//        }
+        if (this.level != null && !this.level.isClientSide()) {
+            for (Direction direction : Direction.values()) {
+                BlockPos neighbourPos = getBlockPos().relative(direction);
+                BlockEntity neighbourBlockEntity = this.level.getBlockEntity(neighbourPos);
+
+                if (neighbourBlockEntity instanceof TransmitterBlockEntity neighbourTransmitter) {
+                    if (neighbourTransmitter.hasNetwork() && canConnect(direction.getOpposite(), neighbourTransmitter.getNetwork(direction.getOpposite()).getType())) {
+                        if (!hasNetwork()) {
+                            addNetwork(neighbourTransmitter.getNetwork(direction));
+                            getNetwork(direction).addTransmitter(this);
+                        } else if (!getNetwork(direction).equals(neighbourTransmitter.getNetwork(direction))) {
+                            addNetwork(getNetwork(direction).merge(neighbourTransmitter.getNetwork(direction)));
+                        }
+                    }
+                }
+            }
+        }
     }
 
     @Override

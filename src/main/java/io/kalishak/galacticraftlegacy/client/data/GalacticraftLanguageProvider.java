@@ -81,6 +81,7 @@ public class GalacticraftLanguageProvider extends LanguageProvider {
         addWithDescription(GalacticraftBlocks.ELECTRIC_COMPRESSOR, "Electric Compressor", "Electric Compressor will process ingots into their compressed equivalents. Compresses two at a time, making it more effective than its predecessor.");
         addWithDescription(GalacticraftBlocks.ELECTRIC_FURNACE, "Electric Furnace", "Electric Furnace is used as a faster alternative to traditional coal furnaces");
         //ddWithDescription(GalacticraftBlocks.ELECTRIC_ARC_FURNACE, "Electric Arc Furnace", "Electric Arc Furnace is used as a better and faster alternative to both traditional coal and electric furnaces: double output from ores!");
+        addWithDescription(GalacticraftBlocks.OXYGEN_COLLECTOR, "Oxygen Collector", "WIP");
         addBlock(GalacticraftBlocks.PARACHEST, "Parachest");
         addBlock(GalacticraftBlocks.ALUMINUM_WIRE, "Aluminum Wire");
         addBlock(GalacticraftBlocks.HEAVY_ALUMINUM_WIRE, "Heavy Aluminum Wire");

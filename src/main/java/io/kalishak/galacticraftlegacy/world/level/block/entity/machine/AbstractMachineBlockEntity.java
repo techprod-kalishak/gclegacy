@@ -9,8 +9,11 @@ package io.kalishak.galacticraftlegacy.world.level.block.entity.machine;
 
 import io.kalishak.galacticraftlegacy.attachment.GalacticraftAttachments;
 import io.kalishak.galacticraftlegacy.attachment.block.SyncedEnergyHandler;
+import io.kalishak.galacticraftlegacy.transfer.node.NodeNetwork;
 import io.kalishak.galacticraftlegacy.world.item.component.GalacticraftDataComponents;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.NamedBlockEntity;
+import io.kalishak.galacticraftlegacy.world.level.block.entity.wire.network.NetworkType;
+import io.kalishak.galacticraftlegacy.world.level.block.entity.wire.network.TransmitterBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -25,6 +28,8 @@ import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.Containers;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.ItemContainerContents;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
@@ -43,7 +48,7 @@ import net.neoforged.neoforge.transfer.transaction.Transaction;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
-public abstract class AbstractMachineBlockEntity extends NamedBlockEntity {
+public abstract class AbstractMachineBlockEntity extends NamedBlockEntity implements TransmitterBlockEntity {
     public static final int BASIC_MACHINE_ENERGY_CAPACITY = 25000;
     public static final int BASIC_MACHINE_MAX_TRANSFER_RATE = 500;
     public static final int ADVANCED_MACHINE_ENERGY_CAPACITY = 50000;
@@ -178,6 +183,58 @@ public abstract class AbstractMachineBlockEntity extends NamedBlockEntity {
         if (this.level != null && !this.level.isClientSide()) {
             setData(GalacticraftAttachments.SYNC_ENERGY_STORAGE, new SyncedEnergyHandler(this.energyHandler.getAmountAsInt()));
         }
+    }
+
+    @Override
+    public void updateNeighbouringTransmitters(Level level, BlockPos pos) {
+
+    }
+
+    protected static NodeNetwork getNetwork(Level level, BlockPos pos) {
+        for (Direction direction : Direction.values()) {
+            BlockEntity blockEntity = level.getBlockEntity(pos.relative(direction));
+
+            if (blockEntity instanceof TransmitterBlockEntity t) {
+                return t.getNetwork(direction);
+            }
+        }
+
+        return null;
+    }
+
+    @Override
+    public boolean hasNetwork() {
+        NodeNetwork network = getNetwork(this.level, this.worldPosition);
+        return network != null;
+    }
+
+    @Override
+    public void addNetwork(NodeNetwork network) {
+        network.addTransmitter(this);
+    }
+
+    @Override
+    public void updateNetwork() {
+
+    }
+
+    @Override
+    public void onNetworkUpdate() {
+
+    }
+
+    @Override
+    public NodeNetwork getNetwork(@Nullable Direction side) {
+        return getNetwork(this.level, this.worldPosition);
+    }
+
+    @Override
+    public boolean canConnect(Direction direction, NetworkType networkType) {
+        return switch (networkType) {
+            case POWER -> direction == Direction.EAST;
+            case FLUID -> this instanceof AbstractFluidTankMachineBlockEntity && direction == Direction.DOWN;
+            default -> false;
+        };
     }
 
     @Override

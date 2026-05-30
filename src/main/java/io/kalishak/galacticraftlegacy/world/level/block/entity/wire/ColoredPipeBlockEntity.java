@@ -12,6 +12,7 @@ import io.kalishak.galacticraftlegacy.attachment.GalacticraftAttachments;
 import io.kalishak.galacticraftlegacy.codec.SerializableEnum;
 import io.kalishak.galacticraftlegacy.transfer.capability.fluid.LimitedFluidResourceHandler;
 import io.kalishak.galacticraftlegacy.transfer.node.FluidNodeNetwork;
+import io.kalishak.galacticraftlegacy.transfer.node.NodeNetwork;
 import io.kalishak.galacticraftlegacy.world.level.OxygenHelper;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.wire.network.ResourceTransmitter;
 import io.kalishak.galacticraftlegacy.transfer.capability.fluid.SingleTankResourceHandler;
@@ -37,6 +38,7 @@ import net.neoforged.neoforge.transfer.fluid.FluidResource;
 import net.neoforged.neoforge.transfer.transaction.Transaction;
 import org.jspecify.annotations.NonNull;
 
+import java.util.Collections;
 import java.util.Set;
 
 public class ColoredPipeBlockEntity extends AbstractConnectableBlockEntity implements ResourceTransmitter {
@@ -122,7 +124,7 @@ public class ColoredPipeBlockEntity extends AbstractConnectableBlockEntity imple
     }
 
     protected Set<BlockEntity> getSurroundingBlockEntities() {
-        if (getNetwork().getType() == NetworkType.FLUID && this.surroundingBlockEntities == null) {
+        if (getNetwork(null).getType() == NetworkType.FLUID && this.surroundingBlockEntities == null) {
             this.surroundingBlockEntities = OxygenHelper.getFluidConnections(this, this.level);
         }
 
@@ -131,6 +133,7 @@ public class ColoredPipeBlockEntity extends AbstractConnectableBlockEntity imple
 
     @Override
     protected void resetNetwork() {
+        this.network = new FluidNodeNetwork(this.level, Collections.emptyList());
     }
 
     @Override
@@ -144,8 +147,9 @@ public class ColoredPipeBlockEntity extends AbstractConnectableBlockEntity imple
     }
 
     @Override
-    public void addNetwork(FluidNodeNetwork network) {
-
+    public void addNetwork(NodeNetwork network) {
+        this.network = network;
+        onNetworkUpdate();
     }
 
     @Override

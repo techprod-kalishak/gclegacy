@@ -20,11 +20,6 @@ public class NeoForgeClientEventHandler {
     NeoForgeClientEventHandler() {}
 
     @SubscribeEvent
-    public void handleRecipeManagerReload(RecipesReceivedEvent event) {
-
-    }
-
-    @SubscribeEvent
     public void onKeyPressed(InputEvent.Key event) {
         if (Minecraft.getInstance().screen == null) {
             InputConstants.Key key = InputConstants.getKey(event.getKeyEvent());

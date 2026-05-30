@@ -34,6 +34,7 @@ public class GalacticraftBlockLootSubProvider extends BlockLootSubProvider {
         add(GalacticraftBlocks.COMPRESSOR.get(), this::createNameableBlockEntityTable);
         add(GalacticraftBlocks.ELECTRIC_COMPRESSOR.get(), this::createNameableBlockEntityTable);
         add(GalacticraftBlocks.ELECTRIC_FURNACE.get(), this::createNameableBlockEntityTable);
+        add(GalacticraftBlocks.OXYGEN_COLLECTOR.get(), this::createNameableBlockEntityTable);
         dropSelf(GalacticraftBlocks.OXYGEN_DETECTOR.get());
         dropSelf(GalacticraftBlocks.ALUMINUM_WIRE.get());
         dropSelf(GalacticraftBlocks.HEAVY_ALUMINUM_WIRE.get());

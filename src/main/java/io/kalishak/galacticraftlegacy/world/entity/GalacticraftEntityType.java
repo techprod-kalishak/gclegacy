@@ -9,16 +9,19 @@ package io.kalishak.galacticraftlegacy.world.entity;
 
 import io.kalishak.galacticraftlegacy.Galacticraft;
 import io.kalishak.galacticraftlegacy.Constants;
+import io.kalishak.galacticraftlegacy.world.entity.monster.EvolvedMonster;
 import io.kalishak.galacticraftlegacy.world.entity.monster.EvolvedSkeleton;
 import io.kalishak.galacticraftlegacy.world.entity.monster.EvolvedZombie;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
+import net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
+import org.jspecify.annotations.NonNull;
 
 import java.util.stream.Stream;
 
@@ -78,6 +81,7 @@ public final class GalacticraftEntityType {
         REGISTRY.register(bus);
         bus.addListener(GalacticraftEntityType::registerCapabilities);
         bus.addListener(GalacticraftEntityType::registerAttributes);
+        bus.addListener(GalacticraftEntityType::registerSpawnPlacements);
     }
 
     private static void registerCapabilities(RegisterCapabilitiesEvent event) {
@@ -87,6 +91,27 @@ public final class GalacticraftEntityType {
     public static void registerAttributes(EntityAttributeCreationEvent event) {
         event.put(EVOLVED_SKELETON.get(), EvolvedSkeleton.createAttributes().build());
         event.put(EVOLVED_ZOMBIE.get(), EvolvedZombie.createAttributes().build());
+    }
+
+    public static void registerSpawnPlacements(RegisterSpawnPlacementsEvent event) {
+        event.register(
+                EVOLVED_SKELETON.get(),
+                SpawnPlacementTypes.NO_RESTRICTIONS,
+                Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                withBound(10),
+                RegisterSpawnPlacementsEvent.Operation.AND
+        );
+        event.register(
+                EVOLVED_ZOMBIE.get(),
+                SpawnPlacementTypes.NO_RESTRICTIONS,
+                Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                withBound(15),
+                RegisterSpawnPlacementsEvent.Operation.AND
+        );
+    }
+
+    private static <T extends Entity & EvolvedMonster> SpawnPlacements.SpawnPredicate<@NonNull T> withBound(int bounds) {
+        return (type, level, spawnReason, pos, random) -> EvolvedMonster.checkEvolvedSpawnRules(type, level, spawnReason, pos, random, bounds);
     }
 
     public static Stream<EntityType<?>> asStream() {

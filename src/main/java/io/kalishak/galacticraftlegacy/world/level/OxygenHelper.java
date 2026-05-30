@@ -50,7 +50,7 @@ public class OxygenHelper {
                 boolean doConnect = false;
 
                 if (neighbour instanceof ConnectorBlockEntity connector) {
-                    doConnect = !level.isClientSide() || connector.canConnect(direction, blockEntity.getNetwork().getType());
+                    doConnect = !level.isClientSide() || connector.canConnect(direction, blockEntity.getNetwork(direction).getType());
                 } else if (neighbour != null) {
                     doConnect = level.getCapability(Capabilities.Fluid.BLOCK, neighbourPos, null) != null;
                 }
@@ -64,6 +64,7 @@ public class OxygenHelper {
         return connections;
     }
 
+    @SuppressWarnings("deprecation")
     public static boolean isThermalOxygen(Level blockGetter, AABB area) {
         int minX = Mth.floor(area.minX + 0.001D);
         int maxX = Mth.floor(area.maxX - 0.001D);

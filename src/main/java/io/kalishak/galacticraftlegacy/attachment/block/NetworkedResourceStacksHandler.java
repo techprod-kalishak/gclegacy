@@ -17,6 +17,7 @@ import net.neoforged.neoforge.transfer.fluid.FluidResource;
 import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.neoforged.neoforge.transfer.resource.Resource;
 
+@SuppressWarnings("unused")
 public abstract class NetworkedResourceStacksHandler<S, R extends Resource> extends StacksResourceHandler<S, R> {
     NetworkedResourceStacksHandler(NonNullList<S> stacks, S emptyStack, Codec<S> stackCodec) {
         super(stacks, emptyStack, stackCodec);

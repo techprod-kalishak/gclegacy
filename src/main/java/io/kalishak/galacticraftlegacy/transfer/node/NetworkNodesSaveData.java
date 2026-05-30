@@ -21,30 +21,30 @@ public class NetworkNodesSaveData extends SavedData {
     public static final SavedDataType<NetworkNodesSaveData> SAVE_DATA_ID = new SavedDataType<>(
             Constants.id("network_nodes"),
             NetworkNodesSaveData::new,
-            NetworkNodesSaveData::codec
+            NetworkNodesSaveData::packCodec
     );
-    private final List<FluidNodeNetwork.Packed> networks = new ArrayList<>();
+    private final List<NodeNetwork.PackedNode> networks = new ArrayList<>();
 
     NetworkNodesSaveData(ServerLevel serverLevel) {
 
     }
 
-    NetworkNodesSaveData(ServerLevel serverLevel, List<FluidNodeNetwork.Packed> networks) {
+    NetworkNodesSaveData(ServerLevel serverLevel, List<NodeNetwork.PackedNode> networks) {
         updateNetworks(networks);
     }
 
-    public void updateNetworks(List<FluidNodeNetwork.Packed> networks) {
+    static Codec<NetworkNodesSaveData> packCodec(ServerLevel serverLevel) {
+        return NodeNetwork.PackedNode.CODEC
+                .listOf()
+                .xmap(packedNodes -> new NetworkNodesSaveData(serverLevel, packedNodes), networkNodesSaveData -> networkNodesSaveData.networks);
+    }
+
+    public void updateNetworks(List<NodeNetwork.PackedNode> networks) {
         this.networks.addAll(networks);
         setDirty();
     }
 
-    static Codec<NetworkNodesSaveData> codec(ServerLevel serverLevel) {
-        return FluidNodeNetwork.Packed.CODEC
-                .listOf()
-                .xmap(networks -> new NetworkNodesSaveData(serverLevel, networks), saveData -> saveData.networks);
-    }
-
-    static List<FluidNodeNetwork.Packed> get(MinecraftServer server) {
+    static List<NodeNetwork.PackedNode> get(MinecraftServer server) {
         return server.getDataStorage().computeIfAbsent(SAVE_DATA_ID).networks;
     }
 }

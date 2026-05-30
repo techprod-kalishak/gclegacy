@@ -18,7 +18,6 @@ import io.kalishak.galacticraftlegacy.world.level.block.entity.ParachestBlockEnt
 import io.netty.buffer.ByteBuf;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
@@ -50,6 +49,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
+@SuppressWarnings("deprecation")
 public class ParachestBlock extends AbstractChestBlock<ParachestBlockEntity> implements SimpleWaterloggedBlock, Fallable {
     public static final MapCodec<ParachestBlock> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             Type.CODEC.fieldOf("type").forGetter(block -> block.type),
@@ -70,11 +70,6 @@ public class ParachestBlock extends AbstractChestBlock<ParachestBlockEntity> imp
     @Override
     protected MapCodec<ParachestBlock> codec() {
         return CODEC;
-    }
-
-    @Override
-    public MutableComponent getName() {
-        return super.getName();
     }
 
     @Override

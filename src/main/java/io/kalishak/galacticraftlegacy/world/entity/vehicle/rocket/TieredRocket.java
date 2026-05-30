@@ -155,12 +155,12 @@ public abstract class TieredRocket extends AbstractAutoRocket implements RocketT
                         setPos(targetPos.getX() + 0.5D, targetPos.getY() + 800.0D, targetPos.getZ() + 0.5D);
                         setDeltaMovement(0, 0.1D, 0);
 
-//                        for (Entity passenger : getPassengers()) {
-//                            if (passenger instanceof ServerPlayer) {
-//                                passenger.setPos(getX(), getY(), getZ());
-//                                setAwaitingForPlayer(true);
-//                            }
-//                        }
+                        for (Entity passenger : getPassengers()) {
+                            if (passenger instanceof ServerPlayer) {
+                                passenger.setPos(getX(), getY(), getZ());
+                                setAwaitingForPlayer(true);
+                            }
+                        }
 
                         setLaunchPhase(LaunchPhase.LANDING);
                     }

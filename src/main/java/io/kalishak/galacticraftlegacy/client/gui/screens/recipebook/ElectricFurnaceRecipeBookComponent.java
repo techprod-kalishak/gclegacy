@@ -62,10 +62,10 @@ public class ElectricFurnaceRecipeBookComponent extends RecipeBookComponent<Elec
         if (recipeDisplay instanceof FurnaceRecipeDisplay furnaceRecipeDisplay) {
             ghostSlots.setInput(this.menu.getSlot(0), contextMap, furnaceRecipeDisplay.ingredient());
 
-//            Slot slot = this.menu.slots.get(1);
-//            if (!slot.hasItem()) {
-//                ghostSlots.setInput(slot, contextMap, furnaceRecipeDisplay.battery());
-//            }
+            Slot slot = this.menu.slots.get(1);
+            if (!slot.hasItem()) {
+                ghostSlots.setInput(slot, contextMap, furnaceRecipeDisplay.fuel());
+            }
         }
     }
 }

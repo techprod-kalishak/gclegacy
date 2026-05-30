@@ -35,6 +35,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jspecify.annotations.Nullable;
 
+@SuppressWarnings("deprecation")
 public class DungeonChestBlock extends KeyLockedBlock implements SimpleWaterloggedBlock {
     public static final MapCodec<DungeonChestBlock> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             FeatureTier.CODEC.fieldOf("tier").forGetter(dungeonChestBlock -> dungeonChestBlock.featureTier),

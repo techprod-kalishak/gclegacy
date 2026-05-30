@@ -10,6 +10,6 @@ package io.kalishak.galacticraftlegacy.world.level.block.entity.wire.network;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 
-public interface TransmitterBlockEntity extends NetworkSourceBlockEntity, NetworkConnectedBlockEntity {
+public interface TransmitterBlockEntity extends NodeSourceBlockEntity, NodeAcceptingBlockEntity {
     void updateNeighbouringTransmitters(Level level, BlockPos pos);
 }

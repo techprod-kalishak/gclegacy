@@ -98,6 +98,12 @@ public final class GalacticraftBlockEntityType {
                     GalacticraftBlocks.PARACHEST_54.get()
             ))
     );
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<OxygenCollectorBlockEntity>> OXYGEN_COLLECTOR = REGISTRY.register(
+            "oxygen_collector",
+            () -> new  BlockEntityType<>(OxygenCollectorBlockEntity::new, Set.of(
+                    GalacticraftBlocks.OXYGEN_COLLECTOR.get()
+            ))
+    );
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<OxygenDetectorBlockEntity>> OXYGEN_DETECTOR = REGISTRY.register(
             "oxygen_detector",
             () -> new BlockEntityType<>(OxygenDetectorBlockEntity::new, Set.of(
@@ -118,16 +124,18 @@ public final class GalacticraftBlockEntityType {
     );
 
     private static void registerCapabilities(RegisterCapabilitiesEvent event) {
+        CircuitFabricatorBlockEntity.registerCapabilities(event);
         CoalGeneratorBlockEntity.registerCapabilities(event);
+        ColoredPipeBlockEntity.registerCapabilities(event);
         CompressorBlockEntity.registerItemCapabilities(event);
         ElectricCompressorBlockEntity.registerCapabilities(event);
-        CircuitFabricatorBlockEntity.registerCapabilities(event);
         ElectricFurnaceBlockEntity.registerCapabilities(event);
+        FlammableCauldronBlockEntity.registerCapability(event);
         ParachestBlockEntity.registerCapabilities(event);
-        ColoredPipeBlockEntity.registerCapabilities(event);
+        OxygenCollectorBlockEntity.registerCapabilities(event);
         WireBlockEntity.registerCapabilities(event, WIRE.get());
         WireBlockEntity.registerCapabilities(event, DENSE_WIRE.get());
-        FlammableCauldronBlockEntity.registerCapability(event);
+
     }
 
     public static void init(IEventBus bus) {

@@ -7,6 +7,7 @@
 
 package io.kalishak.galacticraftlegacy.network.handler.server;
 
+import io.kalishak.galacticraftlegacy.Constants;
 import io.kalishak.galacticraftlegacy.network.payload.ToggleGearInventoryPayload;
 import io.kalishak.galacticraftlegacy.world.inventory.GearInventoryMenu;
 import net.minecraft.network.chat.Component;
@@ -25,9 +26,6 @@ public class ToggleGearInventoryServerHandler {
                 cxt.reply(new ToggleGearInventoryPayload(true));
             }
 
-        }).exceptionally(e -> {
-            cxt.disconnect(Component.translatable("galacticraftlegacy.networking_failed", e.getLocalizedMessage()));
-            return null;
-        });
+        }).exceptionally(e -> Constants.networkFailureMessage(cxt::disconnect, e));
     }
 }

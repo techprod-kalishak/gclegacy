@@ -42,8 +42,6 @@ import net.neoforged.neoforge.transfer.transaction.Transaction;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
-import javax.annotation.ParametersAreNonnullByDefault;
-
 public abstract class GearInventoryProvider implements ParachuteFalling {
     protected final SpaceGearEquipment gearEquipment;
     protected int parachuteFallingTicks;
@@ -248,10 +246,6 @@ public abstract class GearInventoryProvider implements ParachuteFalling {
                                 entity.getRandom().nextLong()
                         );
                     }
-
-//                    if (slot.isTank() && entity instanceof ServerPlayer serverPlayer) {
-//                        PacketDistributor.sendToPlayer(serverPlayer, new UpdateStoredOxygenPayload(serverPlayer.getId(), newStack, slot));
-//                    }
                 }
             }
         }

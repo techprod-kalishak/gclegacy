@@ -18,6 +18,7 @@ import io.kalishak.galacticraftlegacy.data.datamap.GalacticraftDataMaps;
 import io.kalishak.galacticraftlegacy.galaxies.GalacticraftGalaxies;
 import io.kalishak.galacticraftlegacy.network.GalacticraftNetworkHandler;
 import io.kalishak.galacticraftlegacy.registry.GalacticraftRegistries;
+import io.kalishak.galacticraftlegacy.registry.PackedNodeNetworkTypes;
 import io.kalishak.galacticraftlegacy.server.commands.GalacticraftCommands;
 import io.kalishak.galacticraftlegacy.galaxies.CelestialBodyType;
 import io.kalishak.galacticraftlegacy.sounds.GalacticraftSounds;
@@ -74,6 +75,7 @@ public class Galacticraft {
         GalacticraftLootItemConditions.init(modEventBus);
         GalacticraftLootFunctions.init(modEventBus);
         GalacticraftMenuType.init(modEventBus);
+        PackedNodeNetworkTypes.init(modEventBus);
         GalacticraftParticleTypes.init(modEventBus);
         GalacticraftRecipeBookCategories.init(modEventBus);
         GalacticraftRecipeDisplay.init(modEventBus);

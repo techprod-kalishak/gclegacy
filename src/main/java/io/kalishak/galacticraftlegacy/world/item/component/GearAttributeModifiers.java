@@ -29,7 +29,6 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 import org.apache.logging.log4j.util.TriConsumer;
 import org.jspecify.annotations.NonNull;
@@ -41,12 +40,12 @@ import java.util.List;
 import java.util.Locale;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
-import java.util.function.Function;
 
 /**
  * Based on vanilla {@link net.minecraft.world.item.component.ItemAttributeModifiers} but for GearEquipment
  * @param modifiers List of attribute modifiers
  */
+@SuppressWarnings("deprecation")
 public record GearAttributeModifiers(List<GearAttributeModifiers.Entry> modifiers) {
     public static final GearAttributeModifiers EMPTY = new GearAttributeModifiers(List.of());
     public static final Codec<GearAttributeModifiers> CODEC = Entry.CODEC

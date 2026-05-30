@@ -95,19 +95,19 @@ public class ColoredPipeBlock extends AbstractWireBlock {
 
     @Override
     public @Nullable BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return null;//return new ColoredPipeBlockEntity(blockPos, blockState, this.color);
+        return new ColoredPipeBlockEntity(blockPos, blockState, this.color);
     }
 
-//    @Override
-//    public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState unlitState, BlockEntityType<T> blockEntityType) {
-//        if (level instanceof ServerLevel serverLevel) {
-//            return createTickerHelper(
-//                    blockEntityType,
-//                    GalacticraftBlockEntityType.COLORED_PIPE.get(),
-//                    (l, pipePos, pipeState, pipe) -> ColoredPipeBlockEntity.serverTick(serverLevel, pipePos, pipeState, pipe)
-//            );
-//        }
-//
-//        return null;
-//    }
+    @Override
+    public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState unlitState, BlockEntityType<T> blockEntityType) {
+        if (level instanceof ServerLevel serverLevel) {
+            return createTickerHelper(
+                    blockEntityType,
+                    GalacticraftBlockEntityType.COLORED_PIPE.get(),
+                    (l, pipePos, pipeState, pipe) -> ColoredPipeBlockEntity.serverTick(serverLevel, pipePos, pipeState, pipe)
+            );
+        }
+
+        return null;
+    }
 }

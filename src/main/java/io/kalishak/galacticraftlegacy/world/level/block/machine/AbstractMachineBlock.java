@@ -10,7 +10,6 @@ package io.kalishak.galacticraftlegacy.world.level.block.machine;
 import com.mojang.serialization.MapCodec;
 import io.kalishak.galacticraftlegacy.transfer.ResourcefulHelper;
 import io.kalishak.galacticraftlegacy.world.item.component.GalacticraftDataComponents;
-import io.kalishak.galacticraftlegacy.world.item.GalacticraftItems;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.wire.network.NetworkType;
 import io.kalishak.galacticraftlegacy.world.level.block.wire.ConnectingBlock;
 import net.minecraft.core.BlockPos;
@@ -23,7 +22,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -32,13 +30,13 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
-import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.BlockHitResult;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.transfer.energy.EnergyHandler;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
+@SuppressWarnings("deprecation")
 public abstract class AbstractMachineBlock extends BaseEntityBlock implements ConnectingBlock, RotatedByToolBlock {
     public static final BooleanProperty LIT = BlockStateProperties.LIT; //Active
     public static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;

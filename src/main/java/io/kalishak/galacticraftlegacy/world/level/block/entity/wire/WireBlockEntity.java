@@ -7,7 +7,8 @@
 
 package io.kalishak.galacticraftlegacy.world.level.block.entity.wire;
 
-import io.kalishak.galacticraftlegacy.transfer.node.FluidNodeNetwork;
+import io.kalishak.galacticraftlegacy.transfer.node.EnergyNodeNetwork;
+import io.kalishak.galacticraftlegacy.transfer.node.NodeNetwork;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -18,6 +19,7 @@ import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.transfer.energy.SimpleEnergyHandler;
+import net.neoforged.neoforge.transfer.transaction.Transaction;
 
 public class WireBlockEntity extends AbstractConnectableBlockEntity {
     final SimpleEnergyHandler energyHandler = new SimpleEnergyHandler(getCapacity(), getMaxTransfer());
@@ -35,7 +37,13 @@ public class WireBlockEntity extends AbstractConnectableBlockEntity {
     }
 
     public static void serverTick(ServerLevel level, BlockPos blockPos, BlockState blockState, WireBlockEntity wireBlockEntity) {
-
+        if (wireBlockEntity.network instanceof EnergyNodeNetwork energyNodeNetwork) {
+            if (energyNodeNetwork.getRequest() > 0) {
+                try (Transaction transaction = Transaction.open(null)) {
+                    energyNodeNetwork.sendToAll(energyNodeNetwork.getRequest(), false, transaction);
+                }
+            }
+        }
     }
 
     protected int getCapacity() {
@@ -48,7 +56,7 @@ public class WireBlockEntity extends AbstractConnectableBlockEntity {
 
     @Override
     protected void resetNetwork() {
-
+        this.network = new EnergyNodeNetwork(this.level);
     }
 
     public WireBlockEntity(BlockPos pos, BlockState blockState) {
@@ -56,8 +64,9 @@ public class WireBlockEntity extends AbstractConnectableBlockEntity {
     }
 
     @Override
-    public void addNetwork(FluidNodeNetwork network) {
+    public void addNetwork(NodeNetwork network) {
         this.network = network;
+        onNetworkUpdate();
     }
 
     @Override

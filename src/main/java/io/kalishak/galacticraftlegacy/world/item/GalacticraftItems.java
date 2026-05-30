@@ -15,6 +15,8 @@ import io.kalishak.galacticraftlegacy.registry.deferred.DeferredWeatheringCopper
 import io.kalishak.galacticraftlegacy.transfer.capability.fluid.ItemAccessFluidTank;
 import io.kalishak.galacticraftlegacy.world.entity.GalacticraftEntityType;
 import io.kalishak.galacticraftlegacy.world.entity.GearEquipmentSlot;
+import io.kalishak.galacticraftlegacy.world.entity.GearEquipmentSlotGroup;
+import io.kalishak.galacticraftlegacy.world.entity.ai.attributes.GalacticraftAttributes;
 import io.kalishak.galacticraftlegacy.world.item.component.*;
 import io.kalishak.galacticraftlegacy.world.item.equipment.GalacticraftArmorMaterials;
 import io.kalishak.galacticraftlegacy.world.item.equipment.trim.GalacticraftTrimMaterials;
@@ -28,6 +30,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.equipment.ArmorType;
 import net.minecraft.world.item.equipment.Equippable;
@@ -44,7 +47,6 @@ import net.neoforged.neoforge.transfer.fluid.ItemAccessFluidHandler;
 
 public final class GalacticraftItems {
     private static final DeferredItemRegister REGISTRY = new DeferredItemRegister(Galacticraft.MODID);
-
     public static final DeferredItem<BatteryItem> BATTERY = REGISTRY.registerItem(
             "battery",
             BatteryItem::new,
@@ -218,6 +220,20 @@ public final class GalacticraftItems {
             ShieldControllerItem::new,
             () -> GearItem.simpleGear(GearEquipmentSlot.SHIELD)
                     .stacksTo(1)
+                    .component(
+                            GalacticraftDataComponents.GEAR_ATTRIBUTE_MODIFIERS,
+                            GearAttributeModifiers.builder()
+                                    .add(
+                                            GalacticraftAttributes.CORROSION_PROTECTION,
+                                            new AttributeModifier(
+                                                    Constants.id("corrosion_protection"),
+                                                    1.0D,
+                                                    AttributeModifier.Operation.ADD_VALUE
+                                            ),
+                                            GearEquipmentSlotGroup.GEAR
+                                    )
+                                    .build()
+                    )
                     .component(GalacticraftDataComponents.SHIELD_CONTROLLER, new ShieldController(300))
                     .component(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)
                     .component(GalacticraftDataComponents.ITEM_WITH_DESCRIPTION, new ItemWithDescription(Constants.id("shield_controller").toLanguageKey("item", "desc")))
@@ -226,6 +242,20 @@ public final class GalacticraftItems {
             "shield_controller",
             GearItem::new,
             () -> GearItem.simpleGear(GearEquipmentSlot.SHIELD)
+                    .component(
+                            GalacticraftDataComponents.GEAR_ATTRIBUTE_MODIFIERS,
+                            GearAttributeModifiers.builder()
+                                    .add(
+                                            GalacticraftAttributes.CORROSION_PROTECTION,
+                                            new AttributeModifier(
+                                                    Constants.id("corrosion_protection"),
+                                                    1.0D,
+                                                    AttributeModifier.Operation.ADD_VALUE
+                                            ),
+                                            GearEquipmentSlotGroup.GEAR
+                                    )
+                                    .build()
+                    )
     );
     public static final DeferredItem<Item> SENSOR_GLASSES = REGISTRY.registerSimpleItem(
             "sensor_glasses",
@@ -540,6 +570,7 @@ public final class GalacticraftItems {
     public static final DeferredItem<BlockItem> COMPRESSOR = REGISTRY.registerSimpleBlockItemWithDescription(GalacticraftBlocks.COMPRESSOR);
     public static final DeferredItem<BlockItem> ELECTRIC_COMPRESSOR = REGISTRY.registerSimpleBlockItemWithDescription(GalacticraftBlocks.ELECTRIC_COMPRESSOR);
     public static final DeferredItem<BlockItem> ELECTRIC_FURNACE = REGISTRY.registerSimpleBlockItemWithDescription(GalacticraftBlocks.ELECTRIC_FURNACE);
+    public static final DeferredItem<BlockItem> OXYGEN_COLLECTOR = REGISTRY.registerSimpleBlockItemWithDescription(GalacticraftBlocks.OXYGEN_COLLECTOR);
     public static final DeferredItem<BlockItem> MOON_DIRT = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.MOON_DIRT);
     public static final DeferredItem<BlockItem> MOON_TURF = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.MOON_TURF);
     public static final DeferredItem<BlockItem> MOON_ROCK = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.MOON_ROCK);

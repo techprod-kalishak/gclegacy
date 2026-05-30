@@ -15,6 +15,7 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.util.ExtraCodecs;
 import net.neoforged.neoforge.transfer.energy.SimpleEnergyHandler;
 
+@SuppressWarnings("unused")
 public class NetworkedEnergyHandler extends SimpleEnergyHandler {
     public static final MapCodec<NetworkedEnergyHandler> MAP_CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             ExtraCodecs.NON_NEGATIVE_INT.fieldOf("capacity").forGetter(NetworkedEnergyHandler::getCapacityAsInt),

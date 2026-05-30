@@ -34,6 +34,7 @@ import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jspecify.annotations.Nullable;
 
+@SuppressWarnings("deprecation")
 public class CompressorBlock extends BaseEntityBlock implements RotatedByToolBlock {
     public static final MapCodec<CompressorBlock> CODEC = simpleCodec(CompressorBlock::new);
     public static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;

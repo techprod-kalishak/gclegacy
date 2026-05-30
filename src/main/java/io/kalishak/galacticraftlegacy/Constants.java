@@ -22,6 +22,7 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 public class Constants {
+    public static final Component NETWORK_FAIL = Component.translatable("galacticraftlegacy.networking_failed");
     public static final double RTD = 180.0D / Math.PI;
 
     public static Identifier id(String assetName) {
@@ -62,5 +63,10 @@ public class Constants {
                         .append(Component.literal(" " + scaledStored + "/" + scaledCapacity + " " + unitSupplier.get().getUnit())
                                 .withStyle(Style.EMPTY.withColor(ItemAccessEnergyUtils.colorFromStorage(stored, capacity))))
         );
+    }
+
+    public static Void networkFailureMessage(Consumer<Component> consumer, Throwable throwable) {
+        consumer.accept(Component.translatable("galacticraftlegacy.networking_failed", throwable.getLocalizedMessage()));
+        return null;
     }
 }

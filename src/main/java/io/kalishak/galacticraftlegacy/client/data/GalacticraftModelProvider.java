@@ -79,6 +79,7 @@ public class GalacticraftModelProvider extends ModelProvider {
         litMachine(blockModels, GalacticraftBlocks.COAL_GENERATOR.get());
         machine(blockModels, GalacticraftBlocks.CIRCUIT_FABRICATOR.get());
         machine(blockModels, GalacticraftBlocks.ELECTRIC_FURNACE.get());
+        machine(blockModels, GalacticraftBlocks.OXYGEN_COLLECTOR.get());
         blockModels.createNonTemplateModelBlock(GalacticraftBlocks.OIL.get());
         blockModels.createNonTemplateModelBlock(GalacticraftBlocks.FUEL.get());
         blockModels.family(GalacticraftBlocks.MOON_BRICKS.get()).generateFor(GalacticraftBlockFamilies.MOON_BRICKS);

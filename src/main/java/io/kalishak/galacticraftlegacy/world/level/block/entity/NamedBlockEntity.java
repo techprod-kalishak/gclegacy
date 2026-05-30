@@ -69,9 +69,4 @@ public abstract class NamedBlockEntity extends BlockEntity implements MenuProvid
         super.collectImplicitComponents(components);
         components.set(DataComponents.CUSTOM_NAME, this.name);
     }
-
-    @Override
-    public void removeComponentsFromTag(ValueOutput output) {
-        output.discard("CustomName");
-    }
 }

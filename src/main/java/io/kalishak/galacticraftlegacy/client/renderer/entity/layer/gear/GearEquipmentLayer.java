@@ -105,10 +105,6 @@ public abstract class GearEquipmentLayer<S extends LivingEntityRenderState, M ex
         renderer.addLayer(new OxygenMaskLayer<>(renderer, modelSet, layerRenderer, equipmentAssets));
         renderer.addLayer(new OxygenGearLayer<>(renderer, modelSet, layerRenderer, equipmentAssets));
         renderer.addLayer(new OxygenTankLayer<>(renderer, modelSet, layerRenderer, equipmentAssets));
-
-//        if (renderer instanceof WolfRenderer wolfRenderer) {
-//            renderer.addLayer((RenderLayer<S, M>) new ThermalWolfJacketLayer(wolfRenderer, modelSet, layerRenderer, equipmentAssets));
-//        }
     }
 
     protected ItemStack extractFromRenderState(S renderState, ContextKey<ItemStack> contextKey, Function<GearRenderState, ItemStack> callback) {

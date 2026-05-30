@@ -7,10 +7,12 @@
 
 package io.kalishak.galacticraftlegacy.registry;
 
+import com.mojang.serialization.MapCodec;
 import io.kalishak.galacticraftlegacy.Constants;
 import io.kalishak.galacticraftlegacy.attachment.level.CelestialBodyLevelData;
 import io.kalishak.galacticraftlegacy.galaxies.CelestialBodyType;
 import io.kalishak.galacticraftlegacy.galaxies.CelestialObject;
+import io.kalishak.galacticraftlegacy.transfer.node.NodeNetwork;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -22,10 +24,13 @@ public class GalacticraftRegistries {
     public static final Registry<CelestialObject> CELESTIAL_OBJECT = new RegistryBuilder<>(Keys.CELESTIAL_OBJECT)
             .defaultKey(Constants.id("sol"))
             .create();
+    public static final Registry<MapCodec<? extends NodeNetwork.PackedNode>> PACKED_NODE_TYPE = new RegistryBuilder<>(Keys.PACKED_NODE_TYPE)
+            .create();
 
     @SubscribeEvent
     public static void newRegistries(NewRegistryEvent event) {
         event.register(CELESTIAL_OBJECT);
+        event.register(PACKED_NODE_TYPE);
     }
 
     @SubscribeEvent
@@ -40,6 +45,7 @@ public class GalacticraftRegistries {
         public static final ResourceKey<? extends Registry<CelestialBodyType>> CELESTIAL_BODY_TYPE = ResourceKey.createRegistryKey(Constants.id("celestial_body_type"));
         public static final ResourceKey<Registry<ChecklistEntry>> CHECKLIST = ResourceKey.createRegistryKey(Constants.id("checklist"));
         public static final ResourceKey<Registry<CelestialBodyLevelData>> CELESTIAL_BODY_LEVEL_DATA = ResourceKey.createRegistryKey(Constants.id("celestial_body_level_data"));
+        public static final ResourceKey<Registry<MapCodec<? extends NodeNetwork.PackedNode>>> PACKED_NODE_TYPE = ResourceKey.createRegistryKey(Constants.id("packed_node_type"));
         public static final ResourceKey<Registry<SchematicVariant>> SCHEMATIC = ResourceKey.createRegistryKey(Constants.id("schematic"));
     }
 }

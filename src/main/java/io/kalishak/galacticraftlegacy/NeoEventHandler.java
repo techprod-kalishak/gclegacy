@@ -15,7 +15,7 @@ import io.kalishak.galacticraftlegacy.data.GalacticraftTags;
 import io.kalishak.galacticraftlegacy.data.datamap.Extinguishable;
 import io.kalishak.galacticraftlegacy.data.datamap.GalacticraftDataMaps;
 import io.kalishak.galacticraftlegacy.registry.SchematicVariant;
-import io.kalishak.galacticraftlegacy.transfer.node.FluidNodeNetwork;
+import io.kalishak.galacticraftlegacy.transfer.node.NodeNetwork;
 import io.kalishak.galacticraftlegacy.world.entity.GearEquipmentSlot;
 import io.kalishak.galacticraftlegacy.world.item.component.*;
 import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.GalacticraftRecipeType;
@@ -43,22 +43,19 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CampfireBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.gamerules.GameRules;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.common.util.AttributeTooltipContext;
 import net.neoforged.neoforge.event.AddAttributeTooltipsEvent;
 import net.neoforged.neoforge.event.OnDatapackSyncEvent;
-import net.neoforged.neoforge.event.VanillaGameEvent;
-import net.neoforged.neoforge.event.entity.EntityEvent;
-import net.neoforged.neoforge.event.entity.EntityLeaveLevelEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import net.neoforged.neoforge.event.server.ServerStoppingEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
+import net.neoforged.neoforge.event.tick.LevelTickEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import net.neoforged.neoforge.transfer.ResourceHandler;
 import net.neoforged.neoforge.transfer.access.ItemAccess;
@@ -212,15 +209,19 @@ public class NeoEventHandler {
     @SubscribeEvent
     public void onServerLoad(ServerStartingEvent event) {
         SpaceRaceHooks.onServerLoad(event);
-        FluidNodeNetwork.onServerLoad(event);
+        NodeNetwork.onServerLoad(event);
+    }
+
+    @SubscribeEvent
+    public void onLevelTick(LevelTickEvent.Post event) {
+        NodeNetwork.levelTick(event);
     }
 
     @SubscribeEvent
     public void onServerStop(ServerStoppingEvent event) {
         SpaceRaceHooks.onServerStop(event);
-        FluidNodeNetwork.onServerStop(event);
+        NodeNetwork.onServerStop(event);
     }
-
 
     @SuppressWarnings({"ConstantConditions", "unchecked"})
     private static void addTooltipIfPresent(ItemStack itemStack, Stream<DataComponentType<?>> components, AttributeTooltipContext cxt, Consumer<Component> consumer) {

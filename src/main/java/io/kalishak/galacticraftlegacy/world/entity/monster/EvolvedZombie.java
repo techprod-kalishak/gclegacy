@@ -24,7 +24,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 
-public class EvolvedZombie extends Zombie implements SpaceEntity {
+public class EvolvedZombie extends Zombie implements EvolvedMonster {
     private static final EntityDataAccessor<Float> DATA_PITCH_ID = SynchedEntityData.defineId(EvolvedZombie.class, EntityDataSerializers.FLOAT);
     private final SpaceGearEquipment gear = new SpaceGearEquipment();
     private float tumbling = 0.0F;
