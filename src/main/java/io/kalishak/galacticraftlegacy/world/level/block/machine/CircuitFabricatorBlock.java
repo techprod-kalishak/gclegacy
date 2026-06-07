@@ -12,7 +12,6 @@ import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.CircuitFa
 import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
@@ -30,13 +29,6 @@ public class CircuitFabricatorBlock extends AbstractMachineBlock {
     @Override
     protected MapCodec<CircuitFabricatorBlock> codec() {
         return CODEC;
-    }
-
-    @Override
-    protected void openContainer(Level level, BlockPos pos, @Nullable BlockEntity blockEntity, Player player) {
-        if (blockEntity instanceof CircuitFabricatorBlockEntity circuitFabricator) {
-            player.openMenu(circuitFabricator, pos);
-        }
     }
 
     @Override

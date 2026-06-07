@@ -81,22 +81,7 @@ public abstract class AbstractAutoRocket extends AbstractSpaceShip implements La
     protected static final EntityDataAccessor<Long> DATA_LAST_STATUS_COOLDOWN_ID = SynchedEntityData.defineId(AbstractAutoRocket.class, EntityDataSerializers.LONG);
     protected final @Nullable NonNullList<ItemStack> inventory;
     protected final @Nullable ItemStacksResourceHandler itemStacksResourceHandler;
-    protected final SingleTankResourceHandler tankResourceHandler = new SingleTankResourceHandler() {
-        @Override
-        public @NonNull FluidStack getFluidStack() {
-            return AbstractAutoRocket.this.fuel;
-        }
-
-        @Override
-        public void setFluidStack(@NonNull FluidStack stack) {
-            AbstractAutoRocket.this.fuel = stack;
-        }
-
-        @Override
-        public int getCapacity() {
-            return FluidType.BUCKET_VOLUME * 8;
-        }
-    };
+    protected final SingleTankResourceHandler tankResourceHandler = new SingleTankResourceHandler(FluidType.BUCKET_VOLUME * 8);
     protected FluidStack fuel = FluidStack.EMPTY;
     protected @Nullable LaunchControllerBlockEntity launchController;
     protected @Nullable BlockEntity landingPad;

@@ -15,27 +15,15 @@ import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
-import net.neoforged.neoforge.fluids.FluidStack;
 
-public class ParachestScreen extends AbstractContainerScreen<ParachestMenu> implements FluidTankScreen {
+public class ParachestScreen extends AbstractContainerScreen<ParachestMenu> {
     private static final Identifier CONTAINER_BACKGROUND = Constants.texture("textures/gui/container/parachest_54.png");
     private final int containerRows;
-    private FluidStack tank;
 
     public ParachestScreen(ParachestMenu menu, Inventory playerInventory, Component title) {
         super(menu, playerInventory, title);
         this.containerRows = menu.getRowCount();
         this.inventoryLabelY = this.imageHeight - 94;
-    }
-
-    @Override
-    public void updateTankContents(FluidStack content, int tankIndex) {
-        this.tank = content.copy();
-    }
-
-    @Override
-    public FluidStack getTankContents(int tankIndex) {
-        return this.tank;
     }
 
     @Override

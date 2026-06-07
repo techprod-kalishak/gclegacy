@@ -70,12 +70,12 @@ public class ElectricCompressorScreen extends AbstractRecipeBookScreen<ElectricC
     }
 
     @Override
-    public Rectangle getEnergyBarBounds() {
-        return new Rectangle(18, 96, 56, 7);
+    public Bounds getEnergyBarBounds() {
+        return new Bounds(18, 96);
     }
 
     @Override
-    public Rectangle getEnergyIndicatorBounds() {
-        return new Rectangle(4, 95, 11, 10);
+    public Bounds getEnergyIndicatorBounds() {
+        return new Bounds(4, 95);
     }
 }

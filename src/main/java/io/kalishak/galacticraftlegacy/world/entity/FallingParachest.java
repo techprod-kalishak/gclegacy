@@ -58,22 +58,7 @@ public class FallingParachest extends FallingBlockEntity implements ParachuteFal
     private DyeColor parachuteColor = DyeColor.RED;
 
     private final ItemStacksResourceHandler itemResources;
-    private final SingleTankResourceHandler fluidResource = new SingleTankResourceHandler() {
-        @Override
-        public @NonNull FluidStack getFluidStack() {
-            return FallingParachest.this.fuelTank;
-        }
-
-        @Override
-        public void setFluidStack(@NonNull FluidStack stack) {
-            FallingParachest.this.fuelTank = stack;
-        }
-
-        @Override
-        public int getCapacity() {
-            return 8 * FluidType.BUCKET_VOLUME;
-        }
-    };
+    private final SingleTankResourceHandler fluidResource = new SingleTankResourceHandler(8 * FluidType.BUCKET_VOLUME);
 
     public FallingParachest(EntityType<? extends FallingParachest> entityType, Level level) {
         super(entityType, level);

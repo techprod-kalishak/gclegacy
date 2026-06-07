@@ -35,7 +35,7 @@ import net.neoforged.neoforge.transfer.item.ItemUtil;
 
 import java.util.List;
 
-public class CircuitFabricatorMenu extends AbstractMachineMenu<CircuitFabricatorBlockEntity> {
+public class CircuitFabricatorMenu extends AbstractMachineRecipeBookMenu<CircuitFabricatorBlockEntity> {
     private static final int INV_SLOT_START = 6;
     private static final int INV_SLOT_END = 33;
     private static final int USE_ROW_SLOT_START = 33;

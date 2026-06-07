@@ -12,6 +12,8 @@ import com.google.common.collect.Sets;
 import com.mojang.datafixers.util.Either;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
+import io.kalishak.galacticraftlegacy.Constants;
+import io.kalishak.galacticraftlegacy.Galacticraft;
 import io.kalishak.galacticraftlegacy.network.payload.AddPipePayload;
 import io.kalishak.galacticraftlegacy.registry.GalacticraftRegistries;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.wire.network.NetworkType;
@@ -28,12 +30,16 @@ import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import net.neoforged.neoforge.event.server.ServerStoppingEvent;
 import net.neoforged.neoforge.event.tick.LevelTickEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
+import org.apache.logging.log4j.LogManager;
 import org.jspecify.annotations.NonNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.*;
 import java.util.function.Function;
 
 public abstract class NodeNetwork {
+    protected static final Logger LOGGER = LoggerFactory.getLogger(NodeNetwork.class);
     private static final Map<ResourceKey<Level>, List<NodeNetwork>> NODE_IN_LEVEL = new HashMap<>();
     protected final Set<TransmitterBlockEntity> pipes = Sets.newHashSet();
     protected final Set<TransmitterBlockEntity> newPipes = Sets.newHashSet();
@@ -80,8 +86,6 @@ public abstract class NodeNetwork {
             if (!blockEntity.hasLevel()) {
                 this.pipes.remove(transmitter);
             }
-
-            transmitter.addNetwork(this);
         }
 
         updateCapacity();
@@ -193,6 +197,7 @@ public abstract class NodeNetwork {
 
     protected static void registerNode(NodeNetwork node) {
         ResourceKey<Level> dimension = node.level.dimension();
+        LOGGER.debug("Registering new node network in {}", dimension);
         var networksInLevel = NODE_IN_LEVEL.computeIfAbsent(dimension, _ -> Lists.newArrayList());
 
         networksInLevel.add(node);
@@ -201,11 +206,14 @@ public abstract class NodeNetwork {
 
     protected static void unregisterNode(NodeNetwork node) {
         ResourceKey<Level> dimension = node.level.dimension();
+        LOGGER.debug("Unegistering a node network from {}", dimension);
         var networksInLevel = NODE_IN_LEVEL.get(dimension);
 
         if (networksInLevel != null) {
             networksInLevel.remove(node);
             NODE_IN_LEVEL.put(dimension, networksInLevel);
+        } else {
+            LOGGER.debug("Tried to remove non-existent node network!");
         }
     }
 

@@ -20,22 +20,7 @@ import java.util.UUID;
 public abstract class AbstractLander extends MovingEntity {
     private static final int FUEL_CAPACITY = 5000;
     protected FluidStack fuelStack = FluidStack.EMPTY;
-    protected final SingleTankResourceHandler tankResourceHandler = new SingleTankResourceHandler() {
-        @Override
-        public @NonNull FluidStack getFluidStack() {
-            return AbstractLander.this.fuelStack;
-        }
-
-        @Override
-        public void setFluidStack(@NonNull FluidStack stack) {
-            AbstractLander.this.fuelStack = stack;
-        }
-
-        @Override
-        public int getCapacity() {
-            return FUEL_CAPACITY;
-        }
-    };
+    protected final SingleTankResourceHandler tankResourceHandler = new SingleTankResourceHandler(FUEL_CAPACITY);
     private boolean lastShouldMove;
     private UUID persistantRiderUUID;
     private boolean shouldMoveClient;
@@ -54,7 +39,7 @@ public abstract class AbstractLander extends MovingEntity {
         event.registerEntity(
                 Capabilities.Fluid.ENTITY,
                 type,
-                (entity, context) -> entity.tankResourceHandler
+                (entity, _) -> entity.tankResourceHandler
         );
     }
 }

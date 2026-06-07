@@ -66,10 +66,10 @@ public interface ItemAccessEnergyUtils extends TooltipProvider {
     }
 
     static int colorFromStorage(int stored, int capacity) {
-        float perc = Math.clamp((float) stored / (float) capacity, 0.0F, 1.0F);
+        float per = Math.clamp((float) stored / (float) capacity, 0.0F, 1.0F);
 
-        int r = Math.round(255.0F * (1.0F - perc));
-        int g = Math.round(255.0F * perc);
+        int r = Math.round(255.0F * (1.0F - per));
+        int g = Math.round(255.0F * per);
 
         return r << 16 | g << 8;
     }

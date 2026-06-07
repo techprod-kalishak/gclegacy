@@ -8,6 +8,7 @@
 package io.kalishak.galacticraftlegacy.registry;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.kalishak.galacticraftlegacy.world.item.FeatureTier;
 import net.minecraft.core.Holder;
@@ -24,6 +25,7 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.TooltipProvider;
 
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 public record SchematicVariant(FeatureTier tier, Identifier assetId, Component title) implements TooltipProvider {
     public static final Codec<SchematicVariant> DIRECT_CODEC = RecordCodecBuilder.create(instance -> instance.group(
@@ -32,6 +34,7 @@ public record SchematicVariant(FeatureTier tier, Identifier assetId, Component t
             ComponentSerialization.CODEC.fieldOf("title").forGetter(SchematicVariant::title)
     ).apply(instance, SchematicVariant::new));
     public static final Codec<Holder<SchematicVariant>> CODEC = RegistryFixedCodec.create(GalacticraftRegistries.Keys.SCHEMATIC);
+    public static final MapCodec<Holder<SchematicVariant>> MAP_CODEC = CODEC.fieldOf("variant");
     public static final StreamCodec<RegistryFriendlyByteBuf, SchematicVariant> DIRECT_STREAM_CODEC = StreamCodec.composite(
             FeatureTier.STREAM_CODEC, SchematicVariant::tier,
             Identifier.STREAM_CODEC, SchematicVariant::assetId,

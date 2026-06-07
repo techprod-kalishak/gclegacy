@@ -25,7 +25,7 @@ public class BatteryItem extends Item {
     @Override
     public int getBarWidth(ItemStack stack) {
         EnergyHandler energyHandler = ItemAccessEnergyUtils.getEnergyHandler(stack);
-        return Math.min(1 + energyHandler.getAmountAsInt() * 12 / energyHandler.getCapacityAsInt(), 13);
+        return Math.min(energyHandler.getAmountAsInt() * 13 / energyHandler.getCapacityAsInt(), 13);
     }
 
     @Override

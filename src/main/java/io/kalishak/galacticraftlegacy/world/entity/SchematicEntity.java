@@ -11,7 +11,6 @@ import io.kalishak.galacticraftlegacy.attachment.GalacticraftAttachments;
 import io.kalishak.galacticraftlegacy.registry.SchematicVariant;
 import io.kalishak.galacticraftlegacy.world.item.GalacticraftItems;
 import io.kalishak.galacticraftlegacy.world.item.component.GalacticraftDataComponents;
-import io.kalishak.galacticraftlegacy.world.item.component.SchematicContent;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
@@ -51,7 +50,7 @@ public class SchematicEntity extends HangingEntity {
     public SchematicEntity(Level level, BlockPos blockPos, Direction direction, Holder<SchematicVariant> schematicHolder) {
         this(level, blockPos);
         setDirection(direction);
-        setSchematic(new SchematicContent(schematicHolder));
+        setSchematic(schematicHolder);
     }
 
     @Override
@@ -59,15 +58,11 @@ public class SchematicEntity extends HangingEntity {
         super.defineSynchedData(builder);
     }
 
-    public void setSchematic(SchematicContent schematic) {
+    public void setSchematic(Holder<SchematicVariant> schematic) {
         setData(GalacticraftAttachments.DATA_SCHEMATIC, schematic);
     }
 
-    public void setSchematic(Holder<SchematicVariant> schematic) {
-        setSchematic(new SchematicContent(schematic));
-    }
-
-    public SchematicContent getSchematic() {
+    public Holder<SchematicVariant> getSchematic() {
         return getData(GalacticraftAttachments.DATA_SCHEMATIC);
     }
 
@@ -96,7 +91,7 @@ public class SchematicEntity extends HangingEntity {
     protected void addAdditionalSaveData(ValueOutput valueOutput) {
         super.addAdditionalSaveData(valueOutput);
         valueOutput.store("facing", Direction.CODEC, getDirection());
-        valueOutput.store("schematic", SchematicContent.CODEC, getSchematic());
+        valueOutput.store("schematic", SchematicVariant.CODEC, getSchematic());
     }
 
     @Override
@@ -104,7 +99,7 @@ public class SchematicEntity extends HangingEntity {
         super.readAdditionalSaveData(valueInput);
         Direction direction = valueInput.read("facing", Direction.CODEC).orElse(Direction.SOUTH);
         setDirection(direction);
-        valueInput.read("schematic", SchematicContent.CODEC).ifPresent(this::setSchematic);
+        valueInput.read("schematic", SchematicVariant.CODEC).ifPresent(this::setSchematic);
     }
 
     @Override
@@ -120,12 +115,13 @@ public class SchematicEntity extends HangingEntity {
     }
 
     @Override
+    @SuppressWarnings("ConstantConditions")
     public void dropItem(ServerLevel level, @Nullable Entity entity) {
         if (level.getGameRules().get(GameRules.ENTITY_DROPS)) {
             playSound(SoundEvents.PAINTING_BREAK, 1.0F, 1.0F);
 
             if (!(entity instanceof Player player && player.hasInfiniteMaterials())) {
-                spawnAtLocation(level, GalacticraftItems.SCHEMATIC);
+                spawnAtLocation(level, getPickResult());
             }
         }
     }
@@ -157,7 +153,10 @@ public class SchematicEntity extends HangingEntity {
     }
 
     @Override
-    public @Nullable ItemStack getPickResult() {
-        return GalacticraftItems.SCHEMATIC.toStack();
+    public ItemStack getPickResult() {
+        ItemStack stack = GalacticraftItems.SCHEMATIC.toStack();
+        stack.set(GalacticraftDataComponents.SCHEMATIC, getSchematic());
+
+        return stack;
     }
 }

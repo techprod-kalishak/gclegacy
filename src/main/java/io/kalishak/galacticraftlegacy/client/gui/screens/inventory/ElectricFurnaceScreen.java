@@ -52,13 +52,13 @@ public class ElectricFurnaceScreen extends AbstractMachineScreen<ElectricFurnace
     }
 
     @Override
-    public Rectangle getEnergyIndicatorBounds() {
-        return new Rectangle(27, 53, 11, 10);
+    public Bounds getEnergyIndicatorBounds() {
+        return new Bounds(27, 53);
     }
 
     @Override
-    public Rectangle getEnergyBarBounds() {
-        return new Rectangle(40, 53, 54, 7);
+    public Bounds getEnergyBarBounds() {
+        return new Bounds(40, 53);
     }
 
     @Override

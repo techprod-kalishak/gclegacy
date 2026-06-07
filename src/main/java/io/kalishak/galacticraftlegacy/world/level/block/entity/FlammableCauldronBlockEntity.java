@@ -19,27 +19,10 @@ import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidType;
-import net.neoforged.neoforge.transfer.fluid.FluidResource;
-import org.jspecify.annotations.NonNull;
 
 public class FlammableCauldronBlockEntity extends BlockEntity {
     private FluidStack stack = FluidStack.EMPTY;
-    private final SingleTankResourceHandler handler = new SingleTankResourceHandler() {
-        @Override
-        public @NonNull FluidStack getFluidStack() {
-            return FlammableCauldronBlockEntity.this.stack;
-        }
-
-        @Override
-        public void setFluidStack(@NonNull FluidStack stack) {
-            FlammableCauldronBlockEntity.this.stack = stack;
-        }
-
-        @Override
-        public int getCapacity() {
-            return FluidType.BUCKET_VOLUME;
-        }
-
+    private final SingleTankResourceHandler handler = new SingleTankResourceHandler(FluidType.BUCKET_VOLUME) {
         @Override
         protected void notifyChange() {
             FlammableCauldronBlockEntity.this.refreshBlockState();
@@ -56,7 +39,7 @@ public class FlammableCauldronBlockEntity extends BlockEntity {
     }
 
     public static void registerCapability(RegisterCapabilitiesEvent event) {
-        event.registerBlockEntity(Capabilities.Fluid.BLOCK, GalacticraftBlockEntityType.FLAMMABLE_CAULDRON.get(), (blockEntity, cxt) -> blockEntity.handler);
+        event.registerBlockEntity(Capabilities.Fluid.BLOCK, GalacticraftBlockEntityType.FLAMMABLE_CAULDRON.get(), (blockEntity, _) -> blockEntity.handler);
     }
 
     private void refreshBlockState() {

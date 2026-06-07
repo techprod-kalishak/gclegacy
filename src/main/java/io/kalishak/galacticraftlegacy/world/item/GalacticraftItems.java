@@ -279,7 +279,7 @@ public final class GalacticraftItems {
     public static final DeferredItem<Item> TIN_INGOT = REGISTRY.registerSimpleItem("tin_ingot");
     public static final DeferredItem<Item> RAW_TIN = REGISTRY.registerSimpleItem("raw_tin");
     public static final DeferredItem<Item> RAW_SILICON = REGISTRY.registerSimpleItem("raw_silicon");
-    public static final DeferredItem<Item> SAPPHIRE = REGISTRY.registerSimpleItem("sapphire", properties -> properties.rarity(Rarity.UNCOMMON));
+    public static final DeferredItem<Item> SAPPHIRE = REGISTRY.registerSimpleItemWithDescription("sapphire", properties -> properties.rarity(Rarity.UNCOMMON));
     public static final DeferredItem<Item> BASIC_WAFER = REGISTRY.registerSimpleItem("basic_wafer");
     public static final DeferredItem<Item> ADVANCED_WAFER = REGISTRY.registerSimpleItem("advanced_wafer");
     public static final DeferredItem<Item> SOLAR_WAFER = REGISTRY.registerSimpleItem("solar_wafer");
@@ -544,8 +544,8 @@ public final class GalacticraftItems {
             () -> new Item.Properties().spawnEgg(GalacticraftEntityType.EVOLVED_ZOMBIE.get())
     );
 
-    public static final DeferredItem<BlockItem> ALUMINUM_WIRE = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.ALUMINUM_WIRE);
-    public static final DeferredItem<BlockItem> HEAVY_ALUMINUM_WIRE = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.HEAVY_ALUMINUM_WIRE);
+    public static final DeferredItem<BlockItem> ALUMINUM_WIRE = REGISTRY.registerSimpleBlockItemWithDescription(GalacticraftBlocks.ALUMINUM_WIRE);
+    public static final DeferredItem<BlockItem> HEAVY_ALUMINUM_WIRE = REGISTRY.registerSimpleBlockItemWithDescription(GalacticraftBlocks.HEAVY_ALUMINUM_WIRE);
     public static final DeferredItem<BlockItem> WHITE_PIPE = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.WHITE_PIPE);
     public static final DeferredItem<BlockItem> ORANGE_PIPE = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.ORANGE_PIPE);
     public static final DeferredItem<BlockItem> MAGENTA_PIPE = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.MAGENTA_PIPE);
@@ -616,6 +616,7 @@ public final class GalacticraftItems {
     );
     public static final DeferredItem<BlockItem> UNLIT_LANTERN = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.UNLIT_LANTERN);
     public static final DeferredWeatheringCopperItems UNLIT_COPPER_LANTERNS = DeferredWeatheringCopperItems.create(GalacticraftBlocks.UNLIT_COPPER_LANTERN, REGISTRY::registerSimpleBlockItem);
+    public static final DeferredItem<BlockItem> MAGNETIC_CRAFTING_TABLE = REGISTRY.registerSimpleBlockItemWithDescription(GalacticraftBlocks.MAGNETIC_CRAFTING_TABLE);
 
     public static void init(IEventBus bus) {
         REGISTRY.register(bus);
@@ -625,37 +626,37 @@ public final class GalacticraftItems {
     private static void registerItemCapabilities(RegisterCapabilitiesEvent event) {
         event.registerItem(
                 Capabilities.Energy.ITEM,
-                (item, cxt) -> new ItemAccessEnergyHandler(cxt, GalacticraftDataComponents.STORED_ENERGY.get(), 15000, 25),
+                (_, cxt) -> new ItemAccessEnergyHandler(cxt, GalacticraftDataComponents.STORED_ENERGY.get(), 15000, 25),
                 BATTERY
         );
         event.registerItem(
                 Capabilities.Energy.ITEM,
-                (item, cxt) -> InfiniteEnergyHandler.INSTANCE,
+                (_, _) -> InfiniteEnergyHandler.INSTANCE,
                 INFINITE_BATTERY
         );
         event.registerItem(
                 Capabilities.Fluid.ITEM,
-                (item, cxt) -> new ItemAccessFluidTank(cxt, GalacticraftDataComponents.FLUID_TANK.get(), 900, resource -> resource.is(GalacticraftFluids.OXYGEN)),
+                (_, cxt) -> new ItemAccessFluidTank(cxt, GalacticraftDataComponents.FLUID_TANK.get(), 900, resource -> resource.is(GalacticraftFluids.OXYGEN)),
                 LIGHT_TANK
         );
         event.registerItem(
                 Capabilities.Fluid.ITEM,
-                (item, cxt) -> new ItemAccessFluidTank(cxt, GalacticraftDataComponents.FLUID_TANK.get(), 1800, resource -> resource.is(GalacticraftFluids.OXYGEN)),
+                (_, cxt) -> new ItemAccessFluidTank(cxt, GalacticraftDataComponents.FLUID_TANK.get(), 1800, resource -> resource.is(GalacticraftFluids.OXYGEN)),
                 MEDIUM_TANK
         );
         event.registerItem(
                 Capabilities.Fluid.ITEM,
-                (item, cxt) -> new ItemAccessFluidTank(cxt, GalacticraftDataComponents.FLUID_TANK.get(), 2700, resource -> resource.is(GalacticraftFluids.OXYGEN)),
+                (_, cxt) -> new ItemAccessFluidTank(cxt, GalacticraftDataComponents.FLUID_TANK.get(), 2700, resource -> resource.is(GalacticraftFluids.OXYGEN)),
                 HEAVY_TANK
         );
         event.registerItem(
                 Capabilities.Fluid.ITEM,
-                (item, cxt) -> new InfiniteResourceHandler<>(FluidResource.of(GalacticraftFluids.OXYGEN)),
+                (_, _) -> new InfiniteResourceHandler<>(FluidResource.of(GalacticraftFluids.OXYGEN)),
                 INFINITE_OXYGEN_TANK
         );
         event.registerItem(
                 Capabilities.Fluid.ITEM,
-                (item, cxt) -> new ItemAccessFluidHandler(cxt, GalacticraftDataComponents.FLUID_TANK.get(), 8000),
+                (_, cxt) -> new ItemAccessFluidHandler(cxt, GalacticraftDataComponents.FLUID_TANK.get(), 8000),
                 FLUID_TANK
         );
     }

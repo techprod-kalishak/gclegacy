@@ -20,7 +20,7 @@ import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.client.gui.GuiLayer;
 
 public class SensorGlassesOverlay implements GuiLayer {
-    private static final Identifier GUI = Constants.id("gui/sensor_glasses.png");
+    private static final Identifier GUI = Constants.id("textures/gui/sensor_glasses.png");
     private int zoom = 0;
 
     @Override

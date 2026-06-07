@@ -33,7 +33,7 @@ import net.neoforged.neoforge.transfer.item.ResourceHandlerSlot;
 
 import java.util.List;
 
-public class ElectricFurnaceMenu extends AbstractMachineMenu<ElectricFurnaceBlockEntity> {
+public class ElectricFurnaceMenu extends AbstractMachineRecipeBookMenu<ElectricFurnaceBlockEntity> {
     public ElectricFurnaceMenu(int containerId, Inventory playerInventory, ElectricFurnaceBlockEntity machine, ContainerData containerData) {
         super(GalacticraftMenuType.ARC_FURNACE.get(), containerId, playerInventory, machine, containerData);
 

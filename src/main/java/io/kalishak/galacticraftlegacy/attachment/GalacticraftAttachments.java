@@ -14,9 +14,12 @@ import io.kalishak.galacticraftlegacy.attachment.entity.AdvancedMovement;
 import io.kalishak.galacticraftlegacy.attachment.entity.EntityGearInventory;
 import io.kalishak.galacticraftlegacy.attachment.entity.PlayerSpaceData;
 import io.kalishak.galacticraftlegacy.attachment.level.CelestialBodyLevelData;
+import io.kalishak.galacticraftlegacy.registry.SchematicVariant;
+import io.kalishak.galacticraftlegacy.registry.SchematicVariants;
 import io.kalishak.galacticraftlegacy.world.entity.FlagData;
-import io.kalishak.galacticraftlegacy.world.item.component.SchematicContent;
+import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.MachineStatus;
 import net.minecraft.core.Holder;
+import net.minecraft.world.entity.Entity;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.attachment.AttachmentType;
 import net.neoforged.neoforge.fluids.FluidStack;
@@ -29,6 +32,13 @@ public final class GalacticraftAttachments {
     private static final DeferredRegister<AttachmentType<?>> REGISTRY = DeferredRegister.create(NeoForgeRegistries.Keys.ATTACHMENT_TYPES, Galacticraft.MODID);
 
     //Block
+    public static final DeferredHolder<AttachmentType<?>, AttachmentType<MachineStatus>> MACHINE_STATUS = REGISTRY.register(
+            "machine_status",
+            () -> AttachmentType.builder(() -> new MachineStatus(MachineStatus.Type.IDLE))
+                    .serialize(MachineStatus.MAP_CODEC)
+                    .sync(MachineStatus.STREAM_CODEC)
+                    .build()
+    );
     @ApiStatus.Internal
     public static final DeferredHolder<AttachmentType<?>, AttachmentType<SyncedEnergyHandler>> SYNC_ENERGY_STORAGE = REGISTRY.register(
             "energy_storage",
@@ -67,17 +77,23 @@ public final class GalacticraftAttachments {
                     .sync(FlagData.STREAM_CODEC)
                     .build()
     );
-    public static final DeferredHolder<AttachmentType<?>, AttachmentType<SchematicContent>> DATA_SCHEMATIC = REGISTRY.register(
+    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Holder<SchematicVariant>>> DATA_SCHEMATIC = REGISTRY.register(
             "data_schematic",
-            () -> AttachmentType.builder(SchematicContent::getDefault)
-                    .serialize(SchematicContent.MAP_CODEC)
-                    .sync(SchematicContent.STREAM_CODEC)
+            () -> AttachmentType.builder(attachmentHolder -> {
+                if (attachmentHolder instanceof Entity entity) {
+                    return entity.registryAccess().getOrThrow(SchematicVariants.TIER_2_ROCKET).getDelegate();
+                }
+
+                throw new IllegalArgumentException(attachmentHolder.getClass() + " should not store the schematic data!");
+            })
+                    .serialize(SchematicVariant.MAP_CODEC)
+                    .sync(SchematicVariant.STREAM_CODEC)
                     .build()
     );
     public static final DeferredHolder<AttachmentType<?>, AttachmentType<PlayerSpaceData>> PLAYER_SPACE_DATA = REGISTRY.register(
             "player_space_data",
             () -> AttachmentType.builder(PlayerSpaceData::new)
-                    .serialize(PlayerSpaceData.CODEC)
+                    .serialize(PlayerSpaceData.MAP_CODEC)
                     .sync(PlayerSpaceData.STREAM_CODEC)
                     .copyOnDeath()
                     .copyHandler(PlayerSpaceData::copyOnDeath).build()
@@ -85,7 +101,7 @@ public final class GalacticraftAttachments {
     public static final DeferredHolder<AttachmentType<?>, AttachmentType<EntityGearInventory>> ENTITY_GEAR_INVENTORY = REGISTRY.register(
             "entity_gear_inventory",
             () -> AttachmentType.builder(EntityGearInventory::new)
-                    .serialize(EntityGearInventory.CODEC, EntityGearInventory::shouldSave)
+                    .serialize(EntityGearInventory.MAP_CODEC, EntityGearInventory::shouldSave)
                     .sync(EntityGearInventory.STREAM_CODEC)
                     .build()
     );

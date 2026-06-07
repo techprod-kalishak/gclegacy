@@ -18,13 +18,27 @@ import net.neoforged.neoforge.transfer.transaction.SnapshotJournal;
 import net.neoforged.neoforge.transfer.transaction.TransactionContext;
 import org.jspecify.annotations.NonNull;
 
-import java.util.Objects;
-
-public abstract class SingleTankResourceHandler extends SnapshotJournal<FluidStack> implements ResourceHandler<FluidResource>, ValueIOSerializable {
+public class SingleTankResourceHandler extends SnapshotJournal<FluidStack> implements ResourceHandler<FluidResource>, ValueIOSerializable {
     public static final String VALUE_IO_KEY = "FluidStack";
+    private final int capacity;
+    private @NonNull FluidStack stack;
 
-    public abstract @NonNull FluidStack getFluidStack();
-    public abstract void setFluidStack(@NonNull FluidStack stack);
+    public SingleTankResourceHandler(@NonNull FluidStack stack, int capacity) {
+        this.stack = stack;
+        this.capacity = capacity;
+    }
+
+    public SingleTankResourceHandler(int capacity) {
+        this(FluidStack.EMPTY, capacity);
+    }
+
+    public @NonNull FluidStack getFluidStack() {
+        return this.stack;
+    }
+
+    public void setFluidStack(@NonNull FluidStack stack) {
+        this.stack = stack;
+    }
 
     protected boolean isValid(FluidResource resource) {
         return true;
@@ -33,7 +47,9 @@ public abstract class SingleTankResourceHandler extends SnapshotJournal<FluidSta
     protected void notifyChange() {
     }
 
-    public abstract int getCapacity();
+    public int getCapacity() {
+        return this.capacity;
+    }
 
     @Override
     public final int size() {
@@ -42,17 +58,15 @@ public abstract class SingleTankResourceHandler extends SnapshotJournal<FluidSta
 
     @Override
     public int insert(int index, FluidResource resource, int amount, TransactionContext transaction) {
-        Objects.checkIndex(index, size());
         TransferPreconditions.checkNonEmptyNonNegative(resource, amount);
 
-        FluidStack currentStack = getFluidStack();
+        FluidStack currentStack = this.stack;
 
         if ((currentStack.isEmpty() || resource.matches(currentStack)) && isValid(resource)) {
             int inserted = Math.min(amount, getCapacity() - currentStack.getAmount());
 
             if (inserted > 0) {
                 updateSnapshots(transaction);
-                currentStack = getFluidStack();
 
                 if (currentStack.isEmpty()) {
                     currentStack = resource.toStack(inserted);
@@ -60,7 +74,7 @@ public abstract class SingleTankResourceHandler extends SnapshotJournal<FluidSta
                     currentStack.grow(inserted);
                 }
 
-                setFluidStack(currentStack);
+                this.stack = currentStack;
                 notifyChange();
                 return inserted;
             }
@@ -71,20 +85,20 @@ public abstract class SingleTankResourceHandler extends SnapshotJournal<FluidSta
 
     @Override
     public int extract(int index, FluidResource resource, int amount, TransactionContext transaction) {
-        Objects.checkIndex(index, size());
         TransferPreconditions.checkNonEmptyNonNegative(resource, amount);
 
-        FluidStack currentStack = getFluidStack();
+        FluidStack currentStack = this.stack;
 
         if (resource.matches(currentStack)) {
             int extracted = Math.min(currentStack.getAmount(), amount);
 
             if (extracted > 0) {
                 updateSnapshots(transaction);
-                currentStack = getFluidStack();
+                currentStack = this.stack;
                 currentStack.shrink(extracted);
-                setFluidStack(currentStack);
+                this.stack = currentStack;
                 notifyChange();
+
                 return extracted;
             }
         }
@@ -94,7 +108,7 @@ public abstract class SingleTankResourceHandler extends SnapshotJournal<FluidSta
 
     @Override
     public final FluidResource getResource(int index) {
-        return FluidResource.of(getFluidStack());
+        return FluidResource.of(this.stack);
     }
 
     public FluidResource getResource() {
@@ -103,7 +117,6 @@ public abstract class SingleTankResourceHandler extends SnapshotJournal<FluidSta
 
     @Override
     public final long getAmountAsLong(int index) {
-        Objects.checkIndex(index, size());
         return getFluidStack().getAmount();
     }
 
@@ -118,33 +131,29 @@ public abstract class SingleTankResourceHandler extends SnapshotJournal<FluidSta
 
     @Override
     public boolean isValid(int index, FluidResource resource) {
-        TransferPreconditions.checkNonEmpty(resource);
         return isValid(resource);
     }
 
     @Override
     protected FluidStack createSnapshot() {
-        FluidStack og = getFluidStack();
-        setFluidStack(og.copy());
-
-        return og;
+        return this.stack.copy();
     }
 
     @Override
     protected void revertToSnapshot(FluidStack snapshot) {
-        setFluidStack(snapshot);
+        this.stack = snapshot.copy();
     }
 
     @Override
     public void serialize(ValueOutput output) {
-        if (!getFluidStack().isEmpty()) {
-            output.store(VALUE_IO_KEY, FluidStack.CODEC, getFluidStack());
+        if (!this.stack.isEmpty()) {
+            output.store(VALUE_IO_KEY, FluidStack.OPTIONAL_CODEC, this.stack);
         }
     }
 
     @Override
     public void deserialize(ValueInput input) {
-        setFluidStack(input.read(VALUE_IO_KEY, FluidStack.CODEC).orElse(FluidStack.EMPTY));
+        input.read(VALUE_IO_KEY, FluidStack.OPTIONAL_CODEC).ifPresent(this::setFluidStack);
     }
 
     @Override

@@ -31,6 +31,7 @@ import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.registries.datamaps.builtin.FurnaceFuel;
 import net.neoforged.neoforge.registries.datamaps.builtin.NeoForgeDataMaps;
+import net.neoforged.neoforge.transfer.EmptyResourceHandler;
 import net.neoforged.neoforge.transfer.RangedResourceHandler;
 import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.neoforged.neoforge.transfer.item.ItemUtil;
@@ -66,12 +67,14 @@ public class CoalGeneratorBlockEntity extends AbstractMachineBlockEntity {
         event.registerBlockEntity(
                 Capabilities.Item.BLOCK,
                 GalacticraftBlockEntityType.COAL_GENERATOR.get(),
-                (machine, cxt) -> {
-                    if (cxt == Direction.UP) {
-                        return RangedResourceHandler.ofSingleIndex(() -> machine.innerResourceHandler, 0);
+                (machine, context) -> {
+                    if (context == Direction.UP) {
+                        return RangedResourceHandler.ofSingleIndex(() -> machine.items, 0);
+                    } else if (context == null) {
+                        return machine.items;
                     }
 
-                    return machine.innerResourceHandler;
+                    return EmptyResourceHandler.instance();
                 }
         );
     }
@@ -82,7 +85,7 @@ public class CoalGeneratorBlockEntity extends AbstractMachineBlockEntity {
 
         if (coalGenerator.heatLevel - MIN_ENERGY_PER_HEAT > 0) {
             try (Transaction tx = Transaction.open(null)) {
-                if (coalGenerator.energyHandler.insert(Mth.floor(coalGenerator.heatLevel) - MIN_ENERGY_PER_HEAT, tx) > 0) {
+                if (coalGenerator.capacitor.insert(Mth.floor(coalGenerator.heatLevel) - MIN_ENERGY_PER_HEAT, tx) > 0) {
                     tx.commit();
                 }
             }
@@ -93,17 +96,17 @@ public class CoalGeneratorBlockEntity extends AbstractMachineBlockEntity {
             coalGenerator.heatLevel = Math.min(coalGenerator.heatLevel + Math.max(coalGenerator.heatLevel * 0.005F, HEAT_UP_SPEED), MAX_ENERGY_PER_HEAT);
         }
 
-        ItemResource fuel = coalGenerator.innerResourceHandler.getResource(0);
+        ItemResource fuel = coalGenerator.items.getResource(0);
 
         if (coalGenerator.litTimeRemaining <= 0 && !fuel.isEmpty()) {
             try (Transaction tx = Transaction.open(null)) {
                 FurnaceFuel furnaceFuel = level.registryAccess().lookupOrThrow(Registries.ITEM).getData(NeoForgeDataMaps.FURNACE_FUELS, fuel.typeHolder().unwrapKey().orElseThrow());
                 ItemStackTemplate remainder = fuel.toStack().getCraftingRemainder();
 
-                if (coalGenerator.innerResourceHandler.extract(fuel, 1, tx) > 0) {
+                if (coalGenerator.items.extract(fuel, 1, tx) > 0) {
                     if (furnaceFuel != null && furnaceFuel.burnTime() > 0) {
                         if (remainder != null) {
-                            coalGenerator.innerResourceHandler.set(0, ItemResource.of(remainder), remainder.count());
+                            coalGenerator.items.set(0, ItemResource.of(remainder), remainder.count());
                         }
 
                         coalGenerator.litTotalTime =  furnaceFuel.burnTime();
@@ -141,12 +144,12 @@ public class CoalGeneratorBlockEntity extends AbstractMachineBlockEntity {
 
     @Override
     public void set(int index, ItemResource resource, int amount) {
-        ItemStack existingStack = ItemUtil.getStack(this.innerResourceHandler, index);
+        ItemStack existingStack = ItemUtil.getStack(this.items, index);
         ItemStackTemplate remainder = existingStack.getCraftingRemainder();
 
         if (remainder != null) {
             try (Transaction tx = Transaction.open(null)) {
-                if (!ItemUtil.insertItemReturnRemaining(this.innerResourceHandler, existingStack, false, tx).isEmpty()) {
+                if (!ItemUtil.insertItemReturnRemaining(this.items, existingStack, false, tx).isEmpty()) {
                     tx.commit();
                 }
             }
@@ -157,7 +160,7 @@ public class CoalGeneratorBlockEntity extends AbstractMachineBlockEntity {
     }
 
     @Override
-    protected int size() {
+    protected int containerSize() {
         return 1;
     }
 

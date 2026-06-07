@@ -9,6 +9,7 @@ package io.kalishak.galacticraftlegacy.client.data;
 
 import io.kalishak.galacticraftlegacy.Constants;
 import io.kalishak.galacticraftlegacy.Galacticraft;
+import io.kalishak.galacticraftlegacy.client.data.models.model.GalacticraftTextureMapping;
 import io.kalishak.galacticraftlegacy.client.item.ColorByFluid;
 import io.kalishak.galacticraftlegacy.client.renderer.item.properties.numeric.DungeonLocatorAngle;
 import io.kalishak.galacticraftlegacy.client.renderer.item.properties.range.FluidAmountProperty;
@@ -22,6 +23,7 @@ import io.kalishak.galacticraftlegacy.world.item.component.GalacticraftDataCompo
 import io.kalishak.galacticraftlegacy.world.item.equipment.trim.GalacticraftMaterialAssetGroup;
 import io.kalishak.galacticraftlegacy.world.item.equipment.trim.GalacticraftTrimMaterials;
 import io.kalishak.galacticraftlegacy.world.level.block.GalacticraftBlocks;
+import io.kalishak.galacticraftlegacy.world.level.block.MagneticCraftingBlock;
 import io.kalishak.galacticraftlegacy.world.level.block.wire.HeavyWireBlock;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
@@ -79,13 +81,11 @@ public class GalacticraftModelProvider extends ModelProvider {
         litMachine(blockModels, GalacticraftBlocks.COAL_GENERATOR.get());
         machine(blockModels, GalacticraftBlocks.CIRCUIT_FABRICATOR.get());
         machine(blockModels, GalacticraftBlocks.ELECTRIC_FURNACE.get());
-        machine(blockModels, GalacticraftBlocks.OXYGEN_COLLECTOR.get());
         blockModels.createNonTemplateModelBlock(GalacticraftBlocks.OIL.get());
         blockModels.createNonTemplateModelBlock(GalacticraftBlocks.FUEL.get());
         blockModels.family(GalacticraftBlocks.MOON_BRICKS.get()).generateFor(GalacticraftBlockFamilies.MOON_BRICKS);
         machine(blockModels, GalacticraftBlocks.COMPRESSOR.get());
         machine(blockModels, GalacticraftBlocks.ELECTRIC_COMPRESSOR.get());
-
         blockModels.createTrivialCube(GalacticraftBlocks.MOON_DIRT.get());
         blockModels.createRotatedMirroredVariantBlock(GalacticraftBlocks.MOON_TURF.get());
         blockModels.createTrivialCube(GalacticraftBlocks.MOON_ROCK.get());
@@ -135,6 +135,8 @@ public class GalacticraftModelProvider extends ModelProvider {
         blockModels.createNormalTorch(GalacticraftBlocks.UNLIT_COPPER_TORCH.get(), GalacticraftBlocks.UNLIT_COPPER_WALL_TORCH.get());
         blockModels.createLantern(GalacticraftBlocks.UNLIT_LANTERN.get());
         GalacticraftBlocks.UNLIT_COPPER_LANTERN.waxedMapping().forEach(blockModels::createCopperLantern);
+        magneticCraftingTable(blockModels, GalacticraftBlocks.MAGNETIC_CRAFTING_TABLE.get());
+        rotationalMachine(blockModels, GalacticraftTexturedModel.OXYGEN_COLLECTOR, GalacticraftBlocks.OXYGEN_COLLECTOR.get());
 
         itemModels.generateFlatItem(GalacticraftItems.BATTERY.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(GalacticraftItems.INFINITE_BATTERY.get(), GalacticraftItems.BATTERY.get(), ModelTemplates.FLAT_ITEM);
@@ -263,6 +265,24 @@ public class GalacticraftModelProvider extends ModelProvider {
         itemModels.generateFlatItem(GalacticraftItems.HEAVY_DUTY_PLATE_TIER_3.get(), ModelTemplates.FLAT_ITEM);
     }
 
+    private void magneticCraftingTable(BlockModelGenerators blockModels, MagneticCraftingBlock block) {
+        TextureMapping textureMapping = TextureMapping.cubeBottomTop(block);
+        MultiVariant model = plainVariant(ModelTemplates.CUBE_BOTTOM_TOP.create(block, textureMapping, blockModels.modelOutput));
+        blockModels.blockStateOutput
+                .accept(
+                        MultiVariantGenerator.dispatch(block)
+                                .with(
+                                        PropertyDispatch.initial(BlockStateProperties.FACING)
+                                                .select(Direction.DOWN, model.with(X_ROT_180))
+                                                .select(Direction.UP, model)
+                                                .select(Direction.NORTH, model.with(X_ROT_90))
+                                                .select(Direction.EAST, model.with(Y_ROT_90).with(X_ROT_90))
+                                                .select(Direction.SOUTH, model.with(Y_ROT_180).with(X_ROT_90))
+                                                .select(Direction.WEST, model.with(Y_ROT_270).with(X_ROT_90))
+                                )
+                );
+    }
+
     private void grating(BlockModelGenerators blockModels, Block gratingBlock) {
         blockModels.registerSimpleFlatItemModel(gratingBlock.asItem());
 
@@ -379,13 +399,18 @@ public class GalacticraftModelProvider extends ModelProvider {
                         .with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING)
         );
     }
-    private void machine(BlockModelGenerators gen, Block block) {
+
+    private void rotationalMachine(BlockModelGenerators gen, TexturedModel.Provider provider, Block block) {
         gen.blockStateOutput.accept(
                 MultiVariantGenerator.dispatch(
                         block,
-                        BlockModelGenerators.plainVariant(GalacticraftTexturedModel.SIMPLE_MACHINE.create(block, gen.modelOutput))
+                        BlockModelGenerators.plainVariant(provider.create(block, gen.modelOutput))
                 ).with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING)
         );
+    }
+
+    private void machine(BlockModelGenerators gen, Block block) {
+        rotationalMachine(gen, GalacticraftTexturedModel.SIMPLE_MACHINE, block);
     }
 
     private Identifier generatePipeBaseModel(Block block, BiConsumer<Identifier, ModelInstance> maker) {

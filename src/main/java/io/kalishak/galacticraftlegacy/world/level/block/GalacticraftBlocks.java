@@ -13,6 +13,7 @@ import io.kalishak.galacticraftlegacy.world.item.FeatureTier;
 import io.kalishak.galacticraftlegacy.world.level.block.cauldron.FlammableCauldronBlock;
 import io.kalishak.galacticraftlegacy.world.level.block.cauldron.GalacticraftCauldronInteraction;
 import io.kalishak.galacticraftlegacy.world.level.block.machine.*;
+import io.kalishak.galacticraftlegacy.world.level.block.machine.oxygen.OxygenCollectorBlock;
 import io.kalishak.galacticraftlegacy.world.level.block.wire.WireBlock;
 import io.kalishak.galacticraftlegacy.world.level.block.wire.ColoredPipeBlock;
 import io.kalishak.galacticraftlegacy.world.level.block.wire.HeavyWireBlock;
@@ -610,7 +611,7 @@ public final class GalacticraftBlocks {
                     .instrument(NoteBlockInstrument.IRON_XYLOPHONE)
                     .sound(SoundType.METAL)
                     .requiresCorrectToolForDrops()
-                    .isRedstoneConductor(((blockState, blockGetter, blockPos) -> false))
+                    .isRedstoneConductor(((_, _, _) -> false))
                     .isValidSpawn(Blocks::never)
                     .strength(3.5F)
     );
@@ -734,6 +735,15 @@ public final class GalacticraftBlocks {
                     .sound(SoundType.METAL)
                     .requiresCorrectToolForDrops()
                     .strength(1.0F)
+    );
+    public static final DeferredBlock<MagneticCraftingBlock> MAGNETIC_CRAFTING_TABLE = REGISTRY.registerBlock(
+            "magnetic_crafting_table",
+            MagneticCraftingBlock::new,
+            () -> BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.METAL)
+                    .instrument(NoteBlockInstrument.XYLOPHONE)
+                    .sound(SoundType.METAL)
+                    .strength(1.5F)
     );
 
     private static BlockBehaviour.Properties wallVariant(Supplier<Block> baseBlock, boolean overrideDescription, UnaryOperator<BlockBehaviour.Properties> properties) {

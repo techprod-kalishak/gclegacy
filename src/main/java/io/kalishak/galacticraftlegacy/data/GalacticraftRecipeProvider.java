@@ -249,6 +249,14 @@ public class GalacticraftRecipeProvider extends RecipeProvider {
                 getItemId(GalacticraftItems.TITANIUM_INGOT) + "_from_titanium_nugget",
                 null
         );
+        ShapedRecipeBuilder.shaped(this.items, RecipeCategory.DECORATIONS, GalacticraftItems.MAGNETIC_CRAFTING_TABLE)
+                .define('#', Items.CRAFTING_TABLE)
+                .define('I', GalacticraftTags.Items.PLATE_IRON)
+                .pattern("I")
+                .pattern("#")
+                .unlockedBy(getHasName(Items.CRAFTING_TABLE), has(Items.CRAFTING_TABLE))
+                .unlockedBy(getHasName(GalacticraftItems.COMPRESSED_IRON), has(GalacticraftTags.Items.PLATE_IRON))
+                .save(this.output, Constants.key(Registries.RECIPE, getSimpleRecipeName(GalacticraftItems.MAGNETIC_CRAFTING_TABLE)));
         SimpleCookingRecipeBuilder.smelting(
                         Ingredient.of(GalacticraftItems.TITANIUM_SWORD,
                                 GalacticraftItems.TITANIUM_SPEAR,

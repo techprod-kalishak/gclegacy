@@ -7,23 +7,14 @@
 
 package io.kalishak.galacticraftlegacy.world.level.block.entity.machine;
 
-import io.kalishak.galacticraftlegacy.attachment.GalacticraftAttachments;
-import io.kalishak.galacticraftlegacy.attachment.block.SyncedEnergyHandler;
-import io.kalishak.galacticraftlegacy.transfer.capability.fluid.SingleTankResourceHandler;
-import io.kalishak.galacticraftlegacy.world.item.component.GalacticraftDataComponents;
+import io.kalishak.galacticraftlegacy.world.inventory.machine.OxygenCollectorMenu;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityType;
-import io.kalishak.galacticraftlegacy.world.level.block.entity.NamedBlockEntity;
+import io.kalishak.galacticraftlegacy.world.level.material.fluid.GalacticraftFluids;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.core.component.DataComponentGetter;
-import net.minecraft.core.component.DataComponentMap;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientGamePacketListener;
-import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -33,79 +24,96 @@ import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.fluids.FluidStack;
-import net.neoforged.neoforge.fluids.SimpleFluidContent;
-import net.neoforged.neoforge.transfer.VoidingResourceHandler;
-import net.neoforged.neoforge.transfer.energy.SimpleEnergyHandler;
-import net.neoforged.neoforge.transfer.energy.VoidingEnergyHandler;
+import net.neoforged.neoforge.fluids.FluidType;
+import net.neoforged.neoforge.transfer.EmptyResourceHandler;
 import net.neoforged.neoforge.transfer.fluid.FluidResource;
-import org.jspecify.annotations.NonNull;
+import net.neoforged.neoforge.transfer.transaction.Transaction;
 import org.jspecify.annotations.Nullable;
 
-public class OxygenCollectorBlockEntity extends NamedBlockEntity {
-    private @NonNull FluidStack fluid = FluidStack.EMPTY;
-    private final SingleTankResourceHandler fluidResourceHandler = new SingleTankResourceHandler() {
-        @Override
-        public FluidStack getFluidStack() {
-            return OxygenCollectorBlockEntity.this.fluid;
-        }
-
-        @Override
-        public void setFluidStack(FluidStack stack) {
-            OxygenCollectorBlockEntity.this.fluid = stack;
-        }
-
-        @Override
-        public int getCapacity() {
-            return 8000;
-        }
-    };
-    private final SimpleEnergyHandler energyHandler = new SimpleEnergyHandler(25000, 250) {
-        @Override
-        protected void onEnergyChanged(int previousAmount) {
-            if (!OxygenCollectorBlockEntity.this.isRemoved()) {
-                OxygenCollectorBlockEntity.this.setData(GalacticraftAttachments.SYNC_ENERGY_STORAGE, new SyncedEnergyHandler(previousAmount));
-            }
-        }
-    };
-    public boolean active;
-    public static final int OUTPUT_PER_TICK = 100;
+public class OxygenCollectorBlockEntity extends AbstractOxygenBlockEntity {
     public static float OXYGEN_PER_PLANT = 0.75F;
-    public float lastOxygenCollected;
+    public int lastOxygenCollected;
     private boolean noAtmosphericOxygen;
     private boolean isInitialised;
     private boolean producedLastTick;
 
     public OxygenCollectorBlockEntity(BlockPos pos, BlockState blockState) {
-        super(GalacticraftBlockEntityType.OXYGEN_COLLECTOR.get(), pos, blockState);
+        super(GalacticraftBlockEntityType.OXYGEN_COLLECTOR.get(), pos, blockState, 100, FluidType.BUCKET_VOLUME * 6);
     }
 
     public static void registerCapabilities(RegisterCapabilitiesEvent event) {
+        registerInputItemCapability(GalacticraftBlockEntityType.OXYGEN_COLLECTOR.get(), event);
+        registerSingleEnergyInputEnergyHandler(Direction.EAST, GalacticraftBlockEntityType.OXYGEN_COLLECTOR.get(), event);
         event.registerBlockEntity(
                 Capabilities.Fluid.BLOCK,
                 GalacticraftBlockEntityType.OXYGEN_COLLECTOR.get(),
                 (blockEntity, context) -> {
-                    if (context == null || context == Direction.DOWN) {
-                        return blockEntity.fluidResourceHandler;
+                    if (context == null || context == Direction.WEST) {
+                        return blockEntity.oxygenHandler;
                     }
 
-                    return new VoidingResourceHandler<>(FluidResource.EMPTY);
-                }
-        );
-        event.registerBlockEntity(
-                Capabilities.Energy.BLOCK,
-                GalacticraftBlockEntityType.OXYGEN_COLLECTOR.get(),
-                (blockEntity, context) -> {
-                    if (context == null || context == Direction.EAST) {
-                        return blockEntity.energyHandler;
-                    }
-
-                    return VoidingEnergyHandler.INSTANCE;
+                    return EmptyResourceHandler.instance();
                 }
         );
     }
 
     public static void serverTick(ServerLevel level, BlockPos worldPosition, BlockState blockState, OxygenCollectorBlockEntity blockEntity) {
+        extractBattery(blockEntity, false, 2500, null);
+        produce(level, worldPosition, blockEntity, Direction.EAST, null);
 
+        blockEntity.producedLastTick = blockEntity.oxygenHandler.getAmount() < blockEntity.oxygenHandler.getCapacity();
+
+        if (blockEntity.producedLastTick /*&& level.getRandom().nextInt(10) == 0*/) {
+            if (blockEntity.hasEnergyToOperate()) {
+                float nearbyLeaves = 0;
+
+                if (!blockEntity.isInitialised) {
+                    blockEntity.noAtmosphericOxygen = !level.dimension().equals(ServerLevel.OVERWORLD);
+                    blockEntity.isInitialised = true;
+                }
+
+                if (blockEntity.noAtmosphericOxygen) {
+                    int minY = worldPosition.getY() - 5;
+                    int maxY = worldPosition.getY() + 5;
+
+                    if (minY < 0) {
+                        minY = 0;
+                    }
+
+                    if (maxY >= level.getHeight()) {
+                        maxY = level.getHeight() - 1;
+                    }
+
+                    for (int x = worldPosition.getX() - 5; x <= worldPosition.getX() + 5; x++) {
+                        for (int z = worldPosition.getZ() - 5; z <= worldPosition.getZ() + 5; z++) {
+                            for (int y = minY; y <= maxY; y++) {
+                                BlockPos pos = new BlockPos(x, y, z);
+                                BlockState state = level.getBlockState(pos);
+
+                                if (state.is(BlockTags.LEAVES) || state.is(BlockTags.CROPS)) {
+                                    nearbyLeaves += OXYGEN_PER_PLANT;
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    nearbyLeaves = 9.3F * 10.0F;
+                }
+
+                blockEntity.lastOxygenCollected = (int) Math.floor(nearbyLeaves / 10.0F);
+
+                try (Transaction transaction = Transaction.open(null)) {
+                    if (blockEntity.oxygenHandler.insert(FluidResource.of(GalacticraftFluids.OXYGEN), blockEntity.lastOxygenCollected, transaction) > 0) {
+                        if (blockEntity.capacitor.extract(300, transaction) > 0) {
+                            transaction.commit();
+                        }
+                    }
+                }
+
+            } else {
+                blockEntity.lastOxygenCollected = 0;
+            }
+        }
     }
 
     @Override
@@ -115,53 +123,35 @@ public class OxygenCollectorBlockEntity extends NamedBlockEntity {
 
     @Override
     public @Nullable AbstractContainerMenu createMenu(int containerId, Inventory inventory, Player player) {
-        return null;
-    }
-
-    @Override
-    public void onLoad() {
-        super.onLoad();
-
-        if (this.level != null && !this.level.isClientSide()) {
-            setData(GalacticraftAttachments.SYNC_ENERGY_STORAGE, new SyncedEnergyHandler(this.energyHandler.getAmountAsInt()));
-        }
-    }
-
-    @Override
-    protected void loadAdditional(ValueInput input) {
-        super.loadAdditional(input);
-        this.fluidResourceHandler.deserialize(input);
-        this.energyHandler.deserialize(input);
+        return new OxygenCollectorMenu(containerId, inventory, this);
     }
 
     @Override
     protected void saveAdditional(ValueOutput output) {
         super.saveAdditional(output);
-        this.fluidResourceHandler.serialize(output);
-        this.energyHandler.serialize(output);
+        output.putBoolean("NoAtmosphericOxygen", this.noAtmosphericOxygen);
+        output.putBoolean("IsInitialised", this.isInitialised);
     }
 
     @Override
-    protected void applyImplicitComponents(DataComponentGetter componentGetter) {
-        super.applyImplicitComponents(componentGetter);
-        this.fluid = componentGetter.getOrDefault(GalacticraftDataComponents.FLUID_TANK, SimpleFluidContent.EMPTY).copy();
-        this.energyHandler.set(componentGetter.getOrDefault(GalacticraftDataComponents.STORED_ENERGY, 0));
+    protected void loadAdditional(ValueInput input) {
+        super.loadAdditional(input);
+        this.noAtmosphericOxygen = input.getBooleanOr("NoAtmosphericOxygen", false);
+        this.isInitialised = input.getBooleanOr("IsInitialised", false);
     }
 
     @Override
-    protected void collectImplicitComponents(DataComponentMap.Builder components) {
-        super.collectImplicitComponents(components);
-        components.set(GalacticraftDataComponents.FLUID_TANK, SimpleFluidContent.copyOf(this.fluid));
-        components.set(GalacticraftDataComponents.STORED_ENERGY, this.energyHandler.getAmountAsInt());
+    public boolean isOxygenConsumer() {
+        return false;
     }
 
     @Override
-    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
-        return saveWithoutMetadata(registries);
+    protected int containerSize() {
+        return 1;
     }
 
     @Override
-    public @Nullable Packet<ClientGamePacketListener> getUpdatePacket() {
-        return ClientboundBlockEntityDataPacket.create(this);
+    protected int getBatterySlotIndex() {
+        return 0;
     }
 }

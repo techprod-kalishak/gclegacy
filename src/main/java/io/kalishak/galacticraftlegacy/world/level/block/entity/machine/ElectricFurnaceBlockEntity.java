@@ -27,11 +27,11 @@ import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
-import net.neoforged.neoforge.transfer.DelegatingResourceHandler;
+import net.neoforged.neoforge.transfer.EmptyResourceHandler;
 import net.neoforged.neoforge.transfer.RangedResourceHandler;
 import net.neoforged.neoforge.transfer.ResourceHandler;
+import net.neoforged.neoforge.transfer.energy.EmptyEnergyHandler;
 import net.neoforged.neoforge.transfer.energy.EnergyHandler;
-import net.neoforged.neoforge.transfer.energy.VoidingEnergyHandler;
 import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.neoforged.neoforge.transfer.item.ItemUtil;
 import net.neoforged.neoforge.transfer.transaction.Transaction;
@@ -75,33 +75,29 @@ public class ElectricFurnaceBlockEntity extends RecipeMachineBlockEntity<SingleR
         event.registerBlockEntity(
                 Capabilities.Item.BLOCK,
                 GalacticraftBlockEntityType.ELECTRIC_FURNACE.get(),
-                (blockEntity, cxt) -> {
-                    if (cxt != null) {
-                        if (cxt.getAxis().isVertical()) {
-                            return cxt == Direction.UP ? RangedResourceHandler.ofSingleIndex(() -> blockEntity.innerResourceHandler, 0) : RangedResourceHandler.of(() -> blockEntity.innerResourceHandler, 1, 3);
-                        }
-
-                        return RangedResourceHandler.ofSingleIndex(() -> blockEntity.innerResourceHandler, 1);
-                    }
-
-                    return new DelegatingResourceHandler<>(blockEntity.innerResourceHandler);
+                (blockEntity, context) -> switch (context) {
+                    case UP -> RangedResourceHandler.ofSingleIndex(() -> blockEntity.items, 0);
+                    case DOWN -> RangedResourceHandler.of(() -> blockEntity.items, 1, 3);
+                    case NORTH -> RangedResourceHandler.ofSingleIndex(() -> blockEntity.items, 1);
+                    case null -> blockEntity.items;
+                    default -> EmptyResourceHandler.instance();
                 }
         );
         event.registerBlockEntity(
                 Capabilities.Energy.BLOCK,
                 GalacticraftBlockEntityType.ELECTRIC_FURNACE.get(),
-                (blockEntity, cxt) -> {
-                    if (cxt == null || cxt == Direction.EAST) {
-                        return blockEntity.energyHandler;
+                (blockEntity, context) -> {
+                    if (context == null || context == Direction.EAST) {
+                        return blockEntity.capacitor;
                     }
 
-                    return VoidingEnergyHandler.INSTANCE;
+                    return EmptyEnergyHandler.INSTANCE;
                 }
         );
     }
 
     private boolean isLit() {
-        return this.energyHandler.getAmountAsInt() > 0 && this.cookingTotalTime > 0;
+        return this.capacitor.getAmountAsInt() > 0 && this.cookingTotalTime > 0;
     }
 
     @Override
@@ -119,7 +115,7 @@ public class ElectricFurnaceBlockEntity extends RecipeMachineBlockEntity<SingleR
     }
 
     @Override
-    protected int size() {
+    protected int containerSize() {
         return 3;
     }
 
@@ -141,7 +137,7 @@ public class ElectricFurnaceBlockEntity extends RecipeMachineBlockEntity<SingleR
     @Override
     public void set(int index, ItemResource resource, int amount) {
         if (index == SLOT_INPUT) {
-            ItemStack stack = ItemUtil.getStack(this.innerResourceHandler, index);
+            ItemStack stack = ItemUtil.getStack(this.items, index);
 
             if ((stack.isEmpty() || resource.matches(stack)) ) {
                 if (this.level instanceof ServerLevel serverLevel) {
@@ -159,9 +155,9 @@ public class ElectricFurnaceBlockEntity extends RecipeMachineBlockEntity<SingleR
         boolean isLit = furnace.isLit();
         boolean hadChanged = false;
 
-        energyTransferTick(furnace, furnace.cookingTimer > 0, false, BASIC_MACHINE_MAX_TRANSFER_RATE, null);
+        extractBattery(furnace, false, BASIC_MACHINE_MAX_TRANSFER_RATE, null);
 
-        ItemStack input = ItemUtil.getStack(furnace.innerResourceHandler, SLOT_INPUT);
+        ItemStack input = ItemUtil.getStack(furnace.items, SLOT_INPUT);
         boolean haveEnergy = furnace.hasEnergyToOperate();
 
         if (furnace.hasEnergyToOperate() || !input.isEmpty() && haveEnergy) {
@@ -172,14 +168,14 @@ public class ElectricFurnaceBlockEntity extends RecipeMachineBlockEntity<SingleR
                 recipeHolder = furnace.quickCheck.getRecipeFor(recipeInput, level).orElse(null);
             }
 
-            if (furnace.hasEnergyToOperate() && canHeat(recipeHolder, recipeInput, furnace.innerResourceHandler, furnace.energyHandler)) {
+            if (furnace.hasEnergyToOperate() && canHeat(recipeHolder, recipeInput, furnace.items, furnace.capacitor)) {
                 furnace.cookingTimer++;
 
                 if (furnace.cookingTimer == furnace.cookingTotalTime) {
                     furnace.cookingTimer = 0;
                     furnace.cookingTotalTime = getTotalSmeltingTime(level, furnace);
 
-                    if (heat(recipeHolder, recipeInput, furnace.innerResourceHandler, furnace.energyHandler)) {
+                    if (heat(recipeHolder, recipeInput, furnace.items, furnace.capacitor)) {
                         furnace.setRecipeUsed(recipeHolder);
                     }
 
@@ -204,7 +200,7 @@ public class ElectricFurnaceBlockEntity extends RecipeMachineBlockEntity<SingleR
     }
 
     private static int getTotalSmeltingTime(ServerLevel level, ElectricFurnaceBlockEntity furnace) {
-        SingleRecipeInput recipeInput = new SingleRecipeInput(ItemUtil.getStack(furnace.innerResourceHandler, SLOT_INPUT));
+        SingleRecipeInput recipeInput = new SingleRecipeInput(ItemUtil.getStack(furnace.items, SLOT_INPUT));
         return furnace.quickCheck.getRecipeFor(recipeInput, level).map(recipeHolder -> recipeHolder.value().cookingTime()).orElse(100);
     }
 

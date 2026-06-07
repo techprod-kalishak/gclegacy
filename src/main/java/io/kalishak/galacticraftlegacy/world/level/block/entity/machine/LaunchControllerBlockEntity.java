@@ -11,7 +11,6 @@ import io.kalishak.galacticraftlegacy.world.level.telemetry.TelemetryTracker;
 import io.kalishak.galacticraftlegacy.world.entity.vehicle.rocket.AbstractAutoRocket;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityType;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -19,10 +18,6 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class LaunchControllerBlockEntity extends BlockEntity {
     private int targetFrequency = -1;
-
-    public LaunchControllerBlockEntity(ResourceKey<Level> levelKey, BlockPos pos, BlockState blockState) {
-        super(GalacticraftBlockEntityType.LAUNCH_CONTROLLER.get(), pos, blockState);
-    }
 
     public LaunchControllerBlockEntity(BlockPos pos, BlockState blockState) {
         super(GalacticraftBlockEntityType.LAUNCH_CONTROLLER.get(), pos, blockState);

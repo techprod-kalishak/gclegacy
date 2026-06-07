@@ -35,7 +35,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.component.ItemContainerContents;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.*;
@@ -47,11 +46,8 @@ import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.fluids.SimpleFluidContent;
-import net.neoforged.neoforge.transfer.fluid.FluidResource;
 import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
-import net.neoforged.neoforge.transfer.item.ItemUtil;
-import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
 import java.util.List;
@@ -64,22 +60,7 @@ public class ParachestBlockEntity extends NamedBlockEntity implements LidBlockEn
     private DyeColor parachuteColor = DyeColor.RED;
 
     private final ItemStacksResourceHandler itemResources;
-    private final SingleTankResourceHandler fluidResource = new SingleTankResourceHandler() {
-        @Override
-        public @NonNull FluidStack getFluidStack() {
-            return ParachestBlockEntity.this.tank;
-        }
-
-        @Override
-        public void setFluidStack(@NonNull FluidStack stack) {
-            ParachestBlockEntity.this.tank = stack;
-        }
-
-        @Override
-        public int getCapacity() {
-            return FluidType.BUCKET_VOLUME * 8;
-        }
-
+    private final SingleTankResourceHandler fluidResource = new SingleTankResourceHandler(FluidType.BUCKET_VOLUME * 8) {
         @Override
         protected void notifyChange() {
             ParachestBlockEntity.this.setChanged();
@@ -115,7 +96,7 @@ public class ParachestBlockEntity extends NamedBlockEntity implements LidBlockEn
     public ParachestBlockEntity(BlockPos blockPos, BlockState blockState, int chestSlots) {
         super(GalacticraftBlockEntityType.PARACHEST.get(), blockPos, blockState);
         this.inventory = NonNullList.withSize(3 + chestSlots, ItemStack.EMPTY);
-        this.itemResources = new ItemStacksResourceHandler(this.inventory) {
+        this.itemResources = new ItemStacksResourceHandler(3 + chestSlots) {
             @Override
             protected void onContentsChanged(int index, ItemStack previousContents) {
                 ParachestBlockEntity.this.setChanged();
@@ -131,17 +112,17 @@ public class ParachestBlockEntity extends NamedBlockEntity implements LidBlockEn
         event.registerBlockEntity(
                 Capabilities.Item.BLOCK,
                 GalacticraftBlockEntityType.PARACHEST.get(),
-                (block, cxt) -> block.itemResources
+                (block, _) -> block.itemResources
         );
         event.registerBlockEntity(
                 Capabilities.Fluid.BLOCK,
                 GalacticraftBlockEntityType.PARACHEST.get(),
-                (block, cxt) -> block.fluidResource
+                (block, _) -> block.fluidResource
         );
     }
 
     public int size() {
-        return this.inventory.size();
+        return this.itemResources.size();
     }
 
     public DyeColor getParachuteColor() {
@@ -296,8 +277,8 @@ public class ParachestBlockEntity extends NamedBlockEntity implements LidBlockEn
     protected void applyImplicitComponents(DataComponentGetter componentGetter) {
         super.applyImplicitComponents(componentGetter);
         this.lockKey = componentGetter.getOrDefault(DataComponents.LOCK, LockCode.NO_LOCK);
-        this.owner = componentGetter.get(GalacticraftDataComponents.ENTITY_REFERENCE);
-        componentGetter.getOrDefault(DataComponents.CONTAINER, ItemContainerContents.EMPTY).copyInto(this.inventory);
+        this.owner = componentGetter.get(GalacticraftDataComponents.PLAYER_REFERENCE);
+        ResourcefulHelper.applyContainerComponent(componentGetter, this.itemResources::set);
         this.tank = componentGetter.getOrDefault(GalacticraftDataComponents.FLUID_TANK, SimpleFluidContent.EMPTY).copy();
     }
 
@@ -309,19 +290,11 @@ public class ParachestBlockEntity extends NamedBlockEntity implements LidBlockEn
         }
 
         if (this.owner != null) {
-            components.set(GalacticraftDataComponents.ENTITY_REFERENCE, this.owner);
+            components.set(GalacticraftDataComponents.PLAYER_REFERENCE, this.owner);
         }
 
-        components.set(DataComponents.CONTAINER, ItemContainerContents.fromItems(this.inventory));
+        ResourcefulHelper.collectContainerComponent(components, this.itemResources);
         components.set(GalacticraftDataComponents.FLUID_TANK, SimpleFluidContent.copyOf(this.tank));
-    }
-
-    @Override
-    public void removeComponentsFromTag(ValueOutput output) {
-        super.removeComponentsFromTag(output);
-        output.discard("lock");
-        output.discard(ItemStacksResourceHandler.VALUE_IO_KEY);
-        output.discard(SingleTankResourceHandler.VALUE_IO_KEY);
     }
 
     @Override
@@ -329,9 +302,7 @@ public class ParachestBlockEntity extends NamedBlockEntity implements LidBlockEn
         super.preRemoveSideEffects(pos, state);
 
         if (this.level != null) {
-            for (int i = 0; i < size(); i++) {
-                Containers.dropItemStack(this.level, pos.getX(), pos.getY(), pos.getZ(), ItemUtil.getStack(this.itemResources, i));
-            }
+            Containers.dropContents(this.level, pos, this.itemResources.copyToList());
         }
     }
 }

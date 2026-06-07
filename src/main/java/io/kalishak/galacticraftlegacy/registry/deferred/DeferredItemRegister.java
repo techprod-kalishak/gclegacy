@@ -62,4 +62,8 @@ public class DeferredItemRegister extends DeferredRegister.Items {
     public DeferredItem<Item> registerSimpleItemWithDescription(String name, Supplier<Item.Properties> properties) {
         return registerSimpleItem(name, ItemWithDescription.withDescription(properties, Identifier.fromNamespaceAndPath(getNamespace(), name)));
     }
+
+    public DeferredItem<Item> registerSimpleItemWithDescription(String name, UnaryOperator<Item.Properties> properties) {
+        return registerSimpleItemWithDescription(name, () -> properties.apply(new Item.Properties()));
+    }
 }

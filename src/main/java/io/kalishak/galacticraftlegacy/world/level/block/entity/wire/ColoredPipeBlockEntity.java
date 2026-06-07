@@ -62,7 +62,7 @@ public class ColoredPipeBlockEntity extends AbstractConnectableBlockEntity imple
     }
 
     public static void registerCapabilities(RegisterCapabilitiesEvent event) {
-        event.registerBlockEntity(Capabilities.Fluid.BLOCK, GalacticraftBlockEntityType.COLORED_PIPE.get(), (blockEntity, cxt) -> blockEntity.fluidHandler);
+        event.registerBlockEntity(Capabilities.Fluid.BLOCK, GalacticraftBlockEntityType.COLORED_PIPE.get(), (blockEntity, _) -> blockEntity.fluidHandler);
     }
 
     public static void serverTick(ServerLevel level, BlockPos pos, BlockState state, ColoredPipeBlockEntity coloredPipe) {

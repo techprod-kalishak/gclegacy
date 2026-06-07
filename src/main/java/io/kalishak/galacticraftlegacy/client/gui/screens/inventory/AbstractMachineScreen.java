@@ -7,10 +7,12 @@
 
 package io.kalishak.galacticraftlegacy.client.gui.screens.inventory;
 
+import io.kalishak.galacticraftlegacy.Constants;
 import io.kalishak.galacticraftlegacy.attachment.GalacticraftAttachments;
 import io.kalishak.galacticraftlegacy.attachment.block.SyncedEnergyHandler;
 import io.kalishak.galacticraftlegacy.client.gui.ClientResourceHandlerTextUtils;
-import io.kalishak.galacticraftlegacy.world.inventory.machine.AbstractMachineMenu;
+import io.kalishak.galacticraftlegacy.config.ClientConfig;
+import io.kalishak.galacticraftlegacy.world.inventory.machine.AbstractMachineRecipeBookMenu;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.AbstractMachineBlockEntity;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
@@ -23,7 +25,7 @@ import net.minecraft.world.entity.player.Inventory;
 
 import java.awt.*;
 
-public abstract class AbstractMachineScreen<BE extends AbstractMachineBlockEntity, M extends AbstractMachineMenu<BE>> extends AbstractRecipeBookScreen<M> implements MachineScreen {
+public abstract class AbstractMachineScreen<BE extends AbstractMachineBlockEntity, M extends AbstractMachineRecipeBookMenu<BE>> extends AbstractRecipeBookScreen<M> implements MachineScreen {
     protected final Identifier backgroundTexture;
 
     public AbstractMachineScreen(M menu, RecipeBookComponent<?> recipeBookComponent, Inventory playerInventory, Component title, Identifier backgroundTexture) {
@@ -50,17 +52,17 @@ public abstract class AbstractMachineScreen<BE extends AbstractMachineBlockEntit
     protected void extractTooltip(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY) {
         super.extractTooltip(guiGraphics, mouseX, mouseY);
 
-        if (isHovering(getEnergyBarBounds(), mouseX, mouseY)) {
-            guiGraphics.setTooltipForNextFrame(
+        if (isHovering(getEnergyBarBounds(), BAR_WIDTH, BAR_HEIGHT, mouseX, mouseY)) {
+            Constants.energy(getEnergyStored(), this.menu.getEnergyCapacity(), ClientConfig.ENERGY_UNIT, component -> guiGraphics.setTooltipForNextFrame(
                     this.font,
-                    ClientResourceHandlerTextUtils.energyComponentWithCapacity(getEnergyStored(), this.menu.getEnergyCapacity(), style -> style.withColor(ChatFormatting.GRAY)),
+                    component,
                     mouseX,
                     mouseY
-            );
+            ));
         }
     }
 
-    protected boolean isHovering(Rectangle area, double x, double y) {
-        return isHovering(area.x, area.y, area.width, area.height, x, y);
+    protected boolean isHovering(Bounds area, int width, int height, double x, double y) {
+        return isHovering(area.x(), area.y(), width, height, x, y);
     }
 }

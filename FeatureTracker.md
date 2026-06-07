@@ -1,0 +1,305 @@
+# Feature Tracker - Galacticraft Legacy
+
+## Upcoming Objects & Features
+Please note that the following list is a preliminary outline of planned features and objects for Galacticraft Legacy. The status of each item is a subject to change based on development progress.
+
+### Blocks
+- [ ] Landing Pad ❌
+- [ ] Fueling Pad ❌
+- [ ] Oxygen Bubble Distributor ❌
+- [ ] Oxygen Collector ⏳
+- [ ] Oxygen Compressor ❌
+- [ ] Oxygen Decompressor ❌
+- [ ] Oxygen Sealer ❌
+- [ ] Oxygen Detector ✅
+- [ ] Aluminum Wire ⏳ (Need node network implementation)
+- [ ] Heavy Aluminum Wire ⏳ (Need node network implementation)
+- [ ] Switchable Aluminum Wire ❌
+- [ ] Switchable Heavy Aluminum Wire ❌
+- [ ] Fluid Pipe ⏳ (Need node network implementation)
+- [ ] Refinery ❌
+- [ ] Fuel Loader ❌
+- [ ] Cargo Loader ❌
+- [ ] Cargo Unloader ❌
+- [ ] NASA Workbench ❌
+- [ ] Compact NASA Workbench ❌
+- [ ] Tin Decoration Block & Variants ❌
+- [ ] Tin Wall Block & Variants ❌
+- [ ] Tin Ore Block & Generation ✅
+- [ ] Aluminum Ore & Generation ✅
+- [ ] Silicon Ore & Generation ✅
+- [ ] Tin Block ✅
+- [ ] Raw Tin Block ✅
+- [ ] Aluminum Block ✅
+- [ ] Raw Aluminum Block ✅
+- [ ] Solid Meteoric Block ❌
+- [ ] Raw Meteoric Block ❌
+- [ ] Raw Silicon Block ✅
+- [ ] Air Lock Frame ❌
+- [ ] Air Lock Frame Controller ❌
+- [ ] Vacuum Clear glass  ❌
+- [ ] Vacuum Glass ❌
+- [ ] Vacuum Strong Glass ❌
+- [ ] Magnetic Crafting Table ⏳ (Output not working yet)
+- [ ] Sealed Aluminum Wire ❌
+- [ ] Sealed Heavy Aluminum Wire ❌
+- [ ] Sealed Fluid Pipe ❌
+- [ ] Parachest ⏳
+- [ ] Basic Solar Panel ❌
+- [ ] Advanced Solar Panel ❌
+- [ ] Communication Dish ❌
+- [ ] Coal Generator ✅
+- [ ] Compressor ⏳
+- [ ] Electric Compressor ⏳
+- [ ] Circuit Fabricator ⏳
+- [ ] Oxygen Storage Module ❌
+- [ ] Electric Arc Furnace ❌
+- [ ] Advanced Compressor ❌
+- [ ] Lightning Panels ❌
+- - [ ] Square
+- - [ ] Spotlight
+- - [ ] Linear
+- - [ ] Serial
+- - [ ] Triangular
+- [ ] Glowstone Torch ❌
+- [ ] Fallen Meteor ❌
+- [ ] Moon Copper Ore & Generation ✅
+- [ ] Moon Tin Ore & Generation ✅
+- [ ] Moon Cheese Ore & Generation ✅
+- [ ] Moon Dirt ✅
+- [ ] Moon Rock & Variants ✅
+- [ ] Moon Turf ✅
+- [ ] Moon Sapphire Ore & Generation ✅
+- [ ] Moon Dungeon Brick & Variants ✅
+- [ ] Block of Cheese ✅
+- [ ] Spin Thruster ❌
+- [ ] Display Screen ❌
+- [ ] Telemetry Unit ❌
+- [ ] Arc Lamp ❌
+- [ ] Treasure Chest ⏳
+- [ ] Fluid Tank ❌
+- [ ] Stairs, Walls & Slabs for all blocks ✅
+- [ ] Sealed Redstone Wire ❌
+- [ ] Sealed Redstone Repeater ❌
+- [ ] Sealed Redstone Comparator ❌ (Need review)
+- [ ] Sealed Player Detector ❌
+- [ ] Hydraulic Platform ❌
+- [ ] Emergency Post (Empty and with kit) ❌
+- [ ] Grating ✅
+- [ ] Mars Copper Ore & Generation ❌
+- [ ] Mars Tin Ore & Generation ❌
+- [ ] Mars Desh Ore & Generation ❌
+- [ ] Mars Iron Ore & Generation ❌
+- [ ] Mars Cobblestone & Variants ❌
+- [ ] Mars Fine Regolith & Variants ❌
+- [ ] Mars Regolith & Variants ❌
+- [ ] Mars Dungeon Block & Variants ❌
+- [ ] Desh Block ❌
+- [ ] Raw Desh Block ❌
+- [ ] Mars Stone & Variants ❌
+- [ ] Cavernous Vines ❌
+- [ ] Slimeling Eggs ❌
+- [ ] Creeper Egg ❌
+- [ ] Terraformer ❌
+- [ ] Cryogenic Chamber ❌
+- [ ] Launch Controller ❌
+- [ ] Gas Liquefier ❌
+- [ ] Methane Synthesizer ❌
+- [ ] Water Electrolyzer ❌
+- [ ] Asteroids Rock & Variants ❌
+- [ ] Asteroids Fine Rock & Variants ❌
+- [ ] Asteroid Stone & Variants ❌
+- [ ] Asteroid Aluminum Ore & Generation ❌
+- [ ] Asteroid Titanium Ore & Generation ❌
+- [ ] Asteroid Iron Ore & Generation ❌
+- [ ] Dark Decoration Ore & Variants ❌
+- [ ] Titanium Block ❌
+- [ ] Raw Titanium Block ❌
+- [ ] Walkway ❌
+- - [ ] Aluminum Wire ❌
+- - [ ] Fluid Pipe ❌
+- [ ] Energy Beam Reflector ❌
+- [ ] Energy Beam Receiver ❌
+- [ ] Short Range Telepad ❌
+- [ ] Dense Ice ❌
+- [ ] Astro Miner Base ❌
+- [ ] Venus Soft Rock & Variants ❌
+- [ ] Venus Hard Rock & Variants ❌
+- [ ] Venus Volcanic Rock & Variants ❌
+- [ ] Pumice & Variants ❌
+- [ ] Venus Dungeon Block & Variants ❌
+- [ ] Alt Venus Dungeon Block & Variants ❌
+- [ ] Venus Aluminum Ore & Generation ❌
+- [ ] Venus Copper Ore & Generation ❌
+- [ ] Venus Lead Ore & Generation ❌
+- [ ] Venus Quartz Ore & Generation ❌
+- [ ] Venus Silicon Ore & Generation ❌
+- [ ] Venus Tin Ore & Generation ❌
+- [ ] Venus Solar Ore & Generation ❌
+- [ ] Venus Sulfur Ore & Generation ❌
+- [ ] Vapor Spout ❌
+- [ ] Web String & Web Glowstone String ❌
+- [ ] Geothermal Generator ❌
+- [ ] Crashed Probe ❌
+- [ ] Scorched Venus Rock & Variants ❌
+- [ ] Solar Array Module ❌
+- [ ] Solar Array Controller ❌
+- [ ] Laser Turret ❌
+
+### Items
+- [ ] Oxygen Mask ✅
+- [ ] Oxygen Gear ✅
+- [ ] Oxygen Tanks ✅
+- [ ] Sensor Glasses ⏳ (Missing UI)
+- [ ] Frequency Module ⏳ (Missing render and functionality)
+- [ ] Parachute ⏳ (Missing render and functionality)
+- [ ] Space Emergency Kit ❌
+- [ ] Shield Controller (Missing render)
+- [ ] Rocket items ❌
+- [ ] Tin Canister ✅
+- [ ] Copper Canister ❌
+- [ ] Canisters (Empty, Fluid, Oxygen. etc.) ✅
+- [ ] Sensor Lens ❌
+- [ ] Oxygen Vent ❌
+- [ ] Oxygen Fan ❌
+- [ ] Oxygen Concentrator ❌
+- [ ] Tier 1 Rocket Engine ❌
+- [ ] Tier 1 Booster ❌
+- [ ] Heavy-Duty Plate ⏳ (Missing art)
+- [ ] Nose Cone ❌
+- [ ] Rocket Fins ❌
+- [ ] Steel Pole ❌
+- [ ] Canvas ❌
+- [ ] Buggy Wheel ❌
+- [ ] Buggy Seat ❌
+- [ ] Buggy Storage Box ❌
+- [ ] Buggy Item ❌
+- [ ] Single Solar Module ❌
+- [ ] Full Solar Panel ❌
+- [ ] Raw Silicon ✅
+- [ ] Blue Solar Wafer ✅
+- [ ] Basic Wafer ✅
+- [ ] Advanced Wafer ✅
+- [ ] Ambient Thermal Controller ❌
+- [ ] Can of Food 
+- - [ ] Dehydrated Apple ✅
+- - [ ] Dehydrated Carrot ✅
+- - [ ] Dehydrated Melons ✅
+- - [ ] Dehydrated Potato ✅
+- - [ ] Dehydrated Beetroot ✅
+- - [ ] Dehydrated Beef ✅
+- [ ] Cheese Slice ✅
+- [ ] Burger Bun ❌
+- [ ] Raw Ground Beef ❌
+- [ ] Beef Patty ❌
+- [ ] Cheeseburger ❌
+- [ ] Battery ✅
+- [ ] Throwable Meteor Chunk ❌
+- [ ] Cheese Curd ✅
+- [ ] Raw Meteoric Iron ❌
+- [ ] Lunar Sapphire ✅
+- [ ] Flag Item ✅
+- [ ] Pre-Launch Checklist ❌
+- [ ] Dungeon Locator ✅
+- [ ] Fragmented Carbon ❌
+- [ ] (Raw) Unrefined Desh ✅
+- [ ] Desh Stick ❌
+- [ ] Slimeling Inventory Bag ❌
+- [ ] Fluid manipulator ❌
+- [ ] Grapple Gun ❌
+- [ ] Astro Miner ❌
+- [ ] Heavy Rocket Engine ❌
+- [ ] Heavy Rocket Fins ❌
+- [ ] Iron Shard ❌
+- [ ] Titanium Shard ❌
+- [ ] Thermal Cloth ❌
+- [ ] Beam Core ❌
+- [ ] Titanium Dust ❌
+- [ ] Atmospheric Valve ❌
+- [ ] Heavy Nose Cone ❌
+- [ ] Orion Drive ❌
+- [ ] Strange Seeds ❌
+- [ ] Radioisotope Core ❌
+- [ ] Isothermal Fabric ❌
+- [ ] Solar Dust ❌
+- [ ] Solar Array Panel ❌
+- [ ] Solar Array Wafer ❌
+- [ ] Atomic Battery ❌
+- [ ] Dungeon Keys ❌
+- [ ] Oil Bucket ✅
+- [ ] Fuel Bucket ✅
+- [ ] Bacterial Sludge Bucket ❌
+- [ ] Sulfuric Acid Bucket ❌
+- [ ] NASA Workbench Schematics ✅
+- [ ] Heavy Duty Armor (Missing model art) ⏳
+- [ ] Desh Armor (Missing model art) ⏳
+- [ ] Thermal Padding ⏳ (Model fixes)
+- [ ] Titanium Armor (Missing model art) ⏳
+- [ ] Isothermal Padding ⏳ (Model fixes)
+- [ ] Compressed Copper ⏳ (Missing art)
+- [ ] Compressed Tin ⏳ (Missing art)
+- [ ] Compressed Aluminum ⏳ (Missing art)
+- [ ] Compressed Steel ⏳ (Missing art)
+- [ ] Compressed Bronze ⏳ (Missing art)
+- [ ] Compressed Iron ⏳ (Missing art)
+- [ ] Compressed Meteoric Iron ⏳ (Missing art)
+- [ ] Compressed Heavy Duty Plate (Tier 2) ⏳ (Missing art)
+- [ ] Compressed Desh ⏳ (Missing art)
+- [ ] Compressed Heavy Duty Plate (Tier 3) ⏳ (Missing art)
+- [ ] Compressed Titanium ⏳ (Missing art)
+- [ ] Tin Ingot ✅
+- [ ] Aluminum Ingot ✅
+- [ ] Meteoric Iron Ingot ❌
+- [ ] Desh Ingot ✅
+- [ ] Titanium Ingot ✅
+- [ ] Lead Ingot ✅
+- [ ] Wrench ✅
+- [ ] Heavy Duty Tools ✅
+- [ ] Desh Tools ✅
+- [ ] Sticky Desh Pickaxe ✅
+- [ ] Titanium Tools ✅
+- [ ] Volcanic Pickaxe ❌
+
+### Entities
+- [ ] Tier 1 Rocket ❌
+- [ ] Tier 2 Rocket ❌
+- [ ] Cargo Rocket ❌
+- [ ] Tier 3 Rocket ❌
+- [ ] Buggy ❌
+- [ ] Astro Miner ❌
+- [ ] Flag ⏳ (Missing render and functionality)
+- [ ] Slimeling ❌
+- [ ] Evolved Zombie ✅
+- [ ] Evolved Skeleton ✅
+- [ ] Evolved Creeper ❌
+- [ ] Evolved Enderman ❌
+- [ ] Evolved Spider ❌
+- [ ] Evolved Witch ❌
+- [ ] Evolved Skeleton Jockey ❌
+- [ ] Evolved Zombie Villager ❌
+- [ ] Moon Villager ❌
+- [ ] Hanging Schematics ✅
+
+### Dimensions
+- [ ] Moon Dimension ⏳ (Missing structures)
+- [ ] Mars Dimension ❌
+- [ ] Venus Dimension ❌
+- [ ] Asteroid Field Dimension ❌
+
+### Other
+- [ ] Gear Equipment ✅
+- [ ] Energy Transmission Network ❌
+- [ ] Fluid Transmission Network ❌
+- [ ] Sounds ❌
+
+### UI/UX
+- [ ] Galaxy Map ❌
+
+---
+
+## Legend
+- **✅** - Implemented and tested
+- **⏳** - Work in Progress / awaiting bug fixes
+- **❌** - Not implemented yet
+
+*This list will be updated shortly with development progress.*

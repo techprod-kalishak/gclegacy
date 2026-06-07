@@ -37,7 +37,7 @@ import java.util.List;
 import java.util.Map;
 
 public class EntityGearInventory extends GearInventoryProvider {
-    public static final MapCodec<EntityGearInventory> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+    public static final MapCodec<EntityGearInventory> MAP_CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             SpaceGearEquipment.CODEC.fieldOf("gear_equipment").forGetter(EntityGearInventory::getGearEquipment),
             GearDropChances.CODEC.optionalFieldOf("drop_chances", GearDropChances.DEFAULT).forGetter(inventory -> inventory.gearDropChances)
     ).apply(instance, EntityGearInventory::new));

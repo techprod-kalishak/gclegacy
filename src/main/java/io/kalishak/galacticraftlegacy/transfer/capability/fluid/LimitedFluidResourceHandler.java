@@ -15,13 +15,12 @@ import org.jspecify.annotations.NonNull;
 public class LimitedFluidResourceHandler extends SingleTankResourceHandler {
     private final int maxExtractRate;
     private final int maxInsertRate;
-    private final int capacity;
     protected @NonNull FluidStack fluidStack = FluidStack.EMPTY;
 
     public LimitedFluidResourceHandler(int maxExtractRate, int maxInsertRate, int capacity) {
+        super(capacity);
         this.maxExtractRate = maxExtractRate;
         this.maxInsertRate = maxInsertRate;
-        this.capacity = capacity;
     }
 
     public LimitedFluidResourceHandler(int maxTransfer, int capacity) {
@@ -36,11 +35,6 @@ public class LimitedFluidResourceHandler extends SingleTankResourceHandler {
     @Override
     public void setFluidStack(@NonNull FluidStack stack) {
         this.fluidStack = stack;
-    }
-
-    @Override
-    public int getCapacity() {
-        return this.capacity;
     }
 
     @Override

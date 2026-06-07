@@ -8,6 +8,10 @@
 package io.kalishak.galacticraftlegacy.world.item.component;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import io.kalishak.galacticraftlegacy.Constants;
+import io.kalishak.galacticraftlegacy.config.ClientConfig;
+import io.kalishak.galacticraftlegacy.config.values.EnergyUnit;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.component.DataComponentGetter;
@@ -23,16 +27,31 @@ import net.minecraft.world.item.component.TooltipProvider;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-public record ItemWithDescription(String translationKey) implements TooltipProvider {
-    public static final Codec<ItemWithDescription> CODEC = Codec.STRING.xmap(ItemWithDescription::new, ItemWithDescription::translationKey);
-    public static final StreamCodec<ByteBuf, ItemWithDescription> STREAM_CODEC = ByteBufCodecs.STRING_UTF8.map(ItemWithDescription::new, ItemWithDescription::translationKey);
+public record ItemWithDescription(String translationKey, int energyPerTick) implements TooltipProvider {
+    public static final Codec<ItemWithDescription> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+            Codec.STRING.fieldOf("translation_key").forGetter(ItemWithDescription::translationKey),
+            Codec.INT.optionalFieldOf("energy_per_tick", 0).forGetter(ItemWithDescription::energyPerTick)
+    ).apply(instance, ItemWithDescription::new));
+    public static final StreamCodec<ByteBuf, ItemWithDescription> STREAM_CODEC = StreamCodec.composite(
+            ByteBufCodecs.STRING_UTF8, ItemWithDescription::translationKey,
+            ByteBufCodecs.INT, ItemWithDescription::energyPerTick,
+            ItemWithDescription::new
+    );
 
     public static Supplier<Item.Properties> withDescription(Supplier<Item.Properties> properties, Identifier id) {
         return () -> properties.get().component(GalacticraftDataComponents.ITEM_WITH_DESCRIPTION, new ItemWithDescription(id.toLanguageKey("item", "desc")));
     }
 
+    public ItemWithDescription(String translationKey) {
+        this(translationKey, 0);
+    }
+
     @Override
     public void addToTooltip(Item.TooltipContext context, Consumer<Component> tooltipAdder, TooltipFlag flag, DataComponentGetter componentGetter) {
+        if (this.energyPerTick > 0) {
+            tooltipAdder.accept(Component.translatable("item.galacticraftlegacy.energy_per_tick", Constants.calculateUnit(this.energyPerTick, Constants.ifClient(context.level(), ClientConfig.ENERGY_UNIT, EnergyUnit.GIGA_JOULES))).withStyle(ChatFormatting.GREEN));
+        }
+
         if (!flag.hasShiftDown()) {
             tooltipAdder.accept(Component.translatable("item.galacticraftlegacy.press_shift").withStyle(ChatFormatting.GRAY));
         } else {

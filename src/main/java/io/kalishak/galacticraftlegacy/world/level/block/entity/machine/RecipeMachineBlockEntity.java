@@ -91,13 +91,13 @@ public abstract class RecipeMachineBlockEntity<I extends RecipeInput, R extends 
         player.awardRecipes(list);
 
         for (RecipeHolder<?> recipeholder : list) {
-            player.triggerRecipeCrafted(recipeholder, this.items);
+            player.triggerRecipeCrafted(recipeholder, this.items.copyToList());
         }
 
         this.recipesUsed.clear();
     }
 
-    public List<RecipeHolder<?>> getRecipesToAward(ServerLevel level, Vec3 popVec) {
+    public List<RecipeHolder<?>> getRecipesToAward(ServerLevel level, Vec3 ignored) {
         List<RecipeHolder<?>> list = Lists.newArrayList();
 
         for (Reference2IntMap.Entry<ResourceKey<Recipe<?>>> entry : this.recipesUsed.reference2IntEntrySet()) {
@@ -109,7 +109,7 @@ public abstract class RecipeMachineBlockEntity<I extends RecipeInput, R extends 
 
     @Override
     public void fillStackedContents(StackedItemContents stackedContents) {
-        this.items.forEach(stackedContents::accountStack);
+        this.items.copyToList().forEach(stackedContents::accountStack);
     }
 
     @Override

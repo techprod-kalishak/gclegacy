@@ -12,8 +12,6 @@ import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.CoalGener
 import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.MenuProvider;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
@@ -31,13 +29,6 @@ public class CoalGeneratorBlock extends AbstractMachineBlock {
     @Override
     protected MapCodec<CoalGeneratorBlock> codec() {
         return CODEC;
-    }
-
-    @Override
-    protected void openContainer(Level level, BlockPos pos, @Nullable BlockEntity blockEntity, Player player) {
-        if (blockEntity instanceof MenuProvider menuProvider) {
-            player.openMenu(menuProvider, pos);
-        }
     }
 
     @Override

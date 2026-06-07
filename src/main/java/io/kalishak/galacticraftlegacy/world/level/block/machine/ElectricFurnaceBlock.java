@@ -14,7 +14,6 @@ import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlock
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
@@ -32,13 +31,6 @@ public class ElectricFurnaceBlock extends AbstractMachineBlock {
     @Override
     protected MapCodec<ElectricFurnaceBlock> codec() {
         return CODEC;
-    }
-
-    @Override
-    protected void openContainer(Level level, BlockPos pos, @Nullable BlockEntity blockEntity, Player player) {
-        if (blockEntity instanceof ElectricFurnaceBlockEntity arcFurnace) {
-            player.openMenu(arcFurnace, pos);
-        }
     }
 
     @Override

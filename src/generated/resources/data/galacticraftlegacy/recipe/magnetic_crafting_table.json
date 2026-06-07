@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": "minecraft:crafting_table",
+    "I": "#galacticraftlegacy:plates/iron"
+  },
+  "pattern": [
+    "I",
+    "#"
+  ],
+  "result": {
+    "id": "galacticraftlegacy:magnetic_crafting_table"
+  }
+}

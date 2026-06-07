@@ -26,7 +26,7 @@ import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
-import net.neoforged.neoforge.transfer.DelegatingResourceHandler;
+import net.neoforged.neoforge.transfer.EmptyResourceHandler;
 import net.neoforged.neoforge.transfer.RangedResourceHandler;
 import net.neoforged.neoforge.transfer.ResourceHandler;
 import net.neoforged.neoforge.transfer.item.ItemResource;
@@ -69,24 +69,21 @@ public class ElectricCompressorBlockEntity extends RecipeMachineBlockEntity<Comp
         event.registerBlockEntity(
                 Capabilities.Item.BLOCK,
                 GalacticraftBlockEntityType.ELECTRIC_COMPRESSOR.get(),
-                (blockEntity, cxt) -> {
-                    if (cxt != null && cxt.getAxis().isVertical()) {
-                        return cxt == Direction.UP
-                                ? RangedResourceHandler.of(() -> blockEntity.innerResourceHandler, CRAFTING_SLOT_START, FUEL_SLOT)
-                                : RangedResourceHandler.of(() -> blockEntity.innerResourceHandler, RESULT_SLOT_START, RESULT_SLOT_END);
-                    }
-
-                    return new DelegatingResourceHandler<>(() -> blockEntity.innerResourceHandler);
+                (blockEntity, context) -> switch (context) {
+                    case UP -> RangedResourceHandler.of(() -> blockEntity.items, CRAFTING_SLOT_START, FUEL_SLOT);
+                    case DOWN -> RangedResourceHandler.of(() -> blockEntity.items, RESULT_SLOT_START, RESULT_SLOT_END);
+                    case null -> blockEntity.items;
+                    default -> EmptyResourceHandler.instance();
                 }
         );
     }
 
     public static void serverTick(ServerLevel level, BlockPos pos, BlockState state, ElectricCompressorBlockEntity compressor) {
-        AbstractMachineBlockEntity.energyTransferTick(compressor.innerResourceHandler, compressor.energyHandler, compressor.compressingTimer > 0, false, AbstractMachineBlockEntity.BASIC_MACHINE_MAX_TRANSFER_RATE, AlloyCompressor.FUEL_SLOT, 250, null);
+        AbstractMachineBlockEntity.extractBattery(compressor.items, compressor.capacitor, false, AbstractMachineBlockEntity.BASIC_MACHINE_MAX_TRANSFER_RATE, AlloyCompressor.FUEL_SLOT, 250, null);
         boolean changed = false;
 
-        int currentEnergy = compressor.energyHandler.getAmountAsInt();
-        ResourceHandler<ItemResource> ingredients = RangedResourceHandler.of(() -> compressor.innerResourceHandler, AlloyCompressor.CRAFTING_SLOT_START, AlloyCompressor.CRAFTING_SLOT_END);
+        int currentEnergy = compressor.capacitor.getAmountAsInt();
+        ResourceHandler<ItemResource> ingredients = RangedResourceHandler.of(() -> compressor.items, AlloyCompressor.CRAFTING_SLOT_START, AlloyCompressor.CRAFTING_SLOT_END);
         boolean hasFuel = currentEnergy > 0;
 
         if (hasFuel) {
@@ -96,22 +93,22 @@ public class ElectricCompressorBlockEntity extends RecipeMachineBlockEntity<Comp
 
             if (hasIngredients) {
                 try (Transaction tx = Transaction.open(null)) {
-                    if (compressor.energyHandler.extract(25, tx) > 0) {
+                    if (compressor.capacitor.extract(25, tx) > 0) {
                         tx.commit();
                     }
                 }
 
                 ItemStack recipeResult = recipe.value().assemble(input);
-                ItemResource resourceInResultSlot = compressor.innerResourceHandler.getResource(10);
-                int maxStackSize = compressor.innerResourceHandler.getCapacityAsInt(10, resourceInResultSlot);
+                ItemResource resourceInResultSlot = compressor.items.getResource(10);
+                int maxStackSize = compressor.items.getCapacityAsInt(10, resourceInResultSlot);
 
-                if (!recipeResult.isEmpty() && AlloyCompressor.canCompress(compressor.innerResourceHandler, maxStackSize, recipeResult)) {
+                if (!recipeResult.isEmpty() && AlloyCompressor.canCompress(compressor.items, maxStackSize, recipeResult)) {
                     compressor.compressingTimer++;
 
                     if (compressor.compressingTimer == compressor.compressingTotalTime) {
                         compressor.compressingTimer = 0;
                         compressor.compressingTotalTime = recipe.value().compressingTime();
-                        AlloyCompressor.compress(compressor.innerResourceHandler, ingredients, recipeResult);
+                        AlloyCompressor.compress(compressor.items, ingredients, recipeResult);
                         compressor.setRecipeUsed(recipe);
                         changed = true;
                     }
@@ -136,7 +133,7 @@ public class ElectricCompressorBlockEntity extends RecipeMachineBlockEntity<Comp
     }
 
     @Override
-    protected int size() {
+    protected int containerSize() {
         return AlloyCompressor.INVENTORY_SIZE_ADVANCED;
     }
 

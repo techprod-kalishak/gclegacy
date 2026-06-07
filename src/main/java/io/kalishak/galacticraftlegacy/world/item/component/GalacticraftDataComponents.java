@@ -11,6 +11,7 @@ import com.mojang.serialization.Codec;
 import io.kalishak.galacticraftlegacy.Galacticraft;
 import io.kalishak.galacticraftlegacy.registry.SchematicVariant;
 import io.kalishak.galacticraftlegacy.world.item.KeyLock;
+import io.kalishak.galacticraftlegacy.world.level.block.entity.MagneticCraftingBlockEntity;
 import net.minecraft.core.GlobalPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponentType;
@@ -18,6 +19,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.world.entity.EntityReference;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.fluids.SimpleFluidContent;
 import net.neoforged.neoforge.registries.DeferredHolder;
@@ -32,11 +34,7 @@ public final class GalacticraftDataComponents {
             "canned_food",
             builder -> builder.persistent(CannedFood.CannedComponent.CODEC).networkSynchronized(CannedFood.CannedComponent.STREAM_CODEC).cacheEncoding()
     );
-    public static final DeferredHolder<DataComponentType<?>, DataComponentType<ImmutableItemCapacitor>> ENERGY_CAPACITOR = REGISTRY.registerComponentType(
-            "energy_capacitor",
-            builder -> builder.persistent(ImmutableItemCapacitor.CODEC).networkSynchronized(ImmutableItemCapacitor.STREAM_CODEC)
-    );
-    public static final DeferredHolder<DataComponentType<?>, DataComponentType<EntityReference<Player>>> ENTITY_REFERENCE = REGISTRY.registerComponentType(
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<EntityReference<Player>>> PLAYER_REFERENCE = REGISTRY.registerComponentType(
             "entity_reference",
             builder -> builder.persistent(EntityReference.codec()).networkSynchronized(EntityReference.streamCodec()).cacheEncoding()
     );
@@ -47,6 +45,10 @@ public final class GalacticraftDataComponents {
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<SimpleFluidContent>> FLUID_TANK = REGISTRY.registerComponentType(
             "fluid_tank",
             builder -> builder.persistent(SimpleFluidContent.CODEC).networkSynchronized(SimpleFluidContent.STREAM_CODEC)
+    );
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<FluidTankContents>> FLUID_TANK_CONTENTS = REGISTRY.registerComponentType(
+            "fluid_tank_contents",
+            builder -> builder.persistent(FluidTankContents.CODEC).networkSynchronized(FluidTankContents.STREAM_CODEC).cacheEncoding()
     );
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<GearAttributeModifiers>> GEAR_ATTRIBUTE_MODIFIERS = REGISTRY.registerComponentType(
             "gear_attribute_modifiers",
@@ -63,6 +65,10 @@ public final class GalacticraftDataComponents {
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<KeyLock>> KEY_LOCK = REGISTRY.registerComponentType(
             "key_lock",
             builder -> builder.persistent(KeyLock.CODEC).networkSynchronized(KeyLock.STREAM_CODEC).cacheEncoding()
+    );
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<RecipeHolder<?>>> RECIPE_HOLDER = REGISTRY.registerComponentType(
+            "recipe_holder",
+            builder -> builder.persistent(MagneticCraftingBlockEntity.RECIPE_HOLDER_CODEC).networkSynchronized(RecipeHolder.STREAM_CODEC).cacheEncoding().ignoreSwapAnimation()
     );
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<Holder<SchematicVariant>>> SCHEMATIC = REGISTRY.registerComponentType(
             "schematic",

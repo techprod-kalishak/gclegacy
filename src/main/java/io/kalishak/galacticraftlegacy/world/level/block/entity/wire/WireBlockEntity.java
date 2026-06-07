@@ -32,7 +32,7 @@ public class WireBlockEntity extends AbstractConnectableBlockEntity {
         event.registerBlockEntity(
                 Capabilities.Energy.BLOCK,
                 blockEntityType,
-                (blockEntity, context) -> blockEntity.energyHandler
+                (blockEntity, _) -> blockEntity.energyHandler
         );
     }
 

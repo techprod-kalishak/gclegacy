@@ -31,6 +31,7 @@ import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
+import net.neoforged.neoforge.transfer.EmptyResourceHandler;
 import net.neoforged.neoforge.transfer.RangedResourceHandler;
 import net.neoforged.neoforge.transfer.ResourceHandler;
 import net.neoforged.neoforge.transfer.energy.EnergyHandler;
@@ -84,26 +85,26 @@ public class CircuitFabricatorBlockEntity extends RecipeMachineBlockEntity<Simpl
         boolean shouldUpdate = false;
         boolean canProcess;
 
-        energyTransferTick(circuitFabricator, circuitFabricator.processProgress > 0, false, BASIC_MACHINE_MAX_TRANSFER_RATE, null);
+        extractBattery(circuitFabricator, false, BASIC_MACHINE_MAX_TRANSFER_RATE, null);
 
         if (circuitFabricator.processTimeTotal > 0) {
             circuitFabricator.processProgress++;
         }
 
-        ItemResource ingredientResource = circuitFabricator.innerResourceHandler.getResource(SLOT_INGREDIENT);
+        ItemResource ingredientResource = circuitFabricator.items.getResource(SLOT_INGREDIENT);
 
         try (Transaction tx = Transaction.open(null)) {
-            SimpleResourceInput simpleResourceInput = new SimpleResourceInput(() -> circuitFabricator.innerResourceHandler, SLOT_DIAMOND, SLOT_COUNT);
+            SimpleResourceInput simpleResourceInput = new SimpleResourceInput(() -> circuitFabricator.items, SLOT_DIAMOND, SLOT_COUNT);
             RecipeHolder<CircuitRecipe> recipeHolder = circuitFabricator.quickCheck.getRecipeFor(simpleResourceInput, serverLevel).orElse(null);
 
-            canProcess = canProcess(serverLevel.registryAccess(), recipeHolder, simpleResourceInput, circuitFabricator.innerResourceHandler, circuitFabricator.energyHandler, tx);
+            canProcess = canProcess(serverLevel.registryAccess(), recipeHolder, simpleResourceInput, circuitFabricator.items, circuitFabricator.capacitor, tx);
 
             if (circuitFabricator.processProgress <= 0 && !ingredientResource.isEmpty()) {
                 if (canProcess) {
                     circuitFabricator.processTimeTotal = 200;
                 }
             } else if (circuitFabricator.processProgress == circuitFabricator.processTimeTotal && canProcess) {
-                if (process(serverLevel.registryAccess(), recipeHolder, simpleResourceInput, circuitFabricator.innerResourceHandler, circuitFabricator.energyHandler, tx)) {
+                if (process(serverLevel.registryAccess(), recipeHolder, simpleResourceInput, circuitFabricator.items, circuitFabricator.capacitor, tx)) {
                     tx.commit();
                     shouldUpdate = true;
 
@@ -168,20 +169,17 @@ public class CircuitFabricatorBlockEntity extends RecipeMachineBlockEntity<Simpl
         event.registerBlockEntity(
                 Capabilities.Item.BLOCK,
                 GalacticraftBlockEntityType.CIRCUIT_FABRICATOR.get(),
-                (machine, direction) -> {
-                    if (direction == Direction.UP) {
-                        return RangedResourceHandler.of(() -> machine.innerResourceHandler, SLOT_BATTERY, SLOT_OUTPUT);
-                    } else if (direction == Direction.DOWN) {
-                        return RangedResourceHandler.ofSingleIndex(() -> machine.innerResourceHandler, SLOT_OUTPUT);
-                    }
-
-                    return machine.innerResourceHandler;
+                (blockEntity, context) -> switch (context) {
+                    case UP -> RangedResourceHandler.of(() -> blockEntity.items, SLOT_BATTERY, SLOT_OUTPUT);
+                    case DOWN -> RangedResourceHandler.ofSingleIndex(() -> blockEntity.items, SLOT_OUTPUT);
+                    case null -> blockEntity.items;
+                    default -> EmptyResourceHandler.instance();
                 }
         );
     }
 
     private static boolean checkRecipe(CircuitFabricatorBlockEntity machine, ServerLevel serverLevel) {
-        SimpleResourceInput simpleResourceInput = new SimpleResourceInput(() -> machine.innerResourceHandler, SLOT_DIAMOND, SLOT_COUNT);
+        SimpleResourceInput simpleResourceInput = new SimpleResourceInput(() -> machine.items, SLOT_DIAMOND, SLOT_COUNT);
         return machine.quickCheck.getRecipeFor(simpleResourceInput, serverLevel).isPresent();
     }
 
@@ -216,7 +214,7 @@ public class CircuitFabricatorBlockEntity extends RecipeMachineBlockEntity<Simpl
     }
 
     @Override
-    protected int size() {
+    protected int containerSize() {
         return SLOT_COUNT;
     }
 

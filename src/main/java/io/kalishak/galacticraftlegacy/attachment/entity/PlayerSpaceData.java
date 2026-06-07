@@ -32,7 +32,7 @@ import org.jspecify.annotations.Nullable;
 import java.util.List;
 
 public class PlayerSpaceData extends GearInventoryProvider {
-    public static final MapCodec<PlayerSpaceData> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+    public static final MapCodec<PlayerSpaceData> MAP_CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             SpaceGearEquipment.CODEC.fieldOf("GearEquipment").forGetter(PlayerSpaceData::getGearEquipment)
     ).apply(instance, PlayerSpaceData::new));
     public static final StreamCodec<RegistryFriendlyByteBuf, PlayerSpaceData> STREAM_CODEC = StreamCodec.composite(

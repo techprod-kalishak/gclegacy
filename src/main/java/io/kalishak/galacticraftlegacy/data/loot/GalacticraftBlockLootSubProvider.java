@@ -82,6 +82,7 @@ public class GalacticraftBlockLootSubProvider extends BlockLootSubProvider {
         dropSelf(GalacticraftBlocks.UNLIT_COPPER_TORCH.get());
         dropSelf(GalacticraftBlocks.UNLIT_LANTERN.get());
         GalacticraftBlocks.UNLIT_COPPER_LANTERN.forEach(this::dropSelf);
+        dropSelf(GalacticraftBlocks.MAGNETIC_CRAFTING_TABLE.get());
     }
 
     @Override

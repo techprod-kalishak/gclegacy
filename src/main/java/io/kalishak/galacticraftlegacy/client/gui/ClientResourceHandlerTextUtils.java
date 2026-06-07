@@ -8,9 +8,11 @@
 package io.kalishak.galacticraftlegacy.client.gui;
 
 import io.kalishak.galacticraftlegacy.config.ClientConfig;
+import io.kalishak.galacticraftlegacy.world.item.component.ItemAccessEnergyUtils;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.neoforged.neoforge.transfer.energy.EnergyHandler;
+import net.neoforged.neoforge.transfer.energy.ItemAccessEnergyHandler;
 
 import java.util.function.UnaryOperator;
 

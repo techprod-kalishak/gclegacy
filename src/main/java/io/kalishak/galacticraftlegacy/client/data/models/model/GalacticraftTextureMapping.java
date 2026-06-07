@@ -14,6 +14,8 @@ import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.Block;
 
+import static net.minecraft.client.data.models.model.TextureMapping.getBlockTexture;
+
 public class GalacticraftTextureMapping {
     private static final Material MACHINE = new Material(Identifier.fromNamespaceAndPath(Galacticraft.MODID, "block/machine"));
 
@@ -28,8 +30,30 @@ public class GalacticraftTextureMapping {
                 .put(TextureSlot.PARTICLE, withSuffix(MACHINE, "_top"));
     }
 
+    public static TextureMapping rotatableBlock(Block block) {
+        return new TextureMapping()
+                .put(TextureSlot.PARTICLE, getBlockTexture(block, "_side"))
+                .put(TextureSlot.DOWN, getBlockTexture(block, "_bottom"))
+                .put(TextureSlot.UP, getBlockTexture(block, "_top"))
+                .put(TextureSlot.NORTH, getBlockTexture(block, "_side"))
+                .put(TextureSlot.EAST, getBlockTexture(block, "_side"))
+                .put(TextureSlot.SOUTH, getBlockTexture(block, "_side"))
+                .put(TextureSlot.WEST, getBlockTexture(block, "_side"));
+    }
+
+    public static TextureMapping oxygenCollector(Block block) {
+        return new TextureMapping()
+                .put(TextureSlot.NORTH, getBlockTexture(block, "_side"))
+                .put(TextureSlot.SOUTH, getBlockTexture(block, "_side"))
+                .put(TextureSlot.EAST, withSuffix(MACHINE, "_energy_input"))
+                .put(TextureSlot.WEST, withSuffix(MACHINE, "_oxygen_output"))
+                .put(TextureSlot.UP, getBlockTexture(block, "_side"))
+                .put(TextureSlot.DOWN, getBlockTexture(block, "_side"))
+                .put(TextureSlot.PARTICLE, getBlockTexture(block, "_side"));
+    }
+
     public static TextureMapping simpleMachine(Block block) {
-        return simpleMachine(TextureMapping.getBlockTexture(block));
+        return simpleMachine(getBlockTexture(block));
     }
 
     private static Material withSuffix(Material material, String suffix) {

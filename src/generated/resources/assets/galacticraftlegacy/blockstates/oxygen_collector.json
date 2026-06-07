@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "galacticraftlegacy:block/oxygen_collector",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "galacticraftlegacy:block/oxygen_collector"
+    },
+    "facing=south": {
+      "model": "galacticraftlegacy:block/oxygen_collector",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "galacticraftlegacy:block/oxygen_collector",
+      "y": 270
+    }
+  }
+}

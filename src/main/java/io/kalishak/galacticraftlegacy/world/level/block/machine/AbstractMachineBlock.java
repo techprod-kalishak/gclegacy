@@ -9,6 +9,7 @@ package io.kalishak.galacticraftlegacy.world.level.block.machine;
 
 import com.mojang.serialization.MapCodec;
 import io.kalishak.galacticraftlegacy.transfer.ResourcefulHelper;
+import io.kalishak.galacticraftlegacy.world.item.component.FluidTankContents;
 import io.kalishak.galacticraftlegacy.world.item.component.GalacticraftDataComponents;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.wire.network.NetworkType;
 import io.kalishak.galacticraftlegacy.world.level.block.wire.ConnectingBlock;
@@ -18,6 +19,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -32,7 +34,9 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.transfer.ResourceHandler;
 import net.neoforged.neoforge.transfer.energy.EnergyHandler;
+import net.neoforged.neoforge.transfer.fluid.FluidResource;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
@@ -54,7 +58,9 @@ public abstract class AbstractMachineBlock extends BaseEntityBlock implements Co
         if (!level.isClientSide()) {
             BlockEntity blockEntity = level.getBlockEntity(pos);
 
-            openContainer(level, pos, blockEntity, player);
+            if (blockEntity instanceof MenuProvider menuProvider) {
+                player.openMenu(menuProvider, pos);
+            }
         }
 
         return InteractionResult.SUCCESS;
@@ -68,16 +74,23 @@ public abstract class AbstractMachineBlock extends BaseEntityBlock implements Co
     @Override
     public ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state, boolean includeData, Player player) {
         ItemStack returned = super.getCloneItemStack(level, pos, state, includeData, player);
-        EnergyHandler energyHandler = player.level().getCapability(Capabilities.Energy.BLOCK, pos, state, level.getBlockEntity(pos), state.getValue(FACING));
+        BlockEntity blockEntity = level.getBlockEntity(pos);
 
-        if (includeData && energyHandler != null) {
-            returned.set(GalacticraftDataComponents.STORED_ENERGY, energyHandler.getAmountAsInt());
+        EnergyHandler energyHandler = player.level().getCapability(Capabilities.Energy.BLOCK, pos, state, blockEntity, null);
+        ResourceHandler<FluidResource> fluidHandler = player.level().getCapability(Capabilities.Fluid.BLOCK, pos, state, blockEntity, null);
+
+        if (includeData) {
+            if (energyHandler != null) {
+                returned.set(GalacticraftDataComponents.STORED_ENERGY, energyHandler.getAmountAsInt());
+            }
+
+            if (fluidHandler != null) {
+                returned.set(GalacticraftDataComponents.FLUID_TANK_CONTENTS, FluidTankContents.fromHandler(fluidHandler));
+            }
         }
 
         return returned;
     }
-
-    protected abstract void openContainer(Level level, BlockPos pos, @Nullable BlockEntity blockEntity, Player player);
 
     @Override
     public @Nullable BlockState getStateForPlacement(BlockPlaceContext context) {

@@ -75,19 +75,33 @@ public final class GalacticraftBlockEntityType {
     );
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<ElectricFurnaceBlockEntity>> ELECTRIC_FURNACE = REGISTRY.register(
             "electric_furnace",
-            () -> new BlockEntityType<>(ElectricFurnaceBlockEntity::new, Set.of(GalacticraftBlocks.ELECTRIC_FURNACE.get()))
+            () -> new BlockEntityType<>(ElectricFurnaceBlockEntity::new, Set.of(
+                    GalacticraftBlocks.ELECTRIC_FURNACE.get()
+            ))
     );
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<CoalGeneratorBlockEntity>> COAL_GENERATOR = REGISTRY.register(
             "coal_generator",
-            () -> new BlockEntityType<>(CoalGeneratorBlockEntity::new, Set.of(GalacticraftBlocks.COAL_GENERATOR.get()))
+            () -> new BlockEntityType<>(CoalGeneratorBlockEntity::new, Set.of(
+                    GalacticraftBlocks.COAL_GENERATOR.get()
+            ))
     );
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<CircuitFabricatorBlockEntity>> CIRCUIT_FABRICATOR = REGISTRY.register(
             "circuit_fabricator",
-            () -> new BlockEntityType<>(CircuitFabricatorBlockEntity::new, Set.of(GalacticraftBlocks.CIRCUIT_FABRICATOR.get()))
+            () -> new BlockEntityType<>(CircuitFabricatorBlockEntity::new, Set.of(
+                    GalacticraftBlocks.CIRCUIT_FABRICATOR.get()
+            ))
     );
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<LaunchControllerBlockEntity>> LAUNCH_CONTROLLER = REGISTRY.register(
             "launch_controller",
-            () -> new BlockEntityType<>(LaunchControllerBlockEntity::new, Set.of())
+            () -> new BlockEntityType<>(LaunchControllerBlockEntity::new, Set.of(
+
+            ))
+    );
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<MagneticCraftingBlockEntity>> MAGNETIC_CRAFTING = REGISTRY.register(
+            "magnetic_crafting_table",
+            () -> new BlockEntityType<>(MagneticCraftingBlockEntity::new, Set.of(
+                    GalacticraftBlocks.MAGNETIC_CRAFTING_TABLE.get()
+            ))
     );
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<ParachestBlockEntity>> PARACHEST = REGISTRY.register(
             "parachest",
@@ -107,8 +121,8 @@ public final class GalacticraftBlockEntityType {
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<OxygenDetectorBlockEntity>> OXYGEN_DETECTOR = REGISTRY.register(
             "oxygen_detector",
             () -> new BlockEntityType<>(OxygenDetectorBlockEntity::new, Set.of(
-                    GalacticraftBlocks.OXYGEN_DETECTOR.get())
-            )
+                    GalacticraftBlocks.OXYGEN_DETECTOR.get()
+            ))
     );
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<WireBlockEntity>> WIRE = REGISTRY.register(
             "wire",
@@ -131,11 +145,11 @@ public final class GalacticraftBlockEntityType {
         ElectricCompressorBlockEntity.registerCapabilities(event);
         ElectricFurnaceBlockEntity.registerCapabilities(event);
         FlammableCauldronBlockEntity.registerCapability(event);
+        MagneticCraftingBlockEntity.registerCapabilities(event);
         ParachestBlockEntity.registerCapabilities(event);
         OxygenCollectorBlockEntity.registerCapabilities(event);
         WireBlockEntity.registerCapabilities(event, WIRE.get());
         WireBlockEntity.registerCapabilities(event, DENSE_WIRE.get());
-
     }
 
     public static void init(IEventBus bus) {

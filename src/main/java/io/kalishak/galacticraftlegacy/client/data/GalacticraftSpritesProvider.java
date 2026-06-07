@@ -47,8 +47,8 @@ public class GalacticraftSpritesProvider extends SpriteSourceProvider {
         atlas(AtlasIds.CELESTIALS).addSource(new DirectoryLister("environment/celestial", ""));
         atlas(AtlasIds.CHESTS).addSource(new SingleFile(Constants.id("parachest")));
         atlas(AtlasIds.GUI).addSource(new DirectoryLister("gui/sprites", ""));
-        atlas(CELESTIAL_BODIES).addSource(new DirectoryLister("galaxy", "galaxy/"));
-        atlas(PARACHUTES).addSource(new DirectoryLister("entity/equipment/galacticraftlegacy/parachute", "entity/equipment/galacticraftlegacy/parachute/"));
-        atlas(SCHEMATICS).addSource(new DirectoryLister("schematic", "schematic/"));
+        atlas(CELESTIAL_BODIES).addSource(new DirectoryLister("galaxy", ""));
+        atlas(PARACHUTES).addSource(new DirectoryLister("entity/equipment/galacticraftlegacy/parachute", ""));
+        atlas(SCHEMATICS).addSource(new DirectoryLister("schematic", ""));
     }
 }

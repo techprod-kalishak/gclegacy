@@ -5,12 +5,13 @@
  * See LICENSE file for more details
  */
 
-package io.kalishak.galacticraftlegacy.world.level.block.machine;
+package io.kalishak.galacticraftlegacy.world.level.block.machine.oxygen;
 
 import com.mojang.serialization.MapCodec;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityType;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.OxygenCollectorBlockEntity;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.wire.network.NetworkType;
+import io.kalishak.galacticraftlegacy.world.level.block.machine.AbstractMachineBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -40,17 +41,8 @@ public class OxygenCollectorBlock extends AbstractMachineBlock {
     }
 
     @Override
-    protected InteractionResult useWithoutItem(BlockState blockState, Level level, BlockPos worldPosition, Player player, BlockHitResult hitResult) {
-        return InteractionResult.TRY_WITH_EMPTY_HAND;
-    }
-
-    @Override
-    protected void openContainer(Level level, BlockPos worldPosition, @Nullable BlockEntity blockEntity, Player player) {
-    }
-
-    @Override
     public @NonNull NetworkType getNetworkType(@NonNull Direction direction) {
-        return direction == Direction.DOWN ? NetworkType.FLUID : super.getNetworkType(direction);
+        return direction == Direction.WEST ? NetworkType.FLUID : super.getNetworkType(direction);
     }
 
     @Override
@@ -92,11 +84,11 @@ public class OxygenCollectorBlock extends AbstractMachineBlock {
 
     @Override
     public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState, BlockEntityType<T> type) {
-        if (!level.isClientSide()) {
+        if (level instanceof ServerLevel serverLevel) {
             return createTickerHelper(
                     type,
                     GalacticraftBlockEntityType.OXYGEN_COLLECTOR.get(),
-                    (_, worldPosition, worldBlockState, blockEntity) -> OxygenCollectorBlockEntity.serverTick((ServerLevel) level, worldPosition, worldBlockState, blockEntity)
+                    (_, worldPosition, worldBlockState, blockEntity) -> OxygenCollectorBlockEntity.serverTick(serverLevel, worldPosition, worldBlockState, blockEntity)
             );
         }
 

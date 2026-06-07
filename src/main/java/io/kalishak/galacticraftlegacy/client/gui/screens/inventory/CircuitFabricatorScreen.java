@@ -41,13 +41,13 @@ public class CircuitFabricatorScreen extends AbstractMachineScreen<CircuitFabric
     }
 
     @Override
-    public Rectangle getEnergyBarBounds() {
-        return new Rectangle(80, 95, 56, 7);
+    public Bounds getEnergyBarBounds() {
+        return new Bounds(80, 95);
     }
 
     @Override
-    public Rectangle getEnergyIndicatorBounds() {
-        return new Rectangle(136, 94, 11, 10);
+    public Bounds getEnergyIndicatorBounds() {
+        return new Bounds(136, 94);
     }
 
     @Override

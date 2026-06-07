@@ -8,6 +8,7 @@
 package io.kalishak.galacticraftlegacy.world.level.block.entity.machine;
 
 import com.google.common.collect.Lists;
+import io.kalishak.galacticraftlegacy.transfer.ResourcefulHelper;
 import io.kalishak.galacticraftlegacy.world.inventory.machine.CompressorMenu;
 import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.AnvilCompressingRecipe;
 import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.GalacticraftRecipeType;
@@ -17,12 +18,9 @@ import io.kalishak.galacticraftlegacy.world.level.block.entity.NamedBlockEntity;
 import it.unimi.dsi.fastutil.objects.Reference2IntMap;
 import it.unimi.dsi.fastutil.objects.Reference2IntOpenHashMap;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.NonNullList;
 import net.minecraft.core.component.DataComponentGetter;
 import net.minecraft.core.component.DataComponentMap;
-import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -43,7 +41,6 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemStackTemplate;
-import net.minecraft.world.item.component.ItemContainerContents;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
@@ -56,10 +53,12 @@ import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.registries.datamaps.builtin.FurnaceFuel;
 import net.neoforged.neoforge.registries.datamaps.builtin.NeoForgeDataMaps;
+import net.neoforged.neoforge.transfer.EmptyResourceHandler;
 import net.neoforged.neoforge.transfer.RangedResourceHandler;
 import net.neoforged.neoforge.transfer.ResourceHandler;
 import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
+import net.neoforged.neoforge.transfer.item.ItemUtil;
 import net.neoforged.neoforge.transfer.transaction.Transaction;
 import org.jspecify.annotations.Nullable;
 
@@ -67,8 +66,7 @@ import java.util.List;
 import java.util.Map;
 
 public class CompressorBlockEntity extends NamedBlockEntity implements AlloyCompressor {
-    protected final NonNullList<ItemStack> items = NonNullList.withSize(AlloyCompressor.INVENTORY_SIZE_BASIC, ItemStack.EMPTY);
-    protected final ItemStacksResourceHandler innerResourceHandler = new ItemStacksResourceHandler(this.items);
+    protected final ItemStacksResourceHandler items = new ItemStacksResourceHandler(AlloyCompressor.INVENTORY_SIZE_BASIC);
     protected int compressingTimer;
     protected int compressingTotalTime;
     protected int fuelTimeRemaining;
@@ -117,18 +115,12 @@ public class CompressorBlockEntity extends NamedBlockEntity implements AlloyComp
         event.registerBlockEntity(
                 Capabilities.Item.BLOCK,
                 GalacticraftBlockEntityType.COMPRESSOR.get(),
-                (blockEntity, cxt) -> {
-                    if (cxt != null && cxt.getAxis().isVertical()) {
-                        if (cxt.getAxis().isVertical()) {
-                            return cxt == Direction.UP
-                                    ? RangedResourceHandler.of(() -> blockEntity.innerResourceHandler, CRAFTING_SLOT_START, CRAFTING_SLOT_END)
-                                    : RangedResourceHandler.of(() -> blockEntity.innerResourceHandler, RESULT_SLOT_START, RESULT_SLOT_END);
-                        }
-
-                        return RangedResourceHandler.ofSingleIndex(() -> blockEntity.innerResourceHandler, FUEL_SLOT);
-                    }
-
-                    return blockEntity.innerResourceHandler;
+                (blockEntity, context) -> switch (context) {
+                    case UP -> RangedResourceHandler.of(() -> blockEntity.items, CRAFTING_SLOT_START, CRAFTING_SLOT_END);
+                    case DOWN -> RangedResourceHandler.of(() -> blockEntity.items, RESULT_SLOT_START, RESULT_SLOT_END);
+                    case NORTH -> RangedResourceHandler.ofSingleIndex(() -> blockEntity.items, FUEL_SLOT);
+                    case null -> blockEntity.items;
+                    default -> EmptyResourceHandler.instance();
                 }
         );
     }
@@ -146,8 +138,8 @@ public class CompressorBlockEntity extends NamedBlockEntity implements AlloyComp
             isLit = false;
         }
 
-        ItemResource fuel = compressor.innerResourceHandler.getResource(AlloyCompressor.FUEL_SLOT);
-        ResourceHandler<ItemResource> ingredients = RangedResourceHandler.of(() -> compressor.innerResourceHandler, AlloyCompressor.CRAFTING_SLOT_START, AlloyCompressor.CRAFTING_SLOT_END);
+        ItemResource fuel = compressor.items.getResource(AlloyCompressor.FUEL_SLOT);
+        ResourceHandler<ItemResource> ingredients = RangedResourceHandler.of(() -> compressor.items, AlloyCompressor.CRAFTING_SLOT_START, AlloyCompressor.CRAFTING_SLOT_END);
 
         boolean hasFuel = !fuel.isEmpty();
 
@@ -158,17 +150,17 @@ public class CompressorBlockEntity extends NamedBlockEntity implements AlloyComp
 
             if (hasIngredients) {
                 ItemStack recipeResult = recipe.value().assemble(input);
-                ItemResource resourceInResultSlot = compressor.innerResourceHandler.getResource(AlloyCompressor.RESULT_SLOT_START);
-                int maxStackSize = compressor.innerResourceHandler.getCapacityAsInt(AlloyCompressor.RESULT_SLOT_START, resourceInResultSlot);
+                ItemResource resourceInResultSlot = compressor.items.getResource(AlloyCompressor.RESULT_SLOT_START);
+                int maxStackSize = compressor.items.getCapacityAsInt(AlloyCompressor.RESULT_SLOT_START, resourceInResultSlot);
 
-                if (!recipeResult.isEmpty() && AlloyCompressor.canCompress(compressor.innerResourceHandler, maxStackSize, recipeResult)) {
+                if (!recipeResult.isEmpty() && AlloyCompressor.canCompress(compressor.items, maxStackSize, recipeResult)) {
                     if (!isLit) {
                         int newLitTime = fuelDuration(level, fuel);
                         compressor.fuelTimeRemaining = newLitTime;
                         compressor.fuelTotalTime = newLitTime;
 
                         if (newLitTime > 0) {
-                            consumeFuel(compressor.innerResourceHandler, fuel);
+                            consumeFuel(compressor.items, fuel);
                             isLit = true;
                             changed = true;
                         }
@@ -184,7 +176,7 @@ public class CompressorBlockEntity extends NamedBlockEntity implements AlloyComp
                         if (compressor.compressingTimer == compressor.compressingTotalTime) {
                             compressor.compressingTimer = 0;
                             compressor.compressingTotalTime = recipe.value().compressingTime();
-                            AlloyCompressor.compress(compressor.innerResourceHandler, ingredients, recipeResult);
+                            AlloyCompressor.compress(compressor.items, ingredients, recipeResult);
                             compressor.setRecipeUsed(recipe);
                             changed = true;
                         }
@@ -244,10 +236,10 @@ public class CompressorBlockEntity extends NamedBlockEntity implements AlloyComp
     }
 
     public void set(int index, ItemResource resource, int amount) {
-        ItemStack oldStack = this.items.get(index);
+        ItemStack oldStack = ItemUtil.getStack(this.items, index);
         ItemStack newStack = resource.toStack(amount);
         boolean same = !resource.isEmpty() && ItemStack.isSameItemSameComponents(oldStack, newStack);
-        this.innerResourceHandler.set(index, resource, amount);
+        this.items.set(index, resource, amount);
 
         if (index == AlloyCompressor.FUEL_SLOT && !same && this.level instanceof ServerLevel serverLevel) {
             this.fuelTotalTime = fuelDuration(serverLevel, resource);
@@ -259,7 +251,7 @@ public class CompressorBlockEntity extends NamedBlockEntity implements AlloyComp
     @Override
     protected void loadAdditional(ValueInput input) {
         super.loadAdditional(input);
-        this.innerResourceHandler.deserialize(input);
+        this.items.deserialize(input);
         this.fuelTimeRemaining = input.getIntOr("FuelTimeRemaining", (short) 0);
         this.fuelTotalTime = input.getIntOr("FuelTotalTime", (short) 0);
         this.compressingTimer = input.getIntOr("CompressingTimer", (short) 0);
@@ -271,7 +263,7 @@ public class CompressorBlockEntity extends NamedBlockEntity implements AlloyComp
     @Override
     protected void saveAdditional(ValueOutput output) {
         super.saveAdditional(output);
-        this.innerResourceHandler.serialize(output);
+        this.items.serialize(output);
         output.putInt("FuelTimeRemaining", this.fuelTimeRemaining);
         output.putInt("FuelTotalTime", this.fuelTotalTime);
         output.putInt("CompressingTimer", this.compressingTimer);
@@ -280,15 +272,15 @@ public class CompressorBlockEntity extends NamedBlockEntity implements AlloyComp
     }
 
     @Override
-    protected void applyImplicitComponents(DataComponentGetter componentGetter) {
-        super.applyImplicitComponents(componentGetter);
-        componentGetter.getOrDefault(DataComponents.CONTAINER, ItemContainerContents.EMPTY).copyInto(this.items);
+    protected void applyImplicitComponents(DataComponentGetter components) {
+        super.applyImplicitComponents(components);
+        ResourcefulHelper.applyContainerComponent(components, this.items::set);
     }
 
     @Override
     protected void collectImplicitComponents(DataComponentMap.Builder components) {
         super.collectImplicitComponents(components);
-        components.set(DataComponents.CONTAINER, ItemContainerContents.fromItems(this.items));
+        ResourcefulHelper.collectContainerComponent(components, this.items);
     }
 
     @Override
@@ -314,7 +306,7 @@ public class CompressorBlockEntity extends NamedBlockEntity implements AlloyComp
         player.awardRecipes(list);
 
         for (RecipeHolder<?> recipeholder : list) {
-            player.triggerRecipeCrafted(recipeholder, this.items);
+            player.triggerRecipeCrafted(recipeholder, this.items.copyToList());
         }
 
         this.recipesUsed.clear();
@@ -335,16 +327,14 @@ public class CompressorBlockEntity extends NamedBlockEntity implements AlloyComp
 
     @Override
     public void preRemoveSideEffects(BlockPos pos, BlockState state) {
-        super.preRemoveSideEffects(pos, state);
-
         if (this.level != null) {
-            Containers.dropContents(this.level, pos, this.items);
+            Containers.dropContents(this.level, pos, this.items.copyToList());
         }
     }
 
     @Override
     public void fillStackedContents(StackedItemContents stackedItemContents) {
-        this.items.forEach(stackedItemContents::accountStack);
+        this.items.copyToList().forEach(stackedItemContents::accountStack);
     }
 
     @Override

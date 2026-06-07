@@ -7,8 +7,9 @@
 
 package io.kalishak.galacticraftlegacy.world.level.block.entity.machine;
 
+import io.kalishak.galacticraftlegacy.attachment.GalacticraftAttachments;
 import io.kalishak.galacticraftlegacy.transfer.ResourcefulHelper;
-import io.kalishak.galacticraftlegacy.transfer.capability.fluid.LimitedFluidResourceHandler;
+import io.kalishak.galacticraftlegacy.transfer.capability.fluid.SingleTankResourceHandler;
 import io.kalishak.galacticraftlegacy.transfer.node.FluidNodeNetwork;
 import io.kalishak.galacticraftlegacy.transfer.node.object.OxygenConsumer;
 import io.kalishak.galacticraftlegacy.world.item.component.GalacticraftDataComponents;
@@ -24,6 +25,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.fluids.SimpleFluidContent;
 import net.neoforged.neoforge.transfer.ResourceHandler;
 import net.neoforged.neoforge.transfer.fluid.FluidResource;
@@ -31,16 +33,29 @@ import net.neoforged.neoforge.transfer.transaction.Transaction;
 import org.jspecify.annotations.Nullable;
 
 public abstract class AbstractOxygenBlockEntity extends AbstractMachineBlockEntity {
-    protected static final int OXYGEN_CAPACITY = 16000;
-    protected static final FluidResource OXYGEN_RESOURCE = FluidResource.of(GalacticraftFluids.OXYGEN);
     protected final int oxygenPerTick;
-    protected final LimitedFluidResourceHandler oxygenHandler;
+    protected final SingleTankResourceHandler oxygenHandler;
     protected int lastOxygenAmount;
 
     protected AbstractOxygenBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState blockState, int oxygenPerTick, int capacity) {
         super(type, pos, blockState);
         this.oxygenPerTick = oxygenPerTick;
-        this.oxygenHandler = new LimitedFluidResourceHandler(oxygenPerTick, oxygenPerTick, capacity);
+        this.oxygenHandler = new SingleTankResourceHandler(capacity) {
+            @Override
+            protected void notifyChange() {
+                if (!AbstractOxygenBlockEntity.this.isRemoved()) {
+                    AbstractOxygenBlockEntity.this.setData(GalacticraftAttachments.SYNC_FLUID_STACK, AbstractOxygenBlockEntity.this.oxygenHandler.getFluidStack());
+                }
+            }
+        };
+    }
+
+    protected static <M extends AbstractOxygenBlockEntity> void registerInputItemCapability(BlockEntityType<? extends M> blockEntity, RegisterCapabilitiesEvent event) {
+        event.registerBlockEntity(
+                Capabilities.Item.BLOCK,
+                blockEntity,
+                (be, _) -> be.items
+        );
     }
 
     protected static void oxygenServerTick(ServerLevel level, BlockPos worldPosition, BlockState blockState, AbstractOxygenBlockEntity entity, @Nullable Transaction tx) {
@@ -48,7 +63,7 @@ public abstract class AbstractOxygenBlockEntity extends AbstractMachineBlockEnti
             try (Transaction childTx = Transaction.open(tx)) {
                 int snapshot = entity.oxygenHandler.getAmount();
 
-                if (entity.oxygenHandler.extract(0, OXYGEN_RESOURCE, entity.oxygenPerTick, childTx) > 0) {
+                if (entity.oxygenHandler.extract(0, FluidResource.of(GalacticraftFluids.OXYGEN), entity.oxygenPerTick, childTx) > 0) {
                     entity.lastOxygenAmount = snapshot;
                     childTx.commit();
                 }
@@ -67,10 +82,10 @@ public abstract class AbstractOxygenBlockEntity extends AbstractMachineBlockEnti
                 if (requestedAmount > 0) {
                     try (Transaction childTx = Transaction.open(tx)) {
                         int moveAmount = Math.min(entity.oxygenPerTick, requestedAmount);
-                        int inserted = network.insert(OXYGEN_RESOURCE, moveAmount, false, childTx);
+                        int inserted = network.insert(FluidResource.of(GalacticraftFluids.OXYGEN), moveAmount, false, childTx);
 
                         if (inserted > 0) {
-                            int extractedFrom = entity.oxygenHandler.extract(OXYGEN_RESOURCE, moveAmount, childTx);
+                            int extractedFrom = entity.oxygenHandler.extract(FluidResource.of(GalacticraftFluids.OXYGEN), moveAmount, childTx);
 
                             if (inserted == extractedFrom) {
                                 childTx.commit();
@@ -86,10 +101,10 @@ public abstract class AbstractOxygenBlockEntity extends AbstractMachineBlockEnti
                 if (requestedAmount > 0) {
                     try (Transaction childTx = Transaction.open(tx)) {
                         int moveAmount = Math.min(entity.oxygenPerTick, requestedAmount);
-                        int inserted = targetResourceHandler.insert(OXYGEN_RESOURCE, moveAmount, childTx);
+                        int inserted = targetResourceHandler.insert(FluidResource.of(GalacticraftFluids.OXYGEN), moveAmount, childTx);
 
                         if (inserted > 0) {
-                            int extractedFrom = entity.oxygenHandler.extract(OXYGEN_RESOURCE, moveAmount, childTx);
+                            int extractedFrom = entity.oxygenHandler.extract(FluidResource.of(GalacticraftFluids.OXYGEN), moveAmount, childTx);
 
                             if (inserted == extractedFrom) {
                                 childTx.commit();
@@ -128,9 +143,9 @@ public abstract class AbstractOxygenBlockEntity extends AbstractMachineBlockEnti
     }
 
     @Override
-    protected void applyImplicitComponents(DataComponentGetter componentGetter) {
-        super.applyImplicitComponents(componentGetter);
-        this.oxygenHandler.setFluidStack(componentGetter.getOrDefault(GalacticraftDataComponents.FLUID_TANK, SimpleFluidContent.EMPTY).copy());
+    protected void applyImplicitComponents(DataComponentGetter components) {
+        super.applyImplicitComponents(components);
+        this.oxygenHandler.setFluidStack(components.getOrDefault(GalacticraftDataComponents.FLUID_TANK, SimpleFluidContent.EMPTY).copy());
     }
 
     @Override

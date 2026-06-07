@@ -54,9 +54,13 @@ public class Constants {
         tooltipAdder.accept(Component.translatable("item.galacticraftlegacy.creative_only").withStyle(ChatFormatting.RED));
     }
 
+    public static int calculateUnit(int amount, Supplier<EnergyUnit> unitSupplier) {
+        return unitSupplier.get().calculate(amount);
+    }
+
     public static void energy(int stored, int capacity, Supplier<EnergyUnit> unitSupplier, Consumer<Component> tooltipAdder) {
         int scaledStored = unitSupplier.get().calculate(stored);
-        int scaledCapacity = unitSupplier.get().calculate(stored);
+        int scaledCapacity = unitSupplier.get().calculate(capacity);
 
         tooltipAdder.accept(
                 Component.translatable("item.galacticraftlegacy.battery.tooltip").withStyle(ChatFormatting.GRAY)

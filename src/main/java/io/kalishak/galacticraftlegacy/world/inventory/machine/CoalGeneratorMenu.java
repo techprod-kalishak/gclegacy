@@ -104,6 +104,6 @@ public class CoalGeneratorMenu extends AbstractContainerMenu {
     }
 
     public float getHeatLevel() {
-        return Math.max(0, Math.min(this.heatData.get(), 100));
+        return Math.clamp(this.heatData.get(), 0, 100);
     }
 }

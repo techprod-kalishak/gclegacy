@@ -7,11 +7,17 @@
 
 package io.kalishak.galacticraftlegacy.transfer;
 
+import io.kalishak.galacticraftlegacy.world.item.component.FluidTankContents;
+import io.kalishak.galacticraftlegacy.world.item.component.GalacticraftDataComponents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.component.DataComponentGetter;
+import net.minecraft.core.component.DataComponentMap;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.ItemContainerContents;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -28,17 +34,60 @@ import net.neoforged.neoforge.transfer.energy.EnergyHandler;
 import net.neoforged.neoforge.transfer.energy.VoidingEnergyHandler;
 import net.neoforged.neoforge.transfer.fluid.FluidResource;
 import net.neoforged.neoforge.transfer.item.ItemResource;
-import net.neoforged.neoforge.transfer.resource.DataComponentHolderResource;
 import net.neoforged.neoforge.transfer.resource.Resource;
 import net.neoforged.neoforge.transfer.transaction.Transaction;
 import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.function.*;
 
 public interface ResourcefulHelper {
-    static <R extends Resource> void notPlaceable(int index, R resource, int amount) {
+    /** Items */
+
+    static void applyTankComponent(DataComponentGetter components, IndexModifier<FluidResource> modifier) {
+        FluidTankContents contents = components.get(GalacticraftDataComponents.FLUID_TANK_CONTENTS);
+
+        if (contents == null) {
+            return;
+        }
+
+        NonNullList<FluidStack> fluids = NonNullList.withSize(contents.getSlots(), FluidStack.EMPTY);
+        contents.copyInto(fluids);
+
+        for (int i = 0; i < fluids.size(); i++) {
+            FluidStack stack = fluids.get(i);
+            modifier.set(i, FluidResource.of(stack), stack.getAmount());
+        }
+    }
+
+    static void applyContainerComponent(DataComponentGetter components, IndexModifier<ItemResource> modifier) {
+        ItemContainerContents contents = components.get(DataComponents.CONTAINER);
+
+        if (contents == null) {
+            return;
+        }
+
+        NonNullList<ItemStack> items = NonNullList.withSize(contents.getSlots(), ItemStack.EMPTY);
+        contents.copyInto(items);
+
+        for (int i = 0; i < items.size(); i++) {
+            ItemStack stack = items.get(i);
+            modifier.set(i, ItemResource.of(stack), stack.count());
+        }
+    }
+
+    static void collectContainerComponent(DataComponentMap.Builder components, ResourceHandler<ItemResource> items) {
+        NonNullList<ItemStack> stacks = orderedHandlerCopy(items, ItemStack.EMPTY, ItemResource::toStack);
+
+        components.set(DataComponents.CONTAINER, ItemContainerContents.fromItems(stacks));
+    }
+
+    static void collectTankComponent(DataComponentMap.Builder components, ResourceHandler<FluidResource> fluids) {
+        NonNullList<FluidStack> stacks = orderedHandlerCopy(fluids, FluidStack.EMPTY, FluidResource::toStack);
+
+        components.set(GalacticraftDataComponents.FLUID_TANK_CONTENTS, FluidTankContents.fromFluids(stacks));
     }
 
     static int getRedstoneSignalFromBlockEntity(Level level, BlockPos pos, BlockState state, @Nullable Direction side) {
@@ -55,6 +104,36 @@ public interface ResourcefulHelper {
         return 0;
     }
 
+    static ItemResource fillTank(ResourceHandler<FluidResource> tank, Predicate<FluidResource> extractedFluidPredicate, ItemStack emptyTank, @Nullable Transaction tx) {
+        ResourceHandler<FluidResource> itemTank = emptyTank.getCapability(Capabilities.Fluid.ITEM, ItemAccess.forStack(emptyTank));
+
+        if (itemTank != null) {
+            boolean isBucket = emptyTank.is(Tags.Items.BUCKETS_EMPTY);
+
+            try (Transaction childTx = Transaction.open(tx)) {
+                FluidResource toExtract = ResourceHandlerUtil.findExtractableResource(tank, extractedFluidPredicate, childTx);
+                int maxAmount = isBucket ? FluidType.BUCKET_VOLUME : tank.getAmountAsInt(0);
+
+                if (toExtract != null) {
+                    int extracted = tank.extract(toExtract, maxAmount, childTx);
+
+                    if (isBucket && extracted == FluidType.BUCKET_VOLUME) {
+                        childTx.commit();
+                        return ItemResource.of(toExtract.getFluid().getBucket());
+                    } else if (!isBucket) {
+                        int filled = itemTank.insert(toExtract, extracted, childTx);
+
+                        if (filled == extracted) {
+                            childTx.commit();
+                        }
+                    }
+                }
+            }
+        }
+
+        return ItemResource.of(emptyTank);
+    }
+
     @SuppressWarnings("unchecked")
     static <BE extends BlockEntity> BE readBlockEntity(BlockEntityType<BE> wantedType, Level level, RegistryFriendlyByteBuf data) {
         BlockEntity blockEntity = level.getBlockEntity(data.readBlockPos());
@@ -65,6 +144,24 @@ public interface ResourcefulHelper {
 
         throw new IllegalArgumentException("BlockEntityType " + wantedType + " not found");
     }
+
+    /** Energy */
+
+    static EnergyHandler getEnergyHandler(BlockEntity blockEntity, @Nullable Direction side) {
+        Level level = blockEntity.getLevel();
+
+        if (level == null) {
+            return VoidingEnergyHandler.INSTANCE;
+        }
+
+        BlockPos pos = blockEntity.getBlockPos();
+        BlockState state = level.getBlockState(pos);
+        EnergyHandler cap = level.getCapability(Capabilities.Energy.BLOCK, pos, state, blockEntity, side);
+
+        return cap != null ? cap : EmptyEnergyHandler.INSTANCE;
+    }
+
+    /** Generic */
 
     static <R extends Resource> ResourceHandler<R> getResourceHandler(BlockCapability<ResourceHandler<R>, @Nullable Direction> capability, R emptyResource, BlockEntity blockEntity, @Nullable Direction side) {
         Level level = blockEntity.getLevel();
@@ -80,18 +177,20 @@ public interface ResourcefulHelper {
         return cap != null ? cap : EmptyResourceHandler.instance();
     }
 
-    static EnergyHandler getEnergyHandler(BlockEntity blockEntity, @Nullable Direction side) {
-        Level level = blockEntity.getLevel();
+    static <R extends Resource, S> NonNullList<S> orderedHandlerCopy(ResourceHandler<R> resourceHandler, S emptyStack, BiFunction<R, Integer, S> stacker) {
+        NonNullList<S> stacks = NonNullList.withSize(resourceHandler.size(), emptyStack);
 
-        if (level == null) {
-            return VoidingEnergyHandler.INSTANCE;
+        for (int i = 0; i < resourceHandler.size(); i++) {
+            R resource = resourceHandler.getResource(i);
+            int amount = resourceHandler.getAmountAsInt(i);
+            S stack = stacker.apply(resource, amount);
+            stacks.set(i, stack);
         }
 
-        BlockPos pos = blockEntity.getBlockPos();
-        BlockState state = level.getBlockState(pos);
-        EnergyHandler cap = level.getCapability(Capabilities.Energy.BLOCK, pos, state, blockEntity, side);
+        return stacks;
+    }
 
-        return cap != null ? cap : EmptyEnergyHandler.INSTANCE;
+    static <R extends Resource> void notPlaceable(int index, R resource, int amount) {
     }
 
     static <R extends Resource, S> boolean handlerMatches(ResourceHandler<R> resourceHandler, ResourceHandler<R> otherResourceHandler, BiFunction<ResourceHandler<R>, Integer, S> toStack, BiPredicate<S, S> stackComparator) {
@@ -165,34 +264,10 @@ public interface ResourcefulHelper {
         return 0;
     }
 
-    static ItemResource fillTank(ResourceHandler<FluidResource> tank, Predicate<FluidResource> extractedFluidPredicate, ItemStack emptyTank, @Nullable Transaction tx) {
-        ResourceHandler<FluidResource> itemTank = emptyTank.getCapability(Capabilities.Fluid.ITEM, ItemAccess.forStack(emptyTank));
-
-        if (itemTank != null) {
-            boolean isBucket = emptyTank.is(Tags.Items.BUCKETS_EMPTY);
-
-            try (Transaction childTx = Transaction.open(tx)) {
-                FluidResource toExtract = ResourceHandlerUtil.findExtractableResource(tank, extractedFluidPredicate, childTx);
-                int maxAmount = isBucket ? FluidType.BUCKET_VOLUME : tank.getAmountAsInt(0);
-
-                if (toExtract != null) {
-                    int extracted = tank.extract(toExtract, maxAmount, childTx);
-
-                    if (isBucket && extracted == FluidType.BUCKET_VOLUME) {
-                        childTx.commit();
-                        return ItemResource.of(toExtract.getFluid().getBucket());
-                    } else if (!isBucket) {
-                        int filled = itemTank.insert(toExtract, extracted, childTx);
-
-                        if (filled == extracted) {
-                            childTx.commit();
-                        }
-                    }
-                }
-            }
+    static <R extends Resource> void clear(ResourceHandler<R> resourceHandler, IndexModifier<R> indexModifier, R emptyResource) {
+        for (int i = 0; i <= resourceHandler.size(); i++) {
+            indexModifier.set(i, emptyResource, 0);
         }
-
-        return ItemResource.of(emptyTank);
     }
 
     static <R extends Resource, S> boolean areResourcesEqual(R resource, R otherResource, int resourceCount, int otherResourceCount, BiFunction<R, Integer, S> stacker, BiPredicate<S, S> stackComparator) {
@@ -210,6 +285,10 @@ public interface ResourcefulHelper {
     }
 
     static <R extends Resource, S> List<S> asList(ResourceHandler<R> resourceHandler, BiFunction<ResourceHandler<R>, Integer, S> stacker) {
+        if (resourceHandler.size() == 0) {
+            return Collections.emptyList();
+        }
+
         List<S> resources = new ArrayList<>(resourceHandler.size());
 
         for (int i = 0; i < resourceHandler.size(); i++) {

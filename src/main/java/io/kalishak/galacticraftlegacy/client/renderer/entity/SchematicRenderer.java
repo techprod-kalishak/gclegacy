@@ -64,7 +64,7 @@ public class SchematicRenderer extends EntityRenderer<SchematicEntity, Schematic
     public void extractRenderState(SchematicEntity schematicEntity, SchematicRenderState reusedState, float partialTick) {
         super.extractRenderState(schematicEntity, reusedState, partialTick);
         Direction direction = schematicEntity.getDirection();
-        SchematicVariant schematicVariant = schematicEntity.getSchematic().schematic().value();
+        SchematicVariant schematicVariant = schematicEntity.getSchematic().value();
         reusedState.direction = direction;
         reusedState.schematicVariant = schematicVariant;
         int width = 4;
@@ -102,7 +102,6 @@ public class SchematicRenderer extends EntityRenderer<SchematicEntity, Schematic
         nodeCollector.submitCustomGeometry(poseStack, renderType, (pose, consumer) -> {
             float f = -4 / 2.0F;
             float f1 = -4 / 2.0F;
-            float f2 = 0.03125F;
             float f3 = backSprite.getU0();
             float f4 = backSprite.getU1();
             float f5 = backSprite.getV0();

@@ -35,9 +35,9 @@ public class GalacticraftLanguageProvider extends LanguageProvider {
         addAdvancement("compressed", "Compressed", "Craft a compressor");
 
         add("pack.galacticraftlegacy.description", "Galacticraft Legacy data pack");
-        add("item.galacticraftlegacy.tank.tooltip", "Oxygen Remaining: %s");
+        add("item.galacticraftlegacy.tank.tooltip", "Oxygen Remaining: ");
         add("galacticraftlegacy.networking_failed", "There was an error on the network thread: ");
-        add("item.galacticraftlegacy.battery.tooltip", "Energy Stored: %s");
+        add("item.galacticraftlegacy.battery.tooltip", "Energy Stored: ");
         add("item.galacticraftlegact.fluid_tank.empty", "Tank is empty");
         add("item.galacticraftlegacy.fluid_tank.tooltip", "Fluid in tank %s: %s");
         add("itemGroup.galacticraftlegacy.blocks", "Galacticraft Legacy Blocks");
@@ -70,7 +70,6 @@ public class GalacticraftLanguageProvider extends LanguageProvider {
         addBlock(GalacticraftBlocks.RAW_SILICON_BLOCK, "Raw Silicon Block");
         addBlock(GalacticraftBlocks.GRATING, "Grating");
         addBlock(GalacticraftBlocks.CHEESE, "Cheese");
-        addBlock(GalacticraftBlocks.OXYGEN_DETECTOR, "Oxygen Detector");
         addBlock(GalacticraftBlocks.OIL, "Oil");
         addBlock(GalacticraftBlocks.FUEL, "Fuel");
         addBlock(GalacticraftBlocks.OIL_CAULDRON, "Oil Cauldron");
@@ -81,10 +80,25 @@ public class GalacticraftLanguageProvider extends LanguageProvider {
         addWithDescription(GalacticraftBlocks.ELECTRIC_COMPRESSOR, "Electric Compressor", "Electric Compressor will process ingots into their compressed equivalents. Compresses two at a time, making it more effective than its predecessor.");
         addWithDescription(GalacticraftBlocks.ELECTRIC_FURNACE, "Electric Furnace", "Electric Furnace is used as a faster alternative to traditional coal furnaces");
         //ddWithDescription(GalacticraftBlocks.ELECTRIC_ARC_FURNACE, "Electric Arc Furnace", "Electric Arc Furnace is used as a better and faster alternative to both traditional coal and electric furnaces: double output from ores!");
-        addWithDescription(GalacticraftBlocks.OXYGEN_COLLECTOR, "Oxygen Collector", "WIP");
+        addWithDescription(GalacticraftBlocks.OXYGEN_COLLECTOR, "Oxygen Collector", "Oxygen Collector will store oxygen collected from leaves in the surrounding area.");
+        //addWithDescription(GalacticraftBlocks.OXYGEN_BUBBLE_DISTRIBUTOR, "Oxygen Bubble Distributor", "Oxygen Bubble Distributor will emit an oxygen bubble outwards from the center block, using internal tank. This allows safe breathing inside the bubble.");
+        //addWithDescription(GalacticraftBlocks.OXYGEN_COMPRESSOR, "Oxygen Compressor", "Oxygen Compressor will load oxygen from internal storage into an oxygen tank.");
+        //addWithDescription(GalacticraftBlocks.OXYGEN_DECOMPRESSOR, "Oxygen Decompressor", "Oxygen Decompressor will unload oxygen into internal storage from an oxygen tank.");
+        //addWithDescription(GalacticraftBlocks.OXYGEN_SEALER, "Oxygen Sealer", "Oxygen Sealer will check for an enclosed space. If the space is enclosed, it will fill with breathable air.");
+        addWithDescription(GalacticraftBlocks.OXYGEN_DETECTOR, "Oxygen Detector", "Oxygen Detector will emit redstone signal when surrounded by oxygen.");
+        //addWithDescription(GalacticraftBlocks.REFINERY, "Refinery", "Refinery will take an input of oil and energy, and output fuel used by rockets and vehicles.");
+        //addWithDescription(GalacticraftBlocks.FUEL_LOADER, "Fuel Loader", "After being connected to fuel pad, a Fuel Loader will allow fuel to passed into the connected Rocket of vehicle.");
+        //addWithDescription(GalacticraftBlocks.CARGO_LOADER, "Cargo Loader", "Cargo Loaders will pass blocks and items onto Rockets and other vehicles with cargo space. Must be attached to Landing/Fueling pad.");
+        //addWithDescription(GalacticraftBlocks.CARGO_UNLOADER, "Cargo Unloader", "Cargo Unloaders will extract blocks and items from Rockets and other vehicles with cargo space. Must be attached to Landing/Fueling pad.");
+        //addWithDescription(GalacticraftBlocks.COMPACT_NASA_WORKBENCH, "Compact NASA Workbench", "Compact variant of the NASA workbench.");
+        //addWithDescription(GalacticraftBlocks.AIR_LOCK_FRAME, "Air Lock Frame", "Air Lock Frames, when arranged in a portal-like formation, with a single block replaced with a controller, will function as a working air lock.");
+        //addWithDescription(GalacticraftBlocks.AIR_LOCK_CONTROLLER, "Air Lock Controller", "Air Lock Frames, when arranged in a portal-like formation, with a single block replaced with a controller, will function as a working air lock.");
+        //addWithDescription(GalacticraftBlocks.CLEAR_VACCUM_GLASS, "Vaccum Glass (Clear)", "Clear glass for great views of space, can also provide a great view underwater");
+        //addWithDescription(GalacticraftBlocks.FRAMED_CLEAR_VACCUM_GLASS, "Vaccum Glass (Clear)", "Clear glass for great views of space, can also provide a great view underwater");
+        addWithDescription(GalacticraftBlocks.MAGNETIC_CRAFTING_TABLE, "Magnetic Crafting Table", "Items placed won't fall off - it holds its inventory! Can shift-click items in. Hoppers can insert and remove items, it will attempt to automatically create the last recipe crafted.");
         addBlock(GalacticraftBlocks.PARACHEST, "Parachest");
-        addBlock(GalacticraftBlocks.ALUMINUM_WIRE, "Aluminum Wire");
-        addBlock(GalacticraftBlocks.HEAVY_ALUMINUM_WIRE, "Heavy Aluminum Wire");
+        addWithDescription(GalacticraftBlocks.ALUMINUM_WIRE, "Aluminum Wire", "Aluminum Wire is used to connect energy sources to energy consuming machines.");
+        addWithDescription(GalacticraftBlocks.HEAVY_ALUMINUM_WIRE, "Heavy Aluminum Wire", "Heavy Aluminum Wire is used to connect energy sources to energy consuming machines. Its higher capacity boosts efficiency for Tier 2 machines.");
         addBlock(GalacticraftBlocks.WHITE_PIPE, "White Pipe");
         addBlock(GalacticraftBlocks.ORANGE_PIPE, "Orange Pipe");
         addBlock(GalacticraftBlocks.MAGENTA_PIPE, "Magenta Pipe");
@@ -178,7 +192,7 @@ public class GalacticraftLanguageProvider extends LanguageProvider {
         addItem(GalacticraftItems.TIN_INGOT, "Tin Ingot");
         addItem(GalacticraftItems.RAW_TIN, "Raw Tin");
         addItem(GalacticraftItems.RAW_SILICON, "Silicon");
-        addItem(GalacticraftItems.SAPPHIRE, "Lunar Sapphire");
+        addWithDescription(GalacticraftItems.SAPPHIRE, "Lunar Sapphire", "Lunar Sapphires are the unit of currency when trading with Alien Villagers");
         addItem(GalacticraftItems.BASIC_WAFER, "Basic Wafer");
         addItem(GalacticraftItems.ADVANCED_WAFER, "Advanced Wafer");
         addItem(GalacticraftItems.SOLAR_WAFER, "Solar Wafer");
