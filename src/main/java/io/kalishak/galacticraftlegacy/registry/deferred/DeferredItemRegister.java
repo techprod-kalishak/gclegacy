@@ -55,6 +55,12 @@ public class DeferredItemRegister extends DeferredRegister.Items {
         return registerSimpleBlockItemWithDescription(block, Item.Properties::new);
     }
 
+    public <I extends BlockItem> DeferredItem<I> registerBlockItemWithDescription(Holder<Block> block, BiFunction<Block, Item.Properties, I> getter, Supplier<Item.Properties> properties) {
+        Identifier id = block.unwrapKey().orElseThrow().identifier();
+
+        return registerBlockItem(block, getter, ItemWithDescription.withDescription(properties, id));
+    }
+
     public <I extends Item> DeferredItem<I> registerItemWithDescription(String name, Function<Item.Properties, ? extends I> getter, Supplier<Item.Properties> properties) {
         return registerItem(name, getter, ItemWithDescription.withDescription(properties, Identifier.fromNamespaceAndPath(getNamespace(), name)));
     }

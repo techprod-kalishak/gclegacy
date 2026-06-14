@@ -236,9 +236,13 @@ public class GalacticraftItemTagsProvider extends ItemTagsProvider {
                 .addTag(GalacticraftTags.Items.INGOTS_TITANIUM);
 
         tag(ItemTags.SLABS)
-                .add(GalacticraftItems.MOON_BRICK_SLAB.get());
+                .add(GalacticraftItems.MOON_BRICK_SLAB.get())
+                .add(GalacticraftItems.ASTEROID_ROCK_SLAB.get())
+                .add(GalacticraftItems.TIN_DECORATION_SLAB.get());
         tag(ItemTags.STAIRS)
-                .add(GalacticraftItems.MOON_BRICK_STAIRS.get());
+                .add(GalacticraftItems.MOON_BRICK_STAIRS.get())
+                .add(GalacticraftItems.ASTEROID_ROCK_STAIRS.get())
+                .add(GalacticraftItems.TIN_DECORATION_STAIRS.get());
         tag(Tags.Items.STORAGE_BLOCKS)
                 .addTag(GalacticraftTags.Items.STORAGE_BLOCKS_ALUMINUM)
                 .addTag(GalacticraftTags.Items.STORAGE_BLOCKS_RAW_ALUMINUM)
@@ -246,7 +250,9 @@ public class GalacticraftItemTagsProvider extends ItemTagsProvider {
                 .addTag(GalacticraftTags.Items.STORAGE_BLOCKS_RAW_TIN)
                 .addTag(GalacticraftTags.Items.STORAGE_BLOCKS_RAW_SILICON);
         tag(ItemTags.WALLS)
-                .add(GalacticraftItems.MOON_BRICK_WALL.get());
+                .add(GalacticraftItems.MOON_BRICK_WALL.get())
+                .add(GalacticraftItems.ASTEROID_ROCK_WALL.get())
+                .add(GalacticraftItems.TIN_DECORATION_WALL.get());
 
         tag(GalacticraftTags.Items.WRENCH)
                 .add(GalacticraftItems.WRENCH.get());

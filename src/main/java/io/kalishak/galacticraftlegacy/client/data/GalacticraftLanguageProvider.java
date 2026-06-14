@@ -140,6 +140,18 @@ public class GalacticraftLanguageProvider extends LanguageProvider {
         addBlock(GalacticraftBlocks.UNLIT_COPPER_LANTERN.waxedExposed(), "Unlit Waxed Exposed Copper Lantern");
         addBlock(GalacticraftBlocks.UNLIT_COPPER_LANTERN.waxedWeathered(), "Unlit Waxed Weathered Copper Lantern");
         addBlock(GalacticraftBlocks.UNLIT_COPPER_LANTERN.waxedOxidized(), "Unlit Waxed Oxidized Copper Lantern");
+        addBlock(GalacticraftBlocks.TIN_DECORATION_BLOCK, "Tin Decoration Block");
+        addBlock(GalacticraftBlocks.TIN_DECORATION_CUT_BLOCK, "Cut Tin Decoration Block");
+        addBlock(GalacticraftBlocks.TIN_DECORATION_SLAB, "Tin Decoration Slab");
+        addBlock(GalacticraftBlocks.TIN_DECORATION_STAIRS, "Tin Decoration Stairs");
+        addBlock(GalacticraftBlocks.TIN_DECORATION_WALL, "Tin Decoration Wall");
+        addBlock(GalacticraftBlocks.SPACE_STATION, "Space Station Holder");
+        addBlock(GalacticraftBlocks.ASTEROID_ROCK, "Asteroids Rock");
+        addBlock(GalacticraftBlocks.ASTEROID_ROCK_SLAB, "Asteroids Rock Slab");
+        addBlock(GalacticraftBlocks.ASTEROID_ROCK_STAIRS, "Asteroids Rock Stairs");
+        addBlock(GalacticraftBlocks.ASTEROID_ROCK_WALL, "Asteroids Rock Wall");
+        addBlock(GalacticraftBlocks.ASTEROID_ALUMINUM_ORE, "Asteroid Aluminum Ore");
+        addWithDescription(GalacticraftBlocks.FALLEN_METEOR, "Fallen Meteor", "Fallen Meteors can be found in many planets/moons which have little or no atmosphere. Will drop Meteoric Iron when broken.");
 
         addEntityType(GalacticraftEntityType.FLAG, "Flag");
         addEntityType(GalacticraftEntityType.FALLING_PARACHEST, "Parachest");

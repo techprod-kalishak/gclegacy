@@ -17,14 +17,28 @@ import net.minecraft.world.attribute.EnvironmentAttributes;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.BiomeGenerationSettings;
+import net.minecraft.world.level.biome.BiomeSpecialEffects;
 import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.minecraft.world.level.levelgen.carver.ConfiguredWorldCarver;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 
 public interface GalacticraftBiomes {
+    ResourceKey<Biome> SPACE = key("space");
+
     static void bootstrap(BootstrapContext<Biome> cxt) {
         HolderGetter<PlacedFeature> placedFeatures = cxt.lookup(Registries.PLACED_FEATURE);
         HolderGetter<ConfiguredWorldCarver<?>> worldCarvers = cxt.lookup(Registries.CONFIGURED_CARVER);
+
+        cxt.register(
+                SPACE,
+                baseSpaceBiome(0.0F)
+                        .specialEffects(new BiomeSpecialEffects.Builder().waterColor(-1).build())
+                        .mobSpawnSettings(MobSpawnSettings.EMPTY)
+                        .generationSettings(new BiomeGenerationSettings.Builder(placedFeatures, worldCarvers).build())
+                        .build()
+        );
+
         MoonBiomes.bootstrap(cxt, placedFeatures, worldCarvers);
     }
 

@@ -1,7 +1,0 @@
-{
-  "parent": "galacticraftlegacy:block/grating_template",
-  "textures": {
-    "particle": "galacticraftlegacy:block/grating",
-    "texture": "galacticraftlegacy:block/grating"
-  }
-}

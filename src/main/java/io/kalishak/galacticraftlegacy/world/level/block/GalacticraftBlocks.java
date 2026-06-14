@@ -305,6 +305,61 @@ public final class GalacticraftBlocks {
                     .instrument(NoteBlockInstrument.BASEDRUM)
                     .requiresCorrectToolForDrops()
     );
+    public static final DeferredBlock<FallenMeteorBlock> FALLEN_METEOR = REGISTRY.registerBlock(
+            "fallen_meteor",
+            FallenMeteorBlock::new,
+            () -> BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.STONE)
+                    .strength(5.5F, 40.0F)
+                    .instrument(NoteBlockInstrument.BASS)
+                    .requiresCorrectToolForDrops()
+    );
+
+    /** Asteroids */
+    public static final DeferredBlock<Block> ASTEROID_ROCK = REGISTRY.registerSimpleBlock(
+            "asteroid_rock",
+            () -> BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.COLOR_GRAY)
+                    .strength(4.5F, 6.0F)
+                    .instrument(NoteBlockInstrument.BASEDRUM)
+                    .requiresCorrectToolForDrops()
+    );
+    public static final DeferredBlock<SlabBlock> ASTEROID_ROCK_SLAB = REGISTRY.registerBlock(
+            "asteroid_rock_slab",
+            SlabBlock::new,
+            () -> BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.COLOR_GRAY)
+                    .strength(4.5F, 6.0F)
+                    .instrument(NoteBlockInstrument.BASEDRUM)
+                    .requiresCorrectToolForDrops()
+    );
+    public static final DeferredBlock<StairBlock> ASTEROID_ROCK_STAIRS = REGISTRY.registerBlock(
+            "asteroid_rock_stairs",
+            properties -> new StairBlock(ASTEROID_ROCK.get().defaultBlockState(), properties),
+            () -> BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.COLOR_GRAY)
+                    .strength(4.5F, 6.0F)
+                    .instrument(NoteBlockInstrument.BASEDRUM)
+                    .requiresCorrectToolForDrops()
+    );
+    public static final DeferredBlock<WallBlock> ASTEROID_ROCK_WALL = REGISTRY.registerBlock(
+            "asteroid_rock_wall",
+            WallBlock::new,
+            () -> BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.COLOR_GRAY)
+                    .strength(4.5F, 6.0F)
+                    .instrument(NoteBlockInstrument.BASEDRUM)
+                    .requiresCorrectToolForDrops()
+    );
+    public static final DeferredBlock<DropExperienceBlock> ASTEROID_ALUMINUM_ORE = REGISTRY.registerBlock(
+            "asteroid_aluminum_ore",
+            properties -> new DropExperienceBlock(ConstantInt.ZERO, properties),
+            () -> BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.COLOR_GRAY)
+                    .strength(4.5F, 6.0F)
+                    .instrument(NoteBlockInstrument.BASEDRUM)
+                    .requiresCorrectToolForDrops()
+    );
 
     // Fluids
     public static final DeferredBlock<LiquidBlock> OIL = REGISTRY.registerBlock(
@@ -625,7 +680,7 @@ public final class GalacticraftBlocks {
                     .pushReaction(PushReaction.DESTROY)
     );
 
-    //Ambient
+    //Deco
     public static final DeferredBlock<UnlitTorchBlock> UNLIT_TORCH = REGISTRY.registerBlock(
             "unlit_torch",
             properties -> new UnlitTorchBlock(Blocks.TORCH.defaultBlockState(), properties),
@@ -688,8 +743,52 @@ public final class GalacticraftBlocks {
                     .noOcclusion()
                     .pushReaction(PushReaction.DESTROY)
     );
+    public static final DeferredBlock<Block> TIN_DECORATION_BLOCK = REGISTRY.registerSimpleBlock(
+            "tin_decoration_block",
+            properties -> properties
+                    .mapColor(DyeColor.LIGHT_GRAY)
+                    .strength(1.0F, 15.0F)
+                    .requiresCorrectToolForDrops()
+    );
+    public static final DeferredBlock<Block> TIN_DECORATION_CUT_BLOCK = REGISTRY.registerSimpleBlock(
+            "tin_decoration_cut_block",
+            properties -> properties
+                    .mapColor(DyeColor.LIGHT_GRAY)
+                    .strength(1.0F, 15.0F)
+                    .requiresCorrectToolForDrops()
+    );
+    public static final DeferredBlock<SlabBlock> TIN_DECORATION_SLAB = REGISTRY.registerBlock(
+            "tin_decoration_slab",
+            SlabBlock::new,
+            properties -> properties
+                    .mapColor(DyeColor.LIGHT_GRAY)
+                    .strength(1.0F, 15.0F)
+                    .requiresCorrectToolForDrops()
+    );
+    public static final DeferredBlock<StairBlock> TIN_DECORATION_STAIRS = REGISTRY.registerBlock(
+            "tin_decoration_stairs",
+            properties -> new StairBlock(TIN_DECORATION_BLOCK.get().defaultBlockState(), properties),
+            properties -> properties
+                    .mapColor(DyeColor.LIGHT_GRAY)
+                    .strength(1.0F, 15.0F)
+                    .requiresCorrectToolForDrops()
+    );
+    public static final DeferredBlock<WallBlock> TIN_DECORATION_WALL = REGISTRY.registerBlock(
+            "tin_decoration_wall",
+            WallBlock::new,
+            properties -> properties
+                    .mapColor(DyeColor.LIGHT_GRAY)
+                    .strength(1.0F, 15.0F)
+                    .requiresCorrectToolForDrops()
+    );
+    public static final DeferredBlock<Block> SPACE_STATION = REGISTRY.registerSimpleBlock(
+            "space_station",
+            builder -> builder
+                    .strength(-1.0F, 3600000.0F)
+                    .noLootTable()
+    );
 
-    // Machines
+    /** Machines */
     public static final DeferredBlock<OxygenDetectorBlock> OXYGEN_DETECTOR = REGISTRY.registerBlock(
             "oxygen_detector",
             OxygenDetectorBlock::new,

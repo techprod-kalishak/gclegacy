@@ -39,11 +39,13 @@ import io.kalishak.galacticraftlegacy.client.data.GalacticraftSpritesProvider;
 import io.kalishak.galacticraftlegacy.client.renderer.special.KeySpecialRenderer;
 import io.kalishak.galacticraftlegacy.world.entity.GalacticraftEntityType;
 import io.kalishak.galacticraftlegacy.world.inventory.GalacticraftMenuType;
+import io.kalishak.galacticraftlegacy.world.level.block.GalacticraftBlocks;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityType;
 import io.kalishak.galacticraftlegacy.world.level.dimension.GalacticraftDimensions;
 import io.kalishak.galacticraftlegacy.world.level.material.fluid.GalacticraftFluidType;
 import io.kalishak.galacticraftlegacy.world.level.material.fluid.GalacticraftFluids;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.color.block.BlockTintSource;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.player.PlayerModel;
@@ -53,6 +55,7 @@ import net.minecraft.client.renderer.entity.player.AvatarRenderer;
 import net.minecraft.client.resources.model.sprite.AtlasManager;
 import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.resources.Identifier;
+import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
@@ -67,6 +70,7 @@ import net.neoforged.neoforge.common.NeoForge;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.List;
 import java.util.Set;
 
 @SuppressWarnings("unused")
@@ -84,6 +88,7 @@ public class GalacticraftClient {
         bus.addListener(this::registerLayerDefinitions);
         bus.addListener(this::registerScreens);
         bus.addListener(this::registerTintSources);
+        bus.addListener(this::registerBlockTintSources);
         bus.addListener(this::registerRangedItemModelProperty);
         bus.addListener(this::addRenderStates);
         bus.addListener(this::registerSelectItemModelProperty);
@@ -125,7 +130,7 @@ public class GalacticraftClient {
     }
 
     private void registerEnvironmentEffects(RegisterCustomEnvironmentEffectRendererEvent event) {
-        MoonSkyRenderer.create(event::registerSkyboxRenderer);
+        //MoonSkyRenderer.create(event::registerSkyboxRenderer);
         SpaceCloudsRenderer.create(event::registerCloudRenderer);
         SpaceWeatherRenderer.create(event::registerWeatherEffectRenderer);
     }
@@ -168,9 +173,11 @@ public class GalacticraftClient {
     private void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(GalacticraftEntityType.FLAG.get(), FlagRenderer::new);
         event.registerEntityRenderer(GalacticraftEntityType.SCHEMATIC.get(), SchematicRenderer::new);
+        event.registerEntityRenderer(GalacticraftEntityType.THROWN_METEOR_CHUNK.get(), ThrownMeteorRenderer::new);
         event.registerEntityRenderer(GalacticraftEntityType.FALLING_PARACHEST.get(), FallingParachestRenderer::new);
         event.registerEntityRenderer(GalacticraftEntityType.EVOLVED_SKELETON.get(), EvolvedSkeletonRenderer::new);
         event.registerEntityRenderer(GalacticraftEntityType.EVOLVED_ZOMBIE.get(), EvolvedZombieRenderer::new);
+        event.registerEntityRenderer(GalacticraftEntityType.NO_GRAVITY_MOVING_BLOCK.get(), NoGravityMovingBlockRenderer::new);
 
         event.registerBlockEntityRenderer(GalacticraftBlockEntityType.PARACHEST.get(), ParachestBlockRenderer::new);
         event.registerBlockEntityRenderer(GalacticraftBlockEntityType.DUNGEON_CHEST.get(), DungeonBlockRenderer::new);
@@ -212,11 +219,15 @@ public class GalacticraftClient {
     }
 
     private void registerDimensionTransitionScreen(RegisterDimensionTransitionScreenEvent event) {
-        event.registerIncomingEffect(GalacticraftDimensions.MOON, SpaceTravelLoadingScreen::new);
+        //event.registerIncomingEffect(GalacticraftDimensions.MOON, SpaceTravelLoadingScreen::new);
     }
 
     private void registerTintSources(RegisterColorHandlersEvent.ItemTintSources event) {
         event.register(Constants.id("color_by_fluid"), ColorByFluid.CODEC);
+    }
+
+    private void registerBlockTintSources(RegisterColorHandlersEvent.BlockTintSources event) {
+        event.register(List.of(GalacticraftBlockTintSources.meteor()), GalacticraftBlocks.FALLEN_METEOR.get());
     }
 
     private void registerRangedItemModelProperty(RegisterRangeSelectItemModelPropertyEvent event) {

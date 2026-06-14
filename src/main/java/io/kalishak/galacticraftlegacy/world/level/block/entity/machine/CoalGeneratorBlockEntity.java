@@ -171,7 +171,7 @@ public class CoalGeneratorBlockEntity extends AbstractMachineBlockEntity {
 
     @Override
     protected Component getDefaultName() {
-        return GalacticraftBlocks.COAL_GENERATOR.get().getName();
+        return Component.translatable("block.galacticraftlegacy.coal_generator");
     }
 
     @Override

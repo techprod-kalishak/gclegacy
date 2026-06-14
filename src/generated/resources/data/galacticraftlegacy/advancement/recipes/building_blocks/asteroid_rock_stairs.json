@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_asteroid_rock": {
+      "conditions": {
+        "items": [
+          {
+            "items": "galacticraftlegacy:asteroid_rock"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "galacticraftlegacy:asteroid_rock_stairs"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_asteroid_rock"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "galacticraftlegacy:asteroid_rock_stairs"
+    ]
+  }
+}

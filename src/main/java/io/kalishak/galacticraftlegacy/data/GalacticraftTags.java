@@ -42,6 +42,8 @@ public final class GalacticraftTags {
     }
 
     public static class Blocks {
+        public static final TagKey<Block> METEOR_BLOCK_REPLACEABLE = tagKey(Registries.BLOCK, "meteor_block_replaceable");
+        public static final TagKey<Block> BASE_STONE_ASTEROID = tagKey(Registries.BLOCK, "base_stone_asteroid");
         public static final TagKey<Block> BASE_STONE_MOON = tagKey(Registries.BLOCK, "base_stone_moon");
         public static final TagKey<Block> BREATHABLE_AIR = tagKey(Registries.BLOCK, "breathable_air");
         public static final TagKey<Block> CRUDE_OIL_POOL_REPLACEABLE = tagKey(Registries.BLOCK, "crude_oil_pool_replaceable");

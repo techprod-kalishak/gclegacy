@@ -22,6 +22,7 @@ import io.kalishak.galacticraftlegacy.world.item.GearEquipmentAssets;
 import io.kalishak.galacticraftlegacy.world.item.component.GalacticraftDataComponents;
 import io.kalishak.galacticraftlegacy.world.item.equipment.trim.GalacticraftMaterialAssetGroup;
 import io.kalishak.galacticraftlegacy.world.item.equipment.trim.GalacticraftTrimMaterials;
+import io.kalishak.galacticraftlegacy.world.level.block.FallenMeteorBlock;
 import io.kalishak.galacticraftlegacy.world.level.block.GalacticraftBlocks;
 import io.kalishak.galacticraftlegacy.world.level.block.MagneticCraftingBlock;
 import io.kalishak.galacticraftlegacy.world.level.block.wire.HeavyWireBlock;
@@ -38,17 +39,20 @@ import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.Identifier;
+import net.minecraft.util.Util;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.neoforged.neoforge.client.model.generators.template.ExtendedModelTemplateBuilder;
 
+import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
+import java.util.function.UnaryOperator;
 
 import static net.minecraft.client.data.models.BlockModelGenerators.*;
 
@@ -83,7 +87,7 @@ public class GalacticraftModelProvider extends ModelProvider {
         machine(blockModels, GalacticraftBlocks.ELECTRIC_FURNACE.get());
         blockModels.createNonTemplateModelBlock(GalacticraftBlocks.OIL.get());
         blockModels.createNonTemplateModelBlock(GalacticraftBlocks.FUEL.get());
-        blockModels.family(GalacticraftBlocks.MOON_BRICKS.get()).generateFor(GalacticraftBlockFamilies.MOON_BRICKS);
+        GalacticraftBlockFamilies.getFamilies().forEach(blockFamily -> blockModels.family(blockFamily.getBaseBlock()).generateFor(blockFamily));
         machine(blockModels, GalacticraftBlocks.COMPRESSOR.get());
         machine(blockModels, GalacticraftBlocks.ELECTRIC_COMPRESSOR.get());
         blockModels.createTrivialCube(GalacticraftBlocks.MOON_DIRT.get());
@@ -102,7 +106,6 @@ public class GalacticraftModelProvider extends ModelProvider {
         blockModels.createParticleOnlyBlock(GalacticraftBlocks.MOON_DUNGEON_CHEST.get(), Blocks.OAK_PLANKS);
         blockModels.createParticleOnlyBlock(GalacticraftBlocks.MARS_DUNGEON_CHEST.get(), Blocks.OAK_PLANKS);
         blockModels.createParticleOnlyBlock(GalacticraftBlocks.VENUS_DUNGEON_CHEST.get(), Blocks.OAK_PLANKS);
-        grating(blockModels, GalacticraftBlocks.GRATING.get());
         cheese(blockModels, GalacticraftBlocks.CHEESE.get());
         blockModels.createTrivialBlock(
                 GalacticraftBlocks.OXYGEN_DETECTOR.get(),
@@ -137,7 +140,15 @@ public class GalacticraftModelProvider extends ModelProvider {
         GalacticraftBlocks.UNLIT_COPPER_LANTERN.waxedMapping().forEach(blockModels::createCopperLantern);
         magneticCraftingTable(blockModels, GalacticraftBlocks.MAGNETIC_CRAFTING_TABLE.get());
         rotationalMachine(blockModels, GalacticraftTexturedModel.OXYGEN_COLLECTOR, GalacticraftBlocks.OXYGEN_COLLECTOR.get());
+        blockModels.createTrivialCube(GalacticraftBlocks.ASTEROID_ALUMINUM_ORE.get());
+        blockModels.createTrivialBlock(GalacticraftBlocks.TIN_DECORATION_CUT_BLOCK.get(), TexturedModel.CUBE_TOP_BOTTOM);
+        blockModels.createTrivialCube(GalacticraftBlocks.SPACE_STATION.get());
+        blockModels.createNonTemplateModelBlock(GalacticraftBlocks.GRATING.get());
+        blockModels.createNonTemplateModelBlock(GalacticraftBlocks.FALLEN_METEOR.get());
 
+        blockModels.registerSimpleFlatItemModel(GalacticraftBlocks.GRATING.get());
+        blockModels.registerSimpleFlatItemModel(GalacticraftBlocks.FALLEN_METEOR.get());
+        itemModels.generateFlatItem(GalacticraftItems.THROWABLE_METEOR_CHUNK.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(GalacticraftItems.BATTERY.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(GalacticraftItems.INFINITE_BATTERY.get(), GalacticraftItems.BATTERY.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(GalacticraftItems.THERMAL_CLOTH.get(), ModelTemplates.FLAT_ITEM);
@@ -265,6 +276,14 @@ public class GalacticraftModelProvider extends ModelProvider {
         itemModels.generateFlatItem(GalacticraftItems.HEAVY_DUTY_PLATE_TIER_3.get(), ModelTemplates.FLAT_ITEM);
     }
 
+    private void simpleParent(BlockModelGenerators blockModels, Block block, UnaryOperator<ExtendedModelTemplateBuilder> builder, TextureSlot... slots) {
+        Material material = TextureMapping.getBlockTexture(block);
+        TextureMapping textureMapping = Util.make(new TextureMapping(), mapping -> Arrays.stream(slots).forEach(slot -> mapping.put(slot, material)));
+        Identifier modelId = builder.apply(ModelTemplates.create(slots).extend()).build().create(block, textureMapping, blockModels.modelOutput);
+
+        blockModels.blockStateOutput.accept(MultiVariantGenerator.dispatch(block, BlockModelGenerators.plainVariant(modelId)));
+    }
+
     private void magneticCraftingTable(BlockModelGenerators blockModels, MagneticCraftingBlock block) {
         TextureMapping textureMapping = TextureMapping.cubeBottomTop(block);
         MultiVariant model = plainVariant(ModelTemplates.CUBE_BOTTOM_TOP.create(block, textureMapping, blockModels.modelOutput));
@@ -281,20 +300,6 @@ public class GalacticraftModelProvider extends ModelProvider {
                                                 .select(Direction.WEST, model.with(Y_ROT_270).with(X_ROT_90))
                                 )
                 );
-    }
-
-    private void grating(BlockModelGenerators blockModels, Block gratingBlock) {
-        blockModels.registerSimpleFlatItemModel(gratingBlock.asItem());
-
-        Material textures = TextureMapping.getBlockTexture(gratingBlock);
-        TextureMapping mapping = new TextureMapping().put(TextureSlot.PARTICLE,  textures).put(TextureSlot.TEXTURE, textures);
-        Identifier modelId = ModelTemplates.create(TextureSlot.PARTICLE, TextureSlot.TEXTURE)
-                .extend()
-                .parent(Constants.id("block/grating_template"))
-                .build()
-                .create(gratingBlock, mapping, blockModels.modelOutput);
-
-        blockModels.blockStateOutput.accept(MultiVariantGenerator.dispatch(gratingBlock, BlockModelGenerators.plainVariant(modelId)));
     }
 
     private void cheese(BlockModelGenerators blockModels, Block cheeseBlock) {

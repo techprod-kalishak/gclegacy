@@ -10,6 +10,10 @@
     "galacticraftlegacy:moon_cheese_ore",
     "galacticraftlegacy:tin_ore",
     "galacticraftlegacy:deepslate_tin_ore",
-    "galacticraftlegacy:moon_tin_ore"
+    "galacticraftlegacy:moon_tin_ore",
+    "galacticraftlegacy:asteroid_rock",
+    "galacticraftlegacy:asteroid_rock_slab",
+    "galacticraftlegacy:asteroid_rock_stairs",
+    "galacticraftlegacy:asteroid_rock_wall"
   ]
 }

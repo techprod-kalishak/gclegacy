@@ -83,6 +83,17 @@ public class GalacticraftBlockLootSubProvider extends BlockLootSubProvider {
         dropSelf(GalacticraftBlocks.UNLIT_LANTERN.get());
         GalacticraftBlocks.UNLIT_COPPER_LANTERN.forEach(this::dropSelf);
         dropSelf(GalacticraftBlocks.MAGNETIC_CRAFTING_TABLE.get());
+        dropSelf(GalacticraftBlocks.ASTEROID_ROCK.get());
+        add(GalacticraftBlocks.ASTEROID_ROCK_SLAB.get(), this::createSlabItemTable);
+        dropSelf(GalacticraftBlocks.ASTEROID_ROCK_STAIRS.get());
+        dropSelf(GalacticraftBlocks.ASTEROID_ROCK_WALL.get());
+        add(GalacticraftBlocks.ASTEROID_ALUMINUM_ORE.get(), block -> createOreDrop(block, GalacticraftItems.RAW_ALUMINUM.get()));
+        add(GalacticraftBlocks.FALLEN_METEOR.get(), block -> createOreDrop(block, GalacticraftItems.RAW_METEORIC_IRON.get()));
+        dropSelf(GalacticraftBlocks.TIN_DECORATION_BLOCK.get());
+        dropSelf(GalacticraftBlocks.TIN_DECORATION_CUT_BLOCK.get());
+        add(GalacticraftBlocks.TIN_DECORATION_SLAB.get(), this::createSlabItemTable);
+        dropSelf(GalacticraftBlocks.TIN_DECORATION_STAIRS.get());
+        dropSelf(GalacticraftBlocks.TIN_DECORATION_WALL.get());
     }
 
     @Override

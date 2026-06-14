@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "galacticraftlegacy:block/asteroid_rock_slab"
+    },
+    "type=double": {
+      "model": "galacticraftlegacy:block/asteroid_rock"
+    },
+    "type=top": {
+      "model": "galacticraftlegacy:block/asteroid_rock_slab_top"
+    }
+  }
+}

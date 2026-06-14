@@ -43,7 +43,7 @@ public class GalacticraftFoods {
             .additionalRemainder(new ItemStackTemplate(Items.PUMPKIN_SEEDS))
             .build();
     public static final CannedFood DEHYDRATED_BEET = CannedFood.builder()
-            .name(Component.translatable("item.galacticraftlegacy.dehydrated_beet").withStyle(ChatFormatting.YELLOW))
+            .name(Component.translatable("item.galacticraftlegacy.dehydrated_beetroot").withStyle(ChatFormatting.YELLOW))
             .food(builder -> builder.nutrition(2).saturationModifier(0.3F))
             .additionalRemainder(new ItemStackTemplate(Items.BEETROOT_SEEDS))
             .build();

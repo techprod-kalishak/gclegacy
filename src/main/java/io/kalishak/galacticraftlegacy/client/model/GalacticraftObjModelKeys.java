@@ -28,9 +28,26 @@ import java.util.Map;
 
 @EventBusSubscriber(modid = Galacticraft.MODID, value = Dist.CLIENT)
 public class GalacticraftObjModelKeys {
+    /**
+     * 32 Tin Ingot
+     * 16 Aluminum Ingot
+     * 1 Advanced Wafer
+     * 24 Iron Ingot
+     */
+
     private static final Identifier TELEMETRY_MODULE = Constants.id("telemetry_module");
+    private static final Identifier THROWN_METEOR_CHUNK = Constants.id("thrown_meteor_chunk");
     public static final StandaloneModelKey<ObjModel> TELEMETRY_MODULE_KEY = new StandaloneModelKey<>(TELEMETRY_MODULE::toString);
+    public static final StandaloneModelKey<ObjModel> THROWN_METEOR_CHUNK_KEY = new StandaloneModelKey<>(THROWN_METEOR_CHUNK::toString);
     public static final ObjGeometry.Settings TELEMETRY_SETTINGS = new ObjGeometry.Settings(
+            TELEMETRY_MODULE.withPrefix("entity/"),
+            false,
+            true,
+            false,
+            false,
+            null
+    );
+    public static final ObjGeometry.Settings THROWN_METEOR_SETTINGS = new ObjGeometry.Settings(
             TELEMETRY_MODULE.withPrefix("entity/"),
             false,
             true,
@@ -54,10 +71,31 @@ public class GalacticraftObjModelKeys {
                             null,
                             Map.of()
 
-            ), ObjLoader.INSTANCE.loadGeometry(TELEMETRY_SETTINGS)));
+            ), ObjLoader.INSTANCE.loadGeometry(TELEMETRY_SETTINGS))
+    );
+    public static final SimpleUnbakedStandaloneModel<ObjModel> THROWN_METEOR_BAKER = new SimpleUnbakedStandaloneModel<>(
+            THROWN_METEOR_CHUNK,
+            (_, _, _) -> new ObjModel(
+                    new StandardModelParameters(
+                            null,
+                            new TextureSlots.Data.Builder()
+                                    .addTexture(
+                                            "surface",
+                                            new Material(THROWN_METEOR_CHUNK.withPath(path -> "textures/model/" + path + ".png"))
+                                    )
+                                    .build(),
+                            null,
+                            true,
+                            UnbakedModel.GuiLight.FRONT,
+                            null,
+                            Map.of()
+                    ), ObjLoader.INSTANCE.loadGeometry(THROWN_METEOR_SETTINGS)
+            )
+    );
 
     @SubscribeEvent
     public static void modelLoad(ModelEvent.RegisterStandalone event) {
         event.register(TELEMETRY_MODULE_KEY, TELEMETRY_MODEL_BAKER);
+        event.register(THROWN_METEOR_CHUNK_KEY, TELEMETRY_MODEL_BAKER);
     }
 }

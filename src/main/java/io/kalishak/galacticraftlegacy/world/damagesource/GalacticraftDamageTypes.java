@@ -17,26 +17,43 @@ import net.minecraft.world.damagesource.DamageScaling;
 import net.minecraft.world.damagesource.DamageType;
 
 public final class GalacticraftDamageTypes {
-    public static final ResourceKey<DamageType> SUFFOCATION = Constants.key(Registries.DAMAGE_TYPE, "suffocation");
     public static final ResourceKey<DamageType> ACID_VICTIM = Constants.key(Registries.DAMAGE_TYPE, "acid_victim");
-    public static final ResourceKey<DamageType> SUN_RADIATION = Constants.key(Registries.DAMAGE_TYPE, "sun_radiation");
+    public static final ResourceKey<DamageType> METEOR_CHUNK = Constants.key(Registries.DAMAGE_TYPE, "meteor_chunk");
     public static final ResourceKey<DamageType> SPACESHIP_CRASH = Constants.key(Registries.DAMAGE_TYPE, "spaceship_crash");
+    public static final ResourceKey<DamageType> SUFFOCATION = Constants.key(Registries.DAMAGE_TYPE, "suffocation");
+    public static final ResourceKey<DamageType> SUN_RADIATION = Constants.key(Registries.DAMAGE_TYPE, "sun_radiation");
 
     public static void bootstrap(BootstrapContext<DamageType> cxt) {
+        cxt.register(
+                ACID_VICTIM,
+                new DamageType(
+                        "galacticraft.acid_victim",
+                        DamageScaling.ALWAYS,
+                        0.1F
+                )
+        );
+        cxt.register(
+                METEOR_CHUNK,
+                new DamageType(
+                        "galacticraft.meteor_chunk",
+                        DamageScaling.WHEN_CAUSED_BY_LIVING_NON_PLAYER,
+                        0.5F
+                )
+        );
+        cxt.register(
+                SPACESHIP_CRASH,
+                new DamageType(
+                        "galacticraft.spaceship_crash",
+                        DamageScaling.NEVER,
+                        2.0F
+                )
+        );
         cxt.register(
                 SUFFOCATION,
                 new DamageType(
                         "galacticraft.suffocation",
                         EnumExtensions.DAMAGE_SCALING_BY_CELESTIAL_BODY.getValue(),
                         1.0F
-                )
-        );
-        cxt.register(
-                ACID_VICTIM,
-                new DamageType(
-                        "galacticraft.acidVictim",
-                        DamageScaling.ALWAYS,
-                        0.1F
                 )
         );
         cxt.register(
@@ -48,13 +65,6 @@ public final class GalacticraftDamageTypes {
                         DamageEffects.DROWNING
                 )
         );
-        cxt.register(
-                SPACESHIP_CRASH,
-                new DamageType(
-                        "galacticraft.spaceship_crash",
-                        DamageScaling.NEVER,
-                        2.0F
-                )
-        );
+
     }
 }

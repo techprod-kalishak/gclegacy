@@ -10,11 +10,13 @@ package io.kalishak.galacticraftlegacy.world.level.levelgen;
 import io.kalishak.galacticraftlegacy.Constants;
 import io.kalishak.galacticraftlegacy.data.worldgen.GalacticraftSurfaceRuleData;
 import io.kalishak.galacticraftlegacy.world.level.block.GalacticraftBlocks;
+import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.biome.Climate;
 import net.minecraft.world.level.levelgen.*;
+import net.minecraft.world.level.levelgen.synth.NormalNoise;
 
 import java.util.List;
 
@@ -26,14 +28,17 @@ public final class GalacticraftNoiseGeneratorSettings {
     public static final ResourceKey<NoiseGeneratorSettings> VENUS = Constants.key(Registries.NOISE_SETTINGS, "venus");
 
     public static void bootstrap(BootstrapContext<NoiseGeneratorSettings> cxt) {
+        HolderGetter<DensityFunction> densityFunctions = cxt.lookup(Registries.DENSITY_FUNCTION);
+        HolderGetter<NormalNoise.NoiseParameters> noiseParameters = cxt.lookup(Registries.NOISE);
+
         cxt.register(
                 MOON,
                 new NoiseGeneratorSettings(
-                        NoiseSettings.create(0, 128, 1, 2),
+                        NoiseSettings.create(-64, 256, 2, 2),
                         GalacticraftBlocks.MOON_ROCK.get().defaultBlockState(),
                         GalacticraftBlocks.EMPTY_AIR.get().defaultBlockState(),
-                        GalacticraftNoiseRouterData.moon(cxt.lookup(Registries.DENSITY_FUNCTION), cxt.lookup(Registries.NOISE)),
-                        GalacticraftSurfaceRuleData.moon(),
+                        GalacticraftNoiseRouterData.moon(densityFunctions, noiseParameters),
+                        GalacticraftSurfaceRuleData.moonNew(),
                         List.of(
                                 new Climate.ParameterPoint(
                                         Climate.Parameter.point(-2.0F),

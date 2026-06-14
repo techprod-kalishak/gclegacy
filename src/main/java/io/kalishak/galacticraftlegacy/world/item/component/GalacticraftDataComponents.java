@@ -58,6 +58,10 @@ public final class GalacticraftDataComponents {
             "gear_equippable",
             builder -> builder.persistent(GearEquippable.CODEC).networkSynchronized(GearEquippable.STREAM_CODEC).cacheEncoding()
     );
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<HotContent>> HOT_CONTENT = REGISTRY.registerComponentType(
+            "hot_content",
+            builder -> builder.persistent(HotContent.CODEC).networkSynchronized(HotContent.STREAM_CODEC)
+    );
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<ItemWithDescription>> ITEM_WITH_DESCRIPTION = REGISTRY.registerComponentType(
             "item_with_description",
             builder -> builder.persistent(ItemWithDescription.CODEC).networkSynchronized(ItemWithDescription.STREAM_CODEC).cacheEncoding()

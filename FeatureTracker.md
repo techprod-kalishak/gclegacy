@@ -106,7 +106,7 @@ Please note that the following list is a preliminary outline of planned features
 - [ ] Gas Liquefier ❌
 - [ ] Methane Synthesizer ❌
 - [ ] Water Electrolyzer ❌
-- [ ] Asteroids Rock & Variants ❌
+- [ ] Asteroids Rock & Variants ✅
 - [ ] Asteroids Fine Rock & Variants ❌
 - [ ] Asteroid Stone & Variants ❌
 - [ ] Asteroid Aluminum Ore & Generation ❌

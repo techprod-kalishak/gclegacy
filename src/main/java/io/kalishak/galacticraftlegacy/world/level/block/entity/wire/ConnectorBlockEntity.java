@@ -12,4 +12,14 @@ import net.minecraft.core.Direction;
 
 public interface ConnectorBlockEntity {
     boolean canConnect(Direction direction, NetworkType networkType);
+
+    static Direction getRelativeFace(Direction declared, Direction actual) {
+        int data = declared.get2DDataValue() + actual.get2DDataValue();
+
+        if (data > 3) {
+            data -= 3;
+        }
+
+        return Direction.from2DDataValue(data);
+    }
 }

@@ -12,6 +12,7 @@ import io.kalishak.galacticraftlegacy.Constants;
 import io.kalishak.galacticraftlegacy.world.entity.monster.EvolvedMonster;
 import io.kalishak.galacticraftlegacy.world.entity.monster.EvolvedSkeleton;
 import io.kalishak.galacticraftlegacy.world.entity.monster.EvolvedZombie;
+import io.kalishak.galacticraftlegacy.world.entity.projectile.ThrownMeteorChunk;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.level.levelgen.Heightmap;
@@ -26,55 +27,78 @@ import org.jspecify.annotations.NonNull;
 import java.util.stream.Stream;
 
 public final class GalacticraftEntityType {
-    private static final DeferredRegister<EntityType<?>> REGISTRY = DeferredRegister.create(Registries.ENTITY_TYPE, Galacticraft.MODID);
+    private static final DeferredRegister.Entities REGISTRY = DeferredRegister.createEntities(Galacticraft.MODID);
 
-    public static final DeferredHolder<EntityType<?>, EntityType<FallingParachest>> FALLING_PARACHEST = REGISTRY.register(
+    public static final DeferredHolder<EntityType<?>, EntityType<FallingParachest>> FALLING_PARACHEST = REGISTRY.registerEntityType(
             "falling_parachest",
-            () -> EntityType.Builder.of(FallingParachest::new, MobCategory.MISC)
+            FallingParachest::new,
+            MobCategory.MISC,
+            builder -> builder
                     .noLootTable()
                     .fireImmune()
                     .canSpawnFarFromPlayer()
-                    .build(Constants.key(Registries.ENTITY_TYPE, "falling_parachest"))
     );
-    public static final DeferredHolder<EntityType<?>, EntityType<Flag>> FLAG = REGISTRY.register(
+    public static final DeferredHolder<EntityType<?>, EntityType<Flag>> FLAG = REGISTRY.registerEntityType(
             "flag",
-            () -> EntityType.Builder.<Flag>of(Flag::new, MobCategory.MISC)
+            Flag::new,
+            MobCategory.MISC,
+            builder -> builder
                     .noLootTable()
                     .noSummon()
                     .sized(0.4F, 3.0F)
-                    .build(Constants.key(Registries.ENTITY_TYPE, "flag"))
     );
-    public static final DeferredHolder<EntityType<?>, EntityType<SchematicEntity>> SCHEMATIC = REGISTRY.register(
+    public static final DeferredHolder<EntityType<?>, EntityType<NoGravityMovingBlockEntity>> NO_GRAVITY_MOVING_BLOCK = REGISTRY.registerEntityType(
+            "no_gravity_moving_block",
+            NoGravityMovingBlockEntity::new, MobCategory.AMBIENT,
+            builder -> builder
+                    .noLootTable()
+                    .sized(1.0F, 1.0F)
+                    .clientTrackingRange(20)
+                    .updateInterval(20)
+    );
+    public static final DeferredHolder<EntityType<?>, EntityType<SchematicEntity>> SCHEMATIC = REGISTRY.registerEntityType(
             "schematic",
-            () -> EntityType.Builder.<SchematicEntity>of(SchematicEntity::new, MobCategory.MISC)
+            SchematicEntity::new,
+            MobCategory.MISC,
+            builder -> builder
                     .noLootTable()
                     .sized(0.5F, 0.5F)
                     .clientTrackingRange(10)
                     .updateInterval(Integer.MAX_VALUE)
-                    .build(Constants.key(Registries.ENTITY_TYPE, "schematic"))
     );
 
     //Evolved variants
-    public static final DeferredHolder<EntityType<?>, EntityType<EvolvedSkeleton>> EVOLVED_SKELETON = REGISTRY.register(
+    public static final DeferredHolder<EntityType<?>, EntityType<EvolvedSkeleton>> EVOLVED_SKELETON = REGISTRY.registerEntityType(
             "evolved_skeleton",
-            () -> EntityType.Builder.<EvolvedSkeleton>of(EvolvedSkeleton::new, MobCategory.MONSTER)
+            EvolvedSkeleton::new,
+            MobCategory.MONSTER,
+            builder -> builder
                     .sized(0.6F, 1.99F)
                     .eyeHeight(1.74F)
                     .ridingOffset(-0.7F)
                     .clientTrackingRange(8)
                     .notInPeaceful()
-                    .build(Constants.key(Registries.ENTITY_TYPE, "evolved_skeleton"))
     );
-    public static final DeferredHolder<EntityType<?>, EntityType<EvolvedZombie>> EVOLVED_ZOMBIE = REGISTRY.register(
+    public static final DeferredHolder<EntityType<?>, EntityType<EvolvedZombie>> EVOLVED_ZOMBIE = REGISTRY.registerEntityType(
             "evolved_zombie",
-            () -> EntityType.Builder.<EvolvedZombie>of(EvolvedZombie::new, MobCategory.MONSTER)
+            EvolvedZombie::new,
+            MobCategory.MONSTER,
+            builder -> builder
                     .sized(0.6F, 1.95F)
                     .eyeHeight(1.74F)
                     .passengerAttachments(2.0125F)
                     .ridingOffset(-0.7F)
                     .clientTrackingRange(8)
                     .notInPeaceful()
-                    .build(Constants.key(Registries.ENTITY_TYPE, "evolved_zombie"))
+    );
+    public static final DeferredHolder<EntityType<?>, EntityType<ThrownMeteorChunk>> THROWN_METEOR_CHUNK = REGISTRY.registerEntityType(
+            "thrown_meteor_chunk",
+            ThrownMeteorChunk::new, MobCategory.MISC,
+                    builder -> builder
+                    .noLootTable()
+                    .sized(0.25F, 0.25F)
+                    .clientTrackingRange(4)
+                    .updateInterval(10)
     );
 
     public static void init(IEventBus bus) {

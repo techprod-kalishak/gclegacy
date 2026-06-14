@@ -32,6 +32,8 @@ import java.util.*;
 public class FluidNodeNetwork extends ResourceNodeNetwork<FluidResource, FluidStack> {
     public FluidNodeNetwork(Level level, Collection<FluidNodeNetwork> toMerge) {
         super(level, FluidResource.EMPTY, Capabilities.Fluid.BLOCK, toMerge);
+
+        registerNode(this);
     }
 
     public static FluidNodeNetwork fromBlockEntity(BlockEntity blockEntity, Direction side) {

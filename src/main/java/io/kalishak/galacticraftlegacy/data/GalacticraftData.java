@@ -24,6 +24,7 @@ import io.kalishak.galacticraftlegacy.world.damagesource.GalacticraftDamageTypes
 import io.kalishak.galacticraftlegacy.world.item.equipment.trim.GalacticraftTrimMaterials;
 import io.kalishak.galacticraftlegacy.world.level.biome.GalacticraftBiomes;
 import io.kalishak.galacticraftlegacy.world.level.dimension.GalacticraftDimensionTypes;
+import io.kalishak.galacticraftlegacy.world.level.dimension.GalacticraftLevelStem;
 import io.kalishak.galacticraftlegacy.world.level.levelgen.GalacticraftBiomeModifiers;
 import io.kalishak.galacticraftlegacy.world.level.levelgen.GalacticraftNoiseGeneratorSettings;
 import io.kalishak.galacticraftlegacy.world.level.levelgen.features.GalacticraftFeatures;
@@ -48,10 +49,11 @@ public class GalacticraftData {
             .add(Registries.CONFIGURED_FEATURE, GalacticraftFeatures::bootstrap)
             .add(Registries.DAMAGE_TYPE, GalacticraftDamageTypes::bootstrap)
             .add(Registries.DIMENSION_TYPE, GalacticraftDimensionTypes::bootstrap)
+            .add(Registries.LEVEL_STEM, GalacticraftLevelStem::bootstrap)
+            .add(Registries.NOISE_SETTINGS, GalacticraftNoiseGeneratorSettings::bootstrap)
             .add(Registries.PLACED_FEATURE, GalacticraftPlacements::bootstrap)
             .add(Registries.TIMELINE, GalacticraftTimelines::bootstrap)
             .add(Registries.TRIM_MATERIAL, GalacticraftTrimMaterials::bootstrap)
-            .add(Registries.NOISE_SETTINGS, GalacticraftNoiseGeneratorSettings::bootstrap)
             .add(Registries.WORLD_CLOCK, GalacticraftWorldClocks::bootstrap)
             .add(NeoForgeRegistries.Keys.BIOME_MODIFIERS, GalacticraftBiomeModifiers::bootstrap)
             .add(GalacticraftRegistries.Keys.CHECKLIST, Checklist::bootstrap)

@@ -15,4 +15,7 @@ public interface NodeSourceBlockEntity {
     NodeNetwork getNetwork(@Nullable Direction side);
     boolean hasNetwork();
     void addNetwork(NodeNetwork network);
+
+    void updateNetwork();
+    void onNetworkUpdate();
 }

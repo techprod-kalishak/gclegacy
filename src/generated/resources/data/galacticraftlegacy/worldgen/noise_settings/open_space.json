@@ -37,7 +37,7 @@
   "surface_rule": {
     "type": "minecraft:block",
     "result_state": {
-      "Name": "galacticraftlegacy:empty_air"
+      "Name": "minecraft:air"
     }
   }
 }

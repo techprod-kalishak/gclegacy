@@ -40,6 +40,8 @@ public class EnergyNodeNetwork extends NodeNetwork {
 
     public EnergyNodeNetwork(Level level) {
         super(level);
+
+        registerNode(this);
     }
 
     @Override
@@ -148,6 +150,7 @@ public class EnergyNodeNetwork extends NodeNetwork {
 
     @Override
     protected PackedNode save() {
+        unregisterNode(this);
         return new Packed(
                 this.level.dimension(),
                 this.amount,

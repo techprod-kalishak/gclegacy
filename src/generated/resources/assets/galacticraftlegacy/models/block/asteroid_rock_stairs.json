@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/stairs",
+  "textures": {
+    "bottom": "galacticraftlegacy:block/asteroid_rock",
+    "side": "galacticraftlegacy:block/asteroid_rock",
+    "top": "galacticraftlegacy:block/asteroid_rock"
+  }
+}

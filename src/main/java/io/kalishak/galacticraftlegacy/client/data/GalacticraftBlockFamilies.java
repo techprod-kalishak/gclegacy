@@ -20,8 +20,22 @@ public class GalacticraftBlockFamilies {
             .recipeUnlockedBy("has_moon_bricks")
             .recipeGroupPrefix("moon_bricks")
             .getFamily();
+    public static final BlockFamily ASTEROID_ROCKS = new BlockFamily.Builder(GalacticraftBlocks.ASTEROID_ROCK.get())
+            .stairs(GalacticraftBlocks.ASTEROID_ROCK_STAIRS.get())
+            .slab(GalacticraftBlocks.ASTEROID_ROCK_SLAB.get())
+            .wall(GalacticraftBlocks.ASTEROID_ROCK_WALL.get())
+            .recipeUnlockedBy("has_asteroid_rock")
+            .recipeGroupPrefix("asteroid_rock")
+            .getFamily();
+    public static final BlockFamily TIN_DECORATION = new BlockFamily.Builder(GalacticraftBlocks.TIN_DECORATION_BLOCK.get())
+            .stairs(GalacticraftBlocks.TIN_DECORATION_STAIRS.get())
+            .slab(GalacticraftBlocks.TIN_DECORATION_SLAB.get())
+            .wall(GalacticraftBlocks.TIN_DECORATION_WALL.get())
+            .recipeUnlockedBy("has_tin")
+            .recipeGroupPrefix("tin_decoration")
+            .getFamily();
 
     public static Stream<BlockFamily> getFamilies() {
-        return Stream.of(MOON_BRICKS);
+        return Stream.of(MOON_BRICKS, ASTEROID_ROCKS, TIN_DECORATION);
     }
 }

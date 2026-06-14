@@ -240,6 +240,11 @@ public final class GalacticraftCreativeModeTabs {
         output.accept(GalacticraftItems.MOON_BRICK_WALL);
         output.accept(GalacticraftItems.CHEESE);
         output.accept(GalacticraftItems.GRATING);
+        output.accept(GalacticraftItems.ASTEROID_ROCK);
+        output.accept(GalacticraftItems.ASTEROID_ROCK_SLAB);
+        output.accept(GalacticraftItems.ASTEROID_ROCK_STAIRS);
+        output.accept(GalacticraftItems.ASTEROID_ROCK_WALL);
+        output.accept(GalacticraftItems.ASTEROID_ALUMINUM_ORE);
 
         output.accept(GalacticraftItems.UNLIT_TORCH, CreativeModeTab.TabVisibility.SEARCH_TAB_ONLY);
         output.accept(GalacticraftItems.UNLIT_COPPER_TORCH, CreativeModeTab.TabVisibility.SEARCH_TAB_ONLY);

@@ -543,6 +543,10 @@ public final class GalacticraftItems {
             SpawnEggItem::new,
             () -> new Item.Properties().spawnEgg(GalacticraftEntityType.EVOLVED_ZOMBIE.get())
     );
+    public static final DeferredItem<ThrowableMeteorItem> THROWABLE_METEOR_CHUNK = REGISTRY.registerItem(
+            "throwable_meteor_chunk",
+            ThrowableMeteorItem::new
+    );
 
     public static final DeferredItem<BlockItem> ALUMINUM_WIRE = REGISTRY.registerSimpleBlockItemWithDescription(GalacticraftBlocks.ALUMINUM_WIRE);
     public static final DeferredItem<BlockItem> HEAVY_ALUMINUM_WIRE = REGISTRY.registerSimpleBlockItemWithDescription(GalacticraftBlocks.HEAVY_ALUMINUM_WIRE);
@@ -617,6 +621,21 @@ public final class GalacticraftItems {
     public static final DeferredItem<BlockItem> UNLIT_LANTERN = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.UNLIT_LANTERN);
     public static final DeferredWeatheringCopperItems UNLIT_COPPER_LANTERNS = DeferredWeatheringCopperItems.create(GalacticraftBlocks.UNLIT_COPPER_LANTERN, REGISTRY::registerSimpleBlockItem);
     public static final DeferredItem<BlockItem> MAGNETIC_CRAFTING_TABLE = REGISTRY.registerSimpleBlockItemWithDescription(GalacticraftBlocks.MAGNETIC_CRAFTING_TABLE);
+    public static final DeferredItem<BlockItem> ASTEROID_ROCK = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.ASTEROID_ROCK);
+    public static final DeferredItem<BlockItem> ASTEROID_ROCK_SLAB = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.ASTEROID_ROCK_SLAB);
+    public static final DeferredItem<BlockItem> ASTEROID_ROCK_STAIRS = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.ASTEROID_ROCK_STAIRS);
+    public static final DeferredItem<BlockItem> ASTEROID_ROCK_WALL = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.ASTEROID_ROCK_WALL);
+    public static final DeferredItem<BlockItem> ASTEROID_ALUMINUM_ORE = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.ASTEROID_ALUMINUM_ORE);
+    public static final DeferredItem<FallenMeteorItem> FALLEN_METEOR = REGISTRY.registerBlockItemWithDescription(
+            GalacticraftBlocks.FALLEN_METEOR,
+            FallenMeteorItem::new,
+            () -> new Item.Properties().stacksTo(1)
+    );
+    public static final DeferredItem<BlockItem> TIN_DECORATION_BLOCK = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.TIN_DECORATION_BLOCK);
+    public static final DeferredItem<BlockItem> TIN_DECORATION_CUT_BLOCK = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.TIN_DECORATION_CUT_BLOCK);
+    public static final DeferredItem<BlockItem> TIN_DECORATION_SLAB = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.TIN_DECORATION_SLAB);
+    public static final DeferredItem<BlockItem> TIN_DECORATION_STAIRS = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.TIN_DECORATION_STAIRS);
+    public static final DeferredItem<BlockItem> TIN_DECORATION_WALL = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.TIN_DECORATION_WALL);
 
     public static void init(IEventBus bus) {
         REGISTRY.register(bus);

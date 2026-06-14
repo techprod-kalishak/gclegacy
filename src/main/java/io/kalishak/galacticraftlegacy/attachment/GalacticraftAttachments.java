@@ -17,6 +17,7 @@ import io.kalishak.galacticraftlegacy.attachment.level.CelestialBodyLevelData;
 import io.kalishak.galacticraftlegacy.registry.SchematicVariant;
 import io.kalishak.galacticraftlegacy.registry.SchematicVariants;
 import io.kalishak.galacticraftlegacy.world.entity.FlagData;
+import io.kalishak.galacticraftlegacy.world.item.component.HotContent;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.MachineStatus;
 import net.minecraft.core.Holder;
 import net.minecraft.world.entity.Entity;
@@ -32,6 +33,13 @@ public final class GalacticraftAttachments {
     private static final DeferredRegister<AttachmentType<?>> REGISTRY = DeferredRegister.create(NeoForgeRegistries.Keys.ATTACHMENT_TYPES, Galacticraft.MODID);
 
     //Block
+    public static final DeferredHolder<AttachmentType<?>, AttachmentType<HotContent>> HOT_CONTENT = REGISTRY.register(
+            "hot_content",
+            () -> AttachmentType.builder(() -> HotContent.DEFAULT)
+                    .serialize(HotContent.MAP_CODEC)
+                    .sync(HotContent.STREAM_CODEC)
+                    .build()
+    );
     public static final DeferredHolder<AttachmentType<?>, AttachmentType<MachineStatus>> MACHINE_STATUS = REGISTRY.register(
             "machine_status",
             () -> AttachmentType.builder(() -> new MachineStatus(MachineStatus.Type.IDLE))

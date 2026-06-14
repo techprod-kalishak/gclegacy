@@ -12,11 +12,18 @@
     "galacticraftlegacy:moon_brick_wall",
     "galacticraftlegacy:aluminum_ore",
     "galacticraftlegacy:deepslate_aluminum_ore",
+    "galacticraftlegacy:asteroid_aluminum_ore",
     "galacticraftlegacy:tin_ore",
     "galacticraftlegacy:deepslate_tin_ore",
     "galacticraftlegacy:silicon_ore",
     "galacticraftlegacy:deepslate_silicon_ore",
     "galacticraftlegacy:oil_cauldron",
-    "galacticraftlegacy:fuel_cauldron"
+    "galacticraftlegacy:fuel_cauldron",
+    "galacticraftlegacy:fallen_meteor",
+    "galacticraftlegacy:tin_decoration_block",
+    "galacticraftlegacy:tin_decoration_cut_block",
+    "galacticraftlegacy:tin_decoration_slab",
+    "galacticraftlegacy:tin_decoration_stairs",
+    "galacticraftlegacy:tin_decoration_wall"
   ]
 }

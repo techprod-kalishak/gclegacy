@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "asteroid_rock_stairs",
+  "key": {
+    "#": "galacticraftlegacy:asteroid_rock"
+  },
+  "pattern": [
+    "#  ",
+    "## ",
+    "###"
+  ],
+  "result": {
+    "count": 4,
+    "id": "galacticraftlegacy:asteroid_rock_stairs"
+  }
+}
