@@ -12,6 +12,7 @@ import io.kalishak.galacticraftlegacy.world.level.biome.MoonBiomes;
 import io.kalishak.galacticraftlegacy.world.level.block.GalacticraftBlocks;
 import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.levelgen.NoiseGeneratorSettings;
 import net.minecraft.world.level.levelgen.Noises;
 import net.minecraft.world.level.levelgen.SurfaceRules;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
@@ -23,7 +24,6 @@ public class GalacticraftSurfaceRuleData {
     public static final SurfaceRules.RuleSource MOON_DIRT = SurfaceRules.state(GalacticraftBlocks.MOON_DIRT.get().defaultBlockState());
 
     public static SurfaceRules.RuleSource moon() {
-        SurfaceRules.ConditionSource hole = SurfaceRules.hole();
         SurfaceRules.ConditionSource craterOceans = SurfaceRules.isBiome(MoonBiomes.MOON_CRATER_OCEAN);
         SurfaceRules.ConditionSource steeps = SurfaceRules.steep();
         SurfaceRules.ConditionSource hardRocks = SurfaceRules.noiseCondition(Noises.NETHERRACK, 0.54);
@@ -32,8 +32,8 @@ public class GalacticraftSurfaceRuleData {
                 SurfaceRules.ifTrue(
                         SurfaceRules.isBiome(MoonBiomes.MOON_PLAINS),
                         SurfaceRules.sequence(
-                                SurfaceRules.ifTrue(SurfaceRules.noiseCondition(Noises.CONTINENTALNESS, -0.12, 0.12), MOON_DIRT),
-                                MOON_TURF
+                                SurfaceRules.ifTrue(SurfaceRules.noiseCondition(Noises.CONTINENTALNESS, -0.12, 0.12), MOON_TURF),
+                                MOON_DIRT
                         )
                 ),
                 SurfaceRules.ifTrue(
@@ -53,20 +53,16 @@ public class GalacticraftSurfaceRuleData {
                                 SurfaceRules.ifTrue(SurfaceRules.not(hardRocks), SurfaceRules.ifTrue(nearFloor, MOON_DIRT))
                         )
                 ),
-                MOON_TURF
+                MOON_ROCK
         );
 
         return SurfaceRules.sequence(
                 SurfaceRules.ifTrue(SurfaceRules.verticalGradient("bedrock_floor", VerticalAnchor.bottom(), VerticalAnchor.aboveBottom(5)), BEDROCK),
-                SurfaceRules.ifTrue(steeps,  commonSurface)
+                SurfaceRules.ifTrue(steeps, commonSurface)
         );
     }
 
     public static SurfaceRules.RuleSource empty() {
         return SurfaceRules.state(Blocks.AIR.defaultBlockState());
-    }
-
-    public static SurfaceRules.RuleSource moonNew() {
-        return SurfaceRules.sequence(MOON_TURF, MOON_DIRT, MOON_ROCK);
     }
 }

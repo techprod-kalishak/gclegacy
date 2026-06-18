@@ -27,7 +27,7 @@
     "minecraft:gameplay/water_evaporates": true,
     "minecraft:visual/sky_color": "#9097ff",
     "neoforge:custom_clouds": "galacticraftlegacy:clouds/space",
-    "neoforge:custom_skybox": "galacticraftlegacy:skybox/moon_sky",
+    "neoforge:custom_skybox": "galacticraftlegacy:moon",
     "neoforge:custom_weather_effects": "galacticraftlegacy:weather_effect/space"
   },
   "coordinate_scale": 1.0,

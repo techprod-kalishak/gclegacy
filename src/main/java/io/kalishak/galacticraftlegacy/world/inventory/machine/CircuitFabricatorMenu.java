@@ -28,6 +28,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.StackedItemContents;
 import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.common.Tags;
@@ -135,7 +136,7 @@ public class CircuitFabricatorMenu extends AbstractMachineRecipeBookMenu<Circuit
 
             @Override
             public boolean recipeMatches(RecipeHolder<CircuitRecipe> recipe) {
-                return recipe.value().matches(new SimpleResourceInput(() -> CircuitFabricatorMenu.this.resourceHandler, CircuitFabricatorBlockEntity.SLOT_DIAMOND, CircuitFabricatorBlockEntity.SLOT_COUNT), level);
+                return recipe.value().matches(CraftingInput.of(3, 2, CircuitFabricatorMenu.this.machine.getItems().subList(CircuitFabricatorBlockEntity.SLOT_DIAMOND, CircuitFabricatorBlockEntity.SLOT_COUNT)), level);
             }
         }, 3, 2, craftingSlots, craftingSlots, playerInventory, (RecipeHolder<CircuitRecipe>) recipe, useMaxItems, isCreative);
     }

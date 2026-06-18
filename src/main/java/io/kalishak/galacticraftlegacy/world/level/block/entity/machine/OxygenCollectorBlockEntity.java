@@ -16,19 +16,14 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
-import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
-import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidType;
-import net.neoforged.neoforge.transfer.EmptyResourceHandler;
 import net.neoforged.neoforge.transfer.fluid.FluidResource;
 import net.neoforged.neoforge.transfer.transaction.Transaction;
-import org.jspecify.annotations.Nullable;
 
 public class OxygenCollectorBlockEntity extends AbstractOxygenBlockEntity {
     public static float OXYGEN_PER_PLANT = 0.75F;
@@ -42,28 +37,18 @@ public class OxygenCollectorBlockEntity extends AbstractOxygenBlockEntity {
     }
 
     public static void registerCapabilities(RegisterCapabilitiesEvent event) {
-        registerInputItemCapability(GalacticraftBlockEntityType.OXYGEN_COLLECTOR.get(), event);
-        registerSingleEnergyInputEnergyHandler(Direction.EAST, GalacticraftBlockEntityType.OXYGEN_COLLECTOR.get(), event);
-        event.registerBlockEntity(
-                Capabilities.Fluid.BLOCK,
-                GalacticraftBlockEntityType.OXYGEN_COLLECTOR.get(),
-                (blockEntity, context) -> {
-                    if (context == null || context == Direction.WEST) {
-                        return blockEntity.oxygenHandler;
-                    }
-
-                    return EmptyResourceHandler.instance();
-                }
-        );
+        registerItemCapability(GalacticraftBlockEntityType.OXYGEN_COLLECTOR.get(), event);
+        registerEnergyCapability(GalacticraftBlockEntityType.OXYGEN_COLLECTOR.get(), event);
+        registerFluidCapability(GalacticraftBlockEntityType.OXYGEN_COLLECTOR.get(), event);
     }
 
     public static void serverTick(ServerLevel level, BlockPos worldPosition, BlockState blockState, OxygenCollectorBlockEntity blockEntity) {
-        extractBattery(blockEntity, false, 2500, null);
+        extractBattery(blockEntity, false, 25, null);
         produce(level, worldPosition, blockEntity, Direction.EAST, null);
 
         blockEntity.producedLastTick = blockEntity.oxygenHandler.getAmount() < blockEntity.oxygenHandler.getCapacity();
 
-        if (blockEntity.producedLastTick /*&& level.getRandom().nextInt(10) == 0*/) {
+        if (blockEntity.producedLastTick && level.getRandom().nextInt(10) == 0) {
             if (blockEntity.hasEnergyToOperate()) {
                 float nearbyLeaves = 0;
 
@@ -122,7 +107,7 @@ public class OxygenCollectorBlockEntity extends AbstractOxygenBlockEntity {
     }
 
     @Override
-    public @Nullable AbstractContainerMenu createMenu(int containerId, Inventory inventory, Player player) {
+    public AbstractContainerMenu createMenu(int containerId, Inventory inventory) {
         return new OxygenCollectorMenu(containerId, inventory, this);
     }
 
@@ -146,12 +131,17 @@ public class OxygenCollectorBlockEntity extends AbstractOxygenBlockEntity {
     }
 
     @Override
-    protected int containerSize() {
+    public int getContainerSize() {
         return 1;
     }
 
     @Override
     protected int getBatterySlotIndex() {
         return 0;
+    }
+
+    @Override
+    public int getTanks() {
+        return 1;
     }
 }

@@ -27,11 +27,11 @@ public class SpaceWeatherRenderer implements CustomWeatherEffectRenderer {
 
     @Override
     public boolean renderSnowAndRain(LevelRenderState levelRenderState, WeatherRenderState weatherRenderState, MultiBufferSource bufferSource, Vec3 camPos) {
-        return true;
+        return false;
     }
 
     @Override
     public boolean tickRain(ClientLevel level, int ticks, Camera camera) {
-        return true;
+        return false;
     }
 }

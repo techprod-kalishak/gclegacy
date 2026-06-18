@@ -7,7 +7,6 @@
 
 package io.kalishak.galacticraftlegacy.world.item.crafting.recipe;
 
-import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.kalishak.galacticraftlegacy.data.GalacticraftTags;
@@ -15,15 +14,12 @@ import io.kalishak.galacticraftlegacy.world.item.GalacticraftItems;
 import io.kalishak.galacticraftlegacy.world.item.crafting.FabricatingBookCategory;
 import io.kalishak.galacticraftlegacy.world.item.crafting.GalacticraftRecipeBookCategories;
 import io.kalishak.galacticraftlegacy.world.item.crafting.display.CircutFabricatorRecipeDisplay;
-import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.input.SimpleResourceInput;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.CircuitFabricatorBlockEntity;
 import net.minecraft.core.HolderGetter;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
-import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -34,13 +30,10 @@ import net.minecraft.world.item.crafting.display.RecipeDisplay;
 import net.minecraft.world.item.crafting.display.SlotDisplay;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.common.Tags;
-import net.neoforged.neoforge.transfer.item.ItemResource;
-import net.neoforged.neoforge.transfer.transaction.Transaction;
-import org.jspecify.annotations.Nullable;
 
 import java.util.List;
 
-public class CircuitRecipe extends MachineRecipe<SimpleResourceInput> {
+public class CircuitRecipe extends MachineRecipe<CraftingInput> {
     public static final MapCodec<CircuitRecipe> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             CommonInfo.MAP_CODEC.forGetter(circuitRecipe -> circuitRecipe.commonInfo),
             FabricatingBookInfo.MAP_CODEC.forGetter(circuitRecipe -> circuitRecipe.bookInfo),
@@ -75,35 +68,21 @@ public class CircuitRecipe extends MachineRecipe<SimpleResourceInput> {
     }
 
     @Override
-    public ItemStack disassembleIngredients(SimpleResourceInput simpleResourceInput, @Nullable Transaction tx, HolderGetter.Provider registries, boolean simulate) {
-        if (!simulate) {
-            try (Transaction childTx = Transaction.open(tx)) {
-                for (int i = 0; i < simpleResourceInput.size() - 1; i++) {
-                    ItemResource resource = simpleResourceInput.getResource(i);
-
-                    if (simpleResourceInput.extract(i, resource, 1, childTx) != 1) {
-                        return ItemStack.EMPTY;
-                    }
-                }
-
-                childTx.commit();
-            }
-        } else {
-            NonNullList<Ingredient> items = withBase(registries.lookupOrThrow(Registries.ITEM), this.ingredient);
-
-            for (int i = 0; i < simpleResourceInput.size() - 1; i++) {
-                if (!items.get(i).acceptsItem(simpleResourceInput.getResource(i).typeHolder())) {
-                    return ItemStack.EMPTY;
-                }
-            }
-        }
-
-        return assemble(simpleResourceInput);
+    public ItemStack assemble(CraftingInput input) {
+        return this.result.create();
     }
 
     @Override
-    public boolean matches(SimpleResourceInput input, Level level) {
-        return this.ingredient.acceptsItem(input.getItem(CircuitFabricatorBlockEntity.SLOT_INGREDIENT).typeHolder());
+    public boolean matches(CraftingInput input, Level level) {
+        NonNullList<Ingredient> ingredients = withBase(level.registryAccess().lookupOrThrow(Registries.ITEM), this.ingredient);
+
+        for (int i = 0; i < input.size(); i++) {
+            if (!ingredients.get(i).acceptsItem(input.getItem(i).typeHolder())) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     @Override

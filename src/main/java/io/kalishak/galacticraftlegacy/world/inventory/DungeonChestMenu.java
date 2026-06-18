@@ -8,6 +8,7 @@
 package io.kalishak.galacticraftlegacy.world.inventory;
 
 import io.kalishak.galacticraftlegacy.transfer.ResourcefulHelper;
+import io.kalishak.galacticraftlegacy.world.inventory.slot.NotPlaceableResourceHandlerSlot;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.DungeonChestBlockEntity;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityType;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -16,7 +17,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.transfer.item.ResourceHandlerSlot;
+import net.neoforged.neoforge.transfer.ResourceHandler;
+import net.neoforged.neoforge.transfer.item.ItemResource;
+import net.neoforged.neoforge.transfer.item.VanillaContainerWrapper;
 
 public class DungeonChestMenu extends AbstractContainerMenu {
     private final DungeonChestBlockEntity blockEntity;
@@ -25,12 +28,14 @@ public class DungeonChestMenu extends AbstractContainerMenu {
         super(GalacticraftMenuType.DUNGEON_CHEST.get(), containerId);
         this.blockEntity = blockEntity;
         blockEntity.startOpen(playerInventory.player);
+        ResourceHandler<ItemResource> resourceHandler = VanillaContainerWrapper.of(blockEntity);
 
-        for(int i = 0; i < 3; ++i) {
-            for(int j = 0; j < 9; ++j) {
-                addSlot(new ResourceHandlerSlot(blockEntity.getResourceHandler(), (index, resource, amount) -> {}, j + i * 9, 8 + j * 18, 13 + i * 18));
+        for (int i = 0; i < 3; ++i) {
+            for (int j = 0; j < 9; ++j) {
+                addSlot(new NotPlaceableResourceHandlerSlot(resourceHandler, j + i * 9, 8 + j * 18, 13 + i * 18));
             }
         }
+
         addStandardInventorySlots(playerInventory, 8, 85);
     }
 

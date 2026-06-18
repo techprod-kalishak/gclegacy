@@ -28,9 +28,7 @@ import io.kalishak.galacticraftlegacy.client.model.geom.GalacticraftModelLayers;
 import io.kalishak.galacticraftlegacy.client.renderer.GalacticraftSheets;
 import io.kalishak.galacticraftlegacy.client.renderer.entity.layer.gear.GearEquipmentLayer;
 import io.kalishak.galacticraftlegacy.client.renderer.entity.state.GearRenderState;
-import io.kalishak.galacticraftlegacy.client.renderer.environment.MoonSkyRenderer;
-import io.kalishak.galacticraftlegacy.client.renderer.environment.SpaceCloudsRenderer;
-import io.kalishak.galacticraftlegacy.client.renderer.environment.SpaceWeatherRenderer;
+import io.kalishak.galacticraftlegacy.client.renderer.environment.*;
 import io.kalishak.galacticraftlegacy.client.renderer.item.KeyModel;
 import io.kalishak.galacticraftlegacy.client.renderer.item.properties.numeric.DungeonLocatorAngle;
 import io.kalishak.galacticraftlegacy.client.renderer.item.properties.range.FluidAmountProperty;
@@ -98,6 +96,7 @@ public class GalacticraftClient {
         bus.addListener(EntityRenderersEvent.AddLayers.class, GearEquipmentLayer::registerAdditionalLayers);
         bus.addListener(GalacticraftClientRecipeBookCategories::registerBookCategories);
         bus.addListener(GalacticraftKeys::registerKeyMappings);
+        NeoForge.EVENT_BUS.addListener(SpaceSkyRenderer::extractLevelRenderState);
 
         container.registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);
 
@@ -130,7 +129,8 @@ public class GalacticraftClient {
     }
 
     private void registerEnvironmentEffects(RegisterCustomEnvironmentEffectRendererEvent event) {
-        //MoonSkyRenderer.create(event::registerSkyboxRenderer);
+        MoonSkyRenderer.create(event::registerSkyboxRenderer);
+        OrbitalSkyRenderer.create(event::registerSkyboxRenderer);
         SpaceCloudsRenderer.create(event::registerCloudRenderer);
         SpaceWeatherRenderer.create(event::registerWeatherEffectRenderer);
     }

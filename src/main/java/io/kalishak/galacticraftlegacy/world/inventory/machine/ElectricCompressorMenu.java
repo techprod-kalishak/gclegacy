@@ -12,7 +12,6 @@ import io.kalishak.galacticraftlegacy.world.inventory.GalacticraftMenuType;
 import io.kalishak.galacticraftlegacy.world.inventory.slot.CapabilityHandlerSlot;
 import io.kalishak.galacticraftlegacy.world.inventory.slot.ResultResourceHandlerSlot;
 import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.ElectricCompressingRecipe;
-import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.input.CompressingRecipeInput;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityType;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.AlloyCompressor;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.ElectricCompressorBlockEntity;
@@ -26,6 +25,7 @@ import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.neoforged.neoforge.capabilities.Capabilities;
@@ -36,10 +36,10 @@ public class ElectricCompressorMenu extends AbstractCompressorMenu {
     public ElectricCompressorMenu(int containerId, Inventory playerInventory, ElectricCompressorBlockEntity compressor, ContainerData dataAccess) {
         super(GalacticraftMenuType.ELECTRIC_COMPRESSOR.get(), containerId, playerInventory, compressor, dataAccess);
 
-        addCompressorGrid(this.compressorInventory, compressor::set, 19, 18);
-        addSlot(new CapabilityHandlerSlot<>(this.compressorInventory, compressor::set, Capabilities.Energy.ITEM, AlloyCompressor.FUEL_SLOT, 55, 75));
-        addSlot(new ResultResourceHandlerSlot(playerInventory.player, this.compressorInventory, _ -> {}, AlloyCompressor.RESULT_SLOT_START, 138, 30));
-        addSlot(new ResultResourceHandlerSlot(playerInventory.player, this.compressorInventory, _ -> {}, AlloyCompressor.RESULT_SLOT_END, 138, 48));
+        addCompressorGrid(19, 18);
+        addSlot(handler -> new CapabilityHandlerSlot<>(handler, compressor::set, Capabilities.Energy.ITEM, AlloyCompressor.FUEL_SLOT, 55, 75));
+        addSlot(handler -> new ResultResourceHandlerSlot(playerInventory.player, handler, _ -> {}, AlloyCompressor.RESULT_SLOT_START, 138, 30));
+        addSlot(handler -> new ResultResourceHandlerSlot(playerInventory.player, handler, _ -> {}, AlloyCompressor.RESULT_SLOT_END, 138, 48));
 
         addStandardInventorySlots(playerInventory, 8, 117);
     }
@@ -89,7 +89,7 @@ public class ElectricCompressorMenu extends AbstractCompressorMenu {
 
             @Override
             public boolean recipeMatches(RecipeHolder<ElectricCompressingRecipe> recipe) {
-                return recipe.value().matches(new CompressingRecipeInput(3, 3, () -> ElectricCompressorMenu.this.compressorInventory), level);
+                return recipe.value().matches(CraftingInput.of(3, 3, ElectricCompressorMenu.this.compressor.getCraftingItems()), level);
             }
         }, 3, 3, this.slots.subList(AlloyCompressor.CRAFTING_SLOT_START, AlloyCompressor.CRAFTING_SLOT_END), slotsToClear, inventory, (RecipeHolder<ElectricCompressingRecipe>) recipe, useMaxItems, allowDroppingItemsToClear);
     }

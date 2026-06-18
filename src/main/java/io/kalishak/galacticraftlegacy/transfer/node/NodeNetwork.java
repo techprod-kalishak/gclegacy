@@ -31,6 +31,7 @@ import net.neoforged.neoforge.event.server.ServerStoppingEvent;
 import net.neoforged.neoforge.event.tick.LevelTickEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
 import org.apache.logging.log4j.LogManager;
+import org.jetbrains.annotations.VisibleForTesting;
 import org.jspecify.annotations.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,6 +49,7 @@ public abstract class NodeNetwork {
     protected boolean hasTransferred;
     protected boolean previouslyTransferred;
     protected int transferDelay;
+    @VisibleForTesting
     protected int capacity;
     protected boolean needsUpdate;
     protected int updateDelay;

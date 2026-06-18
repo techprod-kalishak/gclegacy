@@ -23,6 +23,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.SeededContainerLoot;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
@@ -33,12 +34,9 @@ import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
 import org.jspecify.annotations.Nullable;
 
 
-public abstract class KeyLockedBlockEntity extends NamedBlockEntity implements RandomizableInventory {
+public abstract class KeyLockedBlockEntity extends RandomizableContainerBlockEntity implements RandomizableContainer {
     protected KeyLock keyLock = KeyLock.UNLOCKED;
     protected NonNullList<ItemStack> items = NonNullList.withSize(getContainerSize(), ItemStack.EMPTY);
-    protected final ItemStacksResourceHandler itemHandler = new ItemStacksResourceHandler(this.items);
-    protected @Nullable ResourceKey<LootTable> lootTable;
-    protected long lootTableSeed = 0L;
 
     protected KeyLockedBlockEntity(BlockEntityType<?> blockEntityType, BlockPos blockPos, BlockState blockState) {
         super(blockEntityType, blockPos, blockState);
@@ -54,48 +52,25 @@ public abstract class KeyLockedBlockEntity extends NamedBlockEntity implements R
     }
 
     @Override
-    public ResourceHandler<ItemResource> getResourceHandler() {
-        return this.itemHandler;
+    public void setItems(NonNullList<ItemStack> items) {
+        this.items = items;
     }
 
     @Override
-    public void setLootTable(@Nullable ResourceKey<LootTable> lootTable) {
-        this.lootTable = lootTable;
-    }
-
-    @Override
-    public @Nullable ResourceKey<LootTable> getLootTable() {
-        return this.lootTable;
-    }
-
-    @Override
-    public void setLootTableSeed(long lootTableSeed) {
-        this.lootTableSeed = lootTableSeed;
-    }
-
-    @Override
-    public long getLootTableSeed() {
-        return this.lootTableSeed;
+    public NonNullList<ItemStack> getItems() {
+        return this.items;
     }
 
     @Override
     protected void loadAdditional(ValueInput input) {
         super.loadAdditional(input);
         KeyLock.fromTag(input, this::setKeyLock);
-
-        if (tryLoadLootTable(input)) {
-            this.itemHandler.deserialize(input);
-        }
     }
 
     @Override
     protected void saveAdditional(ValueOutput output) {
         super.saveAdditional(output);
         this.keyLock.addToTag(output);
-
-        if (!trySaveLootTable(output)) {
-            this.itemHandler.serialize(output);
-        }
     }
 
     public boolean canUnlock(ItemStack itemStack) {
@@ -126,13 +101,6 @@ public abstract class KeyLockedBlockEntity extends NamedBlockEntity implements R
     protected void applyImplicitComponents(DataComponentGetter componentGetter) {
         super.applyImplicitComponents(componentGetter);
         this.keyLock = componentGetter.getOrDefault(GalacticraftDataComponents.KEY_LOCK, KeyLock.UNLOCKED);
-
-        SeededContainerLoot seededContainerLoot = componentGetter.get(DataComponents.CONTAINER_LOOT);
-
-        if (seededContainerLoot != null) {
-            this.lootTable = seededContainerLoot.lootTable();
-            this.lootTableSeed = seededContainerLoot.seed();
-        }
     }
 
     @Override
@@ -142,17 +110,5 @@ public abstract class KeyLockedBlockEntity extends NamedBlockEntity implements R
         if (isLocked()) {
             components.set(GalacticraftDataComponents.KEY_LOCK, getKeyLock());
         }
-
-        if (this.lootTable != null) {
-            components.set(DataComponents.CONTAINER_LOOT, new SeededContainerLoot(this.lootTable, this.lootTableSeed));
-        }
-    }
-
-    @Override
-    public void removeComponentsFromTag(ValueOutput output) {
-        super.removeComponentsFromTag(output);
-        output.discard(KeyLock.TAG_KEY);
-        output.discard(RandomizableContainer.LOOT_TABLE_TAG);
-        output.discard(RandomizableContainer.LOOT_TABLE_SEED_TAG);
     }
 }

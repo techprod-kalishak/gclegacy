@@ -47,7 +47,7 @@ public class EvolvedSkeleton extends Skeleton implements EvolvedMonster {
     @Override
     protected void defineSynchedData(SynchedEntityData.Builder entityData) {
         super.defineSynchedData(entityData);
-        this.entityData.set(DATA_PITCH_ID, 0.0F);
+        entityData.define(DATA_PITCH_ID, 0.0F);
     }
 
     public float getSpinY() {

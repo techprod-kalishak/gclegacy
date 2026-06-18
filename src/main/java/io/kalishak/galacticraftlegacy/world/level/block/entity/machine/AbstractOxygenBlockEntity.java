@@ -10,8 +10,12 @@ package io.kalishak.galacticraftlegacy.world.level.block.entity.machine;
 import io.kalishak.galacticraftlegacy.attachment.GalacticraftAttachments;
 import io.kalishak.galacticraftlegacy.transfer.ResourcefulHelper;
 import io.kalishak.galacticraftlegacy.transfer.capability.fluid.SingleTankResourceHandler;
+import io.kalishak.galacticraftlegacy.transfer.capability.fluid.TankWrapper;
+import io.kalishak.galacticraftlegacy.transfer.capability.fluid.WorldlyTankWrapper;
 import io.kalishak.galacticraftlegacy.transfer.node.FluidNodeNetwork;
 import io.kalishak.galacticraftlegacy.transfer.node.object.OxygenConsumer;
+import io.kalishak.galacticraftlegacy.world.inventory.Tank;
+import io.kalishak.galacticraftlegacy.world.inventory.WorldlyTank;
 import io.kalishak.galacticraftlegacy.world.item.component.GalacticraftDataComponents;
 import io.kalishak.galacticraftlegacy.world.level.material.fluid.GalacticraftFluids;
 import net.minecraft.core.BlockPos;
@@ -26,14 +30,16 @@ import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
+import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.SimpleFluidContent;
 import net.neoforged.neoforge.transfer.ResourceHandler;
 import net.neoforged.neoforge.transfer.fluid.FluidResource;
 import net.neoforged.neoforge.transfer.transaction.Transaction;
 import org.jspecify.annotations.Nullable;
 
-public abstract class AbstractOxygenBlockEntity extends AbstractMachineBlockEntity {
+public abstract class AbstractOxygenBlockEntity extends AbstractMachineBlockEntity implements Tank {
     protected final int oxygenPerTick;
+    protected FluidStack oxygenTank = FluidStack.EMPTY;
     protected final SingleTankResourceHandler oxygenHandler;
     protected int lastOxygenAmount;
 
@@ -50,11 +56,19 @@ public abstract class AbstractOxygenBlockEntity extends AbstractMachineBlockEnti
         };
     }
 
-    protected static <M extends AbstractOxygenBlockEntity> void registerInputItemCapability(BlockEntityType<? extends M> blockEntity, RegisterCapabilitiesEvent event) {
+    public static <M extends AbstractOxygenBlockEntity> void registerEnergyFluidItemCapability(BlockEntityType<M> blockEntity, RegisterCapabilitiesEvent event) {
+        registerItemCapability(blockEntity, event);
+        registerEnergyCapability(blockEntity, event);
         event.registerBlockEntity(
-                Capabilities.Item.BLOCK,
+                Capabilities.Fluid.BLOCK,
                 blockEntity,
-                (be, _) -> be.items
+                (machine, context) -> {
+                    if (machine instanceof WorldlyTank worldlyTank) {
+                        return new WorldlyTankWrapper(worldlyTank, context);
+                    }
+
+                    return new TankWrapper(machine);
+                }
         );
     }
 
@@ -133,24 +147,58 @@ public abstract class AbstractOxygenBlockEntity extends AbstractMachineBlockEnti
     @Override
     protected void saveAdditional(ValueOutput output) {
         super.saveAdditional(output);
-        this.oxygenHandler.serialize(output);
+        output.store("OxygenTank", FluidStack.OPTIONAL_CODEC, this.oxygenTank);
     }
 
     @Override
     protected void loadAdditional(ValueInput input) {
         super.loadAdditional(input);
-        this.oxygenHandler.deserialize(input);
+        this.oxygenTank = input.read("OxygenTank", FluidStack.OPTIONAL_CODEC).orElse(FluidStack.EMPTY);
     }
 
     @Override
     protected void applyImplicitComponents(DataComponentGetter components) {
         super.applyImplicitComponents(components);
-        this.oxygenHandler.setFluidStack(components.getOrDefault(GalacticraftDataComponents.FLUID_TANK, SimpleFluidContent.EMPTY).copy());
+        this.oxygenTank = components.getOrDefault(GalacticraftDataComponents.FLUID_TANK, SimpleFluidContent.EMPTY).copy();
     }
 
     @Override
     protected void collectImplicitComponents(DataComponentMap.Builder components) {
         super.collectImplicitComponents(components);
-        components.set(GalacticraftDataComponents.FLUID_TANK, SimpleFluidContent.copyOf(this.oxygenHandler.getFluidStack()));
+        components.set(GalacticraftDataComponents.FLUID_TANK, SimpleFluidContent.copyOf(this.oxygenTank));
+    }
+
+    @Override
+    public FluidStack getFluid(int index) {
+        return null;
+    }
+
+    @Override
+    public FluidStack removeFluid(int index, int amount) {
+        FluidStack stack = this.oxygenTank.copy();
+        onTankChange(index, stack);
+        stack.shrink(amount);
+
+        this.oxygenTank = stack.isEmpty() ? FluidStack.EMPTY : stack;
+
+        return stack;
+    }
+
+    @Override
+    public FluidStack removeNoUpdate(int index) {
+        FluidStack removed = this.oxygenTank.copy();
+
+        this.oxygenTank = FluidStack.EMPTY;
+        return removed;
+    }
+
+    @Override
+    public void setFluid(int index, FluidStack fluidStack) {
+        this.oxygenTank = fluidStack.copy();
+    }
+
+    @Override
+    public void onTankChange(int index, FluidStack previousContents) {
+
     }
 }

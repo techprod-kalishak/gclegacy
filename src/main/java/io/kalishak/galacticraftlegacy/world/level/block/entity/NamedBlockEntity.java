@@ -8,22 +8,18 @@
 package io.kalishak.galacticraftlegacy.world.level.block.entity;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.component.DataComponentGetter;
-import net.minecraft.core.component.DataComponentMap;
-import net.minecraft.core.component.DataComponents;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.ComponentSerialization;
-import net.minecraft.world.MenuProvider;
-import net.minecraft.world.Nameable;
-import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.NonNullList;
+import net.minecraft.world.ContainerHelper;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
-import org.jspecify.annotations.Nullable;
+import net.neoforged.neoforge.transfer.item.ItemResource;
 
-public abstract class NamedBlockEntity extends BlockEntity implements MenuProvider, Nameable {
-    private @Nullable Component name;
+public abstract class NamedBlockEntity extends BaseContainerBlockEntity {
+    protected NonNullList<ItemStack> items = NonNullList.withSize(getContainerSize(), ItemStack.EMPTY);
 
     public NamedBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState blockState) {
         super(type, pos, blockState);
@@ -32,41 +28,27 @@ public abstract class NamedBlockEntity extends BlockEntity implements MenuProvid
     @Override
     protected void loadAdditional(ValueInput input) {
         super.loadAdditional(input);
-        this.name = parseCustomNameSafe(input, "CustomName");
+        this.items = NonNullList.withSize(getContainerSize(), ItemStack.EMPTY);
+        ContainerHelper.loadAllItems(input, this.items);
     }
 
     @Override
     protected void saveAdditional(ValueOutput output) {
         super.saveAdditional(output);
-        output.storeNullable("CustomName", ComponentSerialization.CODEC, this.name);
+        ContainerHelper.saveAllItems(output, this.items);
     }
 
-    protected abstract Component getDefaultName();
-
-    @Override
-    public Component getName() {
-        return this.name != null ? this.name : getDefaultName();
+    public void set(int index, ItemResource resource, int amount) {
+        setItem(index, resource.toStack(amount));
     }
 
     @Override
-    public Component getDisplayName() {
-        return getName();
+    protected NonNullList<ItemStack> getItems() {
+        return this.items;
     }
 
     @Override
-    public @Nullable Component getCustomName() {
-        return this.name;
-    }
-
-    @Override
-    protected void applyImplicitComponents(DataComponentGetter componentGetter) {
-        super.applyImplicitComponents(componentGetter);
-        this.name = componentGetter.get(DataComponents.CUSTOM_NAME);
-    }
-
-    @Override
-    protected void collectImplicitComponents(DataComponentMap.Builder components) {
-        super.collectImplicitComponents(components);
-        components.set(DataComponents.CUSTOM_NAME, this.name);
+    protected void setItems(NonNullList<ItemStack> items) {
+        this.items = items;
     }
 }

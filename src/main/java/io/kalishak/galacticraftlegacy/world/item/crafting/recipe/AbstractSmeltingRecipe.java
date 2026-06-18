@@ -27,10 +27,8 @@ import org.jspecify.annotations.Nullable;
 
 import java.util.List;
 
-/**
- * A copy of {@link AbstractCookingRecipe} with {@link net.neoforged.neoforge.transfer.ResourceHandler} backed input
- */
-public abstract class AbstractSmeltingRecipe extends MachineRecipe<SimpleResourceInput> {
+
+public abstract class AbstractSmeltingRecipe extends MachineRecipe<SingleRecipeInput> {
     protected final AbstractCookingRecipe.CookingBookInfo cookingCategory;
     protected final Ingredient ingredient;
     protected final int cookingTime;
@@ -58,30 +56,8 @@ public abstract class AbstractSmeltingRecipe extends MachineRecipe<SimpleResourc
     }
 
     @Override
-    public boolean matches(SimpleResourceInput input, Level level) {
-        return this.ingredient.acceptsItem(input.getResource(0).typeHolder());
-    }
-
-    @Override
-    public ItemStack disassembleIngredients(SimpleResourceInput resourceInput, @Nullable Transaction tx, HolderGetter.Provider registries, boolean simulate) {
-        ItemResource itemResource = resourceInput.getResource(0);
-
-        if (itemResource.isEmpty()) return ItemStack.EMPTY;
-
-        try (Transaction childTx = Transaction.open(tx)) {
-            if (this.ingredient.acceptsItem(itemResource.typeHolder())) {
-                if (resourceInput.extract(0, itemResource, 1, childTx) > 0) {
-
-                    if (!simulate) {
-                        childTx.commit();
-                    }
-
-                    return assemble(resourceInput);
-                }
-            }
-        }
-
-        return ItemStack.EMPTY;
+    public boolean matches(SingleRecipeInput input, Level level) {
+        return this.ingredient.acceptsItem(input.getItem(0).typeHolder());
     }
 
     @Override

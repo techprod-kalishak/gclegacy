@@ -9,6 +9,7 @@ package io.kalishak.galacticraftlegacy.world.level.dimension;
 
 import io.kalishak.galacticraftlegacy.Constants;
 import io.kalishak.galacticraftlegacy.client.renderer.environment.MoonSkyRenderer;
+import io.kalishak.galacticraftlegacy.client.renderer.environment.OrbitalSkyRenderer;
 import io.kalishak.galacticraftlegacy.client.renderer.environment.SpaceCloudsRenderer;
 import io.kalishak.galacticraftlegacy.client.renderer.environment.SpaceWeatherRenderer;
 import io.kalishak.galacticraftlegacy.data.GalacticraftTags;
@@ -56,9 +57,10 @@ public class GalacticraftDimensionTypes {
                         GalacticraftTags.Blocks.INFINIBURN_OPEN_SPACE,
                         0.0F,
                         new DimensionType.MonsterSettings(ConstantInt.ZERO, 0),
-                        DimensionType.Skybox.END,
+                        DimensionType.Skybox.OVERWORLD,
                         CardinalLighting.Type.DEFAULT,
                         EnvironmentAttributeMap.builder()
+                                .set(NeoForgeEnvironmentAttributes.CUSTOM_SKYBOX, OrbitalSkyRenderer.ID)
                                 .set(EnvironmentAttributes.BED_RULE, GalacticraftWorldAttributes.BED_RULE_CRYO_CHAMBER)
                                 .set(EnvironmentAttributes.WATER_EVAPORATES, true)
                                 .set(GalacticraftEnvironmentAttributes.GRAVITY.get(), 0.01F)
@@ -112,7 +114,7 @@ public class GalacticraftDimensionTypes {
                         GalacticraftTags.Blocks.INFINIBURN_OPEN_SPACE,
                         0.0F,
                         new DimensionType.MonsterSettings(ConstantInt.of(6), 15),
-                        DimensionType.Skybox.OVERWORLD,
+                        DimensionType.Skybox.NONE,
                         CardinalLighting.Type.DEFAULT,
                         EnvironmentAttributeMap.builder()
                                 .set(EnvironmentAttributes.BED_RULE, GalacticraftWorldAttributes.BED_RULE_CRYO_CHAMBER)
@@ -162,7 +164,7 @@ public class GalacticraftDimensionTypes {
                         GalacticraftTags.Blocks.INFINIBURN_VENUS,
                         0.0F,
                         new DimensionType.MonsterSettings(ConstantInt.of(6), 15),
-                        DimensionType.Skybox.OVERWORLD,
+                        DimensionType.Skybox.NONE,
                         CardinalLighting.Type.DEFAULT,
                         EnvironmentAttributeMap.builder()
                                 .set(EnvironmentAttributes.BED_RULE, GalacticraftWorldAttributes.BED_RULE_CRYO_CHAMBER)

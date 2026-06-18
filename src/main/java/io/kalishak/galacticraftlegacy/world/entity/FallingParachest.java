@@ -78,7 +78,7 @@ public class FallingParachest extends FallingBlockEntity implements ParachuteFal
         this.zo = z;
 
         if (blockEntity instanceof ParachestBlockEntity parachestBlockEntity) {
-            this.inventory = NonNullList.withSize(parachestBlockEntity.size(), ItemStack.EMPTY);
+            this.inventory = NonNullList.withSize(parachestBlockEntity.getContainerSize(), ItemStack.EMPTY);
             parachestBlockEntity.copyItems(this.inventory);
             this.fuelTank = parachestBlockEntity.copyTank();
 

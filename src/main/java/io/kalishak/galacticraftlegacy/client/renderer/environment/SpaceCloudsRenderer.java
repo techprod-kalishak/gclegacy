@@ -25,6 +25,6 @@ public class SpaceCloudsRenderer implements CustomCloudsRenderer {
 
     @Override
     public boolean renderClouds(LevelRenderState levelRenderState, Vec3 camPos, CloudStatus cloudStatus, int cloudColor, float cloudHeight, int cloudRange, Matrix4fc modelViewMatrix) {
-        return true;
+        return false;
     }
 }

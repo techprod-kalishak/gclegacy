@@ -15,6 +15,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.biome.Climate;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.*;
 import net.minecraft.world.level.levelgen.synth.NormalNoise;
 
@@ -34,11 +35,11 @@ public final class GalacticraftNoiseGeneratorSettings {
         cxt.register(
                 MOON,
                 new NoiseGeneratorSettings(
-                        NoiseSettings.create(-64, 256, 2, 2),
+                        NoiseSettings.create(-32, 128, 2, 2),
                         GalacticraftBlocks.MOON_ROCK.get().defaultBlockState(),
-                        GalacticraftBlocks.EMPTY_AIR.get().defaultBlockState(),
+                        Blocks.AIR.defaultBlockState(),
                         GalacticraftNoiseRouterData.moon(densityFunctions, noiseParameters),
-                        GalacticraftSurfaceRuleData.moonNew(),
+                        GalacticraftSurfaceRuleData.moon(),
                         List.of(
                                 new Climate.ParameterPoint(
                                         Climate.Parameter.point(-2.0F),
@@ -50,7 +51,7 @@ public final class GalacticraftNoiseGeneratorSettings {
                                         0L
                                 )
                         ),
-                        0,
+                        120,
                         false,
                         false,
                         true,
@@ -61,13 +62,13 @@ public final class GalacticraftNoiseGeneratorSettings {
                 OPEN_SPACE,
                 new NoiseGeneratorSettings(
                         NoiseSettings.create(0, 256, 1, 1),
-                        GalacticraftBlocks.EMPTY_AIR.get().defaultBlockState(),
-                        GalacticraftBlocks.EMPTY_AIR.get().defaultBlockState(),
+                        Blocks.AIR.defaultBlockState(),
+                        Blocks.AIR.defaultBlockState(),
                         GalacticraftNoiseRouterData.empty(),
                         GalacticraftSurfaceRuleData.empty(),
                         List.of(),
                         0,
-                        false,
+                        true,
                         false,
                         false,
                         false

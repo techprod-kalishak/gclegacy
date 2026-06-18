@@ -12,7 +12,6 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.kalishak.galacticraftlegacy.world.item.GalacticraftItems;
 import io.kalishak.galacticraftlegacy.world.item.crafting.GalacticraftRecipeBookCategories;
-import io.kalishak.galacticraftlegacy.world.item.crafting.StaticRecipePattern;
 import net.minecraft.core.Holder;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
@@ -22,13 +21,14 @@ import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.RecipeBookCategory;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.ShapedRecipePattern;
 import net.minecraft.world.item.crafting.display.SlotDisplay;
 
 public class AnvilCompressingRecipe extends CompressingRecipe {
     public static final MapCodec<AnvilCompressingRecipe> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             CommonInfo.MAP_CODEC.forGetter(compressingRecipe -> compressingRecipe.commonInfo),
             Codec.STRING.optionalFieldOf("group", "").forGetter(AnvilCompressingRecipe::group),
-            StaticRecipePattern.MAP_CODEC.forGetter(compressingRecipe -> compressingRecipe.pattern),
+            ShapedRecipePattern.MAP_CODEC.forGetter(compressingRecipe -> compressingRecipe.pattern),
             ItemStackTemplate.CODEC.fieldOf("result").forGetter(AnvilCompressingRecipe::result),
             Codec.INT.optionalFieldOf("compressing_time", 200).forGetter(AnvilCompressingRecipe::compressingTime),
             Codec.FLOAT.optionalFieldOf("experience", 0.0F).forGetter(AnvilCompressingRecipe::experience)
@@ -36,7 +36,7 @@ public class AnvilCompressingRecipe extends CompressingRecipe {
     public static final StreamCodec<RegistryFriendlyByteBuf, AnvilCompressingRecipe> STREAM_CODEC = StreamCodec.composite(
             CommonInfo.STREAM_CODEC, compressingRecipe -> compressingRecipe.commonInfo,
             ByteBufCodecs.STRING_UTF8, AnvilCompressingRecipe::group,
-            StaticRecipePattern.STREAM_CODEC, compressingRecipe -> compressingRecipe.pattern,
+            ShapedRecipePattern.STREAM_CODEC, compressingRecipe -> compressingRecipe.pattern,
             ItemStackTemplate.STREAM_CODEC, AnvilCompressingRecipe::result,
             ByteBufCodecs.INT, AnvilCompressingRecipe::compressingTime,
             ByteBufCodecs.FLOAT, AnvilCompressingRecipe::experience,
@@ -44,7 +44,7 @@ public class AnvilCompressingRecipe extends CompressingRecipe {
     );
     private final float experience;
 
-    public AnvilCompressingRecipe(CommonInfo commonInfo, String group, StaticRecipePattern pattern, ItemStackTemplate result, int compressingTime, float experience) {
+    public AnvilCompressingRecipe(CommonInfo commonInfo, String group, ShapedRecipePattern pattern, ItemStackTemplate result, int compressingTime, float experience) {
         super(commonInfo, group, pattern, result, compressingTime);
         this.experience = experience;
     }

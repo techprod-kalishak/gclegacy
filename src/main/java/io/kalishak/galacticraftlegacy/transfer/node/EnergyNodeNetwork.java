@@ -28,6 +28,7 @@ import net.neoforged.neoforge.network.PacketDistributor;
 import net.neoforged.neoforge.transfer.energy.EnergyHandler;
 import net.neoforged.neoforge.transfer.transaction.SnapshotJournal;
 import net.neoforged.neoforge.transfer.transaction.Transaction;
+import org.jetbrains.annotations.VisibleForTesting;
 import org.jspecify.annotations.NonNull;
 import oshi.util.tuples.Pair;
 
@@ -36,6 +37,7 @@ import java.util.*;
 public class EnergyNodeNetwork extends NodeNetwork {
     protected final Map<BlockPos, Acceptor> acceptors = Maps.newHashMap();
     private final Snapshot snapshot = new Snapshot();
+    @VisibleForTesting
     protected int amount;
 
     public EnergyNodeNetwork(Level level) {

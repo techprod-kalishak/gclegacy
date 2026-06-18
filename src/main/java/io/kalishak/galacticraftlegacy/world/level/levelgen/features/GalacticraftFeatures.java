@@ -19,12 +19,14 @@ import net.minecraft.util.valueproviders.ConstantInt;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 public class GalacticraftFeatures {
     private static final DeferredRegister<Feature<?>> REGISTRY = DeferredRegister.create(Registries.FEATURE, Galacticraft.MODID);
+    public static final ResourceKey<ConfiguredFeature<?, ?>> SPACE_STATION_KEY = key("space_station");
 
     public static final DeferredHolder<Feature<?>, CrudeOilPoolFeature> CRUDE_OIL_POOL = REGISTRY.register(
             "crude_oil_pool",
@@ -33,6 +35,10 @@ public class GalacticraftFeatures {
     public static final DeferredHolder<Feature<?>, CraterFeature> CRATER = REGISTRY.register(
             "crater",
             CraterFeature::new
+    );
+    public static final DeferredHolder<Feature<?>, SpaceStationFeature> SPACE_STATION = REGISTRY.register(
+            "space_station",
+            SpaceStationFeature::new
     );
 
     public static void init(IEventBus bus) {
@@ -45,6 +51,8 @@ public class GalacticraftFeatures {
         MoonFeatures.bootstrap(cxt);
         OverworldFeatures.bootstrap(cxt);
         VenusFeatures.bootstrap(cxt);
+
+        cxt.register(SPACE_STATION_KEY, new ConfiguredFeature<>(SPACE_STATION.get(), new NoneFeatureConfiguration()));
     }
 
     static ResourceKey<ConfiguredFeature<?, ?>> key(String name) {

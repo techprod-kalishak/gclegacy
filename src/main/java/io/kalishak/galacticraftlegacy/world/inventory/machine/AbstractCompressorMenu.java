@@ -8,46 +8,48 @@
 package io.kalishak.galacticraftlegacy.world.inventory.machine;
 
 import io.kalishak.galacticraftlegacy.EnumExtensions;
-import io.kalishak.galacticraftlegacy.transfer.ResourcefulHelper;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.AlloyCompressor;
 import net.minecraft.util.Mth;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.StackedItemContents;
-import net.minecraft.world.inventory.ContainerData;
-import net.minecraft.world.inventory.MenuType;
-import net.minecraft.world.inventory.RecipeBookMenu;
-import net.minecraft.world.inventory.RecipeBookType;
+import net.minecraft.world.inventory.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.neoforged.neoforge.capabilities.Capabilities;
-import net.neoforged.neoforge.transfer.IndexModifier;
 import net.neoforged.neoforge.transfer.ResourceHandler;
 import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.neoforged.neoforge.transfer.item.ResourceHandlerSlot;
+import net.neoforged.neoforge.transfer.item.VanillaContainerWrapper;
+
+import java.util.function.Function;
 
 public abstract class AbstractCompressorMenu extends RecipeBookMenu {
     protected final AlloyCompressor compressor;
     protected final ContainerData dataAccess;
-    protected final ResourceHandler<ItemResource> compressorInventory;
+    private final ResourceHandler<ItemResource> handler;
 
     public AbstractCompressorMenu(MenuType<?> menuType, int containerId, Inventory playerInventory, AlloyCompressor compressor, ContainerData dataAccess) {
         super(menuType, containerId);
         this.compressor = compressor;
         this.dataAccess = dataAccess;
-        this.compressorInventory = ResourcefulHelper.getResourceHandler(Capabilities.Item.BLOCK, ItemResource.EMPTY, (BlockEntity) compressor, null);
+        this.handler = VanillaContainerWrapper.of(this.compressor);
 
         addDataSlots(dataAccess);
     }
 
-    protected void addCompressorGrid(ResourceHandler<ItemResource> handler, IndexModifier<ItemResource> setter, int left, int top) {
+    protected void addCompressorGrid(int left, int top) {
         int index = 0;
+
         for (int x = 0; x < 3; x++) {
             for (int y = 0; y < 3; y++) {
-                addSlot(new ResourceHandlerSlot(handler, setter, index, left + x * 18, top + y * 18));
+                addSlot(new ResourceHandlerSlot(this.handler, this.compressor::set, index, left + x * 18, top + y * 18));
                 index++;
             }
         }
+    }
+
+    protected void addSlot(Function<ResourceHandler<ItemResource>, ? extends Slot> handler) {
+        addSlot(handler.apply(this.handler));
     }
 
     public float getCompressingProgress() {

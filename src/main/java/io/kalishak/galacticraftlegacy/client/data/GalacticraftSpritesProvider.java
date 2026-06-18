@@ -44,7 +44,6 @@ public class GalacticraftSpritesProvider extends SpriteSourceProvider {
                 ),
                 PalettedPermutations.DEFAULT_SEPARATOR
         ));
-        atlas(AtlasIds.CELESTIALS).addSource(new DirectoryLister("environment/celestial", ""));
         atlas(AtlasIds.CHESTS).addSource(new SingleFile(Constants.id("parachest")));
         atlas(AtlasIds.GUI).addSource(new DirectoryLister("gui/sprites", ""));
         atlas(CELESTIAL_BODIES).addSource(new DirectoryLister("galaxy", ""));

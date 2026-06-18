@@ -10,7 +10,6 @@ package io.kalishak.galacticraftlegacy.data.recipes.builder;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import io.kalishak.galacticraftlegacy.Constants;
-import io.kalishak.galacticraftlegacy.world.item.crafting.StaticRecipePattern;
 import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.AnvilCompressingRecipe;
 import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.CompressingRecipe;
 import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.ElectricCompressingRecipe;
@@ -24,6 +23,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.ShapedRecipePattern;
 import net.minecraft.world.level.ItemLike;
 import org.jspecify.annotations.Nullable;
 
@@ -115,7 +115,7 @@ public class CompressingRecipeBuilder implements RecipeBuilder {
 
     @Override
     public void save(RecipeOutput output, ResourceKey<Recipe<?>> id) {
-        StaticRecipePattern pattern = StaticRecipePattern.of(this.keys, this.rows);
+        ShapedRecipePattern pattern = ShapedRecipePattern.of(this.keys, this.rows);
         CompressingRecipe recipe = this.factory.create(
                 RecipeBuilder.createCraftingCommonInfo(true),
                 Objects.requireNonNullElse(this.group, ""),

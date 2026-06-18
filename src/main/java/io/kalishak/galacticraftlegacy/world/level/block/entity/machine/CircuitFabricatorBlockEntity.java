@@ -10,36 +10,30 @@ package io.kalishak.galacticraftlegacy.world.level.block.entity.machine;
 import io.kalishak.galacticraftlegacy.world.inventory.machine.CircuitFabricatorMenu;
 import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.CircuitRecipe;
 import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.GalacticraftRecipeType;
-import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.input.SimpleResourceInput;
 import io.kalishak.galacticraftlegacy.world.level.block.GalacticraftBlocks;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
+import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.RecipeHolder;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
-import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
-import net.neoforged.neoforge.transfer.EmptyResourceHandler;
-import net.neoforged.neoforge.transfer.RangedResourceHandler;
-import net.neoforged.neoforge.transfer.ResourceHandler;
 import net.neoforged.neoforge.transfer.energy.EnergyHandler;
-import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.neoforged.neoforge.transfer.transaction.Transaction;
 import org.jspecify.annotations.Nullable;
 
-public class CircuitFabricatorBlockEntity extends RecipeMachineBlockEntity<SimpleResourceInput, CircuitRecipe> {
+public class CircuitFabricatorBlockEntity extends RecipeMachineBlockEntity<CraftingInput, CircuitRecipe> implements WorldlyContainer {
     public static final int DATA_PROCESS_PROGRESS = 0;
     public static final int DATA_PROGRESS_TIME_TOTAL = 1;
     public static final int PROCESS_RETRACT_SPEED = 2;
@@ -51,6 +45,9 @@ public class CircuitFabricatorBlockEntity extends RecipeMachineBlockEntity<Simpl
     public static final int SLOT_INGREDIENT = 5;
     public static final int SLOT_OUTPUT = 6;
     public static final int SLOT_COUNT = 7;
+    public static final int[] BATTERY_SLOTS = new int[] { 0 };
+    public static final int[] INPUT_SLOTS = new int[] { 1, 2, 3, 4, 5 };
+    public static final int[] OUTPUT_SLOTS = new int[] { 6 };
     private int processProgress;
     private int processTimeTotal;
     private final ContainerData containerData = new ContainerData() {
@@ -81,106 +78,70 @@ public class CircuitFabricatorBlockEntity extends RecipeMachineBlockEntity<Simpl
         super(GalacticraftBlockEntityType.CIRCUIT_FABRICATOR.get(), pos, blockState, GalacticraftRecipeType.CIRCUIT.get());
     }
 
-    public static void serverTick(ServerLevel serverLevel, BlockPos tickerPos, BlockState tickerState, CircuitFabricatorBlockEntity circuitFabricator) {
-        boolean shouldUpdate = false;
-        boolean canProcess;
+    public static void serverTick(ServerLevel level, BlockPos pos, BlockState state, CircuitFabricatorBlockEntity entity) {
+        boolean changed = false;
 
-        extractBattery(circuitFabricator, false, BASIC_MACHINE_MAX_TRANSFER_RATE, null);
+        ItemStack mainIngredient = entity.inventory.get(SLOT_INGREDIENT);
+        boolean canOperate = entity.hasEnergyToOperate();
 
-        if (circuitFabricator.processTimeTotal > 0) {
-            circuitFabricator.processProgress++;
+        if (canOperate && !mainIngredient.isEmpty()) {
+            CraftingInput input = CraftingInput.of(2, 3, entity.inventory);
+
+            RecipeHolder<CircuitRecipe> recipe = entity.quickCheck.getRecipeFor(input, level).orElse(null);
+
+            if (recipe != null) {
+                int maxStackSize = entity.getMaxStackSize();
+                ItemStack result = recipe.value().assemble(input);
+
+                if (!result.isEmpty() && RecipeMachineBlockEntity.canProcess(entity.inventory, maxStackSize, result, entity.capacitor, entity.getMaxEnergyTransferRate(), SLOT_OUTPUT)) {
+                    entity.processProgress++;
+
+                    if (entity.processProgress == entity.processTimeTotal) {
+                        entity.processProgress = 0;
+                        entity.processTimeTotal = 400;
+                        process(entity.inventory, result, entity.capacitor, entity.getMaxEnergyTransferRate());
+                        changed = true;
+                    }
+                }
+            }
+        } else if (entity.processProgress > 0) {
+            entity.processProgress = Mth.clamp(entity.processProgress - PROCESS_RETRACT_SPEED, 0, entity.processTimeTotal);
         }
 
-        ItemResource ingredientResource = circuitFabricator.items.getResource(SLOT_INGREDIENT);
+        if (changed) {
+            setChanged(level, pos, state);
+        }
+    }
 
+    private static void process(NonNullList<ItemStack> items, ItemStack result, EnergyHandler energyHandler, int energyPerTick) {
         try (Transaction tx = Transaction.open(null)) {
-            SimpleResourceInput simpleResourceInput = new SimpleResourceInput(() -> circuitFabricator.items, SLOT_DIAMOND, SLOT_COUNT);
-            RecipeHolder<CircuitRecipe> recipeHolder = circuitFabricator.quickCheck.getRecipeFor(simpleResourceInput, serverLevel).orElse(null);
+            if (energyHandler.extract(energyPerTick, tx) >= energyPerTick) {
+                ItemStack inResultSlot = items.get(SLOT_OUTPUT);
 
-            canProcess = canProcess(serverLevel.registryAccess(), recipeHolder, simpleResourceInput, circuitFabricator.items, circuitFabricator.capacitor, tx);
-
-            if (circuitFabricator.processProgress <= 0 && !ingredientResource.isEmpty()) {
-                if (canProcess) {
-                    circuitFabricator.processTimeTotal = 200;
+                if (inResultSlot.isEmpty()) {
+                    items.set(SLOT_OUTPUT, result.copy());
+                } else {
+                    inResultSlot.grow(result.getCount());
                 }
-            } else if (circuitFabricator.processProgress == circuitFabricator.processTimeTotal && canProcess) {
-                if (process(serverLevel.registryAccess(), recipeHolder, simpleResourceInput, circuitFabricator.items, circuitFabricator.capacitor, tx)) {
-                    tx.commit();
-                    shouldUpdate = true;
 
-                    circuitFabricator.processTimeTotal = 0;
+                for (int i = SLOT_DIAMOND; i < SLOT_OUTPUT; i++) {
+                    ItemStack inSlot = items.get(i);
+                    inSlot.shrink(1);
                 }
             }
+
+            tx.commit();
         }
-
-        if (!canProcess || circuitFabricator.processProgress > 0) {
-            circuitFabricator.processProgress = Mth.clamp(circuitFabricator.processProgress - PROCESS_RETRACT_SPEED, 0, circuitFabricator.processTimeTotal);
-        } else {
-            circuitFabricator.processTimeTotal = 0;
-        }
-
-        if (shouldUpdate) {
-            BlockEntity.setChanged(serverLevel, tickerPos, tickerState);
-        }
-    }
-
-    private static boolean canProcess(RegistryAccess registryAccess, @Nullable RecipeHolder<CircuitRecipe> recipeHolder, SimpleResourceInput simpleResourceInput, ResourceHandler<ItemResource> items, EnergyHandler energyHandler, Transaction parentTx) {
-        if (hasRequiredIngredients(items, 1, 6) && recipeHolder != null) {
-            try (Transaction tx = Transaction.open(parentTx)) {
-                if (energyHandler.extract(CircuitFabricatorBlockEntity.BASIC_MACHINE_MAX_TRANSFER_RATE, tx) > 0) {
-                    ItemStack assembledResult = recipeHolder.value().assemble(simpleResourceInput);
-
-                    if (assembledResult.isEmpty()) return false;
-
-                    if (!recipeHolder.value().disassembleIngredients(simpleResourceInput, tx, registryAccess, true).isEmpty()) {
-                        if (items.insert(SLOT_OUTPUT, ItemResource.of(assembledResult), assembledResult.getCount(), tx) > 0) {
-                            tx.close();
-
-                            return true;
-                        }
-                    }
-                }
-            }
-        }
-
-        return false;
-    }
-
-    private static boolean process(RegistryAccess registryAccess, @Nullable RecipeHolder<CircuitRecipe> recipeHolder, SimpleResourceInput simpleResourceInput, ResourceHandler<ItemResource> items, EnergyHandler energyHandler, Transaction parentTx) {
-        if (recipeHolder != null && canProcess(registryAccess, recipeHolder, simpleResourceInput, items, energyHandler, parentTx)) {
-            try (Transaction tx = Transaction.open(parentTx)) {
-                if (energyHandler.extract(CircuitFabricatorBlockEntity.BASIC_MACHINE_MAX_TRANSFER_RATE, tx) > 0) {
-                    ItemStack assembledResult = recipeHolder.value().disassembleIngredients(simpleResourceInput, tx, registryAccess, false);
-
-                    if (items.insert(SLOT_OUTPUT, ItemResource.of(assembledResult.typeHolder()), assembledResult.getCount(), tx) > 0) {
-                        tx.commit();
-
-                        return true;
-                    }
-                }
-            }
-        }
-
-        return false;
     }
 
     public static void registerCapabilities(RegisterCapabilitiesEvent event) {
-        registerSingleEnergyInputEnergyHandler(Direction.EAST, GalacticraftBlockEntityType.CIRCUIT_FABRICATOR.get(), event);
-        event.registerBlockEntity(
-                Capabilities.Item.BLOCK,
-                GalacticraftBlockEntityType.CIRCUIT_FABRICATOR.get(),
-                (blockEntity, context) -> switch (context) {
-                    case UP -> RangedResourceHandler.of(() -> blockEntity.items, SLOT_BATTERY, SLOT_OUTPUT);
-                    case DOWN -> RangedResourceHandler.ofSingleIndex(() -> blockEntity.items, SLOT_OUTPUT);
-                    case null -> blockEntity.items;
-                    default -> EmptyResourceHandler.instance();
-                }
-        );
+        registerEnergyCapability(GalacticraftBlockEntityType.CIRCUIT_FABRICATOR.get(), event);
+        registerItemCapability(GalacticraftBlockEntityType.CIRCUIT_FABRICATOR.get(), event);
     }
 
     private static boolean checkRecipe(CircuitFabricatorBlockEntity machine, ServerLevel serverLevel) {
-        SimpleResourceInput simpleResourceInput = new SimpleResourceInput(() -> machine.items, SLOT_DIAMOND, SLOT_COUNT);
-        return machine.quickCheck.getRecipeFor(simpleResourceInput, serverLevel).isPresent();
+        CraftingInput input = CraftingInput.of(2, 3, machine.inventory);
+        return machine.quickCheck.getRecipeFor(input, serverLevel).isPresent();
     }
 
     @Override
@@ -198,7 +159,26 @@ public class CircuitFabricatorBlockEntity extends RecipeMachineBlockEntity<Simpl
     }
 
     @Override
-    public void set(int index, ItemResource resource, int amount) {
+    public int[] getSlotsForFace(Direction direction) {
+        if (direction == Direction.DOWN) {
+            return OUTPUT_SLOTS;
+        }
+
+        return direction == Direction.UP ? INPUT_SLOTS : BATTERY_SLOTS;
+    }
+
+    @Override
+    public boolean canPlaceItemThroughFace(int slot, ItemStack itemStack, @Nullable Direction direction) {
+        return canPlaceItem(slot, itemStack);
+    }
+
+    @Override
+    public boolean canTakeItemThroughFace(int slot, ItemStack itemStack, Direction direction) {
+        return direction == Direction.DOWN;
+    }
+
+    @Override
+    public void setItem(int slot, ItemStack itemStack) {
         if (hasRequiredIngredients(this, SLOT_DIAMOND, SLOT_OUTPUT)) {
             if (this.level instanceof ServerLevel serverLevel) {
                 if (checkRecipe(this, serverLevel) && this.processTimeTotal == 0) {
@@ -210,11 +190,11 @@ public class CircuitFabricatorBlockEntity extends RecipeMachineBlockEntity<Simpl
             }
         }
 
-        super.set(index, resource, amount);
+        super.setItem(slot, itemStack);
     }
 
     @Override
-    protected int containerSize() {
+    public int getContainerSize() {
         return SLOT_COUNT;
     }
 
@@ -229,7 +209,7 @@ public class CircuitFabricatorBlockEntity extends RecipeMachineBlockEntity<Simpl
     }
 
     @Override
-    public @Nullable AbstractContainerMenu createMenu(int containerId, Inventory playerInventory, Player player) {
+    public AbstractContainerMenu createMenu(int containerId, Inventory playerInventory) {
         return new CircuitFabricatorMenu(containerId, playerInventory, this, this.containerData);
     }
 }

@@ -40,6 +40,7 @@ public final class GalacticraftEnvironmentAttributes {
                     .defaultValue(0.08F)
                     .valueRange(AttributeRange.ofFloat(-1.0F, 1.0F))
                     .syncable()
+                    .notPositional()
                     ::build
     );
 

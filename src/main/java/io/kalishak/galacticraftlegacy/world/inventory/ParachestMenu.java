@@ -9,6 +9,7 @@ package io.kalishak.galacticraftlegacy.world.inventory;
 
 import io.kalishak.galacticraftlegacy.transfer.ResourcefulHelper;
 import io.kalishak.galacticraftlegacy.world.inventory.slot.CapabilityHandlerSlot;
+import io.kalishak.galacticraftlegacy.world.inventory.slot.NotPlaceableResourceHandlerSlot;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityType;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.ParachestBlockEntity;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -37,17 +38,16 @@ public class ParachestMenu extends AbstractContainerMenu {
         this.fluidResourceHandler = ResourcefulHelper.getResourceHandler(Capabilities.Fluid.BLOCK, FluidResource.EMPTY, parachest, null);
         this.parachest = parachest;
         this.player = playerInventory.player;
-        this.rows = (parachest.size() - 3) / 9;
+        this.rows = (parachest.getContainerSize() - 3) / 9;
 
-        addSlot(new CapabilityHandlerSlot<>(this.resourceHandler, parachest::setTankItem, Capabilities.Fluid.ITEM, 0,  75, (this.rows == 0 ? 24 : 26) + this.rows * 18));
-        addSlot(new ResourceHandlerSlot(this.resourceHandler, (index, resource, amount) -> {}, 1, 125, (this.rows == 0 ? 24 : 26) + this.rows * 18));
-        addSlot(new ResourceHandlerSlot(this.resourceHandler, (index, resource, amount) -> {}, 2, 125 + 18, (this.rows == 0 ? 24 : 26) + this.rows * 18));
+        addSlot(new CapabilityHandlerSlot<>(this.resourceHandler, parachest::set, Capabilities.Fluid.ITEM, 0,  75, (this.rows == 0 ? 24 : 26) + this.rows * 18));
+        addSlot(new NotPlaceableResourceHandlerSlot(this.resourceHandler, 1, 125, (this.rows == 0 ? 24 : 26) + this.rows * 18));
+        addSlot(new NotPlaceableResourceHandlerSlot(this.resourceHandler, 2, 125 + 18, (this.rows == 0 ? 24 : 26) + this.rows * 18));
 
         for (int i = 0; i < this.rows; i++) {
             for (int j = 0; j < 9; j++) {
-                addSlot(new ResourceHandlerSlot(
+                addSlot(new NotPlaceableResourceHandlerSlot(
                         this.resourceHandler,
-                        (index, resource, amount) -> {},
                         2 + j + i * 9,
                         8 + j * 18,
                         18 + j * 18

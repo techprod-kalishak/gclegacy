@@ -62,7 +62,8 @@ public class GalacticraftNoiseRouterData {
     }
 
     public static NoiseRouter moon(HolderGetter<DensityFunction> densityFunctions, HolderGetter<NormalNoise.NoiseParameters> noiseParameters) {
-        DensityFunction caveFunction = slideCaves(densityFunctions, -64, 256);
+        DensityFunction caveFunction = slideCaves(densityFunctions, 10, 100);
+
         return template(densityFunctions, noiseParameters, caveFunction);
     }
 
@@ -79,10 +80,10 @@ public class GalacticraftNoiseRouterData {
         return slide(
                 getFunction(
                         densityFunctions,
-                        NoiseRouterData.CONTINENTS),
+                        NoiseRouterData.CONTINENTS_LARGE),
                 minY,
                 height,
-                24,
+                16,
                 0,
                 0.9375,
                 -8,

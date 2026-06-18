@@ -4,13 +4,13 @@
     "Name": "galacticraftlegacy:moon_rock"
   },
   "default_fluid": {
-    "Name": "galacticraftlegacy:empty_air"
+    "Name": "minecraft:air"
   },
   "disable_mob_generation": false,
   "legacy_random_source": false,
   "noise": {
-    "height": 256,
-    "min_y": -64,
+    "height": 128,
+    "min_y": -32,
     "size_horizontal": 2,
     "size_vertical": 2
   },
@@ -36,9 +36,9 @@
                 "argument1": {
                   "type": "minecraft:y_clamped_gradient",
                   "from_value": 0.0,
-                  "from_y": -72,
+                  "from_y": 2,
                   "to_value": 1.0,
-                  "to_y": -40
+                  "to_y": 34
                 },
                 "argument2": {
                   "type": "minecraft:add",
@@ -51,9 +51,9 @@
                       "argument1": {
                         "type": "minecraft:y_clamped_gradient",
                         "from_value": 1.0,
-                        "from_y": 168,
+                        "from_y": 94,
                         "to_value": 0.0,
-                        "to_y": 192
+                        "to_y": 110
                       },
                       "argument2": {
                         "type": "minecraft:add",
@@ -97,7 +97,7 @@
     "vein_toggle": 0.1
   },
   "ore_veins_enabled": true,
-  "sea_level": 0,
+  "sea_level": 120,
   "spawn_target": [
     {
       "continentalness": [
@@ -116,28 +116,206 @@
     "type": "minecraft:sequence",
     "sequence": [
       {
-        "type": "minecraft:block",
-        "result_state": {
-          "Name": "galacticraftlegacy:moon_turf",
-          "Properties": {
-            "axis": "y",
-            "persistent": "false"
+        "type": "minecraft:condition",
+        "if_true": {
+          "type": "minecraft:vertical_gradient",
+          "false_at_and_above": {
+            "above_bottom": 5
+          },
+          "random_name": "minecraft:bedrock_floor",
+          "true_at_and_below": {
+            "above_bottom": 0
+          }
+        },
+        "then_run": {
+          "type": "minecraft:block",
+          "result_state": {
+            "Name": "minecraft:bedrock"
           }
         }
       },
       {
-        "type": "minecraft:block",
-        "result_state": {
-          "Name": "galacticraftlegacy:moon_dirt",
-          "Properties": {
-            "persistent": "false"
-          }
-        }
-      },
-      {
-        "type": "minecraft:block",
-        "result_state": {
-          "Name": "galacticraftlegacy:moon_rock"
+        "type": "minecraft:condition",
+        "if_true": {
+          "type": "minecraft:steep"
+        },
+        "then_run": {
+          "type": "minecraft:sequence",
+          "sequence": [
+            {
+              "type": "minecraft:condition",
+              "if_true": {
+                "type": "minecraft:biome",
+                "biome_is": [
+                  "galacticraftlegacy:moon_plains"
+                ]
+              },
+              "then_run": {
+                "type": "minecraft:sequence",
+                "sequence": [
+                  {
+                    "type": "minecraft:condition",
+                    "if_true": {
+                      "type": "minecraft:noise_threshold",
+                      "max_threshold": 0.12,
+                      "min_threshold": -0.12,
+                      "noise": "minecraft:continentalness"
+                    },
+                    "then_run": {
+                      "type": "minecraft:block",
+                      "result_state": {
+                        "Name": "galacticraftlegacy:moon_turf",
+                        "Properties": {
+                          "axis": "y",
+                          "persistent": "false"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "minecraft:block",
+                    "result_state": {
+                      "Name": "galacticraftlegacy:moon_dirt",
+                      "Properties": {
+                        "persistent": "false"
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "type": "minecraft:condition",
+              "if_true": {
+                "type": "minecraft:biome",
+                "biome_is": [
+                  "galacticraftlegacy:moon_crater_oceans"
+                ]
+              },
+              "then_run": {
+                "type": "minecraft:sequence",
+                "sequence": [
+                  {
+                    "type": "minecraft:condition",
+                    "if_true": {
+                      "type": "minecraft:noise_threshold",
+                      "max_threshold": 0.4,
+                      "min_threshold": -0.4,
+                      "noise": "minecraft:surface"
+                    },
+                    "then_run": {
+                      "type": "minecraft:block",
+                      "result_state": {
+                        "Name": "galacticraftlegacy:moon_turf",
+                        "Properties": {
+                          "axis": "y",
+                          "persistent": "false"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "minecraft:condition",
+                    "if_true": {
+                      "type": "minecraft:y_above",
+                      "add_stone_depth": true,
+                      "anchor": {
+                        "above_bottom": 10
+                      },
+                      "surface_depth_multiplier": 0
+                    },
+                    "then_run": {
+                      "type": "minecraft:block",
+                      "result_state": {
+                        "Name": "galacticraftlegacy:moon_rock"
+                      }
+                    }
+                  },
+                  {
+                    "type": "minecraft:condition",
+                    "if_true": {
+                      "type": "minecraft:biome",
+                      "biome_is": [
+                        "galacticraftlegacy:moon_crater_oceans"
+                      ]
+                    },
+                    "then_run": {
+                      "type": "minecraft:condition",
+                      "if_true": {
+                        "type": "minecraft:stone_depth",
+                        "add_surface_depth": false,
+                        "offset": 0,
+                        "secondary_depth_range": 0,
+                        "surface_type": "floor"
+                      },
+                      "then_run": {
+                        "type": "minecraft:block",
+                        "result_state": {
+                          "Name": "galacticraftlegacy:moon_dirt",
+                          "Properties": {
+                            "persistent": "false"
+                          }
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "type": "minecraft:condition",
+              "if_true": {
+                "type": "minecraft:stone_depth",
+                "add_surface_depth": false,
+                "offset": 0,
+                "secondary_depth_range": 0,
+                "surface_type": "floor"
+              },
+              "then_run": {
+                "type": "minecraft:sequence",
+                "sequence": [
+                  {
+                    "type": "minecraft:condition",
+                    "if_true": {
+                      "type": "minecraft:not",
+                      "invert": {
+                        "type": "minecraft:noise_threshold",
+                        "max_threshold": 1.7976931348623157E308,
+                        "min_threshold": 0.54,
+                        "noise": "minecraft:netherrack"
+                      }
+                    },
+                    "then_run": {
+                      "type": "minecraft:condition",
+                      "if_true": {
+                        "type": "minecraft:y_above",
+                        "add_stone_depth": true,
+                        "anchor": {
+                          "above_bottom": 10
+                        },
+                        "surface_depth_multiplier": 0
+                      },
+                      "then_run": {
+                        "type": "minecraft:block",
+                        "result_state": {
+                          "Name": "galacticraftlegacy:moon_dirt",
+                          "Properties": {
+                            "persistent": "false"
+                          }
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "type": "minecraft:block",
+              "result_state": {
+                "Name": "galacticraftlegacy:moon_rock"
+              }
+            }
+          ]
         }
       }
     ]

@@ -1,12 +1,12 @@
 {
   "aquifers_enabled": false,
   "default_block": {
-    "Name": "galacticraftlegacy:empty_air"
+    "Name": "minecraft:air"
   },
   "default_fluid": {
-    "Name": "galacticraftlegacy:empty_air"
+    "Name": "minecraft:air"
   },
-  "disable_mob_generation": false,
+  "disable_mob_generation": true,
   "legacy_random_source": false,
   "noise": {
     "height": 256,

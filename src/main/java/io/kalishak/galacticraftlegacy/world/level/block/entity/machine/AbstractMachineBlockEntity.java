@@ -9,24 +9,31 @@ package io.kalishak.galacticraftlegacy.world.level.block.entity.machine;
 
 import io.kalishak.galacticraftlegacy.attachment.GalacticraftAttachments;
 import io.kalishak.galacticraftlegacy.attachment.block.SyncedEnergyHandler;
-import io.kalishak.galacticraftlegacy.transfer.ResourcefulHelper;
+import io.kalishak.galacticraftlegacy.transfer.capability.fluid.TankWrapper;
+import io.kalishak.galacticraftlegacy.transfer.capability.fluid.WorldlyTankWrapper;
 import io.kalishak.galacticraftlegacy.transfer.node.NodeNetwork;
+import io.kalishak.galacticraftlegacy.world.inventory.Tank;
+import io.kalishak.galacticraftlegacy.world.inventory.WorldlyTank;
 import io.kalishak.galacticraftlegacy.world.item.component.GalacticraftDataComponents;
-import io.kalishak.galacticraftlegacy.world.level.block.entity.NamedBlockEntity;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.wire.network.NetworkType;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.wire.network.TransmitterBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.NonNullList;
 import net.minecraft.core.component.DataComponentGetter;
 import net.minecraft.core.component.DataComponentMap;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
-import net.minecraft.world.Containers;
+import net.minecraft.world.ContainerHelper;
+import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.ItemContainerContents;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -34,23 +41,22 @@ import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
-import net.neoforged.neoforge.transfer.ResourceHandler;
 import net.neoforged.neoforge.transfer.access.ItemAccess;
 import net.neoforged.neoforge.transfer.energy.*;
 import net.neoforged.neoforge.transfer.item.ItemResource;
-import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
+import net.neoforged.neoforge.transfer.item.VanillaContainerWrapper;
+import net.neoforged.neoforge.transfer.item.WorldlyContainerWrapper;
 import net.neoforged.neoforge.transfer.transaction.Transaction;
-import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
-public abstract class AbstractMachineBlockEntity extends NamedBlockEntity implements TransmitterBlockEntity {
+public abstract class AbstractMachineBlockEntity extends BaseContainerBlockEntity implements TransmitterBlockEntity {
     public static final int BASIC_MACHINE_ENERGY_CAPACITY = 25000;
     public static final int BASIC_MACHINE_MAX_TRANSFER_RATE = 500;
     public static final int ADVANCED_MACHINE_ENERGY_CAPACITY = 50000;
     public static final int ADVANCED_MACHINE_MAX_TRANSFER_RATE = 750;
     public static final int MACHINE_ENERGY_LEAK = 5;
-    protected final ItemStacksResourceHandler items = new ItemStacksResourceHandler(containerSize());
-    protected final SimpleEnergyHandler capacitor = new SimpleEnergyHandler(energyCapacity(), maxTransferRate()) {
+    protected NonNullList<ItemStack> inventory = NonNullList.withSize(getContainerSize(), ItemStack.EMPTY);
+    protected final SimpleEnergyHandler capacitor = new SimpleEnergyHandler(getMaxEnergy(), getMaxEnergyTransferRate()) {
         @Override
         protected void onEnergyChanged(int previousAmount) {
             if (!AbstractMachineBlockEntity.this.isRemoved()) {
@@ -64,32 +70,56 @@ public abstract class AbstractMachineBlockEntity extends NamedBlockEntity implem
         super(type, pos, blockState);
     }
 
-    protected static <M extends AbstractMachineBlockEntity> void registerSingleEnergyInputEnergyHandler(@NonNull Direction direction, BlockEntityType<M> type, RegisterCapabilitiesEvent event) {
+    protected static <M extends AbstractMachineBlockEntity> void registerItemCapability(BlockEntityType<M> type, RegisterCapabilitiesEvent event) {
         event.registerBlockEntity(
-                Capabilities.Energy.BLOCK,
+                Capabilities.Item.BLOCK,
                 type,
-                (machine, cxt) -> {
-                    if (cxt == null || cxt == direction) {
-                        return machine.capacitor;
+                (blockEntity, context) -> {
+                    if (blockEntity instanceof WorldlyContainer worldlyContainer) {
+                        return new WorldlyContainerWrapper(worldlyContainer, context);
                     }
 
-                    return EmptyEnergyHandler.INSTANCE;
+                    return VanillaContainerWrapper.of(blockEntity);
                 }
         );
     }
 
-    protected static boolean extractBattery(ResourceHandler<ItemResource> itemResourceHandler, EnergyHandler energyHandler, boolean enableLeak, int energyBasePerOperation, int batterySlotIndex, int maxTransferRate, @Nullable Transaction tx) {
-        ItemResource battery = itemResourceHandler.getResource(batterySlotIndex);
+    protected static <M extends AbstractMachineBlockEntity> void registerFluidCapability(BlockEntityType<M> type, RegisterCapabilitiesEvent event) {
+        event.registerBlockEntity(
+                Capabilities.Fluid.BLOCK,
+                type,
+                (blockEntity, context) -> {
+                    if (blockEntity instanceof WorldlyTank worldlyTank) {
+                        return new WorldlyTankWrapper(worldlyTank, context);
+                    } else if (blockEntity instanceof Tank tank) {
+                        return new TankWrapper(tank);
+                    }
+
+                    return null;
+                }
+        );
+    }
+
+    protected static <M extends AbstractMachineBlockEntity> void registerEnergyCapability(BlockEntityType<M> type, RegisterCapabilitiesEvent event) {
+        event.registerBlockEntity(
+                Capabilities.Energy.BLOCK,
+                type,
+                (machine, _) -> machine.capacitor
+        );
+    }
+
+    protected static <M extends AbstractMachineBlockEntity> boolean extractBattery(M machine, boolean enableLeak, int energyBasePerOperation, @Nullable Transaction tx) {
+        ItemStack battery = machine.getItem(machine.getBatterySlotIndex());
         boolean doCommit = false;
 
         if (!battery.isEmpty()) {
-            EnergyHandler itemCapacitor = battery.toStack().getCapability(Capabilities.Energy.ITEM, ItemAccess.forHandlerIndex(itemResourceHandler, batterySlotIndex));
+            EnergyHandler itemCapacitor = battery.getCapability(Capabilities.Energy.ITEM, ItemAccess.forStack(battery));
 
             if (itemCapacitor != null && itemCapacitor.getAmountAsInt() > 0) {
-                int toMove = Math.min(energyHandler.getCapacityAsInt() - energyHandler.getAmountAsInt(), Math.min(itemCapacitor.getAmountAsInt(), maxTransferRate));
+                int toMove = Math.min(machine.capacitor.getCapacityAsInt() - machine.capacitor.getAmountAsInt(), Math.min(itemCapacitor.getAmountAsInt(), machine.getMaxEnergyTransferRate()));
 
                 try (Transaction childTx = Transaction.open(tx)) {
-                    if (EnergyHandlerUtil.move(itemCapacitor, energyHandler, toMove, childTx) > 0) {
+                    if (EnergyHandlerUtil.move(itemCapacitor, machine.capacitor, toMove, childTx) > 0) {
                         childTx.commit();
                         doCommit = true;
                     }
@@ -105,7 +135,7 @@ public abstract class AbstractMachineBlockEntity extends NamedBlockEntity implem
 
         if (toExtract > 0) {
             try (Transaction childTx = Transaction.open(tx)) {
-                if (energyHandler.extract(toExtract, childTx) > 0) {
+                if (machine.capacitor.extract(toExtract, childTx) > 0) {
                     childTx.commit();
                     doCommit = true;
                 }
@@ -113,18 +143,6 @@ public abstract class AbstractMachineBlockEntity extends NamedBlockEntity implem
         }
 
         return doCommit;
-    }
-
-    protected static <M extends AbstractMachineBlockEntity> boolean extractBattery(M machine, boolean enableLeak, int energyBasePerOperation, @Nullable Transaction tx) {
-        return extractBattery(
-                machine.items,
-                machine.capacitor,
-                enableLeak,
-                energyBasePerOperation,
-                machine.getBatterySlotIndex(),
-                machine.maxTransferRate(),
-                tx
-        );
     }
 
     /**
@@ -135,17 +153,25 @@ public abstract class AbstractMachineBlockEntity extends NamedBlockEntity implem
      * @return true if all the slots are filled
      */
     protected static boolean hasRequiredIngredients(AbstractMachineBlockEntity machine, int ingredientSlotStart, int ingredientSlotEnd) {
-        return ResourcefulHelper.orderedHandlerCopy(machine.items, ItemStack.EMPTY, ItemResource::toStack).subList(ingredientSlotStart, ingredientSlotEnd).stream().noneMatch(ItemStack::isEmpty);
+        return machine.inventory.subList(ingredientSlotStart, ingredientSlotEnd).stream().noneMatch(ItemStack::isEmpty);
     }
 
-    protected static boolean hasRequiredIngredients(ResourceHandler<ItemResource> resourceHandler, int ingredientSlotStart, int ingredientSlotEnd) {
+    protected static boolean hasRequiredIngredients(NonNullList<ItemStack> items, int ingredientSlotStart, int ingredientSlotEnd) {
         for (int i = ingredientSlotStart; i < ingredientSlotEnd; i++) {
-            if (resourceHandler.getResource(i).isEmpty()) {
+            if (items.get(i).isEmpty()) {
                 return false;
             }
         }
 
         return true;
+    }
+
+    protected static void extractIngredients(NonNullList<ItemStack> items, int startSlot, int endSlot) {
+        for (int i = startSlot; i <= endSlot; i++) {
+            ItemStack stack = items.get(i).copy();
+            stack.shrink(1);
+            items.set(i, stack);
+        }
     }
 
     protected static NodeNetwork getNetwork(Level level, BlockPos pos) {
@@ -169,24 +195,51 @@ public abstract class AbstractMachineBlockEntity extends NamedBlockEntity implem
         return this.machineStatus;
     }
 
-    protected abstract int containerSize();
-
     protected abstract int getBatterySlotIndex();
 
-    protected int energyCapacity() {
+    protected int[] getBatterySlots() {
+        return new int[] { getBatterySlotIndex() };
+    }
+
+    protected int getMaxEnergy() {
         return BASIC_MACHINE_ENERGY_CAPACITY;
     }
 
-    protected int maxTransferRate() {
+    protected int getMaxEnergyTransferRate() {
         return BASIC_MACHINE_MAX_TRANSFER_RATE;
     }
 
     protected boolean hasEnergyToOperate() {
-        return this.capacitor.getAmountAsInt() > maxTransferRate();
+        return this.capacitor.getAmountAsInt() > getMaxEnergyTransferRate();
     }
 
-    public void set(int index, ItemResource resource, int amount) {
-        this.items.set(index, resource, amount);
+    public final void set(int index, ItemResource resource, int amount) {
+        setItem(index, resource.toStack(amount));
+    }
+
+    @Override
+    protected void setItems(NonNullList<ItemStack> items) {
+        this.inventory = items;
+    }
+
+    @Override
+    public NonNullList<ItemStack> getItems() {
+        return this.inventory;
+    }
+
+    @Override
+    public void setItem(int slot, ItemStack itemStack) {
+        ItemStack currentStack = this.inventory.get(slot);
+        boolean sameItem = !itemStack.isEmpty() && ItemStack.isSameItemSameComponents(currentStack, itemStack);
+        this.inventory.set(slot, itemStack);
+        itemStack.limitSize(getMaxStackSize(itemStack));
+
+        if (!sameItem) {
+            onItemChange(slot);
+        }
+    }
+
+    protected void onItemChange(int slot) {
     }
 
     @Override
@@ -241,7 +294,8 @@ public abstract class AbstractMachineBlockEntity extends NamedBlockEntity implem
     @Override
     protected void loadAdditional(ValueInput input) {
         super.loadAdditional(input);
-        this.items.deserialize(input);
+        this.inventory = NonNullList.withSize(getContainerSize(), ItemStack.EMPTY);
+        ContainerHelper.loadAllItems(input, this.inventory);
         this.capacitor.deserialize(input);
         MachineStatus.deserialize(input, this::setMachineStatus);
     }
@@ -249,7 +303,7 @@ public abstract class AbstractMachineBlockEntity extends NamedBlockEntity implem
     @Override
     protected void saveAdditional(ValueOutput output) {
         super.saveAdditional(output);
-        this.items.serialize(output);
+        ContainerHelper.saveAllItems(output, this.inventory);
         this.capacitor.serialize(output);
         MachineStatus.serialize(output, getMachineStatus());
     }
@@ -257,14 +311,14 @@ public abstract class AbstractMachineBlockEntity extends NamedBlockEntity implem
     @Override
     protected void applyImplicitComponents(DataComponentGetter components) {
         super.applyImplicitComponents(components);
-        ResourcefulHelper.applyContainerComponent(components, this::set);
+        components.getOrDefault(DataComponents.CONTAINER, ItemContainerContents.EMPTY).copyInto(this.inventory);
         this.capacitor.set(components.getOrDefault(GalacticraftDataComponents.STORED_ENERGY, 0));
     }
 
     @Override
     protected void collectImplicitComponents(DataComponentMap.Builder components) {
         super.collectImplicitComponents(components);
-        ResourcefulHelper.collectContainerComponent(components, this.items);
+        components.set(DataComponents.CONTAINER, ItemContainerContents.fromItems(this.inventory));
         components.set(GalacticraftDataComponents.STORED_ENERGY, this.capacitor.getAmountAsInt());
     }
 
@@ -276,12 +330,5 @@ public abstract class AbstractMachineBlockEntity extends NamedBlockEntity implem
     @Override
     public @Nullable Packet<ClientGamePacketListener> getUpdatePacket() {
         return ClientboundBlockEntityDataPacket.create(this);
-    }
-
-    @Override
-    public void preRemoveSideEffects(BlockPos pos, BlockState state) {
-        if (this.level != null) {
-            Containers.dropContents(this.level, pos, this.items.copyToList());
-        }
     }
 }

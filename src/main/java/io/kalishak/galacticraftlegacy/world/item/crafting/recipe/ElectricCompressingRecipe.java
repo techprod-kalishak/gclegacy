@@ -13,7 +13,6 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.kalishak.galacticraftlegacy.world.item.GalacticraftItems;
 import io.kalishak.galacticraftlegacy.world.item.component.GalacticraftDataComponents;
 import io.kalishak.galacticraftlegacy.world.item.crafting.GalacticraftRecipeBookCategories;
-import io.kalishak.galacticraftlegacy.world.item.crafting.StaticRecipePattern;
 import io.kalishak.galacticraftlegacy.world.item.crafting.display.BatterySlotDisplay;
 import net.minecraft.core.Holder;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -24,26 +23,27 @@ import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.RecipeBookCategory;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.ShapedRecipePattern;
 import net.minecraft.world.item.crafting.display.SlotDisplay;
 
 public class ElectricCompressingRecipe extends CompressingRecipe {
     public static final MapCodec<ElectricCompressingRecipe> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             CommonInfo.MAP_CODEC.forGetter(compressingRecipe -> compressingRecipe.commonInfo),
             Codec.STRING.optionalFieldOf("group", "").forGetter(ElectricCompressingRecipe::group),
-            StaticRecipePattern.MAP_CODEC.fieldOf("pattern").forGetter(compressingRecipe -> compressingRecipe.pattern),
+            ShapedRecipePattern.MAP_CODEC.fieldOf("pattern").forGetter(compressingRecipe -> compressingRecipe.pattern),
             ItemStackTemplate.CODEC.fieldOf("result").forGetter(ElectricCompressingRecipe::result),
             Codec.INT.optionalFieldOf("compressing_time", 200).forGetter(ElectricCompressingRecipe::compressingTime)
     ).apply(instance, ElectricCompressingRecipe::new));
     public static final StreamCodec<RegistryFriendlyByteBuf, ElectricCompressingRecipe> STREAM_CODEC = StreamCodec.composite(
             CommonInfo.STREAM_CODEC, compressingRecipe -> compressingRecipe.commonInfo,
             ByteBufCodecs.STRING_UTF8, ElectricCompressingRecipe::group,
-            StaticRecipePattern.STREAM_CODEC, compressingRecipe -> compressingRecipe.pattern,
+            ShapedRecipePattern.STREAM_CODEC, compressingRecipe -> compressingRecipe.pattern,
             ItemStackTemplate.STREAM_CODEC, ElectricCompressingRecipe::result,
             ByteBufCodecs.INT, ElectricCompressingRecipe::compressingTime,
             ElectricCompressingRecipe::new
     );
 
-    public ElectricCompressingRecipe(CommonInfo commonInfo, String group, StaticRecipePattern pattern, ItemStackTemplate result, int compressingTime) {
+    public ElectricCompressingRecipe(CommonInfo commonInfo, String group, ShapedRecipePattern pattern, ItemStackTemplate result, int compressingTime) {
         super(commonInfo, group, pattern, result, compressingTime);
     }
 

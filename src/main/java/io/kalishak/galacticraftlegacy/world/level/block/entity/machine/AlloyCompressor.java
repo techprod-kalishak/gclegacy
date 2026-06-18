@@ -7,18 +7,20 @@
 
 package io.kalishak.galacticraftlegacy.world.level.block.entity.machine;
 
+import net.minecraft.core.Direction;
+import net.minecraft.core.NonNullList;
 import net.minecraft.world.MenuProvider;
+import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.inventory.RecipeCraftingHolder;
 import net.minecraft.world.inventory.StackedContentsCompatible;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
-import net.neoforged.neoforge.transfer.ResourceHandler;
 import net.neoforged.neoforge.transfer.item.ItemResource;
-import net.neoforged.neoforge.transfer.item.ItemUtil;
-import net.neoforged.neoforge.transfer.transaction.Transaction;
 import org.jspecify.annotations.Nullable;
 
-public interface AlloyCompressor extends MenuProvider, StackedContentsCompatible, RecipeCraftingHolder {
+import java.util.List;
+
+public interface AlloyCompressor extends MenuProvider, StackedContentsCompatible, RecipeCraftingHolder, WorldlyContainer {
     int CRAFTING_SLOT_START = 0;
     int CRAFTING_SLOT_END = 8;
     int FUEL_SLOT = 9;
@@ -30,6 +32,14 @@ public interface AlloyCompressor extends MenuProvider, StackedContentsCompatible
     int DATA_SLOT_LIT_TIME_TOTAL = 3;
     int INVENTORY_SIZE_BASIC = 11;
     int INVENTORY_SIZE_ADVANCED = 12;
+    int[] SLOTS_FOR_INPUT = new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8 };
+    int[] SLOTS_FOR_FUEL = new int[] { 9 };
+
+    int[] getSlotsForOutput();
+
+    List<ItemStack> getCraftingItems();
+
+    void set(int index, ItemResource resource, int amount);
 
     @Override
     default void setRecipeUsed(@Nullable RecipeHolder<?> recipeHolder) {
@@ -40,8 +50,29 @@ public interface AlloyCompressor extends MenuProvider, StackedContentsCompatible
         return null;
     }
 
-    static boolean canCompress(ResourceHandler<ItemResource> items, int maxStackSize, ItemStack recipeResult) {
-        ItemStack resultItemStack = ItemUtil.getStack(items, 10);
+    @Override
+    default int[] getSlotsForFace(Direction direction) {
+        if (direction == Direction.UP) {
+            return SLOTS_FOR_INPUT;
+        } else if (direction == Direction.DOWN) {
+            return getSlotsForOutput();
+        }
+
+        return SLOTS_FOR_FUEL;
+    }
+
+    @Override
+    default boolean canPlaceItemThroughFace(int slot, ItemStack itemStack, @Nullable Direction direction) {
+        return true;
+    }
+
+    @Override
+    default boolean canTakeItemThroughFace(int slot, ItemStack itemStack, Direction direction) {
+        return true;
+    }
+
+    static boolean canCompress(NonNullList<ItemStack> items, int maxStackSize, ItemStack recipeResult) {
+        ItemStack resultItemStack = items.get(10);
 
         if (resultItemStack.isEmpty()) {
             return true;
@@ -54,22 +85,11 @@ public interface AlloyCompressor extends MenuProvider, StackedContentsCompatible
         }
     }
 
-    static void compress(ResourceHandler<ItemResource> items, ResourceHandler<ItemResource> ingredients, ItemStack result) {
-        try (Transaction transaction = Transaction.open(null)) {
-            boolean produce = true;
-
-            for (int i = 0; i < ingredients.size(); i++) {
-                ItemResource resource = ingredients.getResource(i);
-
-                if (!resource.isEmpty() && items.extract(resource, 1, transaction) == 0) {
-                    produce = false;
-                    break;
-                }
-            }
-
-            if (produce && items.insert(ItemResource.of(result), 1, transaction) > 0) {
-                transaction.commit();
-            }
+    static void compress(NonNullList<ItemStack> items, ItemStack result) {
+        for (ItemStack stack : items) {
+            stack.shrink(1);
         }
+
+        result.grow(1);
     }
 }

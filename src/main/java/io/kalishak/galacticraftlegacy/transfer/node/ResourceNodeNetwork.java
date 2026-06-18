@@ -20,6 +20,7 @@ import net.neoforged.neoforge.transfer.ResourceHandler;
 import net.neoforged.neoforge.transfer.resource.Resource;
 import net.neoforged.neoforge.transfer.transaction.SnapshotJournal;
 import net.neoforged.neoforge.transfer.transaction.Transaction;
+import org.jetbrains.annotations.VisibleForTesting;
 import org.jspecify.annotations.Nullable;
 import oshi.util.tuples.Pair;
 
@@ -30,7 +31,9 @@ public abstract class ResourceNodeNetwork<R extends Resource, S> extends NodeNet
     protected final R emptyResource;
     private final Snapshot snapshot = new Snapshot();
     private final BlockCapability<ResourceHandler<R>, @Nullable Direction> capability;
+    @VisibleForTesting
     protected R buffer;
+    @VisibleForTesting
     protected int amount;
 
     protected ResourceNodeNetwork(Level level, R emptyResource, BlockCapability<ResourceHandler<R>, @Nullable Direction> capability) {

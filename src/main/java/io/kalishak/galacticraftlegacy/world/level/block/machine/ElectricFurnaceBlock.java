@@ -8,11 +8,9 @@
 package io.kalishak.galacticraftlegacy.world.level.block.machine;
 
 import com.mojang.serialization.MapCodec;
-import io.kalishak.galacticraftlegacy.transfer.ResourcefulHelper;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.ElectricFurnaceBlockEntity;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityType;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -34,11 +32,6 @@ public class ElectricFurnaceBlock extends AbstractMachineBlock {
     }
 
     @Override
-    protected int getAnalogOutputSignal(BlockState blockState, Level level, BlockPos blockPos, Direction direction) {
-        return ResourcefulHelper.getRedstoneSignalFromBlockEntity(level, blockPos, blockState, direction);
-    }
-
-    @Override
     public @Nullable BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return new ElectricFurnaceBlockEntity(pos, state);
     }
@@ -49,7 +42,7 @@ public class ElectricFurnaceBlock extends AbstractMachineBlock {
             return createTickerHelper(
                     blockEntityType,
                     GalacticraftBlockEntityType.ELECTRIC_FURNACE.get(),
-                    (tickerLevel, tickerPos, tickerState, ticker) -> ElectricFurnaceBlockEntity.serverTick(serverLevel, tickerPos, tickerState, ticker)
+                    (_, tickerPos, tickerState, ticker) -> ElectricFurnaceBlockEntity.serverTick(serverLevel, tickerPos, tickerState, ticker)
             );
         }
 

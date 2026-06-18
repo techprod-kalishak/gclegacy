@@ -9,6 +9,8 @@ package io.kalishak.galacticraftlegacy.world.level.biome;
 
 import io.kalishak.galacticraftlegacy.Constants;
 import io.kalishak.galacticraftlegacy.world.entity.GalacticraftEntityType;
+import io.kalishak.galacticraftlegacy.world.level.levelgen.features.GalacticraftFeatures;
+import io.kalishak.galacticraftlegacy.world.level.levelgen.placement.GalacticraftPlacements;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
@@ -20,6 +22,7 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.BiomeGenerationSettings;
 import net.minecraft.world.level.biome.BiomeSpecialEffects;
 import net.minecraft.world.level.biome.MobSpawnSettings;
+import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.carver.ConfiguredWorldCarver;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 
@@ -35,7 +38,7 @@ public interface GalacticraftBiomes {
                 baseSpaceBiome(0.0F)
                         .specialEffects(new BiomeSpecialEffects.Builder().waterColor(-1).build())
                         .mobSpawnSettings(MobSpawnSettings.EMPTY)
-                        .generationSettings(new BiomeGenerationSettings.Builder(placedFeatures, worldCarvers).build())
+                        .generationSettings(new BiomeGenerationSettings.Builder(placedFeatures, worldCarvers).addFeature(GenerationStep.Decoration.TOP_LAYER_MODIFICATION, GalacticraftPlacements.SPACE_STATION).build())
                         .build()
         );
 

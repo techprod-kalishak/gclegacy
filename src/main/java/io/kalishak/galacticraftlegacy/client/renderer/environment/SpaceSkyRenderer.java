@@ -18,7 +18,6 @@ import com.mojang.math.Axis;
 import io.kalishak.galacticraftlegacy.config.ClientConfig;
 import io.kalishak.galacticraftlegacy.Constants;
 import io.kalishak.galacticraftlegacy.client.renderer.environment.state.SpaceSkyRenderState;
-import io.kalishak.galacticraftlegacy.world.attribute.GalacticraftEnvironmentAttributes;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderPipelines;
@@ -31,17 +30,16 @@ import net.minecraft.data.AtlasIds;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.attribute.EnvironmentAttributeProbe;
-import net.minecraft.world.attribute.EnvironmentAttributes;
+import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.client.CustomSkyboxRenderer;
-import net.neoforged.neoforge.client.event.TextureAtlasStitchedEvent;
+import net.neoforged.neoforge.client.event.ExtractLevelRenderStateEvent;
 import org.joml.*;
 
 import java.lang.Math;
 import java.util.OptionalDouble;
 import java.util.OptionalInt;
 
-public abstract class SpaceSkyRenderer<S extends SpaceSkyRenderState> implements CustomSkyboxRenderer, AutoCloseable {
+public abstract class SpaceSkyRenderer implements CustomSkyboxRenderer {
     protected static final Identifier SUN_SPRITE = Constants.id("orbital_sun");
     protected TextureAtlas celestialsAtlas;
     protected GpuBuffer starBuffer;
@@ -50,8 +48,6 @@ public abstract class SpaceSkyRenderer<S extends SpaceSkyRenderState> implements
     protected int starIndexCount;
 
     static int starCount = 1500;
-
-    protected abstract S createRenderState(SkyRenderState skyRenderState);
 
     /**
      * We will initialize it before rendering, let's c how it's gonna b
@@ -64,30 +60,25 @@ public abstract class SpaceSkyRenderer<S extends SpaceSkyRenderState> implements
         this.quadIndices = RenderSystem.getSequentialBuffer(VertexFormat.Mode.QUADS);
     }
 
-    public void extractRenderState(float partialTicks, Camera camera, S state, EnvironmentAttributeProbe attributeProbe) {
-        state.sunAngle = attributeProbe.getValue(EnvironmentAttributes.SUN_ANGLE, partialTicks) * (float) (Math.PI / 180.0D);
-        state.earthAngle = attributeProbe.getValue(GalacticraftEnvironmentAttributes.EARTH_ANGLE.get(), partialTicks) * (float) (Math.PI / 180.0D);
-        state.starAngle = attributeProbe.getValue(EnvironmentAttributes.STAR_ANGLE, partialTicks) * (float) (Math.PI / 180.0D);
-        state.starBrightness = attributeProbe.getValue(EnvironmentAttributes.STAR_BRIGHTNESS, partialTicks);
+    @SubscribeEvent
+    public static void extractLevelRenderState(ExtractLevelRenderStateEvent event) {
+        SpaceSkyRenderState.extract(event.getRenderTick(), event.getRenderState(), event.getCamera().attributeProbe());
     }
 
     @Override
-    public boolean renderSky(LevelRenderState levelRenderState, SkyRenderState skyRenderState, Matrix4fc modelViewMatrix, Runnable setupFog) {
+    public final boolean renderSky(LevelRenderState levelRenderState, SkyRenderState skyRenderState, Matrix4fc modelViewMatrix, Runnable setupFog) {
         Minecraft mc = Minecraft.getInstance();
         init(mc.getAtlasManager());
 
         Camera camera = mc.gameRenderer.getMainCamera();
-        EnvironmentAttributeProbe attributeProbe = camera.attributeProbe();
-        S spaceSkyRenderState = createRenderState(skyRenderState);
         PoseStack poseStack = new PoseStack();
 
-        extractRenderState(1.0F, camera, createRenderState(skyRenderState), attributeProbe);
-        extractSky(poseStack, camera, levelRenderState, spaceSkyRenderState, modelViewMatrix, setupFog);
+        extractSky(poseStack, camera, levelRenderState, modelViewMatrix, setupFog);
 
         return true;
     }
 
-    protected abstract void extractSky(PoseStack poseStack, Camera camera, LevelRenderState levelRenderState, S renderState, Matrix4fc modelViewMatrix, Runnable setupFog);
+    protected abstract void extractSky(PoseStack poseStack, Camera camera, LevelRenderState levelRenderState, Matrix4fc modelViewMatrix, Runnable setupFog);
 
     /**
      * Each SpaceSkyRenderer should declare its own celestial features to be rendered, this class will have only common renderers
@@ -222,11 +213,5 @@ public abstract class SpaceSkyRenderer<S extends SpaceSkyRenderState> implements
 
     protected static GpuBuffer buildSunQuad(TextureAtlas atlas) {
         return buildCelestialQuad("Sun quad", atlas.getSprite(SUN_SPRITE));
-    }
-
-    @Override
-    public void close() {
-        this.sunBuffer.close();
-        this.starBuffer.close();
     }
 }

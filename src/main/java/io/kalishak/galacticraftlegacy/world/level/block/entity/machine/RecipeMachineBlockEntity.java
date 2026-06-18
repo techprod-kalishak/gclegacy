@@ -12,6 +12,7 @@ import com.mojang.serialization.Codec;
 import it.unimi.dsi.fastutil.objects.Reference2IntMap;
 import it.unimi.dsi.fastutil.objects.Reference2IntOpenHashMap;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -29,6 +30,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.transfer.energy.EnergyHandler;
 import net.neoforged.neoforge.transfer.item.ItemUtil;
 import org.jspecify.annotations.Nullable;
 
@@ -53,6 +55,22 @@ public abstract class RecipeMachineBlockEntity<I extends RecipeInput, R extends 
         }
 
         ExperienceOrb.award(level, position, xpReward);
+    }
+
+    public static boolean canProcess(NonNullList<ItemStack> items, int maxStackSize, ItemStack result, EnergyHandler energyHandler, int energyPerTick, int outputSlot) {
+        if (energyHandler.getAmountAsInt() < energyPerTick) return false;
+
+        ItemStack resultItemStack = items.get(outputSlot);
+
+        if (resultItemStack.isEmpty()) {
+            return true;
+        } else if (!ItemStack.isSameItemSameComponents(resultItemStack, result)) {
+            return false;
+        } else {
+            int resultCount = resultItemStack.getCount() + result.count();
+            int maxResultCount = Math.min(maxStackSize, result.getMaxStackSize());
+            return resultCount <= maxResultCount;
+        }
     }
 
     @Override
@@ -91,7 +109,7 @@ public abstract class RecipeMachineBlockEntity<I extends RecipeInput, R extends 
         player.awardRecipes(list);
 
         for (RecipeHolder<?> recipeholder : list) {
-            player.triggerRecipeCrafted(recipeholder, this.items.copyToList());
+            player.triggerRecipeCrafted(recipeholder, this.inventory);
         }
 
         this.recipesUsed.clear();
@@ -109,7 +127,7 @@ public abstract class RecipeMachineBlockEntity<I extends RecipeInput, R extends 
 
     @Override
     public void fillStackedContents(StackedItemContents stackedContents) {
-        this.items.copyToList().forEach(stackedContents::accountStack);
+        this.inventory.forEach(stackedContents::accountStack);
     }
 
     @Override

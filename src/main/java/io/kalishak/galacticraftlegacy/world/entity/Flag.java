@@ -115,8 +115,8 @@ public class Flag extends Entity {
     }
 
     @Override
-    protected void defineSynchedData(SynchedEntityData.Builder builder) {
-        builder.define(DATA_OWNER_UUID, Optional.empty());
+    protected void defineSynchedData(SynchedEntityData.Builder entityData) {
+        entityData.define(DATA_OWNER_UUID, Optional.empty());
     }
 
     @Override

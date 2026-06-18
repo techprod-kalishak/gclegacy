@@ -16,10 +16,6 @@ import net.neoforged.neoforge.transfer.item.ItemUtil;
 import java.util.function.Supplier;
 
 public class SimpleResourceInput extends RangedResourceHandler<ItemResource> implements ResourceHandlerInput {
-    public SimpleResourceInput(ResourceHandler<ItemResource> delegate, int start, int end) {
-        super(delegate, start, end);
-    }
-
     public SimpleResourceInput(Supplier<ResourceHandler<ItemResource>> delegate, int start, int end) {
         super(delegate, start, end);
     }

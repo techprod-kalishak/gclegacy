@@ -4,7 +4,21 @@
   "effects": {
     "water_color": "#ffffff"
   },
-  "features": [],
+  "features": [
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [
+      "galacticraftlegacy:space_station"
+    ]
+  ],
   "has_precipitation": false,
   "spawn_costs": {},
   "spawners": {

@@ -12,7 +12,6 @@ import io.kalishak.galacticraftlegacy.world.inventory.GalacticraftMenuType;
 import io.kalishak.galacticraftlegacy.world.inventory.slot.FuelHandlerSlot;
 import io.kalishak.galacticraftlegacy.world.inventory.slot.ResultResourceHandlerSlot;
 import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.AnvilCompressingRecipe;
-import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.input.CompressingRecipeInput;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityType;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.AlloyCompressor;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.CompressorBlockEntity;
@@ -25,6 +24,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.StackedItemContents;
 import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.RecipeHolder;
 
 import java.util.List;
@@ -33,9 +33,9 @@ public class CompressorMenu extends AbstractCompressorMenu {
     public CompressorMenu(int containerId, Inventory playerInventory, CompressorBlockEntity compressor, ContainerData dataAccess) {
         super(GalacticraftMenuType.COMPRESSOR.get(), containerId,  playerInventory, compressor, dataAccess);
 
-        addCompressorGrid(this.compressorInventory, compressor::set, 19, 18);
-        addSlot(new ResultResourceHandlerSlot(playerInventory.player, this.compressorInventory, compressor::awardUsedRecipes, AlloyCompressor.RESULT_SLOT_START, 138, 38));
-        addSlot(new FuelHandlerSlot(this.compressorInventory, compressor::set, AlloyCompressor.FUEL_SLOT, 55, 75));
+        addCompressorGrid(19, 18);
+        addSlot(handler -> new ResultResourceHandlerSlot(playerInventory.player, handler, compressor::awardUsedRecipes, AlloyCompressor.RESULT_SLOT_START, 138, 38));
+        addSlot(handler -> new FuelHandlerSlot(handler, compressor::set, AlloyCompressor.FUEL_SLOT, 55, 75));
 
         addStandardInventorySlots(playerInventory, 8, 110);
     }
@@ -63,6 +63,7 @@ public class CompressorMenu extends AbstractCompressorMenu {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public PostPlaceAction handlePlacement(boolean useMaxItems, boolean allowDroppingItemsToClear, RecipeHolder<?> recipe, ServerLevel level, Inventory inventory) {
         final List<Slot> slotsToClear = List.of(
                 getSlot(0), //CRAFTING_SLOT_START
@@ -90,7 +91,7 @@ public class CompressorMenu extends AbstractCompressorMenu {
 
             @Override
             public boolean recipeMatches(RecipeHolder<AnvilCompressingRecipe> recipe) {
-                return recipe.value().matches(new CompressingRecipeInput(3, 3, () -> CompressorMenu.this.compressorInventory), level);
+                return recipe.value().matches(CraftingInput.of(3, 3, CompressorMenu.this.compressor.getCraftingItems()), level);
             }
         }, 3, 3, this.slots.subList(AlloyCompressor.CRAFTING_SLOT_START, AlloyCompressor.CRAFTING_SLOT_END), slotsToClear, inventory, (RecipeHolder<AnvilCompressingRecipe>) recipe, useMaxItems, allowDroppingItemsToClear);
     }

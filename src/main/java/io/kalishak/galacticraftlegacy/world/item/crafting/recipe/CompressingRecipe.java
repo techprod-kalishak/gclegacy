@@ -7,9 +7,7 @@
 
 package io.kalishak.galacticraftlegacy.world.item.crafting.recipe;
 
-import io.kalishak.galacticraftlegacy.world.item.crafting.StaticRecipePattern;
 import io.kalishak.galacticraftlegacy.world.item.crafting.display.CompressorRecipeDisplay;
-import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.input.CompressingRecipeInput;
 import net.minecraft.core.Holder;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -23,15 +21,15 @@ import org.jspecify.annotations.Nullable;
 import java.util.List;
 import java.util.Optional;
 
-public abstract class CompressingRecipe implements Recipe<CompressingRecipeInput> {
-    public final StaticRecipePattern pattern;
+public abstract class CompressingRecipe implements Recipe<CraftingInput> {
+    public final ShapedRecipePattern pattern;
     protected final CommonInfo commonInfo;
     protected final String group;
     protected final ItemStackTemplate result;
     protected final int compressingTime;
     protected @Nullable PlacementInfo placementInfo;
 
-    protected CompressingRecipe(CommonInfo commonInfo, String group, StaticRecipePattern pattern, ItemStackTemplate result, int compressingTime) {
+    protected CompressingRecipe(CommonInfo commonInfo, String group, ShapedRecipePattern pattern, ItemStackTemplate result, int compressingTime) {
         this.commonInfo = commonInfo;
         this.group = group;
         this.pattern = pattern;
@@ -81,12 +79,12 @@ public abstract class CompressingRecipe implements Recipe<CompressingRecipeInput
     }
 
     @Override
-    public boolean matches(CompressingRecipeInput input, Level level) {
+    public boolean matches(CraftingInput input, Level level) {
         return this.pattern.matches(input);
     }
 
     @Override
-    public ItemStack assemble(CompressingRecipeInput input) {
+    public ItemStack assemble(CraftingInput input) {
         return this.result.create();
     }
 
@@ -116,6 +114,6 @@ public abstract class CompressingRecipe implements Recipe<CompressingRecipeInput
 
     @FunctionalInterface
     public interface Factory<T extends CompressingRecipe> {
-        T create(CommonInfo commonInfo, String group, StaticRecipePattern pattern, ItemStackTemplate result, int compressingTime, float experience);
+        T create(CommonInfo commonInfo, String group, ShapedRecipePattern pattern, ItemStackTemplate result, int compressingTime, float experience);
     }
 }
