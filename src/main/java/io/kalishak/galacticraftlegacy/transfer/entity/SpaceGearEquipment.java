@@ -8,31 +8,33 @@
 package io.kalishak.galacticraftlegacy.transfer.entity;
 
 import com.mojang.serialization.Codec;
-import io.kalishak.galacticraftlegacy.transfer.capability.item.MappedItemResourceHandler;
 import io.kalishak.galacticraftlegacy.world.entity.GearEquipmentSlot;
+import io.kalishak.galacticraftlegacy.world.inventory.MappedEquipment;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
+import net.neoforged.neoforge.common.util.ValueIOSerializable;
 
 import java.util.*;
-import java.util.function.BiPredicate;
 
-public class SpaceGearEquipment extends MappedItemResourceHandler<GearEquipmentSlot> {
-    public static final Codec<SpaceGearEquipment> CODEC = codec(GearEquipmentSlot.class, GearEquipmentSlot.CODEC).xmap(SpaceGearEquipment::new, spaceEquipment -> spaceEquipment.stacks);
-    public static final StreamCodec<RegistryFriendlyByteBuf, SpaceGearEquipment> STREAM_CODEC = streamCodec(GearEquipmentSlot.class, GearEquipmentSlot.STREAM_CODEC).map(SpaceGearEquipment::new, spaceEquipment -> spaceEquipment.stacks);
+public class SpaceGearEquipment extends MappedEquipment<GearEquipmentSlot> implements ValueIOSerializable {
+    private static final Codec<EnumMap<GearEquipmentSlot, ItemStack>> ENUM_MAP_CODEC = codec(GearEquipmentSlot.class, GearEquipmentSlot.CODEC);
+    public static final Codec<SpaceGearEquipment> CODEC = ENUM_MAP_CODEC.xmap(SpaceGearEquipment::new, spaceEquipment -> spaceEquipment.items);
+    public static final StreamCodec<RegistryFriendlyByteBuf, SpaceGearEquipment> STREAM_CODEC = streamCodec(GearEquipmentSlot.class, GearEquipmentSlot.STREAM_CODEC).map(SpaceGearEquipment::new, spaceEquipment -> spaceEquipment.items);
 
     public SpaceGearEquipment() {
-        super(GearEquipmentSlot.class, GearEquipmentSlot.CODEC);
+        super(new EnumMap<>(GearEquipmentSlot.class));
     }
 
-    private SpaceGearEquipment(EnumMap<GearEquipmentSlot, ItemStack> stacks) {
-        super(stacks, GearEquipmentSlot.class, GearEquipmentSlot.CODEC);
+    private SpaceGearEquipment(EnumMap<GearEquipmentSlot, ItemStack> items) {
+        super(items);
     }
 
     public void tick(Entity entity) {
-        for (Map.Entry<GearEquipmentSlot, ItemStack> entry : this.stacks.entrySet()) {
+        for (Map.Entry<GearEquipmentSlot, ItemStack> entry : this.items.entrySet()) {
             ItemStack stack = entry.getValue();
 
             if (!stack.isEmpty()) {
@@ -41,19 +43,14 @@ public class SpaceGearEquipment extends MappedItemResourceHandler<GearEquipmentS
         }
     }
 
-    public void setAll(SpaceGearEquipment spaceEquipment) {
-        this.stacks.clear();
-        this.stacks.putAll(spaceEquipment.stacks);
+    @Override
+    public void serialize(ValueOutput output) {
+        output.store("GearEquipment", ENUM_MAP_CODEC, this.items);
     }
 
-    public void dropAll(LivingEntity entity) {
-        for (ItemStack stack : this.stacks.values()) {
-
-            if (!stack.isEmpty()) {
-                entity.drop(stack, true, false);
-            }
-        }
-
-        clearContent();
+    @Override
+    public void deserialize(ValueInput input) {
+        this.items.clear();
+        input.read("GearEquipment", ENUM_MAP_CODEC).ifPresent(this.items::putAll);
     }
 }

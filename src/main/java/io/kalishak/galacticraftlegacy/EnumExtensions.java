@@ -12,6 +12,7 @@ import io.kalishak.galacticraftlegacy.attachment.GalacticraftAttachments;
 import io.kalishak.galacticraftlegacy.attachment.entity.GearInventoryProvider;
 import io.kalishak.galacticraftlegacy.attachment.level.CelestialBodyLevelData;
 import io.kalishak.galacticraftlegacy.world.damagesource.GalacticraftDamageTypes;
+import io.kalishak.galacticraftlegacy.world.entity.GearEquipmentSlot;
 import net.minecraft.client.resources.model.EquipmentClientInfo;
 import net.minecraft.core.Holder;
 import net.minecraft.world.damagesource.DamageScaling;
@@ -33,7 +34,7 @@ public class EnumExtensions {
             int missingParts = 0;
 
             for (int i = 0; i < 4; i++) {
-                if (inventoryProvider.getGearEquipment().getResource(i).isEmpty()) {
+                if (inventoryProvider.getGearEquipment().get(GearEquipmentSlot.byId(i)).isEmpty()) {
                     missingParts++;
                 }
             }

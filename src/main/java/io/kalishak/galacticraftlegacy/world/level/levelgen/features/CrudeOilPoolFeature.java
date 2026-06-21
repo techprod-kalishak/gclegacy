@@ -32,11 +32,11 @@ public class CrudeOilPoolFeature extends Feature<CrudeOilPoolConfiguration> {
     }
 
     @Override
-    public boolean place(FeaturePlaceContext<CrudeOilPoolConfiguration> featurePlaceContext) {
-        WorldGenLevel levelGen = featurePlaceContext.level();
-        BlockPos startingPos = featurePlaceContext.origin();
-        CrudeOilPoolConfiguration config = featurePlaceContext.config();
-        RandomSource random = featurePlaceContext.random();
+    public boolean place(FeaturePlaceContext<CrudeOilPoolConfiguration> context) {
+        WorldGenLevel levelGen = context.level();
+        BlockPos startingPos = context.origin();
+        CrudeOilPoolConfiguration config = context.config();
+        RandomSource random = context.random();
         Optional<Column> column = findBottom(levelGen, startingPos);
         OptionalInt yLevel = column.map(Column::getFloor).orElseGet(OptionalInt::empty);
 

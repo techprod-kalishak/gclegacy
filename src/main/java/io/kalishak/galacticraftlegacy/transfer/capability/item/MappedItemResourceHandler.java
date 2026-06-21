@@ -9,39 +9,21 @@ package io.kalishak.galacticraftlegacy.transfer.capability.item;
 
 import com.mojang.serialization.Codec;
 import io.kalishak.galacticraftlegacy.codec.SerializableEnum;
-import io.netty.buffer.ByteBuf;
+import io.kalishak.galacticraftlegacy.world.inventory.MappedEquipment;
 import net.minecraft.core.component.DataComponents;
-import net.minecraft.network.RegistryFriendlyByteBuf;
-import net.minecraft.network.codec.ByteBufCodecs;
-import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.transfer.item.ItemResource;
 
 import java.util.EnumMap;
 
-public class MappedItemResourceHandler<E extends Enum<E> & SerializableEnum> extends MappedResourceHandler<ItemStack, ItemResource, E> {
-    public static <E extends Enum<E>> Codec<EnumMap<E, ItemStack>> codec(Class<E> enumClass, Codec<E> enumCodec) {
-        return Codec.unboundedMap(enumCodec, ItemStack.OPTIONAL_CODEC).xmap(map -> {
-            EnumMap<E, ItemStack> items = new EnumMap<>(enumClass);
-            items.putAll(map);
-            return items;
-        }, entries -> {
-            EnumMap<E, ItemStack> items = new EnumMap<>(entries);
-            items.values().removeIf(ItemStack::isEmpty);
-            return items;
-        });
-    }
-
-    public static <E extends Enum<E>> StreamCodec<RegistryFriendlyByteBuf, EnumMap<E, ItemStack>> streamCodec(Class<E> enumClass, StreamCodec<ByteBuf, E> enumStreamCodec) {
-        return ByteBufCodecs.map(size -> new EnumMap<>(enumClass), enumStreamCodec, ItemStack.OPTIONAL_STREAM_CODEC);
-    }
-
+public class MappedItemResourceHandler<E extends Enum<E> & StringRepresentable> extends MappedResourceHandler<ItemStack, ItemResource, E> {
     public MappedItemResourceHandler(Class<E> enumClass, Codec<E> enumCodec) {
-        super(enumClass, ItemStack.EMPTY, codec(enumClass, enumCodec));
+        super(enumClass, ItemStack.EMPTY, MappedEquipment.codec(enumClass, enumCodec));
     }
 
-    protected MappedItemResourceHandler(EnumMap<E, ItemStack> stacks, Class<E> enumClass, Codec<E> enumCodec) {
-        super(stacks, enumClass, ItemStack.EMPTY, codec(enumClass, enumCodec));
+    public MappedItemResourceHandler(EnumMap<E, ItemStack> stacks, Class<E> enumClass, Codec<E> enumCodec) {
+        super(stacks, enumClass, ItemStack.EMPTY, MappedEquipment.codec(enumClass, enumCodec));
     }
 
     @Override

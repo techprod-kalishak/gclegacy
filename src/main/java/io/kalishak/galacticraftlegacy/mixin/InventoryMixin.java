@@ -9,7 +9,10 @@ package io.kalishak.galacticraftlegacy.mixin;
 
 import io.kalishak.galacticraftlegacy.attachment.GalacticraftAttachments;
 import io.kalishak.galacticraftlegacy.transfer.ResourcefulHelper;
+import io.kalishak.galacticraftlegacy.transfer.entity.SpaceGearEquipment;
+import io.kalishak.galacticraftlegacy.world.entity.GearEquipmentSlot;
 import net.minecraft.world.Container;
+import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -32,13 +35,20 @@ public class InventoryMixin {
     @Inject(method = "clearOrCountMatchingItems", at = @At("TAIL"), cancellable = true)
     private void galacticraftlegacy$clearOrCountMatchingItems(Predicate<ItemStack> predicate, int amountToRemove, Container craftSlots, CallbackInfoReturnable<Integer> cir) {
         int value = cir.getReturnValue();
-        int cleared = ResourcefulHelper.clearOrCountMatching(
-                player.getData(GalacticraftAttachments.PLAYER_SPACE_DATA).getGearEquipment(),
-                ItemUtil::getStack,
-                predicate,
-                amountToRemove - value,
-                amountToRemove == 0
-        );
+        SpaceGearEquipment equipment = player.getData(GalacticraftAttachments.PLAYER_SPACE_DATA).getGearEquipment();
+
+        int cleared = 0;
+
+        for (GearEquipmentSlot slot : GearEquipmentSlot.values()) {
+            ItemStack stack = equipment.get(slot);
+
+            cleared += ContainerHelper.clearOrCountMatchingItems(
+                    stack,
+                    predicate,
+                    amountToRemove - value,
+                    amountToRemove == 0
+            );
+        }
 
         if (cleared > 0) {
             cir.setReturnValue(value + cleared);

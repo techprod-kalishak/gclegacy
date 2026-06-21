@@ -147,13 +147,13 @@ public abstract class GearInventoryProvider implements ParachuteFalling {
 
         int oxygenRemaining = 0;
 
-        ResourceHandler<FluidResource> tankHandler = tank.getCapability(Capabilities.Fluid.ITEM, ItemAccess.forHandlerIndexStrict(getGearEquipment(), GearEquipmentSlot.TANK.getIndex()));
+        ResourceHandler<FluidResource> tankHandler = tank.getCapability(Capabilities.Fluid.ITEM, ItemAccess.forStack(tank));
 
         if (tankHandler != null) {
             oxygenRemaining += tankHandler.getAmountAsInt(0);
         }
 
-        ResourceHandler<FluidResource> additionalTankHandler = additionalTank.getCapability(Capabilities.Fluid.ITEM, ItemAccess.forHandlerIndexStrict(getGearEquipment(), GearEquipmentSlot.ADDITIONAL_TANK.getIndex()));
+        ResourceHandler<FluidResource> additionalTankHandler = additionalTank.getCapability(Capabilities.Fluid.ITEM, ItemAccess.forStack(additionalTank));
 
         if (additionalTankHandler != null) {
             oxygenRemaining += additionalTankHandler.getAmountAsInt(0);
@@ -192,17 +192,10 @@ public abstract class GearInventoryProvider implements ParachuteFalling {
         return hasCompleteOxygenSetup() && getRemainingOxygen() > 0;
     }
 
-    protected boolean depleteOxygen() {
-        ItemStack tank = getGearEquipment().get(GearEquipmentSlot.TANK);
-        ItemStack additionalTank = getGearEquipment().get(GearEquipmentSlot.ADDITIONAL_TANK);
-
-        if (tank.isEmpty() && additionalTank.isEmpty()) {
-            return false;
-        }
-
-        try (Transaction tx = Transaction.open(null)) {
+    private boolean deplateTank(ItemStack tank, @Nullable Transaction parent) {
+        try (Transaction tx = Transaction.open(parent)) {
             if (!tank.isEmpty()) {
-                ResourceHandler<FluidResource> tankHandler = tank.getCapability(Capabilities.Fluid.ITEM, ItemAccess.forHandlerIndex(getGearEquipment(), GearEquipmentSlot.TANK.getIndex()));
+                ResourceHandler<FluidResource> tankHandler = tank.getCapability(Capabilities.Fluid.ITEM, ItemAccess.forStack(tank));
 
                 if (tankHandler != null) {
                     if (tankHandler.extract(FluidResource.of(GalacticraftFluids.OXYGEN), 1, tx) > 0) {
@@ -211,20 +204,18 @@ public abstract class GearInventoryProvider implements ParachuteFalling {
                     }
                 }
             }
-
-            if (!additionalTank.isEmpty()) {
-                ResourceHandler<FluidResource> additionalTankHandler = additionalTank.getCapability(Capabilities.Fluid.ITEM, ItemAccess.forHandlerIndex(getGearEquipment(), GearEquipmentSlot.ADDITIONAL_TANK.getIndex()));
-
-                if (additionalTankHandler != null) {
-                    if (additionalTankHandler.extract(FluidResource.of(GalacticraftFluids.OXYGEN), 1, tx) > 0) {
-                        tx.commit();
-                        return true;
-                    }
-                }
-            }
         }
 
         return false;
+    }
+
+    protected boolean depleteOxygen() {
+        ItemStack tank = getGearEquipment().get(GearEquipmentSlot.TANK);
+        ItemStack additionalTank = getGearEquipment().get(GearEquipmentSlot.ADDITIONAL_TANK);
+
+        try (Transaction tx = Transaction.open(null)) {
+            return deplateTank(tank, tx) || deplateTank(additionalTank, tx);
+        }
     }
 
     public void onGearEquipped(LivingEntity entity, GearEquipmentSlot slot, ItemStack newStack, ItemStack oldStack) {

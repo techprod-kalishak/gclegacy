@@ -20,6 +20,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentEffectComponents;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.neoforged.neoforge.transfer.ResourceHandler;
+import net.neoforged.neoforge.transfer.item.ItemResource;
 import org.jspecify.annotations.Nullable;
 
 public class GearSlot extends MutableHandlerSlot {
@@ -27,8 +29,8 @@ public class GearSlot extends MutableHandlerSlot {
     private final GearEquipmentSlot slot;
     private final @Nullable Identifier icon;
 
-    public GearSlot(SpaceGearEquipment handler, LivingEntity owner, GearEquipmentSlot slot, @Nullable Identifier icon, int index, int xPosition, int yPosition) {
-        super(handler, handler::set, resource -> canSet(resource, slot), index, xPosition, yPosition);
+    public GearSlot(ResourceHandler<ItemResource> handler, SpaceGearEquipment equipment, LivingEntity owner, GearEquipmentSlot slot, @Nullable Identifier icon, int index, int xPosition, int yPosition) {
+        super(handler, (rIndex, resource, amount) -> equipment.set(GearEquipmentSlot.byId(rIndex), resource.toStack(amount)), resource -> canSet(resource, slot), index, xPosition, yPosition);
         this.owner = owner;
         this.slot = slot;
         this.icon = icon;

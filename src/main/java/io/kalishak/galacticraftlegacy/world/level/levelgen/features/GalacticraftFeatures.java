@@ -36,6 +36,10 @@ public class GalacticraftFeatures {
             "crater",
             CraterFeature::new
     );
+    public static final DeferredHolder<Feature<?>, FallenMeteorFeature> FALLEN_METEOR = REGISTRY.register(
+            "fallen_meteor",
+            FallenMeteorFeature::new
+    );
     public static final DeferredHolder<Feature<?>, SpaceStationFeature> SPACE_STATION = REGISTRY.register(
             "space_station",
             SpaceStationFeature::new

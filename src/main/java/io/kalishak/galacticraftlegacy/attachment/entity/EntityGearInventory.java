@@ -151,6 +151,6 @@ public class EntityGearInventory extends GearInventoryProvider {
     }
 
     public boolean shouldSave() {
-        return !ResourceHandlerUtil.isEmpty(this.gearEquipment);
+        return !this.gearEquipment.isEmpty();
     }
 }

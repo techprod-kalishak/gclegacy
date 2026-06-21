@@ -13,13 +13,10 @@ import io.kalishak.galacticraftlegacy.attachment.GalacticraftAttachments;
 import io.kalishak.galacticraftlegacy.attachment.entity.GearInventoryProvider;
 import io.kalishak.galacticraftlegacy.transfer.entity.SpaceGearEquipment;
 import io.kalishak.galacticraftlegacy.world.entity.GearEquipmentSlot;
-import io.kalishak.galacticraftlegacy.world.item.component.GearEquippable;
 import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.context.ContextKey;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.equipment.EquipmentAsset;
 
 public interface GearRenderState {
     ContextKey<ItemStack> THERMAL_CAP = new ContextKey<>(Constants.id("thermal_cap"));

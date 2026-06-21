@@ -112,9 +112,9 @@ public record GearEquippable(GearEquipmentSlot gearSlot, Holder<SoundEvent> equi
 
         SpaceGearEquipment gearResourceHandler = AttachmentHelper.getGearInventory(player).getGearEquipment();
 
-        ItemResource resourceInSlot = gearResourceHandler.getResource(this.gearSlot.getIndex());
+        ItemStack stackInSlot = gearResourceHandler.get(this.gearSlot);
 
-        if ((!EnchantmentHelper.has(resourceInSlot.toStack(), EnchantmentEffectComponents.PREVENT_ARMOR_CHANGE) || player.isCreative()) && !resourceInSlot.matches(equippedFromHand)) {
+        if ((!EnchantmentHelper.has(stackInSlot, EnchantmentEffectComponents.PREVENT_ARMOR_CHANGE) || player.isCreative()) && !ItemStack.isSameItemSameComponents(stackInSlot, equippedFromHand)) {
             if (!player.level().isClientSide()) {
                 player.awardStat(Stats.ITEM_USED.get(equippedFromHand.getItem()));
             }
@@ -123,21 +123,21 @@ public record GearEquippable(GearEquipmentSlot gearSlot, Holder<SoundEvent> equi
                 ItemStack returnedFromGear;
                 ItemStack placedToGear = player.isCreative() ? equippedFromHand.copy() : equippedFromHand.copyAndClear();
 
-                if (resourceInSlot.isEmpty()) {
+                if (stackInSlot.isEmpty()) {
                     returnedFromGear = equippedFromHand;
                 } else {
-                    returnedFromGear = resourceInSlot.toStack();
-                    gearResourceHandler.set(this.gearSlot.getIndex(), ItemResource.EMPTY, 0); //bruh
+                    returnedFromGear = stackInSlot.copyWithCount(1);
+                    gearResourceHandler.set(this.gearSlot, ItemStack.EMPTY); //bruh
                 }
 
-                gearResourceHandler.set(this.gearSlot.getIndex(), ItemResource.of(placedToGear), 1);
+                gearResourceHandler.set(this.gearSlot, placedToGear);
 
 
                 return InteractionResult.SUCCESS.heldItemTransformedTo(returnedFromGear);
             } else {
-                ItemStack returnedFromGear = resourceInSlot.toStack();
+                ItemStack returnedFromGear = stackInSlot.copyWithCount(1);
                 ItemStack placedToGear = equippedFromHand.consumeAndReturn(1, player);
-                gearResourceHandler.set(this.gearSlot.getIndex(), ItemResource.of(placedToGear), 1);
+                gearResourceHandler.set(this.gearSlot, placedToGear);
 
                 if (!player.getInventory().add(returnedFromGear)) {
                     player.drop(returnedFromGear, false);

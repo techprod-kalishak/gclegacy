@@ -9,7 +9,7 @@ package io.kalishak.galacticraftlegacy.transfer.capability.item;
 
 import com.mojang.serialization.Codec;
 import io.kalishak.galacticraftlegacy.codec.SerializableEnum;
-import net.minecraft.world.Clearable;
+import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.common.util.ValueIOSerializable;
@@ -23,11 +23,12 @@ import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.Objects;
 
-public abstract class MappedResourceHandler<S, R extends Resource, E extends Enum<E> & SerializableEnum> implements ResourceHandler<R>, ValueIOSerializable, Clearable {
-    protected final EnumMap<E, S> stacks;
+public abstract class MappedResourceHandler<S, R extends Resource, E extends Enum<E> & StringRepresentable> implements ResourceHandler<R>, ValueIOSerializable {
     protected final S emptyStack;
+    protected final EnumMap<E, S> stacks;
     protected final Codec<EnumMap<E, S>> codec;
     private final Class<E> enumClass;
+
     private final ArrayList<ValueJournal> snapshotJournals;
 
     protected MappedResourceHandler(Class<E> enumClass, S emptyStack, Codec<EnumMap<E, S>> codec) {
@@ -40,22 +41,6 @@ public abstract class MappedResourceHandler<S, R extends Resource, E extends Enu
         this.codec = codec;
         this.enumClass = enumClass;
         this.snapshotJournals = new ArrayList<>(enumClass.getEnumConstants().length);
-
-        updateStacksSize();
-    }
-
-    private void updateStacksSize() {
-        this.snapshotJournals.ensureCapacity(size());
-
-        for (int i = 0; i < size(); i++) {
-            E entry = this.enumClass.getEnumConstants()[i];
-            this.snapshotJournals.add(new ValueJournal(entry));
-        }
-
-        if (this.snapshotJournals.size() > size()) {
-            this.snapshotJournals.subList(size(), this.snapshotJournals.size()).clear();
-        }
-
     }
 
     protected abstract R getResource(S stack);
@@ -190,9 +175,8 @@ public abstract class MappedResourceHandler<S, R extends Resource, E extends Enu
         });
     }
 
-    @Override
-    public void clearContent() {
-        this.stacks.replaceAll((k, v) -> this.emptyStack);
+    public void clear() {
+        this.stacks.replaceAll((_, _) -> this.emptyStack);
     }
 
     private class ValueJournal extends SnapshotJournal<S> {

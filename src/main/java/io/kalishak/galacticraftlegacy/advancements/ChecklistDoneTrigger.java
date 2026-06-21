@@ -41,7 +41,7 @@ public class ChecklistDoneTrigger extends SimpleCriterionTrigger<ChecklistDoneTr
                 .flatMap(registry -> registry.get(entry))
                 .map(Holder.Reference::value);
 
-        if (!ResourceHandlerUtil.isEmpty(provider) && checklistEntry.isPresent()) {
+        if (!provider.isEmpty() && checklistEntry.isPresent()) {
             trigger(player, triggerInstance -> triggerInstance.matches(provider, checklistEntry.get()));
         }
     }
