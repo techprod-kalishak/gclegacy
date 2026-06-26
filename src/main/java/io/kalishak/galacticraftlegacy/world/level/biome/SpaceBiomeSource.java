@@ -16,10 +16,6 @@ public class SpaceBiomeSource {
                         Pair.of(
                                 Climate.parameters(-0.5F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F),
                                 lookup.apply(MoonBiomes.MOON_PLAINS)
-                        ),
-                        Pair.of(
-                                Climate.parameters(0.0F, 0.0F, 0.5F, 0.0F, 0.0F, 0.0F, 0.175F),
-                                lookup.apply(MoonBiomes.MOON_CRATER_OCEAN)
                         )
                 )
         );

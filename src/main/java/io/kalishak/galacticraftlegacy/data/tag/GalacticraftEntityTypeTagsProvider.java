@@ -37,5 +37,8 @@ public class GalacticraftEntityTypeTagsProvider extends EntityTypeTagsProvider {
                 .add(GalacticraftEntityType.EVOLVED_SKELETON.get());
         tag(EntityTypeTags.ZOMBIES)
                 .add(GalacticraftEntityType.EVOLVED_ZOMBIE.get());
+        tag(GalacticraftTags.EntityTypes.SPACE_MOB)
+                .add(GalacticraftEntityType.EVOLVED_SKELETON.get())
+                .add(GalacticraftEntityType.EVOLVED_ZOMBIE.get());
     }
 }

@@ -12,10 +12,15 @@ import io.kalishak.galacticraftlegacy.Galacticraft;
 import io.kalishak.galacticraftlegacy.world.level.levelgen.CraterSize;
 import io.kalishak.galacticraftlegacy.world.level.levelgen.features.configurations.CraterConfiguration;
 import io.kalishak.galacticraftlegacy.world.level.levelgen.features.configurations.CrudeOilPoolConfiguration;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.valueproviders.ConstantInt;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.Column;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
@@ -23,6 +28,9 @@ import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConf
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
+
+import java.util.Optional;
+import java.util.function.Predicate;
 
 public class GalacticraftFeatures {
     private static final DeferredRegister<Feature<?>> REGISTRY = DeferredRegister.create(Registries.FEATURE, Galacticraft.MODID);
@@ -71,5 +79,12 @@ public class GalacticraftFeatures {
                         new CraterConfiguration(size, ConstantInt.of(uniformCount))
                 )
         );
+    }
+
+    public static Optional<Column> findBottom(WorldGenLevel levelGen, BlockPos pos) {
+        Predicate<BlockState> inWater = state -> state.is(Blocks.WATER);
+        Predicate<BlockState> notWater = state -> !state.is(Blocks.WATER);
+
+        return Column.scan(levelGen, pos, 90, inWater, notWater);
     }
 }

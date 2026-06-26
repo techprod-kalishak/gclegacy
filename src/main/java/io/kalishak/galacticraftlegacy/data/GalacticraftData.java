@@ -27,6 +27,8 @@ import io.kalishak.galacticraftlegacy.world.level.dimension.GalacticraftDimensio
 import io.kalishak.galacticraftlegacy.world.level.dimension.GalacticraftLevelStem;
 import io.kalishak.galacticraftlegacy.world.level.levelgen.GalacticraftBiomeModifiers;
 import io.kalishak.galacticraftlegacy.world.level.levelgen.GalacticraftNoiseGeneratorSettings;
+import io.kalishak.galacticraftlegacy.world.level.levelgen.GalacticraftNoiseRouterData;
+import io.kalishak.galacticraftlegacy.world.level.levelgen.GalacticraftNoises;
 import io.kalishak.galacticraftlegacy.world.level.levelgen.features.GalacticraftFeatures;
 import io.kalishak.galacticraftlegacy.world.level.levelgen.placement.GalacticraftPlacements;
 import io.kalishak.galacticraftlegacy.world.timeline.GalacticraftTimelines;
@@ -48,8 +50,10 @@ public class GalacticraftData {
             .add(Registries.CONFIGURED_CARVER, GalacticraftCarvers::bootstrap)
             .add(Registries.CONFIGURED_FEATURE, GalacticraftFeatures::bootstrap)
             .add(Registries.DAMAGE_TYPE, GalacticraftDamageTypes::bootstrap)
+            .add(Registries.DENSITY_FUNCTION, GalacticraftNoiseRouterData::bootstrap)
             .add(Registries.DIMENSION_TYPE, GalacticraftDimensionTypes::bootstrap)
             .add(Registries.LEVEL_STEM, GalacticraftLevelStem::bootstrap)
+            .add(Registries.NOISE, GalacticraftNoises::bootstrap)
             .add(Registries.NOISE_SETTINGS, GalacticraftNoiseGeneratorSettings::bootstrap)
             .add(Registries.PLACED_FEATURE, GalacticraftPlacements::bootstrap)
             .add(Registries.TIMELINE, GalacticraftTimelines::bootstrap)

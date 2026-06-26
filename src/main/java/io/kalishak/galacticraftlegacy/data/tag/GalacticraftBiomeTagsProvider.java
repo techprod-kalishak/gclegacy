@@ -35,7 +35,6 @@ public class GalacticraftBiomeTagsProvider extends KeyTagProvider<Biome> {
                 .addOptionalTag(GalacticraftTags.Biomes.IS_ASTEROIDS)
                 .addOptionalTag(GalacticraftTags.Biomes.IS_VENUS);
         tag(GalacticraftTags.Biomes.IS_MOON)
-                .add(MoonBiomes.MOON_PLAINS)
-                .add(MoonBiomes.MOON_CRATER_OCEAN);
+                .add(MoonBiomes.MOON_PLAINS);
     }
 }

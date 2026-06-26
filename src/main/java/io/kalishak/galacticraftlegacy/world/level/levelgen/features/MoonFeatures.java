@@ -10,6 +10,7 @@ package io.kalishak.galacticraftlegacy.world.level.levelgen.features;
 import io.kalishak.galacticraftlegacy.world.level.block.GalacticraftBlocks;
 import io.kalishak.galacticraftlegacy.world.level.levelgen.CraterSize;
 import io.kalishak.galacticraftlegacy.world.level.levelgen.features.configurations.CraterConfiguration;
+import io.kalishak.galacticraftlegacy.world.level.levelgen.features.configurations.FallenMeteorConfiguration;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.data.worldgen.features.FeatureUtils;
 import net.minecraft.resources.ResourceKey;
@@ -23,6 +24,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.RuleTest;
 import net.minecraft.world.level.levelgen.structure.templatesystem.TagMatchTest;
 
 public class MoonFeatures {
+    public static final ResourceKey<ConfiguredFeature<?, ?>> FALLEN_METEOR = GalacticraftFeatures.key("moon_fallen_meteor");
     public static final ResourceKey<ConfiguredFeature<?, ?>> MOON_CRATER = GalacticraftFeatures.key("moon_crater");
     public static final ResourceKey<ConfiguredFeature<?, ?>> MOON_CRATER_LARGE = GalacticraftFeatures.key("moon_crater_large");
     public static final ResourceKey<ConfiguredFeature<?, ?>> ORE_MOON_COPPER = GalacticraftFeatures.key("ore_moon_copper");
@@ -45,6 +47,13 @@ public class MoonFeatures {
                 MOON_CRATER_LARGE,
                 CraterSize.LARGE,
                 8
+        );
+
+        FeatureUtils.register(
+                cxt,
+                FALLEN_METEOR,
+                GalacticraftFeatures.FALLEN_METEOR.get(),
+                FallenMeteorConfiguration.DEFAULT
         );
 
         FeatureUtils.register(

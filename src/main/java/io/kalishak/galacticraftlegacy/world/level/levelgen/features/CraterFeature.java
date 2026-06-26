@@ -35,7 +35,7 @@ public class CraterFeature extends Feature<CraterConfiguration> {
         return true;
     }
 
-    private void makeCrater(int craterX, int craterZ, int size, WorldGenLevel level) {
+    public static void makeCrater(int craterX, int craterZ, int size, WorldGenLevel level) {
         for (int x = 0; x < 128; x++) {
             for (int z = 0; z < 128; z++) {
                 double xPos = craterX - x;

@@ -16,18 +16,6 @@
             "temperature": -0.5,
             "weirdness": 0.0
           }
-        },
-        {
-          "biome": "galacticraftlegacy:moon_crater_oceans",
-          "parameters": {
-            "continentalness": 0.5,
-            "depth": 0.0,
-            "erosion": 0.0,
-            "humidity": 0.0,
-            "offset": 0.175,
-            "temperature": 0.0,
-            "weirdness": 0.0
-          }
         }
       ]
     },

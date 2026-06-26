@@ -1,0 +1,21 @@
+{
+  "feature": "galacticraftlegacy:moon_fallen_meteor",
+  "placement": [
+    {
+      "type": "minecraft:rarity_filter",
+      "chance": 8
+    },
+    {
+      "type": "minecraft:biome"
+    },
+    {
+      "type": "minecraft:random_offset",
+      "xz_spread": {
+        "type": "minecraft:uniform",
+        "max_inclusive": 16,
+        "min_inclusive": 4
+      },
+      "y_spread": 0
+    }
+  ]
+}

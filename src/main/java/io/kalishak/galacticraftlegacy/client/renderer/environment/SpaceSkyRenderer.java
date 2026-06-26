@@ -39,7 +39,7 @@ import java.lang.Math;
 import java.util.OptionalDouble;
 import java.util.OptionalInt;
 
-public abstract class SpaceSkyRenderer implements CustomSkyboxRenderer {
+public abstract class SpaceSkyRenderer implements CustomSkyboxRenderer, AutoCloseable {
     protected static final Identifier SUN_SPRITE = Constants.id("orbital_sun");
     protected TextureAtlas celestialsAtlas;
     protected GpuBuffer starBuffer;
@@ -213,5 +213,11 @@ public abstract class SpaceSkyRenderer implements CustomSkyboxRenderer {
 
     protected static GpuBuffer buildSunQuad(TextureAtlas atlas) {
         return buildCelestialQuad("Sun quad", atlas.getSprite(SUN_SPRITE));
+    }
+
+    @Override
+    public void close() {
+        this.starBuffer.close();
+        this.sunBuffer.close();
     }
 }

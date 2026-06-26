@@ -14,14 +14,12 @@ import io.kalishak.galacticraftlegacy.world.level.levelgen.placement.Galacticraf
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
+import net.minecraft.data.worldgen.biome.OverworldBiomes;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.attribute.EnvironmentAttributes;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
-import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.level.biome.BiomeGenerationSettings;
-import net.minecraft.world.level.biome.BiomeSpecialEffects;
-import net.minecraft.world.level.biome.MobSpawnSettings;
+import net.minecraft.world.level.biome.*;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.carver.ConfiguredWorldCarver;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
@@ -36,7 +34,7 @@ public interface GalacticraftBiomes {
         cxt.register(
                 SPACE,
                 baseSpaceBiome(0.0F)
-                        .specialEffects(new BiomeSpecialEffects.Builder().waterColor(-1).build())
+                        .specialEffects(new BiomeSpecialEffects.Builder().waterColor(0).build())
                         .mobSpawnSettings(MobSpawnSettings.EMPTY)
                         .generationSettings(new BiomeGenerationSettings.Builder(placedFeatures, worldCarvers).addFeature(GenerationStep.Decoration.TOP_LAYER_MODIFICATION, GalacticraftPlacements.SPACE_STATION).build())
                         .build()

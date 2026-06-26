@@ -14,17 +14,13 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.Column;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
-import net.minecraft.world.level.levelgen.feature.GeodeFeature;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 
 import java.util.Optional;
 import java.util.OptionalInt;
-import java.util.function.Predicate;
 
 public class CrudeOilPoolFeature extends Feature<CrudeOilPoolConfiguration> {
     public CrudeOilPoolFeature() {
@@ -37,7 +33,7 @@ public class CrudeOilPoolFeature extends Feature<CrudeOilPoolConfiguration> {
         BlockPos startingPos = context.origin();
         CrudeOilPoolConfiguration config = context.config();
         RandomSource random = context.random();
-        Optional<Column> column = findBottom(levelGen, startingPos);
+        Optional<Column> column = GalacticraftFeatures.findBottom(levelGen, startingPos);
         OptionalInt yLevel = column.map(Column::getFloor).orElseGet(OptionalInt::empty);
 
         if (yLevel.isEmpty()) return false;
@@ -67,13 +63,6 @@ public class CrudeOilPoolFeature extends Feature<CrudeOilPoolConfiguration> {
             level.setBlock(pos, GalacticraftBlocks.OIL.get().defaultBlockState(), 2);
             return 1;
         }).sum() > 0;
-    }
-
-    private static Optional<Column> findBottom(WorldGenLevel levelGen, BlockPos pos) {
-        Predicate<BlockState> inWater = state -> state.is(Blocks.WATER);
-        Predicate<BlockState> notWater = state -> !state.is(Blocks.WATER);
-
-        return Column.scan(levelGen, pos, 90, inWater, notWater);
     }
 
     private static boolean isValidPlacement(WorldGenLevel levelGen, BlockPos pos) {

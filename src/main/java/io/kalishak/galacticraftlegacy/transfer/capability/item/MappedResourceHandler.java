@@ -9,7 +9,6 @@ package io.kalishak.galacticraftlegacy.transfer.capability.item;
 
 import com.mojang.serialization.Codec;
 import io.kalishak.galacticraftlegacy.codec.SerializableEnum;
-import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.common.util.ValueIOSerializable;
@@ -23,7 +22,7 @@ import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.Objects;
 
-public abstract class MappedResourceHandler<S, R extends Resource, E extends Enum<E> & StringRepresentable> implements ResourceHandler<R>, ValueIOSerializable {
+public abstract class MappedResourceHandler<S, R extends Resource, E extends Enum<E> & SerializableEnum> implements ResourceHandler<R>, ValueIOSerializable {
     protected final S emptyStack;
     protected final EnumMap<E, S> stacks;
     protected final Codec<EnumMap<E, S>> codec;
@@ -88,6 +87,18 @@ public abstract class MappedResourceHandler<S, R extends Resource, E extends Enu
         E entry = this.enumClass.getEnumConstants()[index];
         S old = this.stacks.put(entry, getStack(resource, amount));
         onContentsChanged(entry, old);
+    }
+
+    private void updateJournalSize() {
+        this.snapshotJournals.ensureCapacity(this.stacks.size());
+        // Add missing entries
+        while (snapshotJournals.size() < this.stacks.size()) {
+            this.snapshotJournals.add(new ValueJournal(snapshotJournals.size()));
+        }
+        // Remove superfluous entries
+        if (snapshotJournals.size() > stacks.size()) {
+            snapshotJournals.subList(stacks.size(), snapshotJournals.size()).clear();
+        }
     }
 
     public void setAll(EnumMap<E, S> stacks) {
@@ -180,25 +191,25 @@ public abstract class MappedResourceHandler<S, R extends Resource, E extends Enu
     }
 
     private class ValueJournal extends SnapshotJournal<S> {
-        private final E entry;
+        private final int index;
 
-        private ValueJournal(E entry) {
-            this.entry = entry;
+        private ValueJournal(int index) {
+            this.index = index;
         }
 
         @Override
         protected S createSnapshot() {
-            return MappedResourceHandler.this.copyOf(MappedResourceHandler.this.stacks.getOrDefault(this.entry, MappedResourceHandler.this.emptyStack));
+            return MappedResourceHandler.this.copyOf(MappedResourceHandler.this.stacks.getOrDefault(SerializableEnum.fromIndexMap(MappedResourceHandler.this.enumClass, this.index), MappedResourceHandler.this.emptyStack));
         }
 
         @Override
         protected void revertToSnapshot(S s) {
-            MappedResourceHandler.this.stacks.put(this.entry, s);
+            MappedResourceHandler.this.stacks.put(SerializableEnum.fromIndexMap(MappedResourceHandler.this.enumClass, this.index), s);
         }
 
         @Override
         protected void onRootCommit(S originalState) {
-            MappedResourceHandler.this.onContentsChanged(this.entry, originalState);
+            MappedResourceHandler.this.onContentsChanged(SerializableEnum.fromIndexMap(MappedResourceHandler.this.enumClass, this.index), originalState);
         }
     }
 }

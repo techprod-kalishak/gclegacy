@@ -123,4 +123,10 @@ public class OrbitalSkyRenderer extends SpaceSkyRenderer {
 
         return var15;
     }
+
+    @Override
+    public void close() {
+        super.close();
+        this.moonBuffer.close();
+    }
 }

@@ -1,0 +1,18 @@
+{
+  "feature": "galacticraftlegacy:space_station",
+  "placement": [
+    {
+      "type": "minecraft:fixed_placement",
+      "positions": [
+        [
+          0,
+          0,
+          0
+        ]
+      ]
+    },
+    {
+      "type": "minecraft:biome"
+    }
+  ]
+}

@@ -38,6 +38,7 @@ import io.kalishak.galacticraftlegacy.world.level.block.GalacticraftBlocks;
 import io.kalishak.galacticraftlegacy.world.level.block.GalacticraftDispenserBehaviors;
 import io.kalishak.galacticraftlegacy.world.level.block.cauldron.GalacticraftCauldronInteraction;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityType;
+import io.kalishak.galacticraftlegacy.world.level.levelgen.GalacticraftNoiseRouterData;
 import io.kalishak.galacticraftlegacy.world.level.levelgen.features.GalacticraftFeatures;
 import io.kalishak.galacticraftlegacy.world.level.material.fluid.GalacticraftFluidType;
 import io.kalishak.galacticraftlegacy.world.level.material.fluid.GalacticraftFluids;
@@ -75,6 +76,7 @@ public class Galacticraft {
         GalacticraftLootItemConditions.init(modEventBus);
         GalacticraftLootFunctions.init(modEventBus);
         GalacticraftMenuType.init(modEventBus);
+        GalacticraftNoiseRouterData.init(modEventBus);
         PackedNodeNetworkTypes.init(modEventBus);
         GalacticraftParticleTypes.init(modEventBus);
         GalacticraftRecipeBookCategories.init(modEventBus);

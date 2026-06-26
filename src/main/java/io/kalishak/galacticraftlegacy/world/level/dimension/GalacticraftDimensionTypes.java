@@ -89,12 +89,12 @@ public class GalacticraftDimensionTypes {
                                 .set(NeoForgeEnvironmentAttributes.CUSTOM_SKYBOX, MoonSkyRenderer.ID)
                                 .set(NeoForgeEnvironmentAttributes.CUSTOM_CLOUDS, SpaceCloudsRenderer.ID)
                                 .set(NeoForgeEnvironmentAttributes.CUSTOM_WEATHER_EFFECTS, SpaceWeatherRenderer.ID)
-                                .set(EnvironmentAttributes.SKY_COLOR, MoonBiomes.calculateSkyColor())
+                                .set(EnvironmentAttributes.SKY_COLOR, 0)
                                 .set(EnvironmentAttributes.BACKGROUND_MUSIC, GalacticraftWorldAttributes.MUSIC_SPACE)
                                 .set(EnvironmentAttributes.BED_RULE, GalacticraftWorldAttributes.BED_RULE_CRYO_CHAMBER)
                                 .set(EnvironmentAttributes.AMBIENT_SOUNDS, GalacticraftWorldAttributes.AMBIENT_SOUNDS_SPACE)
                                 .set(EnvironmentAttributes.WATER_EVAPORATES, true)
-                                .set(GalacticraftEnvironmentAttributes.GRAVITY.get(), 0.03F)
+                                .set(GalacticraftEnvironmentAttributes.GRAVITY.get(), 0.062F)
                                 .build(),
                         timelineHolderGetter.getOrThrow(GalacticraftTags.Timelines.IN_MOON),
                         worldClocks.get(GalacticraftWorldClocks.MOON).map(IHolderExtension::getDelegate)

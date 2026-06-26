@@ -17,7 +17,7 @@ import net.neoforged.neoforge.transfer.item.ItemResource;
 
 import java.util.EnumMap;
 
-public class MappedItemResourceHandler<E extends Enum<E> & StringRepresentable> extends MappedResourceHandler<ItemStack, ItemResource, E> {
+public class MappedItemResourceHandler<E extends Enum<E> & SerializableEnum> extends MappedResourceHandler<ItemStack, ItemResource, E> {
     public MappedItemResourceHandler(Class<E> enumClass, Codec<E> enumCodec) {
         super(enumClass, ItemStack.EMPTY, MappedEquipment.codec(enumClass, enumCodec));
     }

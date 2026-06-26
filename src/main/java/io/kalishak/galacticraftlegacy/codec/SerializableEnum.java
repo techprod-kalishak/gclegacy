@@ -14,6 +14,7 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.util.ByIdMap;
 import net.minecraft.util.StringRepresentable;
 import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 import java.util.function.IntFunction;
 
@@ -24,21 +25,41 @@ public interface SerializableEnum extends StringRepresentable {
 
     int getIndex();
 
-    static <Serializable extends SerializableEnum> Codec<Serializable> codec(Class<Serializable> clazz) {
-        if (!clazz.isEnum()) {
-            throw new IllegalStateException(clazz + " is not an enum");
+    static <Serializable extends SerializableEnum> Codec<Serializable> codec(Class<Serializable> enumClass) {
+        if (!enumClass.isEnum()) {
+            throw new IllegalStateException(enumClass + " is not an enum");
         }
 
-        return StringRepresentable.fromValues(clazz::getEnumConstants);
+        return StringRepresentable.fromValues(enumClass::getEnumConstants);
     }
 
-    static <Serializable extends SerializableEnum> StreamCodec<ByteBuf, Serializable> streamCodec(Class<Serializable> clazz) {
-        if (!clazz.isEnum()) {
-            throw new IllegalStateException(clazz + " is not an enum");
+    static <Serializable extends SerializableEnum> StreamCodec<ByteBuf, Serializable> streamCodec(Class<Serializable> enumClass) {
+        if (!enumClass.isEnum()) {
+            throw new IllegalStateException(enumClass + " is not an enum");
         }
 
-        IntFunction<Serializable> byId = ByIdMap.continuous(SerializableEnum::getIndex, clazz.getEnumConstants(), ByIdMap.OutOfBoundsStrategy.ZERO);
+        IntFunction<Serializable> byId = ByIdMap.continuous(SerializableEnum::getIndex, enumClass.getEnumConstants(), ByIdMap.OutOfBoundsStrategy.ZERO);
 
         return ByteBufCodecs.idMapper(byId, SerializableEnum::getIndex);
+    }
+
+    static @Nullable <Serializable extends Enum<Serializable> & SerializableEnum> Serializable fromIndexMap(Class<Serializable> enumClass, int index) {
+        if (!enumClass.isEnum()) {
+            throw new IllegalStateException(enumClass + " is not an enum");
+        }
+
+        Serializable[] enums = enumClass.getEnumConstants();
+
+        if (index > enums.length) {
+            throw new IllegalStateException("Provided index " + index + " is out of bound for length " + enums.length);
+        }
+
+        for (Serializable serializable : enums) {
+            if (serializable.getIndex() == index) {
+                return serializable;
+            }
+        }
+
+        return null;
     }
 }

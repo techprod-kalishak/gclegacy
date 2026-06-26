@@ -8,10 +8,7 @@
       }
     }
   },
-  "carvers": [
-    "galacticraftlegacy:moon_cave",
-    "galacticraftlegacy:moon_cave_extra"
-  ],
+  "carvers": "galacticraftlegacy:moon_cave",
   "downfall": 0.2,
   "effects": {
     "water_color": "#0671a9"
@@ -36,7 +33,9 @@
     [],
     [],
     [
-      "galacticraftlegacy:moon_crater"
+      "galacticraftlegacy:moon_crater",
+      "galacticraftlegacy:moon_crater_large",
+      "galacticraftlegacy:moon_fallen_meteor"
     ]
   ],
   "has_precipitation": false,

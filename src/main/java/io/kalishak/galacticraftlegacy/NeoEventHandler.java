@@ -31,6 +31,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BucketItem;
@@ -38,6 +39,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.TooltipProvider;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.SpawnData;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CampfireBlock;
@@ -49,8 +51,8 @@ import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.common.util.AttributeTooltipContext;
 import net.neoforged.neoforge.event.AddAttributeTooltipsEvent;
 import net.neoforged.neoforge.event.OnDatapackSyncEvent;
-import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
-import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
+import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
+import net.neoforged.neoforge.event.entity.living.*;
 import net.neoforged.neoforge.event.level.BlockEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import net.neoforged.neoforge.event.server.ServerStoppingEvent;
@@ -71,6 +73,19 @@ public class NeoEventHandler {
     @SubscribeEvent
     public void updateRecipes(OnDatapackSyncEvent event) {
         event.sendRecipes(GalacticraftRecipeType.CIRCUIT.get());
+    }
+
+    @SubscribeEvent
+    public void onEntitySpawn(EntityJoinLevelEvent event) {
+        Entity entity = event.getEntity();
+        Level level = event.getLevel();
+
+        if (!entity.is(EntityType.PLAYER)) {
+            boolean isSpaceEntity = entity.is(GalacticraftTags.EntityTypes.SPACE_MOB);
+            boolean isSpaceLevel = level.dimensionTypeRegistration().is(GalacticraftTags.DimensionTypes.SPACE_MOB_HABITABLE);
+
+            event.setCanceled((isSpaceEntity && !isSpaceLevel) || (!isSpaceEntity && isSpaceLevel));
+        }
     }
 
     @SubscribeEvent

@@ -1,0 +1,13 @@
+{
+  "type": "galacticraftlegacy:fallen_meteor",
+  "config": {
+    "crater_chance": 1.0,
+    "heat_level": 5000,
+    "max_distance_between": {
+      "type": "minecraft:uniform",
+      "max_inclusive": 12,
+      "min_inclusive": 8
+    },
+    "min_distance_between": 4
+  }
+}

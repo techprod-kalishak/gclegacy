@@ -91,11 +91,13 @@ public final class GalacticraftTags {
         public static final TagKey<DimensionType> OPEN_SPACE = tagKey(Registries.DIMENSION_TYPE, "open_space");
         public static final TagKey<DimensionType> REQUIRES_CRYOCHAMBER = tagKey(Registries.DIMENSION_TYPE, "requires_cryochamber");
         public static final TagKey<DimensionType> HAS_DISABLED_ROCKETS = tagKey(Registries.DIMENSION_TYPE, "has_disabled_rockets");
+        public static final TagKey<DimensionType> SPACE_MOB_HABITABLE = tagKey(Registries.DIMENSION_TYPE, "space_mob_habitable");
     }
 
     public static class EntityTypes {
         public static final TagKey<EntityType<?>> CAN_EQUIP_GEAR = tagKey(Registries.ENTITY_TYPE, "can_equip_gear");
         public static final TagKey<EntityType<?>> CAN_EQUIP_PARACHUTE = tagKey(Registries.ENTITY_TYPE, "can_equip_parachute");
+        public static final TagKey<EntityType<?>> SPACE_MOB = tagKey(Registries.ENTITY_TYPE, "space_mob");
     }
 
     public static class Fluids {

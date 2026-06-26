@@ -27,6 +27,7 @@ import net.minecraft.world.level.levelgen.FlatLevelSource;
 import net.minecraft.world.level.levelgen.NoiseBasedChunkGenerator;
 import net.minecraft.world.level.levelgen.NoiseGeneratorSettings;
 import net.minecraft.world.level.levelgen.NoiseSettings;
+import net.minecraft.world.level.levelgen.feature.VoidStartPlatformFeature;
 import net.minecraft.world.level.levelgen.flat.FlatLevelGeneratorSettings;
 
 import java.util.List;

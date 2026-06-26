@@ -1,7 +1,7 @@
 {
   "ambient_light": 0.0,
   "attributes": {
-    "galacticraftlegacy:gameplay/gravity": 0.03,
+    "galacticraftlegacy:gameplay/gravity": 0.062,
     "minecraft:audio/ambient_sounds": {
       "mood": {
         "block_search_extent": 8,
@@ -25,7 +25,7 @@
       }
     },
     "minecraft:gameplay/water_evaporates": true,
-    "minecraft:visual/sky_color": "#9097ff",
+    "minecraft:visual/sky_color": "#000000",
     "neoforge:custom_clouds": "galacticraftlegacy:clouds/space",
     "neoforge:custom_skybox": "galacticraftlegacy:moon",
     "neoforge:custom_weather_effects": "galacticraftlegacy:weather_effect/space"

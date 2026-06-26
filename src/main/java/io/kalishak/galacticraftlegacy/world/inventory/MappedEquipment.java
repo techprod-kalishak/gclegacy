@@ -1,6 +1,7 @@
 package io.kalishak.galacticraftlegacy.world.inventory;
 
 import com.mojang.serialization.Codec;
+import io.kalishak.galacticraftlegacy.codec.SerializableEnum;
 import io.kalishak.galacticraftlegacy.transfer.capability.item.MappedItemResourceHandler;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -37,8 +38,8 @@ public class MappedEquipment<E extends Enum<E> & StringRepresentable> {
         this.items = items;
     }
 
-    public static <E extends Enum<E> & StringRepresentable> MappedItemResourceHandler<E> of(MappedEquipment<E> equipment, Class<E> clazz, Codec<E> enumCodec) {
-        return new MappedItemResourceHandler<E>(equipment.items, clazz, enumCodec);
+    public static <E extends Enum<E> & SerializableEnum> MappedItemResourceHandler<E> of(MappedEquipment<E> equipment, Class<E> clazz, Codec<E> enumCodec) {
+        return new MappedItemResourceHandler<>(equipment.items, clazz, enumCodec);
     }
 
     public ItemStack set(E slot, ItemStack stack) {

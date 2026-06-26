@@ -36,7 +36,7 @@ public final class GalacticraftNoiseGeneratorSettings {
                 MOON,
                 new NoiseGeneratorSettings(
                         NoiseSettings.create(-32, 128, 2, 2),
-                        GalacticraftBlocks.MOON_ROCK.get().defaultBlockState(),
+                        GalacticraftBlocks.MOON_TURF.get().defaultBlockState(),
                         Blocks.AIR.defaultBlockState(),
                         GalacticraftNoiseRouterData.moon(densityFunctions, noiseParameters),
                         GalacticraftSurfaceRuleData.moon(),
@@ -51,8 +51,8 @@ public final class GalacticraftNoiseGeneratorSettings {
                                         0L
                                 )
                         ),
-                        120,
-                        false,
+                        68,
+                        true,
                         false,
                         true,
                         false

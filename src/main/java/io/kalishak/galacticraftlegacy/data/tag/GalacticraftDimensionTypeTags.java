@@ -38,5 +38,8 @@ public class GalacticraftDimensionTypeTags extends KeyTagProvider<DimensionType>
                 .add(GalacticraftDimensionTypes.MARS)
                 .add(GalacticraftDimensionTypes.VENUS)
                 .add(GalacticraftDimensionTypes.ASTEROIDS);
+        tag(GalacticraftTags.DimensionTypes.SPACE_MOB_HABITABLE)
+                .add(GalacticraftDimensionTypes.MOON)
+                .add(GalacticraftDimensionTypes.MARS);
     }
 }
