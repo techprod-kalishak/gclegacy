@@ -301,6 +301,6 @@
   "tag.block.galacticraftlegacy.sensor_glasses_detectable": "Detectable by Sensor Glasses",
   "tag.entity_type.galacticraftlegacy.can_equip_parachute": "Can equip parachute",
   "tag.fluid.galacticraftlegacy.flows_grating": "Flows through Grating",
-  "tag.item.galacticraftlegacy.parachute": "Parachute",
-  "tag.item.galacticraftlegacy.tools.wrench": "Wrench"
+  "tag.item.c.tools.wrench": "Wrench",
+  "tag.item.galacticraftlegacy.parachute": "Parachute"
 }

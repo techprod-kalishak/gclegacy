@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "#": "#galacticraftlegacy:ingots/tin"
+    "#": "#c:ingots/tin"
   },
   "pattern": [
     "# #",

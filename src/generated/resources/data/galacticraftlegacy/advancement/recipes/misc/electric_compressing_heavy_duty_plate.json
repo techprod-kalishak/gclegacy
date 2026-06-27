@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "#galacticraftlegacy:plates/aluminum"
+            "items": "#c:plates/aluminum"
           }
         ]
       },
@@ -15,7 +15,7 @@
       "conditions": {
         "items": [
           {
-            "items": "#galacticraftlegacy:plates/bronze"
+            "items": "#c:plates/bronze"
           }
         ]
       },
@@ -25,7 +25,7 @@
       "conditions": {
         "items": [
           {
-            "items": "#galacticraftlegacy:plates/steel"
+            "items": "#c:plates/steel"
           }
         ]
       },

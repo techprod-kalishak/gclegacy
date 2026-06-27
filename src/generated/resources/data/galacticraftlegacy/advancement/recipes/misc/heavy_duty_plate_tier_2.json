@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "#galacticraftlegacy:plates/meteoric_iron"
+            "items": "#c:plates/meteoric_iron"
           }
         ]
       },
@@ -15,7 +15,7 @@
       "conditions": {
         "items": [
           {
-            "items": "#galacticraftlegacy:plates/heavy_duty"
+            "items": "#c:plates/heavy_duty"
           }
         ]
       },

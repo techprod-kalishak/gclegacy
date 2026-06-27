@@ -1,9 +1,9 @@
 {
   "values": [
-    "#galacticraftlegacy:ores/aluminum",
-    "#galacticraftlegacy:ores/cheese",
-    "#galacticraftlegacy:ores/sapphire",
-    "#galacticraftlegacy:ores/silicon",
-    "#galacticraftlegacy:ores/tin"
+    "#c:ores/aluminum",
+    "#c:ores/cheese",
+    "#c:ores/sapphire",
+    "#c:ores/silicon",
+    "#c:ores/tin"
   ]
 }

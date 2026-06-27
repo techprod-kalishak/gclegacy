@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "equipment",
   "key": {
-    "I": "#galacticraftlegacy:ingots/titanium"
+    "I": "#c:ingots/titanium"
   },
   "pattern": [
     "III",

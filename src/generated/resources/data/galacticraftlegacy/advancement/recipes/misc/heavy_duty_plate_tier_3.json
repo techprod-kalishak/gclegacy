@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "#galacticraftlegacy:plates/desh"
+            "items": "#c:plates/desh"
           }
         ]
       },
@@ -15,7 +15,7 @@
       "conditions": {
         "items": [
           {
-            "items": "#galacticraftlegacy:plates/heavy_duty_tier_2"
+            "items": "#c:plates/heavy_duty_tier_2"
           }
         ]
       },

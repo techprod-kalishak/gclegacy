@@ -1,6 +1,14 @@
+/*
+ * Copyright (c) 2026 Kalishak
+ *
+ * Licensed under the MIT license
+ * See LICENSE file for more details
+ */
+
 package io.kalishak.galacticraftlegacy.world.level.block;
 
 import com.mojang.serialization.MapCodec;
+import io.kalishak.galacticraftlegacy.data.GalacticraftTags;
 import io.kalishak.galacticraftlegacy.world.item.HotItem;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.FallenMeteorBlockEntity;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityType;
@@ -23,6 +31,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.chunk.ChunkAccess;
+import net.minecraft.world.level.chunk.LevelChunk;
+import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.Vec3;
@@ -30,6 +41,12 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jspecify.annotations.Nullable;
+
+import java.util.List;
+import java.util.function.LongFunction;
+import java.util.function.LongUnaryOperator;
+import java.util.stream.Collectors;
+import java.util.stream.LongStream;
 
 public class FallenMeteorBlock extends FallingBlock implements EntityBlock, SimpleWaterloggedBlock {
     public static final MapCodec<FallenMeteorBlock> CODEC = simpleCodec(FallenMeteorBlock::new);
@@ -62,6 +79,33 @@ public class FallenMeteorBlock extends FallingBlock implements EntityBlock, Simp
         g = g << 8;
 
         return a | r | g | b;
+    }
+
+    public static void createFallingMeteor(ServerLevel level, BlockPos pos) {
+        if (level.dimensionTypeRegistration().is(GalacticraftTags.DimensionTypes.HAS_METEORS)) {
+            if (level.isAreaLoaded(pos, 16)) {
+                RandomSource random = level.getRandom();
+                ChunkAccess chunk = level.getChunkAt(pos);
+                int newX = random.nextInt(4, 16);
+                int newZ = random.nextInt(4, 16);
+                List<BlockPos> existingMeteors = chunk.getBlockEntitiesPos().stream()
+                        .filter(blockPos -> {
+                            BlockEntity blockEntity = chunk.getBlockEntity(blockPos);
+
+                            return blockEntity instanceof FallenMeteorBlockEntity;
+                        })
+                        .toList();
+
+                if (!existingMeteors.isEmpty()) {
+                    //modify x and z when there are few meteors at the chunk
+                }
+
+                BlockState fallenMeteor = GalacticraftBlocks.FALLEN_METEOR.get().defaultBlockState();
+                BlockPos newPos = new BlockPos(pos.getX() + newX, 250, pos.getZ() + newZ);
+                level.setBlock(newPos, fallenMeteor, 2);
+                level.gameEvent(GameEvent.BLOCK_PLACE, newPos, GameEvent.Context.of(fallenMeteor));
+            }
+        }
     }
 
     @Override

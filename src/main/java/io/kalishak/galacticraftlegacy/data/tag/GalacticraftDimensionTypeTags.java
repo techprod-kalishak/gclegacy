@@ -29,6 +29,9 @@ public class GalacticraftDimensionTypeTags extends KeyTagProvider<DimensionType>
         tag(GalacticraftTags.DimensionTypes.HAS_DISABLED_ROCKETS)
                 .add(BuiltinDimensionTypes.NETHER)
                 .add(BuiltinDimensionTypes.END);
+        tag(GalacticraftTags.DimensionTypes.HAS_METEORS)
+                .add(GalacticraftDimensionTypes.MOON)
+                .add(GalacticraftDimensionTypes.MARS);
         tag(GalacticraftTags.DimensionTypes.OPEN_SPACE)
                 .add(GalacticraftDimensionTypes.OVERWORLD_ORBIT)
                 .add(GalacticraftDimensionTypes.ASTEROIDS);

@@ -36,11 +36,12 @@ public interface GalacticraftBiomes {
                 baseSpaceBiome(0.0F)
                         .specialEffects(new BiomeSpecialEffects.Builder().waterColor(0).build())
                         .mobSpawnSettings(MobSpawnSettings.EMPTY)
-                        .generationSettings(new BiomeGenerationSettings.Builder(placedFeatures, worldCarvers).addFeature(GenerationStep.Decoration.TOP_LAYER_MODIFICATION, GalacticraftPlacements.SPACE_STATION).build())
+                        .generationSettings(new BiomeGenerationSettings.Builder(placedFeatures, worldCarvers).addFeature(GenerationStep.Decoration.LOCAL_MODIFICATIONS, GalacticraftPlacements.SPACE_STATION).build())
                         .build()
         );
 
         MoonBiomes.bootstrap(cxt, placedFeatures, worldCarvers);
+        MarsBiomes.bootstrap(cxt, placedFeatures, worldCarvers);
     }
 
     static ResourceKey<Biome> key(String name) {

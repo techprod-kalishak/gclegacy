@@ -11,11 +11,10 @@ import io.kalishak.galacticraftlegacy.Constants;
 import io.kalishak.galacticraftlegacy.attachment.level.CelestialBodyLevelData;
 import io.kalishak.galacticraftlegacy.galaxies.GalacticraftGalaxies;
 import io.kalishak.galacticraftlegacy.galaxies.environment.AtmosphereInfo;
-import io.kalishak.galacticraftlegacy.galaxies.environment.CelestialBodyTransition;
+import io.kalishak.galacticraftlegacy.world.level.dimension.transition.TransitionType;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.world.phys.Vec3;
 
 import java.util.function.Supplier;
 
@@ -34,13 +33,8 @@ public class CelestialBodyLevelDataEntries {
             0.0F,
             AtmosphereInfo.EARTH,
             1.0F,
-            new CelestialBodyTransition(
-                    Vec3.ZERO,
-                    0,
-                    CelestialBodyTransition.Type.PARACHUTE
-            )
+            TransitionType.PARACHUTE
     );
-
 
     public static void bootstrap(BootstrapContext<CelestialBodyLevelData> cxt) {
         cxt.register(
@@ -61,7 +55,15 @@ public class CelestialBodyLevelDataEntries {
         );
         cxt.register(
                 EARTH_ORBIT,
-                PLACEHOLDER.get()
+                new CelestialBodyLevelData(
+                        GalacticraftGalaxies.SATELLITE,
+                        0.1F,
+                        AtmosphereInfo.builder()
+                                .temperature(140.0F)
+                                .build(),
+                        0.165F,
+                        TransitionType.FIXED_POSITION
+                )
         );
         cxt.register(
                 MOON,
@@ -72,11 +74,7 @@ public class CelestialBodyLevelDataEntries {
                                 .temperature(140.0F)
                                 .build(),
                         0.165F,
-                        new CelestialBodyTransition(
-                                Vec3.ZERO,
-                                256,
-                                CelestialBodyTransition.Type.LANDER
-                        )
+                        TransitionType.LANDER
                 )
         );
         cxt.register(
@@ -91,11 +89,7 @@ public class CelestialBodyLevelDataEntries {
                                 .temperature(-60.0F)
                                 .build(),
                         0.38F,
-                        new CelestialBodyTransition(
-                                Vec3.ZERO,
-                                256,
-                                CelestialBodyTransition.Type.BUBBLE_LANDER
-                        )
+                        TransitionType.LANDER
                 )
         );
         cxt.register(
@@ -107,11 +101,7 @@ public class CelestialBodyLevelDataEntries {
                                 .temperature(2.7F)
                                 .build(),
                         0.01F,
-                        new CelestialBodyTransition(
-                                Vec3.ZERO,
-                                256,
-                                CelestialBodyTransition.Type.CAPSULE
-                        )
+                        TransitionType.LANDER
                 )
         );
         cxt.register(
@@ -125,11 +115,7 @@ public class CelestialBodyLevelDataEntries {
                                 .temperature(462.0F)
                                 .build(),
                         0.904F,
-                        new CelestialBodyTransition(
-                                Vec3.ZERO,
-                                256,
-                                CelestialBodyTransition.Type.CAPSULE
-                        )
+                        TransitionType.LANDER
                 )
         );
     }

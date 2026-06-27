@@ -3,7 +3,7 @@
   "compressing_time": 100,
   "pattern": {
     "key": {
-      "#": "#galacticraftlegacy:ingots/aluminum"
+      "#": "#c:ingots/aluminum"
     },
     "pattern": [
       "##"

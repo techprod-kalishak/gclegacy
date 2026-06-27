@@ -2,7 +2,7 @@
   "type": "galacticraftlegacy:compressing",
   "experience": 0.3,
   "key": {
-    "#": "#galacticraftlegacy:raw_materials/meteoric_iron"
+    "#": "#c:raw_materials/meteoric_iron"
   },
   "pattern": [
     "##"

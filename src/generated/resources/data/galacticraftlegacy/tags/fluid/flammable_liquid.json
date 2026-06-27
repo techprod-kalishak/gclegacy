@@ -1,6 +1,6 @@
 {
   "values": [
-    "#galacticraftlegacy:is_oil",
-    "#galacticraftlegacy:is_fuel"
+    "#c:is_oil",
+    "#c:is_fuel"
   ]
 }

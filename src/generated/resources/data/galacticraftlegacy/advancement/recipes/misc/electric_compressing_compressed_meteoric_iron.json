@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "#galacticraftlegacy:raw_materials/meteoric_iron"
+            "items": "#c:raw_materials/meteoric_iron"
           }
         ]
       },

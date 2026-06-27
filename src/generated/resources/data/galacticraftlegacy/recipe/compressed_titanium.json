@@ -2,7 +2,7 @@
   "type": "galacticraftlegacy:compressing",
   "experience": 0.3,
   "key": {
-    "#": "#galacticraftlegacy:ingots/titanium"
+    "#": "#c:ingots/titanium"
   },
   "pattern": [
     "##"
