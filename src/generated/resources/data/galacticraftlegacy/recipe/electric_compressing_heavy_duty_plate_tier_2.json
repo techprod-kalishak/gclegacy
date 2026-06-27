@@ -3,8 +3,8 @@
   "compressing_time": 100,
   "pattern": {
     "key": {
-      "#": "#galacticraftlegacy:plates/heavy_duty",
-      "M": "#galacticraftlegacy:plates/meteoric_iron"
+      "#": "#c:plates/heavy_duty",
+      "M": "#c:plates/meteoric_iron"
     },
     "pattern": [
       "#M"

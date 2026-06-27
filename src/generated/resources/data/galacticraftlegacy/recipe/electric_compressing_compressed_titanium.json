@@ -3,7 +3,7 @@
   "compressing_time": 100,
   "pattern": {
     "key": {
-      "#": "#galacticraftlegacy:ingots/titanium"
+      "#": "#c:ingots/titanium"
     },
     "pattern": [
       "##"

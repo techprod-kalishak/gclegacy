@@ -3,8 +3,8 @@
   "compressing_time": 100,
   "pattern": {
     "key": {
-      "#": "#galacticraftlegacy:plates/heavy_duty",
-      "D": "#galacticraftlegacy:plates/desh"
+      "#": "#c:plates/heavy_duty",
+      "D": "#c:plates/desh"
     },
     "pattern": [
       "#D"

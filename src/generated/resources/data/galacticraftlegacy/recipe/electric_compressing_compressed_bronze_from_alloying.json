@@ -3,8 +3,8 @@
   "compressing_time": 100,
   "pattern": {
     "key": {
-      "#": "#galacticraftlegacy:plates/copper",
-      "X": "#galacticraftlegacy:plates/tin"
+      "#": "#c:plates/copper",
+      "X": "#c:plates/tin"
     },
     "pattern": [
       "#X"

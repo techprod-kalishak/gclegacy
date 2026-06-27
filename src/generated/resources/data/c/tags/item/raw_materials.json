@@ -1,12 +1,12 @@
 {
   "values": [
-    "#galacticraftlegacy:raw_materials/cheese",
-    "#galacticraftlegacy:raw_materials/aluminum",
-    "#galacticraftlegacy:raw_materials/desh",
-    "#galacticraftlegacy:raw_materials/lead",
-    "#galacticraftlegacy:raw_materials/silicon",
-    "#galacticraftlegacy:raw_materials/steel",
-    "#galacticraftlegacy:raw_materials/tin",
-    "#galacticraftlegacy:raw_materials/titanium"
+    "#c:raw_materials/cheese",
+    "#c:raw_materials/aluminum",
+    "#c:raw_materials/desh",
+    "#c:raw_materials/lead",
+    "#c:raw_materials/silicon",
+    "#c:raw_materials/steel",
+    "#c:raw_materials/tin",
+    "#c:raw_materials/titanium"
   ]
 }

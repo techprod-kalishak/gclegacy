@@ -25,6 +25,7 @@ import io.kalishak.galacticraftlegacy.world.item.equipment.trim.GalacticraftTrim
 import io.kalishak.galacticraftlegacy.world.level.biome.GalacticraftBiomes;
 import io.kalishak.galacticraftlegacy.world.level.dimension.GalacticraftDimensionTypes;
 import io.kalishak.galacticraftlegacy.world.level.dimension.GalacticraftLevelStem;
+import io.kalishak.galacticraftlegacy.world.level.dimension.SpaceStationRecipe;
 import io.kalishak.galacticraftlegacy.world.level.levelgen.GalacticraftBiomeModifiers;
 import io.kalishak.galacticraftlegacy.world.level.levelgen.GalacticraftNoiseGeneratorSettings;
 import io.kalishak.galacticraftlegacy.world.level.levelgen.GalacticraftNoiseRouterData;
@@ -62,7 +63,8 @@ public class GalacticraftData {
             .add(NeoForgeRegistries.Keys.BIOME_MODIFIERS, GalacticraftBiomeModifiers::bootstrap)
             .add(GalacticraftRegistries.Keys.CHECKLIST, Checklist::bootstrap)
             .add(GalacticraftRegistries.Keys.SCHEMATIC, SchematicVariants::bootstrap)
-            .add(GalacticraftRegistries.Keys.CELESTIAL_BODY_LEVEL_DATA, CelestialBodyLevelDataEntries::bootstrap);
+            .add(GalacticraftRegistries.Keys.CELESTIAL_BODY_LEVEL_DATA, CelestialBodyLevelDataEntries::bootstrap)
+            .add(GalacticraftRegistries.Keys.SPACE_STATION_RECIPE, SpaceStationRecipe::bootstrap);
 
     public static void gatherData(GatherDataEvent.Client event) {
         event.createProvider(output -> new PackMetadataGenerator(output)

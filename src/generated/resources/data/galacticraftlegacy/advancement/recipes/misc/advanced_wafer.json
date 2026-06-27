@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "#galacticraftlegacy:raw_materials/silicon"
+            "items": "#c:raw_materials/silicon"
           }
         ]
       },

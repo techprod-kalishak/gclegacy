@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2026 Kalishak
+ *
+ * Licensed under the MIT license
+ * See LICENSE file for more details
+ */
+
 package io.kalishak.galacticraftlegacy.world.level.biome;
 
 import com.mojang.datafixers.util.Pair;
@@ -9,8 +16,8 @@ import net.minecraft.world.level.biome.Climate;
 import java.util.List;
 import java.util.function.Function;
 
-public class SpaceBiomeSource {
-    public static Climate.ParameterList<Holder<Biome>> moonBiomes(Function<ResourceKey<Biome>,? extends Holder<Biome>> lookup) {
+public class GalacticraftBiomeSources {
+    public static Climate.ParameterList<Holder<Biome>> moonBiomes(Function<ResourceKey<Biome>, ? extends Holder<Biome>> lookup) {
         return new Climate.ParameterList<>(
                 List.of(
                         Pair.of(
@@ -19,6 +26,14 @@ public class SpaceBiomeSource {
                         )
                 )
         );
+    }
+    public static Climate.ParameterList<Holder<Biome>> marsBiomes(Function<ResourceKey<Biome>, ? extends Holder<Biome>> lookup) {
+        return new Climate.ParameterList<>(List.of(
+                Pair.of(
+                        Climate.parameters(-0.5F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F),
+                        lookup.apply(MarsBiomes.MARS_PLAINS)
+                )
+        ));
     }
 
     public interface BiomeResolver<T> {

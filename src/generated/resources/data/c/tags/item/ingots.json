@@ -1,10 +1,10 @@
 {
   "values": [
-    "#galacticraftlegacy:ingots/aluminum",
-    "#galacticraftlegacy:ingots/desh",
-    "#galacticraftlegacy:ingots/lead",
-    "#galacticraftlegacy:ingots/steel",
-    "#galacticraftlegacy:ingots/tin",
-    "#galacticraftlegacy:ingots/titanium"
+    "#c:ingots/aluminum",
+    "#c:ingots/desh",
+    "#c:ingots/lead",
+    "#c:ingots/steel",
+    "#c:ingots/tin",
+    "#c:ingots/titanium"
   ]
 }

@@ -3,7 +3,7 @@
   "compressing_time": 100,
   "pattern": {
     "key": {
-      "#": "#galacticraftlegacy:plates/iron",
+      "#": "#c:plates/iron",
       "X": "minecraft:coal"
     },
     "pattern": [

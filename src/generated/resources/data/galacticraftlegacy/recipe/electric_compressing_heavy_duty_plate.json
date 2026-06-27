@@ -3,9 +3,9 @@
   "compressing_time": 100,
   "pattern": {
     "key": {
-      "A": "#galacticraftlegacy:plates/aluminum",
-      "B": "#galacticraftlegacy:plates/bronze",
-      "S": "#galacticraftlegacy:plates/steel"
+      "A": "#c:plates/aluminum",
+      "B": "#c:plates/bronze",
+      "S": "#c:plates/steel"
     },
     "pattern": [
       "SAB",

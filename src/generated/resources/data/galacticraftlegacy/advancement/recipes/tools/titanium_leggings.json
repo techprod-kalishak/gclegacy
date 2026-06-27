@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "#galacticraftlegacy:ingots/titanium"
+            "items": "#c:ingots/titanium"
           }
         ]
       },

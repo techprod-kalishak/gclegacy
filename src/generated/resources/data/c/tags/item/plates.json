@@ -1,0 +1,16 @@
+{
+  "values": [
+    "#c:plates/aluminum",
+    "#c:plates/bronze",
+    "#c:plates/copper",
+    "#c:plates/desh",
+    "#c:plates/iron",
+    "#c:plates/meteoric_iron",
+    "#c:plates/tin",
+    "#c:plates/titanium",
+    "#c:plates/steel",
+    "#c:plates/heavy_duty",
+    "#c:plates/heavy_duty_tier_2",
+    "#c:plates/heavy_duty_tier_3"
+  ]
+}

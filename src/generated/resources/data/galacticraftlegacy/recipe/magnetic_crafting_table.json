@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "#": "minecraft:crafting_table",
-    "I": "#galacticraftlegacy:plates/iron"
+    "I": "#c:plates/iron"
   },
   "pattern": [
     "I",

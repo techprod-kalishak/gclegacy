@@ -1,9 +1,9 @@
 {
   "values": [
-    "#galacticraftlegacy:storage_blocks/aluminum",
-    "#galacticraftlegacy:storage_blocks/raw_aluminum",
-    "#galacticraftlegacy:storage_blocks/tin",
-    "#galacticraftlegacy:storage_blocks/raw_tin",
-    "#galacticraftlegacy:storage_blocks/raw_silicon"
+    "#c:storage_blocks/aluminum",
+    "#c:storage_blocks/raw_aluminum",
+    "#c:storage_blocks/tin",
+    "#c:storage_blocks/raw_tin",
+    "#c:storage_blocks/raw_silicon"
   ]
 }
