@@ -8,6 +8,7 @@
 package io.kalishak.galacticraftlegacy.client.gui;
 
 import io.kalishak.galacticraftlegacy.config.ClientConfig;
+import io.kalishak.galacticraftlegacy.references.GalacticraftComponents;
 import io.kalishak.galacticraftlegacy.world.item.component.ItemAccessEnergyUtils;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
@@ -31,7 +32,7 @@ public class ClientResourceHandlerTextUtils {
     }
 
     public static Component energyComponentWithCapacity(int amount, int capacity, UnaryOperator<Style> withStyle) {
-        return Component.translatable("item.galacticraftlegacy.battery.tooltip", ClientConfig.ENERGY_UNIT.get().calculate(amount) + "/" + ClientConfig.ENERGY_UNIT.get().calculate(capacity) + " " + ClientConfig.ENERGY_UNIT.get().getUnit()).withStyle(withStyle);
+        return GalacticraftComponents.TOOLTIP_BATTERY.apply(ClientConfig.ENERGY_UNIT.get().calculate(amount) + "/" + ClientConfig.ENERGY_UNIT.get().calculate(capacity) + " " + ClientConfig.ENERGY_UNIT.get().getUnit()).withStyle(withStyle);
     }
 
     public static Component energyComponentWithCapacity(EnergyHandler energyHandler, UnaryOperator<Style> withStyle) {

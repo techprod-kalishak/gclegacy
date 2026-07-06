@@ -8,12 +8,13 @@
 package io.kalishak.galacticraftlegacy.world.level.levelgen;
 
 import com.mojang.serialization.MapCodec;
-import io.kalishak.galacticraftlegacy.Constants;
+import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.Galacticraft;
 import io.kalishak.galacticraftlegacy.world.level.levelgen.synth.GradientNoise;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.levelgen.*;
 import net.minecraft.world.level.levelgen.synth.NormalNoise;
@@ -60,33 +61,29 @@ public class GalacticraftNoiseRouterData {
     }
 
     public static NoiseRouter moon(HolderGetter<DensityFunction> densityFunctions, HolderGetter<NormalNoise.NoiseParameters> noises) {
-        DensityFunction flatMoonRoll1 = GradientNoise.createSeeded(0L, 4, 0.25D);
-        DensityFunction flatMoonRoll2 = GradientNoise.createSeeded(0L, 4, 0.25D);
-        DensityFunction flatMoonRoll3 = GradientNoise.createSeeded(0L, 1, 0.25D);
-        DensityFunction flatMoonRoll4 = GradientNoise.createSeeded(0L, 1, 0.25D);
-
-        DensityFunction temp = DensityFunctions.shiftedNoise2d(
-                flatMoonRoll1, flatMoonRoll2, 0.25D, noises.getOrThrow(GalacticraftNoises.OPENSPACE)
+        DensityFunction shiftX = getFunction(densityFunctions, vanillaKey("shift_x"));
+        DensityFunction shiftZ = getFunction(densityFunctions, vanillaKey("shift_z"));
+        DensityFunction temperature = DensityFunctions.shiftedNoise2d(
+                shiftX, shiftZ, 0.25, noises.getOrThrow(Noises.TEMPERATURE)
         );
-        DensityFunction veg = DensityFunctions.shiftedNoise2d(
-                flatMoonRoll3, flatMoonRoll4, 0.25D, noises.getOrThrow(GalacticraftNoises.OPENSPACE_VEG)
+        DensityFunction vegetation = DensityFunctions.shiftedNoise2d(
+                shiftX, shiftZ, 0.25, noises.getOrThrow(Noises.VEGETATION)
         );
-
-        DensityFunction fullNoise = postProcess(slide(getFunction(densityFunctions, NoiseRouterData.CONTINENTS), 0, 128, 63, -124, -23.4375, 4, 63, -0.234375));
+        DensityFunction depth = getFunction(densityFunctions, vanillaKey("overworld/depth"));
 
         return new NoiseRouter(
                 DensityFunctions.zero(),
                 DensityFunctions.zero(),
                 DensityFunctions.zero(),
                 DensityFunctions.zero(),
-                temp,
-                veg,
+                temperature,
+                vegetation,
                 DensityFunctions.zero(),
                 DensityFunctions.zero(),
+                depth,
                 DensityFunctions.zero(),
                 DensityFunctions.zero(),
-                DensityFunctions.zero(),
-                fullNoise,
+                postProcess(slide(getFunction(densityFunctions, vanillaKey("overworld/sloped_cheese")), 8, 128, 80, 64, -0.03, 0, 12, 0.1)),
                 DensityFunctions.zero(),
                 DensityFunctions.zero(),
                 DensityFunctions.zero()
@@ -95,6 +92,10 @@ public class GalacticraftNoiseRouterData {
 
     private static DensityFunction getFunction(HolderGetter<DensityFunction> functions, ResourceKey<DensityFunction> name) {
         return new DensityFunctions.HolderHolder(functions.getOrThrow(name));
+    }
+
+    private static ResourceKey<DensityFunction> vanillaKey(String key) {
+        return ResourceKey.create(Registries.DENSITY_FUNCTION, Identifier.withDefaultNamespace(key));
     }
 
     private static DensityFunction postProcess(DensityFunction slide) {

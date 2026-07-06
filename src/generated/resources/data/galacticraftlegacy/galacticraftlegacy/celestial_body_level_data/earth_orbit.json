@@ -1,25 +1,23 @@
 {
   "atmosphere_info": {
-    "gas_composition": {
-      "galacticraftlegacy:argon": 0.93,
-      "galacticraftlegacy:carbon_dioxide": 0.04,
-      "galacticraftlegacy:nitrogen": 78.08,
-      "galacticraftlegacy:oxygen": 20.95
-    },
-    "has_precipitation": true,
-    "is_corrosive": true,
-    "temperature": 273.15
+    "gas_composition": {},
+    "has_precipitation": false,
+    "is_corrosive": false,
+    "temperature_modifier": -0.9
   },
-  "celestial_object_reference": "galacticraftlegacy:overworld",
-  "gravity_scale": 1.0,
-  "temperature_modifier": 0.0,
+  "celestial_object_reference": "galacticraftlegacy:satellite",
+  "gravity_scale": 0.165,
   "transition": {
-    "type": "parachute",
-    "initial_velocity": [
-      0.0,
-      0.0,
-      0.0
+    "type": "galacticraftlegacy:fixed",
+    "parachest_pos": [
+      -8,
+      90,
+      -1
     ],
-    "transition_height": 0
+    "pos": [
+      0,
+      65,
+      0
+    ]
   }
 }

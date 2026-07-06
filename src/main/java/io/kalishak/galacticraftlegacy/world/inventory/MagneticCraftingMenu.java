@@ -22,7 +22,6 @@ import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
-import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.transfer.ResourceHandler;
 import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.neoforged.neoforge.transfer.item.ResourceHandlerSlot;
@@ -34,23 +33,22 @@ public class MagneticCraftingMenu extends AbstractCraftingMenu {
     private final MagneticCraftingBlockEntity blockEntity;
     private final Player player;
 
-    public MagneticCraftingMenu(int containerId, Inventory inventory, Player player, MagneticCraftingBlockEntity blockEntity) {
+    public MagneticCraftingMenu(int containerId, Inventory playerInventory, MagneticCraftingBlockEntity blockEntity) {
         super(GalacticraftMenuType.MAGNETIC_CRAFTING.get(), containerId, 3, 3);
         this.blockEntity = blockEntity;
-        this.player = player;
-        ResourceHandler<ItemResource> resourceHandler = ResourcefulHelper.getResourceHandler(Capabilities.Item.BLOCK, ItemResource.EMPTY, blockEntity, null);
+        this.player = playerInventory.player;
 
-        addResultSlot(resourceHandler);
-        addCraftingSlots(resourceHandler);
-        addStandardInventorySlots(inventory, 8, 84);
-    }
-
-    public MagneticCraftingMenu(int containerId, Inventory playerInventory, RegistryFriendlyByteBuf data) {
-        this(containerId, playerInventory, playerInventory.player, ResourcefulHelper.readBlockEntity(GalacticraftBlockEntityType.MAGNETIC_CRAFTING.get(), playerInventory.player.level(), data));
+        addResultSlot(blockEntity.getResourceHandler());
+        addCraftingSlots(blockEntity.getResourceHandler());
+        addStandardInventorySlots(playerInventory, 8, 84);
 
         if (playerInventory.player instanceof ServerPlayer serverPlayer) {
             slotChangedCraftingGrid(this, serverPlayer, null);
         }
+    }
+
+    public MagneticCraftingMenu(int containerId, Inventory playerInventory, RegistryFriendlyByteBuf data) {
+        this(containerId, playerInventory, ResourcefulHelper.readBlockEntity(GalacticraftBlockEntityType.MAGNETIC_CRAFTING.get(), playerInventory.player.level(), data));
     }
 
     private void addResultSlot(ResourceHandler<ItemResource> resourceHandler) {
@@ -58,7 +56,7 @@ public class MagneticCraftingMenu extends AbstractCraftingMenu {
                 this.player,
                 this.blockEntity,
                 resourceHandler,
-                this.blockEntity::set,
+                this.blockEntity::setItem,
                 0, 124, 35
         ));
     }
@@ -67,7 +65,7 @@ public class MagneticCraftingMenu extends AbstractCraftingMenu {
         int index = 1;
         for (int y = 0; y < 3; ++y) {
             for (int x = 0; x < 3; ++x) {
-                addSlot(new ResourceHandlerSlot(resourceHandler, this.blockEntity::set, index, 30 + x * 18, 17 + y * 18));
+                addSlot(new ResourceHandlerSlot(resourceHandler, this.blockEntity::setItem, index, 30 + x * 18, 17 + y * 18));
                 index++;
             }
         }
@@ -75,7 +73,7 @@ public class MagneticCraftingMenu extends AbstractCraftingMenu {
 
     protected static void slotChangedCraftingGrid(MagneticCraftingMenu menu, ServerPlayer player, @Nullable RecipeHolder<CraftingRecipe> recipeHint) {
         menu.blockEntity.refreshRecipeResult(recipeHint, itemStack -> {
-            menu.blockEntity.set(0, ItemResource.of(itemStack), itemStack.getCount());
+            menu.blockEntity.setItem(0, itemStack);
             menu.setRemoteSlot(0, itemStack);
 
             player.connection.send(new ClientboundContainerSetSlotPacket(menu.containerId, menu.incrementStateId(), 0, itemStack));

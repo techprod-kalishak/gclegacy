@@ -7,10 +7,9 @@
 
 package io.kalishak.galacticraftlegacy.world.item.crafting.recipe;
 
-import io.kalishak.galacticraftlegacy.Constants;
+import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.Galacticraft;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;

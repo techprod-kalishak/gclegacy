@@ -7,7 +7,7 @@
 
 package io.kalishak.galacticraftlegacy.client.model;
 
-import io.kalishak.galacticraftlegacy.Constants;
+import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.Galacticraft;
 import net.minecraft.client.resources.model.UnbakedModel;
 import net.minecraft.client.resources.model.sprite.Material;

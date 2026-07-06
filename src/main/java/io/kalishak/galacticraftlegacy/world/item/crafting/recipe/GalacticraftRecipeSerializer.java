@@ -31,11 +31,11 @@ public final class GalacticraftRecipeSerializer {
     );
     public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<HeatingRecipe>> HEATING = REGISTRY.register(
             "heating",
-            () -> AbstractSmeltingRecipe.recipeSerializer(HeatingRecipe::new, 100)
+            () -> new RecipeSerializer<>(HeatingRecipe.MAP_CODEC, HeatingRecipe.STREAM_CODEC)
     );
     public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<ArcHeatingRecipe>> ARC_HEATING = REGISTRY.register(
             "arc_heating",
-            () -> AbstractSmeltingRecipe.recipeSerializer(ArcHeatingRecipe::new, 50)
+            () -> new RecipeSerializer<>(ArcHeatingRecipe.MAP_CODEC, ArcHeatingRecipe.STREAM_CODEC)
     );
 
     public static void init(IEventBus bus) {

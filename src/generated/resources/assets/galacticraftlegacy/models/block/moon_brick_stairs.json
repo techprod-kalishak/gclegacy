@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/stairs",
-  "textures": {
-    "bottom": "galacticraftlegacy:block/moon_bricks",
-    "side": "galacticraftlegacy:block/moon_bricks",
-    "top": "galacticraftlegacy:block/moon_bricks"
-  }
-}

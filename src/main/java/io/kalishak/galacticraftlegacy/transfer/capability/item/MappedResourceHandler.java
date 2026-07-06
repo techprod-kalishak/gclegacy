@@ -40,6 +40,7 @@ public abstract class MappedResourceHandler<S, R extends Resource, E extends Enu
         this.codec = codec;
         this.enumClass = enumClass;
         this.snapshotJournals = new ArrayList<>(enumClass.getEnumConstants().length);
+        updateJournalSize();
     }
 
     protected abstract R getResource(S stack);
@@ -90,20 +91,21 @@ public abstract class MappedResourceHandler<S, R extends Resource, E extends Enu
     }
 
     private void updateJournalSize() {
-        this.snapshotJournals.ensureCapacity(this.stacks.size());
+        this.snapshotJournals.ensureCapacity(size());
         // Add missing entries
-        while (snapshotJournals.size() < this.stacks.size()) {
+        while (snapshotJournals.size() < size()) {
             this.snapshotJournals.add(new ValueJournal(snapshotJournals.size()));
         }
         // Remove superfluous entries
-        if (snapshotJournals.size() > stacks.size()) {
-            snapshotJournals.subList(stacks.size(), snapshotJournals.size()).clear();
+        if (snapshotJournals.size() > size()) {
+            snapshotJournals.subList(size(), snapshotJournals.size()).clear();
         }
     }
 
     public void setAll(EnumMap<E, S> stacks) {
         this.stacks.clear();
         this.stacks.putAll(stacks);
+        updateJournalSize();
     }
 
     @Override
@@ -183,6 +185,7 @@ public abstract class MappedResourceHandler<S, R extends Resource, E extends Enu
         valueInput.read("stacks", this.codec).ifPresent(stacks -> {
             this.stacks.clear();
             this.stacks.putAll(stacks);
+            updateJournalSize();
         });
     }
 

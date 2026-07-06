@@ -8,8 +8,10 @@
 package io.kalishak.galacticraftlegacy.world.level.block;
 
 import com.mojang.serialization.MapCodec;
-import io.kalishak.galacticraftlegacy.data.GalacticraftTags;
+import io.kalishak.galacticraftlegacy.attachment.GalacticraftAttachments;
 import io.kalishak.galacticraftlegacy.world.item.HotItem;
+import io.kalishak.galacticraftlegacy.world.item.component.GalacticraftDataComponents;
+import io.kalishak.galacticraftlegacy.world.item.component.HotContent;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.FallenMeteorBlockEntity;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityType;
 import net.minecraft.core.BlockPos;
@@ -20,6 +22,9 @@ import net.minecraft.util.valueproviders.IntProvider;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.InsideBlockEffectApplier;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.item.FallingBlockEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.*;
@@ -31,9 +36,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.chunk.ChunkAccess;
-import net.minecraft.world.level.chunk.LevelChunk;
-import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.Vec3;
@@ -41,12 +43,6 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jspecify.annotations.Nullable;
-
-import java.util.List;
-import java.util.function.LongFunction;
-import java.util.function.LongUnaryOperator;
-import java.util.stream.Collectors;
-import java.util.stream.LongStream;
 
 public class FallenMeteorBlock extends FallingBlock implements EntityBlock, SimpleWaterloggedBlock {
     public static final MapCodec<FallenMeteorBlock> CODEC = simpleCodec(FallenMeteorBlock::new);
@@ -81,33 +77,6 @@ public class FallenMeteorBlock extends FallingBlock implements EntityBlock, Simp
         return a | r | g | b;
     }
 
-    public static void createFallingMeteor(ServerLevel level, BlockPos pos) {
-        if (level.dimensionTypeRegistration().is(GalacticraftTags.DimensionTypes.HAS_METEORS)) {
-            if (level.isAreaLoaded(pos, 16)) {
-                RandomSource random = level.getRandom();
-                ChunkAccess chunk = level.getChunkAt(pos);
-                int newX = random.nextInt(4, 16);
-                int newZ = random.nextInt(4, 16);
-                List<BlockPos> existingMeteors = chunk.getBlockEntitiesPos().stream()
-                        .filter(blockPos -> {
-                            BlockEntity blockEntity = chunk.getBlockEntity(blockPos);
-
-                            return blockEntity instanceof FallenMeteorBlockEntity;
-                        })
-                        .toList();
-
-                if (!existingMeteors.isEmpty()) {
-                    //modify x and z when there are few meteors at the chunk
-                }
-
-                BlockState fallenMeteor = GalacticraftBlocks.FALLEN_METEOR.get().defaultBlockState();
-                BlockPos newPos = new BlockPos(pos.getX() + newX, 250, pos.getZ() + newZ);
-                level.setBlock(newPos, fallenMeteor, 2);
-                level.gameEvent(GameEvent.BLOCK_PLACE, newPos, GameEvent.Context.of(fallenMeteor));
-            }
-        }
-    }
-
     @Override
     protected MapCodec<FallenMeteorBlock> codec() {
         return CODEC;
@@ -136,14 +105,25 @@ public class FallenMeteorBlock extends FallingBlock implements EntityBlock, Simp
         return defaultBlockState().setValue(WATERLOGGED, fluidState.is(Fluids.WATER));
     }
 
-//    @Override
-//    public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity by, ItemStack itemStack) {
-//        HotContent content = itemStack.get(GalacticraftDataComponents.HOT_CONTENT);
-//
-//        if (content != null) {
-//            level.getBlockEntity(pos, GalacticraftBlockEntityType.FALLEN_METEOR.get()).ifPresent(fallenMeteor -> fallenMeteor.setData(GalacticraftAttachments.HOT_CONTENT, content));
-//        }
-//    }
+    @Override
+    public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity by, ItemStack itemStack) {
+        HotContent content = itemStack.get(GalacticraftDataComponents.HOT_CONTENT);
+
+        if (content != null) {
+            level.getBlockEntity(pos, GalacticraftBlockEntityType.FALLEN_METEOR.get()).ifPresent(fallenMeteor -> fallenMeteor.setData(GalacticraftAttachments.HOT_CONTENT, content));
+        }
+    }
+
+    @Override
+    public void onBrokenAfterFall(Level level, BlockPos pos, FallingBlockEntity entity) {
+        entity.getExistingData(GalacticraftAttachments.HOT_CONTENT)
+                        .ifPresent(hotContent -> {
+                            if (hotContent.getScaledHeatLevel() > 0.5F && entity.getStartPos().getY() - 150 > pos.getY()) {
+                                entity.setInvulnerable(true);
+                                level.explode(entity, pos.getX(), pos.getY(), pos.getZ(), 1.0F, Level.ExplosionInteraction.BLOCK);
+                            }
+                        });
+    }
 
     @Override
     protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity, InsideBlockEffectApplier effectApplier, boolean isPrecise) {
@@ -171,16 +151,16 @@ public class FallenMeteorBlock extends FallingBlock implements EntityBlock, Simp
         return EXPERIENCE.sample(level.getRandom());
     }
 
-//    @Override
-//    public ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state, boolean includeData, Player player) {
-//        ItemStack result = super.getCloneItemStack(level, pos, state, includeData, player);
-//
-//        if (includeData) {
-//            level.getBlockEntity(pos, GalacticraftBlockEntityType.FALLEN_METEOR.get()).ifPresent(meteor -> result.set(GalacticraftDataComponents.HOT_CONTENT, new HotContent(meteor.getHeatLevel())));
-//        }
-//
-//        return result;
-//    }
+    @Override
+    public ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state, boolean includeData, Player player) {
+        ItemStack result = super.getCloneItemStack(level, pos, state, includeData, player);
+
+        if (includeData) {
+            level.getBlockEntity(pos, GalacticraftBlockEntityType.FALLEN_METEOR.get()).ifPresent(meteor -> result.set(GalacticraftDataComponents.HOT_CONTENT, meteor.getData(GalacticraftAttachments.HOT_CONTENT)));
+        }
+
+        return result;
+    }
 
     @Override
     protected boolean triggerEvent(BlockState state, Level level, BlockPos pos, int b0, int b1) {

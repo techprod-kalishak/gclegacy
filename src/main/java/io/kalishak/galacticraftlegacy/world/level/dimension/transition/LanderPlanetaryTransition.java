@@ -7,9 +7,13 @@
 
 package io.kalishak.galacticraftlegacy.world.level.dimension.transition;
 
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.kalishak.galacticraftlegacy.config.CommonConfig;
 import io.kalishak.galacticraftlegacy.world.entity.LandingEntity;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
@@ -17,36 +21,45 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.event.config.ModConfigEvent;
 import org.jspecify.annotations.Nullable;
 
-public class LanderPlanetaryTransition<E extends Entity> extends PlanetaryTransition {
-    protected final EntityType<E> landerType;
-    private final boolean landerDisabled;
+public class LanderPlanetaryTransition extends PlanetaryTransition {
+    public static final MapCodec<LanderPlanetaryTransition> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+            BuiltInRegistries.ENTITY_TYPE.holderByNameCodec().fieldOf("lander_type").forGetter(transition -> transition.landerType)
+    ).apply(instance, LanderPlanetaryTransition::new));
 
-    public LanderPlanetaryTransition(EntityType<E> landerType) {
-        super(TransitionType.LANDER.get());
+    protected final Holder<EntityType<?>> landerType;
+    private static boolean landerDisabled = true;
+
+    public LanderPlanetaryTransition(Holder<EntityType<?>> landerType) {
         this.landerType = landerType;
-        this.landerDisabled = CommonConfig.DISABLE_LANDERS.get();
+    }
+
+    @SubscribeEvent
+    public static void onConfigReloaded(ModConfigEvent.Reloading event) {
+        LanderPlanetaryTransition.landerDisabled = CommonConfig.DISABLE_LANDERS.get();
     }
 
     @Override
     public boolean useParachute() {
-        return this.landerDisabled;
+        return LanderPlanetaryTransition.landerDisabled;
     }
 
     @Override
     public BlockPos getPlayerSpawnLocation(ServerLevel level, ServerPlayer player) {
-        return player.blockPosition().atY(this.landerDisabled ? 250 : 900);
+        return player.blockPosition().atY(LanderPlanetaryTransition.landerDisabled ? 250 : 900);
     }
 
     @Override
     public BlockPos getEntitySpawnLocation(ServerLevel level, Entity entity) {
-        return entity.blockPosition().atY(this.landerDisabled ? 250 : 900);
+        return entity.blockPosition().atY(LanderPlanetaryTransition.landerDisabled ? 250 : 900);
     }
 
     @Override
     public @Nullable BlockPos getParachestSpawnLocation(ServerLevel level, ServerPlayer player) {
-        if (this.landerDisabled) {
+        if (LanderPlanetaryTransition.landerDisabled) {
             RandomSource random = level.getRandom();
             double x = (random.nextDouble() * 2 - 1.0D) * 4.0D;
             double z = (random.nextDouble() * 2 - 1.0D) * 4.0D;
@@ -63,8 +76,8 @@ public class LanderPlanetaryTransition<E extends Entity> extends PlanetaryTransi
 
     @Override
     public void onDimensionChange(Level newLevel, ServerPlayer player, boolean isRidingAutoRocket) {
-        if (!isRidingAutoRocket && !this.landerDisabled) {
-            Entity landerEntity = this.landerType.create(newLevel, EntitySpawnReason.SPAWN_ITEM_USE);
+        if (!isRidingAutoRocket && !LanderPlanetaryTransition.landerDisabled) {
+            Entity landerEntity = this.landerType.value().create(newLevel, EntitySpawnReason.SPAWN_ITEM_USE);
 
             if (!(landerEntity instanceof LandingEntity)) return;
 
@@ -75,5 +88,10 @@ public class LanderPlanetaryTransition<E extends Entity> extends PlanetaryTransi
                 player.startRiding(landerEntity);
             }
         }
+    }
+
+    @Override
+    public MapCodec<LanderPlanetaryTransition> codec() {
+        return CODEC;
     }
 }

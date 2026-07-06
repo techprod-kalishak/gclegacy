@@ -7,7 +7,7 @@
 
 package io.kalishak.galacticraftlegacy.client.renderer.item;
 
-import io.kalishak.galacticraftlegacy.Constants;
+import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.world.item.FeatureTier;
 import net.minecraft.client.model.Model;
 import net.minecraft.client.model.geom.ModelPart;

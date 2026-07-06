@@ -7,11 +7,14 @@
 
 package io.kalishak.galacticraftlegacy.registry;
 
-import io.kalishak.galacticraftlegacy.Constants;
+import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.attachment.level.CelestialBodyLevelData;
 import io.kalishak.galacticraftlegacy.galaxies.GalacticraftGalaxies;
 import io.kalishak.galacticraftlegacy.galaxies.environment.AtmosphereInfo;
-import io.kalishak.galacticraftlegacy.world.level.dimension.transition.TransitionType;
+import io.kalishak.galacticraftlegacy.world.entity.GalacticraftEntityType;
+import io.kalishak.galacticraftlegacy.world.level.dimension.transition.EarthPlanetaryTranstion;
+import io.kalishak.galacticraftlegacy.world.level.dimension.transition.FixedPlanetaryTransition;
+import io.kalishak.galacticraftlegacy.world.level.dimension.transition.LanderPlanetaryTransition;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
@@ -30,10 +33,9 @@ public class CelestialBodyLevelDataEntries {
     public static final ResourceKey<CelestialBodyLevelData> VENUS = Constants.key(GalacticraftRegistries.Keys.CELESTIAL_BODY_LEVEL_DATA, "venus");
     public static final Supplier<CelestialBodyLevelData> PLACEHOLDER = () -> new CelestialBodyLevelData(
             GalacticraftGalaxies.OVERWORLD,
-            0.0F,
             AtmosphereInfo.EARTH,
             1.0F,
-            TransitionType.PARACHUTE
+            new EarthPlanetaryTranstion()
     );
 
     public static void bootstrap(BootstrapContext<CelestialBodyLevelData> cxt) {
@@ -57,65 +59,60 @@ public class CelestialBodyLevelDataEntries {
                 EARTH_ORBIT,
                 new CelestialBodyLevelData(
                         GalacticraftGalaxies.SATELLITE,
-                        0.1F,
                         AtmosphereInfo.builder()
-                                .temperature(140.0F)
+                                .temperatureModifier(-0.9F)
                                 .build(),
                         0.165F,
-                        TransitionType.FIXED_POSITION
+                        FixedPlanetaryTransition.spaceStation()
                 )
         );
         cxt.register(
                 MOON,
                 new CelestialBodyLevelData(
                         GalacticraftGalaxies.MOON,
-                        0.1F,
                         AtmosphereInfo.builder()
-                                .temperature(140.0F)
+                                .temperatureModifier(-0.9F)
                                 .build(),
                         0.165F,
-                        TransitionType.LANDER
+                        new LanderPlanetaryTransition(GalacticraftEntityType.LANDER)
                 )
         );
         cxt.register(
                 MARS,
                 new CelestialBodyLevelData(
                         GalacticraftGalaxies.MARS,
-                        0.38F,
                         AtmosphereInfo.builder()
                                 .gas(Constants.key(Registries.FLUID, "carbon_dioxide"), 0.95)
                                 .gas(Constants.key(Registries.FLUID, "nitrogen"), 0.03)
                                 .gas(Constants.key(Registries.FLUID, "argon"), 0.02)
-                                .temperature(-60.0F)
+                                .temperatureModifier(-0.5F)
                                 .build(),
                         0.38F,
-                        TransitionType.LANDER
+                        new LanderPlanetaryTransition(GalacticraftEntityType.LANDING_BALLOONS)
                 )
         );
         cxt.register(
                 ASTEROIDS,
                 new CelestialBodyLevelData(
                         GalacticraftGalaxies.ASTEROIDS,
-                        0.0F,
                         AtmosphereInfo.builder()
-                                .temperature(2.7F)
+                                .temperatureModifier(-0.9F)
                                 .build(),
                         0.01F,
-                        TransitionType.LANDER
+                        new LanderPlanetaryTransition(GalacticraftEntityType.ENTRY_POD)
                 )
         );
         cxt.register(
                 VENUS,
-                new  CelestialBodyLevelData(
+                new CelestialBodyLevelData(
                         GalacticraftGalaxies.VENUS,
-                        1.0F,
                         AtmosphereInfo.builder()
                                 .gas(Constants.key(Registries.FLUID, "carbon_dioxide"), 0.965)
                                 .gas(Constants.key(Registries.FLUID, "nitrogen"), 0.035)
-                                .temperature(462.0F)
+                                .temperatureModifier(2.0F)
                                 .build(),
                         0.904F,
-                        TransitionType.LANDER
+                        new LanderPlanetaryTransition(GalacticraftEntityType.ENTRY_POD)
                 )
         );
     }

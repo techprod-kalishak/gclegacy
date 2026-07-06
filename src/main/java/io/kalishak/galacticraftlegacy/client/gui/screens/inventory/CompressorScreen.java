@@ -7,7 +7,7 @@
 
 package io.kalishak.galacticraftlegacy.client.gui.screens.inventory;
 
-import io.kalishak.galacticraftlegacy.Constants;
+import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.client.gui.screens.recipebook.CompressorRecipeBookComponent;
 import io.kalishak.galacticraftlegacy.world.inventory.machine.CompressorMenu;
 import net.minecraft.client.gui.GuiGraphicsExtractor;

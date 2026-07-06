@@ -9,7 +9,7 @@ package io.kalishak.galacticraftlegacy.galaxies.environment;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import io.kalishak.galacticraftlegacy.Constants;
+import io.kalishak.galacticraftlegacy.references.GalacricraftFluidIds;
 import it.unimi.dsi.fastutil.objects.Object2DoubleArrayMap;
 import it.unimi.dsi.fastutil.objects.Object2DoubleMap;
 import net.minecraft.core.registries.Registries;
@@ -31,34 +31,33 @@ public class AtmosphereInfo {
                 return gasComposition;
             }, HashMap::new
             ).fieldOf("gas_composition").forGetter(AtmosphereInfo::getGasComposition),
-            Codec.FLOAT.fieldOf("temperature").forGetter(AtmosphereInfo::getTemperature)
+            Codec.FLOAT.fieldOf("temperature_modifier").forGetter(AtmosphereInfo::getTemperatureModifier)
     ).apply(instance, AtmosphereInfo::new));
     public static final StreamCodec<RegistryFriendlyByteBuf, AtmosphereInfo> STREAM_CODEC = StreamCodec.composite(
             ByteBufCodecs.BOOL, AtmosphereInfo::isCorrosive,
             ByteBufCodecs.BOOL, AtmosphereInfo::hasPrecipitation,
             ByteBufCodecs.map(Object2DoubleArrayMap::new, ResourceKey.streamCodec(Registries.FLUID), ByteBufCodecs.DOUBLE), AtmosphereInfo::getGasComposition,
-            ByteBufCodecs.FLOAT, AtmosphereInfo::getTemperature,
+            ByteBufCodecs.FLOAT, AtmosphereInfo::getTemperatureModifier,
             AtmosphereInfo::new
     );
     public static final AtmosphereInfo EARTH = builder()
-            .corrosive()
             .rainy()
-            .gas(ResourceKey.create(Registries.FLUID, Constants.id("nitrogen")), 78.08)
-            .gas(ResourceKey.create(Registries.FLUID, Constants.id("oxygen")), 20.95)
-            .gas(ResourceKey.create(Registries.FLUID, Constants.id("argon")), 0.93)
-            .gas(ResourceKey.create(Registries.FLUID, Constants.id("carbon_dioxide")), 0.04)
+            .gas(GalacricraftFluidIds.NITROGEN, 78.08)
+            .gas(GalacricraftFluidIds.OXYGEN, 20.95)
+            .gas(GalacricraftFluidIds.ARGON, 0.93)
+            .gas(GalacricraftFluidIds.CO2, 0.04)
             .build();
 
     private final boolean isCorrosive;
     private final boolean hasPrecipitation;
     private final Object2DoubleMap<ResourceKey<Fluid>> gasComposition;
-    private final float temperature;
+    private final float temperatureModifier;
 
     private AtmosphereInfo(boolean isCorrosive, boolean hasPrecipitation, Object2DoubleMap<ResourceKey<Fluid>> gasComposition, float temperature) {
         this.isCorrosive = isCorrosive;
         this.hasPrecipitation = hasPrecipitation;
         this.gasComposition = gasComposition;
-        this.temperature = temperature;
+        this.temperatureModifier = temperature;
     }
 
     public static Builder builder() {
@@ -77,20 +76,20 @@ public class AtmosphereInfo {
         return this.gasComposition;
     }
 
-    public float getTemperature() {
-        return this.temperature;
+    public float getTemperatureModifier() {
+        return this.temperatureModifier;
     }
 
     public boolean isBreathable() {
-        double oxygenLevel = getGasComposition().getOrDefault(ResourceKey.create(Registries.FLUID, Constants.id("oxygen")), 0.0);
-        return oxygenLevel >= 19.5 && oxygenLevel <= 23.5 && !isCorrosive();
+        double oxygenLevel = getGasComposition().getOrDefault(GalacricraftFluidIds.OXYGEN, 0.0);
+        return oxygenLevel >= 19.5D && !isCorrosive();
     }
 
     public static class Builder {
         private boolean isCorrosive = false;
         private boolean hasPrecipitation = false;
         private final Object2DoubleMap<ResourceKey<Fluid>> gasComposition = new Object2DoubleArrayMap<>();
-        private float temperature = 273.15F;
+        private float temperatureModifier = 1.0F;
 
         private Builder() {}
 
@@ -109,13 +108,13 @@ public class AtmosphereInfo {
             return this;
         }
 
-        public Builder temperature(float temperature) {
-            this.temperature = temperature;
+        public Builder temperatureModifier(float temperatureModifier) {
+            this.temperatureModifier = temperatureModifier;
             return this;
         }
 
         public AtmosphereInfo build() {
-            return new AtmosphereInfo(this.isCorrosive, this.hasPrecipitation, this.gasComposition, this.temperature);
+            return new AtmosphereInfo(this.isCorrosive, this.hasPrecipitation, this.gasComposition, this.temperatureModifier);
         }
     }
 }

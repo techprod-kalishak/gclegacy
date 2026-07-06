@@ -35,7 +35,7 @@ public class CompressorMenu extends AbstractCompressorMenu {
 
         addCompressorGrid(19, 18);
         addSlot(handler -> new ResultResourceHandlerSlot(playerInventory.player, handler, compressor::awardUsedRecipes, AlloyCompressor.RESULT_SLOT_START, 138, 38));
-        addSlot(handler -> new FuelHandlerSlot(handler, compressor::set, AlloyCompressor.FUEL_SLOT, 55, 75));
+        addSlot(handler -> new FuelHandlerSlot(handler, compressor::setItem, AlloyCompressor.FUEL_SLOT, 55, 75));
 
         addStandardInventorySlots(playerInventory, 8, 110);
     }

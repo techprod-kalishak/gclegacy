@@ -12,4 +12,5 @@ import net.minecraft.world.attribute.AttributeType;
 
 public final class GalacticraftAttributeTypes {
     public static final AttributeType<EarthPhase> EARTH_PHASE = AttributeType.ofNotInterpolated(EarthPhase.CODEC);
+    public static final AttributeType<PlanetAttribute> PLANET_ATTRIBUTE = AttributeType.ofNotInterpolated(PlanetAttribute.CODEC);
 }

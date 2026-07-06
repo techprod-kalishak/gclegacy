@@ -8,7 +8,7 @@
 package io.kalishak.galacticraftlegacy.client.renderer.entity.layer.gear;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import io.kalishak.galacticraftlegacy.Constants;
+import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.EnumExtensions;
 import io.kalishak.galacticraftlegacy.client.renderer.entity.state.GearRenderState;
 import io.kalishak.galacticraftlegacy.world.entity.GearEquipmentSlot;
@@ -16,6 +16,7 @@ import io.kalishak.galacticraftlegacy.world.item.component.GalacticraftDataCompo
 import io.kalishak.galacticraftlegacy.world.item.component.GearEquippable;
 import net.minecraft.client.model.Model;
 import net.minecraft.client.renderer.SubmitNodeCollector;
+import net.minecraft.client.renderer.entity.layers.EquipmentLayerRenderer;
 import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.texture.OverlayTexture;
@@ -27,6 +28,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.List;
+import java.util.function.Supplier;
 
 public interface ThermalEquipmentLayer<S extends LivingEntityRenderState, M extends Model<S>> {
     Identifier PADDING_LAYER = Constants.texture("entity/equipment/galacticraftlegacy/thermal_padding/colored_layer.png");
@@ -36,17 +38,18 @@ public interface ThermalEquipmentLayer<S extends LivingEntityRenderState, M exte
 
     EquipmentAssetManager getEquipmentAssetManager();
 
-    default void renderThermalPiece(PoseStack poseStack, SubmitNodeCollector nodeCollector, ItemStack item, GearEquipmentSlot slot, int packedLight, S renderState, EquipmentClientInfo.LayerType layerType, Identifier paddingLayer) {
+    default void renderThermalPiece(PoseStack poseStack, SubmitNodeCollector nodeCollector, ItemStack item, GearEquipmentSlot slot, int packedLight, S renderState, EquipmentClientInfo.LayerType layerType, Identifier paddingLayer, final int order) {
         GearEquippable gearEquippable = item.get(GalacticraftDataComponents.GEAR_EQUIPPABLE);
         if (gearEquippable != null && ThermalEquipmentLayer.shouldRender(gearEquippable, slot, renderState.isInvisible)) {
             M model = getModel(slot.getRelatedEquipment(), renderState);
             int color = getColor(renderState);
+            int layerOrder = order;
             List<EquipmentClientInfo.Layer> list = getEquipmentAssetManager().get(gearEquippable.assetId().orElseThrow()).getLayers(layerType);
 
             if (!list.isEmpty()) {
                 EquipmentClientInfo.Layer layer = list.getFirst();
                 nodeCollector
-                        .order(1)
+                        .order(layerOrder++)
                         .submitModel(
                                 model,
                                 renderState,
@@ -58,7 +61,7 @@ public interface ThermalEquipmentLayer<S extends LivingEntityRenderState, M exte
                                 null
                         );
                 nodeCollector
-                        .order(2)
+                        .order(layerOrder++)
                         .submitModel(
                                 model,
                                 renderState,
@@ -76,7 +79,7 @@ public interface ThermalEquipmentLayer<S extends LivingEntityRenderState, M exte
     }
 
     default void renderThermalPiece(PoseStack poseStack, SubmitNodeCollector nodeCollector, ItemStack item, GearEquipmentSlot slot, int packedLight, S renderState) {
-        renderThermalPiece(poseStack, nodeCollector, item, slot, packedLight, renderState, EnumExtensions.LAYER_TYPE_THERMAL_PADDING.getValue(), PADDING_LAYER);
+        renderThermalPiece(poseStack, nodeCollector, item, slot, packedLight, renderState, EnumExtensions.LAYER_TYPE_THERMAL_PADDING.getValue(), PADDING_LAYER, 1);
     }
 
     static boolean shouldRender(ItemStack stack, GearEquipmentSlot gearSlot, boolean invisible) {

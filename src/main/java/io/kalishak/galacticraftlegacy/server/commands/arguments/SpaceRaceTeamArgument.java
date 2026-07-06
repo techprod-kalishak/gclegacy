@@ -14,6 +14,7 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.DynamicCommandExceptionType;
 import com.mojang.brigadier.suggestion.Suggestions;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
+import io.kalishak.galacticraftlegacy.references.GalacticraftComponents;
 import io.kalishak.galacticraftlegacy.world.score.race.SpaceRaceHooks;
 import io.kalishak.galacticraftlegacy.world.score.race.SpaceRaceScoreboard;
 import io.kalishak.galacticraftlegacy.world.score.race.SpaceRaceTeam;
@@ -27,9 +28,7 @@ import java.util.concurrent.CompletableFuture;
 
 public class SpaceRaceTeamArgument implements ArgumentType<String> {
     private static final Collection<String> EXAMPLES = Arrays.asList("spaceM", "MASA");
-    private static final DynamicCommandExceptionType ERROR_SPACE_RACE_NOT_FOUND = new DynamicCommandExceptionType(
-            name -> Component.translatableEscape("space_race.notFound", name)
-    );
+    private static final DynamicCommandExceptionType ERROR_SPACE_RACE_NOT_FOUND = new DynamicCommandExceptionType(GalacticraftComponents.COMMAND_ERROR_SPACE_RACE_DONT_EXIST);
 
     public static SpaceRaceTeamArgument spaceRace() {
         return new SpaceRaceTeamArgument();

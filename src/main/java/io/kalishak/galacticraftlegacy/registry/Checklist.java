@@ -8,24 +8,19 @@
 package io.kalishak.galacticraftlegacy.registry;
 
 import com.google.common.collect.ImmutableMap;
-import io.kalishak.galacticraftlegacy.Constants;
-import io.kalishak.galacticraftlegacy.Galacticraft;
+import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.data.GalacticraftTags;
 import io.kalishak.galacticraftlegacy.world.entity.GearEquipmentSlot;
 import io.kalishak.galacticraftlegacy.world.item.GalacticraftItems;
 import io.kalishak.galacticraftlegacy.world.item.component.GalacticraftDataComponents;
 import net.minecraft.advancements.criterion.DataComponentMatchers;
 import net.minecraft.advancements.criterion.ItemPredicate;
-import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
-import net.minecraft.core.component.DataComponentExactPredicate;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Item;
 
-import java.util.Map;
-import java.util.function.BiFunction;
 import java.util.function.UnaryOperator;
 
 public final class Checklist {

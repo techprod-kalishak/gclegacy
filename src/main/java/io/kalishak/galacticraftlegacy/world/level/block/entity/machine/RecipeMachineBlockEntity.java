@@ -57,10 +57,10 @@ public abstract class RecipeMachineBlockEntity<I extends RecipeInput, R extends 
         ExperienceOrb.award(level, position, xpReward);
     }
 
-    public static boolean canProcess(NonNullList<ItemStack> items, int maxStackSize, ItemStack result, EnergyHandler energyHandler, int energyPerTick, int outputSlot) {
+    public static boolean canProcess(RecipeMachineBlockEntity<?, ?> entity, int maxStackSize, ItemStack result, EnergyHandler energyHandler, int energyPerTick, int outputSlot) {
         if (energyHandler.getAmountAsInt() < energyPerTick) return false;
 
-        ItemStack resultItemStack = items.get(outputSlot);
+        ItemStack resultItemStack = entity.getItem(outputSlot);
 
         if (resultItemStack.isEmpty()) {
             return true;
@@ -109,7 +109,7 @@ public abstract class RecipeMachineBlockEntity<I extends RecipeInput, R extends 
         player.awardRecipes(list);
 
         for (RecipeHolder<?> recipeholder : list) {
-            player.triggerRecipeCrafted(recipeholder, this.inventory);
+            player.triggerRecipeCrafted(recipeholder, this.items.copyToList());
         }
 
         this.recipesUsed.clear();
@@ -127,15 +127,6 @@ public abstract class RecipeMachineBlockEntity<I extends RecipeInput, R extends 
 
     @Override
     public void fillStackedContents(StackedItemContents stackedContents) {
-        this.inventory.forEach(stackedContents::accountStack);
-    }
-
-    @Override
-    public void preRemoveSideEffects(BlockPos pos, BlockState state) {
-        super.preRemoveSideEffects(pos, state);
-
-        if (this.level instanceof ServerLevel serverlevel) {
-            getRecipesToAward(serverlevel, Vec3.atCenterOf(pos));
-        }
+        forEachResource(((resource, count) -> stackedContents.accountStack(resource.toStack(count))));
     }
 }

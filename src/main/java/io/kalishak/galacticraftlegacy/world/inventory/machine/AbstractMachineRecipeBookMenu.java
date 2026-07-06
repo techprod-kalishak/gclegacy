@@ -21,7 +21,6 @@ import net.neoforged.neoforge.transfer.ResourceHandler;
 import net.neoforged.neoforge.transfer.access.ItemAccess;
 import net.neoforged.neoforge.transfer.energy.EnergyHandler;
 import net.neoforged.neoforge.transfer.item.ItemResource;
-import net.neoforged.neoforge.transfer.item.VanillaContainerWrapper;
 
 public abstract class AbstractMachineRecipeBookMenu<M extends AbstractMachineBlockEntity> extends RecipeBookMenu {
     protected final ContainerData containerData;
@@ -34,7 +33,7 @@ public abstract class AbstractMachineRecipeBookMenu<M extends AbstractMachineBlo
         super(menuType, containerId);
         this.containerData = containerData;
         this.machine = machine;
-        this.resourceHandler = VanillaContainerWrapper.of(machine);
+        this.resourceHandler = machine.getResourceHandler();
         this.energyHandler = ResourcefulHelper.getEnergyHandler(machine, null);
         this.player = playerInventory.player;
         addDataSlots(containerData);

@@ -17,9 +17,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.transfer.ResourceHandler;
-import net.neoforged.neoforge.transfer.item.ItemResource;
-import net.neoforged.neoforge.transfer.item.VanillaContainerWrapper;
 
 public class DungeonChestMenu extends AbstractContainerMenu {
     private final DungeonChestBlockEntity blockEntity;
@@ -27,12 +24,11 @@ public class DungeonChestMenu extends AbstractContainerMenu {
     public DungeonChestMenu(int containerId, Inventory playerInventory, DungeonChestBlockEntity blockEntity) {
         super(GalacticraftMenuType.DUNGEON_CHEST.get(), containerId);
         this.blockEntity = blockEntity;
-        blockEntity.startOpen(playerInventory.player);
-        ResourceHandler<ItemResource> resourceHandler = VanillaContainerWrapper.of(blockEntity);
+        //blockEntity.startOpen(playerInventory.player);
 
         for (int i = 0; i < 3; ++i) {
             for (int j = 0; j < 9; ++j) {
-                addSlot(new NotPlaceableResourceHandlerSlot(resourceHandler, j + i * 9, 8 + j * 18, 13 + i * 18));
+                addSlot(new NotPlaceableResourceHandlerSlot(blockEntity.getResourceHandler(), j + i * 9, 8 + j * 18, 13 + i * 18));
             }
         }
 
@@ -76,6 +72,6 @@ public class DungeonChestMenu extends AbstractContainerMenu {
     @Override
     public void removed(Player player) {
         super.removed(player);
-        this.blockEntity.stopOpen(player);
+        //this.blockEntity.stopOpen(player);
     }
 }

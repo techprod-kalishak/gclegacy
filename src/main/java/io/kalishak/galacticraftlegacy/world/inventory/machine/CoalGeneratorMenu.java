@@ -37,8 +37,8 @@ public class CoalGeneratorMenu extends AbstractContainerMenu {
         this.heatData = heatData;
 
         addSlot(new FuelHandlerSlot(
-                ResourcefulHelper.getResourceHandler(Capabilities.Item.BLOCK, ItemResource.EMPTY, coalGenerator, null),
-                coalGenerator::set,
+                coalGenerator.getResourceHandler(),
+                coalGenerator::setItem,
                 0,
                 33,
                 34

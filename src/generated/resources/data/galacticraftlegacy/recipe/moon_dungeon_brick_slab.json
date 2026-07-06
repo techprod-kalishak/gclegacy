@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "moon_bricks_slab",
+  "key": {
+    "#": "galacticraftlegacy:moon_dungeon_bricks"
+  },
+  "pattern": [
+    "###"
+  ],
+  "result": {
+    "count": 6,
+    "id": "galacticraftlegacy:moon_dungeon_brick_slab"
+  }
+}

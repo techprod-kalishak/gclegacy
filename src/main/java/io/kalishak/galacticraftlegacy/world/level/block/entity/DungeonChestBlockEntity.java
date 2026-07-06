@@ -7,6 +7,7 @@
 
 package io.kalishak.galacticraftlegacy.world.level.block.entity;
 
+import io.kalishak.galacticraftlegacy.references.GalacticraftComponents;
 import io.kalishak.galacticraftlegacy.world.inventory.DungeonChestMenu;
 import io.kalishak.galacticraftlegacy.world.item.FeatureTier;
 import io.kalishak.galacticraftlegacy.world.item.KeyLock;
@@ -18,10 +19,11 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.ChestLidController;
 import net.minecraft.world.level.block.entity.LidBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import org.jspecify.annotations.Nullable;
 
 public class DungeonChestBlockEntity extends KeyLockedBlockEntity implements LidBlockEntity {
-    private static final Component DEFAULT_NAME = Component.translatable("galacticraftlegacy.container.dungeon_chest");
     private final ChestLidController chestLidController = new ChestLidController();
     private FeatureTier featureTier = FeatureTier.TIER_1;
 
@@ -33,6 +35,10 @@ public class DungeonChestBlockEntity extends KeyLockedBlockEntity implements Lid
         this(blockPos, blockState);
         this.featureTier = featureTier;
         setKeyLock(KeyLock.preGenTier(featureTier));
+    }
+
+    public static void registerCapabilities(RegisterCapabilitiesEvent event) {
+        event.registerBlockEntity(Capabilities.Item.BLOCK, GalacticraftBlockEntityType.DUNGEON_CHEST.get(), (entity, _) -> entity.items);
     }
 
     public static void lidAnimateTick(Level level, BlockPos blockPos, BlockState state, DungeonChestBlockEntity dungeonChest) {
@@ -54,7 +60,7 @@ public class DungeonChestBlockEntity extends KeyLockedBlockEntity implements Lid
     }
 
     @Override
-    public int getContainerSize() {
+    public int getItemsSize() {
         return 27;
     }
 
@@ -70,6 +76,6 @@ public class DungeonChestBlockEntity extends KeyLockedBlockEntity implements Lid
 
     @Override
     protected Component getDefaultName() {
-        return DEFAULT_NAME;
+        return GalacticraftComponents.BLOCK_DUNGEON_CHEST;
     }
 }

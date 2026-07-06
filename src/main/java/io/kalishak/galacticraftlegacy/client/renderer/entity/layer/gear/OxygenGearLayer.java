@@ -8,7 +8,7 @@
 package io.kalishak.galacticraftlegacy.client.renderer.entity.layer.gear;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import io.kalishak.galacticraftlegacy.Constants;
+import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.client.model.gear.OxygenGearModel;
 import io.kalishak.galacticraftlegacy.client.model.geom.GalacticraftModelLayers;
 import io.kalishak.galacticraftlegacy.client.renderer.entity.state.GearRenderState;

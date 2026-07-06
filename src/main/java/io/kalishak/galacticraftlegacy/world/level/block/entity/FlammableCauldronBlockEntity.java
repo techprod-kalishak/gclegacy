@@ -22,7 +22,7 @@ import net.neoforged.neoforge.fluids.FluidType;
 
 public class FlammableCauldronBlockEntity extends BlockEntity {
     private FluidStack stack = FluidStack.EMPTY;
-    private final SingleTankResourceHandler handler = new SingleTankResourceHandler(FluidType.BUCKET_VOLUME) {
+    private final SingleTankResourceHandler handler = new SingleTankResourceHandler(this.stack, FluidType.BUCKET_VOLUME) {
         @Override
         protected void notifyChange() {
             FlammableCauldronBlockEntity.this.refreshBlockState();
@@ -60,12 +60,14 @@ public class FlammableCauldronBlockEntity extends BlockEntity {
     @Override
     protected void saveAdditional(ValueOutput output) {
         super.saveAdditional(output);
-        this.handler.serialize(output);
+        if (!this.stack.isEmpty()) {
+            output.store("FluidStack", FluidStack.OPTIONAL_CODEC, this.stack);
+        }
     }
 
     @Override
     protected void loadAdditional(ValueInput input) {
         super.loadAdditional(input);
-        this.handler.deserialize(input);
+        input.read("FluidStack", FluidStack.OPTIONAL_CODEC).ifPresent(stack -> this.stack = stack);
     }
 }

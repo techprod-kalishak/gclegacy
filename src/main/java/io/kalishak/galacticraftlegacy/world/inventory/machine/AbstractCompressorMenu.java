@@ -19,7 +19,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.neoforged.neoforge.transfer.ResourceHandler;
 import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.neoforged.neoforge.transfer.item.ResourceHandlerSlot;
-import net.neoforged.neoforge.transfer.item.VanillaContainerWrapper;
 
 import java.util.function.Function;
 
@@ -32,7 +31,7 @@ public abstract class AbstractCompressorMenu extends RecipeBookMenu {
         super(menuType, containerId);
         this.compressor = compressor;
         this.dataAccess = dataAccess;
-        this.handler = VanillaContainerWrapper.of(this.compressor);
+        this.handler = compressor.getResourceHandler();
 
         addDataSlots(dataAccess);
     }
@@ -42,7 +41,7 @@ public abstract class AbstractCompressorMenu extends RecipeBookMenu {
 
         for (int x = 0; x < 3; x++) {
             for (int y = 0; y < 3; y++) {
-                addSlot(new ResourceHandlerSlot(this.handler, this.compressor::set, index, left + x * 18, top + y * 18));
+                addSlot(new ResourceHandlerSlot(this.handler, this.compressor::setItem, index, left + x * 18, top + y * 18));
                 index++;
             }
         }

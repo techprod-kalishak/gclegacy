@@ -7,7 +7,8 @@
 
 package io.kalishak.galacticraftlegacy.client.gui.screens.recipebook;
 
-import io.kalishak.galacticraftlegacy.Constants;
+import io.kalishak.galacticraftlegacy.references.Constants;
+import io.kalishak.galacticraftlegacy.references.GalacticraftComponents;
 import io.kalishak.galacticraftlegacy.world.inventory.machine.ElectricFurnaceMenu;
 import net.minecraft.client.gui.components.WidgetSprites;
 import net.minecraft.client.gui.screens.recipebook.GhostSlots;
@@ -29,7 +30,6 @@ public class ElectricFurnaceRecipeBookComponent extends RecipeBookComponent<Elec
             Constants.id("recipe_book/electric_furnace_filter_enabled_highlighted"),
             Constants.id("recipe_book/electric_furnace_filter_disabled_highlighted")
     );
-    private static final Component FILTER_NAME = Component.translatable("gui.recipebook.toggleRecipes.heatable");
 
     public ElectricFurnaceRecipeBookComponent(ElectricFurnaceMenu menu, List<TabInfo> tabInfos) {
         super(menu, tabInfos);
@@ -52,7 +52,7 @@ public class ElectricFurnaceRecipeBookComponent extends RecipeBookComponent<Elec
 
     @Override
     protected Component getRecipeFilterName() {
-        return FILTER_NAME;
+        return GalacticraftComponents.FILTER_NAME_HEATABLE;
     }
 
     @Override

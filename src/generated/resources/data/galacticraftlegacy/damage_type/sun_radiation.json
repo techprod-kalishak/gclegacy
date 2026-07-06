@@ -1,6 +1,6 @@
 {
-  "effects": "drowning",
+  "effects": "burning",
   "exhaustion": 0.2,
   "message_id": "galacticraft.sunRadiation",
-  "scaling": "galacticraftlegacy:by_celestial_body"
+  "scaling": "always"
 }

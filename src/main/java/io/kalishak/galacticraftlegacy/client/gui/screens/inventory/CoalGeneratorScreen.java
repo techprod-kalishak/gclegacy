@@ -9,6 +9,7 @@ package io.kalishak.galacticraftlegacy.client.gui.screens.inventory;
 
 import io.kalishak.galacticraftlegacy.Galacticraft;
 import io.kalishak.galacticraftlegacy.client.gui.ClientResourceHandlerTextUtils;
+import io.kalishak.galacticraftlegacy.references.GalacticraftComponents;
 import io.kalishak.galacticraftlegacy.world.inventory.machine.CoalGeneratorMenu;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.CoalGeneratorBlockEntity;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
@@ -50,7 +51,7 @@ public class CoalGeneratorScreen extends AbstractContainerScreen<CoalGeneratorMe
         int j = this.topPos;
 
         boolean warmingUp = this.menu.getHeatLevel() <= 0 || this.menu.getHeatLevel() < CoalGeneratorBlockEntity.MIN_ENERGY_PER_HEAT;
-        Component generate = warmingUp ? Component.translatable("container.coal_generator.not_generating") : Component.translatable("container.coal_generator.generating");
+        Component generate = warmingUp ? GalacticraftComponents.COAL_GENERATOR_NOT_GENERATING : GalacticraftComponents.COAL_GENERATOR_GENERATING;
         Component status;
 
         guiGraphics.text(
@@ -63,7 +64,7 @@ public class CoalGeneratorScreen extends AbstractContainerScreen<CoalGeneratorMe
         );
 
         if (warmingUp) {
-            status = Component.translatable("container.coal_generator.heat_level", Mth.floor(this.menu.getHeatLevel() / CoalGeneratorBlockEntity.MIN_ENERGY_PER_HEAT * 100) + "%");
+            status = GalacticraftComponents.COAL_GENERATOR_HEAT_LEVEL.append(Mth.floor(this.menu.getHeatLevel() / CoalGeneratorBlockEntity.MIN_ENERGY_PER_HEAT * 100) + "%");
 
             guiGraphics.text(
                     this.font,

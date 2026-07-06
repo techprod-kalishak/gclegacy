@@ -7,13 +7,12 @@
 
 package io.kalishak.galacticraftlegacy.network.handler.client;
 
-import io.kalishak.galacticraftlegacy.Constants;
 import io.kalishak.galacticraftlegacy.client.gui.screens.inventory.GearInventoryScreen;
 import io.kalishak.galacticraftlegacy.network.payload.ToggleGearInventoryPayload;
+import io.kalishak.galacticraftlegacy.references.GalacticraftComponents;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
-import net.minecraft.network.chat.Component;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 public class ToggleGearInventoryClientHandler {
@@ -28,6 +27,6 @@ public class ToggleGearInventoryClientHandler {
             } else {
                 mc.setScreen(null);
             }
-        }).exceptionally(e -> Constants.networkFailureMessage(cxt::disconnect, e));
+        }).exceptionally(e -> GalacticraftComponents.networkFailureMessage(cxt::disconnect, e));
     }
 }

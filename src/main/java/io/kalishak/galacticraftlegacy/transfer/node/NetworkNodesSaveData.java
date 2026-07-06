@@ -8,7 +8,7 @@
 package io.kalishak.galacticraftlegacy.transfer.node;
 
 import com.mojang.serialization.Codec;
-import io.kalishak.galacticraftlegacy.Constants;
+import io.kalishak.galacticraftlegacy.references.Constants;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.saveddata.SavedData;

@@ -7,7 +7,7 @@
 
 package io.kalishak.galacticraftlegacy.client.resources;
 
-import io.kalishak.galacticraftlegacy.Constants;
+import io.kalishak.galacticraftlegacy.references.Constants;
 import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.resources.model.sprite.SpriteId;
 

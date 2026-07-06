@@ -7,7 +7,7 @@
 
 package io.kalishak.galacticraftlegacy.world.level.levelgen.placement;
 
-import io.kalishak.galacticraftlegacy.Constants;
+import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.world.level.levelgen.features.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderGetter;

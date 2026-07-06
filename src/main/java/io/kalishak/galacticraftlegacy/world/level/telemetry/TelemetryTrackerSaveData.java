@@ -9,10 +9,8 @@ package io.kalishak.galacticraftlegacy.world.level.telemetry;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import io.kalishak.galacticraftlegacy.Constants;
-import net.minecraft.core.BlockPos;
+import io.kalishak.galacticraftlegacy.references.Constants;
 import net.minecraft.core.GlobalPos;
-import net.minecraft.core.UUIDUtil;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.MinecraftServer;

@@ -13,6 +13,7 @@ import io.kalishak.galacticraftlegacy.data.advancement.GalacticraftAdvancementPr
 import io.kalishak.galacticraftlegacy.data.loot.GalacticraftLootTableProvider;
 import io.kalishak.galacticraftlegacy.data.tag.*;
 import io.kalishak.galacticraftlegacy.data.worldgen.GalacticraftCarvers;
+import io.kalishak.galacticraftlegacy.references.GalacticraftComponents;
 import io.kalishak.galacticraftlegacy.registry.CelestialBodyLevelDataEntries;
 import io.kalishak.galacticraftlegacy.registry.Checklist;
 import io.kalishak.galacticraftlegacy.registry.GalacticraftRegistries;
@@ -38,7 +39,6 @@ import net.minecraft.DetectedVersion;
 import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.metadata.PackMetadataGenerator;
-import net.minecraft.network.chat.Component;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.metadata.pack.PackMetadataSection;
 import net.minecraft.util.InclusiveRange;
@@ -69,7 +69,7 @@ public class GalacticraftData {
     public static void gatherData(GatherDataEvent.Client event) {
         event.createProvider(output -> new PackMetadataGenerator(output)
                 .add(PackMetadataSection.SERVER_TYPE, new PackMetadataSection(
-                        Component.translatable("pack.galacticraftlegacy.description"),
+                        GalacticraftComponents.DATAPACK_DESCRIPTION,
                         new InclusiveRange<>(DetectedVersion.BUILT_IN.packVersion(PackType.SERVER_DATA)))));
 
         event.createProvider(GalacticraftSpritesProvider::new);

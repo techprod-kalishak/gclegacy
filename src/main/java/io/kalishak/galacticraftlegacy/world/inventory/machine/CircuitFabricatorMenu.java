@@ -16,7 +16,6 @@ import io.kalishak.galacticraftlegacy.world.inventory.slot.CapabilityHandlerSlot
 import io.kalishak.galacticraftlegacy.world.inventory.slot.MutableHandlerSlot;
 import io.kalishak.galacticraftlegacy.world.item.component.ItemAccessEnergyUtils;
 import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.CircuitRecipe;
-import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.input.SimpleResourceInput;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.CircuitFabricatorBlockEntity;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityType;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -32,6 +31,7 @@ import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.common.Tags;
+import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.neoforged.neoforge.transfer.item.ItemUtil;
 
 import java.util.List;
@@ -45,13 +45,13 @@ public class CircuitFabricatorMenu extends AbstractMachineRecipeBookMenu<Circuit
     public CircuitFabricatorMenu(int containerId, Inventory playerInventory, CircuitFabricatorBlockEntity circuitFabricator, ContainerData containerData) {
         super(GalacticraftMenuType.CIRCUIT_FABRICATOR.get(), containerId, playerInventory, circuitFabricator, containerData);
 
-        addSlot(new CapabilityHandlerSlot<>(this.resourceHandler, circuitFabricator::set, Capabilities.Energy.ITEM, CircuitFabricatorBlockEntity.SLOT_BATTERY, 6, 69));
-        addSlot(new MutableHandlerSlot(this.resourceHandler, circuitFabricator::set, stack -> stack.is(Tags.Items.GEMS_DIAMOND), CircuitFabricatorBlockEntity.SLOT_DIAMOND, 15, 17));
-        addSlot(new MutableHandlerSlot(this.resourceHandler, circuitFabricator::set, stack -> stack.is(GalacticraftTags.Items.RAW_MATERIALS_SILICON), CircuitFabricatorBlockEntity.SLOT_SILICON_1, 74, 46));
-        addSlot(new MutableHandlerSlot(this.resourceHandler, circuitFabricator::set, stack -> stack.is(GalacticraftTags.Items.RAW_MATERIALS_SILICON), CircuitFabricatorBlockEntity.SLOT_SILICON_2, 74, 64));
-        addSlot(new MutableHandlerSlot(this.resourceHandler, circuitFabricator::set, stack -> stack.is(Tags.Items.DUSTS_REDSTONE), CircuitFabricatorBlockEntity.SLOT_REDSTONE, 122, 46));
-        addSlot(new MutableHandlerSlot(this.resourceHandler, circuitFabricator::set, Predicates.alwaysTrue(), CircuitFabricatorBlockEntity.SLOT_INGREDIENT, 145, 20));
-        addSlot(new MutableHandlerSlot(this.resourceHandler, circuitFabricator::set, Predicates.alwaysFalse(), CircuitFabricatorBlockEntity.SLOT_OUTPUT, 152, 86));
+        addSlot(new CapabilityHandlerSlot<>(this.resourceHandler, circuitFabricator::setItem, Capabilities.Energy.ITEM, CircuitFabricatorBlockEntity.SLOT_BATTERY, 6, 69));
+        addSlot(new MutableHandlerSlot(this.resourceHandler, circuitFabricator::setItem, stack -> stack.is(Tags.Items.GEMS_DIAMOND), CircuitFabricatorBlockEntity.SLOT_DIAMOND, 15, 17));
+        addSlot(new MutableHandlerSlot(this.resourceHandler, circuitFabricator::setItem, stack -> stack.is(GalacticraftTags.Items.RAW_MATERIALS_SILICON), CircuitFabricatorBlockEntity.SLOT_SILICON_1, 74, 46));
+        addSlot(new MutableHandlerSlot(this.resourceHandler, circuitFabricator::setItem, stack -> stack.is(GalacticraftTags.Items.RAW_MATERIALS_SILICON), CircuitFabricatorBlockEntity.SLOT_SILICON_2, 74, 64));
+        addSlot(new MutableHandlerSlot(this.resourceHandler, circuitFabricator::setItem, stack -> stack.is(Tags.Items.DUSTS_REDSTONE), CircuitFabricatorBlockEntity.SLOT_REDSTONE, 122, 46));
+        addSlot(new MutableHandlerSlot(this.resourceHandler, circuitFabricator::setItem, Predicates.alwaysTrue(), CircuitFabricatorBlockEntity.SLOT_INGREDIENT, 145, 20));
+        addSlot(new MutableHandlerSlot(this.resourceHandler, circuitFabricator::setItem, Predicates.alwaysFalse(), CircuitFabricatorBlockEntity.SLOT_OUTPUT, 152, 86));
         addStandardInventorySlots(playerInventory, 8, 110);
         addDataSlots(containerData);
     }
@@ -136,7 +136,7 @@ public class CircuitFabricatorMenu extends AbstractMachineRecipeBookMenu<Circuit
 
             @Override
             public boolean recipeMatches(RecipeHolder<CircuitRecipe> recipe) {
-                return recipe.value().matches(CraftingInput.of(3, 2, CircuitFabricatorMenu.this.machine.getItems().subList(CircuitFabricatorBlockEntity.SLOT_DIAMOND, CircuitFabricatorBlockEntity.SLOT_COUNT)), level);
+                return recipe.value().matches(CraftingInput.of(3, 2, ResourcefulHelper.orderedHandlerCopy(CircuitFabricatorMenu.this.machine.getResourceHandler(), ItemStack.EMPTY, ItemResource::toStack) .subList(CircuitFabricatorBlockEntity.SLOT_DIAMOND, CircuitFabricatorBlockEntity.SLOT_COUNT)), level);
             }
         }, 3, 2, craftingSlots, craftingSlots, playerInventory, (RecipeHolder<CircuitRecipe>) recipe, useMaxItems, isCreative);
     }

@@ -14,13 +14,13 @@ import io.kalishak.galacticraftlegacy.config.values.EnergyUnit;
 import io.kalishak.galacticraftlegacy.data.GalacticraftTags;
 import io.kalishak.galacticraftlegacy.data.datamap.Extinguishable;
 import io.kalishak.galacticraftlegacy.data.datamap.GalacticraftDataMaps;
+import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.registry.SchematicVariant;
 import io.kalishak.galacticraftlegacy.transfer.node.NodeNetwork;
 import io.kalishak.galacticraftlegacy.world.entity.GearEquipmentSlot;
 import io.kalishak.galacticraftlegacy.world.item.component.*;
 import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.GalacticraftRecipeType;
 import io.kalishak.galacticraftlegacy.world.level.OxygenHelper;
-import io.kalishak.galacticraftlegacy.world.level.block.FallenMeteorBlock;
 import io.kalishak.galacticraftlegacy.world.score.race.SpaceRaceHooks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
@@ -216,9 +216,9 @@ public class NeoEventHandler {
     public void onLevelTick(LevelTickEvent.Post event) {
         NodeNetwork.levelTick(event);
 
-        if (event.getLevel() instanceof ServerLevel serverLevel) {
-            FallenMeteorBlock.createFallingMeteor(serverLevel, BlockPos.ZERO);
-        }
+//        if (event.getLevel() instanceof ServerLevel serverLevel) {
+//            FallenMeteor.createFallingMeteor(serverLevel);
+//        }
     }
 
     @SubscribeEvent

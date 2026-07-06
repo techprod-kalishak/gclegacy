@@ -7,7 +7,7 @@
 
 package io.kalishak.galacticraftlegacy.transfer.capability.fluid;
 
-import io.kalishak.galacticraftlegacy.world.inventory.Tank;
+import io.kalishak.galacticraftlegacy.world.inventory.container.Tank;
 import net.minecraft.core.component.PatchedDataComponentMap;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.transfer.ResourceHandler;

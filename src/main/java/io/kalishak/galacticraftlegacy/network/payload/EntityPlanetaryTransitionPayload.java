@@ -7,7 +7,7 @@
 
 package io.kalishak.galacticraftlegacy.network.payload;
 
-import io.kalishak.galacticraftlegacy.Constants;
+import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.world.entity.vehicle.rocket.AbstractAutoRocket;
 import net.minecraft.core.UUIDUtil;
 import net.minecraft.core.registries.Registries;

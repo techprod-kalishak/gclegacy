@@ -10,7 +10,9 @@ package io.kalishak.galacticraftlegacy.world.item.component;
 import com.mojang.serialization.Codec;
 import io.kalishak.galacticraftlegacy.Galacticraft;
 import io.kalishak.galacticraftlegacy.registry.SchematicVariant;
+import io.kalishak.galacticraftlegacy.world.item.FeatureTier;
 import io.kalishak.galacticraftlegacy.world.item.KeyLock;
+import io.kalishak.galacticraftlegacy.world.item.VehicleComponentType;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.MagneticCraftingBlockEntity;
 import net.minecraft.core.GlobalPos;
 import net.minecraft.core.Holder;
@@ -19,12 +21,16 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.world.entity.EntityReference;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent;
 import net.neoforged.neoforge.fluids.SimpleFluidContent;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
+import java.util.List;
 import java.util.stream.Stream;
 
 public final class GalacticraftDataComponents {
@@ -74,6 +80,10 @@ public final class GalacticraftDataComponents {
             "recipe_holder",
             builder -> builder.persistent(MagneticCraftingBlockEntity.RECIPE_HOLDER_CODEC).networkSynchronized(RecipeHolder.STREAM_CODEC).cacheEncoding().ignoreSwapAnimation()
     );
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<VehiclePart>> ROCKET_PART = REGISTRY.registerComponentType(
+            "rocket_part",
+            builder -> builder.persistent(VehiclePart.CODEC).networkSynchronized(VehiclePart.STREAM_CODEC).cacheEncoding()
+    );
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<Holder<SchematicVariant>>> SCHEMATIC = REGISTRY.registerComponentType(
             "schematic",
             builder -> builder.persistent(SchematicVariant.CODEC).networkSynchronized(SchematicVariant.STREAM_CODEC).ignoreSwapAnimation()
@@ -93,9 +103,24 @@ public final class GalacticraftDataComponents {
 
     public static void init(IEventBus bus) {
         REGISTRY.register(bus);
+        bus.addListener(GalacticraftDataComponents::modifyDefaultComponents);
     }
 
     public static Stream<DataComponentType<?>> getTooltipProviders() {
         return REGISTRY.getEntries().stream().map(DeferredHolder::get);
+    }
+
+    @SubscribeEvent
+    public static void modifyDefaultComponents(ModifyDefaultComponentsEvent event) {
+        final VehiclePart storage = new VehiclePart(VehicleComponentType.STORAGE, List.of(FeatureTier.values()));
+
+        event.modify(
+                Items.CHEST,
+                (components, _, _) -> components.set(GalacticraftDataComponents.ROCKET_PART, storage)
+        );
+        event.modify(
+                Items.COPPER_CHEST,
+                (components, _, _) -> components.set(GalacticraftDataComponents.ROCKET_PART, storage)
+        );
     }
 }

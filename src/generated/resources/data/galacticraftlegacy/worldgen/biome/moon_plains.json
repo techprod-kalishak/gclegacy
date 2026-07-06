@@ -47,12 +47,6 @@
     "misc": [],
     "monster": [
       {
-        "type": "minecraft:spider",
-        "maxCount": 4,
-        "minCount": 4,
-        "weight": 100
-      },
-      {
         "type": "galacticraftlegacy:evolved_zombie",
         "maxCount": 4,
         "minCount": 4,
@@ -63,18 +57,6 @@
         "maxCount": 4,
         "minCount": 4,
         "weight": 15
-      },
-      {
-        "type": "minecraft:enderman",
-        "maxCount": 4,
-        "minCount": 1,
-        "weight": 10
-      },
-      {
-        "type": "minecraft:witch",
-        "maxCount": 1,
-        "minCount": 1,
-        "weight": 5
       }
     ],
     "underground_water_creature": [],

@@ -15,6 +15,7 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.util.StringRepresentable;
+import net.minecraft.util.Util;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
@@ -45,8 +46,11 @@ public class MappedEquipment<E extends Enum<E> & StringRepresentable> {
         this.items = items;
     }
 
-    public static <E extends Enum<E> & SerializableEnum> MappedItemResourceHandler<E> of(MappedEquipment<E> equipment, Class<E> clazz, Codec<E> enumCodec) {
-        return new MappedItemResourceHandler<>(equipment.items, clazz, enumCodec);
+    public static <E extends Enum<E> & SerializableEnum> MappedItemResourceHandler<E> of(MappedEquipment<E> equipment, Class<E> clazz, Codec<E> codec) {
+        MappedItemResourceHandler<E> mappedItemResourceHandler = new MappedItemResourceHandler<>((EnumMap<E, ItemStack>) Util.makeEnumMap(clazz, _ -> ItemStack.EMPTY), clazz, codec);
+        mappedItemResourceHandler.setAll(equipment.items);
+
+        return mappedItemResourceHandler;
     }
 
     public ItemStack set(E slot, ItemStack stack) {

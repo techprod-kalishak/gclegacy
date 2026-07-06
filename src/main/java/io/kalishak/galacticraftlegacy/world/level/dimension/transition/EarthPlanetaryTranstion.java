@@ -7,6 +7,7 @@
 
 package io.kalishak.galacticraftlegacy.world.level.dimension.transition;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -16,9 +17,8 @@ import net.minecraft.world.level.Level;
 import org.jspecify.annotations.Nullable;
 
 public class EarthPlanetaryTranstion extends PlanetaryTransition {
-    public EarthPlanetaryTranstion() {
-        super(TransitionType.PARACHUTE.get());
-    }
+    public static final EarthPlanetaryTranstion INSTANCE = new EarthPlanetaryTranstion();
+    public static final MapCodec<EarthPlanetaryTranstion> CODEC = MapCodec.unit(EarthPlanetaryTranstion::new);
 
     @Override
     public boolean useParachute() {
@@ -51,5 +51,10 @@ public class EarthPlanetaryTranstion extends PlanetaryTransition {
     @Override
     public void onDimensionChange(Level newLevel, ServerPlayer player, boolean isRidingAutoRocket) {
 
+    }
+
+    @Override
+    public MapCodec<EarthPlanetaryTranstion> codec() {
+        return CODEC;
     }
 }

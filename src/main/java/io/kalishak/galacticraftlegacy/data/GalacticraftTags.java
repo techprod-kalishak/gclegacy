@@ -9,7 +9,7 @@ package io.kalishak.galacticraftlegacy.data;
 
 import io.kalishak.galacticraftlegacy.registry.ChecklistEntry;
 import io.kalishak.galacticraftlegacy.registry.GalacticraftRegistries;
-import io.kalishak.galacticraftlegacy.Constants;
+import io.kalishak.galacticraftlegacy.references.Constants;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
@@ -119,6 +119,7 @@ public final class GalacticraftTags {
         public static final TagKey<Item> INGOTS_ALUMINUM = shared(Registries.ITEM, "ingots/aluminum");
         public static final TagKey<Item> INGOTS_BRONZE = shared(Registries.ITEM, "ingots/bronze");
         public static final TagKey<Item> INGOTS_DESH = shared(Registries.ITEM, "ingots/desh");
+        public static final TagKey<Item> INGOTS_IRIDIUM = shared(Registries.ITEM, "ingots/iridium");
         public static final TagKey<Item> INGOTS_STEEL = shared(Registries.ITEM, "ingots/steel");
         public static final TagKey<Item> INGOTS_TIN = shared(Registries.ITEM, "ingots/tin");
         public static final TagKey<Item> INGOTS_TITANIUM = shared(Registries.ITEM, "ingots/titanium");
@@ -143,13 +144,14 @@ public final class GalacticraftTags {
         public static final TagKey<Item> PLATE_HEAVY_DUTY_3 = shared(Registries.ITEM, "plates/heavy_duty_tier_3");
         public static final TagKey<Item> ORES_ALUMINUM = shared(Registries.ITEM, "ores/aluminum");
         public static final TagKey<Item> ORES_CHEESE = shared(Registries.ITEM, "ores/cheese");
+        public static final TagKey<Item> ORES_IRIDIUM = shared(Registries.ITEM, "ores/iridium");
         public static final TagKey<Item> ORES_SAPPHIRE = shared(Registries.ITEM, "ores/sapphire");
         public static final TagKey<Item> ORES_SILICON = shared(Registries.ITEM, "ores/silicon");
         public static final TagKey<Item> ORES_TIN = shared(Registries.ITEM, "ores/tin");
         public static final TagKey<Item> RAW_MATERIALS_ALUMINUM = shared(Registries.ITEM, "raw_materials/aluminum");
         public static final TagKey<Item> RAW_MATERIALS_CHEESE = shared(Registries.ITEM, "raw_materials/cheese");
         public static final TagKey<Item> RAW_MATERIALS_DESH = shared(Registries.ITEM, "raw_materials/desh");
-        public static final TagKey<Item> RAW_MATERIALS_METEORIC_IRON = shared(Registries.ITEM, "raw_materials/meteoric_iron");
+        public static final TagKey<Item> RAW_MATERIALS_IRIDIUM = shared(Registries.ITEM, "raw_materials/iridium");
         public static final TagKey<Item> RAW_MATERIALS_LEAD = shared(Registries.ITEM, "raw_materials/lead");
         public static final TagKey<Item> RAW_MATERIALS_SILICON = shared(Registries.ITEM, "raw_materials/silicon");
         public static final TagKey<Item> RAW_MATERIALS_STEEL = shared(Registries.ITEM, "raw_materials/steel");

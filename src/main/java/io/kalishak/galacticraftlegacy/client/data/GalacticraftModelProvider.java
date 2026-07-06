@@ -7,9 +7,8 @@
 
 package io.kalishak.galacticraftlegacy.client.data;
 
-import io.kalishak.galacticraftlegacy.Constants;
+import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.Galacticraft;
-import io.kalishak.galacticraftlegacy.client.data.models.model.GalacticraftTextureMapping;
 import io.kalishak.galacticraftlegacy.client.item.ColorByFluid;
 import io.kalishak.galacticraftlegacy.client.renderer.item.properties.numeric.DungeonLocatorAngle;
 import io.kalishak.galacticraftlegacy.client.renderer.item.properties.range.FluidAmountProperty;
@@ -22,7 +21,6 @@ import io.kalishak.galacticraftlegacy.world.item.GearEquipmentAssets;
 import io.kalishak.galacticraftlegacy.world.item.component.GalacticraftDataComponents;
 import io.kalishak.galacticraftlegacy.world.item.equipment.trim.GalacticraftMaterialAssetGroup;
 import io.kalishak.galacticraftlegacy.world.item.equipment.trim.GalacticraftTrimMaterials;
-import io.kalishak.galacticraftlegacy.world.level.block.FallenMeteorBlock;
 import io.kalishak.galacticraftlegacy.world.level.block.GalacticraftBlocks;
 import io.kalishak.galacticraftlegacy.world.level.block.MagneticCraftingBlock;
 import io.kalishak.galacticraftlegacy.world.level.block.wire.HeavyWireBlock;
@@ -144,10 +142,9 @@ public class GalacticraftModelProvider extends ModelProvider {
         blockModels.createTrivialBlock(GalacticraftBlocks.TIN_DECORATION_CUT_BLOCK.get(), TexturedModel.CUBE_TOP_BOTTOM);
         blockModels.createTrivialCube(GalacticraftBlocks.SPACE_STATION.get());
         blockModels.createNonTemplateModelBlock(GalacticraftBlocks.GRATING.get());
-        blockModels.createNonTemplateModelBlock(GalacticraftBlocks.FALLEN_METEOR.get());
+        createMeteor(blockModels, GalacticraftBlocks.FALLEN_METEOR.get());
 
         blockModels.registerSimpleFlatItemModel(GalacticraftBlocks.GRATING.get());
-        blockModels.registerSimpleFlatItemModel(GalacticraftBlocks.FALLEN_METEOR.get());
         itemModels.generateFlatItem(GalacticraftItems.THROWABLE_METEOR_CHUNK.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(GalacticraftItems.BATTERY.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(GalacticraftItems.INFINITE_BATTERY.get(), GalacticraftItems.BATTERY.get(), ModelTemplates.FLAT_ITEM);
@@ -245,7 +242,6 @@ public class GalacticraftModelProvider extends ModelProvider {
         itemModels.generateTrimmableItem(GalacticraftItems.TITANIUM_BOOTS.get(), GearEquipmentAssets.TITANIUM, ItemModelGenerators.TRIM_PREFIX_BOOTS, false);
         itemModels.generateFlatItem(GalacticraftItems.RAW_LEAD.get(),  ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(GalacticraftItems.LEAD_INGOT.get(),  ModelTemplates.FLAT_ITEM);
-        itemModels.generateFlatItem(GalacticraftItems.LEAD_NUGGET.get(),  ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(GalacticraftItems.CHEESE_CHUNK.get(),  ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(GalacticraftItems.CHEESE_SLICE.get(), ModelTemplates.FLAT_ITEM);
         createKey(itemModels, GalacticraftItems.MOON_DUNGEON_KEY.get(), FeatureTier.TIER_1);
@@ -262,6 +258,7 @@ public class GalacticraftModelProvider extends ModelProvider {
         itemModels.generateFlatItem(GalacticraftItems.EVOLVED_SKELETON_SPAWN_EGG.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(GalacticraftItems.EVOLVED_ZOMBIE_SPAWN_EGG.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(GalacticraftItems.RAW_METEORIC_IRON.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.METEORIC_IRON_INGOT.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(GalacticraftItems.COMPRESSED_ALUMINUM.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(GalacticraftItems.COMPRESSED_BRONZE.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(GalacticraftItems.COMPRESSED_COPPER.get(), ModelTemplates.FLAT_ITEM);
@@ -282,6 +279,12 @@ public class GalacticraftModelProvider extends ModelProvider {
         Identifier modelId = builder.apply(ModelTemplates.create(slots).extend()).build().create(block, textureMapping, blockModels.modelOutput);
 
         blockModels.blockStateOutput.accept(MultiVariantGenerator.dispatch(block, BlockModelGenerators.plainVariant(modelId)));
+    }
+
+    private void createMeteor(BlockModelGenerators blockModels, Block block) {
+        Identifier blockModel = Constants.id("block/fallen_meteor");
+        blockModels.createNonTemplateModelBlock(block);
+        blockModels.registerSimpleTintedItemModel(block, blockModel, ItemModelUtils.constantTint(0));
     }
 
     private void magneticCraftingTable(BlockModelGenerators blockModels, MagneticCraftingBlock block) {

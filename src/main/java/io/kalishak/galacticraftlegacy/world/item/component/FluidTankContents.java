@@ -9,7 +9,7 @@ package io.kalishak.galacticraftlegacy.world.item.component;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.ChatFormatting;
+import io.kalishak.galacticraftlegacy.references.GalacticraftComponents;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.component.DataComponentGetter;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -17,7 +17,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.TooltipProvider;
 import net.neoforged.neoforge.fluids.FluidStack;
@@ -185,20 +184,20 @@ public final class FluidTankContents implements TooltipProvider {
         int lineCount = 0;
         int count = 0;
 
-        for (Optional<FluidStackTemplate> item : this.fluids) {
-            if (item.isPresent()) {
+        for (Optional<FluidStackTemplate> fluid : this.fluids) {
+            if (fluid.isPresent()) {
                 count++;
 
                 if (lineCount <= 4) {
                     lineCount++;
-                    FluidStack fluidStack = item.get().create();
-                    consumer.accept(Component.translatable("item.galacticraftlegacy.tank.fluid_amount", fluidStack.getHoverName(), fluidStack.getAmount()));
+                    FluidStack fluidStack = fluid.get().create();
+                    consumer.accept(GalacticraftComponents.TOOLTIP_SINGLE_FLUID.apply(fluidStack));
                 }
             }
         }
 
         if (count - lineCount > 0) {
-            consumer.accept(Component.translatable("item.galacticraftlegacy.tank.more_fluids", count - lineCount).withStyle(ChatFormatting.ITALIC));
+            consumer.accept(GalacticraftComponents.TOOLTIP_MORE_FLUIDS.apply(count - lineCount));
         }
     }
 

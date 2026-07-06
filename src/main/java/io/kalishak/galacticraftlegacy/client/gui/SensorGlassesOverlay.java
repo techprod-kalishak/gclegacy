@@ -7,7 +7,7 @@
 
 package io.kalishak.galacticraftlegacy.client.gui;
 
-import io.kalishak.galacticraftlegacy.Constants;
+import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.world.item.GalacticraftItems;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;

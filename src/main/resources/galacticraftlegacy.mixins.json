@@ -4,7 +4,8 @@
   "compatibilityLevel": "JAVA_21",
   "mixins": [
     "BedBlockMixin",
-    "EntityMixin",
+    "ItemEntityMixin",
+    "LivingEntityMixin",
     "InventoryMixin"
   ],
   "client": [

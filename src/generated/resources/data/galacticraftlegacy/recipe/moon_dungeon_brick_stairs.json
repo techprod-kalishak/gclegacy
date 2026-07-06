@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "moon_bricks_stairs",
+  "key": {
+    "#": "galacticraftlegacy:moon_dungeon_bricks"
+  },
+  "pattern": [
+    "#  ",
+    "## ",
+    "###"
+  ],
+  "result": {
+    "count": 4,
+    "id": "galacticraftlegacy:moon_dungeon_brick_stairs"
+  }
+}

@@ -7,7 +7,7 @@
 
 package io.kalishak.galacticraftlegacy.galaxies;
 
-import io.kalishak.galacticraftlegacy.Constants;
+import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.Galacticraft;
 import io.kalishak.galacticraftlegacy.data.GalacticraftTags;
 import io.kalishak.galacticraftlegacy.registry.GalacticraftRegistries;

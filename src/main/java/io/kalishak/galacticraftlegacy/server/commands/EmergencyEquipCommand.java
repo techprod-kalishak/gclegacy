@@ -8,7 +8,6 @@
 package io.kalishak.galacticraftlegacy.server.commands;
 
 import com.mojang.brigadier.CommandDispatcher;
-import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.arguments.BoolArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
@@ -17,17 +16,15 @@ import com.mojang.brigadier.exceptions.DynamicCommandExceptionType;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
 import io.kalishak.galacticraftlegacy.attachment.AttachmentHelper;
 import io.kalishak.galacticraftlegacy.data.GalacticraftTags;
+import io.kalishak.galacticraftlegacy.references.GalacticraftComponents;
 import io.kalishak.galacticraftlegacy.server.commands.arguments.item.EmergencyEquipment;
 import io.kalishak.galacticraftlegacy.transfer.entity.SpaceGearEquipment;
 import io.kalishak.galacticraftlegacy.world.entity.GearEquipmentSlot;
 import io.kalishak.galacticraftlegacy.world.item.GalacticraftItems;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
-import net.minecraft.commands.ParserUtils;
 import net.minecraft.commands.SharedSuggestionProvider;
 import net.minecraft.commands.arguments.EntityArgument;
-import net.minecraft.commands.synchronization.SuggestionProviders;
-import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -36,12 +33,8 @@ import java.util.Arrays;
 import java.util.Collection;
 
 public class EmergencyEquipCommand {
-    private static final Dynamic2CommandExceptionType ERROR_ITEMS_NOT_EQUPPABLE = new Dynamic2CommandExceptionType(
-            (entity, equipment) -> Component.translatableEscape("galacticraftlegacy.arguments.equipment.not_equippable", entity, equipment)
-    );
-    private static final DynamicCommandExceptionType ERROR_INVALID_ENTITIY = new  DynamicCommandExceptionType(
-            entity -> Component.translatableEscape("galacticraftlegacy.arguments.invalid_entity", entity)
-    );
+    private static final Dynamic2CommandExceptionType ERROR_ITEMS_NOT_EQUPPABLE = new Dynamic2CommandExceptionType(GalacticraftComponents.COMMAND_ERROR_NOT_EQUIPABLE);
+    private static final DynamicCommandExceptionType ERROR_INVALID_ENTITIY = new  DynamicCommandExceptionType(GalacticraftComponents.COMMAND_ERROR_INVALID_GEAR_OWNER);
     public static final SuggestionProvider<CommandSourceStack> SUGGEST_EQUIPMENT = (_, builder) ->
             SharedSuggestionProvider.suggest(Arrays.stream(EmergencyEquipment.values()).map(EmergencyEquipment::getSerializedName), builder);
 
@@ -112,7 +105,7 @@ public class EmergencyEquipCommand {
         int swapped = createEquipment(player, equipment, swapExisting);
 
         if (swapped > 0) {
-            source.sendSuccess(() -> Component.translatable("galacticraftlegacy.commands.emergency_equip.success", player.getDisplayName(), swapped), true);
+            source.sendSuccess(() -> GalacticraftComponents.COMMAND_SUCCESS_EQUIP_EMERGENCY_GEAR.apply(player.getDisplayName(), swapped), true);
         } else {
             throw ERROR_INVALID_ENTITIY.create(player.getDisplayName());
         }

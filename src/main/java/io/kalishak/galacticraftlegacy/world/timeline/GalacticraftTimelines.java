@@ -7,7 +7,7 @@
 
 package io.kalishak.galacticraftlegacy.world.timeline;
 
-import io.kalishak.galacticraftlegacy.Constants;
+import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.world.attribute.GalacticraftEnvironmentAttributes;
 import io.kalishak.galacticraftlegacy.world.level.EarthPhase;
 import net.minecraft.core.Holder;

@@ -7,7 +7,7 @@
 
 package io.kalishak.galacticraftlegacy.world.damagesource;
 
-import io.kalishak.galacticraftlegacy.Constants;
+import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.EnumExtensions;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
@@ -52,17 +52,18 @@ public final class GalacticraftDamageTypes {
                 SUFFOCATION,
                 new DamageType(
                         "galacticraft.suffocation",
-                        EnumExtensions.DAMAGE_SCALING_BY_CELESTIAL_BODY.getValue(),
-                        1.0F
+                        DamageScaling.ALWAYS,
+                        1.0F,
+                        DamageEffects.DROWNING
                 )
         );
         cxt.register(
                 SUN_RADIATION,
                 new DamageType(
                         "galacticraft.sunRadiation",
-                        EnumExtensions.DAMAGE_SCALING_BY_CELESTIAL_BODY.getValue(),
+                        DamageScaling.ALWAYS,
                         0.2F,
-                        DamageEffects.DROWNING
+                        DamageEffects.BURNING
                 )
         );
 

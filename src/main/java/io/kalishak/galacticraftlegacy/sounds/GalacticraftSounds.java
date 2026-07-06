@@ -7,7 +7,7 @@
 
 package io.kalishak.galacticraftlegacy.sounds;
 
-import io.kalishak.galacticraftlegacy.Constants;
+import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.Galacticraft;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.sounds.SoundEvent;

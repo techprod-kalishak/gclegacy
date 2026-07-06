@@ -7,7 +7,7 @@
 
 package io.kalishak.galacticraftlegacy.client.gui.screens.inventory;
 
-import io.kalishak.galacticraftlegacy.Constants;
+import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.client.gui.screens.recipebook.ElectricFurnaceRecipeBookComponent;
 import io.kalishak.galacticraftlegacy.world.inventory.machine.ElectricFurnaceMenu;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.ElectricFurnaceBlockEntity;
@@ -23,7 +23,6 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.RecipeBookCategories;
 
-import java.awt.*;
 import java.util.List;
 
 public class ElectricFurnaceScreen extends AbstractMachineScreen<ElectricFurnaceBlockEntity, ElectricFurnaceMenu> {

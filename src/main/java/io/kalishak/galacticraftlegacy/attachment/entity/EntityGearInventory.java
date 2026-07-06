@@ -49,7 +49,7 @@ public class EntityGearInventory extends GearInventoryProvider {
 
     private GearDropChances gearDropChances = GearDropChances.DEFAULT;
 
-    private EntityGearInventory(SpaceGearEquipment gearEquipment, GearDropChances gearDropChances) {
+    public EntityGearInventory(SpaceGearEquipment gearEquipment, GearDropChances gearDropChances) {
         super(gearEquipment);
         this.gearDropChances = gearDropChances;
     }
@@ -109,8 +109,8 @@ public class EntityGearInventory extends GearInventoryProvider {
     }
 
     @Override
-    public float getThermalArmorEffectiveness() {
-        return 1.0F;
+    public boolean isThermalPaddingEffective(float temperatureModifier) {
+        return true;
     }
 
     @Override

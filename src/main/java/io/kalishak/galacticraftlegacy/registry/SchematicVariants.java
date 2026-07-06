@@ -7,7 +7,7 @@
 
 package io.kalishak.galacticraftlegacy.registry;
 
-import io.kalishak.galacticraftlegacy.Constants;
+import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.world.item.FeatureTier;
 import net.minecraft.ChatFormatting;
 import net.minecraft.data.worldgen.BootstrapContext;

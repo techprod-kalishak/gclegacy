@@ -8,7 +8,7 @@
 package io.kalishak.galacticraftlegacy.world.score.race;
 
 import com.mojang.serialization.Codec;
-import io.kalishak.galacticraftlegacy.Constants;
+import io.kalishak.galacticraftlegacy.references.Constants;
 import net.minecraft.world.level.saveddata.SavedData;
 import net.minecraft.world.level.saveddata.SavedDataType;
 

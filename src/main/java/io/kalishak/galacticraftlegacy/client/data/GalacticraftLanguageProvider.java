@@ -8,7 +8,7 @@
 package io.kalishak.galacticraftlegacy.client.data;
 
 import io.kalishak.galacticraftlegacy.Galacticraft;
-import io.kalishak.galacticraftlegacy.Constants;
+import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.data.GalacticraftTags;
 import io.kalishak.galacticraftlegacy.world.entity.GalacticraftEntityType;
 import io.kalishak.galacticraftlegacy.world.item.GalacticraftItems;
@@ -201,6 +201,7 @@ public class GalacticraftLanguageProvider extends LanguageProvider {
         addItem(GalacticraftItems.ALUMINUM_INGOT, "Aluminum Ingot");
         addItem(GalacticraftItems.RAW_ALUMINUM, "Raw Aluminum");
         addItem(GalacticraftItems.RAW_METEORIC_IRON, "Raw Meteoric Iron");
+        addItem(GalacticraftItems.METEORIC_IRON_INGOT, "Meteoric Iron Ingot");
         addItem(GalacticraftItems.TIN_INGOT, "Tin Ingot");
         addItem(GalacticraftItems.RAW_TIN, "Raw Tin");
         addItem(GalacticraftItems.RAW_SILICON, "Silicon");
@@ -256,7 +257,6 @@ public class GalacticraftLanguageProvider extends LanguageProvider {
         addItem(GalacticraftItems.TITANIUM_BOOTS, "Titanium Boots");
         addItem(GalacticraftItems.RAW_LEAD, "Raw Lead");
         addItem(GalacticraftItems.LEAD_INGOT, "Lead Ingot");
-        addItem(GalacticraftItems.LEAD_NUGGET, "Lead Nugget");
         addItem(GalacticraftItems.CHEESE_CHUNK, "Cheese Chunk");
         addItem(GalacticraftItems.CHEESE_SLICE, "Cheese Slice");
         addItem(GalacticraftItems.MOON_DUNGEON_KEY, "Moon Dungeon Key");

@@ -7,7 +7,7 @@
 
 package io.kalishak.galacticraftlegacy.client.gui.screens.inventory;
 
-import io.kalishak.galacticraftlegacy.Constants;
+import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.client.gui.screens.recipebook.FabricatingRecipeBook;
 import io.kalishak.galacticraftlegacy.client.gui.screens.recipebook.SearchRecipeBookCategory;
 import io.kalishak.galacticraftlegacy.world.inventory.machine.CircuitFabricatorMenu;
@@ -23,7 +23,6 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.Items;
 
-import java.awt.*;
 import java.util.List;
 import java.util.Optional;
 

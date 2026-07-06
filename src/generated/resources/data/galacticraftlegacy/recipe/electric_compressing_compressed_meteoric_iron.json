@@ -3,7 +3,7 @@
   "compressing_time": 100,
   "pattern": {
     "key": {
-      "#": "#c:raw_materials/meteoric_iron"
+      "#": "#c:raw_materials/iridium"
     },
     "pattern": [
       "##"

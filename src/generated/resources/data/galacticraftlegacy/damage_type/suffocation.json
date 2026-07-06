@@ -1,5 +1,6 @@
 {
+  "effects": "drowning",
   "exhaustion": 1.0,
   "message_id": "galacticraft.suffocation",
-  "scaling": "galacticraftlegacy:by_celestial_body"
+  "scaling": "always"
 }

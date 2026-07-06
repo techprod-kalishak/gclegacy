@@ -8,7 +8,7 @@
 package io.kalishak.galacticraftlegacy.client.gui;
 
 import io.kalishak.galacticraftlegacy.config.ClientConfig;
-import io.kalishak.galacticraftlegacy.Constants;
+import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.attachment.GalacticraftAttachments;
 import io.kalishak.galacticraftlegacy.attachment.level.CelestialBodyLevelData;
 import io.kalishak.galacticraftlegacy.config.values.OxygenTankPosition;

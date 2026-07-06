@@ -14,7 +14,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.textures.GpuTextureView;
 import com.mojang.blaze3d.vertex.*;
 import com.mojang.math.Axis;
-import io.kalishak.galacticraftlegacy.Constants;
+import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.client.renderer.environment.state.SpaceSkyRenderState;
 import io.kalishak.galacticraftlegacy.world.level.EarthPhase;
 import net.minecraft.client.Camera;
@@ -23,11 +23,9 @@ import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.client.renderer.state.level.LevelRenderState;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.resources.model.sprite.AtlasManager;
 import net.minecraft.resources.Identifier;
 import net.neoforged.neoforge.client.CustomSkyboxRenderer;
-import net.neoforged.neoforge.client.event.RegisterCustomEnvironmentEffectRendererEvent;
 import org.joml.*;
 
 import java.util.OptionalDouble;
@@ -36,23 +34,18 @@ import java.util.function.BiConsumer;
 
 public class MoonSkyRenderer extends SpaceSkyRenderer {
     public static final Identifier ID = Constants.id("moon");
-    private GpuBuffer earthBuffer;
+    private final GpuBuffer earthBuffer;
 
-    /**
-     * To avoid accidental registration on server thread, we will now check what thread are we on.
-     * Don't ask.
-     * @param registry method to register custom skybox, see {@link RegisterCustomEnvironmentEffectRendererEvent#registerSkyboxRenderer(Identifier, CustomSkyboxRenderer)}
-     */
-    public static void create(BiConsumer<Identifier, CustomSkyboxRenderer> registry) {
-        if (RenderSystem.isOnRenderThread()) {
-            registry.accept(ID, new MoonSkyRenderer());
-        }
+    public MoonSkyRenderer(AtlasManager atlasManager) {
+        super(atlasManager);
+        this.earthBuffer = buildEarthPhases(this.celestialsAtlas);
     }
 
-    @Override
-    protected void init(AtlasManager atlasManager) {
-        super.init(atlasManager);
-        this.earthBuffer = buildEarthPhases(this.celestialsAtlas);
+    public static void create(BiConsumer<Identifier, CustomSkyboxRenderer> registry) {
+        registry.accept(
+                ID,
+                (SkyboxRendererSupplier) MoonSkyRenderer::new
+        );
     }
 
     @Override
@@ -65,6 +58,11 @@ public class MoonSkyRenderer extends SpaceSkyRenderer {
                 levelRenderState.getRenderDataOrDefault(SpaceSkyRenderState.EARTH_PHASE_ID, EarthPhase.FULL_EARTH),
                 levelRenderState.skyRenderState.starBrightness
         );
+    }
+
+    @Override
+    protected Identifier getSunSprite() {
+        return PLANETARY_SUN_SPRITE;
     }
 
     private void renderMoonSky(PoseStack poseStack, float sunAngle, float starAngle, float earthAngle, EarthPhase earthPhase, float starBrightness) {
@@ -107,11 +105,12 @@ public class MoonSkyRenderer extends SpaceSkyRenderer {
         modelViewStack.popMatrix();
     }
 
-    private static GpuBuffer buildEarthPhases(TextureAtlas atlas) {
+    private GpuBuffer buildEarthPhases(TextureAtlas atlas) {
         EarthPhase[] phases = EarthPhase.values();
         VertexFormat format = DefaultVertexFormat.POSITION_TEX;
 
-        GpuBuffer var15;
+        GpuBuffer currentBuffer;
+
         try (ByteBufferBuilder byteBufferBuilder = ByteBufferBuilder.exactlySized(phases.length * 4 * format.getVertexSize())) {
             BufferBuilder bufferBuilder = new BufferBuilder(byteBufferBuilder, VertexFormat.Mode.QUADS, format);
 
@@ -124,10 +123,16 @@ public class MoonSkyRenderer extends SpaceSkyRenderer {
             }
 
             try (MeshData mesh = bufferBuilder.buildOrThrow()) {
-                var15 = RenderSystem.getDevice().createBuffer(() -> "Earth phases", 32, mesh.vertexBuffer());
+                currentBuffer = RenderSystem.getDevice().createBuffer(() -> "Earth phases", 32, mesh.vertexBuffer());
             }
         }
 
-        return var15;
+        return currentBuffer;
+    }
+
+    @Override
+    public void close() {
+        super.close();
+        this.earthBuffer.close();
     }
 }

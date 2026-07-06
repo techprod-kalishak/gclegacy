@@ -7,7 +7,7 @@
 
 package io.kalishak.galacticraftlegacy.data.recipes.builder;
 
-import io.kalishak.galacticraftlegacy.Constants;
+import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.world.item.crafting.FabricatingBookCategory;
 import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.CircuitRecipe;
 import net.minecraft.advancements.Criterion;

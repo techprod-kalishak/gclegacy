@@ -9,12 +9,11 @@ package io.kalishak.galacticraftlegacy.client;
 
 import com.google.common.reflect.TypeToken;
 import io.kalishak.galacticraftlegacy.Galacticraft;
-import io.kalishak.galacticraftlegacy.Constants;
+import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.client.gui.SensorGlassesOverlay;
 import io.kalishak.galacticraftlegacy.client.gui.TanksLayer;
 import io.kalishak.galacticraftlegacy.client.gui.screens.inventory.*;
 import io.kalishak.galacticraftlegacy.client.gui.screens.recipebook.GalacticraftClientRecipeBookCategories;
-import io.kalishak.galacticraftlegacy.client.gui.screens.transition.SpaceTravelLoadingScreen;
 import io.kalishak.galacticraftlegacy.client.item.ColorByFluid;
 import io.kalishak.galacticraftlegacy.client.model.FlagModel;
 import io.kalishak.galacticraftlegacy.client.model.gear.OxygenGearModel;
@@ -39,11 +38,9 @@ import io.kalishak.galacticraftlegacy.world.entity.GalacticraftEntityType;
 import io.kalishak.galacticraftlegacy.world.inventory.GalacticraftMenuType;
 import io.kalishak.galacticraftlegacy.world.level.block.GalacticraftBlocks;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityType;
-import io.kalishak.galacticraftlegacy.world.level.dimension.GalacticraftDimensions;
 import io.kalishak.galacticraftlegacy.world.level.material.fluid.GalacticraftFluidType;
 import io.kalishak.galacticraftlegacy.world.level.material.fluid.GalacticraftFluids;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.color.block.BlockTintSource;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.player.PlayerModel;
@@ -53,7 +50,6 @@ import net.minecraft.client.renderer.entity.player.AvatarRenderer;
 import net.minecraft.client.resources.model.sprite.AtlasManager;
 import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.resources.Identifier;
-import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
@@ -97,6 +93,7 @@ public class GalacticraftClient {
         bus.addListener(GalacticraftClientRecipeBookCategories::registerBookCategories);
         bus.addListener(GalacticraftKeys::registerKeyMappings);
         NeoForge.EVENT_BUS.addListener(SpaceSkyRenderer::extractLevelRenderState);
+        NeoForge.EVENT_BUS.addListener(SpaceSkyRenderer::renderSky);
 
         container.registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);
 
@@ -172,6 +169,7 @@ public class GalacticraftClient {
 
     private void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(GalacticraftEntityType.FLAG.get(), FlagRenderer::new);
+        event.registerEntityRenderer(GalacticraftEntityType.FALLEN_METEOR.get(), FallingBlockRenderer::new);
         event.registerEntityRenderer(GalacticraftEntityType.SCHEMATIC.get(), SchematicRenderer::new);
         event.registerEntityRenderer(GalacticraftEntityType.THROWN_METEOR_CHUNK.get(), ThrownMeteorRenderer::new);
         event.registerEntityRenderer(GalacticraftEntityType.FALLING_PARACHEST.get(), FallingParachestRenderer::new);
@@ -196,7 +194,7 @@ public class GalacticraftClient {
         event.registerLayerDefinition(GalacticraftModelLayers.MEDIUM_OXYGEN_TANK, OxygenTankModel::createMediumTankLayer);
         event.registerLayerDefinition(GalacticraftModelLayers.LIGHT_OXYGEN_TANK, OxygenTankModel::createLightTankLayer);
         event.registerLayerDefinition(GalacticraftModelLayers.PARACHUTE, ParachuteModel::createParachuteLayer);
-        ArmorModelSet<LayerDefinition> thermalPadding = PlayerModel.createArmorMeshSet(new CubeDeformation(0.008F), new CubeDeformation(0.04F)).map(layer -> LayerDefinition.create(layer, 64, 32));
+        ArmorModelSet<LayerDefinition> thermalPadding = PlayerModel.createArmorMeshSet(new CubeDeformation(0.032F), new CubeDeformation(0.06F)).map(layer -> LayerDefinition.create(layer, 64, 32));
         event.registerLayerDefinition(GalacticraftModelLayers.THERMAL_PADDING.head(), thermalPadding::head);
         event.registerLayerDefinition(GalacticraftModelLayers.THERMAL_PADDING.chest(), thermalPadding::chest);
         event.registerLayerDefinition(GalacticraftModelLayers.THERMAL_PADDING.legs(), thermalPadding::legs);

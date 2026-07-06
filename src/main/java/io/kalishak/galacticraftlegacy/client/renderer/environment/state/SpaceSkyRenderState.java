@@ -7,7 +7,7 @@
 
 package io.kalishak.galacticraftlegacy.client.renderer.environment.state;
 
-import io.kalishak.galacticraftlegacy.Constants;
+import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.world.attribute.GalacticraftEnvironmentAttributes;
 import io.kalishak.galacticraftlegacy.world.level.EarthPhase;
 import net.minecraft.client.renderer.state.level.LevelRenderState;

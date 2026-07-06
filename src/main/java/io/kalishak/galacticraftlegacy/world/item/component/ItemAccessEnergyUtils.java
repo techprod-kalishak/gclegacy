@@ -8,8 +8,9 @@
 package io.kalishak.galacticraftlegacy.world.item.component;
 
 import io.kalishak.galacticraftlegacy.config.ClientConfig;
-import io.kalishak.galacticraftlegacy.Constants;
+import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.config.values.EnergyUnit;
+import io.kalishak.galacticraftlegacy.references.GalacticraftComponents;
 import net.minecraft.core.component.DataComponentGetter;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
@@ -55,7 +56,7 @@ public interface ItemAccessEnergyUtils extends TooltipProvider {
 
     static void addTooltip(@NonNull EnergyHandler energyHandler, Supplier<EnergyUnit> energyUnit, Consumer<Component> tooltipAdder) {
         if (energyHandler instanceof InfiniteEnergyHandler) {
-            Constants.infinite(tooltipAdder);
+            GalacticraftComponents.infinite(tooltipAdder);
         } else {
             Constants.energy(energyHandler.getAmountAsInt(), energyHandler.getCapacityAsInt(), energyUnit, tooltipAdder);
         }

@@ -45,6 +45,7 @@ import org.jspecify.annotations.Nullable;
 public abstract class GearInventoryProvider implements ParachuteFalling {
     protected final SpaceGearEquipment gearEquipment;
     protected int parachuteFallingTicks;
+    protected int lastSuffocationDamageTick = 0;
 
     protected GearInventoryProvider(SpaceGearEquipment gearEquipment) {
         this.gearEquipment = gearEquipment;
@@ -52,7 +53,7 @@ public abstract class GearInventoryProvider implements ParachuteFalling {
 
     public abstract void dropAll(ServerLevel level, @NonNull LivingEntity gearOwner, @Nullable DamageSource cause);
 
-    public abstract float getThermalArmorEffectiveness();
+    public abstract boolean isThermalPaddingEffective(float temperatureModifier);
 
     public void serverGearTick(ServerLevel serverLevel, LivingEntity gearOwner) {
         //Oxygen
@@ -61,15 +62,23 @@ public abstract class GearInventoryProvider implements ParachuteFalling {
         Holder<CelestialBodyLevelData> celestialBodyLevelData = serverLevel.getData(GalacticraftAttachments.CELESTIAL_BODY);
 
         if (!gearOwner.is(EntityTypeTags.UNDEAD)) {
-            if (!mayBreath(gearOwner) && !depleteOxygen()) {
-                gearOwner.hurtServer(serverLevel, serverLevel.damageSources().source(GalacticraftDamageTypes.SUFFOCATION), 2.0F);
+            if (!celestialBodyLevelData.value().atmosphereInfo().isBreathable()) {
+                if (!mayBreath(gearOwner) || !depleteOxygen()) {
+                    if (this.lastSuffocationDamageTick++ > 120) {
+                        gearOwner.hurtServer(serverLevel, serverLevel.damageSources().source(GalacticraftDamageTypes.SUFFOCATION), 0.2F);
+                        this.lastSuffocationDamageTick = 0;
+                    }
+                }
+
+                if (gearOwner.isOnFire()) {
+                    gearOwner.setRemainingFireTicks(0);
+                }
             }
 
-            if (celestialBodyLevelData.value().temperatureModifier() != 0) {
-                float effectiveness = getThermalArmorEffectiveness();
-
-                if (effectiveness < 1.0F) {
-                    gearOwner.hurtServer(serverLevel, serverLevel.damageSources().source(GalacticraftDamageTypes.SUN_RADIATION), 2.0F * (1.0F - effectiveness));
+            float temperatureModifier = celestialBodyLevelData.value().atmosphereInfo().getTemperatureModifier();
+            if (temperatureModifier != 1.0) {
+                if (!isThermalPaddingEffective(temperatureModifier)) {
+                    gearOwner.hurtServer(serverLevel, serverLevel.damageSources().source(GalacticraftDamageTypes.SUN_RADIATION), 0.2F);
                 }
             }
 
@@ -168,7 +177,9 @@ public abstract class GearInventoryProvider implements ParachuteFalling {
         ItemStack mask = getGearEquipment().get(GearEquipmentSlot.MASK);
         ItemStack gear = getGearEquipment().get(GearEquipmentSlot.GEAR);
 
-        return !mask.isEmpty() && !gear.isEmpty() && (!tank.isEmpty() || !additionalTank.isEmpty());
+        boolean xorTank = (!tank.isEmpty() && additionalTank.isEmpty()) || (tank.isEmpty() && !additionalTank.isEmpty()) || !tank.isEmpty() && !additionalTank.isEmpty();
+
+        return !mask.isEmpty() && !gear.isEmpty() && xorTank;
     }
 
     public boolean mayBreath(LivingEntity livingEntity) {

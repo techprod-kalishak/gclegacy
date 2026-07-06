@@ -10,6 +10,7 @@ package io.kalishak.galacticraftlegacy.data.worldgen;
 import io.kalishak.galacticraftlegacy.data.GalacticraftTags;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.data.worldgen.BootstrapContext;
+import net.minecraft.data.worldgen.Carvers;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.valueproviders.UniformFloat;
 import net.minecraft.world.level.block.Block;
@@ -29,15 +30,15 @@ public class MoonCarvers {
                 CAVE,
                 WorldCarver.CAVE.configured(
                         new CaveCarverConfiguration(
-                                0.2F,
-                                UniformHeight.of(VerticalAnchor.aboveBottom(12), VerticalAnchor.absolute(56)),
+                                0.05F,
+                                UniformHeight.of(VerticalAnchor.aboveBottom(8), VerticalAnchor.absolute(56)),
                                 UniformFloat.of(0.1F, 0.3F),
                                 VerticalAnchor.bottom(),
                                 CarverDebugSettings.of(false, Blocks.STONE_BUTTON.defaultBlockState()),
                                 blocks.getOrThrow(GalacticraftTags.Blocks.MOON_CARVER_REPLACEABLES),
-                                UniformFloat.of(0.2F, 0.4F),
-                                UniformFloat.of(0.2F, 0.4F),
-                                UniformFloat.of(-0.4F, 0.1F)
+                                UniformFloat.of(0.2F, 0.6F),
+                                UniformFloat.of(0.2F, 0.5F),
+                                UniformFloat.of(-0.9F, -0.1F)
                         )
                 )
         );

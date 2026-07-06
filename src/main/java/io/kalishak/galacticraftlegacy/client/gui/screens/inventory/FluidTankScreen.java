@@ -7,14 +7,12 @@
 
 package io.kalishak.galacticraftlegacy.client.gui.screens.inventory;
 
-import io.kalishak.galacticraftlegacy.Constants;
+import io.kalishak.galacticraftlegacy.references.Constants;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.neoforged.neoforge.fluids.FluidStack;
-
-import java.awt.*;
 
 public interface FluidTankScreen extends MachineScreen {
     Identifier OXYGEN_BAR_SPRITE = Constants.id("container/oxygen_bar");

@@ -15,6 +15,7 @@ import io.kalishak.galacticraftlegacy.registry.CelestialBodyLevelDataEntries;
 import io.kalishak.galacticraftlegacy.registry.GalacticraftRegistries;
 import io.kalishak.galacticraftlegacy.galaxies.environment.AtmosphereInfo;
 import io.kalishak.galacticraftlegacy.world.level.dimension.GalacticraftDimensions;
+import io.kalishak.galacticraftlegacy.world.level.dimension.transition.PlanetaryTransition;
 import io.kalishak.galacticraftlegacy.world.level.dimension.transition.TransitionType;
 import net.minecraft.core.Holder;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -30,12 +31,11 @@ import java.util.Map;
 /**
  * Immutable data regarding every space object. Do not have to be habitable by the Player
  * @param celestialObject celestial body reference
- * @param temperatureModifier Scaled modifier for temperature calculations
  * @param atmosphereInfo General information about the atmosphere of this celestial body
  * @param gravityScale Modifier used to modify entity's gravity attribute
  * @param transition Information about transitions to this celestial body
  */
-public record CelestialBodyLevelData(Holder<CelestialObject> celestialObject, float temperatureModifier, AtmosphereInfo atmosphereInfo, float gravityScale, Holder<TransitionType<?>> transition) {
+public record CelestialBodyLevelData(Holder<CelestialObject> celestialObject, AtmosphereInfo atmosphereInfo, float gravityScale, PlanetaryTransition transition) {
     private static final Map<ResourceKey<Level>, ResourceKey<CelestialBodyLevelData>> KEYS = ImmutableMap.<ResourceKey<Level>, ResourceKey<CelestialBodyLevelData>>builder()
             .put(Level.OVERWORLD, CelestialBodyLevelDataEntries.OVERWORLD)
             .put(GalacticraftDimensions.MOON, CelestialBodyLevelDataEntries.MOON)
@@ -47,7 +47,6 @@ public record CelestialBodyLevelData(Holder<CelestialObject> celestialObject, fl
 
     public static final Codec<CelestialBodyLevelData> DIRECT_CODEC = RecordCodecBuilder.create(instance -> instance.group(
             CelestialObject.CODEC.fieldOf("celestial_object_reference").forGetter(CelestialBodyLevelData::celestialObject),
-            Codec.FLOAT.fieldOf("temperature_modifier").forGetter(CelestialBodyLevelData::temperatureModifier),
             AtmosphereInfo.CODEC.fieldOf("atmosphere_info").forGetter(CelestialBodyLevelData::atmosphereInfo),
             Codec.FLOAT.fieldOf("gravity_scale").forGetter(CelestialBodyLevelData::gravityScale),
             TransitionType.CODEC.fieldOf("transition").forGetter(CelestialBodyLevelData::transition)
@@ -55,7 +54,6 @@ public record CelestialBodyLevelData(Holder<CelestialObject> celestialObject, fl
     public static final Codec<Holder<CelestialBodyLevelData>> CODEC = RegistryFixedCodec.create(GalacticraftRegistries.Keys.CELESTIAL_BODY_LEVEL_DATA);
     public static final StreamCodec<RegistryFriendlyByteBuf, CelestialBodyLevelData> DIRECT_STREAM_CODEC = StreamCodec.composite(
             CelestialObject.STREAM_CODEC, CelestialBodyLevelData::celestialObject,
-            ByteBufCodecs.FLOAT, CelestialBodyLevelData::temperatureModifier,
             AtmosphereInfo.STREAM_CODEC, CelestialBodyLevelData::atmosphereInfo,
             ByteBufCodecs.FLOAT, CelestialBodyLevelData::gravityScale,
             TransitionType.STREAM_CODEC, CelestialBodyLevelData::transition,

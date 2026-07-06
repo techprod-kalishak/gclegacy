@@ -30,6 +30,6 @@ public class OxygenCollectorMenu extends AbstractOxygenMachineMenu<OxygenCollect
 
     @Override
     public void addSlots(ResourceHandler<ItemResource> resourceHandler) {
-        addSlot(new CapabilityHandlerSlot<>(resourceHandler, this.machine::set, Capabilities.Energy.ITEM, 0, 32, 22));
+        addSlot(new CapabilityHandlerSlot<>(resourceHandler, this.machine::setItem, Capabilities.Energy.ITEM, 0, 32, 22));
     }
 }

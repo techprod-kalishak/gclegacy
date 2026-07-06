@@ -7,21 +7,17 @@
 
 package io.kalishak.galacticraftlegacy.data.advancement;
 
-import io.kalishak.galacticraftlegacy.Constants;
+import io.kalishak.galacticraftlegacy.references.Constants;
+import io.kalishak.galacticraftlegacy.references.GalacticraftComponents;
 import io.kalishak.galacticraftlegacy.world.item.GalacticraftItems;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementType;
 import net.minecraft.advancements.criterion.InventoryChangeTrigger;
 import net.minecraft.advancements.criterion.PlayerTrigger;
-import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.advancements.AdvancementProvider;
-import net.minecraft.network.chat.Component;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Items;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -39,12 +35,11 @@ public class GalacticraftAdvancementProvider {
     }
 
     private static void buildRoot(HolderLookup.Provider registries, Consumer<AdvancementHolder> output) {
-        HolderGetter<Item> items = registries.lookupOrThrow(Registries.ITEM);
         AdvancementHolder root = Advancement.Builder.advancement()
                 .display(
                         GalacticraftItems.ADVANCED_WAFER,
-                        Component.translatable("advancements.galacticraftlegacy.galacticraft.title"),
-                        Component.translatable("advancements.galacticraftlegacy.galacticraft.description"),
+                        GalacticraftComponents.ADVANCEMENT_GC,
+                        GalacticraftComponents.ADVANCEMENT_GC_DESC,
                         Constants.id("gui/advancements/backgrounds/space"),
                         AdvancementType.TASK,
                         false,
@@ -56,8 +51,8 @@ public class GalacticraftAdvancementProvider {
         AdvancementHolder coalPower = Advancement.Builder.advancement()
                 .display(
                         GalacticraftItems.COAL_GENERATOR,
-                        Component.translatable("advancements.galacticraftlegacy.coal_power.title"),
-                        Component.translatable("advancements.galacticraftlegacy.coal_power.description"),
+                        GalacticraftComponents.ADVANCEMENT_COAL_POWER,
+                        GalacticraftComponents.ADVANCEMENT_COAL_POWER_DESC,
                         null,
                         AdvancementType.TASK,
                         true,
@@ -70,8 +65,8 @@ public class GalacticraftAdvancementProvider {
         AdvancementHolder fabricated = Advancement.Builder.advancement()
                 .display(
                         GalacticraftItems.CIRCUIT_FABRICATOR,
-                        Component.translatable("advancements.galacticraftlegacy.fabricated.title"),
-                        Component.translatable("advancements.galacticraftlegacy.fabricated.description"),
+                        GalacticraftComponents.ADVANCEMENT_FABRICATED,
+                        GalacticraftComponents.ADVANCEMENT_FABRICATED_DESC,
                         null,
                         AdvancementType.TASK,
                         true,
@@ -84,8 +79,8 @@ public class GalacticraftAdvancementProvider {
         AdvancementHolder wafers = Advancement.Builder.advancement()
                 .display(
                         GalacticraftItems.BASIC_WAFER,
-                        Component.translatable("advancements.galacticraftlegacy.wafers.title"),
-                        Component.translatable("advancements.galacticraftlegacy.wafers.description"),
+                        GalacticraftComponents.ADVANCEMENT_WAFERS,
+                        GalacticraftComponents.ADVANCEMENT_WAFERS_DESC,
                         null,
                         AdvancementType.TASK,
                         true,
@@ -98,8 +93,8 @@ public class GalacticraftAdvancementProvider {
         AdvancementHolder goldenWafers = Advancement.Builder.advancement()
                 .display(
                         GalacticraftItems.ADVANCED_WAFER,
-                        Component.translatable("advancements.galacticraftlegacy.golden_wafers.title"),
-                        Component.translatable("advancements.galacticraftlegacy.golden_wafers.description"),
+                        GalacticraftComponents.ADVANCEMENT_GOLDEN_WAFERS,
+                        GalacticraftComponents.ADVANCEMENT_GOLDEN_WAFERS_DESC,
                         null,
                         AdvancementType.TASK,
                         true,
@@ -112,8 +107,8 @@ public class GalacticraftAdvancementProvider {
         AdvancementHolder compressed = Advancement.Builder.advancement()
                 .display(
                         GalacticraftItems.COMPRESSOR,
-                        Component.translatable("advancements.galacticraftlegacy.compressed.title"),
-                        Component.translatable("advancements.galacticraftlegacy.compressed.description"),
+                        GalacticraftComponents.ADVANCEMENT_COMPRESSED,
+                        GalacticraftComponents.ADVANCEMENT_COMPRESSED_DESC,
                         null,
                         AdvancementType.TASK,
                         true,

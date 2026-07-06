@@ -7,7 +7,7 @@
 
 package io.kalishak.galacticraftlegacy.client.renderer.environment;
 
-import io.kalishak.galacticraftlegacy.Constants;
+import io.kalishak.galacticraftlegacy.references.Constants;
 import net.minecraft.client.CloudStatus;
 import net.minecraft.client.renderer.state.level.LevelRenderState;
 import net.minecraft.resources.Identifier;
@@ -21,10 +21,11 @@ public class SpaceCloudsRenderer implements CustomCloudsRenderer {
     public static final Identifier ID = Constants.id("clouds/space");
 
     public static void create(BiConsumer<Identifier, CustomCloudsRenderer> registry) {
+        registry.accept(ID, new SpaceCloudsRenderer());
     }
 
     @Override
     public boolean renderClouds(LevelRenderState levelRenderState, Vec3 camPos, CloudStatus cloudStatus, int cloudColor, float cloudHeight, int cloudRange, Matrix4fc modelViewMatrix) {
-        return false;
+        return true;
     }
 }

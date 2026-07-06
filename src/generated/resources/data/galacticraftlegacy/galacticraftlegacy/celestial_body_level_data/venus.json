@@ -6,18 +6,12 @@
     },
     "has_precipitation": false,
     "is_corrosive": false,
-    "temperature": 462.0
+    "temperature_modifier": 2.0
   },
   "celestial_object_reference": "galacticraftlegacy:venus",
   "gravity_scale": 0.904,
-  "temperature_modifier": 1.0,
   "transition": {
-    "type": "capsule",
-    "initial_velocity": [
-      0.0,
-      0.0,
-      0.0
-    ],
-    "transition_height": 256
+    "type": "galacticraftlegacy:with_lander",
+    "lander_type": "galacticraftlegacy:entry_pod"
   }
 }

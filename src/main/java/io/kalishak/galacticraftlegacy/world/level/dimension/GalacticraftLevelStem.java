@@ -7,7 +7,7 @@
 
 package io.kalishak.galacticraftlegacy.world.level.dimension;
 
-import io.kalishak.galacticraftlegacy.Constants;
+import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.world.level.biome.GalacticraftBiomes;
 import io.kalishak.galacticraftlegacy.world.level.biome.GalacticraftBiomeSources;
 import io.kalishak.galacticraftlegacy.world.level.levelgen.GalacticraftNoiseGeneratorSettings;

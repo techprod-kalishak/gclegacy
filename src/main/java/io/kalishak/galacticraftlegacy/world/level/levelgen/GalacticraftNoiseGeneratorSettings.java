@@ -7,7 +7,7 @@
 
 package io.kalishak.galacticraftlegacy.world.level.levelgen;
 
-import io.kalishak.galacticraftlegacy.Constants;
+import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.data.worldgen.GalacticraftSurfaceRuleData;
 import io.kalishak.galacticraftlegacy.world.level.block.GalacticraftBlocks;
 import net.minecraft.core.HolderGetter;
@@ -39,7 +39,7 @@ public final class GalacticraftNoiseGeneratorSettings {
                         GalacticraftBlocks.MOON_TURF.get().defaultBlockState(),
                         Blocks.AIR.defaultBlockState(),
                         GalacticraftNoiseRouterData.moon(densityFunctions, noiseParameters),
-                        GalacticraftSurfaceRuleData.moon(),
+                        GalacticraftSurfaceRuleData.bruh(),
                         List.of(
                                 new Climate.ParameterPoint(
                                         Climate.Parameter.point(-2.0F),
@@ -62,6 +62,22 @@ public final class GalacticraftNoiseGeneratorSettings {
                 OPEN_SPACE,
                 new NoiseGeneratorSettings(
                         NoiseSettings.create(0, 256, 1, 1),
+                        Blocks.AIR.defaultBlockState(),
+                        Blocks.AIR.defaultBlockState(),
+                        GalacticraftNoiseRouterData.empty(),
+                        GalacticraftSurfaceRuleData.empty(),
+                        List.of(),
+                        0,
+                        true,
+                        false,
+                        false,
+                        false
+                )
+        );
+        cxt.register(
+                MARS,
+                new NoiseGeneratorSettings(
+                        NoiseSettings.create(0, 128, 1, 1),
                         Blocks.AIR.defaultBlockState(),
                         Blocks.AIR.defaultBlockState(),
                         GalacticraftNoiseRouterData.empty(),

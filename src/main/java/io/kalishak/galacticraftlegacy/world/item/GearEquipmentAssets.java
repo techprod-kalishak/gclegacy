@@ -15,7 +15,7 @@ import net.minecraft.world.item.equipment.EquipmentAssets;
 
 import java.util.Map;
 
-import static io.kalishak.galacticraftlegacy.Constants.key;
+import static io.kalishak.galacticraftlegacy.references.Constants.key;
 
 public final class GearEquipmentAssets {
     public static final ResourceKey<EquipmentAsset> DESH = key(EquipmentAssets.ROOT_ID, "desh");

@@ -43,6 +43,15 @@ public final class GalacticraftEnvironmentAttributes {
                     .notPositional()
                     ::build
     );
+    public static final DeferredHolder<EnvironmentAttribute<?>, EnvironmentAttribute<Float>> FALL_DAMAGE_MODIFIER = REGISTRY.register(
+            "gameplay/fall_damage_modifier",
+            EnvironmentAttribute.builder(AttributeTypes.FLOAT)
+                    .defaultValue(1.0F)
+                    .valueRange(AttributeRange.ofFloat(-1.0F, 1.0F))
+                    .syncable()
+                    .notPositional()
+                    ::build
+    );
 
     public static void init(IEventBus bus) {
         REGISTRY.register(bus);

@@ -89,7 +89,7 @@ public class EvolvedZombie extends Zombie implements EvolvedMonster {
 
     @Override
     public void jumpFromGround() {
-        if (!SpaceEntity.spaceJump(this, this::getJumpPower)) {
+        if (SpaceEntity.shouldJump(this, this::getJumpPower)) {
             super.jumpFromGround();
         }
     }
@@ -97,7 +97,7 @@ public class EvolvedZombie extends Zombie implements EvolvedMonster {
     @Override
     protected void populateDefaultEquipmentSlots(RandomSource random, DifficultyInstance difficulty) {
         super.populateDefaultEquipmentSlots(random, difficulty);
-        EvolvedMonster.populateDefault(this.gear);
+        EvolvedMonster.populateDefault(this, this.gear);
     }
 
     @Override
@@ -105,6 +105,7 @@ public class EvolvedZombie extends Zombie implements EvolvedMonster {
         super.addAdditionalSaveData(output);
         this.gear.serialize(output);
         output.putFloat("Tumbling", this.tumbling);
+        EvolvedMonster.writeGear(this, this.gear);
     }
 
     @Override
@@ -112,6 +113,7 @@ public class EvolvedZombie extends Zombie implements EvolvedMonster {
         super.readAdditionalSaveData(input);
         this.gear.deserialize(input);
         this.tumbling = input.getFloatOr("Tumbling", 0.0F);
+        EvolvedMonster.readGear(this, this.gear);
     }
 
     @Override

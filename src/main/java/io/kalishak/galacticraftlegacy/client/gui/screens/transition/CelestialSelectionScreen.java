@@ -9,7 +9,7 @@ package io.kalishak.galacticraftlegacy.client.gui.screens.transition;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import io.kalishak.galacticraftlegacy.Constants;
+import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.galaxies.CelestialObject;
 import io.kalishak.galacticraftlegacy.galaxies.GalacticraftGalaxies;
 import net.minecraft.client.GameNarrator;

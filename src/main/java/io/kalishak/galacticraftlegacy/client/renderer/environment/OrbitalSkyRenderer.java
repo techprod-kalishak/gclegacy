@@ -14,7 +14,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.textures.GpuTextureView;
 import com.mojang.blaze3d.vertex.*;
 import com.mojang.math.Axis;
-import io.kalishak.galacticraftlegacy.Constants;
+import io.kalishak.galacticraftlegacy.references.Constants;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderPipelines;
@@ -33,18 +33,18 @@ import java.util.function.BiConsumer;
 
 public class OrbitalSkyRenderer extends SpaceSkyRenderer {
     public static final Identifier ID = Constants.id("orbit");
-    private GpuBuffer moonBuffer;
+    private final GpuBuffer moonBuffer;
 
-    public static void create(BiConsumer<Identifier, CustomSkyboxRenderer> registry) {
-        if (RenderSystem.isOnRenderThread()) {
-            registry.accept(ID, new OrbitalSkyRenderer());
-        }
+    public OrbitalSkyRenderer(AtlasManager atlasManager) {
+        super(atlasManager);
+        this.moonBuffer = buildMoonPhases(this.celestialsAtlas);
     }
 
-    @Override
-    protected void init(AtlasManager atlasManager) {
-        super.init(atlasManager);
-        this.moonBuffer = buildMoonPhases(this.celestialsAtlas);
+    public static void create(BiConsumer<Identifier, CustomSkyboxRenderer> registry) {
+        registry.accept(
+                ID,
+                (SkyboxRendererSupplier) OrbitalSkyRenderer::new
+        );
     }
 
     @Override

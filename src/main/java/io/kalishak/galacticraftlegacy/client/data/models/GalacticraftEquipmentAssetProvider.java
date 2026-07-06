@@ -7,7 +7,7 @@
 
 package io.kalishak.galacticraftlegacy.client.data.models;
 
-import io.kalishak.galacticraftlegacy.Constants;
+import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.EnumExtensions;
 import io.kalishak.galacticraftlegacy.world.item.GearEquipmentAssets;
 import net.minecraft.client.data.models.EquipmentAssetProvider;

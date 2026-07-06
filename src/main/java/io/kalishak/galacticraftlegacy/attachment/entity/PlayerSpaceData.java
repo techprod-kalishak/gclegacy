@@ -69,7 +69,7 @@ public class PlayerSpaceData extends GearInventoryProvider {
 
     @Override
     @SuppressWarnings("ConstantConditions")
-    public float getThermalArmorEffectiveness() {
+    public boolean isThermalPaddingEffective(float temperatureModifier) {
         List<ItemStack> thermal = List.of(
                 getGearEquipment().get(GearEquipmentSlot.THERMAL_CAP),
                 getGearEquipment().get(GearEquipmentSlot.THERMAL_SHIRT),
@@ -77,10 +77,12 @@ public class PlayerSpaceData extends GearInventoryProvider {
                 getGearEquipment().get(GearEquipmentSlot.THERMAL_SOCKS)
         );
 
-        return (float) thermal.stream()
+        float effectiveness = (float) thermal.stream()
                 .filter(stack -> stack.has(GalacticraftDataComponents.GEAR_ATTRIBUTE_MODIFIERS))
                 .mapToDouble(stack -> stack.get(GalacticraftDataComponents.GEAR_ATTRIBUTE_MODIFIERS).compute(GalacticraftAttributes.THERMAL_PROTECTION, 0.0D, stack.get(GalacticraftDataComponents.GEAR_EQUIPPABLE)))
-                .sum() / 4.0F;
+                .sum();
+
+        return Math.abs(effectiveness) > Math.abs(temperatureModifier);
     }
 
     @Override

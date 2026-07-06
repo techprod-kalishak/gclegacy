@@ -7,8 +7,9 @@
 
 package io.kalishak.galacticraftlegacy.world.item;
 
-import io.kalishak.galacticraftlegacy.Constants;
+import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.Galacticraft;
+import io.kalishak.galacticraftlegacy.references.GalacticraftItemIds;
 import io.kalishak.galacticraftlegacy.registry.SchematicVariants;
 import io.kalishak.galacticraftlegacy.registry.deferred.DeferredItemRegister;
 import io.kalishak.galacticraftlegacy.registry.deferred.DeferredWeatheringCopperItems;
@@ -45,178 +46,180 @@ import net.neoforged.neoforge.transfer.energy.ItemAccessEnergyHandler;
 import net.neoforged.neoforge.transfer.fluid.FluidResource;
 import net.neoforged.neoforge.transfer.fluid.ItemAccessFluidHandler;
 
+import java.util.List;
+
 public final class GalacticraftItems {
     private static final DeferredItemRegister REGISTRY = new DeferredItemRegister(Galacticraft.MODID);
     public static final DeferredItem<BatteryItem> BATTERY = REGISTRY.registerItem(
-            "battery",
+            GalacticraftItemIds.BATTERY,
             BatteryItem::new,
             properties -> properties.stacksTo(1)
     );
     public static final DeferredItem<Item> INFINITE_BATTERY = REGISTRY.registerSimpleItem(
-            "infinite_battery",
+            GalacticraftItemIds.INFINITE_BATTERY,
             properties -> properties
                     .stacksTo(1)
                     .component(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)
     );
-    public static final DeferredItem<Item> THERMAL_CLOTH = REGISTRY.registerSimpleItem("thermal_cloth");
-    public static final DeferredItem<Item> ISOTHERMAL_FABRIC = REGISTRY.registerSimpleItem("isothermal_fabric");
+    public static final DeferredItem<Item> THERMAL_CLOTH = REGISTRY.registerSimpleItem(GalacticraftItemIds.THERMAL_CLOTH);
+    public static final DeferredItem<Item> ISOTHERMAL_FABRIC = REGISTRY.registerSimpleItem(GalacticraftItemIds.ISOTHERMAL_FABRIC);
     public static final DeferredItem<GearItem> THERMAL_PADDING_HELM = REGISTRY.registerItem(
-            "thermal_cap",
+            GalacticraftItemIds.THERMAL_CAP,
             GearItem::new,
             () -> GearItem.thermalPiece(GearEquipmentSlot.THERMAL_CAP, GearEquipmentAssets.THERMAL, -0.25F)
     );
     public static final DeferredItem<GearItem> THERMAL_PADDING_CHESTPIECE = REGISTRY.registerItem(
-            "thermal_shirt",
+            GalacticraftItemIds.THERMAL_SHIRT,
             GearItem::new,
             () -> GearItem.thermalPiece(GearEquipmentSlot.THERMAL_SHIRT, GearEquipmentAssets.THERMAL, -0.25F)
     );
     public static final DeferredItem<GearItem> THERMAL_PADDING_LEGGINGS = REGISTRY.registerItem(
-            "thermal_leggings",
+            GalacticraftItemIds.THERMAL_LEGGINGS,
             GearItem::new,
             () -> GearItem.thermalPiece(GearEquipmentSlot.THERMAL_LEGGINGS, GearEquipmentAssets.THERMAL, -0.25F)
     );
     public static final DeferredItem<GearItem> THERMAL_PADDING_BOOTS = REGISTRY.registerItem(
-            "thermal_socks",
+            GalacticraftItemIds.THERMAL_SOCKS,
             GearItem::new,
             () -> GearItem.thermalPiece(GearEquipmentSlot.THERMAL_SOCKS, GearEquipmentAssets.THERMAL, -0.25F)
     );
     public static final DeferredItem<GearItem> ISOTHERMAL_HELM = REGISTRY.registerItem(
-            "isothermal_cap",
+            GalacticraftItemIds.ISOTHERMAL_CAP,
             GearItem::new,
             () -> GearItem.thermalPiece(GearEquipmentSlot.THERMAL_CAP, GearEquipmentAssets.ISOTHERMAL, 0.25F)
     );
     public static final DeferredItem<GearItem> ISOTHERMAL_CHESTPIECE = REGISTRY.registerItem(
-            "isothermal_shirt",
+            GalacticraftItemIds.ISOTHERMAL_SHIRT,
             GearItem::new,
             () -> GearItem.thermalPiece(GearEquipmentSlot.THERMAL_SHIRT, GearEquipmentAssets.ISOTHERMAL, 0.25F)
     );
     public static final DeferredItem<GearItem> ISOTHERMAL_LEGGINGS = REGISTRY.registerItem(
-            "isothermal_leggings",
+            GalacticraftItemIds.ISOTHERMAL_LEGGINGS,
             GearItem::new,
             () -> GearItem.thermalPiece(GearEquipmentSlot.THERMAL_LEGGINGS, GearEquipmentAssets.ISOTHERMAL, 0.25F)
     );
     public static final DeferredItem<GearItem> ISOTHERMAL_BOOTS = REGISTRY.registerItem(
-            "isothermal_socks",
+            GalacticraftItemIds.ISOTHERMAL_SOCKS,
             GearItem::new,
             () -> GearItem.thermalPiece(GearEquipmentSlot.THERMAL_SOCKS, GearEquipmentAssets.ISOTHERMAL, 0.25F)
     );
     public static final DeferredItem<GearItem> LIGHT_TANK = REGISTRY.registerItem(
-            "light_oxygen_tank",
+            GalacticraftItemIds.LIGHT_OXYGEN_TANK,
             OxygenTankItem::new,
             () -> GearItem.tankProperties(GearEquipmentAssets.LIGHT_TANK)
     );
     public static final DeferredItem<GearItem> MEDIUM_TANK = REGISTRY.registerItem(
-            "medium_oxygen_tank",
+            GalacticraftItemIds.MEDIUM_OXYGEN_TANK,
             OxygenTankItem::new,
             () -> GearItem.tankProperties(GearEquipmentAssets.MEDIUM_TANK)
     );
     public static final DeferredItem<GearItem> HEAVY_TANK = REGISTRY.registerItem(
-            "heavy_oxygen_tank",
+            GalacticraftItemIds.HEAVY_OXYGEN_TANK,
             OxygenTankItem::new,
             () -> GearItem.tankProperties(GearEquipmentAssets.HEAVY_TANK)
     );
     public static final DeferredItem<GearItem> INFINITE_OXYGEN_TANK = REGISTRY.registerItem(
-            "infinite_oxygen_tank",
+            GalacticraftItemIds.INFINITE_OXYGEN_TANK,
             GearItem::new,
             () -> GearItem.tankProperties(GearEquipmentAssets.HEAVY_TANK)
                     .component(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)
     );
     public static final DeferredItem<GearItem> OXYGEN_MASK = REGISTRY.registerItem(
-            "oxygen_mask",
+            GalacticraftItemIds.OXYGEN_MASK,
             GearItem::new,
             () -> GearItem.simpleGear(GearEquipmentSlot.MASK)
     );
     public static final DeferredItem<GearItem> OXYGEN_GEAR = REGISTRY.registerItem(
-            "oxygen_gear",
+            GalacticraftItemIds.OXYGEN_GEAR,
             GearItem::new,
             () -> GearItem.simpleGear(GearEquipmentSlot.GEAR)
     );
     public static final DeferredItem<Item> WRENCH = REGISTRY.registerSimpleItem(
-            "wrench",
+            GalacticraftItemIds.WRENCH,
             properties -> properties.durability(256)
     );
     public static final DeferredItem<GearItem> BLACK_PARACHUTE = REGISTRY.registerItem(
-            "black_parachute",
+            GalacticraftItemIds.PARACHUTES.get(DyeColor.BLACK),
             GearItem::new,
             () -> GearItem.parachute(DyeColor.BLACK)
     );
     public static final DeferredItem<GearItem> BLUE_PARACHUTE = REGISTRY.registerItem(
-            "blue_parachute",
+            GalacticraftItemIds.PARACHUTES.get(DyeColor.BLUE),
             GearItem::new,
             () -> GearItem.parachute(DyeColor.BLUE)
     );
     public static final DeferredItem<GearItem> BROWN_PARACHUTE = REGISTRY.registerItem(
-            "brown_parachute",
+            GalacticraftItemIds.PARACHUTES.get(DyeColor.BROWN),
             GearItem::new,
             () -> GearItem.parachute(DyeColor.BROWN)
     );
     public static final DeferredItem<GearItem> CYAN_PARACHUTE = REGISTRY.registerItem(
-            "cyan_parachute",
+            GalacticraftItemIds.PARACHUTES.get(DyeColor.CYAN),
             GearItem::new,
             () -> GearItem.parachute(DyeColor.CYAN)
     );
     public static final DeferredItem<GearItem> GRAY_PARACHUTE = REGISTRY.registerItem(
-            "gray_parachute",
+            GalacticraftItemIds.PARACHUTES.get(DyeColor.GRAY),
             GearItem::new,
             () -> GearItem.parachute(DyeColor.GRAY)
     );
     public static final DeferredItem<GearItem> GREEN_PARACHUTE = REGISTRY.registerItem(
-            "green_parachute",
+            GalacticraftItemIds.PARACHUTES.get(DyeColor.GREEN),
             GearItem::new,
             () -> GearItem.parachute(DyeColor.GREEN)
     );
     public static final DeferredItem<GearItem> LIGHT_BLUE_PARACHUTE = REGISTRY.registerItem(
-            "light_blue_parachute",
+            GalacticraftItemIds.PARACHUTES.get(DyeColor.LIGHT_BLUE),
             GearItem::new,
             () -> GearItem.parachute(DyeColor.LIGHT_BLUE)
     );
     public static final DeferredItem<GearItem> LIGHT_GRAY_PARACHUTE = REGISTRY.registerItem(
-            "light_gray_parachute",
+            GalacticraftItemIds.PARACHUTES.get(DyeColor.LIGHT_GRAY),
             GearItem::new,
             () -> GearItem.parachute(DyeColor.LIGHT_GRAY)
     );
     public static final DeferredItem<GearItem> LIME_PARACHUTE = REGISTRY.registerItem(
-            "lime_parachute",
+            GalacticraftItemIds.PARACHUTES.get(DyeColor.LIME),
             GearItem::new,
             () -> GearItem.parachute(DyeColor.LIME)
     );
     public static final DeferredItem<GearItem> MAGENTA_PARACHUTE = REGISTRY.registerItem(
-            "magenta_parachute",
+            GalacticraftItemIds.PARACHUTES.get(DyeColor.MAGENTA),
             GearItem::new,
             () -> GearItem.parachute(DyeColor.MAGENTA)
     );
     public static final DeferredItem<GearItem> ORANGE_PARACHUTE = REGISTRY.registerItem(
-            "orange_parachute",
+            GalacticraftItemIds.PARACHUTES.get(DyeColor.ORANGE),
             GearItem::new,
             () -> GearItem.parachute(DyeColor.ORANGE)
     );
     public static final DeferredItem<GearItem> PINK_PARACHUTE = REGISTRY.registerItem(
-            "pink_parachute",
+            GalacticraftItemIds.PARACHUTES.get(DyeColor.PINK),
             GearItem::new,
             () -> GearItem.parachute(DyeColor.PINK)
     );
     public static final DeferredItem<GearItem> PURPLE_PARACHUTE = REGISTRY.registerItem(
-            "purple_parachute",
+            GalacticraftItemIds.PARACHUTES.get(DyeColor.PURPLE),
             GearItem::new,
             () -> GearItem.parachute(DyeColor.PURPLE)
     );
     public static final DeferredItem<GearItem> RED_PARACHUTE = REGISTRY.registerItem(
-            "red_parachute",
+            GalacticraftItemIds.PARACHUTES.get(DyeColor.RED),
             GearItem::new,
             () -> GearItem.parachute(DyeColor.RED)
     );
     public static final DeferredItem<GearItem> WHITE_PARACHUTE = REGISTRY.registerItem(
-            "white_parachute",
+            GalacticraftItemIds.PARACHUTES.get(DyeColor.WHITE),
             GearItem::new,
             () -> GearItem.parachute(DyeColor.WHITE)
     );
     public static final DeferredItem<GearItem> YELLOW_PARACHUTE = REGISTRY.registerItem(
-            "yellow_parachute",
+            GalacticraftItemIds.PARACHUTES.get(DyeColor.YELLOW),
             GearItem::new,
             () -> GearItem.parachute(DyeColor.YELLOW)
     );
     public static final DeferredItem<GearItem> PROTO_SHIELD_CONTROLLER = REGISTRY.registerItem(
-            "proto_shield_controller",
+            GalacticraftItemIds.PROTO_SHIELD_CONTROLLER,
             ShieldControllerItem::new,
             () -> GearItem.simpleGear(GearEquipmentSlot.SHIELD)
                     .stacksTo(1)
@@ -239,7 +242,7 @@ public final class GalacticraftItems {
                     .component(GalacticraftDataComponents.ITEM_WITH_DESCRIPTION, new ItemWithDescription(Constants.id("shield_controller").toLanguageKey("item", "desc")))
     );
     public static final DeferredItem<GearItem> SHIELD_CONTROLLER = REGISTRY.registerItemWithDescription(
-            "shield_controller",
+            GalacticraftItemIds.SHIELD_CONTROLLER,
             GearItem::new,
             () -> GearItem.simpleGear(GearEquipmentSlot.SHIELD)
                     .component(
@@ -258,7 +261,7 @@ public final class GalacticraftItems {
                     )
     );
     public static final DeferredItem<Item> SENSOR_GLASSES = REGISTRY.registerSimpleItem(
-            "sensor_glasses",
+            GalacticraftItemIds.SENSOR_GLASSES,
             properties -> properties
                     .stacksTo(1)
                     .component(
@@ -269,282 +272,309 @@ public final class GalacticraftItems {
                     )
     );
     public static final DeferredItem<StructureFinderItem> DUNGEON_LOCATOR = REGISTRY.registerItem(
-            "dungeon_locator",
+            GalacticraftItemIds.DUNGEON_LOCATOR,
             StructureFinderItem::new,
             properties -> properties.stacksTo(1)
     );
-    public static final DeferredItem<Item> ALUMINUM_INGOT = REGISTRY.registerSimpleItem("aluminum_ingot");
-    public static final DeferredItem<Item> RAW_ALUMINUM = REGISTRY.registerSimpleItem("raw_aluminum");
-    public static final DeferredItem<Item> RAW_METEORIC_IRON = REGISTRY.registerSimpleItem("raw_meteoric_iron");
-    public static final DeferredItem<Item> TIN_INGOT = REGISTRY.registerSimpleItem("tin_ingot");
-    public static final DeferredItem<Item> RAW_TIN = REGISTRY.registerSimpleItem("raw_tin");
-    public static final DeferredItem<Item> RAW_SILICON = REGISTRY.registerSimpleItem("raw_silicon");
-    public static final DeferredItem<Item> SAPPHIRE = REGISTRY.registerSimpleItemWithDescription("sapphire", properties -> properties.rarity(Rarity.UNCOMMON));
-    public static final DeferredItem<Item> BASIC_WAFER = REGISTRY.registerSimpleItem("basic_wafer");
-    public static final DeferredItem<Item> ADVANCED_WAFER = REGISTRY.registerSimpleItem("advanced_wafer");
-    public static final DeferredItem<Item> SOLAR_WAFER = REGISTRY.registerSimpleItem("solar_wafer");
-    public static final DeferredItem<Item> FLAG = REGISTRY.registerItem("flag", FlagItem::new, properties -> properties.stacksTo(1));
+    public static final DeferredItem<Item> ALUMINUM_INGOT = REGISTRY.registerSimpleItem(GalacticraftItemIds.ALUMINUM_INGOT);
+    public static final DeferredItem<Item> RAW_ALUMINUM = REGISTRY.registerSimpleItem(GalacticraftItemIds.RAW_ALUMINUM);
+    public static final DeferredItem<Item> RAW_METEORIC_IRON = REGISTRY.registerSimpleItem(GalacticraftItemIds.RAW_METEORIC_IRON);
+    public static final DeferredItem<Item> METEORIC_IRON_INGOT = REGISTRY.registerSimpleItem(GalacticraftItemIds.METEORIC_IRON_INGOT);
+    public static final DeferredItem<Item> TIN_INGOT = REGISTRY.registerSimpleItem(GalacticraftItemIds.TIN_INGOT);
+    public static final DeferredItem<Item> RAW_TIN = REGISTRY.registerSimpleItem(GalacticraftItemIds.RAW_TIN);
+    public static final DeferredItem<Item> RAW_SILICON = REGISTRY.registerSimpleItem(GalacticraftItemIds.RAW_SILICON);
+    public static final DeferredItem<Item> SAPPHIRE = REGISTRY.registerSimpleItemWithDescription(GalacticraftItemIds.SAPPHIRE, properties -> properties.rarity(Rarity.UNCOMMON));
+    public static final DeferredItem<Item> BASIC_WAFER = REGISTRY.registerSimpleItem(GalacticraftItemIds.BASIC_WAFER);
+    public static final DeferredItem<Item> ADVANCED_WAFER = REGISTRY.registerSimpleItem(GalacticraftItemIds.ADVANCED_WAFER);
+    public static final DeferredItem<Item> SOLAR_WAFER = REGISTRY.registerSimpleItem(GalacticraftItemIds.SOLAR_WAFER);
+    public static final DeferredItem<Item> FLAG = REGISTRY.registerItem(GalacticraftItemIds.FLAG, FlagItem::new, properties -> properties.stacksTo(1));
     public static final DeferredItem<SchematicItem> SCHEMATIC = REGISTRY.registerItem(
-            "schematic",
+            GalacticraftItemIds.NASA_WORKBENCH_SCHEMATIC,
             SchematicItem::new,
             properties -> properties
                     .stacksTo(1)
                     .delayedHolderComponent(GalacticraftDataComponents.SCHEMATIC.get(), SchematicVariants.TIER_2_ROCKET)
     );
     public static final DeferredItem<FluidTankItem> FLUID_TANK = REGISTRY.registerItem(
-            "fluid_tank",
+            GalacticraftItemIds.FLUID_TANK,
             FluidTankItem::new,
             () -> new Item.Properties()
                     .stacksTo(1)
                     .component(GalacticraftDataComponents.FLUID_TANK, SimpleFluidContent.EMPTY)
     );
     public static final DeferredItem<BucketItem> OIL_BUCKET = REGISTRY.registerItem(
-            "oil_bucket",
+            GalacticraftItemIds.OIL_BUCKET,
             properties -> new BucketItem(GalacticraftFluids.OIL.value(), properties)
     );
     public static final DeferredItem<BucketItem> FUEL_BUCKET = REGISTRY.registerItem(
-            "fuel_bucket",
+            GalacticraftItemIds.FUEL_BUCKET,
             properties -> new BucketItem(GalacticraftFluids.FUEL.value(), properties)
     );
 
-    public static final DeferredItem<Item> RAW_STEEL = REGISTRY.registerSimpleItem("raw_steel");
+    public static final DeferredItem<Item> RAW_STEEL = REGISTRY.registerSimpleItem(GalacticraftItemIds.RAW_STEEL);
     public static final DeferredItem<Item> STEEL_INGOT = REGISTRY.registerSimpleItem(
-            "steel_ingot",
+            GalacticraftItemIds.STEEL_INGOT,
             properties -> properties.trimMaterial(GalacticraftTrimMaterials.STEEL)
     );
-    public static final DeferredItem<Item> STEEL_NUGGET = REGISTRY.registerSimpleItem("steel_nugget");
+    public static final DeferredItem<Item> STEEL_NUGGET = REGISTRY.registerSimpleItem(GalacticraftItemIds.STEEL_NUGGET);
     //STEEL ARMOR & TOOL SET
     public static final DeferredItem<Item> STEEL_HELMET = REGISTRY.registerSimpleItem(
-            "steel_helmet",
+            GalacticraftItemIds.STEEL_HELMET,
             properties -> properties.humanoidArmor(GalacticraftArmorMaterials.STEEL, ArmorType.HELMET)
     );
     public static final DeferredItem<Item> STEEL_CHESTPLATE = REGISTRY.registerSimpleItem(
-            "steel_chestplate",
+            GalacticraftItemIds.STEEL_CHESTPLATE,
             properties -> properties.humanoidArmor(GalacticraftArmorMaterials.STEEL, ArmorType.CHESTPLATE)
     );
     public static final DeferredItem<Item> STEEL_LEGGINGS = REGISTRY.registerSimpleItem(
-            "steel_leggings",
+            GalacticraftItemIds.STEEL_LEGGINGS,
             properties -> properties.humanoidArmor(GalacticraftArmorMaterials.STEEL, ArmorType.LEGGINGS)
     );
     public static final DeferredItem<Item> STEEL_BOOTS = REGISTRY.registerSimpleItem(
-            "steel_boots",
+            GalacticraftItemIds.STEEL_BOOTS,
             properties -> properties.humanoidArmor(GalacticraftArmorMaterials.STEEL, ArmorType.BOOTS)
     );
     public static final DeferredItem<Item> STEEL_HORSE_ARMOR = REGISTRY.registerSimpleItem(
-            "steel_horse_armor",
+            GalacticraftItemIds.STEEL_HORSE_ARMOR,
             properties -> properties.horseArmor(GalacticraftArmorMaterials.STEEL)
     );
     public static final DeferredItem<Item> STEEL_NAUTILUS_ARMOR = REGISTRY.registerSimpleItem(
-            "steel_nautilus_armor",
+            GalacticraftItemIds.STEEL_NAUTILUS_ARMOR,
             properties -> properties.nautilusArmor(GalacticraftArmorMaterials.STEEL)
     );
     public static final DeferredItem<Item> STEEL_SWORD = REGISTRY.registerSimpleItem(
-            "steel_sword",
+            GalacticraftItemIds.STEEL_SWORD,
             properties -> properties.sword(GalacticraftToolMaterials.STEEL, 3.0F, -2.4F)
     );
-    //TODO Balance Steel Spear
     public static final DeferredItem<Item> STEEL_SPEAR = REGISTRY.registerSimpleItem(
-            "steel_spear",
-            properties -> properties.spear(GalacticraftToolMaterials.STEEL, 0.95F, 0.95F, 0.6F, 2.5F, 8.0F, 6.75F, 5.1F, 11.25F, 4.6F)
+            GalacticraftItemIds.STEEL_SPEAR,
+            properties -> properties.spear(GalacticraftToolMaterials.STEEL, 0.85F, 1.05F, 0.8F, 2.0F, 6.5F, 4.5F, 4.4F, 9.5F, 3.9F)
     );
     public static final DeferredItem<ShovelItem> STEEL_SHOVEL = REGISTRY.registerItem(
-            "steel_shovel",
+            GalacticraftItemIds.STEEL_SHOVEL,
             properties -> new ShovelItem(GalacticraftToolMaterials.STEEL, 3.0F, -2.4F, properties)
     );
     public static final DeferredItem<Item> STEEL_PICKAXE = REGISTRY.registerSimpleItem(
-            "steel_pickaxe",
+            GalacticraftItemIds.STEEL_PICKAXE,
             properties -> properties.pickaxe(GalacticraftToolMaterials.STEEL, 1.0F, -2.8F)
     );
     public static final DeferredItem<AxeItem> STEEL_AXE = REGISTRY.registerItem(
-            "steel_axe",
+            GalacticraftItemIds.STEEL_AXE,
             properties -> new AxeItem(GalacticraftToolMaterials.STEEL, 3.0F, -3.0F, properties)
     );
     public static final DeferredItem<HoeItem> STEEL_HOE = REGISTRY.registerItem(
-            "steel_hoe",
+            GalacticraftItemIds.STEEL_HOE,
             properties -> new HoeItem(GalacticraftToolMaterials.STEEL, -4.0F, 0.0F, properties)
     );
 
-    public static final DeferredItem<Item> RAW_DESH = REGISTRY.registerSimpleItem("raw_desh");
+    public static final DeferredItem<Item> RAW_DESH = REGISTRY.registerSimpleItem(GalacticraftItemIds.RAW_DESH);
     public static final DeferredItem<Item> DESH_INGOT = REGISTRY.registerSimpleItem(
-            "desh_ingot",
+            GalacticraftItemIds.DESH_INGOT,
             properties -> properties.trimMaterial(GalacticraftTrimMaterials.DESH)
     );
-    public static final DeferredItem<Item> DESH_NUGGET = REGISTRY.registerSimpleItem("desh_nugget");
+    public static final DeferredItem<Item> DESH_NUGGET = REGISTRY.registerSimpleItem(GalacticraftItemIds.DESH_NUGGET);
     //DESH ARMOR & TOOL SET
     public static final DeferredItem<Item> DESH_HELMET = REGISTRY.registerSimpleItem(
-            "desh_helmet",
+            GalacticraftItemIds.DESH_HELMET,
             properties -> properties.humanoidArmor(GalacticraftArmorMaterials.DESH, ArmorType.HELMET)
     );
     public static final DeferredItem<Item> DESH_CHESTPLATE = REGISTRY.registerSimpleItem(
-            "desh_chestplate",
+            GalacticraftItemIds.DESH_CHESTPLATE,
             properties -> properties.humanoidArmor(GalacticraftArmorMaterials.DESH, ArmorType.CHESTPLATE)
     );
     public static final DeferredItem<Item> DESH_LEGGINGS = REGISTRY.registerSimpleItem(
-            "desh_leggings",
+            GalacticraftItemIds.DESH_LEGGINGS,
             properties -> properties.humanoidArmor(GalacticraftArmorMaterials.DESH, ArmorType.LEGGINGS)
     );
     public static final DeferredItem<Item> DESH_BOOTS = REGISTRY.registerSimpleItem(
-            "desh_boots",
+            GalacticraftItemIds.DESH_BOOTS,
             properties -> properties.humanoidArmor(GalacticraftArmorMaterials.DESH, ArmorType.BOOTS)
     );
     public static final DeferredItem<Item> DESH_SWORD = REGISTRY.registerSimpleItem(
-            "desh_sword",
+            GalacticraftItemIds.DESH_SWORD,
             properties -> properties.sword(GalacticraftToolMaterials.DESH, 3.0F, -2.4F)
     );
-    //TODO Balance Desh Spear
     public static final DeferredItem<Item> DESH_SPEAR = REGISTRY.registerSimpleItem(
-            "desh_spear",
-            properties -> properties.spear(GalacticraftToolMaterials.DESH, 0.95F, 0.95F, 0.6F, 2.5F, 8.0F, 6.75F, 5.1F, 11.25F, 4.6F)
+            GalacticraftItemIds.DESH_SPEAR,
+            properties -> properties.spear(GalacticraftToolMaterials.DESH, 1.15F, 0.95F, 0.7F, 2.7F, 8.5F, 4.6F, 5.5F, 10.0F, 4.8F)
     );
     public static final DeferredItem<ShovelItem> DESH_SHOVEL = REGISTRY.registerItem(
-            "desh_shovel",
+            GalacticraftItemIds.DESH_SHOVEL,
             properties -> new ShovelItem(GalacticraftToolMaterials.DESH, 3.0F, -2.4F, properties)
     );
     public static final DeferredItem<Item> DESH_PICKAXE = REGISTRY.registerSimpleItem(
-            "desh_pickaxe",
+            GalacticraftItemIds.DESH_PICKAXE,
             properties -> properties.pickaxe(GalacticraftToolMaterials.DESH, 1.0F, -2.8F)
     );
     public static final DeferredItem<AxeItem> DESH_AXE = REGISTRY.registerItem(
-            "desh_axe",
+            GalacticraftItemIds.DESH_AXE,
             properties -> new AxeItem(GalacticraftToolMaterials.DESH, 3.0F, -3.0F, properties)
     );
     public static final DeferredItem<HoeItem> DESH_HOE = REGISTRY.registerItem(
-            "desh_hoe",
+            GalacticraftItemIds.DESH_HOE,
             properties -> new HoeItem(GalacticraftToolMaterials.DESH, -4.0F, 0.0F, properties)
     );
 
-    public static final DeferredItem<Item> RAW_TITANIUM = REGISTRY.registerSimpleItem("raw_titanium");
+    public static final DeferredItem<Item> RAW_TITANIUM = REGISTRY.registerSimpleItem(GalacticraftItemIds.RAW_TITANIUM);
     public static final DeferredItem<Item> TITANIUM_INGOT = REGISTRY.registerSimpleItem(
-            "titanium_ingot",
+            GalacticraftItemIds.TITANIUM_INGOT,
             properties -> properties.trimMaterial(GalacticraftTrimMaterials.TITANIUM)
     );
-    public static final DeferredItem<Item> TITANIUM_NUGGET = REGISTRY.registerSimpleItem("titanium_nugget");
+    public static final DeferredItem<Item> TITANIUM_NUGGET = REGISTRY.registerSimpleItem(GalacticraftItemIds.TITANIUM_NUGGET);
     //TITANIUM ARMOR & TOOL SET
     //TODO change wooden stick to desh
     public static final DeferredItem<Item> TITANIUM_HELMET = REGISTRY.registerSimpleItem(
-            "titanium_helmet",
+            GalacticraftItemIds.TITANIUM_HELMET,
             properties -> properties.humanoidArmor(GalacticraftArmorMaterials.TITANIUM, ArmorType.HELMET)
     );
     public static final DeferredItem<Item> TITANIUM_CHESTPLATE = REGISTRY.registerSimpleItem(
-            "titanium_chestplate",
+            GalacticraftItemIds.TITANIUM_CHESTPLATE,
             properties -> properties.humanoidArmor(GalacticraftArmorMaterials.TITANIUM, ArmorType.CHESTPLATE)
     );
     public static final DeferredItem<Item> TITANIUM_LEGGINGS = REGISTRY.registerSimpleItem(
-            "titanium_leggings",
+            GalacticraftItemIds.TITANIUM_LEGGINGS,
             properties -> properties.humanoidArmor(GalacticraftArmorMaterials.TITANIUM, ArmorType.LEGGINGS)
     );
     public static final DeferredItem<Item> TITANIUM_BOOTS = REGISTRY.registerSimpleItem(
-            "titanium_boots",
+            GalacticraftItemIds.TITANIUM_BOOTS,
             properties -> properties.humanoidArmor(GalacticraftArmorMaterials.TITANIUM, ArmorType.BOOTS)
     );
     public static final DeferredItem<Item> TITANIUM_SWORD = REGISTRY.registerSimpleItem(
-            "titanium_sword",
+            GalacticraftItemIds.TITANIUM_SWORD,
             properties -> properties.sword(GalacticraftToolMaterials.TITANIUM, 3.0F, -2.4F)
     );
-    //TODO Balance Titanium Spear
     public static final DeferredItem<Item> TITANIUM_SPEAR = REGISTRY.registerSimpleItem(
-            "titanium_spear",
-            properties -> properties.spear(GalacticraftToolMaterials.TITANIUM, 0.95F, 0.95F, 0.6F, 2.5F, 8.0F, 6.75F, 5.1F, 11.25F, 4.6F)
+            GalacticraftItemIds.TITANIUM_SPEAR,
+            properties -> properties.spear(GalacticraftToolMaterials.TITANIUM, 0.85F, 1.25F, 0.4F, 3.5F, 8.7F, 8.5F, 5.2F, 14.0F, 5.0F)
     );
     public static final DeferredItem<ShovelItem> TITANIUM_SHOVEL = REGISTRY.registerItem(
-            "titanium_shovel",
+            GalacticraftItemIds.TITANIUM_SHOVEL,
             properties -> new ShovelItem(GalacticraftToolMaterials.TITANIUM, 3.0F, -2.4F, properties)
     );
     public static final DeferredItem<Item> TITANIUM_PICKAXE = REGISTRY.registerSimpleItem(
-            "titanium_pickaxe",
+            GalacticraftItemIds.TITANIUM_PICKAXE,
             properties -> properties.pickaxe(GalacticraftToolMaterials.TITANIUM, 1.0F, -2.8F)
     );
     public static final DeferredItem<AxeItem> TITANIUM_AXE = REGISTRY.registerItem(
-            "titanium_axe",
+            GalacticraftItemIds.TITANIUM_AXE,
             properties -> new AxeItem(GalacticraftToolMaterials.TITANIUM, 3.0F, -3.0F, properties)
     );
     public static final DeferredItem<HoeItem> TITANIUM_HOE = REGISTRY.registerItem(
-            "titanium_hoe",
+            GalacticraftItemIds.TITANIUM_HOE,
             properties -> new HoeItem(GalacticraftToolMaterials.TITANIUM, -4.0F, 0.0F, properties)
     );
-    public static final DeferredItem<Item> RAW_LEAD = REGISTRY.registerSimpleItem("raw_lead");
+    public static final DeferredItem<Item> RAW_LEAD = REGISTRY.registerSimpleItem(GalacticraftItemIds.RAW_LEAD);
     public static final DeferredItem<Item> LEAD_INGOT = REGISTRY.registerSimpleItem(
-            "lead_ingot",
+            GalacticraftItemIds.LEAD_INGOT,
             properties -> properties.trimMaterial(GalacticraftTrimMaterials.LEAD)
     );
-    public static final DeferredItem<Item> LEAD_NUGGET = REGISTRY.registerSimpleItem("lead_nugget");
     public static final DeferredItem<Item> CHEESE_CHUNK = REGISTRY.registerSimpleItem(
-            "cheese_chunk",
+            GalacticraftItemIds.CHEESE_CHUNK,
             properties -> properties
                     .trimMaterial(GalacticraftTrimMaterials.CHEESE)
                     .food(GalacticraftFoods.CHEESE)
     );
     public static final DeferredItem<Item> CHEESE_SLICE = REGISTRY.registerSimpleItem(
-            "cheese_slice",
+            GalacticraftItemIds.CHEESE_SLICE,
             properties -> properties.food(GalacticraftFoods.CHEESE)
     );
     public static final DeferredItem<Item> MOON_DUNGEON_KEY = REGISTRY.registerSimpleItem(
-            "moon_dungeon_key",
+            GalacticraftItemIds.MOON_DUNGEON_KEY,
             properties -> properties.stacksTo(1).component(GalacticraftDataComponents.KEY_LOCK, KeyLock.preGenTier(FeatureTier.TIER_1))
     );
     public static final DeferredItem<Item> MARS_DUNGEON_KEY = REGISTRY.registerSimpleItem(
-            "mars_dungeon_key",
+            GalacticraftItemIds.MARS_DUNGEON_KEY,
             properties -> properties.stacksTo(1).component(GalacticraftDataComponents.KEY_LOCK, KeyLock.preGenTier(FeatureTier.TIER_2))
     );
     public static final DeferredItem<Item> VENUS_DUNGEON_KEY = REGISTRY.registerSimpleItem(
-            "venus_dungeon_key",
+            GalacticraftItemIds.VENUS_DUNGEON_KEY,
             properties -> properties.stacksTo(1).component(GalacticraftDataComponents.KEY_LOCK, KeyLock.preGenTier(FeatureTier.TIER_3))
     );
     public static final DeferredItem<Item> TIN_CANISTER = REGISTRY.registerSimpleItem(
-            "tin_canister"
+            GalacticraftItemIds.TIN_CANISTER
     );
     public static final DeferredItem<Item> DEHYDRATED_APPLE = REGISTRY.registerSimpleItem(
-            "dehydrated_apple",
+            GalacticraftItemIds.DEHYDRATED_APPLE,
             () -> CannedFood.createProperties(GalacticraftFoods.DEHYDRATED_APPLE)
     );
     public static final DeferredItem<Item> DEHYDRATED_CARROT = REGISTRY.registerSimpleItem(
-            "dehydrated_carrot",
+            GalacticraftItemIds.DEHYDRATED_CARROT,
             () -> CannedFood.createProperties(GalacticraftFoods.DEHYDRATED_CARROT)
     );
     public static final DeferredItem<Item> DEHYDRATED_MELON = REGISTRY.registerSimpleItem(
-            "dehydrated_melon",
+            GalacticraftItemIds.DEHYDRATED_MELON,
             () -> CannedFood.createProperties(GalacticraftFoods.DEHYDRATED_MELON)
     );
     public static final DeferredItem<Item> DEHYDRATED_PUMPKIN = REGISTRY.registerSimpleItem(
-            "dehydrated_pumpkin",
+            GalacticraftItemIds.DEHYDRATED_PUMPKIN,
             () -> CannedFood.createProperties(GalacticraftFoods.DEHYDRATED_PUMPKIN)
     );
     public static final DeferredItem<Item> DEHYDRATED_POTATO = REGISTRY.registerSimpleItem(
-            "dehydrated_potato",
+            GalacticraftItemIds.DEHYDRATED_POTATO,
             () -> CannedFood.createProperties(GalacticraftFoods.DEHYDRATED_POTATO)
     );
     public static final DeferredItem<Item> DEHYDRATED_BEETROOT = REGISTRY.registerSimpleItem(
-            "dehydrated_beetroot",
+            GalacticraftItemIds.DEHYDRATED_BEETROOT,
             () -> CannedFood.createProperties(GalacticraftFoods.DEHYDRATED_BEET)
     );
     public static final DeferredItem<Item> CANNED_BEEF = REGISTRY.registerSimpleItem(
-            "canned_beef",
+            GalacticraftItemIds.CANNED_BEEF,
             () -> CannedFood.createProperties(GalacticraftFoods.CANNED_BEEF)
     );
-    public static final DeferredItem<Item> COMPRESSED_ALUMINUM = REGISTRY.registerSimpleItem("compressed_aluminum");
-    public static final DeferredItem<Item> COMPRESSED_BRONZE = REGISTRY.registerSimpleItem("compressed_bronze");
-    public static final DeferredItem<Item> COMPRESSED_COPPER = REGISTRY.registerSimpleItem("compressed_copper");
-    public static final DeferredItem<Item> COMPRESSED_DESH = REGISTRY.registerSimpleItem("compressed_desh");
-    public static final DeferredItem<Item> COMPRESSED_IRON = REGISTRY.registerSimpleItem("compressed_iron");
-    public static final DeferredItem<Item> COMPRESSED_METEORIC_IRON = REGISTRY.registerSimpleItem("compressed_meteoric_iron");
-    public static final DeferredItem<Item> COMPRESSED_TIN = REGISTRY.registerSimpleItem("compressed_tin");
-    public static final DeferredItem<Item> COMPRESSED_TITANIUM = REGISTRY.registerSimpleItem("compressed_titanium");
-    public static final DeferredItem<Item> COMPRESSED_STEEL = REGISTRY.registerSimpleItem("compressed_steel");
-    public static final DeferredItem<Item> HEAVY_DUTY_PLATE = REGISTRY.registerSimpleItem("heavy_duty_plate");
-    public static final DeferredItem<Item> HEAVY_DUTY_PLATE_TIER_2 = REGISTRY.registerSimpleItem("heavy_duty_plate_tier_2");
-    public static final DeferredItem<Item> HEAVY_DUTY_PLATE_TIER_3 = REGISTRY.registerSimpleItem("heavy_duty_plate_tier_3");
+    public static final DeferredItem<Item> COMPRESSED_ALUMINUM = REGISTRY.registerSimpleItem(GalacticraftItemIds.COMPRESSED_ALUMINUM);
+    public static final DeferredItem<Item> COMPRESSED_BRONZE = REGISTRY.registerSimpleItem(GalacticraftItemIds.COMPRESSED_BRONZE);
+    public static final DeferredItem<Item> COMPRESSED_COPPER = REGISTRY.registerSimpleItem(GalacticraftItemIds.COMPRESSED_COPPER);
+    public static final DeferredItem<Item> COMPRESSED_DESH = REGISTRY.registerSimpleItem(GalacticraftItemIds.COMPRESSED_DESH);
+    public static final DeferredItem<Item> COMPRESSED_IRON = REGISTRY.registerSimpleItem(GalacticraftItemIds.COMPRESSED_IRON);
+    public static final DeferredItem<Item> COMPRESSED_METEORIC_IRON = REGISTRY.registerSimpleItem(GalacticraftItemIds.COMPRESSED_METEORIC_IRON);
+    public static final DeferredItem<Item> COMPRESSED_TIN = REGISTRY.registerSimpleItem(GalacticraftItemIds.COMPRESSED_TIN);
+    public static final DeferredItem<Item> COMPRESSED_TITANIUM = REGISTRY.registerSimpleItem(GalacticraftItemIds.COMPRESSED_TITANIUM);
+    public static final DeferredItem<Item> COMPRESSED_STEEL = REGISTRY.registerSimpleItem(GalacticraftItemIds.COMPRESSED_STEEL);
+    public static final DeferredItem<Item> HEAVY_DUTY_PLATE = REGISTRY.registerSimpleItem(
+            GalacticraftItemIds.HEAVY_DUTY_PLATE,
+            properties -> properties
+                    .component(
+                            GalacticraftDataComponents.ROCKET_PART,
+                            new VehiclePart(
+                                    VehicleComponentType.PLATE,
+                                    List.of(FeatureTier.TIER_1)
+                            )
+                    )
+    );
+    public static final DeferredItem<Item> HEAVY_DUTY_PLATE_TIER_2 = REGISTRY.registerSimpleItem(
+            GalacticraftItemIds.T2_HEAVY_DUTY_PLATE,
+            properties -> properties
+                    .component(
+                            GalacticraftDataComponents.ROCKET_PART,
+                            new VehiclePart(
+                                    VehicleComponentType.PLATE,
+                                    List.of(FeatureTier.TIER_2)
+                            )
+                    )
+    );
+    public static final DeferredItem<Item> HEAVY_DUTY_PLATE_TIER_3 = REGISTRY.registerSimpleItem(
+            GalacticraftItemIds.T3_HEAVY_DUTY_PLATE,
+            properties -> properties
+                    .component(
+                            GalacticraftDataComponents.ROCKET_PART,
+                            new VehiclePart(
+                                    VehicleComponentType.PLATE,
+                                    List.of(FeatureTier.TIER_3)
+                            )
+                    )
+    );
     public static final DeferredItem<SpawnEggItem> EVOLVED_SKELETON_SPAWN_EGG = REGISTRY.registerItem(
-            "evolved_skeleton_spawn_egg",
+            GalacticraftItemIds.EVOLVED_SKELETON_SPAWN_EGG,
             SpawnEggItem::new,
             () -> new Item.Properties().spawnEgg(GalacticraftEntityType.EVOLVED_SKELETON.get())
     );
     public static final DeferredItem<SpawnEggItem> EVOLVED_ZOMBIE_SPAWN_EGG = REGISTRY.registerItem(
-            "evolved_zombie_spawn_egg",
+            GalacticraftItemIds.EVOLVED_ZOMBIE_SPAWN_EGG,
             SpawnEggItem::new,
             () -> new Item.Properties().spawnEgg(GalacticraftEntityType.EVOLVED_ZOMBIE.get())
     );
     public static final DeferredItem<ThrowableMeteorItem> THROWABLE_METEOR_CHUNK = REGISTRY.registerItem(
-            "throwable_meteor_chunk",
+            GalacticraftItemIds.THROWABLE_METEOR_CHUNK,
             ThrowableMeteorItem::new
     );
 

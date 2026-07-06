@@ -7,8 +7,11 @@
 
 package io.kalishak.galacticraftlegacy.world.item.crafting.recipe;
 
+import com.mojang.serialization.MapCodec;
 import io.kalishak.galacticraftlegacy.world.item.GalacticraftItems;
 import net.minecraft.core.Holder;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.*;
@@ -16,14 +19,17 @@ import net.minecraft.world.item.crafting.display.RecipeDisplay;
 
 import java.util.List;
 
-public class ArcHeatingRecipe extends AbstractSmeltingRecipe {
-    public ArcHeatingRecipe(CommonInfo commonInfo, AbstractCookingRecipe.CookingBookInfo cookingBookInfo, Ingredient ingredient, ItemStackTemplate result, int cookingTime) {
-        super(commonInfo, cookingBookInfo, ingredient, result, cookingTime);
+public class ArcHeatingRecipe extends AbstractCookingRecipe {
+    public static final MapCodec<ArcHeatingRecipe> MAP_CODEC = cookingMapCodec(ArcHeatingRecipe::new, 50);
+    public static final StreamCodec<RegistryFriendlyByteBuf, ArcHeatingRecipe> STREAM_CODEC = cookingStreamCodec(ArcHeatingRecipe::new);
+
+    public ArcHeatingRecipe(CommonInfo commonInfo, AbstractCookingRecipe.CookingBookInfo cookingBookInfo, Ingredient ingredient, ItemStackTemplate result, float experience, int cookingTime) {
+        super(commonInfo, cookingBookInfo, ingredient, result, experience, cookingTime);
     }
 
     @Override
-    protected Holder<Item> icon() {
-        return GalacticraftItems.ELECTRIC_FURNACE;
+    protected Item furnaceIcon() {
+        return GalacticraftItems.ELECTRIC_FURNACE.get();
     }
 
     @Override
@@ -39,5 +45,10 @@ public class ArcHeatingRecipe extends AbstractSmeltingRecipe {
     @Override
     public List<RecipeDisplay> display() {
         return List.of();
+    }
+
+    @Override
+    public RecipeBookCategory recipeBookCategory() {
+        return null;
     }
 }

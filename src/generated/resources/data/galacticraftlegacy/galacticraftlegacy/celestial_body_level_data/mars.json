@@ -7,18 +7,12 @@
     },
     "has_precipitation": false,
     "is_corrosive": false,
-    "temperature": -60.0
+    "temperature_modifier": -0.5
   },
   "celestial_object_reference": "galacticraftlegacy:mars",
   "gravity_scale": 0.38,
-  "temperature_modifier": 0.38,
   "transition": {
-    "type": "air_balloon",
-    "initial_velocity": [
-      0.0,
-      0.0,
-      0.0
-    ],
-    "transition_height": 256
+    "type": "galacticraftlegacy:with_lander",
+    "lander_type": "galacticraftlegacy:landing_balloons"
   }
 }

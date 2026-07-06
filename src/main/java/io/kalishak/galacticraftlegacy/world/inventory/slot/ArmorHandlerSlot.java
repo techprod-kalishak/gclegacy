@@ -25,7 +25,7 @@ public class ArmorHandlerSlot extends ResourceHandlerSlot {
     private final @Nullable Identifier emptyIcon;
 
     public ArmorHandlerSlot(Inventory playerInventory, LivingEntity owner, EquipmentSlot slot, int xPosition, int yPosition, @Nullable Identifier emptyIcon) {
-        super(PlayerInventoryWrapper.of(playerInventory).getArmorSlots(), ((_, resource, amount) -> playerInventory.add(slot.getIndex(), resource.toStack(amount))), slot.getIndex(), xPosition, yPosition);
+        super(PlayerInventoryWrapper.of(playerInventory).getArmorSlots(), (_, resource, amount) -> playerInventory.setItem(slot.getIndex(36), resource.toStack(amount)), slot.getIndex(), xPosition, yPosition);
         this.owner = owner;
         this.slot = slot;
         this.emptyIcon = emptyIcon;

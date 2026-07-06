@@ -12,7 +12,6 @@ import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlock
 import io.kalishak.galacticraftlegacy.world.level.material.fluid.GalacticraftFluids;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.player.Inventory;
@@ -102,11 +101,6 @@ public class OxygenCollectorBlockEntity extends AbstractOxygenBlockEntity {
     }
 
     @Override
-    protected Component getDefaultName() {
-        return Component.translatable("block.galacticraftlegacy.oxygen_collector");
-    }
-
-    @Override
     public AbstractContainerMenu createMenu(int containerId, Inventory inventory) {
         return new OxygenCollectorMenu(containerId, inventory, this);
     }
@@ -131,7 +125,7 @@ public class OxygenCollectorBlockEntity extends AbstractOxygenBlockEntity {
     }
 
     @Override
-    public int getContainerSize() {
+    public int getItemsSize() {
         return 1;
     }
 

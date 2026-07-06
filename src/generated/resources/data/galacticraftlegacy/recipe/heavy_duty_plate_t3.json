@@ -1,0 +1,14 @@
+{
+  "type": "galacticraftlegacy:compressing",
+  "experience": 0.3,
+  "key": {
+    "#": "#c:plates/heavy_duty",
+    "D": "#c:plates/desh"
+  },
+  "pattern": [
+    "#D"
+  ],
+  "result": {
+    "id": "galacticraftlegacy:heavy_duty_plate_t3"
+  }
+}

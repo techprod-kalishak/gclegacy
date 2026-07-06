@@ -8,12 +8,15 @@
 package io.kalishak.galacticraftlegacy.world.entity;
 
 import io.kalishak.galacticraftlegacy.Galacticraft;
-import io.kalishak.galacticraftlegacy.Constants;
+import io.kalishak.galacticraftlegacy.references.GalacticraftEntityIds;
+import io.kalishak.galacticraftlegacy.world.entity.item.FallenMeteor;
 import io.kalishak.galacticraftlegacy.world.entity.monster.EvolvedMonster;
 import io.kalishak.galacticraftlegacy.world.entity.monster.EvolvedSkeleton;
 import io.kalishak.galacticraftlegacy.world.entity.monster.EvolvedZombie;
 import io.kalishak.galacticraftlegacy.world.entity.projectile.ThrownMeteorChunk;
-import net.minecraft.core.registries.Registries;
+import io.kalishak.galacticraftlegacy.world.entity.vehicle.lander.EntryPod;
+import io.kalishak.galacticraftlegacy.world.entity.vehicle.lander.Lander;
+import io.kalishak.galacticraftlegacy.world.entity.vehicle.lander.LandingBalloons;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.neoforged.bus.api.IEventBus;
@@ -29,8 +32,17 @@ import java.util.stream.Stream;
 public final class GalacticraftEntityType {
     private static final DeferredRegister.Entities REGISTRY = DeferredRegister.createEntities(Galacticraft.MODID);
 
+    public static final DeferredHolder<EntityType<?>, EntityType<EntryPod>> ENTRY_POD = REGISTRY.registerEntityType(
+            GalacticraftEntityIds.ENTRY_POD,
+            EntryPod::new,
+            MobCategory.MISC,
+            builder -> builder
+                    .noLootTable()
+                    .fireImmune()
+                    .sized(1.5F, 3.0F)
+    );
     public static final DeferredHolder<EntityType<?>, EntityType<FallingParachest>> FALLING_PARACHEST = REGISTRY.registerEntityType(
-            "falling_parachest",
+            GalacticraftEntityIds.FALLING_PARACHEST,
             FallingParachest::new,
             MobCategory.MISC,
             builder -> builder
@@ -39,7 +51,7 @@ public final class GalacticraftEntityType {
                     .canSpawnFarFromPlayer()
     );
     public static final DeferredHolder<EntityType<?>, EntityType<Flag>> FLAG = REGISTRY.registerEntityType(
-            "flag",
+            GalacticraftEntityIds.FLAG,
             Flag::new,
             MobCategory.MISC,
             builder -> builder
@@ -47,8 +59,36 @@ public final class GalacticraftEntityType {
                     .noSummon()
                     .sized(0.4F, 3.0F)
     );
+    public static final DeferredHolder<EntityType<?>, EntityType<FallenMeteor>> FALLEN_METEOR = REGISTRY.registerEntityType(
+            GalacticraftEntityIds.FALLEN_METEOR,
+            FallenMeteor::new,
+            MobCategory.MISC,
+            builder -> builder
+                    .noLootTable()
+                    .clientTrackingRange(90)
+                    .fireImmune()
+                    .sized(0.9F, 0.9F)
+    );
+    public static final DeferredHolder<EntityType<?>, EntityType<Lander>> LANDER = REGISTRY.registerEntityType(
+            GalacticraftEntityIds.LANDER,
+            Lander::new,
+            MobCategory.MISC,
+            builder -> builder
+                    .noLootTable()
+                    .fireImmune()
+                    .sized(3.0F, 4.25F)
+    );
+    public static final DeferredHolder<EntityType<?>, EntityType<LandingBalloons>> LANDING_BALLOONS = REGISTRY.registerEntityType(
+            GalacticraftEntityIds.LANDING_BALLOONS,
+            LandingBalloons::new,
+            MobCategory.MISC,
+            builder -> builder
+                    .noLootTable()
+                    .fireImmune()
+                    .sized(2.0F, 2.0F)
+    );
     public static final DeferredHolder<EntityType<?>, EntityType<NoGravityMovingBlockEntity>> NO_GRAVITY_MOVING_BLOCK = REGISTRY.registerEntityType(
-            "no_gravity_moving_block",
+            GalacticraftEntityIds.MOVING_BLOCK,
             NoGravityMovingBlockEntity::new, MobCategory.AMBIENT,
             builder -> builder
                     .noLootTable()
@@ -57,7 +97,7 @@ public final class GalacticraftEntityType {
                     .updateInterval(20)
     );
     public static final DeferredHolder<EntityType<?>, EntityType<SchematicEntity>> SCHEMATIC = REGISTRY.registerEntityType(
-            "schematic",
+            GalacticraftEntityIds.HANGING_SCHEMATIC,
             SchematicEntity::new,
             MobCategory.MISC,
             builder -> builder
@@ -69,7 +109,7 @@ public final class GalacticraftEntityType {
 
     //Evolved variants
     public static final DeferredHolder<EntityType<?>, EntityType<EvolvedSkeleton>> EVOLVED_SKELETON = REGISTRY.registerEntityType(
-            "evolved_skeleton",
+            GalacticraftEntityIds.EVOLVED_SKELETON,
             EvolvedSkeleton::new,
             MobCategory.MONSTER,
             builder -> builder
@@ -80,7 +120,7 @@ public final class GalacticraftEntityType {
                     .notInPeaceful()
     );
     public static final DeferredHolder<EntityType<?>, EntityType<EvolvedZombie>> EVOLVED_ZOMBIE = REGISTRY.registerEntityType(
-            "evolved_zombie",
+            GalacticraftEntityIds.EVOLVED_ZOMBIE,
             EvolvedZombie::new,
             MobCategory.MONSTER,
             builder -> builder
@@ -92,7 +132,7 @@ public final class GalacticraftEntityType {
                     .notInPeaceful()
     );
     public static final DeferredHolder<EntityType<?>, EntityType<ThrownMeteorChunk>> THROWN_METEOR_CHUNK = REGISTRY.registerEntityType(
-            "thrown_meteor_chunk",
+            GalacticraftEntityIds.METEOR_CHUNK,
             ThrownMeteorChunk::new, MobCategory.MISC,
                     builder -> builder
                     .noLootTable()

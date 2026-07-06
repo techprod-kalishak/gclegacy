@@ -7,10 +7,9 @@
 
 package io.kalishak.galacticraftlegacy.network.handler.server;
 
-import io.kalishak.galacticraftlegacy.Constants;
 import io.kalishak.galacticraftlegacy.network.payload.ToggleGearInventoryPayload;
+import io.kalishak.galacticraftlegacy.references.GalacticraftComponents;
 import io.kalishak.galacticraftlegacy.world.inventory.GearInventoryMenu;
-import net.minecraft.network.chat.Component;
 import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
@@ -21,11 +20,11 @@ public class ToggleGearInventoryServerHandler {
             Player player = cxt.player();
 
             if (payload.open()) {
-                player.openMenu(new SimpleMenuProvider(GearInventoryMenu::new, Component.translatable("container.inventory")));
+                player.openMenu(new SimpleMenuProvider(GearInventoryMenu::new, GalacticraftComponents.INVENTORY_TAB));
             }  else {
                 cxt.reply(new ToggleGearInventoryPayload(true));
             }
 
-        }).exceptionally(e -> Constants.networkFailureMessage(cxt::disconnect, e));
+        }).exceptionally(e -> GalacticraftComponents.networkFailureMessage(cxt::disconnect, e));
     }
 }

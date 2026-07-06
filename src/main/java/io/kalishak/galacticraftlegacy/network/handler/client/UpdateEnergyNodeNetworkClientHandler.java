@@ -7,14 +7,14 @@
 
 package io.kalishak.galacticraftlegacy.network.handler.client;
 
-import io.kalishak.galacticraftlegacy.Constants;
 import io.kalishak.galacticraftlegacy.network.payload.UpdateEnergyNodeNetworkPayload;
+import io.kalishak.galacticraftlegacy.references.GalacticraftComponents;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 public class UpdateEnergyNodeNetworkClientHandler {
     public static void handleClient(UpdateEnergyNodeNetworkPayload payload, IPayloadContext cxt) {
         cxt.enqueueWork(() -> {
 
-        }).exceptionally(e -> Constants.networkFailureMessage(cxt::disconnect, e));
+        }).exceptionally(e -> GalacticraftComponents.networkFailureMessage(cxt::disconnect, e));
     }
 }

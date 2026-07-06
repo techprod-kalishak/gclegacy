@@ -10,6 +10,7 @@ package io.kalishak.galacticraftlegacy.client.gui.screens.inventory;
 import io.kalishak.galacticraftlegacy.Galacticraft;
 import io.kalishak.galacticraftlegacy.client.gui.components.ItemDisplayButton;
 import io.kalishak.galacticraftlegacy.network.payload.ToggleGearInventoryPayload;
+import io.kalishak.galacticraftlegacy.references.GalacticraftComponents;
 import io.kalishak.galacticraftlegacy.world.inventory.GearInventoryMenu;
 import io.kalishak.galacticraftlegacy.world.item.GalacticraftItems;
 import net.minecraft.client.Minecraft;
@@ -46,15 +47,15 @@ public class GearInventoryScreen extends AbstractContainerScreen<GearInventoryMe
                 topPos - 20,
                 26,
                 24,
-                Component.translatable("container.inventory"),
+                GalacticraftComponents.INVENTORY_TAB,
                 Items.CRAFTING_TABLE.getDefaultInstance(),
                 false,
                 false,
-                onClick -> {
+                _ -> {
                     mc.player.closeContainer();
                     mc.setScreen(new InventoryScreen(mc.player));
                 },
-                mutableComponentSupplier -> Component.empty()
+                _ -> Component.empty()
         ));
         widgetConsumer.accept(new ItemDisplayButton(
                 mc,
@@ -62,12 +63,12 @@ public class GearInventoryScreen extends AbstractContainerScreen<GearInventoryMe
                 topPos - 20,
                 26,
                 24,
-                Component.translatable("container.gear"),
+                GalacticraftComponents.GEAR_TAB,
                 GalacticraftItems.OXYGEN_MASK.toStack(),
                 false,
                 false,
-                onClick -> ClientPacketDistributor.sendToServer(new ToggleGearInventoryPayload(true)),
-                mutableComponentSupplier -> Component.empty()
+                _ -> ClientPacketDistributor.sendToServer(new ToggleGearInventoryPayload(true)),
+                _ -> Component.empty()
         ));
     }
 

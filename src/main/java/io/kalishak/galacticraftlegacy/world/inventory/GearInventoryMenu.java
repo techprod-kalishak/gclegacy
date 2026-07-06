@@ -23,7 +23,6 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.transfer.item.PlayerInventoryWrapper;
 
 import java.util.Map;
 
@@ -77,23 +76,21 @@ public class GearInventoryMenu extends AbstractContainerMenu {
         super(GalacticraftMenuType.GEAR.get(), syncId);
         PlayerSpaceData playerData = player.getData(GalacticraftAttachments.PLAYER_SPACE_DATA);
         SpaceGearEquipment equipment = playerData.getGearEquipment();
-        MappedItemResourceHandler<GearEquipmentSlot> gearHandler = MappedEquipment.of(playerData.getGearEquipment(), GearEquipmentSlot.class, GearEquipmentSlot.CODEC);
+        MappedItemResourceHandler<GearEquipmentSlot> gearHandler = new MappedItemResourceHandler<>(playerData.getGearEquipment().items, GearEquipmentSlot.class, GearEquipmentSlot.CODEC);
 
         for (int i = 0; i < 4; i++) {
             GearEquipmentSlot slot = SLOTS_IDS[i];
             Identifier identifier = TEXTURE_EMPTY_SLOTS.get(slot);
-            addSlot(new GearSlot(gearHandler, equipment, player, slot, identifier, GEAR_SLOT_START + i, 79, 8 + i * 18));
+            addSlot(new GearSlot(gearHandler, equipment, player, slot, identifier, i, 79, 8 + i * 18));
         }
 
-        addSlot(new GearSlot(gearHandler, equipment, player, GearEquipmentSlot.MASK, EMPTY_SLOT_HELMET, GEAR_SLOT_START + 4, 125, 26));
-        addSlot(new GearSlot(gearHandler, equipment, player, GearEquipmentSlot.GEAR, EMPTY_SLOT_GEAR, GEAR_SLOT_START + 5, 125, 44));
-        addSlot(new GearSlot(gearHandler, equipment, player, GearEquipmentSlot.TANK, EMPTY_SLOT_TANK, GEAR_SLOT_START + 6, 116, 62));
-        addSlot(new GearSlot(gearHandler, equipment, player, GearEquipmentSlot.ADDITIONAL_TANK, EMPTY_SLOT_TANK, GEAR_SLOT_START + 7, 134, 62));
-        addSlot(new GearSlot(gearHandler, equipment, player, GearEquipmentSlot.PARACHUTE, EMPTY_SLOT_PARACHUTE, GEAR_SLOT_START + 8, 143, 26));
-        addSlot(new GearSlot(gearHandler, equipment, player, GearEquipmentSlot.TELEMETRY, EMPTY_SLOT_TELEMETRY, GEAR_SLOT_START + 9, 107, 26));
-        addSlot(new GearSlot(gearHandler, equipment, player, GearEquipmentSlot.SHIELD, EMPTY_SLOT_SHIELD, GEAR_SLOT_START + 10, 125, 8));
-
-        PlayerInventoryWrapper playerInv = PlayerInventoryWrapper.of(playerInventory);
+        addSlot(new GearSlot(gearHandler, equipment, player, GearEquipmentSlot.MASK, EMPTY_SLOT_HELMET, 4, 125, 26));
+        addSlot(new GearSlot(gearHandler, equipment, player, GearEquipmentSlot.GEAR, EMPTY_SLOT_GEAR, 5, 125, 44));
+        addSlot(new GearSlot(gearHandler, equipment, player, GearEquipmentSlot.TANK, EMPTY_SLOT_TANK, 6, 116, 62));
+        addSlot(new GearSlot(gearHandler, equipment, player, GearEquipmentSlot.ADDITIONAL_TANK, EMPTY_SLOT_TANK, 7, 134, 62));
+        addSlot(new GearSlot(gearHandler, equipment, player, GearEquipmentSlot.PARACHUTE, EMPTY_SLOT_PARACHUTE, 8, 143, 26));
+        addSlot(new GearSlot(gearHandler, equipment, player, GearEquipmentSlot.TELEMETRY, EMPTY_SLOT_TELEMETRY, 9, 107, 26));
+        addSlot(new GearSlot(gearHandler, equipment, player, GearEquipmentSlot.SHIELD, EMPTY_SLOT_SHIELD, 10, 125, 8));
 
         for (int i = 0; i < 4; i++) {
             EquipmentSlot equipmentslot = ARMOR_SLOT_IDS[i];

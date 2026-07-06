@@ -9,6 +9,7 @@ package io.kalishak.galacticraftlegacy.world.item.component;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import io.kalishak.galacticraftlegacy.references.GalacticraftComponents;
 import io.kalishak.galacticraftlegacy.world.entity.FlagData;
 import net.minecraft.core.component.DataComponentGetter;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -36,7 +37,7 @@ public record FlagItemData(FlagData flagData, Component teamName) implements Too
     @Override
     public void addToTooltip(Item.TooltipContext context, Consumer<Component> tooltipAdder, TooltipFlag flag, DataComponentGetter componentGetter) {
         if (!this.teamName.equals(CommonComponents.EMPTY)) {
-            tooltipAdder.accept(Component.translatable("space_race.galacticraftlegacy.team_flag").append(this.teamName));
+            tooltipAdder.accept(GalacticraftComponents.TOOLTIP_FLAG.append(this.teamName));
         }
     }
 }

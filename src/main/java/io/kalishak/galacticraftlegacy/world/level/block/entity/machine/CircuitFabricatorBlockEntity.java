@@ -28,12 +28,15 @@ import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
+import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
+import net.neoforged.neoforge.transfer.RangedResourceHandler;
 import net.neoforged.neoforge.transfer.energy.EnergyHandler;
+import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.neoforged.neoforge.transfer.transaction.Transaction;
 import org.jspecify.annotations.Nullable;
 
-public class CircuitFabricatorBlockEntity extends RecipeMachineBlockEntity<CraftingInput, CircuitRecipe> implements WorldlyContainer {
+public class CircuitFabricatorBlockEntity extends RecipeMachineBlockEntity<CraftingInput, CircuitRecipe> {
     public static final int DATA_PROCESS_PROGRESS = 0;
     public static final int DATA_PROGRESS_TIME_TOTAL = 1;
     public static final int PROCESS_RETRACT_SPEED = 2;
@@ -79,27 +82,29 @@ public class CircuitFabricatorBlockEntity extends RecipeMachineBlockEntity<Craft
     }
 
     public static void serverTick(ServerLevel level, BlockPos pos, BlockState state, CircuitFabricatorBlockEntity entity) {
+        AbstractMachineBlockEntity.extractBattery(entity, false, 250, null);
+
         boolean changed = false;
 
-        ItemStack mainIngredient = entity.inventory.get(SLOT_INGREDIENT);
+        ItemStack mainIngredient = entity.getItem(SLOT_INGREDIENT);
         boolean canOperate = entity.hasEnergyToOperate();
 
         if (canOperate && !mainIngredient.isEmpty()) {
-            CraftingInput input = CraftingInput.of(2, 3, entity.inventory);
+            CraftingInput input = CraftingInput.of(2, 3, entity.items.copyToList());
 
             RecipeHolder<CircuitRecipe> recipe = entity.quickCheck.getRecipeFor(input, level).orElse(null);
 
             if (recipe != null) {
-                int maxStackSize = entity.getMaxStackSize();
                 ItemStack result = recipe.value().assemble(input);
+                int maxStackSize = entity.items.getCapacityAsInt(SLOT_OUTPUT, ItemResource.of(result));
 
-                if (!result.isEmpty() && RecipeMachineBlockEntity.canProcess(entity.inventory, maxStackSize, result, entity.capacitor, entity.getMaxEnergyTransferRate(), SLOT_OUTPUT)) {
+                if (!result.isEmpty() && RecipeMachineBlockEntity.canProcess(entity, maxStackSize, result, entity.capacitor, entity.getMaxEnergyTransferRate(), SLOT_OUTPUT)) {
                     entity.processProgress++;
 
                     if (entity.processProgress == entity.processTimeTotal) {
                         entity.processProgress = 0;
                         entity.processTimeTotal = 400;
-                        process(entity.inventory, result, entity.capacitor, entity.getMaxEnergyTransferRate());
+                        process(entity, result, entity.capacitor, entity.getMaxEnergyTransferRate());
                         changed = true;
                     }
                 }
@@ -113,34 +118,46 @@ public class CircuitFabricatorBlockEntity extends RecipeMachineBlockEntity<Craft
         }
     }
 
-    private static void process(NonNullList<ItemStack> items, ItemStack result, EnergyHandler energyHandler, int energyPerTick) {
+    private static void process(CircuitFabricatorBlockEntity entity, ItemStack result, EnergyHandler energyHandler, int energyPerTick) {
         try (Transaction tx = Transaction.open(null)) {
             if (energyHandler.extract(energyPerTick, tx) >= energyPerTick) {
-                ItemStack inResultSlot = items.get(SLOT_OUTPUT);
+                ItemStack inResultSlot = entity.getItem(SLOT_OUTPUT);
 
                 if (inResultSlot.isEmpty()) {
-                    items.set(SLOT_OUTPUT, result.copy());
+                    entity.setItem(SLOT_OUTPUT, result.copy());
                 } else {
-                    inResultSlot.grow(result.getCount());
+                    if (entity.items.insert(SLOT_OUTPUT, ItemResource.of(result), result.getCount(), tx) == result.getCount()) {
+                        for (int i = SLOT_DIAMOND; i < SLOT_OUTPUT; i++) {
+                            ItemStack inSlot = entity.getItem(i);
+
+                            if (entity.items.extract(i, ItemResource.of(inSlot), inSlot.getCount(), tx) <= 0) {
+                                return;
+                            }
+                        }
+                    }
                 }
 
-                for (int i = SLOT_DIAMOND; i < SLOT_OUTPUT; i++) {
-                    ItemStack inSlot = items.get(i);
-                    inSlot.shrink(1);
-                }
+                tx.commit();
             }
-
-            tx.commit();
         }
     }
 
     public static void registerCapabilities(RegisterCapabilitiesEvent event) {
         registerEnergyCapability(GalacticraftBlockEntityType.CIRCUIT_FABRICATOR.get(), event);
-        registerItemCapability(GalacticraftBlockEntityType.CIRCUIT_FABRICATOR.get(), event);
+        event.registerBlockEntity(
+                Capabilities.Item.BLOCK,
+                GalacticraftBlockEntityType.CIRCUIT_FABRICATOR.get(),
+                (entity, side) -> switch (side) {
+                    case UP -> RangedResourceHandler.of(() -> entity.items, SLOT_DIAMOND, SLOT_OUTPUT);
+                    case DOWN -> RangedResourceHandler.ofSingleIndex(() -> entity.items, SLOT_OUTPUT);
+                    case null -> entity.items;
+                    default -> RangedResourceHandler.ofSingleIndex(() -> entity.items, SLOT_BATTERY);
+                }
+        );
     }
 
     private static boolean checkRecipe(CircuitFabricatorBlockEntity machine, ServerLevel serverLevel) {
-        CraftingInput input = CraftingInput.of(2, 3, machine.inventory);
+        CraftingInput input = CraftingInput.of(2, 3, machine.items.copyToList());
         return machine.quickCheck.getRecipeFor(input, serverLevel).isPresent();
     }
 
@@ -158,7 +175,6 @@ public class CircuitFabricatorBlockEntity extends RecipeMachineBlockEntity<Craft
         this.processTimeTotal = input.getIntOr("ProcessTotalTime", 0);
     }
 
-    @Override
     public int[] getSlotsForFace(Direction direction) {
         if (direction == Direction.DOWN) {
             return OUTPUT_SLOTS;
@@ -167,12 +183,11 @@ public class CircuitFabricatorBlockEntity extends RecipeMachineBlockEntity<Craft
         return direction == Direction.UP ? INPUT_SLOTS : BATTERY_SLOTS;
     }
 
-    @Override
     public boolean canPlaceItemThroughFace(int slot, ItemStack itemStack, @Nullable Direction direction) {
-        return canPlaceItem(slot, itemStack);
+//        return canPlaceItem(slot, itemStack);
+        return true;
     }
 
-    @Override
     public boolean canTakeItemThroughFace(int slot, ItemStack itemStack, Direction direction) {
         return direction == Direction.DOWN;
     }
@@ -194,7 +209,7 @@ public class CircuitFabricatorBlockEntity extends RecipeMachineBlockEntity<Craft
     }
 
     @Override
-    public int getContainerSize() {
+    public int getItemsSize() {
         return SLOT_COUNT;
     }
 

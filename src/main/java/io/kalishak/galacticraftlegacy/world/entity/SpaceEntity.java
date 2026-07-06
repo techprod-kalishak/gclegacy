@@ -23,7 +23,11 @@ public interface SpaceEntity {
         return level.environmentAttributes().getDimensionValue(GalacticraftEnvironmentAttributes.GRAVITY.get());
     }
 
-    static boolean spaceJump(Entity jumper, Function<Float, Float> jumpPowerGetter) {
+    static float getFallDamageMultiplier(@NonNull Level level) {
+        return level.environmentAttributes().getDimensionValue(GalacticraftEnvironmentAttributes.FALL_DAMAGE_MODIFIER.get());
+    }
+
+    static boolean shouldJump(Entity jumper, Function<Float, Float> jumpPowerGetter) {
         float dimensionGravity = getGravity(jumper.level());
 
         if (dimensionGravity == 0.08F) {
@@ -44,10 +48,10 @@ public interface SpaceEntity {
                 CommonHooks.onLivingJump(livingJumper);
             }
 
-            return true;
+            return false;
         }
 
-        return false;
+        return true;
     }
 
     void setTumbling(float angle);

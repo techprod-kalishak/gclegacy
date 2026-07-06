@@ -7,7 +7,7 @@
 
 package io.kalishak.galacticraftlegacy.world.entity.vehicle;
 
-import io.kalishak.galacticraftlegacy.Constants;
+import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.attachment.GalacticraftAttachments;
 import io.kalishak.galacticraftlegacy.attachment.entity.AdvancedMovement;
 import net.minecraft.core.NonNullList;

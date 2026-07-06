@@ -15,8 +15,9 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.textures.GpuTextureView;
 import com.mojang.blaze3d.vertex.*;
 import com.mojang.math.Axis;
+import io.kalishak.galacticraftlegacy.client.data.GalacticraftSpritesProvider;
 import io.kalishak.galacticraftlegacy.config.ClientConfig;
-import io.kalishak.galacticraftlegacy.Constants;
+import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.client.renderer.environment.state.SpaceSkyRenderState;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
@@ -26,35 +27,34 @@ import net.minecraft.client.renderer.state.level.SkyRenderState;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.sprite.AtlasManager;
-import net.minecraft.data.AtlasIds;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.client.CustomSkyboxRenderer;
 import net.neoforged.neoforge.client.event.ExtractLevelRenderStateEvent;
+import net.neoforged.neoforge.client.event.RenderLevelStageEvent;
 import org.joml.*;
 
 import java.lang.Math;
 import java.util.OptionalDouble;
 import java.util.OptionalInt;
 
-public abstract class SpaceSkyRenderer implements CustomSkyboxRenderer, AutoCloseable {
-    protected static final Identifier SUN_SPRITE = Constants.id("orbital_sun");
-    protected TextureAtlas celestialsAtlas;
-    protected GpuBuffer starBuffer;
-    protected GpuBuffer sunBuffer;
-    protected RenderSystem.AutoStorageIndexBuffer quadIndices;
+public abstract class SpaceSkyRenderer implements AutoCloseable {
+    protected static final Identifier ORBITAL_SUN_SPRITE = Constants.id("orbital_sun");
+    protected static final Identifier PLANETARY_SUN_SPRITE = Constants.id("atmospheric_sun");
+    private static SpaceSkyRenderer cache;
+    protected final TextureAtlas celestialsAtlas;
+    protected final GpuBuffer starBuffer;
+    protected final GpuBuffer sunBuffer;
+    protected final RenderSystem.AutoStorageIndexBuffer quadIndices;
     protected int starIndexCount;
 
     static int starCount = 1500;
 
-    /**
-     * We will initialize it before rendering, let's c how it's gonna b
-     */
-    protected void init(AtlasManager atlasManager) {
+    protected SpaceSkyRenderer(AtlasManager atlasManager) {
         SpaceSkyRenderer.starCount = ClientConfig.MORE_STARS.get() ? 5000 : 1500;
-        this.celestialsAtlas = atlasManager.getAtlasOrThrow(AtlasIds.CELESTIALS);
+        this.celestialsAtlas = atlasManager.getAtlasOrThrow(GalacticraftSpritesProvider.CELESTIAL_BODIES);
         this.starBuffer = buildStars();
         this.sunBuffer = buildSunQuad(this.celestialsAtlas);
         this.quadIndices = RenderSystem.getSequentialBuffer(VertexFormat.Mode.QUADS);
@@ -65,17 +65,27 @@ public abstract class SpaceSkyRenderer implements CustomSkyboxRenderer, AutoClos
         SpaceSkyRenderState.extract(event.getRenderTick(), event.getRenderState(), event.getCamera().attributeProbe());
     }
 
-    @Override
-    public final boolean renderSky(LevelRenderState levelRenderState, SkyRenderState skyRenderState, Matrix4fc modelViewMatrix, Runnable setupFog) {
+    @SubscribeEvent
+    public static void renderSky(RenderLevelStageEvent.AfterSky event) {
+        LevelRenderState levelRenderState = event.getLevelRenderState();
+        Matrix4fc modelViewMatrix = event.getModelViewMatrix();
         Minecraft mc = Minecraft.getInstance();
-        init(mc.getAtlasManager());
-
+        PoseStack poseStack = event.getPoseStack();
         Camera camera = mc.gameRenderer.getMainCamera();
-        PoseStack poseStack = new PoseStack();
+        AtlasManager atlasManager = mc.getAtlasManager();
+        CustomSkyboxRenderer renderer = levelRenderState.customSkyboxRenderer;
 
-        extractSky(poseStack, camera, levelRenderState, modelViewMatrix, setupFog);
+        if (renderer instanceof SkyboxRendererSupplier supplier) {
+            if (cache == null) {
+                cache = supplier.create(atlasManager);
+            }
+        } else if (renderer == null && cache != null) {
+            cache = null;
+        }
 
-        return true;
+        if (cache != null) {
+            cache.extractSky(poseStack, camera, levelRenderState, modelViewMatrix, () -> {});
+        }
     }
 
     protected abstract void extractSky(PoseStack poseStack, Camera camera, LevelRenderState levelRenderState, Matrix4fc modelViewMatrix, Runnable setupFog);
@@ -91,9 +101,11 @@ public abstract class SpaceSkyRenderer implements CustomSkyboxRenderer, AutoClos
         poseStack.pushPose();
         poseStack.mulPose(Axis.YP.rotationDegrees(-90.0F));
         poseStack.pushPose();
+
         poseStack.mulPose(Axis.XP.rotation(sunAngle));
         renderSun(poseStack);
         poseStack.popPose();
+
         if (starBrightness > 0.0F) {
             poseStack.pushPose();
             poseStack.mulPose(Axis.XP.rotation(starAngle));
@@ -102,6 +114,10 @@ public abstract class SpaceSkyRenderer implements CustomSkyboxRenderer, AutoClos
         }
 
         poseStack.popPose();
+    }
+
+    protected Identifier getSunSprite() {
+        return ORBITAL_SUN_SPRITE;
     }
 
     protected void renderSun(PoseStack poseStack) {
@@ -211,13 +227,22 @@ public abstract class SpaceSkyRenderer implements CustomSkyboxRenderer, AutoClos
         return buffer;
     }
 
-    protected static GpuBuffer buildSunQuad(TextureAtlas atlas) {
-        return buildCelestialQuad("Sun quad", atlas.getSprite(SUN_SPRITE));
+    protected GpuBuffer buildSunQuad(TextureAtlas atlas) {
+        return buildCelestialQuad("Sun quad", atlas.getSprite(getSunSprite()));
     }
 
     @Override
     public void close() {
         this.starBuffer.close();
         this.sunBuffer.close();
+    }
+
+    protected interface SkyboxRendererSupplier extends CustomSkyboxRenderer {
+        @Override
+        default boolean renderSky(LevelRenderState levelRenderState, SkyRenderState skyRenderState, Matrix4fc modelViewMatrix, Runnable setupFog) {
+            return true;
+        }
+
+        SpaceSkyRenderer create(AtlasManager atlasManager);
     }
 }

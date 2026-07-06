@@ -7,7 +7,8 @@
 
 package io.kalishak.galacticraftlegacy.client.gui.screens.transition;
 
-import io.kalishak.galacticraftlegacy.Constants;
+import io.kalishak.galacticraftlegacy.references.Constants;
+import io.kalishak.galacticraftlegacy.references.GalacticraftComponents;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Renderable;
@@ -17,12 +18,10 @@ import net.minecraft.client.multiplayer.LevelLoadTracker;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.client.renderer.texture.AbstractTexture;
 import net.minecraft.client.renderer.texture.TextureManager;
-import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 
 public class SpaceTravelLoadingScreen extends LevelLoadingScreen {
     public static final Identifier SPACE_LOCATION = Constants.id("textures/environment/space.png");
-    private static final Component LOADING_TEXT = Component.translatable("galacticraftlegacy.space_travel.loading");
 
     public SpaceTravelLoadingScreen(LevelLoadTracker loadTracker, Reason reason) {
         super(loadTracker, reason);
@@ -38,7 +37,7 @@ public class SpaceTravelLoadingScreen extends LevelLoadingScreen {
         int yCenter = this.height / 2;
         int textTop = yCenter - 50;
 
-        graphics.centeredText(this.font, LOADING_TEXT, xCenter, textTop, -1);
+        graphics.centeredText(this.font, GalacticraftComponents.SPACE_TRAVEL_TEXT, xCenter, textTop, -1);
     }
 
     @Override

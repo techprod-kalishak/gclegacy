@@ -7,6 +7,7 @@
 
 package io.kalishak.galacticraftlegacy.world.inventory.slot;
 
+import io.kalishak.galacticraftlegacy.world.inventory.container.CraftingStorage;
 import net.minecraft.core.NonNullList;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Player;
@@ -23,11 +24,11 @@ import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.neoforged.neoforge.transfer.item.ResourceHandlerSlot;
 
 public class CraftingResultHandlerSlot extends ResourceHandlerSlot {
-    private final CraftingContainer craftSlots;
+    private final CraftingStorage craftSlots;
     private final Player player;
     private int removeCount;
 
-    public CraftingResultHandlerSlot(Player player, CraftingContainer craftSlots, ResourceHandler<ItemResource> handler, IndexModifier<ItemResource> slotModifier, int handlerSlot, int xPosition, int yPosition) {
+    public CraftingResultHandlerSlot(Player player, CraftingStorage craftSlots, ResourceHandler<ItemResource> handler, IndexModifier<ItemResource> slotModifier, int handlerSlot, int xPosition, int yPosition) {
         super(handler, slotModifier, handlerSlot, xPosition, yPosition);
         this.player = player;
         this.craftSlots = craftSlots;

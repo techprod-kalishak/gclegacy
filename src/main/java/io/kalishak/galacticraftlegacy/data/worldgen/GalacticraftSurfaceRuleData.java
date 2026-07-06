@@ -11,18 +11,44 @@ import com.google.common.collect.ImmutableList;
 import io.kalishak.galacticraftlegacy.world.level.biome.MoonBiomes;
 import io.kalishak.galacticraftlegacy.world.level.block.GalacticraftBlocks;
 import io.kalishak.galacticraftlegacy.world.level.levelgen.GalacticraftNoises;
+import net.minecraft.data.worldgen.SurfaceRuleData;
 import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.NoiseGeneratorSettings;
 import net.minecraft.world.level.levelgen.Noises;
 import net.minecraft.world.level.levelgen.SurfaceRules;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
+import net.minecraft.world.level.levelgen.placement.CaveSurface;
 
 public class GalacticraftSurfaceRuleData {
     public static final SurfaceRules.RuleSource BEDROCK = SurfaceRules.state(Blocks.BEDROCK.defaultBlockState());
     public static final SurfaceRules.RuleSource MOON_TURF = SurfaceRules.state(GalacticraftBlocks.MOON_TURF.get().defaultBlockState());
     public static final SurfaceRules.RuleSource MOON_ROCK = SurfaceRules.state(GalacticraftBlocks.MOON_ROCK.get().defaultBlockState());
     public static final SurfaceRules.RuleSource MOON_DIRT = SurfaceRules.state(GalacticraftBlocks.MOON_DIRT.get().defaultBlockState());
+
+    public static SurfaceRules.RuleSource bruh() {
+        SurfaceRules.ConditionSource exposed = SurfaceRules.abovePreliminarySurface();
+        SurfaceRules.ConditionSource aboveTurf = SurfaceRules.stoneDepthCheck(3, true, CaveSurface.CEILING);
+        SurfaceRules.RuleSource commonSurfaceAndUnderRules = SurfaceRules.sequence(
+                SurfaceRules.ifTrue(
+                        exposed,
+                        MOON_TURF
+                ),
+                SurfaceRules.ifTrue(
+                        aboveTurf,
+                        MOON_DIRT
+                ),
+                MOON_ROCK
+        );
+        SurfaceRules.RuleSource bedrockFloor = SurfaceRules.ifTrue(SurfaceRules.verticalGradient("bedrock_floor", VerticalAnchor.bottom(), VerticalAnchor.aboveBottom(5)), BEDROCK);
+        SurfaceRules.RuleSource rock = SurfaceRules.ifTrue(SurfaceRules.verticalGradient("moon_rock", VerticalAnchor.absolute(0), VerticalAnchor.absolute(8)), MOON_ROCK);
+
+        return SurfaceRules.sequence(
+                commonSurfaceAndUnderRules,
+                rock,
+                bedrockFloor
+        );
+    }
 
     public static SurfaceRules.RuleSource moon() {
         SurfaceRules.ConditionSource steeps = SurfaceRules.steep();

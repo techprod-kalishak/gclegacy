@@ -33,7 +33,7 @@ public abstract class AbstractOxygenMachineMenu<M extends AbstractOxygenBlockEnt
     protected AbstractOxygenMachineMenu(MenuType<? extends AbstractOxygenMachineMenu<M>> menuType, int containerId, Inventory playerInventory, M machine) {
         super(menuType, containerId);
         this.machine = machine;
-        this.resourceHandler = ResourcefulHelper.getResourceHandler(Capabilities.Item.BLOCK, ItemResource.EMPTY, machine, null);
+        this.resourceHandler = machine.getResourceHandler();
         this.energyHandler = ResourcefulHelper.getEnergyHandler(machine, null);
         this.fluidResourceHandler = ResourcefulHelper.getResourceHandler(Capabilities.Fluid.BLOCK, FluidResource.EMPTY, machine, null);
         this.player = playerInventory.player;

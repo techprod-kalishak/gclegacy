@@ -8,8 +8,6 @@
 package io.kalishak.galacticraftlegacy.world.level.block.entity.machine;
 
 import io.kalishak.galacticraftlegacy.transfer.capability.fluid.LimitedFluidStackResourceHandler;
-import io.kalishak.galacticraftlegacy.transfer.capability.fluid.SingleTankResourceHandler;
-import io.kalishak.galacticraftlegacy.world.level.block.entity.NamedBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.block.entity.BlockEntityType;

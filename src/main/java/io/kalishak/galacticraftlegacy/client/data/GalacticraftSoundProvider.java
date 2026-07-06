@@ -7,7 +7,7 @@
 
 package io.kalishak.galacticraftlegacy.client.data;
 
-import io.kalishak.galacticraftlegacy.Constants;
+import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.Galacticraft;
 import io.kalishak.galacticraftlegacy.sounds.GalacticraftSounds;
 import net.minecraft.data.PackOutput;

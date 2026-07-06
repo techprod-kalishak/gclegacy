@@ -7,7 +7,7 @@
 
 package io.kalishak.galacticraftlegacy.world.item.gear;
 
-import io.kalishak.galacticraftlegacy.Constants;
+import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.attachment.entity.GearInventoryProvider;
 import io.kalishak.galacticraftlegacy.world.entity.GearEquipmentSlot;
 import io.kalishak.galacticraftlegacy.world.entity.GearEquipmentSlotGroup;

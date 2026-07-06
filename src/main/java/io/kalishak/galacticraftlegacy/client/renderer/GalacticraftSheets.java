@@ -8,7 +8,7 @@
 package io.kalishak.galacticraftlegacy.client.renderer;
 
 import com.google.common.collect.ImmutableList;
-import io.kalishak.galacticraftlegacy.Constants;
+import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.world.item.FeatureTier;
 import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.SpriteMapper;

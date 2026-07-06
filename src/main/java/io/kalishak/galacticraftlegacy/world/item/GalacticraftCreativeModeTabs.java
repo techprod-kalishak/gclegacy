@@ -8,15 +8,14 @@
 package io.kalishak.galacticraftlegacy.world.item;
 
 import io.kalishak.galacticraftlegacy.Galacticraft;
+import io.kalishak.galacticraftlegacy.references.GalacticraftComponents;
 import io.kalishak.galacticraftlegacy.registry.GalacticraftRegistries;
 import io.kalishak.galacticraftlegacy.registry.SchematicVariant;
 import io.kalishak.galacticraftlegacy.world.item.component.GalacticraftDataComponents;
 import io.kalishak.galacticraftlegacy.world.level.material.fluid.GalacticraftFluids;
-import net.minecraft.client.data.models.model.ModelTemplates;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.ItemStack;
@@ -47,7 +46,7 @@ public final class GalacticraftCreativeModeTabs {
             CreativeModeTab.builder()
                     .icon(GalacticraftItems.OXYGEN_MASK::toStack)
                     .displayItems(GalacticraftCreativeModeTabs::buildItems)
-                    .title(Component.translatable("itemGroup.galacticraftlegacy.items"))
+                    .title(GalacticraftComponents.CREATIVE_MODE_TAB_ITEMS)
                     ::build
     );
 
@@ -56,7 +55,7 @@ public final class GalacticraftCreativeModeTabs {
             CreativeModeTab.builder()
                     .icon(GalacticraftItems.COAL_GENERATOR::toStack)
                     .displayItems(GalacticraftCreativeModeTabs::buildBlocks)
-                    .title(Component.translatable("itemGroup.galacticraftlegacy.blocks"))
+                    .title(GalacticraftComponents.CREATIVE_MODE_TAB_BLOCKS)
                     ::build
     );
 
@@ -110,6 +109,7 @@ public final class GalacticraftCreativeModeTabs {
         emptyAndCharged(output, GalacticraftItems.BATTERY);
         output.accept(GalacticraftItems.INFINITE_BATTERY);
         output.accept(GalacticraftItems.CHEESE_CHUNK);
+        output.accept(GalacticraftItems.RAW_METEORIC_IRON);
         output.accept(GalacticraftItems.SAPPHIRE);
         output.accept(GalacticraftItems.FLAG);
         output.accept(GalacticraftItems.DUNGEON_LOCATOR);
@@ -165,9 +165,9 @@ public final class GalacticraftCreativeModeTabs {
         output.accept(GalacticraftItems.RAW_TITANIUM);
         output.accept(GalacticraftItems.TITANIUM_INGOT);
         output.accept(GalacticraftItems.TITANIUM_NUGGET);
+        output.accept(GalacticraftItems.METEORIC_IRON_INGOT);
         output.accept(GalacticraftItems.RAW_LEAD);
         output.accept(GalacticraftItems.LEAD_INGOT);
-        output.accept(GalacticraftItems.LEAD_NUGGET);
         output.accept(GalacticraftItems.WRENCH);
         output.accept(GalacticraftItems.STEEL_PICKAXE);
         output.accept(GalacticraftItems.STEEL_AXE);

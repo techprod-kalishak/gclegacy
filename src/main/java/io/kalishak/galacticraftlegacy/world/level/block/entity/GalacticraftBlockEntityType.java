@@ -139,8 +139,9 @@ public final class GalacticraftBlockEntityType {
         CoalGeneratorBlockEntity.registerCapabilities(event);
         ColoredPipeBlockEntity.registerCapabilities(event);
         CompressorBlockEntity.registerItemCapabilities(event);
+        DungeonChestBlockEntity.registerCapabilities(event);
         ElectricCompressorBlockEntity.registerCapabilities(event);
-        ElectricFurnaceBlockEntity.registerCapabilities(event);
+        AbstractElectricFurnaceBlockEntity.registerCapabilities(event, ELECTRIC_FURNACE.get());
         FlammableCauldronBlockEntity.registerCapability(event);
         MagneticCraftingBlockEntity.registerCapabilities(event);
         ParachestBlockEntity.registerCapabilities(event);

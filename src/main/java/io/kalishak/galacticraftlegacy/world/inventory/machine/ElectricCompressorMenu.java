@@ -37,7 +37,7 @@ public class ElectricCompressorMenu extends AbstractCompressorMenu {
         super(GalacticraftMenuType.ELECTRIC_COMPRESSOR.get(), containerId, playerInventory, compressor, dataAccess);
 
         addCompressorGrid(19, 18);
-        addSlot(handler -> new CapabilityHandlerSlot<>(handler, compressor::set, Capabilities.Energy.ITEM, AlloyCompressor.FUEL_SLOT, 55, 75));
+        addSlot(handler -> new CapabilityHandlerSlot<>(handler, compressor::setItem, Capabilities.Energy.ITEM, AlloyCompressor.FUEL_SLOT, 55, 75));
         addSlot(handler -> new ResultResourceHandlerSlot(playerInventory.player, handler, _ -> {}, AlloyCompressor.RESULT_SLOT_START, 138, 30));
         addSlot(handler -> new ResultResourceHandlerSlot(playerInventory.player, handler, _ -> {}, AlloyCompressor.RESULT_SLOT_END, 138, 48));
 

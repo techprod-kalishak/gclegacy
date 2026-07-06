@@ -38,9 +38,9 @@ public class ParachestMenu extends AbstractContainerMenu {
         this.fluidResourceHandler = ResourcefulHelper.getResourceHandler(Capabilities.Fluid.BLOCK, FluidResource.EMPTY, parachest, null);
         this.parachest = parachest;
         this.player = playerInventory.player;
-        this.rows = (parachest.getContainerSize() - 3) / 9;
+        this.rows = (parachest.getItemsSize() - 3) / 9;
 
-        addSlot(new CapabilityHandlerSlot<>(this.resourceHandler, parachest::set, Capabilities.Fluid.ITEM, 0,  75, (this.rows == 0 ? 24 : 26) + this.rows * 18));
+        addSlot(new CapabilityHandlerSlot<>(this.resourceHandler, parachest::setItem, Capabilities.Fluid.ITEM, 0,  75, (this.rows == 0 ? 24 : 26) + this.rows * 18));
         addSlot(new NotPlaceableResourceHandlerSlot(this.resourceHandler, 1, 125, (this.rows == 0 ? 24 : 26) + this.rows * 18));
         addSlot(new NotPlaceableResourceHandlerSlot(this.resourceHandler, 2, 125 + 18, (this.rows == 0 ? 24 : 26) + this.rows * 18));
 

@@ -1,0 +1,14 @@
+{
+  "type": "galacticraftlegacy:compressing",
+  "experience": 0.3,
+  "key": {
+    "#": "#c:plates/heavy_duty",
+    "M": "#c:plates/meteoric_iron"
+  },
+  "pattern": [
+    "#M"
+  ],
+  "result": {
+    "id": "galacticraftlegacy:heavy_duty_plate_t2"
+  }
+}

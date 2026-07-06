@@ -7,7 +7,7 @@
 
 package io.kalishak.galacticraftlegacy.data.datamap;
 
-import io.kalishak.galacticraftlegacy.Constants;
+import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.registry.deferred.DeferredWeatheringCopperBlocks;
 import io.kalishak.galacticraftlegacy.world.level.block.GalacticraftBlocks;
 import net.minecraft.core.HolderLookup;

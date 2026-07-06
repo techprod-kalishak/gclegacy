@@ -7,13 +7,12 @@
 
 package io.kalishak.galacticraftlegacy.data;
 
-import io.kalishak.galacticraftlegacy.Constants;
+import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.client.data.GalacticraftBlockFamilies;
 import io.kalishak.galacticraftlegacy.data.recipes.builder.CompressingRecipeBuilder;
 import io.kalishak.galacticraftlegacy.data.recipes.builder.FabricatingRecipeBuilder;
 import io.kalishak.galacticraftlegacy.world.item.GalacticraftItems;
 import io.kalishak.galacticraftlegacy.world.item.crafting.FabricatingBookCategory;
-import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -27,7 +26,6 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.AbstractCookingRecipe;
 import net.minecraft.world.item.crafting.CookingBookCategory;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.ItemLike;
 import net.neoforged.neoforge.common.Tags;
 import org.jspecify.annotations.Nullable;
@@ -51,6 +49,9 @@ public class GalacticraftRecipeProvider extends RecipeProvider {
     );
     private static final List<ItemLike> LEAD_SMELTABLE = List.of(
             GalacticraftItems.RAW_LEAD
+    );
+    private static final List<ItemLike> METEORIC_IRON_SMELTABLE = List.of(
+            GalacticraftItems.RAW_METEORIC_IRON
     );
     private static final List<ItemLike> SILICON_SMELTABLE = List.of(
             GalacticraftItems.SILICON_ORE,
@@ -309,6 +310,9 @@ public class GalacticraftRecipeProvider extends RecipeProvider {
         oreBlasting(DESH_SMELTABLE, RecipeCategory.MISC, CookingBookCategory.MISC, GalacticraftItems.DESH_INGOT, 0.1F, 100, "desh_ingot");
         oreSmelting(LEAD_SMELTABLE, RecipeCategory.MISC, CookingBookCategory.MISC, GalacticraftItems.LEAD_INGOT, 0.2F, 200, "lead_ingot");
         oreBlasting(LEAD_SMELTABLE, RecipeCategory.MISC, CookingBookCategory.MISC, GalacticraftItems.LEAD_INGOT, 0.2F, 100, "lead_ingot");
+        oreSmelting(METEORIC_IRON_SMELTABLE, RecipeCategory.MISC, CookingBookCategory.MISC, GalacticraftItems.METEORIC_IRON_INGOT, 0.2F, 200, "meteoric_iron_ingot");
+        oreBlasting(METEORIC_IRON_SMELTABLE, RecipeCategory.MISC, CookingBookCategory.MISC, GalacticraftItems.METEORIC_IRON_INGOT, 0.2F, 100, "meteoric_iron_ingot");
+
         SimpleCookingRecipeBuilder.smelting(Ingredient.of(GalacticraftItems.RAW_STEEL), RecipeCategory.MISC, CookingBookCategory.MISC, GalacticraftItems.STEEL_INGOT, 0.1F, 200)
                 .unlockedBy(getHasName(GalacticraftItems.RAW_STEEL), has(GalacticraftItems.RAW_STEEL))
                 .save(this.output, Constants.key(Registries.RECIPE, getSmeltingRecipeName(GalacticraftItems.STEEL_INGOT)));
@@ -471,9 +475,9 @@ public class GalacticraftRecipeProvider extends RecipeProvider {
                 .unlockedBy(getHasName(Items.IRON_INGOT), has(Tags.Items.INGOTS_IRON))
         );
         compressing(GalacticraftItems.COMPRESSED_METEORIC_IRON, 0.3F, builder -> builder
-                .define('#', GalacticraftTags.Items.RAW_MATERIALS_METEORIC_IRON)
+                .define('#', GalacticraftTags.Items.RAW_MATERIALS_IRIDIUM)
                 .pattern("##")
-                .unlockedBy(getHasName(GalacticraftItems.RAW_METEORIC_IRON), has(GalacticraftTags.Items.RAW_MATERIALS_METEORIC_IRON))
+                .unlockedBy(getHasName(GalacticraftItems.RAW_METEORIC_IRON), has(GalacticraftTags.Items.RAW_MATERIALS_IRIDIUM))
         );
         compressing(GalacticraftItems.COMPRESSED_TIN, 0.1F, builder -> builder
                 .define('#', GalacticraftTags.Items.INGOTS_TIN)

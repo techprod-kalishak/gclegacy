@@ -112,6 +112,7 @@ public class GalacticraftItemTagsProvider extends ItemTagsProvider {
                 .addTag(GalacticraftTags.Items.RAW_MATERIALS_CHEESE)
                 .addTag(GalacticraftTags.Items.RAW_MATERIALS_ALUMINUM)
                 .addTag(GalacticraftTags.Items.RAW_MATERIALS_DESH)
+                .addTag(GalacticraftTags.Items.RAW_MATERIALS_IRIDIUM)
                 .addTag(GalacticraftTags.Items.RAW_MATERIALS_LEAD)
                 .addTag(GalacticraftTags.Items.RAW_MATERIALS_SILICON)
                 .addTag(GalacticraftTags.Items.RAW_MATERIALS_STEEL)
@@ -124,6 +125,8 @@ public class GalacticraftItemTagsProvider extends ItemTagsProvider {
                 .add(GalacticraftItems.ALUMINUM_INGOT.get());
         tag(GalacticraftTags.Items.INGOTS_DESH)
                 .add(GalacticraftItems.DESH_INGOT.get());
+        tag(GalacticraftTags.Items.INGOTS_IRIDIUM)
+                .add(GalacticraftItems.METEORIC_IRON_INGOT.get());
         tag(GalacticraftTags.Items.INGOTS_LEAD)
                 .add(GalacticraftItems.LEAD_INGOT.get());
         tag(GalacticraftTags.Items.INGOTS_STEEL)
@@ -134,8 +137,6 @@ public class GalacticraftItemTagsProvider extends ItemTagsProvider {
                 .add(GalacticraftItems.TITANIUM_INGOT.get());
         tag(GalacticraftTags.Items.NUGGETS_DESH)
                 .add(GalacticraftItems.DESH_NUGGET.get());
-        tag(GalacticraftTags.Items.NUGGETS_LEAD)
-                .add(GalacticraftItems.LEAD_NUGGET.get());
         tag(GalacticraftTags.Items.NUGGETS_STEEL)
                 .add(GalacticraftItems.STEEL_NUGGET.get());
         tag(GalacticraftTags.Items.NUGGETS_TITANIUM)
@@ -191,6 +192,8 @@ public class GalacticraftItemTagsProvider extends ItemTagsProvider {
                 .add(GalacticraftItems.SILICON_ORE.get())
                 .add(GalacticraftItems.DEEPSLATE_SILICON_ORE.get());
         tag(GalacticraftTags.Items.ORES_TIN)
+                .add(GalacticraftItems.TIN_ORE.get())
+                .add(GalacticraftItems.DEEPSLATE_TIN_ORE.get())
                 .add(GalacticraftItems.MOON_TIN_ORE.get());
         tag(Tags.Items.ORES)
                 .addTag(GalacticraftTags.Items.ORES_ALUMINUM);
@@ -212,7 +215,7 @@ public class GalacticraftItemTagsProvider extends ItemTagsProvider {
                 .add(GalacticraftItems.RAW_DESH.get());
         tag(GalacticraftTags.Items.RAW_MATERIALS_LEAD)
                 .add(GalacticraftItems.RAW_LEAD.get());
-        tag(GalacticraftTags.Items.RAW_MATERIALS_METEORIC_IRON)
+        tag(GalacticraftTags.Items.RAW_MATERIALS_IRIDIUM)
                 .add(GalacticraftItems.RAW_METEORIC_IRON.get());
         tag(GalacticraftTags.Items.RAW_MATERIALS_SILICON)
                 .add(GalacticraftItems.RAW_SILICON.get());

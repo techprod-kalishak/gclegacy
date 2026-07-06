@@ -7,7 +7,7 @@
 
 package io.kalishak.galacticraftlegacy.client.gui.components;
 
-import io.kalishak.galacticraftlegacy.Constants;
+import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.client.gui.screens.inventory.GearInventoryScreen;
 import io.kalishak.galacticraftlegacy.world.item.GalacticraftItems;
 import net.minecraft.client.Minecraft;

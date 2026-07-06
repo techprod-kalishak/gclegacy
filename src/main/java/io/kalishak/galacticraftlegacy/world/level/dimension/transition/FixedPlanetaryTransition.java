@@ -7,37 +7,44 @@
 
 package io.kalishak.galacticraftlegacy.world.level.dimension.transition;
 
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.kalishak.galacticraftlegacy.config.ServerConfig;
-import net.minecraft.ChatFormatting;
+import io.kalishak.galacticraftlegacy.references.GalacticraftComponents;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
 import org.jspecify.annotations.Nullable;
 
+import java.util.Optional;
+
 public class FixedPlanetaryTransition extends PlanetaryTransition {
+    public static final MapCodec<FixedPlanetaryTransition> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+            BlockPos.CODEC.fieldOf("pos").forGetter(transition -> transition.pos),
+            BlockPos.CODEC.optionalFieldOf("parachest_pos").forGetter(transition -> transition.parachestPos),
+            Codec.BOOL.optionalFieldOf("is_space_station", false).forGetter(transition -> transition.isSpaceStation)
+    ).apply(instance, FixedPlanetaryTransition::new));
+
     protected final BlockPos pos;
+    protected final Optional<BlockPos> parachestPos;
     private final boolean isSpaceStation;
 
-    protected FixedPlanetaryTransition(BlockPos pos, boolean isSpaceStation) {
-        super(TransitionType.FIXED_POSITION.get());
+    @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
+    public FixedPlanetaryTransition(BlockPos pos, Optional<BlockPos> optionalParachestPos, boolean isSpaceStation) {
         this.pos = pos;
+        this.parachestPos = optionalParachestPos;
         this.isSpaceStation = isSpaceStation;
     }
 
-    public static FixedPlanetaryTransition orbital() {
-        return new FixedPlanetaryTransition(new BlockPos(0, 65, 0), false) {
-            @Override
-            public BlockPos getParachestSpawnLocation(ServerLevel level, ServerPlayer player) {
-                return new  BlockPos(-8, 90, -1);
-            }
-        };
+    public static FixedPlanetaryTransition spaceStation() {
+        return new FixedPlanetaryTransition(new BlockPos(0, 65, 0), Optional.of(new BlockPos(-8, 90, -1)), false);
     }
 
-    public static FixedPlanetaryTransition spaceStation() {
-        return new FixedPlanetaryTransition(new BlockPos(0, 65, 0), true);
+    public static FixedPlanetaryTransition orbital() {
+        return new FixedPlanetaryTransition(new BlockPos(0, 65, 0), null, true);
     }
 
     @Override
@@ -57,17 +64,18 @@ public class FixedPlanetaryTransition extends PlanetaryTransition {
 
     @Override
     public @Nullable BlockPos getParachestSpawnLocation(ServerLevel level, ServerPlayer player) {
-        return null;
+        return this.parachestPos.orElse(null);
     }
 
     @Override
     public void onDimensionChange(Level newLevel, ServerPlayer player, boolean isRidingAutoRocket) {
         if (this.isSpaceStation && ServerConfig.SPACE_STATIONS_PERMISSIONS.get() && !newLevel.isClientSide()) {
-            player.sendSystemMessage(
-                    Component.translatable("gui.spacestation.type_command").withStyle(ChatFormatting.YELLOW)
-                            .append(Component.literal("/ssinvite").withStyle(ChatFormatting.AQUA))
-                            .append(Component.translatable("gui.spacestation.playername", Component.translatable("gui.spacestation.to_allow_entry").withStyle(ChatFormatting.YELLOW))
-            ));
+            player.sendSystemMessage(GalacticraftComponents.SPACE_STATION_TYPE_COMMAND);
         }
+    }
+
+    @Override
+    public MapCodec<FixedPlanetaryTransition> codec() {
+        return CODEC;
     }
 }

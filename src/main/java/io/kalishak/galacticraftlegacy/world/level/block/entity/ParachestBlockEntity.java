@@ -7,6 +7,7 @@
 
 package io.kalishak.galacticraftlegacy.world.level.block.entity;
 
+import io.kalishak.galacticraftlegacy.references.GalacticraftComponents;
 import io.kalishak.galacticraftlegacy.world.score.race.SpaceRaceHooks;
 import io.kalishak.galacticraftlegacy.world.score.race.SpaceRaceScoreboard;
 import io.kalishak.galacticraftlegacy.world.score.race.SpaceRaceTeam;
@@ -43,12 +44,12 @@ import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.SimpleFluidContent;
 import net.neoforged.neoforge.transfer.item.ItemResource;
-import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
+import net.neoforged.neoforge.transfer.item.ItemUtil;
 import org.jspecify.annotations.Nullable;
 
 import java.util.List;
 
-public class ParachestBlockEntity extends NamedBlockEntity implements LidBlockEntity {
+public class ParachestBlockEntity extends BaseItemStorageBlockEntity implements LidBlockEntity {
     private final int slotCount;
     private FluidStack tank = FluidStack.EMPTY;
     private @Nullable EntityReference<Player> owner;
@@ -84,8 +85,6 @@ public class ParachestBlockEntity extends NamedBlockEntity implements LidBlockEn
     public ParachestBlockEntity(BlockPos blockPos, BlockState blockState, int baseChestSlotCount) {
         super(GalacticraftBlockEntityType.PARACHEST.get(), blockPos, blockState);
         this.slotCount = 3 + baseChestSlotCount;
-
-        setItems(NonNullList.withSize(this.slotCount, ItemStack.EMPTY));
     }
 
     public ParachestBlockEntity(BlockPos blockPos, BlockState blockState) {
@@ -96,7 +95,7 @@ public class ParachestBlockEntity extends NamedBlockEntity implements LidBlockEn
         event.registerBlockEntity(
                 Capabilities.Item.BLOCK,
                 GalacticraftBlockEntityType.PARACHEST.get(),
-                (entity, _) -> new ItemStacksResourceHandler(entity.items)
+                (entity, _) -> entity.items
         );
         event.registerBlockEntity(
                 Capabilities.Fluid.BLOCK,
@@ -106,7 +105,7 @@ public class ParachestBlockEntity extends NamedBlockEntity implements LidBlockEn
     }
 
     @Override
-    public int getContainerSize() {
+    public int getItemsSize() {
         return this.slotCount;
     }
 
@@ -115,21 +114,21 @@ public class ParachestBlockEntity extends NamedBlockEntity implements LidBlockEn
     }
 
     @Override
-    public void set(int index, ItemResource itemResource, int amount) {
-        if (itemResource.has(GalacticraftDataComponents.FLUID_TANK)) {
+    public void setItem(int index, ItemStack itemStack) {
+        if (itemStack.has(GalacticraftDataComponents.FLUID_TANK)) {
             SingleTankResourceHandler thisHandler = new SingleTankResourceHandler(this.tank, 6000);
 
-            ItemResource newResource = ResourcefulHelper.fillTank(thisHandler, fluid -> fluid.is(GalacticraftTags.Fluids.IS_FUEL), itemResource.toStack(), null);
+            ItemResource newResource = ResourcefulHelper.fillTank(thisHandler, fluid -> fluid.is(GalacticraftTags.Fluids.IS_FUEL), itemStack, null);
 
-            if (!ResourcefulHelper.areResourcesEqual(newResource, itemResource, ItemResource::toStack, ItemStack::isSameItemSameComponents)) {
-                super.set(index, itemResource, amount);
+            if (!ItemStack.isSameItemSameComponents(itemStack, newResource.toStack())) {
+                super.setItem(index, itemStack);
             }
         }
     }
 
     @Override
     protected Component getDefaultName() {
-        return Component.translatable("container.parachest");
+        return GalacticraftComponents.BLOCK_PARACHEST;
     }
 
     @Override
@@ -164,12 +163,14 @@ public class ParachestBlockEntity extends NamedBlockEntity implements LidBlockEn
     }
 
     public void copyItemsFrom(NonNullList<ItemStack> items) {
-        setItems(items);
+        for (int i = 0; i < getItemsSize(); i++) {
+            setItem(i, items.get(i));
+        }
     }
 
     public void copyItems(NonNullList<ItemStack> items) {
-        for (int i = 0; i < getContainerSize(); i++) {
-            items.set(i, this.items.get(i).copy());
+        for (int i = 0; i < getItemsSize(); i++) {
+            items.set(i, ItemUtil.getStack(this.items, i));
         }
     }
 

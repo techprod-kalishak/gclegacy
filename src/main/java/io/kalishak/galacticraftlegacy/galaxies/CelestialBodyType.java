@@ -9,7 +9,7 @@ package io.kalishak.galacticraftlegacy.galaxies;
 
 import io.kalishak.galacticraftlegacy.Galacticraft;
 import io.kalishak.galacticraftlegacy.registry.GalacticraftRegistries;
-import io.kalishak.galacticraftlegacy.Constants;
+import io.kalishak.galacticraftlegacy.references.Constants;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.Identifier;
 import net.neoforged.bus.api.IEventBus;

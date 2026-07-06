@@ -7,6 +7,7 @@
 
 package io.kalishak.galacticraftlegacy.world.level.dimension.transition;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -15,12 +16,6 @@ import net.minecraft.world.level.Level;
 import org.jspecify.annotations.Nullable;
 
 public abstract class PlanetaryTransition {
-    protected final TransitionType<?> type;
-
-    protected PlanetaryTransition(TransitionType<?> type) {
-        this.type = type;
-    }
-
     public abstract boolean useParachute();
 
     public abstract BlockPos getPlayerSpawnLocation(ServerLevel level, ServerPlayer player);
@@ -30,10 +25,7 @@ public abstract class PlanetaryTransition {
     public abstract void onDimensionChange(Level newLevel, ServerPlayer player, boolean isRidingAutoRocket);
 
     public void setupAdventureModeSpawn(ServerPlayer player) {
-
     }
 
-    public final TransitionType<?> getType() {
-        return this.type;
-    }
+    public abstract MapCodec<? extends PlanetaryTransition> codec();
 }

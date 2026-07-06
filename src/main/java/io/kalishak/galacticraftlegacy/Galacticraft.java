@@ -38,6 +38,7 @@ import io.kalishak.galacticraftlegacy.world.level.block.GalacticraftBlocks;
 import io.kalishak.galacticraftlegacy.world.level.block.GalacticraftDispenserBehaviors;
 import io.kalishak.galacticraftlegacy.world.level.block.cauldron.GalacticraftCauldronInteraction;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityType;
+import io.kalishak.galacticraftlegacy.world.level.dimension.transition.LanderPlanetaryTransition;
 import io.kalishak.galacticraftlegacy.world.level.dimension.transition.TransitionType;
 import io.kalishak.galacticraftlegacy.world.level.levelgen.GalacticraftNoiseRouterData;
 import io.kalishak.galacticraftlegacy.world.level.levelgen.features.GalacticraftFeatures;
@@ -90,6 +91,7 @@ public class Galacticraft {
 
         modEventBus.addListener(this::setup);
         modEventBus.addListener(this::registerCauldronFluids);
+        modEventBus.addListener(LanderPlanetaryTransition::onConfigReloaded);
 
         GalacticraftCauldronInteraction.init(modEventBus);
         modEventBus.addListener(GalacticraftData::gatherData);

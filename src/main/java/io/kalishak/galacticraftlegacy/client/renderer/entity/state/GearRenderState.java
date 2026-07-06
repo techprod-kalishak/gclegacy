@@ -7,7 +7,7 @@
 
 package io.kalishak.galacticraftlegacy.client.renderer.entity.state;
 
-import io.kalishak.galacticraftlegacy.Constants;
+import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.attachment.AttachmentHelper;
 import io.kalishak.galacticraftlegacy.attachment.GalacticraftAttachments;
 import io.kalishak.galacticraftlegacy.attachment.entity.GearInventoryProvider;
@@ -40,7 +40,7 @@ public interface GearRenderState {
         reusedState.setRenderData(GearRenderState.OXYGEN_MASK, spaceGearEquipment.get(GearEquipmentSlot.MASK));
         reusedState.setRenderData(GearRenderState.OXYGEN_GEAR, spaceGearEquipment.get(GearEquipmentSlot.GEAR));
         reusedState.setRenderData(GearRenderState.TANK, spaceGearEquipment.get(GearEquipmentSlot.TANK));
-        reusedState.setRenderData(GearRenderState.ADDITIONAL_TANK, spaceGearEquipment.get(GearEquipmentSlot.TANK));
+        reusedState.setRenderData(GearRenderState.ADDITIONAL_TANK, spaceGearEquipment.get(GearEquipmentSlot.ADDITIONAL_TANK));
     }
 
     static <E extends LivingEntity, S extends LivingEntityRenderState> void appendPlayerRenderStates(E entity, S reusedState) {
@@ -56,7 +56,7 @@ public interface GearRenderState {
         reusedState.setRenderData(GearRenderState.TELEMETRY_MODULE, spaceGearEquipment.get(GearEquipmentSlot.TELEMETRY));
         reusedState.setRenderData(GearRenderState.SHIELD_CONTROLLER, spaceGearEquipment.get(GearEquipmentSlot.SHIELD));
 
-        AttachmentHelper.getMap(entity.level(), GalacticraftAttachments.CELESTIAL_BODY, levelData -> levelData.value().temperatureModifier())
+        AttachmentHelper.getMap(entity.level(), GalacticraftAttachments.CELESTIAL_BODY, levelData -> levelData.value().atmosphereInfo().getTemperatureModifier())
                 .ifPresent(temperatureModifier -> reusedState.setRenderData(GearRenderState.TEMPERATURE_MODIFIER, temperatureModifier));
     }
 

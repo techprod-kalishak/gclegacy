@@ -8,8 +8,8 @@
 package io.kalishak.galacticraftlegacy.world.item;
 
 import io.kalishak.galacticraftlegacy.data.GalacticraftTags;
+import io.kalishak.galacticraftlegacy.references.GalacticraftComponents;
 import io.kalishak.galacticraftlegacy.world.item.component.GalacticraftDataComponents;
-import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.GlobalPos;
 import net.minecraft.network.chat.Component;
@@ -60,6 +60,6 @@ public class StructureFinderItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay tooltipDisplay, Consumer<Component> tooltipAdder, TooltipFlag flag) {
-        tooltipAdder.accept(Component.translatable("item.galacticraftlegacy.creative_only").withStyle(ChatFormatting.RED));
+        tooltipAdder.accept(GalacticraftComponents.CREATIVE_ONLY);
     }
 }
