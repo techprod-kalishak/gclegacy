@@ -62,6 +62,7 @@ public class GalacticraftComponents {
     public static final MutableComponent COAL_GENERATOR_HEAT_LEVEL = Component.translatable("container.coal_generator.heat_level");
 
     public static final Component FILTER_NAME_HEATABLE = Component.translatable("gui.recipebook.toggleRecipes.heatable");
+    public static final Component FILTER_NAME_ARC_HEATABLE = Component.translatable("gui.recipebook.toggleRecipes.arc_heatable");
 
     // Advancements
     public static final Component ADVANCEMENT_GC = Component.translatable("advancements.galacticraftlegacy.galacticraft.title");

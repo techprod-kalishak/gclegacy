@@ -16,6 +16,7 @@ import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.RecipeBookMenu;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.transfer.ResourceHandler;
 import net.neoforged.neoforge.transfer.access.ItemAccess;
@@ -27,6 +28,7 @@ public abstract class AbstractMachineRecipeBookMenu<M extends AbstractMachineBlo
     protected final M machine;
     protected final ResourceHandler<ItemResource> resourceHandler;
     protected final EnergyHandler energyHandler;
+    protected final Level level;
     protected final Player player;
 
     protected AbstractMachineRecipeBookMenu(MenuType<? extends AbstractMachineRecipeBookMenu<M>> menuType, int containerId, Inventory playerInventory, M machine, ContainerData containerData) {
@@ -35,6 +37,7 @@ public abstract class AbstractMachineRecipeBookMenu<M extends AbstractMachineBlo
         this.machine = machine;
         this.resourceHandler = machine.getResourceHandler();
         this.energyHandler = ResourcefulHelper.getEnergyHandler(machine, null);
+        this.level = playerInventory.player.level();
         this.player = playerInventory.player;
         addDataSlots(containerData);
     }

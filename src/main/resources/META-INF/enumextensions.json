@@ -2,6 +2,15 @@
   "entries": [
     {
       "enum": "net/minecraft/world/inventory/RecipeBookType",
+      "name": "GALACTICRAFTLEGACY_ARC_HEATING",
+      "constructor": "()V",
+      "parameters": {
+        "class": "io/kalishak/galacticraftlegacy/EnumExtensions",
+        "field": "RECIPE_BOOK_TYPE_ARC_HEATING"
+      }
+    },
+    {
+      "enum": "net/minecraft/world/inventory/RecipeBookType",
       "name": "GALACTICRAFTLEGACY_FABRICATING",
       "constructor": "()V",
       "parameters": {
@@ -16,6 +25,15 @@
       "parameters": {
         "class": "io/kalishak/galacticraftlegacy/EnumExtensions",
         "field": "RECIPE_BOOK_TYPE_COMPRESSING"
+      }
+    },
+    {
+      "enum": "net/minecraft/world/inventory/RecipeBookType",
+      "name": "GALACTICRAFTLEGACY_HEATING",
+      "constructor": "()V",
+      "parameters": {
+        "class": "io/kalishak/galacticraftlegacy/EnumExtensions",
+        "field": "RECIPE_BOOK_TYPE_HEATING"
       }
     },
     {

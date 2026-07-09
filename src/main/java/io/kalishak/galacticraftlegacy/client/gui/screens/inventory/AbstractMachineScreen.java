@@ -16,10 +16,16 @@ import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.AbstractM
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.AbstractRecipeBookScreen;
 import net.minecraft.client.gui.screens.recipebook.RecipeBookComponent;
+import net.minecraft.client.gui.screens.recipebook.SearchRecipeBookCategory;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.ExtendedRecipeBookCategory;
+
+import java.util.Optional;
 
 public abstract class AbstractMachineScreen<BE extends AbstractMachineBlockEntity, M extends AbstractMachineRecipeBookMenu<BE>> extends AbstractRecipeBookScreen<M> implements MachineScreen {
     protected final Identifier backgroundTexture;
@@ -29,11 +35,22 @@ public abstract class AbstractMachineScreen<BE extends AbstractMachineBlockEntit
         this.backgroundTexture = backgroundTexture;
     }
 
+    public static RecipeBookComponent.TabInfo asTab(ExtendedRecipeBookCategory category) {
+        return new RecipeBookComponent.TabInfo(new ItemStack(Items.COMPASS), Optional.empty(), category);
+    }
+
     @Override
     public int getEnergyStored() {
         return getMenu().getMachine().getExistingData(GalacticraftAttachments.SYNC_ENERGY_STORAGE)
                 .map(SyncedEnergyHandler::storedEnergy)
                 .orElse(0);
+    }
+
+    @Override
+    public float getEnergyProgress() {
+        int stored = getEnergyStored();
+
+        return stored != 0 ? Math.clamp((float) stored / this.menu.getEnergyCapacity(), 0.0F, 1.0F) : 0.0F;
     }
 
     @Override

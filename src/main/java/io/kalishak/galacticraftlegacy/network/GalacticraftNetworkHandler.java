@@ -11,9 +11,12 @@ import io.kalishak.galacticraftlegacy.network.handler.client.ToggleGearInventory
 import io.kalishak.galacticraftlegacy.network.handler.client.UpdateEnergyNodeNetworkClientHandler;
 import io.kalishak.galacticraftlegacy.network.handler.client.UpdateFluidNodeNetworkClientHandler;
 import io.kalishak.galacticraftlegacy.network.handler.server.ToggleGearInventoryServerHandler;
+import io.kalishak.galacticraftlegacy.network.handler.server.ToggleSensorGlassesServerHandler;
 import io.kalishak.galacticraftlegacy.network.payload.ToggleGearInventoryPayload;
+import io.kalishak.galacticraftlegacy.network.payload.ToggleSensorGlassesPayload;
 import io.kalishak.galacticraftlegacy.network.payload.UpdateEnergyNodeNetworkPayload;
 import io.kalishak.galacticraftlegacy.network.payload.UpdateFluidNodeNetworkPayload;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 
@@ -27,6 +30,12 @@ public final class GalacticraftNetworkHandler {
                 ToggleGearInventoryServerHandler::handleServer,
                 ToggleGearInventoryClientHandler::handleClient
         );
+        registrar.playToServer(
+                ToggleSensorGlassesPayload.TYPE,
+                ToggleSensorGlassesPayload.STREAM_CODEC,
+                ToggleSensorGlassesServerHandler::handleServer
+        );
+
         registrar.playToClient(
                 UpdateFluidNodeNetworkPayload.TYPE,
                 UpdateFluidNodeNetworkPayload.STREAM_CODEC,

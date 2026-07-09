@@ -227,6 +227,7 @@ public final class GalacticraftCreativeModeTabs {
         output.accept(GalacticraftItems.ELECTRIC_COMPRESSOR);
         output.accept(GalacticraftItems.CIRCUIT_FABRICATOR);
         output.accept(GalacticraftItems.ELECTRIC_FURNACE);
+        output.accept(GalacticraftItems.ELECTRIC_ARC_FURNACE);
         output.accept(GalacticraftItems.MOON_COPPER_ORE);
         output.accept(GalacticraftItems.MOON_TIN_ORE);
         output.accept(GalacticraftItems.MOON_CHEESE_ORE);

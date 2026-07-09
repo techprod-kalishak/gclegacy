@@ -64,7 +64,7 @@ public class CircuitFabricatorMenu extends AbstractMachineRecipeBookMenu<Circuit
         int i = this.containerData.get(0);
         int j = this.containerData.get(1);
 
-        return j != 0 && i != 0 ? Mth.clamp((float)i / j, 0.0F, 1.0F) : 0.0F;
+        return j != 0 && i != 0 ? Mth.clamp((float) i / j, 0.0F, 1.0F) : 0.0F;
     }
 
     @Override

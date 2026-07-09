@@ -12,8 +12,11 @@ import net.minecraft.world.inventory.RecipeBookType;
 import net.neoforged.fml.common.asm.enumextension.EnumProxy;
 
 public class EnumExtensions {
-    public static final EnumProxy<RecipeBookType> RECIPE_BOOK_TYPE_FABRICATING = new EnumProxy<>(RecipeBookType.class);
+
+    public static final EnumProxy<RecipeBookType> RECIPE_BOOK_TYPE_ARC_HEATING = new EnumProxy<>(RecipeBookType.class);
     public static final EnumProxy<RecipeBookType> RECIPE_BOOK_TYPE_COMPRESSING = new EnumProxy<>(RecipeBookType.class);
+    public static final EnumProxy<RecipeBookType> RECIPE_BOOK_TYPE_FABRICATING = new EnumProxy<>(RecipeBookType.class);
+    public static final EnumProxy<RecipeBookType> RECIPE_BOOK_TYPE_HEATING = new EnumProxy<>(RecipeBookType.class);
 
     public static final EnumProxy<EquipmentClientInfo.LayerType> LAYER_TYPE_PARACHUTE = new EnumProxy<>(EquipmentClientInfo.LayerType.class, "galacticraftlegacy:parachute");
     public static final EnumProxy<EquipmentClientInfo.LayerType> LAYER_TYPE_TANK = new EnumProxy<>(EquipmentClientInfo.LayerType.class, "galacticraftlegacy:tank");

@@ -47,6 +47,13 @@ public class ElectricCompressorScreen extends AbstractRecipeBookScreen<ElectricC
     }
 
     @Override
+    public float getEnergyProgress() {
+        int len = getEnergyStored();
+
+        return len != 0 ? (float) len / this.menu.getEnergyCapacity() : 0.0F;
+    }
+
+    @Override
     public void extractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
         super.extractRenderState(graphics, mouseX, mouseY, a);
         extractTooltip(graphics, mouseX, mouseY);

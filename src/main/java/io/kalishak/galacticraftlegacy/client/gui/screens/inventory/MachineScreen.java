@@ -23,6 +23,7 @@ public interface MachineScreen {
     int INDICATOR_HEIGHT = 10;
 
     int getEnergyStored();
+    float getEnergyProgress();
 
     default Bounds getEnergyBarBounds() {
         return Bounds.ZERO;
@@ -41,8 +42,8 @@ public interface MachineScreen {
             graphics.blitSprite(RenderPipelines.GUI_TEXTURED, ENERGY_INDICATOR_SPRITE, INDICATOR_WIDTH, INDICATOR_HEIGHT, 0, 0, energyIndicator.x(), energyIndicator.y(), INDICATOR_WIDTH, INDICATOR_HEIGHT);
 
             Bounds energyBar = offset(getEnergyBarBounds(), leftOffset, topOffset);
-            int length = Mth.ceil((float) getEnergyStored() / (float) energyCapacity);
-            graphics.blitSprite(RenderPipelines.GUI_TEXTURED, ENERGY_BAR_SPRITE, BAR_WIDTH, BAR_HEIGHT, 0, 0, energyBar.x(), energyBar.y(), length  * energyBar.x(), BAR_HEIGHT);
+            int length = (int) Math.floor(getEnergyProgress()  * energyBar.x());
+            graphics.blitSprite(RenderPipelines.GUI_TEXTURED, ENERGY_BAR_SPRITE, BAR_WIDTH, BAR_HEIGHT, 0, 0, energyBar.x(), energyBar.y(), length, BAR_HEIGHT);
         }
     }
 

@@ -1,0 +1,9 @@
+{
+  "type": "galacticraftlegacy:arc_heating",
+  "category": "blocks",
+  "cookingtime": 200,
+  "ingredient": "galacticraftlegacy:raw_tin_block",
+  "result": {
+    "id": "galacticraftlegacy:tin_block"
+  }
+}

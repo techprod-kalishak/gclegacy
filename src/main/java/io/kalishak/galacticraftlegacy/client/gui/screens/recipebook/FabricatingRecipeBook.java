@@ -56,16 +56,17 @@ public class FabricatingRecipeBook extends RecipeBookComponent<CircuitFabricator
     }
 
     @Override
-    protected void fillGhostRecipe(GhostSlots ghostSlots, RecipeDisplay recipeDisplay, ContextMap contextMap) {
-        ghostSlots.setResult(this.menu.getSlot(CircuitFabricatorBlockEntity.SLOT_OUTPUT), contextMap, recipeDisplay.result());
+    protected void fillGhostRecipe(GhostSlots ghostSlots, RecipeDisplay recipeDisplay, ContextMap context) {
+        ghostSlots.setResult(this.menu.getSlot(CircuitFabricatorBlockEntity.SLOT_OUTPUT), context, recipeDisplay.result());
 
         if (recipeDisplay instanceof CircutFabricatorRecipeDisplay fabricating) {
             for (int i = CircuitFabricatorBlockEntity.SLOT_DIAMOND; i < CircuitFabricatorBlockEntity.SLOT_OUTPUT; i++) {
-                ghostSlots.setInput(this.menu.getSlot(i), contextMap, CircutFabricatorRecipeDisplay.ofIndex(fabricating, i));
+                ghostSlots.setInput(this.menu.getSlot(i), context, CircutFabricatorRecipeDisplay.ofIndex(fabricating, i));
             }
 
-            if (!this.menu.getSlot(CircuitFabricatorBlockEntity.SLOT_BATTERY).hasItem()) {
-                ghostSlots.setInput(this.menu.getSlot(CircuitFabricatorBlockEntity.SLOT_BATTERY), contextMap, fabricating.battery());
+            Slot energySourceSlot = this.menu.getSlot(CircuitFabricatorBlockEntity.SLOT_BATTERY);
+            if (!energySourceSlot.hasItem()) {
+                ghostSlots.setInput(energySourceSlot, context, EnergyRecipeBookComponent.getEnergyDisplay(energySourceSlot, 250, fabricating.battery()));
             }
         }
     }

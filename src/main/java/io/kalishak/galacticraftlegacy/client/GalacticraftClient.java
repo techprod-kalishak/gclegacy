@@ -204,7 +204,8 @@ public class GalacticraftClient {
     }
 
     private void registerScreens(RegisterMenuScreensEvent event) {
-        event.register(GalacticraftMenuType.ARC_FURNACE.get(), ElectricFurnaceScreen::new);
+        event.register(GalacticraftMenuType.ELECTRIC_FURNACE.get(), ElectricFurnaceScreen::new);
+        event.register(GalacticraftMenuType.ELECTRIC_ARC_FURNACE.get(), ElectricArcFurnaceScreen::new);
         event.register(GalacticraftMenuType.COAL_GENERATOR.get(), CoalGeneratorScreen::new);
         event.register(GalacticraftMenuType.CIRCUIT_FABRICATOR.get(), CircuitFabricatorScreen::new);
         event.register(GalacticraftMenuType.COMPRESSOR.get(), CompressorScreen::new);

@@ -7,6 +7,7 @@
 
 package io.kalishak.galacticraftlegacy.data;
 
+import io.kalishak.galacticraftlegacy.data.recipes.builder.ElectricCookingRecipeBuilder;
 import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.client.data.GalacticraftBlockFamilies;
 import io.kalishak.galacticraftlegacy.data.recipes.builder.CompressingRecipeBuilder;
@@ -14,10 +15,12 @@ import io.kalishak.galacticraftlegacy.data.recipes.builder.FabricatingRecipeBuil
 import io.kalishak.galacticraftlegacy.world.item.GalacticraftItems;
 import io.kalishak.galacticraftlegacy.world.item.crafting.FabricatingBookCategory;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.flag.FeatureFlags;
@@ -26,6 +29,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.AbstractCookingRecipe;
 import net.minecraft.world.item.crafting.CookingBookCategory;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.ItemLike;
 import net.neoforged.neoforge.common.Tags;
 import org.jspecify.annotations.Nullable;
@@ -527,6 +531,48 @@ public class GalacticraftRecipeProvider extends RecipeProvider {
                 .unlockedBy(getHasName(GalacticraftItems.COMPRESSED_DESH), has(GalacticraftTags.Items.PLATE_DESH))
         );
         GalacticraftBlockFamilies.getFamilies().forEach(blockFamily -> generateRecipes(blockFamily, FeatureFlags.DEFAULT_FLAGS));
+
+        heating(
+                Items.RAW_IRON_BLOCK,
+                RecipeCategory.BUILDING_BLOCKS,
+                CookingBookCategory.BLOCKS,
+                Items.IRON_BLOCK,
+                200,
+                null
+        );
+        heating(
+                Items.RAW_COPPER_BLOCK,
+                RecipeCategory.BUILDING_BLOCKS,
+                CookingBookCategory.BLOCKS,
+                Items.COPPER_BLOCK,
+                200,
+                null
+        );
+        heating(
+                Items.RAW_GOLD_BLOCK,
+                RecipeCategory.BUILDING_BLOCKS,
+                CookingBookCategory.BLOCKS,
+                Items.GOLD_BLOCK,
+                200,
+                null
+        );
+
+        heating(
+                GalacticraftItems.RAW_ALUMINUM_BLOCK,
+                RecipeCategory.BUILDING_BLOCKS,
+                CookingBookCategory.BLOCKS,
+                GalacticraftItems.ALUMINUM_BLOCK,
+                200,
+                null
+        );
+        heating(
+                GalacticraftItems.RAW_TIN_BLOCK,
+                RecipeCategory.BUILDING_BLOCKS,
+                CookingBookCategory.BLOCKS,
+                GalacticraftItems.TIN_BLOCK,
+                200,
+                null
+        );
     }
 
     protected void compressing(ItemLike result, int count, float experience, UnaryOperator<CompressingRecipeBuilder> commonRecipeBuilder) {
@@ -555,6 +601,42 @@ public class GalacticraftRecipeProvider extends RecipeProvider {
         for(ItemLike itemlike : smeltables) {
             SimpleCookingRecipeBuilder.generic(Ingredient.of(itemlike), craftingCategory, cookingCategory, result, experience, cookingTime, recipeFactory).group(group).unlockedBy(getHasName(itemlike), this.has(itemlike)).save(this.output, Constants.key(Registries.RECIPE, getItemName(result) + fromDesc + "_" + getItemName(itemlike)));
         }
+    }
+
+    protected void heating(ItemLike input, RecipeCategory recipeCategory, CookingBookCategory cookingBookCategory, ItemLike result, int heatingTime, @Nullable String group) {
+        UnaryOperator<ElectricCookingRecipeBuilder> toHeat = builder -> builder
+                .group(group)
+                .unlockedBy(getHasName(input), has(input));
+        toHeat.apply(
+                ElectricCookingRecipeBuilder.heating(
+                        Ingredient.of(input),
+                        recipeCategory,
+                        cookingBookCategory,
+                        result,
+                        heatingTime
+                )
+        ).save(this.output, getHeatingRecipeName(result, input));
+        toHeat.apply(
+                ElectricCookingRecipeBuilder.arcHeating(
+                        Ingredient.of(input),
+                        recipeCategory,
+                        cookingBookCategory,
+                        result,
+                        heatingTime
+                )
+        ).save(this.output, getArcHeatingRecipeName(result, input));
+    }
+
+    protected void heating(Ingredient input, RecipeCategory recipeCategory, CookingBookCategory cookingBookCategory, ItemLike result, int heatingTime, @Nullable String group) {
+        input.getValues().forEach(itemHolder -> heating(itemHolder.value(), recipeCategory, cookingBookCategory, result, heatingTime, group));
+    }
+
+    protected void heating(TagKey<Item> input, RecipeCategory recipeCategory, CookingBookCategory cookingBookCategory, ItemLike result, int heatingTime, @Nullable String group) {
+        heating(Ingredient.of(this.items.getOrThrow(input)), recipeCategory, cookingBookCategory, result, heatingTime, group);
+    }
+
+    protected void heating(List<ItemLike> input, RecipeCategory recipeCategory, CookingBookCategory cookingBookCategory, ItemLike result, int heatingTime, @Nullable String group) {
+        input.forEach(itemHolder -> heating(itemHolder, recipeCategory, cookingBookCategory, result, heatingTime, group));
     }
 
     public void toolSet(TagKey<Item> ingredient, ItemLike sword, ItemLike spear, ItemLike shovel, ItemLike pickaxe, ItemLike axe, ItemLike hoe) {
@@ -636,16 +718,16 @@ public class GalacticraftRecipeProvider extends RecipeProvider {
                 .save(this.output, Constants.key(Registries.RECIPE, getItemName(boots)));
     }
 
-    private String conversionName(ItemLike result, String conversionName, ItemLike ingredient) {
+    private static String conversionName(ItemLike result, String conversionName, ItemLike ingredient) {
         return getItemName(result) + "_from_" + conversionName + "_" + getItemName(ingredient);
     }
 
-    private static String getHeatingRecipeName(ItemLike result, ItemLike ingredient) {
-        return getItemName(result) + "heating" + getItemName(ingredient);
+    private static ResourceKey<Recipe<?>> getHeatingRecipeName(ItemLike result, ItemLike ingredient) {
+        return Constants.key(Registries.RECIPE, conversionName(result, "heating", ingredient));
     }
 
-    private static String getArcHeatingRecipeName(ItemLike result, ItemLike ingredient) {
-        return getItemName(result) + "arc_heating" + getItemName(ingredient);
+    private static ResourceKey<Recipe<?>> getArcHeatingRecipeName(ItemLike result, ItemLike ingredient) {
+        return Constants.key(Registries.RECIPE, conversionName(result, "arc_heating", ingredient));
     }
 
     @Override

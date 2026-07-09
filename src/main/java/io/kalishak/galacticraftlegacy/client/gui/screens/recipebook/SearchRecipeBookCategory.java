@@ -14,6 +14,7 @@ public enum SearchRecipeBookCategory implements ExtendedRecipeBookCategory {
     COMPRESSING,
     ELECTRIC_COMPRESSING,
     HEATING,
+    ARC_HEATING,
     REFINING,
-    SCHEMATICS
+    SCHEMATICS;
 }

@@ -9,6 +9,7 @@ package io.kalishak.galacticraftlegacy.client.gui.screens.recipebook;
 
 import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.world.inventory.machine.AbstractCompressorMenu;
+import io.kalishak.galacticraftlegacy.world.inventory.machine.CompressorMenu;
 import io.kalishak.galacticraftlegacy.world.item.GalacticraftItems;
 import io.kalishak.galacticraftlegacy.world.item.crafting.GalacticraftRecipeBookCategories;
 import io.kalishak.galacticraftlegacy.world.item.crafting.display.CompressorRecipeDisplay;
@@ -25,6 +26,7 @@ import net.minecraft.world.entity.player.StackedItemContents;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.display.RecipeDisplay;
+import net.minecraft.world.item.crafting.display.SlotDisplay;
 
 import java.util.List;
 import java.util.Optional;
@@ -55,7 +57,7 @@ public class CompressorRecipeBookComponent extends RecipeBookComponent<AbstractC
 
     @Override
     protected boolean isCraftingSlot(Slot slot) {
-        return slot.index < AlloyCompressor.RESULT_SLOT_START;
+        return slot.index < AlloyCompressor.FUEL_SLOT;
     }
 
     @Override
@@ -82,6 +84,15 @@ public class CompressorRecipeBookComponent extends RecipeBookComponent<AbstractC
                     compressorRecipeDisplay.ingredients(),
                     (ingredient, gridIndex, _, _) -> ghostSlots.setInput(craftingSlots.get(gridIndex), context, ingredient)
             );
+
+            Slot slot = this.menu.getSlot(AlloyCompressor.FUEL_SLOT);
+            SlotDisplay energySource = compressorRecipeDisplay.energySource();
+
+            if (energySource == SlotDisplay.AnyFuel.INSTANCE && !slot.hasItem()) {
+                ghostSlots.setInput(slot, context, SlotDisplay.AnyFuel.INSTANCE);
+            } else {
+                ghostSlots.setInput(slot, context, EnergyRecipeBookComponent.getEnergyDisplay(slot, 250, energySource));
+            }
         }
     }
 }

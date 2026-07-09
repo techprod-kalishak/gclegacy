@@ -61,6 +61,11 @@ public class OxygenCollectorScreen extends AbstractContainerScreen<OxygenCollect
     }
 
     @Override
+    public float getEnergyProgress() {
+        return 0;
+    }
+
+    @Override
     public FluidStack getFluidStack() {
         return getMenu().getMachine().getExistingData(GalacticraftAttachments.SYNC_FLUID_STACK)
                 .orElse(FluidStack.EMPTY);

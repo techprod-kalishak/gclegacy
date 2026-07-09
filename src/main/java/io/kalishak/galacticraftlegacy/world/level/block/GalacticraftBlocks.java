@@ -826,6 +826,11 @@ public final class GalacticraftBlocks {
             ElectricFurnaceBlock::new,
             GalacticraftBlocks::machine
     );
+    public static final DeferredBlock<ArcFurnaceBlock> ELECTRIC_ARC_FURNACE = REGISTRY.registerBlock(
+            GalacticraftBlockIds.ELECTRIC_ARC_FURNACE,
+            ArcFurnaceBlock::new,
+            GalacticraftBlocks::machine
+    );
     public static final DeferredBlock<OxygenCollectorBlock> OXYGEN_COLLECTOR = REGISTRY.registerBlock(
             GalacticraftBlockIds.OXYGEN_COLLECTOR,
             OxygenCollectorBlock::new,

@@ -24,6 +24,11 @@ import java.util.Set;
 public final class GalacticraftBlockEntityType {
     private static final DeferredBlockEntityTypeRegister REGISTRY = DeferredBlockEntityTypeRegister.createBlockEntities(Galacticraft.MODID);
 
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<ElectricArcFurnaceBlockEntity>> ELECTRIC_ARC_FURNACE = REGISTRY.registerBlockEntity(
+            "electric_arc_furnace",
+            ElectricArcFurnaceBlockEntity::new,
+            GalacticraftBlocks.ELECTRIC_ARC_FURNACE
+    );
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<ColoredPipeBlockEntity>> COLORED_PIPE = REGISTRY.registerBlockEntity(
             "colored_pipe",
             ColoredPipeBlockEntity::new,

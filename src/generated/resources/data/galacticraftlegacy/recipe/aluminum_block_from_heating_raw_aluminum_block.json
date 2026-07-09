@@ -1,0 +1,9 @@
+{
+  "type": "galacticraftlegacy:heating",
+  "category": "blocks",
+  "cookingtime": 200,
+  "ingredient": "galacticraftlegacy:raw_aluminum_block",
+  "result": {
+    "id": "galacticraftlegacy:aluminum_block"
+  }
+}

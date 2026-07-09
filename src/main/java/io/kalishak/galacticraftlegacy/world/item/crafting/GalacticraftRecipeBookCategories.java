@@ -22,6 +22,9 @@ public final class GalacticraftRecipeBookCategories {
     public static final DeferredHolder<RecipeBookCategory, RecipeBookCategory> HEATING_BLOCKS = REGISTRY.register("heating_blocks", RecipeBookCategory::new);
     public static final DeferredHolder<RecipeBookCategory, RecipeBookCategory> HEATING_FOOD = REGISTRY.register("heating_food", RecipeBookCategory::new);
     public static final DeferredHolder<RecipeBookCategory, RecipeBookCategory> HEATING_MISC = REGISTRY.register("heating_misc", RecipeBookCategory::new);
+    public static final DeferredHolder<RecipeBookCategory, RecipeBookCategory> ARC_HEATING_BLOCKS = REGISTRY.register("arc_heating_blocks", RecipeBookCategory::new);
+    public static final DeferredHolder<RecipeBookCategory, RecipeBookCategory> ARC_HEATING_FOOD = REGISTRY.register("arc_heating_food", RecipeBookCategory::new);
+    public static final DeferredHolder<RecipeBookCategory, RecipeBookCategory> ARC_HEATING_MISC = REGISTRY.register("arc_heating_misc", RecipeBookCategory::new);
     public static final DeferredHolder<RecipeBookCategory, RecipeBookCategory> ELECTRIC_COMPRESSING = REGISTRY.register("electric_compressing", RecipeBookCategory::new);
 
     public static void init(IEventBus bus) {

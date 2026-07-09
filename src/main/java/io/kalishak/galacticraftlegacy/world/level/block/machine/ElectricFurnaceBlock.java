@@ -8,6 +8,7 @@
 package io.kalishak.galacticraftlegacy.world.level.block.machine;
 
 import com.mojang.serialization.MapCodec;
+import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.AbstractElectricFurnaceBlockEntity;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.ElectricFurnaceBlockEntity;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityType;
 import net.minecraft.core.BlockPos;
@@ -42,7 +43,7 @@ public class ElectricFurnaceBlock extends AbstractMachineBlock {
             return createTickerHelper(
                     blockEntityType,
                     GalacticraftBlockEntityType.ELECTRIC_FURNACE.get(),
-                    (_, tickerPos, tickerState, ticker) -> ElectricFurnaceBlockEntity.serverTick(serverLevel, tickerPos, tickerState, ticker)
+                    (_, tickerPos, tickerState, ticker) -> AbstractElectricFurnaceBlockEntity.serverTick(serverLevel, tickerPos, tickerState, ticker)
             );
         }
 

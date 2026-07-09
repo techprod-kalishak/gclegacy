@@ -26,5 +26,10 @@ public class GalacticraftClientRecipeBookCategories {
                 GalacticraftRecipeBookCategories.HEATING_FOOD.get(),
                 GalacticraftRecipeBookCategories.HEATING_MISC.get()
         );
+        event.register(SearchRecipeBookCategory.ARC_HEATING,
+                GalacticraftRecipeBookCategories.ARC_HEATING_BLOCKS.get(),
+                GalacticraftRecipeBookCategories.ARC_HEATING_FOOD.get(),
+                GalacticraftRecipeBookCategories.ARC_HEATING_MISC.get()
+        );
     }
 }

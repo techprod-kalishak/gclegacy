@@ -60,7 +60,8 @@ public class GalacticraftBlockTagsProvider extends BlockTagsProvider {
                 .add(GalacticraftBlocks.COMPRESSOR.get())
                 .add(GalacticraftBlocks.OXYGEN_COLLECTOR.get());
         tag(GalacticraftTags.Blocks.MACHINE_ADVANCED)
-                .add(GalacticraftBlocks.ELECTRIC_FURNACE.get());
+                .add(GalacticraftBlocks.ELECTRIC_FURNACE.get())
+                .add(GalacticraftBlocks.ELECTRIC_ARC_FURNACE.get());
         tag(BlockTags.NEEDS_STONE_TOOL)
                 .add(GalacticraftBlocks.COAL_GENERATOR.get())
                 .add(GalacticraftBlocks.CIRCUIT_FABRICATOR.get())
@@ -68,6 +69,7 @@ public class GalacticraftBlockTagsProvider extends BlockTagsProvider {
                 .add(GalacticraftBlocks.ELECTRIC_COMPRESSOR.get())
                 .add(GalacticraftBlocks.OXYGEN_DETECTOR.get())
                 .add(GalacticraftBlocks.ELECTRIC_FURNACE.get())
+                .add(GalacticraftBlocks.ELECTRIC_ARC_FURNACE.get())
                 .add(GalacticraftBlocks.MOON_COPPER_ORE.get())
                 .add(GalacticraftBlocks.MOON_CHEESE_ORE.get())
                 .add(GalacticraftBlocks.TIN_ORE.get())

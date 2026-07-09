@@ -7,6 +7,10 @@
 
 package io.kalishak.galacticraftlegacy.client.gui;
 
+import io.kalishak.galacticraftlegacy.attachment.AttachmentHelper;
+import io.kalishak.galacticraftlegacy.attachment.GalacticraftAttachments;
+import io.kalishak.galacticraftlegacy.attachment.entity.GearInventoryProvider;
+import io.kalishak.galacticraftlegacy.attachment.entity.PlayerSpaceData;
 import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.world.item.GalacticraftItems;
 import net.minecraft.client.DeltaTracker;
@@ -27,21 +31,25 @@ public class SensorGlassesOverlay implements GuiLayer {
     public void render(GuiGraphicsExtractor graphics, DeltaTracker deltaTracker) {
         Minecraft mc = Minecraft.getInstance();
         LocalPlayer player = mc.player;
+        assert player != null;
 
-        ItemStack sensorGlasses = player.getItemBySlot(EquipmentSlot.HEAD);
+        PlayerSpaceData spaceData = player.getData(GalacticraftAttachments.PLAYER_SPACE_DATA);
 
-        if (sensorGlasses.is(GalacticraftItems.SENSOR_GLASSES)) {
-            this.zoom++;
+        if (spaceData.isSensorGlassesActivated()) {
+            ItemStack sensorGlasses = player.getItemBySlot(EquipmentSlot.HEAD);
 
-            float angle = (float) Math.sin(this.zoom / 80.0F) * 0.1F + 0.1F;
-            int width = graphics.guiWidth();
-            int height = graphics.guiHeight();
+            if (sensorGlasses.is(GalacticraftItems.SENSOR_GLASSES)) {
+                this.zoom++;
 
-            graphics.pose().pushMatrix();
+                float angle = (float) Math.sin(this.zoom / 80.0F) * 0.1F + 0.1F;
+                int width = graphics.guiWidth();
+                int height = graphics.guiHeight();
 
-            graphics.blit(RenderPipelines.GUI_TEXTURED, GUI, 0, 0, 0.0F, 0.0F, width, height, 512, 256);
-            graphics.pose().rotate(angle);
-            graphics.pose().popMatrix();
+                graphics.pose().pushMatrix();
+                graphics.pose().rotate(angle);
+                graphics.blit(RenderPipelines.GUI_TEXTURED, GUI, 0, 0, 0.0F, 0.0F, width, height, 512, 256);
+                graphics.pose().popMatrix();
+            }
         }
     }
 }

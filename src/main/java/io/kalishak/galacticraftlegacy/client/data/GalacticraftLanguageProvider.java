@@ -79,7 +79,7 @@ public class GalacticraftLanguageProvider extends LanguageProvider {
         addWithDescription(GalacticraftBlocks.COMPRESSOR, "Compressor", "Compressor will process ingots into their compressed equivalents. The most essential machine in Galacticraft!");
         addWithDescription(GalacticraftBlocks.ELECTRIC_COMPRESSOR, "Electric Compressor", "Electric Compressor will process ingots into their compressed equivalents. Compresses two at a time, making it more effective than its predecessor.");
         addWithDescription(GalacticraftBlocks.ELECTRIC_FURNACE, "Electric Furnace", "Electric Furnace is used as a faster alternative to traditional coal furnaces");
-        //ddWithDescription(GalacticraftBlocks.ELECTRIC_ARC_FURNACE, "Electric Arc Furnace", "Electric Arc Furnace is used as a better and faster alternative to both traditional coal and electric furnaces: double output from ores!");
+        addWithDescription(GalacticraftBlocks.ELECTRIC_ARC_FURNACE, "Electric Arc Furnace", "Electric Arc Furnace is used as a better and faster alternative to both traditional coal and electric furnaces: double output from ores!");
         addWithDescription(GalacticraftBlocks.OXYGEN_COLLECTOR, "Oxygen Collector", "Oxygen Collector will store oxygen collected from leaves in the surrounding area.");
         //addWithDescription(GalacticraftBlocks.OXYGEN_BUBBLE_DISTRIBUTOR, "Oxygen Bubble Distributor", "Oxygen Bubble Distributor will emit an oxygen bubble outwards from the center block, using internal tank. This allows safe breathing inside the bubble.");
         //addWithDescription(GalacticraftBlocks.OXYGEN_COMPRESSOR, "Oxygen Compressor", "Oxygen Compressor will load oxygen from internal storage into an oxygen tank.");

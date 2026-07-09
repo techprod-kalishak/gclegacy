@@ -83,6 +83,7 @@ public class GalacticraftModelProvider extends ModelProvider {
         litMachine(blockModels, GalacticraftBlocks.COAL_GENERATOR.get());
         machine(blockModels, GalacticraftBlocks.CIRCUIT_FABRICATOR.get());
         machine(blockModels, GalacticraftBlocks.ELECTRIC_FURNACE.get());
+        machine(blockModels, GalacticraftBlocks.ELECTRIC_ARC_FURNACE.get());
         blockModels.createNonTemplateModelBlock(GalacticraftBlocks.OIL.get());
         blockModels.createNonTemplateModelBlock(GalacticraftBlocks.FUEL.get());
         GalacticraftBlockFamilies.getFamilies().forEach(blockFamily -> blockModels.family(blockFamily.getBaseBlock()).generateFor(blockFamily));
