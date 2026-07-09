@@ -5,8 +5,8 @@ import io.kalishak.galacticraftlegacy.transfer.ResourcefulHelper;
 import io.kalishak.galacticraftlegacy.world.inventory.GalacticraftMenuType;
 import io.kalishak.galacticraftlegacy.world.inventory.slot.CapabilityHandlerSlot;
 import io.kalishak.galacticraftlegacy.world.inventory.slot.ResultResourceHandlerSlot;
-import io.kalishak.galacticraftlegacy.world.item.crafting.GalacticraftRecipePropertySet;
 import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.ArcHeatingRecipe;
+import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.GalacticraftRecipeType;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityType;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.ElectricArcFurnaceBlockEntity;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -28,7 +28,7 @@ import java.util.List;
 
 public class ElectricArcFurnaceMenu extends AbstractElectricFurnaceMenu<ArcHeatingRecipe, ElectricArcFurnaceBlockEntity> {
     public ElectricArcFurnaceMenu(int containerId, Inventory playerInventory, ElectricArcFurnaceBlockEntity machine, ContainerData containerData) {
-        super(GalacticraftMenuType.ELECTRIC_ARC_FURNACE.get(), containerId, playerInventory, machine, containerData, GalacticraftRecipePropertySet.ELECTRIC_ARC_FURNACE_INPUT);
+        super(GalacticraftMenuType.ELECTRIC_ARC_FURNACE.get(), containerId, playerInventory, machine, containerData, GalacticraftRecipeType.ARC_HEATING);
 
         addSlot(new ResourceHandlerSlot(this.resourceHandler, machine::setItem, 0, 56, 25));
         addSlot(new CapabilityHandlerSlot<>(this.resourceHandler, machine::setItem, Capabilities.Energy.ITEM, 1, 8, 49));

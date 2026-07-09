@@ -90,6 +90,10 @@ public class CircuitRecipe extends MachineRecipe<CraftingInput> {
         return this.bookInfo.group;
     }
 
+    public Ingredient ingredient() {
+        return this.ingredient;
+    }
+
     private static NonNullList<Ingredient> withBase(HolderGetter<Item> itemHolderGetter, Ingredient mainIngredient) {
         HolderSet<Item> siliconTag = itemHolderGetter.getOrThrow(GalacticraftTags.Items.RAW_MATERIALS_SILICON);
         NonNullList<Ingredient> list = NonNullList.withSize(5, Ingredient.of(Items.STONE));

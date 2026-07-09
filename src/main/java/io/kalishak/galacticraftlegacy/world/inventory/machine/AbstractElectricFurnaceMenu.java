@@ -2,7 +2,7 @@ package io.kalishak.galacticraftlegacy.world.inventory.machine;
 
 import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.ElectricCookingRecipe;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.AbstractElectricFurnaceBlockEntity;
-import net.minecraft.resources.ResourceKey;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -12,16 +12,23 @@ import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.RecipeBookType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.RecipePropertySet;
+import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.neoforged.neoforge.registries.datamaps.builtin.FurnaceFuel;
 import net.neoforged.neoforge.registries.datamaps.builtin.NeoForgeDataMaps;
+import org.jspecify.annotations.Nullable;
+
+import java.util.Optional;
+import java.util.function.Supplier;
 
 public abstract class AbstractElectricFurnaceMenu<R extends ElectricCookingRecipe, M extends AbstractElectricFurnaceBlockEntity<R>> extends AbstractMachineRecipeBookMenu<M> {
-    protected final ResourceKey<RecipePropertySet> recipePropertySet;
+    protected final Supplier<RecipeType<R>> recipeType;
+    private @Nullable RecipeHolder<R> lastUsedRecipe;
 
-    protected AbstractElectricFurnaceMenu(MenuType<? extends AbstractMachineRecipeBookMenu<M>> menuType, int containerId, Inventory playerInventory, M machine, ContainerData containerData, ResourceKey<RecipePropertySet> recipePropertySet) {
+    protected AbstractElectricFurnaceMenu(MenuType<? extends AbstractMachineRecipeBookMenu<M>> menuType, int containerId, Inventory playerInventory, M machine, ContainerData containerData, Supplier<RecipeType<R>> recipeType) {
         super(menuType, containerId, playerInventory, machine, containerData);
-        this.recipePropertySet = recipePropertySet;
+        this.recipeType = recipeType;
     }
 
     @Override
@@ -102,7 +109,18 @@ public abstract class AbstractElectricFurnaceMenu<R extends ElectricCookingRecip
             return false;
         }
 
-        return this.level.recipeAccess().propertySet(this.recipePropertySet).test(stackInSlot);
+        if (this.level instanceof ServerLevel serverLevel) {
+            Optional<RecipeHolder<R>> recipe = serverLevel.recipeAccess().getRecipeFor(this.recipeType.get(), new SingleRecipeInput(stackInSlot), serverLevel, this.lastUsedRecipe);
+            recipe.ifPresent(this::setLastUsedRecipe);
+
+            return recipe.isPresent();
+        }
+
+        return false;
+    }
+
+    private void setLastUsedRecipe(@Nullable RecipeHolder<R> lastUsedRecipe) {
+        this.lastUsedRecipe = lastUsedRecipe;
     }
 
     protected boolean isFuel(ItemStack stack) {

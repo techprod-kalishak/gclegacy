@@ -12,6 +12,8 @@ import io.kalishak.galacticraftlegacy.Galacticraft;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.OnDatapackSyncEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -41,5 +43,9 @@ public final class GalacticraftRecipeType {
 
     public static void init(IEventBus bus) {
         REGISTRY.register(bus);
+//        NeoForge.EVENT_BUS.addListener(
+//                OnDatapackSyncEvent.class,
+//                event -> event.sendRecipes((RecipeType<?>) REGISTRY.getEntries().stream().map(DeferredHolder::get).toList())
+//        );
     }
 }
