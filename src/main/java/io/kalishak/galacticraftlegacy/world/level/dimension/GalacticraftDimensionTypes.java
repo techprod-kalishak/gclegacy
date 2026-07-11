@@ -17,6 +17,7 @@ import io.kalishak.galacticraftlegacy.world.attribute.GalacticraftEnvironmentAtt
 import io.kalishak.galacticraftlegacy.world.attribute.GalacticraftWorldAttributes;
 import io.kalishak.galacticraftlegacy.world.timeline.GalacticraftWorldClocks;
 import net.minecraft.core.HolderGetter;
+import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
@@ -25,6 +26,7 @@ import net.minecraft.world.attribute.EnvironmentAttributeMap;
 import net.minecraft.world.attribute.EnvironmentAttributes;
 import net.minecraft.world.clock.WorldClock;
 import net.minecraft.world.level.CardinalLighting;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.timeline.Timeline;
 import net.neoforged.neoforge.common.extensions.IHolderExtension;
@@ -42,6 +44,8 @@ public class GalacticraftDimensionTypes {
     public static void bootstrap(BootstrapContext<DimensionType> cxt) {
         HolderGetter<Timeline> timelineHolderGetter = cxt.lookup(Registries.TIMELINE);
         HolderGetter<WorldClock> worldClocks = cxt.lookup(Registries.WORLD_CLOCK);
+        HolderGetter<Block> blocks = cxt.lookup(Registries.BLOCK);
+        HolderSet<Block> infiniburnOpenSpace = blocks.getOrThrow(GalacticraftTags.Blocks.INFINIBURN_OPEN_SPACE);
         cxt.register(
                 OVERWORLD_ORBIT,
                 new DimensionType(
@@ -53,7 +57,7 @@ public class GalacticraftDimensionTypes {
                         0,
                         256,
                         128,
-                        GalacticraftTags.Blocks.INFINIBURN_OPEN_SPACE,
+                        infiniburnOpenSpace,
                         0.0F,
                         new DimensionType.MonsterSettings(ConstantInt.ZERO, 0),
                         DimensionType.Skybox.OVERWORLD,
@@ -80,7 +84,7 @@ public class GalacticraftDimensionTypes {
                         -64,
                         256,
                         64,
-                        GalacticraftTags.Blocks.INFINIBURN_OPEN_SPACE,
+                        infiniburnOpenSpace,
                         0.0F,
                         new DimensionType.MonsterSettings(ConstantInt.of(5), 15),
                         DimensionType.Skybox.NONE,
@@ -112,7 +116,7 @@ public class GalacticraftDimensionTypes {
                         0,
                         256,
                         128,
-                        GalacticraftTags.Blocks.INFINIBURN_OPEN_SPACE,
+                        infiniburnOpenSpace,
                         0.0F,
                         new DimensionType.MonsterSettings(ConstantInt.of(6), 15),
                         DimensionType.Skybox.NONE,
@@ -138,7 +142,7 @@ public class GalacticraftDimensionTypes {
                         0,
                         256,
                         128,
-                        GalacticraftTags.Blocks.INFINIBURN_OPEN_SPACE,
+                        infiniburnOpenSpace,
                         0.0F,
                         new DimensionType.MonsterSettings(ConstantInt.ZERO, 0),
                         DimensionType.Skybox.NONE,
@@ -164,7 +168,7 @@ public class GalacticraftDimensionTypes {
                         0,
                         256,
                         128,
-                        GalacticraftTags.Blocks.INFINIBURN_VENUS,
+                        blocks.getOrThrow(GalacticraftTags.Blocks.INFINIBURN_VENUS),
                         0.0F,
                         new DimensionType.MonsterSettings(ConstantInt.of(6), 15),
                         DimensionType.Skybox.NONE,

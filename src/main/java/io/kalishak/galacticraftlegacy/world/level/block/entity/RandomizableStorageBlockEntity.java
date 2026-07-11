@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2026 Kalishak
+ *
+ * Licensed under the MIT license
+ * See LICENSE file for more details
+ */
+
 package io.kalishak.galacticraftlegacy.world.level.block.entity;
 
 import io.kalishak.galacticraftlegacy.world.inventory.container.RandomizableStorage;
@@ -16,6 +23,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.transfer.item.ItemResource;
 import org.jspecify.annotations.Nullable;
 
@@ -79,7 +87,7 @@ public abstract class RandomizableStorageBlockEntity extends BaseItemStorageBloc
         }
 
         if (!player.isSpectator()) {
-            BaseContainerBlockEntity.sendChestLockedNotifications(getBlockPos().getCenter(), player, getDisplayName());
+            BaseContainerBlockEntity.sendChestLockedNotifications(Vec3.atCenterOf(getBlockPos()), player, getDisplayName());
         }
 
         return null;

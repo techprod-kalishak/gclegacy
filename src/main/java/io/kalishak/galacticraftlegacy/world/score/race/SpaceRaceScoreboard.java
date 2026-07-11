@@ -128,7 +128,7 @@ public class SpaceRaceScoreboard {
     protected void loadSpaceRaceTeam(SpaceRaceTeam.Packed packed) {
         SpaceRaceTeam team = getOrCreatePlayerSpaceRace(packed.name());
         packed.displayName().ifPresent(team::setDisplayName);
-        packed.color().ifPresent(team::setColor);
+        team.setColor(packed.color());
         team.setAllowFriendlyFire(packed.allowFriendlyFire());
         team.setSeeFriendlyInvisibles(packed.seeFriendlyInvisibles());
         team.setPlayerPrefix(packed.memberNamePrefix());

@@ -3,25 +3,48 @@
   "criteria": {
     "discovered_gravity": {
       "conditions": {
-        "items": [
-          {
-            "items": "minecraft:white_wool"
+        "distance": {
+          "horizontal": {
+            "min": 10.0
           }
-        ]
+        },
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "minecraft:type_specific/player": {}
+            }
+          }
+        ],
+        "start_position": {
+          "dimension": "minecraft:overworld"
+        }
       },
-      "trigger": "minecraft:inventory_changed"
+      "trigger": "minecraft:fall_from_height"
     },
     "has_the_recipe": {
       "conditions": {
         "recipe": "galacticraftlegacy:blue_parachute"
       },
       "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_wool": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#minecraft:wool"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
     }
   },
   "requirements": [
     [
       "has_the_recipe",
-      "discovered_gravity"
+      "discovered_gravity",
+      "has_wool"
     ]
   ],
   "rewards": {

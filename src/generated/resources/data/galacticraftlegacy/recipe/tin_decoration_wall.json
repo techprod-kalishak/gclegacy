@@ -1,6 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "category": "misc",
   "group": "tin_decoration_wall",
   "key": {
     "#": "galacticraftlegacy:tin_decoration"

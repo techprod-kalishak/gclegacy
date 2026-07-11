@@ -7,9 +7,11 @@
 
 package io.kalishak.galacticraftlegacy.client.renderer.environment;
 
+import com.mojang.blaze3d.PrimitiveTopology;
 import com.mojang.blaze3d.buffers.GpuBuffer;
 import com.mojang.blaze3d.buffers.GpuBufferSlice;
 import com.mojang.blaze3d.pipeline.RenderPipeline;
+import com.mojang.blaze3d.pipeline.RenderTarget;
 import com.mojang.blaze3d.systems.RenderPass;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.textures.GpuTextureView;
@@ -22,6 +24,7 @@ import io.kalishak.galacticraftlegacy.client.renderer.environment.state.SpaceSky
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderPipelines;
+import net.minecraft.client.renderer.SkyRenderer;
 import net.minecraft.client.renderer.state.level.LevelRenderState;
 import net.minecraft.client.renderer.state.level.SkyRenderState;
 import net.minecraft.client.renderer.texture.TextureAtlas;
@@ -37,55 +40,28 @@ import net.neoforged.neoforge.client.event.RenderLevelStageEvent;
 import org.joml.*;
 
 import java.lang.Math;
+import java.util.Optional;
 import java.util.OptionalDouble;
 import java.util.OptionalInt;
 
-public abstract class SpaceSkyRenderer implements AutoCloseable {
+public abstract class SpaceSkyRenderer implements CustomSkyboxRenderer, AutoCloseable {
     protected static final Identifier ORBITAL_SUN_SPRITE = Constants.id("orbital_sun");
     protected static final Identifier PLANETARY_SUN_SPRITE = Constants.id("atmospheric_sun");
-    private static SpaceSkyRenderer cache;
     protected final TextureAtlas celestialsAtlas;
+    protected final RenderTarget renderTarget;
     protected final GpuBuffer starBuffer;
     protected final GpuBuffer sunBuffer;
-    protected final RenderSystem.AutoStorageIndexBuffer quadIndices;
+    protected final RenderSystem.AutoStorageIndexBuffer quadIndices = RenderSystem.getSequentialBuffer(PrimitiveTopology.QUADS);
     protected int starIndexCount;
 
     static int starCount = 1500;
 
-    protected SpaceSkyRenderer(AtlasManager atlasManager) {
+    protected SpaceSkyRenderer(AtlasManager atlasManager, RenderTarget renderTarget) {
         SpaceSkyRenderer.starCount = ClientConfig.MORE_STARS.get() ? 5000 : 1500;
         this.celestialsAtlas = atlasManager.getAtlasOrThrow(GalacticraftSpritesProvider.CELESTIAL_BODIES);
         this.starBuffer = buildStars();
         this.sunBuffer = buildSunQuad(this.celestialsAtlas);
-        this.quadIndices = RenderSystem.getSequentialBuffer(VertexFormat.Mode.QUADS);
-    }
-
-    @SubscribeEvent
-    public static void extractLevelRenderState(ExtractLevelRenderStateEvent event) {
-        SpaceSkyRenderState.extract(event.getRenderTick(), event.getRenderState(), event.getCamera().attributeProbe());
-    }
-
-    @SubscribeEvent
-    public static void renderSky(RenderLevelStageEvent.AfterSky event) {
-        LevelRenderState levelRenderState = event.getLevelRenderState();
-        Matrix4fc modelViewMatrix = event.getModelViewMatrix();
-        Minecraft mc = Minecraft.getInstance();
-        PoseStack poseStack = event.getPoseStack();
-        Camera camera = mc.gameRenderer.getMainCamera();
-        AtlasManager atlasManager = mc.getAtlasManager();
-        CustomSkyboxRenderer renderer = levelRenderState.customSkyboxRenderer;
-
-        if (renderer instanceof SkyboxRendererSupplier supplier) {
-            if (cache == null) {
-                cache = supplier.create(atlasManager);
-            }
-        } else if (renderer == null && cache != null) {
-            cache = null;
-        }
-
-        if (cache != null) {
-            cache.extractSky(poseStack, camera, levelRenderState, modelViewMatrix, () -> {});
-        }
+        this.renderTarget = renderTarget;
     }
 
     protected abstract void extractSky(PoseStack poseStack, Camera camera, LevelRenderState levelRenderState, Matrix4fc modelViewMatrix, Runnable setupFog);
@@ -103,7 +79,7 @@ public abstract class SpaceSkyRenderer implements AutoCloseable {
         poseStack.pushPose();
 
         poseStack.mulPose(Axis.XP.rotation(sunAngle));
-        renderSun(poseStack);
+        renderSun(-1, poseStack);
         poseStack.popPose();
 
         if (starBrightness > 0.0F) {
@@ -120,28 +96,28 @@ public abstract class SpaceSkyRenderer implements AutoCloseable {
         return ORBITAL_SUN_SPRITE;
     }
 
-    protected void renderSun(PoseStack poseStack) {
+    protected void renderSun(float rainBrightness, PoseStack poseStack) {
         Matrix4fStack modelViewStack = RenderSystem.getModelViewStack();
         modelViewStack.pushMatrix();
         modelViewStack.mul(poseStack.last().pose());
         modelViewStack.translate(0.0F, 100.0F, 0.0F);
         modelViewStack.scale(30.0F, 1.0F, 30.0F);
         GpuBufferSlice dynamicTransforms = RenderSystem.getDynamicUniforms()
-                .writeTransform(modelViewStack, new Vector4f(1.0F, 1.0F, 1.0F, 1.0F), new Vector3f(), new Matrix4f());
-        GpuTextureView color = Minecraft.getInstance().getMainRenderTarget().getColorTextureView();
-        GpuTextureView depth = Minecraft.getInstance().getMainRenderTarget().getDepthTextureView();
+                .writeTransform(new Matrix4f(modelViewStack), new Vector4f(1.0F, 1.0F, 1.0F, rainBrightness));
+        GpuTextureView color = this.renderTarget.getColorTextureView();
+        GpuTextureView depth = this.renderTarget.getDepthTextureView();
         GpuBuffer indexBuffer = this.quadIndices.getBuffer(6);
 
         try (RenderPass renderPass = RenderSystem.getDevice()
                 .createCommandEncoder()
-                .createRenderPass(() -> "Sky sun", color, OptionalInt.empty(), depth, OptionalDouble.empty())) {
+                .createRenderPass(() -> "Sky sun", color, Optional.empty(), depth, OptionalDouble.empty())) {
             renderPass.setPipeline(RenderPipelines.CELESTIAL);
             RenderSystem.bindDefaultUniforms(renderPass);
             renderPass.setUniform("DynamicTransforms", dynamicTransforms);
             renderPass.bindTexture("Sampler0", this.celestialsAtlas.getTextureView(), this.celestialsAtlas.getSampler());
-            renderPass.setVertexBuffer(0, this.sunBuffer);
+            renderPass.setVertexBuffer(0, this.sunBuffer.slice());
             renderPass.setIndexBuffer(indexBuffer, this.quadIndices.type());
-            renderPass.drawIndexed(0, 0, 6, 1);
+            renderPass.drawIndexed(6, 1, 0, 0, 0);
         }
 
         modelViewStack.popMatrix();
@@ -153,21 +129,21 @@ public abstract class SpaceSkyRenderer implements AutoCloseable {
         modelViewStack.pushMatrix();
         modelViewStack.mul(poseStack.last().pose());
         RenderPipeline renderPipeline = RenderPipelines.STARS;
-        GpuTextureView colorTexture = Minecraft.getInstance().getMainRenderTarget().getColorTextureView();
-        GpuTextureView depthTexture = Minecraft.getInstance().getMainRenderTarget().getDepthTextureView();
+        GpuTextureView colorTexture = this.renderTarget.getColorTextureView();
+        GpuTextureView depthTexture = this.renderTarget.getDepthTextureView();
         GpuBuffer indexBuffer = this.quadIndices.getBuffer(this.starIndexCount);
         GpuBufferSlice dynamicTransforms = RenderSystem.getDynamicUniforms()
-                .writeTransform(modelViewStack, new Vector4f(starBrightness, starBrightness, starBrightness, starBrightness), new Vector3f(), new Matrix4f());
+                .writeTransform(new Matrix4f(modelViewStack), new Vector4f(starBrightness, starBrightness, starBrightness, starBrightness));
 
         try (RenderPass renderPass = RenderSystem.getDevice()
                 .createCommandEncoder()
-                .createRenderPass(() -> "Stars", colorTexture, OptionalInt.empty(), depthTexture, OptionalDouble.empty())) {
+                .createRenderPass(() -> "Stars", colorTexture, Optional.empty(), depthTexture, OptionalDouble.empty())) {
             renderPass.setPipeline(renderPipeline);
             RenderSystem.bindDefaultUniforms(renderPass);
             renderPass.setUniform("DynamicTransforms", dynamicTransforms);
-            renderPass.setVertexBuffer(0, this.starBuffer);
+            renderPass.setVertexBuffer(0, this.starBuffer.slice());
             renderPass.setIndexBuffer(indexBuffer, this.quadIndices.type());
-            renderPass.drawIndexed(0, 0, this.starIndexCount, 1);
+            renderPass.drawIndexed(this.starIndexCount, 1, 0, 0, 0);
         }
 
         modelViewStack.popMatrix();
@@ -179,7 +155,7 @@ public abstract class SpaceSkyRenderer implements AutoCloseable {
 
         GpuBuffer buffer;
         try (ByteBufferBuilder byteBufferBuilder = ByteBufferBuilder.exactlySized(DefaultVertexFormat.POSITION.getVertexSize() * MoonSkyRenderer.starCount * 4)) {
-            BufferBuilder bufferBuilder = new BufferBuilder(byteBufferBuilder, VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION);
+            BufferBuilder bufferBuilder = new BufferBuilder(byteBufferBuilder, PrimitiveTopology.QUADS, DefaultVertexFormat.POSITION);
 
             for (int i = 0; i < MoonSkyRenderer.starCount; i++) {
                 float x = random.nextFloat() * 2.0F - 1.0F;
@@ -213,7 +189,7 @@ public abstract class SpaceSkyRenderer implements AutoCloseable {
 
         GpuBuffer buffer;
         try (ByteBufferBuilder byteBufferBuilder = ByteBufferBuilder.exactlySized(4 * format.getVertexSize())) {
-            BufferBuilder bufferBuilder = new BufferBuilder(byteBufferBuilder, VertexFormat.Mode.QUADS, format);
+            BufferBuilder bufferBuilder = new BufferBuilder(byteBufferBuilder, PrimitiveTopology.QUADS, format);
             bufferBuilder.addVertex(-1.0F, 0.0F, -1.0F).setUv(sprite.getU0(), sprite.getV0());
             bufferBuilder.addVertex(1.0F, 0.0F, -1.0F).setUv(sprite.getU1(), sprite.getV0());
             bufferBuilder.addVertex(1.0F, 0.0F, 1.0F).setUv(sprite.getU1(), sprite.getV1());

@@ -72,21 +72,7 @@ public final class GalacticraftCreativeModeTabs {
         emptyAndFilled(output, GalacticraftItems.HEAVY_TANK, GalacticraftFluids.OXYGEN);
         output.accept(GalacticraftItems.INFINITE_OXYGEN_TANK);
         output.accept(GalacticraftItems.SENSOR_GLASSES);
-        output.accept(GalacticraftItems.BLACK_PARACHUTE);
-        output.accept(GalacticraftItems.BLUE_PARACHUTE);
-        output.accept(GalacticraftItems.BROWN_PARACHUTE);
-        output.accept(GalacticraftItems.CYAN_PARACHUTE);
-        output.accept(GalacticraftItems.GRAY_PARACHUTE);
-        output.accept(GalacticraftItems.LIGHT_BLUE_PARACHUTE);
-        output.accept(GalacticraftItems.LIGHT_GRAY_PARACHUTE);
-        output.accept(GalacticraftItems.LIME_PARACHUTE);
-        output.accept(GalacticraftItems.MAGENTA_PARACHUTE);
-        output.accept(GalacticraftItems.ORANGE_PARACHUTE);
-        output.accept(GalacticraftItems.PINK_PARACHUTE);
-        output.accept(GalacticraftItems.PURPLE_PARACHUTE);
-        output.accept(GalacticraftItems.RED_PARACHUTE);
-        output.accept(GalacticraftItems.WHITE_PARACHUTE);
-        output.accept(GalacticraftItems.YELLOW_PARACHUTE);
+        GalacticraftItems.PARACHUTE.forEach(output::accept);
         output.accept(GalacticraftItems.PROTO_SHIELD_CONTROLLER);
         output.accept(GalacticraftItems.SHIELD_CONTROLLER);
         output.accept(GalacticraftItems.TIN_CANISTER);
@@ -194,22 +180,13 @@ public final class GalacticraftCreativeModeTabs {
         output.accept(GalacticraftItems.OXYGEN_DETECTOR);
         output.accept(GalacticraftItems.ALUMINUM_WIRE);
         output.accept(GalacticraftItems.HEAVY_ALUMINUM_WIRE);
-        output.accept(GalacticraftItems.WHITE_PIPE);
-        output.accept(GalacticraftItems.ORANGE_PIPE, CreativeModeTab.TabVisibility.SEARCH_TAB_ONLY);
-        output.accept(GalacticraftItems.MAGENTA_PIPE, CreativeModeTab.TabVisibility.SEARCH_TAB_ONLY);
-        output.accept(GalacticraftItems.LIGHT_BLUE_PIPE, CreativeModeTab.TabVisibility.SEARCH_TAB_ONLY);
-        output.accept(GalacticraftItems.YELLOW_PIPE, CreativeModeTab.TabVisibility.SEARCH_TAB_ONLY);
-        output.accept(GalacticraftItems.LIME_PIPE, CreativeModeTab.TabVisibility.SEARCH_TAB_ONLY);
-        output.accept(GalacticraftItems.PINK_PIPE, CreativeModeTab.TabVisibility.SEARCH_TAB_ONLY);
-        output.accept(GalacticraftItems.GRAY_PIPE, CreativeModeTab.TabVisibility.SEARCH_TAB_ONLY);
-        output.accept(GalacticraftItems.LIGHT_GRAY_PIPE, CreativeModeTab.TabVisibility.SEARCH_TAB_ONLY);
-        output.accept(GalacticraftItems.CYAN_PIPE, CreativeModeTab.TabVisibility.SEARCH_TAB_ONLY);
-        output.accept(GalacticraftItems.PURPLE_PIPE, CreativeModeTab.TabVisibility.SEARCH_TAB_ONLY);
-        output.accept(GalacticraftItems.BLUE_PIPE, CreativeModeTab.TabVisibility.SEARCH_TAB_ONLY);
-        output.accept(GalacticraftItems.BROWN_PIPE, CreativeModeTab.TabVisibility.SEARCH_TAB_ONLY);
-        output.accept(GalacticraftItems.GREEN_PIPE, CreativeModeTab.TabVisibility.SEARCH_TAB_ONLY);
-        output.accept(GalacticraftItems.RED_PIPE, CreativeModeTab.TabVisibility.SEARCH_TAB_ONLY);
-        output.accept(GalacticraftItems.BLACK_PIPE, CreativeModeTab.TabVisibility.SEARCH_TAB_ONLY);
+        GalacticraftItems.FLUID_PIPE.forEach(fluidPipe -> {
+            if (fluidPipe == GalacticraftItems.FLUID_PIPE.white()) {
+                output.accept(fluidPipe);
+            } else {
+                output.accept(fluidPipe, CreativeModeTab.TabVisibility.SEARCH_TAB_ONLY);
+            }
+        });
         output.accept(GalacticraftItems.TIN_ORE);
         output.accept(GalacticraftItems.DEEPSLATE_TIN_ORE);
         output.accept(GalacticraftItems.ALUMINUM_ORE);
@@ -250,7 +227,7 @@ public final class GalacticraftCreativeModeTabs {
         output.accept(GalacticraftItems.UNLIT_TORCH, CreativeModeTab.TabVisibility.SEARCH_TAB_ONLY);
         output.accept(GalacticraftItems.UNLIT_COPPER_TORCH, CreativeModeTab.TabVisibility.SEARCH_TAB_ONLY);
         output.accept(GalacticraftItems.UNLIT_LANTERN, CreativeModeTab.TabVisibility.SEARCH_TAB_ONLY);
-        GalacticraftItems.UNLIT_COPPER_LANTERNS.forEach(itemStack -> output.accept(itemStack, CreativeModeTab.TabVisibility.SEARCH_TAB_ONLY));
+        GalacticraftItems.UNLIT_COPPER_LANTERN.forEach(itemStack -> output.accept(itemStack, CreativeModeTab.TabVisibility.SEARCH_TAB_ONLY));
     }
 
     private static void populateVanillaCreativeTabs(BuildCreativeModeTabContentsEvent event) {

@@ -9,6 +9,7 @@ package io.kalishak.galacticraftlegacy.world.entity;
 
 import io.kalishak.galacticraftlegacy.Galacticraft;
 import io.kalishak.galacticraftlegacy.references.GalacticraftEntityIds;
+import io.kalishak.galacticraftlegacy.registry.deferred.DeferredEntityTypeRegister;
 import io.kalishak.galacticraftlegacy.world.entity.item.FallenMeteor;
 import io.kalishak.galacticraftlegacy.world.entity.monster.EvolvedMonster;
 import io.kalishak.galacticraftlegacy.world.entity.monster.EvolvedSkeleton;
@@ -24,13 +25,12 @@ import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 import net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
-import net.neoforged.neoforge.registries.DeferredRegister;
 import org.jspecify.annotations.NonNull;
 
 import java.util.stream.Stream;
 
 public final class GalacticraftEntityType {
-    private static final DeferredRegister.Entities REGISTRY = DeferredRegister.createEntities(Galacticraft.MODID);
+    private static final DeferredEntityTypeRegister REGISTRY = DeferredEntityTypeRegister.createEntities(Galacticraft.MODID);
 
     public static final DeferredHolder<EntityType<?>, EntityType<EntryPod>> ENTRY_POD = REGISTRY.registerEntityType(
             GalacticraftEntityIds.ENTRY_POD,
@@ -97,7 +97,7 @@ public final class GalacticraftEntityType {
                     .updateInterval(20)
     );
     public static final DeferredHolder<EntityType<?>, EntityType<SchematicEntity>> SCHEMATIC = REGISTRY.registerEntityType(
-            GalacticraftEntityIds.HANGING_SCHEMATIC,
+            GalacticraftEntityIds.HANGING_SCHEMATIC.identifier().getPath(),
             SchematicEntity::new,
             MobCategory.MISC,
             builder -> builder

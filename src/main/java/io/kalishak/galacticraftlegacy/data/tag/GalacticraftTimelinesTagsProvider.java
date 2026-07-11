@@ -13,13 +13,13 @@ import io.kalishak.galacticraftlegacy.world.timeline.GalacticraftTimelines;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
-import net.minecraft.data.tags.KeyTagProvider;
+import net.minecraft.data.tags.TagsProvider;
 import net.minecraft.tags.TimelineTags;
 import net.minecraft.world.timeline.Timeline;
 
 import java.util.concurrent.CompletableFuture;
 
-public class GalacticraftTimelinesTagsProvider extends KeyTagProvider<Timeline> {
+public class GalacticraftTimelinesTagsProvider extends TagsProvider<Timeline> {
     public GalacticraftTimelinesTagsProvider(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> registries) {
         super(packOutput, Registries.TIMELINE, registries, Galacticraft.MODID);
     }

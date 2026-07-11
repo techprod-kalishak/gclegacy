@@ -11,16 +11,14 @@ import io.kalishak.galacticraftlegacy.Galacticraft;
 import io.kalishak.galacticraftlegacy.data.GalacticraftTags;
 import io.kalishak.galacticraftlegacy.world.level.biome.MoonBiomes;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
-import net.minecraft.data.tags.BiomeTagsProvider;
-import net.minecraft.data.tags.KeyTagProvider;
+import net.minecraft.data.tags.TagsProvider;
 import net.minecraft.world.level.biome.Biome;
 
 import java.util.concurrent.CompletableFuture;
 
-public class GalacticraftBiomeTagsProvider extends KeyTagProvider<Biome> {
+public class GalacticraftBiomeTagsProvider extends TagsProvider<Biome> {
     public GalacticraftBiomeTagsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> provider) {
         super(output, Registries.BIOME, provider, Galacticraft.MODID);
     }

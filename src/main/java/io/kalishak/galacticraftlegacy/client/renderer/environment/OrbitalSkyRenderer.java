@@ -7,8 +7,10 @@
 
 package io.kalishak.galacticraftlegacy.client.renderer.environment;
 
+import com.mojang.blaze3d.PrimitiveTopology;
 import com.mojang.blaze3d.buffers.GpuBuffer;
 import com.mojang.blaze3d.buffers.GpuBufferSlice;
+import com.mojang.blaze3d.pipeline.RenderTarget;
 import com.mojang.blaze3d.systems.RenderPass;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.textures.GpuTextureView;
@@ -27,6 +29,7 @@ import net.minecraft.world.level.MoonPhase;
 import net.neoforged.neoforge.client.CustomSkyboxRenderer;
 import org.joml.*;
 
+import java.util.Optional;
 import java.util.OptionalDouble;
 import java.util.OptionalInt;
 import java.util.function.BiConsumer;
@@ -35,16 +38,13 @@ public class OrbitalSkyRenderer extends SpaceSkyRenderer {
     public static final Identifier ID = Constants.id("orbit");
     private final GpuBuffer moonBuffer;
 
-    public OrbitalSkyRenderer(AtlasManager atlasManager) {
-        super(atlasManager);
+    public OrbitalSkyRenderer(AtlasManager atlasManager, RenderTarget renderTarget) {
+        super(atlasManager, renderTarget);
         this.moonBuffer = buildMoonPhases(this.celestialsAtlas);
     }
 
     public static void create(BiConsumer<Identifier, CustomSkyboxRenderer> registry) {
-        registry.accept(
-                ID,
-                (SkyboxRendererSupplier) OrbitalSkyRenderer::new
-        );
+
     }
 
     @Override
@@ -63,7 +63,7 @@ public class OrbitalSkyRenderer extends SpaceSkyRenderer {
         poseStack.mulPose(Axis.YP.rotationDegrees(-90.0F));
         poseStack.pushPose();
         poseStack.mulPose(Axis.XP.rotation(sunAngle));
-        renderSun(poseStack);
+        renderSun(-1, poseStack);
         poseStack.popPose();
         poseStack.pushPose();
         poseStack.mulPose(Axis.XP.rotation(moonAngle));
@@ -81,27 +81,28 @@ public class OrbitalSkyRenderer extends SpaceSkyRenderer {
     }
 
     private void renderMoon(PoseStack poseStack) {
+        int baseVertex = MoonPhase.FULL_MOON.index() * 4;
         Matrix4fStack modelViewStack = RenderSystem.getModelViewStack();
         modelViewStack.pushMatrix();
         modelViewStack.mul(poseStack.last().pose());
         modelViewStack.translate(0.0F, 100.0F, 0.0F);
         modelViewStack.scale(20.0F, 1.0F, 20.0F);
         GpuBufferSlice dynamicTransforms = RenderSystem.getDynamicUniforms()
-                .writeTransform(modelViewStack, new Vector4f(1.0F, 1.0F, 1.0F, 0.0F), new Vector3f(), new Matrix4f());
-        GpuTextureView color = Minecraft.getInstance().getMainRenderTarget().getColorTextureView();
-        GpuTextureView depth = Minecraft.getInstance().getMainRenderTarget().getDepthTextureView();
+                .writeTransform(new Matrix4f(modelViewStack), new Vector4f(1.0F, 1.0F, 1.0F, -1));
+        GpuTextureView color = this.renderTarget.getColorTextureView();
+        GpuTextureView depth = this.renderTarget.getDepthTextureView();
         GpuBuffer indexBuffer = this.quadIndices.getBuffer(6);
 
         try (RenderPass renderPass = RenderSystem.getDevice()
                 .createCommandEncoder()
-                .createRenderPass(() -> "Sky moon", color, OptionalInt.empty(), depth, OptionalDouble.empty())) {
+                .createRenderPass(() -> "Sky moon", color, Optional.empty(), depth, OptionalDouble.empty())) {
             renderPass.setPipeline(RenderPipelines.CELESTIAL);
             RenderSystem.bindDefaultUniforms(renderPass);
             renderPass.setUniform("DynamicTransforms", dynamicTransforms);
             renderPass.bindTexture("Sampler0", this.celestialsAtlas.getTextureView(), this.celestialsAtlas.getSampler());
-            renderPass.setVertexBuffer(0, this.moonBuffer);
+            renderPass.setVertexBuffer(0, this.moonBuffer.slice());
             renderPass.setIndexBuffer(indexBuffer, this.quadIndices.type());
-            renderPass.drawIndexed(0, 0, 6, 1);
+            renderPass.drawIndexed(6, 1, 0, baseVertex, 0);
         }
 
         modelViewStack.popMatrix();
@@ -113,7 +114,7 @@ public class OrbitalSkyRenderer extends SpaceSkyRenderer {
 
         GpuBuffer var15;
         try (ByteBufferBuilder byteBufferBuilder = ByteBufferBuilder.exactlySized(phases.length * 4 * format.getVertexSize())) {
-            BufferBuilder bufferBuilder = new BufferBuilder(byteBufferBuilder, VertexFormat.Mode.QUADS, format);
+            BufferBuilder bufferBuilder = new BufferBuilder(byteBufferBuilder, PrimitiveTopology.QUADS, format);
 
             for (MoonPhase phase : phases) {
                 TextureAtlasSprite sprite = atlas.getSprite(Identifier.withDefaultNamespace("moon/" + phase.getSerializedName()));

@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2026 Kalishak
+ *
+ * Licensed under the MIT license
+ * See LICENSE file for more details
+ */
+
 package io.kalishak.galacticraftlegacy.world.level.block.entity;
 
 import io.kalishak.galacticraftlegacy.transfer.ResourcefulHelper;
@@ -19,6 +26,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
+import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.transfer.RangedResourceHandler;
@@ -199,7 +207,7 @@ public abstract class BaseItemStorageBlockEntity extends BlockEntity implements 
             return createMenu(containerId, inventory);
         }
 
-        BaseContainerBlockEntity.sendChestLockedNotifications(getBlockPos().getCenter(), player, getDisplayName());
+        BaseContainerBlockEntity.sendChestLockedNotifications(Vec3.atCenterOf(getBlockPos()), player, getDisplayName());
         return null;
     }
 

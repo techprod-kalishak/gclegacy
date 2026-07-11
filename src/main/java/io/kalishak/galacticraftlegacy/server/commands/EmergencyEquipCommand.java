@@ -152,7 +152,7 @@ public class EmergencyEquipCommand {
             spaceGearEquipment.set(GearEquipmentSlot.THERMAL_SHIRT, GalacticraftItems.ISOTHERMAL_CHESTPIECE.toStack());
             spaceGearEquipment.set(GearEquipmentSlot.THERMAL_LEGGINGS, GalacticraftItems.ISOTHERMAL_LEGGINGS.toStack());
             spaceGearEquipment.set(GearEquipmentSlot.THERMAL_SOCKS, GalacticraftItems.ISOTHERMAL_BOOTS.toStack());
-            spaceGearEquipment.set(GearEquipmentSlot.PARACHUTE, GalacticraftItems.WHITE_PARACHUTE.toStack());
+            spaceGearEquipment.set(GearEquipmentSlot.PARACHUTE, GalacticraftItems.PARACHUTE.white().toStack());
             //spaceGearEquipment.set(GearEquipmentSlot.TELEMETRY, GalacticraftItems.TELEMETRY_MODULE.toStack());
             spaceGearEquipment.set(GearEquipmentSlot.SHIELD, GalacticraftItems.SHIELD_CONTROLLER.toStack());
         }

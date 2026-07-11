@@ -92,8 +92,6 @@ public class GalacticraftClient {
         bus.addListener(EntityRenderersEvent.AddLayers.class, GearEquipmentLayer::registerAdditionalLayers);
         bus.addListener(GalacticraftClientRecipeBookCategories::registerBookCategories);
         bus.addListener(GalacticraftKeys::registerKeyMappings);
-        NeoForge.EVENT_BUS.addListener(SpaceSkyRenderer::extractLevelRenderState);
-        NeoForge.EVENT_BUS.addListener(SpaceSkyRenderer::renderSky);
 
         container.registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);
 

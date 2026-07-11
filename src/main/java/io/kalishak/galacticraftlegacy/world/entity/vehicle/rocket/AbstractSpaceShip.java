@@ -43,6 +43,7 @@ import net.minecraft.world.level.gamerules.GameRules;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.scores.TeamColor;
 import net.neoforged.neoforge.transfer.fluid.FluidResource;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
@@ -410,16 +411,16 @@ public abstract class AbstractSpaceShip extends VehicleEntity implements Trackab
         setTimeUntilLaunch(getTimeUntilLaunch() + delta);
     }
 
-    public ChatFormatting getSpaceRaceTeamConeColor() {
+    public TeamColor getSpaceRaceTeamConeColor() {
         Player owner = this.owner.getEntity(level(), Player.class);
 
         if (owner instanceof ServerPlayer serverPlayer) {
             return SpaceRaceHooks.getSpaceRaceTeam(serverPlayer)
-                    .map(SpaceRaceTeam::getColor)
-                    .orElse(ChatFormatting.RED);
+                    .flatMap(SpaceRaceTeam::getColor)
+                    .orElse(TeamColor.RED);
         }
 
-        return ChatFormatting.WHITE;
+        return TeamColor.WHITE;
     }
 
     public enum LaunchPhase implements SerializableEnum {

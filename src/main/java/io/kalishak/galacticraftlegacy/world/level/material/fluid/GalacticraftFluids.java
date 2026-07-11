@@ -9,6 +9,7 @@ package io.kalishak.galacticraftlegacy.world.level.material.fluid;
 
 import com.google.common.base.Suppliers;
 import io.kalishak.galacticraftlegacy.Galacticraft;
+import io.kalishak.galacticraftlegacy.references.GalacticraftFluidIds;
 import io.kalishak.galacticraftlegacy.world.item.GalacticraftItems;
 import io.kalishak.galacticraftlegacy.world.level.block.GalacticraftBlocks;
 import net.minecraft.core.registries.Registries;
@@ -38,14 +39,14 @@ public class GalacticraftFluids {
             GalacticraftFluids.FUEL_FLOWING::value
     ).block(GalacticraftBlocks.FUEL::value).bucket(GalacticraftItems.FUEL_BUCKET::value));
 
-    public static final DeferredHolder<Fluid, BaseFlowingFluid.Source> OXYGEN = REGISTRY.register("oxygen", () -> new BaseFlowingFluid.Source(OXYGEN_PROPERTIES.get()));
-    public static final DeferredHolder<Fluid, BaseFlowingFluid.Flowing> OXYGEN_FLOWING = REGISTRY.register("oxygen_flowing", () -> new BaseFlowingFluid.Flowing(OXYGEN_PROPERTIES.get()));
+    public static final DeferredHolder<Fluid, BaseFlowingFluid.Source> OXYGEN = REGISTRY.register(GalacticraftFluidIds.OXYGEN.identifier().getPath(), () -> new BaseFlowingFluid.Source(OXYGEN_PROPERTIES.get()));
+    public static final DeferredHolder<Fluid, BaseFlowingFluid.Flowing> OXYGEN_FLOWING = REGISTRY.register(GalacticraftFluidIds.FLOWING_OXYGEN.identifier().getPath(), () -> new BaseFlowingFluid.Flowing(OXYGEN_PROPERTIES.get()));
 
-    public static final DeferredHolder<Fluid, BaseFlowingFluid.Source> OIL = REGISTRY.register("oil", () -> new BaseFlowingFluid.Source(OIL_PROPERTIES.get()));
-    public static final DeferredHolder<Fluid, BaseFlowingFluid.Flowing> OIL_FLOWING = REGISTRY.register("oil_flowing", () -> new BaseFlowingFluid.Flowing(OIL_PROPERTIES.get()));
+    public static final DeferredHolder<Fluid, BaseFlowingFluid.Source> OIL = REGISTRY.register(GalacticraftFluidIds.OIL.identifier().getPath(), () -> new BaseFlowingFluid.Source(OIL_PROPERTIES.get()));
+    public static final DeferredHolder<Fluid, BaseFlowingFluid.Flowing> OIL_FLOWING = REGISTRY.register(GalacticraftFluidIds.FLOWING_OIL.identifier().getPath(), () -> new BaseFlowingFluid.Flowing(OIL_PROPERTIES.get()));
 
-    public static final DeferredHolder<Fluid, BaseFlowingFluid.Source> FUEL = REGISTRY.register("fuel", () -> new BaseFlowingFluid.Source(FUEL_PROPERTIES.get()));
-    public static final DeferredHolder<Fluid, BaseFlowingFluid.Flowing> FUEL_FLOWING = REGISTRY.register("fuel_flowing", () -> new BaseFlowingFluid.Flowing(FUEL_PROPERTIES.get()));
+    public static final DeferredHolder<Fluid, BaseFlowingFluid.Source> FUEL = REGISTRY.register(GalacticraftFluidIds.FUEL.identifier().getPath(), () -> new BaseFlowingFluid.Source(FUEL_PROPERTIES.get()));
+    public static final DeferredHolder<Fluid, BaseFlowingFluid.Flowing> FUEL_FLOWING = REGISTRY.register(GalacticraftFluidIds.FLOWING_FUEL.identifier().getPath(), () -> new BaseFlowingFluid.Flowing(FUEL_PROPERTIES.get()));
 
     public static void init(IEventBus bus) {
         REGISTRY.register(bus);

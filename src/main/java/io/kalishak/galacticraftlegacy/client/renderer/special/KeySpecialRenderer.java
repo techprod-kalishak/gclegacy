@@ -48,8 +48,6 @@ public class KeySpecialRenderer implements SpecialModelRenderer<FeatureTier> {
                 lightCoords,
                 overlayCoords,
                 null,
-                false,
-                hasFoil,
                 -1,
                 null,
                 outlineColor

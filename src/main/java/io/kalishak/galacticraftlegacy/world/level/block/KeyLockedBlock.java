@@ -29,6 +29,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
 
 public abstract class KeyLockedBlock extends BaseEntityBlock {
     public static final BooleanProperty UNLOCKED = BooleanProperty.create("unlocked");
@@ -48,7 +49,7 @@ public abstract class KeyLockedBlock extends BaseEntityBlock {
 
             if (blockEntity instanceof KeyLockedBlockEntity keyLockedBlockEntity) {
                 if (keyLockedBlockEntity.isLocked()) {
-                    BaseContainerBlockEntity.sendChestLockedNotifications(pos.getCenter(), player, keyLockedBlockEntity.getDisplayName());
+                    BaseContainerBlockEntity.sendChestLockedNotifications(Vec3.atCenterOf(pos), player, keyLockedBlockEntity.getDisplayName());
                 } else {
                     player.openMenu(keyLockedBlockEntity, pos);
                 }
@@ -75,7 +76,7 @@ public abstract class KeyLockedBlock extends BaseEntityBlock {
                     stack.shrink(1);
                     player.openMenu(keyLockedBlockEntity, pos);
                 } else if (keyLockedBlockEntity.isLocked()) {
-                    BaseContainerBlockEntity.sendChestLockedNotifications(pos.getCenter(), player, keyLockedBlockEntity.getDisplayName());
+                    BaseContainerBlockEntity.sendChestLockedNotifications(Vec3.atCenterOf(pos), player, keyLockedBlockEntity.getDisplayName());
                 }
             }
         }

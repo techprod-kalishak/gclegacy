@@ -21,6 +21,7 @@ import net.minecraft.network.chat.*;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.scores.Team;
+import net.minecraft.world.scores.TeamColor;
 import org.jspecify.annotations.Nullable;
 
 import java.util.*;
@@ -39,7 +40,7 @@ public class SpaceRaceTeam extends Team {
     private boolean seeFriendlyInvisibles = true;
     private Team.Visibility nameTagVisibility = Team.Visibility.ALWAYS;
     private Team.Visibility deathMessageVisibility = Team.Visibility.ALWAYS;
-    private ChatFormatting color = ChatFormatting.RESET;
+    private Optional<TeamColor> color = Optional.empty();
     private Team.CollisionRule collisionRule = Team.CollisionRule.ALWAYS;
     private final Style displayNameStyle;
     private final Object2LongMap<ResourceKey<CelestialObject>> reachedCelestialBodies = new Object2LongOpenHashMap<>();
@@ -57,7 +58,7 @@ public class SpaceRaceTeam extends Team {
         return new Packed(
                 this.name,
                 Optional.of(this.displayName),
-                this.color != ChatFormatting.RESET ? Optional.of(this.color) : Optional.empty(),
+                this.color,
                 this.allowFriendlyFire,
                 this.seeFriendlyInvisibles,
                 this.playerPrefix,
@@ -72,6 +73,11 @@ public class SpaceRaceTeam extends Team {
         );
     }
 
+    private MutableComponent applyColor(MutableComponent result) {
+        getColor().ifPresent(teamColor -> result.withColor(teamColor.textColor()));
+        return result;
+    }
+
     @Override
     public String getName() {
         return this.name;
@@ -83,12 +89,8 @@ public class SpaceRaceTeam extends Team {
 
     public MutableComponent getFormattedDisplayName() {
         MutableComponent result = ComponentUtils.wrapInSquareBrackets(this.displayName.copy().withStyle(this.displayNameStyle));
-        ChatFormatting color = this.getColor();
-        if (color != ChatFormatting.RESET) {
-            result.withStyle(color);
-        }
 
-        return result;
+        return getFormattedName(result);
     }
 
     public void setDisplayName(Component displayName) {
@@ -126,12 +128,7 @@ public class SpaceRaceTeam extends Team {
     @Override
     public MutableComponent getFormattedName(Component teamMemberName) {
         MutableComponent result = Component.empty().append(this.playerPrefix).append(teamMemberName).append(this.playerSuffix);
-        ChatFormatting color = this.getColor();
-        if (color != ChatFormatting.RESET) {
-            result.withStyle(color);
-        }
-
-        return result;
+        return getFormattedName(result);
     }
 
     public static MutableComponent formatNameForTeam(@Nullable Team team, Component name) {
@@ -216,13 +213,13 @@ public class SpaceRaceTeam extends Team {
         this.setSeeFriendlyInvisibles((options & 2) > 0);
     }
 
-    public void setColor(ChatFormatting color) {
+    public void setColor(Optional<TeamColor> color) {
         this.color = color;
         this.spaceRaceScoreboard.onTeamChanged(this);
     }
 
     @Override
-    public ChatFormatting getColor() {
+    public Optional<TeamColor> getColor() {
         return this.color;
     }
 
@@ -256,7 +253,7 @@ public class SpaceRaceTeam extends Team {
     public record Packed(
             String name,
             Optional<Component> displayName,
-            Optional<ChatFormatting> color,
+            Optional<TeamColor> color,
             boolean allowFriendlyFire,
             boolean seeFriendlyInvisibles,
             Component memberNamePrefix,
@@ -272,7 +269,7 @@ public class SpaceRaceTeam extends Team {
         public static final Codec<Packed> CODEC = RecordCodecBuilder.create(instance -> instance.group(
                 Codec.STRING.fieldOf("Name").forGetter(Packed::name),
                 ComponentSerialization.CODEC.optionalFieldOf("DisplayName").forGetter(Packed::displayName),
-                ChatFormatting.COLOR_CODEC.optionalFieldOf("TeamColor").forGetter(Packed::color),
+                TeamColor.CODEC.optionalFieldOf("TeamColor").forGetter(Packed::color),
                 Codec.BOOL.optionalFieldOf("AllowFriendlyFire", true).forGetter(Packed::allowFriendlyFire),
                 Codec.BOOL.optionalFieldOf("SeeFriendlyInvisibles", true).forGetter(Packed::seeFriendlyInvisibles),
                 ComponentSerialization.CODEC.optionalFieldOf("MemberNamePrefix", CommonComponents.EMPTY).forGetter(Packed::memberNamePrefix),

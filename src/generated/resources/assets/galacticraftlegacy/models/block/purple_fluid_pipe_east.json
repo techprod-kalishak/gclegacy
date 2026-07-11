@@ -1,0 +1,6 @@
+{
+  "parent": "galacticraftlegacy:block/pipe_leg_template",
+  "textures": {
+    "texture": "galacticraftlegacy:block/purple_fluid_pipe"
+  }
+}

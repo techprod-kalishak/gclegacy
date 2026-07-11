@@ -13,13 +13,13 @@ import io.kalishak.galacticraftlegacy.world.level.dimension.GalacticraftDimensio
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
-import net.minecraft.data.tags.KeyTagProvider;
+import net.minecraft.data.tags.TagsProvider;
 import net.minecraft.world.level.dimension.BuiltinDimensionTypes;
 import net.minecraft.world.level.dimension.DimensionType;
 
 import java.util.concurrent.CompletableFuture;
 
-public class GalacticraftDimensionTypeTags extends KeyTagProvider<DimensionType> {
+public class GalacticraftDimensionTypeTags extends TagsProvider<DimensionType> {
     public GalacticraftDimensionTypeTags(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider) {
         super(output, Registries.DIMENSION_TYPE, lookupProvider, Galacticraft.MODID);
     }

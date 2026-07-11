@@ -23,10 +23,10 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.commands.CommandBuildContext;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
-import net.minecraft.commands.arguments.ColorArgument;
 import net.minecraft.commands.arguments.ComponentArgument;
 import net.minecraft.commands.arguments.ScoreHolderArgument;
 import net.minecraft.commands.arguments.TeamArgument;
+import net.minecraft.commands.arguments.TeamColorArgument;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.ComponentUtils;
 import net.minecraft.network.chat.MutableComponent;
@@ -34,9 +34,11 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.scores.PlayerTeam;
 import net.minecraft.world.scores.ScoreHolder;
 import net.minecraft.world.scores.Team;
+import net.minecraft.world.scores.TeamColor;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Optional;
 
 public class SpaceRaceCommand {
     private static final SimpleCommandExceptionType ERROR_SPACE_RACE_ALREADY_EXISTS = new SimpleCommandExceptionType(GalacticraftComponents.COMMAND_ERROR_SPACE_RACE_DUPE);
@@ -132,8 +134,8 @@ public class SpaceRaceCommand {
                                                         .then(
                                                                 Commands.literal("color")
                                                                         .then(
-                                                                                Commands.argument("value", ColorArgument.color())
-                                                                                        .executes(c -> setColor(c.getSource(), SpaceRaceTeamArgument.getSpaceRace(c, "spaceRace"), ColorArgument.getColor(c, "value")))
+                                                                                Commands.argument("value", TeamColorArgument.teamColor())
+                                                                                        .executes(c -> setColor(c.getSource(), SpaceRaceTeamArgument.getSpaceRace(c, "spaceRace"), TeamColorArgument.getTeamColor(c, "value")))
                                                                         )
                                                         )
                                                         .then(
@@ -380,12 +382,12 @@ public class SpaceRaceCommand {
         }
     }
 
-    private static int setColor(CommandSourceStack source, SpaceRaceTeam spaceRaceTeam, ChatFormatting color) throws CommandSyntaxException {
-        if (spaceRaceTeam.getColor() == color) {
+    private static int setColor(CommandSourceStack source, SpaceRaceTeam spaceRaceTeam, TeamColor color) throws CommandSyntaxException {
+        if (spaceRaceTeam.getColor().isPresent() && spaceRaceTeam.getColor().get() == color) {
             throw ERROR_SPACE_RACE_ALREADY_COLOR.create();
         } else {
-            spaceRaceTeam.setColor(color);
-            source.sendSuccess(() -> GalacticraftComponents.COMMAND_SUCCESS_SPACE_RACE_COLOR_SET.apply(spaceRaceTeam.getFormattedDisplayName(), color.getName()), true);
+            spaceRaceTeam.setColor(Optional.of(color));
+            source.sendSuccess(() -> GalacticraftComponents.COMMAND_SUCCESS_SPACE_RACE_COLOR_SET.apply(spaceRaceTeam.getFormattedDisplayName(), color.getSerializedName()), true);
 
             return 0;
         }

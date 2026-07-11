@@ -32,24 +32,7 @@ public final class GalacticraftBlockEntityType {
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<ColoredPipeBlockEntity>> COLORED_PIPE = REGISTRY.registerBlockEntity(
             "colored_pipe",
             ColoredPipeBlockEntity::new,
-            Set.of(
-                    GalacticraftBlocks.WHITE_PIPE,
-                    GalacticraftBlocks.ORANGE_PIPE,
-                    GalacticraftBlocks.MAGENTA_PIPE,
-                    GalacticraftBlocks.LIGHT_BLUE_PIPE,
-                    GalacticraftBlocks.YELLOW_PIPE,
-                    GalacticraftBlocks.LIME_PIPE,
-                    GalacticraftBlocks.PINK_PIPE,
-                    GalacticraftBlocks.GRAY_PIPE,
-                    GalacticraftBlocks.LIGHT_GRAY_PIPE,
-                    GalacticraftBlocks.CYAN_PIPE,
-                    GalacticraftBlocks.PURPLE_PIPE,
-                    GalacticraftBlocks.BLUE_PIPE,
-                    GalacticraftBlocks.BROWN_PIPE,
-                    GalacticraftBlocks.GREEN_PIPE,
-                    GalacticraftBlocks.RED_PIPE,
-                    GalacticraftBlocks.BLACK_PIPE
-            )
+            Set.copyOf(GalacticraftBlocks.FLUID_PIPE.asList())
     );
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<CompressorBlockEntity>> COMPRESSOR = REGISTRY.registerBlockEntity(
             "compressor",

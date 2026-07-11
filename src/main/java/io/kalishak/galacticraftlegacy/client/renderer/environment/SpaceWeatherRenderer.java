@@ -10,7 +10,6 @@ package io.kalishak.galacticraftlegacy.client.renderer.environment;
 import io.kalishak.galacticraftlegacy.references.Constants;
 import net.minecraft.client.Camera;
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.state.level.LevelRenderState;
 import net.minecraft.client.renderer.state.level.WeatherRenderState;
 import net.minecraft.resources.Identifier;
@@ -26,12 +25,12 @@ public class SpaceWeatherRenderer implements CustomWeatherEffectRenderer {
     }
 
     @Override
-    public boolean renderSnowAndRain(LevelRenderState levelRenderState, WeatherRenderState weatherRenderState, MultiBufferSource bufferSource, Vec3 camPos) {
+    public boolean renderSnowAndRain(LevelRenderState levelRenderState, WeatherRenderState weatherRenderState, Vec3 camPos) {
         return false;
     }
 
     @Override
-    public boolean tickRain(ClientLevel level, int ticks, Camera camera) {
+    public boolean tickRain(ClientLevel level, long ticks, Camera camera) {
         return false;
     }
 }

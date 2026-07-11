@@ -1,0 +1,20 @@
+{
+  "values": [
+    "galacticraftlegacy:aluminum_block",
+    "galacticraftlegacy:raw_aluminum_block",
+    "galacticraftlegacy:tin_block",
+    "galacticraftlegacy:raw_tin_block",
+    "galacticraftlegacy:raw_silicon_block",
+    "#galacticraftlegacy:ores/silicon",
+    "#galacticraftlegacy:ores/cheese",
+    "#galacticraftlegacy:ores/sapphire",
+    {
+      "id": "#galacticraftlegacy:ores/aluminum",
+      "required": false
+    },
+    {
+      "id": "#galacticraftlegacy:ores/tin",
+      "required": false
+    }
+  ]
+}

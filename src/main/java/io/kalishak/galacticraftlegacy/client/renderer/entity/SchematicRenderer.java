@@ -15,7 +15,6 @@ import io.kalishak.galacticraftlegacy.client.renderer.entity.state.SchematicRend
 import io.kalishak.galacticraftlegacy.client.data.GalacticraftSpritesProvider;
 import io.kalishak.galacticraftlegacy.world.entity.SchematicEntity;
 import io.kalishak.galacticraftlegacy.registry.SchematicVariant;
-import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -28,6 +27,7 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.Identifier;
+import net.minecraft.util.LightCoordsUtil;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.Level;
 
@@ -93,7 +93,7 @@ public class SchematicRenderer extends EntityRenderer<SchematicEntity, Schematic
                     case EAST -> fixedPosZ = Mth.floor(schematicEntity.getZ() + offset);
                 }
 
-                reusedState.lightCoordsPerBlock[l + k * width] = LevelRenderer.getLightCoords(level, new BlockPos(fixedPosX, fixedPosY, fixedPosZ));
+                reusedState.lightCoordsPerBlock[l + k * width] = LightCoordsUtil.getLightCoords(level, new BlockPos(fixedPosX, fixedPosY, fixedPosZ));
             }
         }
     }

@@ -1,0 +1,51 @@
+{
+  "attribute_modifiers": [
+    {
+      "amount": -0.699999988079071,
+      "attribute": "minecraft:knockback_resistance",
+      "id": "minecraft:spacy_add_knockback_resistance",
+      "operation": "add_value"
+    },
+    {
+      "amount": -0.699999988079071,
+      "attribute": "minecraft:explosion_knockback_resistance",
+      "id": "minecraft:spacy_add_explosion_knockback_resistance",
+      "operation": "add_value"
+    },
+    {
+      "amount": 0.5,
+      "attribute": "minecraft:bounciness",
+      "id": "minecraft:spacy_add_bounciness",
+      "operation": "add_value"
+    },
+    {
+      "amount": -0.8499999940395355,
+      "attribute": "minecraft:friction_modifier",
+      "id": "minecraft:spacy_mul_friction_modifier",
+      "operation": "add_multiplied_total"
+    },
+    {
+      "amount": -0.9499999992549419,
+      "attribute": "minecraft:air_drag_modifier",
+      "id": "minecraft:spacy_mul_air_drag_modifier",
+      "operation": "add_multiplied_total"
+    },
+    {
+      "amount": -0.054999999701976776,
+      "attribute": "minecraft:gravity",
+      "id": "minecraft:spacy_add_gravity",
+      "operation": "add_value"
+    }
+  ],
+  "items": "#galacticraftlegacy:sulfur_cube_archetype/spacy",
+  "knockback_modifiers": {
+    "horizontal_power": 0.76,
+    "vertical_power": 0.15
+  },
+  "sound_settings": {
+    "hit_sound": "minecraft:entity.sulfur_cube.regular.hit",
+    "push_sound": "minecraft:entity.sulfur_cube.regular.push",
+    "push_sound_cooldown": 0.9,
+    "push_sound_impulse_threshold": 0.25
+  }
+}

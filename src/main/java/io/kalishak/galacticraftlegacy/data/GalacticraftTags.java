@@ -14,6 +14,7 @@ import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.tags.BlockItemTagId;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.entity.EntityType;
@@ -33,6 +34,13 @@ public final class GalacticraftTags {
     private static <R> TagKey<R> shared(ResourceKey<? extends Registry<R>> registryKey, String tagKey) {
         return TagKey.create(registryKey, Identifier.fromNamespaceAndPath("c", tagKey));
     }
+    
+    private static BlockItemTagId combinedTagKey(String tagKey) {
+        return new BlockItemTagId(
+                tagKey(Registries.BLOCK, tagKey),
+                tagKey(Registries.ITEM, tagKey)
+        );
+    }
 
     public static class Biomes {
         public static final TagKey<Biome> IS_MOON = tagKey(Registries.BIOME, "is_moon");
@@ -48,8 +56,8 @@ public final class GalacticraftTags {
 
     public static class Blocks {
         public static final TagKey<Block> METEOR_BLOCK_REPLACEABLE = tagKey(Registries.BLOCK, "meteor_block_replaceable");
-        public static final TagKey<Block> BASE_STONE_ASTEROID = tagKey(Registries.BLOCK, "base_stone_asteroid");
-        public static final TagKey<Block> BASE_STONE_MOON = tagKey(Registries.BLOCK, "base_stone_moon");
+        public static final TagKey<Block> BASE_STONE_ASTEROID = BlockItems.BASE_STONE_ASTEROID.block();
+        public static final TagKey<Block> BASE_STONE_MOON = BlockItems.BASE_STONE_MOON.block();
         public static final TagKey<Block> BREATHABLE_AIR = tagKey(Registries.BLOCK, "breathable_air");
         public static final TagKey<Block> CRUDE_OIL_POOL_REPLACEABLE = tagKey(Registries.BLOCK, "crude_oil_pool_replaceable");
         public static final TagKey<Block> MOON_CARVER_REPLACEABLES = tagKey(Registries.BLOCK, "moon_carver_replaceables");
@@ -58,25 +66,57 @@ public final class GalacticraftTags {
         public static final TagKey<Block> INCORRECT_FOR_TITANIUM_TOOL = tagKey(Registries.BLOCK, "incorrect_for_titanium_tool");
         public static final TagKey<Block> INFINIBURN_OPEN_SPACE = tagKey(Registries.BLOCK, "infiniburn_open_space");
         public static final TagKey<Block> INFINIBURN_VENUS = tagKey(Registries.BLOCK, "infiniburn_open_space");
-        public static final TagKey<Block> MACHINE = tagKey(Registries.BLOCK, "machine");
-        public static final TagKey<Block> MACHINE_BASIC = tagKey(Registries.BLOCK, "machine/basic");
-        public static final TagKey<Block> MACHINE_ADVANCED = tagKey(Registries.BLOCK, "machine/advanced");
-        public static final TagKey<Block> ORES_ALUMINUM = shared(Registries.BLOCK, "ores/aluminum");
-        public static final TagKey<Block> ORES_CHEESE = shared(Registries.BLOCK, "ores/cheese");
-        public static final TagKey<Block> ORES_SAPPHIRE = shared(Registries.BLOCK, "ores/sapphire");
-        public static final TagKey<Block> ORES_SILICON = shared(Registries.BLOCK, "ores/silicon");
-        public static final TagKey<Block> ORES_TIN = shared(Registries.BLOCK, "ores/tin");
+        public static final TagKey<Block> MACHINE = BlockItems.MACHINE.block();
+        public static final TagKey<Block> MACHINE_BASIC = BlockItems.MACHINE_BASIC.block();
+        public static final TagKey<Block> MACHINE_ADVANCED = BlockItems.MACHINE_ADVANCED.block();
+        public static final TagKey<Block> ORES_ALUMINUM = BlockItems.ORES_ALUMINUM.block();
+        public static final TagKey<Block> ORES_CHEESE = BlockItems.ORES_CHEESE.block();
+        public static final TagKey<Block> ORES_SAPPHIRE = BlockItems.ORES_SAPPHIRE.block();
+        public static final TagKey<Block> ORES_SILICON = BlockItems.ORES_SILICON.block();
+        public static final TagKey<Block> ORES_TIN = BlockItems.ORES_TIN.block();
         public static final TagKey<Block> SEALABLE = tagKey(Registries.BLOCK, "sealable");
         public static final TagKey<Block> SEALABLE_FROM_BOTTOM = tagKey(Registries.BLOCK, "sealable/from_bottom");
         public static final TagKey<Block> SENSOR_GLASSES_DETECTABLE = tagKey(Registries.BLOCK, "sensor_glasses_detectable");
-        public static final TagKey<Block> STORAGE_BLOCKS_ALUMINUM = shared(Registries.BLOCK, "storage_blocks/aluminum");
-        public static final TagKey<Block> STORAGE_BLOCKS_RAW_ALUMINUM = shared(Registries.BLOCK, "storage_blocks/raw_aluminum");
-        public static final TagKey<Block> STORAGE_BLOCKS_TIN = shared(Registries.BLOCK, "storage_blocks/tin");
-        public static final TagKey<Block> STORAGE_BLOCKS_RAW_TIN = shared(Registries.BLOCK, "storage_blocks/raw_tin");
-        public static final TagKey<Block> STORAGE_BLOCKS_RAW_SILICON = shared(Registries.BLOCK, "storage_blocks/raw_silicon");
+        public static final TagKey<Block> STORAGE_BLOCKS_ALUMINUM = BlockItems.STORAGE_BLOCKS_ALUMINUM.block();
+        public static final TagKey<Block> STORAGE_BLOCKS_RAW_ALUMINUM = BlockItems.STORAGE_BLOCKS_RAW_ALUMINUM.block();
+        public static final TagKey<Block> STORAGE_BLOCKS_TIN = BlockItems.STORAGE_BLOCKS_TIN.block();
+        public static final TagKey<Block> STORAGE_BLOCKS_RAW_TIN = BlockItems.STORAGE_BLOCKS_RAW_TIN.block();
+        public static final TagKey<Block> STORAGE_BLOCKS_RAW_SILICON = BlockItems.STORAGE_BLOCKS_RAW_SILICON.block();
         public static final TagKey<Block> LIT_TORCHES = tagKey(Registries.BLOCK, "lit_torches");
-        public static final TagKey<Block> LIT_TORCHES_STANDING = tagKey(Registries.BLOCK, "lit_torches/standing");
+        public static final TagKey<Block> LIT_TORCHES_STANDING = BlockItems.LIT_TORCHES_STANDING.block();
         public static final TagKey<Block> LIT_TORCHES_WALL = tagKey(Registries.BLOCK, "lit_torches/wall");
+    }
+
+    public static class BlockItems {
+        public static final BlockItemTagId METEOR_BLOCK_REPLACEABLE = combinedTagKey("block_meteor_replaceable");
+        public static final BlockItemTagId BASE_STONE_ASTEROID = combinedTagKey("base_stone_asteroid");
+        public static final BlockItemTagId BASE_STONE_MOON = combinedTagKey("base_stone_moon");
+        public static final BlockItemTagId BREATHABLE_AIR = combinedTagKey("breathable_air");
+        public static final BlockItemTagId CRUDE_OIL_POOL_REPLACEABLE = combinedTagKey("crude_oil_pool_replaceable");
+        public static final BlockItemTagId MOON_CARVER_REPLACEABLES = combinedTagKey("moon_carver_replaceables");
+        public static final BlockItemTagId INCORRECT_FOR_DESH_TOOL = combinedTagKey("incorrect_for_desh_tool");
+        public static final BlockItemTagId INCORRECT_FOR_STEEL_TOOL = combinedTagKey("incorrect_for_steel_tool");
+        public static final BlockItemTagId INCORRECT_FOR_TITANIUM_TOOL = combinedTagKey("incorrect_for_titanium_tool");
+        public static final BlockItemTagId INFINIBURN_OPEN_SPACE = combinedTagKey("infiniburn_open_space");
+        public static final BlockItemTagId INFINIBURN_VENUS = combinedTagKey("infiniburn_open_space");
+        public static final BlockItemTagId MACHINE = combinedTagKey("machine");
+        public static final BlockItemTagId MACHINE_BASIC = combinedTagKey("machine/basic");
+        public static final BlockItemTagId MACHINE_ADVANCED = combinedTagKey("machine/advanced");
+        public static final BlockItemTagId ORES_ALUMINUM = combinedTagKey("ores/aluminum");
+        public static final BlockItemTagId ORES_CHEESE = combinedTagKey("ores/cheese");
+        public static final BlockItemTagId ORES_SAPPHIRE = combinedTagKey("ores/sapphire");
+        public static final BlockItemTagId ORES_SILICON = combinedTagKey("ores/silicon");
+        public static final BlockItemTagId ORES_TIN = combinedTagKey("ores/tin");
+        public static final BlockItemTagId SEALABLE = combinedTagKey("sealable");
+        public static final BlockItemTagId SEALABLE_FROM_BOTTOM = combinedTagKey("sealable/from_bottom");
+        public static final BlockItemTagId SENSOR_GLASSES_DETECTABLE = combinedTagKey("sensor_glasses_detectable");
+        public static final BlockItemTagId STORAGE_BLOCKS_ALUMINUM = combinedTagKey("storage_blocks/aluminum");
+        public static final BlockItemTagId STORAGE_BLOCKS_RAW_ALUMINUM = combinedTagKey("storage_blocks/raw_aluminum");
+        public static final BlockItemTagId STORAGE_BLOCKS_TIN = combinedTagKey("storage_blocks/tin");
+        public static final BlockItemTagId STORAGE_BLOCKS_RAW_TIN = combinedTagKey("storage_blocks/raw_tin");
+        public static final BlockItemTagId STORAGE_BLOCKS_RAW_SILICON = combinedTagKey("storage_blocks/raw_silicon");
+        public static final BlockItemTagId LIT_TORCHES = combinedTagKey("lit_torches");
+        public static final BlockItemTagId LIT_TORCHES_STANDING = combinedTagKey("lit_torches/standing");
     }
 
     public static class Checklist {
@@ -93,6 +133,7 @@ public final class GalacticraftTags {
     }
 
     public static class DimensionTypes {
+        public static final TagKey<DimensionType> GRAVITY_OVERRIDDEN = tagKey(Registries.DIMENSION_TYPE, "gravity_overridden");
         public static final TagKey<DimensionType> OPEN_SPACE = tagKey(Registries.DIMENSION_TYPE, "open_space");
         public static final TagKey<DimensionType> REQUIRES_CRYOCHAMBER = tagKey(Registries.DIMENSION_TYPE, "requires_cryochamber");
         public static final TagKey<DimensionType> HAS_DISABLED_ROCKETS = tagKey(Registries.DIMENSION_TYPE, "has_disabled_rockets");
@@ -101,6 +142,7 @@ public final class GalacticraftTags {
     }
 
     public static class EntityTypes {
+        public static final TagKey<EntityType<?>> BYPASSES_CELESTIAL_GRAVITY = tagKey(Registries.ENTITY_TYPE, "bypasses_celestial_gravity");
         public static final TagKey<EntityType<?>> CAN_EQUIP_GEAR = tagKey(Registries.ENTITY_TYPE, "can_equip_gear");
         public static final TagKey<EntityType<?>> CAN_EQUIP_PARACHUTE = tagKey(Registries.ENTITY_TYPE, "can_equip_parachute");
         public static final TagKey<EntityType<?>> SPACE_MOB = tagKey(Registries.ENTITY_TYPE, "space_mob");
@@ -168,6 +210,7 @@ public final class GalacticraftTags {
         public static final TagKey<Item> STORAGE_BLOCKS_TIN = shared(Registries.ITEM, "storage_blocks/tin");
         public static final TagKey<Item> STORAGE_BLOCKS_RAW_TIN = shared(Registries.ITEM, "storage_blocks/raw_tin");
         public static final TagKey<Item> STORAGE_BLOCKS_RAW_SILICON = shared(Registries.ITEM, "storage_blocks/raw_silicon");
+        public static final TagKey<Item> SULFUR_CUBE_ARCHETYPE_SPACY = tagKey(Registries.ITEM, "sulfur_cube_archetype/spacy");
         public static final TagKey<Item> WRENCH = shared(Registries.ITEM, "tools/wrench");
     }
 

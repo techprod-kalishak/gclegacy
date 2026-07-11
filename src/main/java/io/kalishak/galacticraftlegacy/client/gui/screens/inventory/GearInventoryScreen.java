@@ -53,7 +53,7 @@ public class GearInventoryScreen extends AbstractContainerScreen<GearInventoryMe
                 false,
                 _ -> {
                     mc.player.closeContainer();
-                    mc.setScreen(new InventoryScreen(mc.player));
+                    mc.gui.setScreen(new InventoryScreen(mc.player));
                 },
                 _ -> Component.empty()
         ));

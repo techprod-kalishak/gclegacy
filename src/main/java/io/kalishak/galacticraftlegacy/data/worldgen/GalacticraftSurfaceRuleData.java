@@ -8,10 +8,13 @@
 package io.kalishak.galacticraftlegacy.data.worldgen;
 
 import com.google.common.collect.ImmutableList;
+import io.kalishak.galacticraftlegacy.data.GalacticraftTags;
 import io.kalishak.galacticraftlegacy.world.level.biome.MoonBiomes;
 import io.kalishak.galacticraftlegacy.world.level.block.GalacticraftBlocks;
 import io.kalishak.galacticraftlegacy.world.level.levelgen.GalacticraftNoises;
+import net.minecraft.core.HolderGetter;
 import net.minecraft.data.worldgen.SurfaceRuleData;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.NoiseGeneratorSettings;
@@ -50,19 +53,19 @@ public class GalacticraftSurfaceRuleData {
         );
     }
 
-    public static SurfaceRules.RuleSource moon() {
+    public static SurfaceRules.RuleSource moon(HolderGetter<Biome> biomes) {
         SurfaceRules.ConditionSource steeps = SurfaceRules.steep();
         SurfaceRules.ConditionSource nearFloor = SurfaceRules.yStartCheck(VerticalAnchor.aboveBottom(10), 6);
         SurfaceRules.RuleSource commonSurface = SurfaceRules.sequence(
                 SurfaceRules.ifTrue(
-                        SurfaceRules.isBiome(MoonBiomes.MOON_PLAINS),
+                        SurfaceRules.isBiome(biomes, MoonBiomes.MOON_PLAINS),
                         SurfaceRules.sequence(
-                                SurfaceRules.ifTrue(SurfaceRules.noiseCondition(GalacticraftNoises.OPENSPACE, -0.12, 0.12), MOON_TURF),
+                                SurfaceRules.ifTrue(SurfaceRules.noiseCondition2d(GalacticraftNoises.OPENSPACE, -0.12, 0.12), MOON_TURF),
                                 MOON_DIRT
                         )
                 ),
                 SurfaceRules.sequence(
-                        SurfaceRules.ifTrue(SurfaceRules.noiseCondition(GalacticraftNoises.OPENSPACE_VEG, -0.4, 0.4), MOON_TURF),
+                        SurfaceRules.ifTrue(SurfaceRules.noiseCondition2d(GalacticraftNoises.OPENSPACE_VEG, -0.4, 0.4), MOON_TURF),
                         SurfaceRules.ifTrue(nearFloor, MOON_ROCK),
                         SurfaceRules.ifTrue(SurfaceRules.ON_FLOOR, MOON_DIRT)
                 ),

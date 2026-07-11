@@ -54,7 +54,7 @@ public class ItemDisplayButton extends Button {
 
     @Override
     public boolean isFocused() {
-        return (this.minecraft.screen instanceof GearInventoryScreen && this.itemStack.is(GalacticraftItems.OXYGEN_MASK)) || (this.minecraft.screen instanceof InventoryScreen && this.itemStack.is(Items.CRAFTING_TABLE));
+        return (this.minecraft.gui.screen() instanceof GearInventoryScreen && this.itemStack.is(GalacticraftItems.OXYGEN_MASK)) || (this.minecraft.gui.screen() instanceof InventoryScreen && this.itemStack.is(Items.CRAFTING_TABLE));
     }
 
     protected void renderTooltip(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY) {

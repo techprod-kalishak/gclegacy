@@ -101,12 +101,7 @@ public class DungeonBlockRenderer implements BlockEntityRenderer<DungeonChestBlo
                     this.keyModel.renderType(KeyModel.getTexture(renderState.featureTier)),
                     renderState.lightCoords,
                     OverlayTexture.NO_OVERLAY,
-                    null,
-                    false,
-                    false,
-                    -1,
-                    null,
-                    0
+                    null
             );
             poseStack.popPose();
         }

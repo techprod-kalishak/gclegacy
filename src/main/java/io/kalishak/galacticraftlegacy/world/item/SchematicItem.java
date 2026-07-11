@@ -43,7 +43,7 @@ public class SchematicItem extends Item {
         Holder<SchematicVariant> schematicHolder = itemInHand.get(GalacticraftDataComponents.SCHEMATIC);
         SchematicEntity schematicEntity = new SchematicEntity(level, relative, clickedFace, schematicHolder);
 
-        EntityType.createDefaultStackConfig(level, itemInHand, player).accept(schematicEntity);
+        EntityType.createDefaultStackConfig(level, itemInHand, player).apply(schematicEntity);
 
         if (schematicEntity.survives()) {
             if (!level.isClientSide()) {

@@ -12,9 +12,14 @@ import io.kalishak.galacticraftlegacy.world.item.component.ItemWithDescription;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.ColorCollection;
+import net.minecraft.world.level.block.WeatheringCopperCollection;
+import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -27,6 +32,30 @@ import java.util.function.UnaryOperator;
 public class DeferredItemRegister extends DeferredRegister.Items {
     public DeferredItemRegister(String namespace) {
         super(namespace);
+    }
+
+    public <I extends Item> DeferredItem<I> registerItem(ResourceKey<Item> name, Function<Item.Properties, ? extends I> factory, Supplier<Item.Properties> propertiesSupplier) {
+        return register(name.identifier().getPath(), () -> factory.apply(propertiesSupplier.get().setId(name)));
+    }
+
+    public <I extends Item> DeferredItem<I> registerItem(ResourceKey<Item> name, Function<Item.Properties, ? extends I> func, UnaryOperator<Item.Properties> properties) {
+        return registerItem(name, func, () -> properties.apply(new Item.Properties()));
+    }
+
+    public <I extends Item> DeferredItem<I> registerItem(ResourceKey<Item> name, Function<Item.Properties, ? extends I> func) {
+        return registerItem(name, func, UnaryOperator.identity());
+    }
+
+    public DeferredItem<Item> registerSimpleItem(ResourceKey<Item> name, Supplier<Item.Properties> propertiesSupplier) {
+        return registerItem(name, Item::new, propertiesSupplier);
+    }
+
+    public DeferredItem<Item> registerSimpleItem(ResourceKey<Item> name, UnaryOperator<Item.Properties> propertiesSupplier) {
+        return registerSimpleItem(name, () -> propertiesSupplier.apply(new Item.Properties()));
+    }
+
+    public DeferredItem<Item> registerSimpleItem(ResourceKey<Item> name) {
+        return registerSimpleItem(name, Item.Properties::new);
     }
 
     public <I extends BlockItem> DeferredItem<I> registerBlockItem(Holder<Block> standingBlock, BiFunction<Block, Item.Properties, I> getter, Supplier<Item.Properties> properties) {
@@ -59,15 +88,31 @@ public class DeferredItemRegister extends DeferredRegister.Items {
         return registerBlockItem(block, getter, ItemWithDescription.withDescription(properties, id));
     }
 
-    public <I extends Item> DeferredItem<I> registerItemWithDescription(String name, Function<Item.Properties, ? extends I> getter, Supplier<Item.Properties> properties) {
-        return registerItem(name, getter, ItemWithDescription.withDescription(properties, Identifier.fromNamespaceAndPath(getNamespace(), name)));
+    public <I extends Item> DeferredItem<I> registerItemWithDescription(ResourceKey<Item> name, Function<Item.Properties, ? extends I> getter, Supplier<Item.Properties> properties) {
+        return registerItem(name, getter, ItemWithDescription.withDescription(properties, name.identifier()));
     }
 
-    public DeferredItem<Item> registerSimpleItemWithDescription(String name, Supplier<Item.Properties> properties) {
-        return registerSimpleItem(name, ItemWithDescription.withDescription(properties, Identifier.fromNamespaceAndPath(getNamespace(), name)));
+    public DeferredItem<Item> registerSimpleItemWithDescription(ResourceKey<Item> name, Supplier<Item.Properties> properties) {
+        return registerSimpleItem(name, ItemWithDescription.withDescription(properties, name.identifier()));
     }
 
-    public DeferredItem<Item> registerSimpleItemWithDescription(String name, UnaryOperator<Item.Properties> properties) {
+    public DeferredItem<Item> registerSimpleItemWithDescription(ResourceKey<Item> name, UnaryOperator<Item.Properties> properties) {
         return registerSimpleItemWithDescription(name, () -> properties.apply(new Item.Properties()));
+    }
+
+    public <I extends BlockItem, B extends Block> ColorCollection<DeferredItem<I>> registerBlockItemColorCollection(ColorCollection<DeferredBlock<B>> colorCollection, BiFunction<Block, Item.Properties, I> factory, Function<DyeColor, Item.Properties> propertiesSupplier) {
+        return ColorCollection.zipMap(ColorCollection.VALUES, colorCollection, (dyeColor, block) -> registerBlockItem(block, factory, () -> propertiesSupplier.apply(dyeColor)));
+    }
+
+    public ColorCollection<DeferredItem<BlockItem>> registerBlockItemColorCollection(ColorCollection<DeferredBlock<Block>> colorCollection, Function<DyeColor, Item.Properties> propertiesSupplier) {
+        return registerBlockItemColorCollection(colorCollection, BlockItem::new, propertiesSupplier);
+    }
+
+    public <I extends Item> ColorCollection<DeferredItem<I>> registerColoredItems(ColorCollection<ResourceKey<Item>> ids, Function<Item.Properties, ? extends I> factory, Function<DyeColor, Item.Properties> propertiesSupplier) {
+        return ColorCollection.zipMap(ColorCollection.VALUES, ids, (color, id) -> registerItem(id, factory, () -> propertiesSupplier.apply(color)));
+    }
+
+    public WeatheringCopperCollection<DeferredItem<BlockItem>> registerWeatheringCopperItems(WeatheringCopperCollection<DeferredBlock<Block>> blocks) {
+        return blocks.map(this::registerSimpleBlockItem);
     }
 }

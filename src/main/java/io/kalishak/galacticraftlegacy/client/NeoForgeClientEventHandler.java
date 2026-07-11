@@ -23,7 +23,7 @@ public class NeoForgeClientEventHandler {
 
     @SubscribeEvent
     public void onKeyPressed(InputEvent.Key event) {
-        if (Minecraft.getInstance().screen == null) {
+        if (Minecraft.getInstance().gui.screen() == null) {
             InputConstants.Key key = InputConstants.getKey(event.getKeyEvent());
 
             if (GalacticraftKeys.OPEN_GEAR_KEY.isActiveAndMatches(key) && event.getAction() == GLFW.GLFW_RELEASE) {

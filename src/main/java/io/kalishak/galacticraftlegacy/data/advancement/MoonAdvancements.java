@@ -7,5 +7,6 @@
 
 package io.kalishak.galacticraftlegacy.data.advancement;
 
+@SuppressWarnings("unused")
 public class MoonAdvancements {
 }

@@ -1,19 +1,20 @@
 {
   "values": [
-    "galacticraftlegacy:black_parachute",
+    "galacticraftlegacy:white_parachute",
+    "galacticraftlegacy:orange_parachute",
+    "galacticraftlegacy:magenta_parachute",
+    "galacticraftlegacy:light_blue_parachute",
+    "galacticraftlegacy:yellow_parachute",
+    "galacticraftlegacy:lime_parachute",
+    "galacticraftlegacy:pink_parachute",
+    "galacticraftlegacy:gray_parachute",
+    "galacticraftlegacy:light_gray_parachute",
+    "galacticraftlegacy:cyan_parachute",
+    "galacticraftlegacy:purple_parachute",
     "galacticraftlegacy:blue_parachute",
     "galacticraftlegacy:brown_parachute",
-    "galacticraftlegacy:cyan_parachute",
-    "galacticraftlegacy:gray_parachute",
-    "galacticraftlegacy:light_blue_parachute",
-    "galacticraftlegacy:light_gray_parachute",
-    "galacticraftlegacy:lime_parachute",
-    "galacticraftlegacy:magenta_parachute",
-    "galacticraftlegacy:orange_parachute",
-    "galacticraftlegacy:pink_parachute",
-    "galacticraftlegacy:purple_parachute",
+    "galacticraftlegacy:green_parachute",
     "galacticraftlegacy:red_parachute",
-    "galacticraftlegacy:white_parachute",
-    "galacticraftlegacy:yellow_parachute"
+    "galacticraftlegacy:black_parachute"
   ]
 }

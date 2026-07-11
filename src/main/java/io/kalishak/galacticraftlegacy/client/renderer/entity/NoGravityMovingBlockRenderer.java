@@ -32,7 +32,7 @@ public class NoGravityMovingBlockRenderer extends EntityRenderer<NoGravityMoving
         if (blockState.getRenderShape() == RenderShape.MODEL) {
             poseStack.pushPose();
             poseStack.translate(-0.5, 0.0, -0.5);
-            submitNodeCollector.submitMovingBlock(poseStack, state.movingBlockRenderState);
+            submitNodeCollector.submitMovingBlock(poseStack, state.movingBlockRenderState, state.outlineColor);
             poseStack.popPose();
             super.submit(state, poseStack, submitNodeCollector, camera);
         }

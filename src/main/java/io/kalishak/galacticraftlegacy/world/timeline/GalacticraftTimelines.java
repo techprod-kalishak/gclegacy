@@ -178,8 +178,8 @@ public class GalacticraftTimelines {
                                 ColorModifier.MULTIPLY_RGB,
                                 (track) -> track.addKeyframe(133, -1)
                                         .addKeyframe(11867, -1)
-                                        .addKeyframe(13670, NIGHT_FOG_COLOR_MULTIPLIER)
-                                        .addKeyframe(22330, NIGHT_FOG_COLOR_MULTIPLIER)
+                                        .addKeyframe(13670, NIGHT_FOG_COLOR_MULTIPLIER_START)
+                                        .addKeyframe(22330, NIGHT_FOG_COLOR_MULTIPLIER_END)
                         ).addModifierTrack(
                                 EnvironmentAttributes.SKY_COLOR,
                                 ColorModifier.MULTIPLY_RGB,

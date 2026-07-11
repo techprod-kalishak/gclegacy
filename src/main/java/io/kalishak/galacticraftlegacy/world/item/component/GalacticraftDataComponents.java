@@ -118,9 +118,11 @@ public final class GalacticraftDataComponents {
                 Items.CHEST,
                 (components, _, _) -> components.set(GalacticraftDataComponents.ROCKET_PART, storage)
         );
-        event.modify(
-                Items.COPPER_CHEST,
-                (components, _, _) -> components.set(GalacticraftDataComponents.ROCKET_PART, storage)
-        );
+        Items.COPPER_CHEST.forEach(item -> {
+            event.modify(
+                    item,
+                    (components, _, _) -> components.set(GalacticraftDataComponents.ROCKET_PART, storage)
+            );
+        });
     }
 }

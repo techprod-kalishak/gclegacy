@@ -14,8 +14,13 @@ import io.kalishak.galacticraftlegacy.data.recipes.builder.CompressingRecipeBuil
 import io.kalishak.galacticraftlegacy.data.recipes.builder.FabricatingRecipeBuilder;
 import io.kalishak.galacticraftlegacy.world.item.GalacticraftItems;
 import io.kalishak.galacticraftlegacy.world.item.crafting.FabricatingBookCategory;
+import net.minecraft.advancements.predicates.DistancePredicate;
+import net.minecraft.advancements.predicates.LocationPredicate;
+import net.minecraft.advancements.predicates.MinMaxBounds;
+import net.minecraft.advancements.predicates.entity.EntityPredicate;
+import net.minecraft.advancements.predicates.entity.PlayerPredicate;
+import net.minecraft.advancements.triggers.DistanceTrigger;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
@@ -31,7 +36,10 @@ import net.minecraft.world.item.crafting.CookingBookCategory;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.ColorCollection;
 import net.neoforged.neoforge.common.Tags;
+import net.neoforged.neoforge.registries.DeferredItem;
 import org.jspecify.annotations.Nullable;
 
 import java.util.List;
@@ -338,60 +346,8 @@ public class GalacticraftRecipeProvider extends RecipeProvider {
         oreSmelting(COPPER_SMELTABLE, RecipeCategory.MISC, CookingBookCategory.MISC, Items.COPPER_INGOT, 0.2F, 200, "copper_ingot");
         oreBlasting(COPPER_SMELTABLE, RecipeCategory.MISC, CookingBookCategory.MISC, Items.COPPER_INGOT, 0.2F, 100, "copper_ingot");
 
-        parachute(GalacticraftItems.BLACK_PARACHUTE, Items.BLACK_WOOL);
-        parachute(GalacticraftItems.BLUE_PARACHUTE, Items.BLUE_WOOL);
-        parachute(GalacticraftItems.BROWN_PARACHUTE, Items.BROWN_WOOL);
-        parachute(GalacticraftItems.CYAN_PARACHUTE, Items.CYAN_WOOL);
-        parachute(GalacticraftItems.GRAY_PARACHUTE, Items.GRAY_WOOL);
-        parachute(GalacticraftItems.GREEN_PARACHUTE, Items.GREEN_WOOL);
-        parachute(GalacticraftItems.LIGHT_BLUE_PARACHUTE, Items.LIGHT_BLUE_WOOL);
-        parachute(GalacticraftItems.LIGHT_GRAY_PARACHUTE, Items.LIGHT_GRAY_WOOL);
-        parachute(GalacticraftItems.LIME_PARACHUTE, Items.LIME_WOOL);
-        parachute(GalacticraftItems.MAGENTA_PARACHUTE, Items.MAGENTA_WOOL);
-        parachute(GalacticraftItems.ORANGE_PARACHUTE, Items.ORANGE_WOOL);
-        parachute(GalacticraftItems.PINK_PARACHUTE, Items.PINK_WOOL);
-        parachute(GalacticraftItems.PURPLE_PARACHUTE, Items.PURPLE_WOOL);
-        parachute(GalacticraftItems.RED_PARACHUTE, Items.RED_WOOL);
-        parachute(GalacticraftItems.WHITE_PARACHUTE, Items.WHITE_WOOL);
-        parachute(GalacticraftItems.YELLOW_PARACHUTE, Items.YELLOW_WOOL);
-
-        List<Item> dyes = List.of(
-                Items.BLACK_DYE,
-                Items.BLUE_DYE,
-                Items.BROWN_DYE,
-                Items.CYAN_DYE,
-                Items.GRAY_DYE,
-                Items.GREEN_DYE,
-                Items.LIGHT_BLUE_DYE,
-                Items.LIGHT_GRAY_DYE,
-                Items.LIME_DYE,
-                Items.MAGENTA_DYE,
-                Items.ORANGE_DYE,
-                Items.PINK_DYE,
-                Items.PURPLE_DYE,
-                Items.RED_DYE,
-                Items.YELLOW_DYE,
-                Items.WHITE_DYE
-        );
-        List<Item> parachutes = List.of(
-                GalacticraftItems.BLACK_PARACHUTE.get(),
-                GalacticraftItems.BLUE_PARACHUTE.get(),
-                GalacticraftItems.BROWN_PARACHUTE.get(),
-                GalacticraftItems.CYAN_PARACHUTE.get(),
-                GalacticraftItems.GRAY_PARACHUTE.get(),
-                GalacticraftItems.GREEN_PARACHUTE.get(),
-                GalacticraftItems.LIGHT_BLUE_PARACHUTE.get(),
-                GalacticraftItems.LIGHT_GRAY_PARACHUTE.get(),
-                GalacticraftItems.LIME_PARACHUTE.get(),
-                GalacticraftItems.MAGENTA_PARACHUTE.get(),
-                GalacticraftItems.ORANGE_PARACHUTE.get(),
-                GalacticraftItems.PINK_PARACHUTE.get(),
-                GalacticraftItems.PURPLE_PARACHUTE.get(),
-                GalacticraftItems.RED_PARACHUTE.get(),
-                GalacticraftItems.YELLOW_PARACHUTE.get(),
-                GalacticraftItems.WHITE_PARACHUTE.get()
-        );
-        colorItemWithDye(dyes, parachutes, "parachute_dye", RecipeCategory.TOOLS);
+        ColorCollection.VALUES.forEach(dyeColor -> parachute(GalacticraftItems.PARACHUTE.pick(dyeColor), Items.WOOL.pick(dyeColor)));
+        colorItemWithDye(Items.DYE.asList(), GalacticraftItems.PARACHUTE.map(DeferredItem::asItem).asList(), "dye_parachute", RecipeCategory.TOOLS);
         ShapedRecipeBuilder.shaped(this.items, RecipeCategory.MISC, GalacticraftItems.THERMAL_CLOTH)
                 .define('W', ItemTags.WOOL)
                 .define('R', Items.REDSTONE)
@@ -544,7 +500,7 @@ public class GalacticraftRecipeProvider extends RecipeProvider {
                 Items.RAW_COPPER_BLOCK,
                 RecipeCategory.BUILDING_BLOCKS,
                 CookingBookCategory.BLOCKS,
-                Items.COPPER_BLOCK,
+                Items.COPPER_BLOCK.weathering().unaffected(),
                 200,
                 null
         );
@@ -757,7 +713,15 @@ public class GalacticraftRecipeProvider extends RecipeProvider {
                 .pattern("###")
                 .pattern("S S")
                 .pattern(" S ")
-                .unlockedBy("discovered_gravity", has(Items.WHITE_WOOL))
+                .unlockedBy(
+                        "discovered_gravity",
+                        DistanceTrigger.TriggerInstance.fallFromHeight(
+                                EntityPredicate.Builder.entity().player(PlayerPredicate.Builder.player().build()),
+                                DistancePredicate.horizontal(MinMaxBounds.Doubles.atLeast(10.0D)),
+                                LocationPredicate.Builder.inDimension(Level.OVERWORLD)
+                        )
+                )
+                .unlockedBy("has_wool", has(ItemTags.WOOL))
                 .save(this.output, Constants.key(Registries.RECIPE, getItemName(parachute)));
     }
 

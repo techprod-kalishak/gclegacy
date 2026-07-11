@@ -1,16 +1,24 @@
+/*
+ * Copyright (c) 2026 Kalishak
+ *
+ * Licensed under the MIT license
+ * See LICENSE file for more details
+ */
+
 package io.kalishak.galacticraftlegacy.mixin;
 
+import io.kalishak.galacticraftlegacy.data.GalacticraftTags;
 import io.kalishak.galacticraftlegacy.world.entity.SpaceEntity;
 import net.minecraft.core.Holder;
 import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.util.Mth;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.dimension.DimensionType;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -31,7 +39,12 @@ public abstract class LivingEntityMixin extends Entity {
 
     @Inject(method = "getDefaultGravity", at = @At("RETURN"), cancellable = true)
     private void galacticraftlegacy$getDefaultGravity(CallbackInfoReturnable<Double> cir) {
-        cir.setReturnValue((double) SpaceEntity.getGravity(this.level()));
+        Level level = this.level();
+        Holder<DimensionType> dimension = level.dimensionTypeRegistration();
+
+        if (dimension.is(GalacticraftTags.DimensionTypes.GRAVITY_OVERRIDDEN) && !this.is(GalacticraftTags.EntityTypes.BYPASSES_CELESTIAL_GRAVITY)) {
+            cir.setReturnValue((double) SpaceEntity.getGravity(level));
+        }
     }
 
     @Inject(method = "calculateFallDamage", at = @At("HEAD"), cancellable = true)

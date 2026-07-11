@@ -14,11 +14,11 @@ import io.kalishak.galacticraftlegacy.registry.ChecklistEntry;
 import io.kalishak.galacticraftlegacy.registry.GalacticraftRegistries;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
-import net.minecraft.data.tags.KeyTagProvider;
+import net.minecraft.data.tags.TagsProvider;
 
 import java.util.concurrent.CompletableFuture;
 
-public class GalacticraftChecklistTagsProvider extends KeyTagProvider<ChecklistEntry> {
+public class GalacticraftChecklistTagsProvider extends TagsProvider<ChecklistEntry> {
     public GalacticraftChecklistTagsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
         super(output, GalacticraftRegistries.Keys.CHECKLIST, registries, Galacticraft.MODID);
     }

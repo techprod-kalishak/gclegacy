@@ -9,7 +9,7 @@ package io.kalishak.galacticraftlegacy.data.tag;
 
 import io.kalishak.galacticraftlegacy.Galacticraft;
 import io.kalishak.galacticraftlegacy.data.GalacticraftTags;
-import io.kalishak.galacticraftlegacy.world.level.material.fluid.GalacticraftFluids;
+import io.kalishak.galacticraftlegacy.references.GalacticraftFluidIds;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.FluidTagsProvider;
@@ -28,14 +28,14 @@ public class GalacticraftFluidTagsProvider extends FluidTagsProvider {
                 .addTag(FluidTags.WATER)
                 .addTag(FluidTags.LAVA);
         tag(GalacticraftTags.Fluids.IS_OXYGEN)
-                .add(GalacticraftFluids.OXYGEN.get())
-                .add(GalacticraftFluids.OXYGEN_FLOWING.get());
+                .add(GalacticraftFluidIds.OXYGEN)
+                .add(GalacticraftFluidIds.FLOWING_OXYGEN);
         tag(GalacticraftTags.Fluids.IS_OIL)
-                .add(GalacticraftFluids.OIL.get())
-                .add(GalacticraftFluids.OIL_FLOWING.get());
+                .add(GalacticraftFluidIds.OIL)
+                .add(GalacticraftFluidIds.FLOWING_OIL);
         tag(GalacticraftTags.Fluids.IS_FUEL)
-                .add(GalacticraftFluids.FUEL.get())
-                .add(GalacticraftFluids.FUEL_FLOWING.get());
+                .add(GalacticraftFluidIds.FUEL)
+                .add(GalacticraftFluidIds.FLOWING_FUEL);
         tag(GalacticraftTags.Fluids.FLAMMABLE_LIQUID)
                 .addTag(GalacticraftTags.Fluids.IS_OIL)
                 .addTag(GalacticraftTags.Fluids.IS_FUEL);

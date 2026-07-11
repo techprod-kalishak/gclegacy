@@ -1,6 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "category": "misc",
   "group": "asteroid_rock_wall",
   "key": {
     "#": "galacticraftlegacy:asteroid_rock"

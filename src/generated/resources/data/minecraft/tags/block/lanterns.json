@@ -1,13 +1,13 @@
 {
   "values": [
     "galacticraftlegacy:unlit_lantern",
-    "galacticraftlegacy:unlit_copper_lantern",
-    "galacticraftlegacy:exposed_unlit_copper_lantern",
-    "galacticraftlegacy:weathered_unlit_copper_lantern",
-    "galacticraftlegacy:oxidized_unlit_copper_lantern",
-    "galacticraftlegacy:waxed_unlit_copper_lantern",
-    "galacticraftlegacy:waxed_exposed_unlit_copper_lantern",
-    "galacticraftlegacy:waxed_weathered_unlit_copper_lantern",
-    "galacticraftlegacy:waxed_oxidized_unlit_copper_lantern"
+    "galacticraftlegacy:copper_lantern",
+    "galacticraftlegacy:exposed_copper_lantern",
+    "galacticraftlegacy:weathered_copper_lantern",
+    "galacticraftlegacy:oxidized_copper_lantern",
+    "galacticraftlegacy:waxed_copper_lantern",
+    "galacticraftlegacy:waxed_exposed_copper_lantern",
+    "galacticraftlegacy:waxed_weathered_copper_lantern",
+    "galacticraftlegacy:waxed_oxidized_copper_lantern"
   ]
 }

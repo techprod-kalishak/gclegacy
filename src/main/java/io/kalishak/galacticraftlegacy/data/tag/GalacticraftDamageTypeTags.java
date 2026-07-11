@@ -13,12 +13,12 @@ import io.kalishak.galacticraftlegacy.world.damagesource.GalacticraftDamageTypes
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
-import net.minecraft.data.tags.KeyTagProvider;
+import net.minecraft.data.tags.TagsProvider;
 import net.minecraft.world.damagesource.DamageType;
 
 import java.util.concurrent.CompletableFuture;
 
-public class GalacticraftDamageTypeTags extends KeyTagProvider<DamageType> {
+public class GalacticraftDamageTypeTags extends TagsProvider<DamageType> {
     public GalacticraftDamageTypeTags(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider) {
         super(packOutput, Registries.DAMAGE_TYPE, lookupProvider, Galacticraft.MODID);
     }

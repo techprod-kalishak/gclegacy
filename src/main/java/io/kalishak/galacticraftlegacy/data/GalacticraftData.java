@@ -57,6 +57,7 @@ public class GalacticraftData {
             .add(Registries.NOISE, GalacticraftNoises::bootstrap)
             .add(Registries.NOISE_SETTINGS, GalacticraftNoiseGeneratorSettings::bootstrap)
             .add(Registries.PLACED_FEATURE, GalacticraftPlacements::bootstrap)
+            .add(Registries.SULFUR_CUBE_ARCHETYPE, GalacticraftSulfurCubeArchetypes::bootstrap)
             .add(Registries.TIMELINE, GalacticraftTimelines::bootstrap)
             .add(Registries.TRIM_MATERIAL, GalacticraftTrimMaterials::bootstrap)
             .add(Registries.WORLD_CLOCK, GalacticraftWorldClocks::bootstrap)
@@ -83,13 +84,12 @@ public class GalacticraftData {
         event.createProvider(GalacticraftAdvancementProvider::create);
         event.createProvider(GalacticraftRecipeProvider.Runner::new);
         event.createProvider(GalacticraftBiomeTagsProvider::new);
-        event.createProvider(GalacticraftBlockTagsProvider::new);
         event.createProvider(GalacticraftChecklistTagsProvider::new);
         event.createProvider(GalacticraftDamageTypeTags::new);
         event.createProvider(GalacticraftDimensionTypeTags::new);
         event.createProvider(GalacticraftEntityTypeTagsProvider::new);
         event.createProvider(GalacticraftFluidTagsProvider::new);
-        event.createProvider(GalacticraftItemTagsProvider::new);
+        event.createBlockAndItemTags(GalacticraftBlockTagsProvider::new, GalacticraftItemTagsProvider::new);
         event.createProvider(GalacticraftTimelinesTagsProvider::new);
 
         // VanillaRegistries for lookup

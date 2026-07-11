@@ -7,24 +7,17 @@
 
 package io.kalishak.galacticraftlegacy.data.loot;
 
-import io.kalishak.galacticraftlegacy.config.condition.GalacticraftConditions;
 import io.kalishak.galacticraftlegacy.world.entity.GalacticraftEntityType;
 import io.kalishak.galacticraftlegacy.world.item.GalacticraftItems;
 import io.kalishak.galacticraftlegacy.world.level.material.fluid.GalacticraftFluids;
-import io.kalishak.galacticraftlegacy.world.level.storage.loot.functions.GalacticraftLootFunctions;
 import io.kalishak.galacticraftlegacy.world.level.storage.loot.functions.SetItemFluidTankFunction;
 import io.kalishak.galacticraftlegacy.world.level.storage.loot.predicates.GalacticraftLootItemConditions;
-import net.minecraft.advancements.criterion.EntityFlagsPredicate;
-import net.minecraft.advancements.criterion.EntityPredicate;
-import net.minecraft.advancements.criterion.EntityTypePredicate;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.loot.EntityLootSubProvider;
-import net.minecraft.data.loot.packs.VanillaEntityLoot;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
@@ -32,7 +25,6 @@ import net.minecraft.world.level.storage.loot.functions.*;
 import net.minecraft.world.level.storage.loot.predicates.*;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
-import net.neoforged.neoforge.common.conditions.NeoForgeConditions;
 
 import java.util.stream.Stream;
 
@@ -68,7 +60,7 @@ public class GalacticraftEntityLootSubProvider extends EntityLootSubProvider {
                                 LootPool.lootPool()
                                         .setRolls(ConstantValue.exactly(1.0F))
                                         .add(
-                                                LootItem.lootTableItem(GalacticraftItems.WHITE_PIPE)
+                                                LootItem.lootTableItem(GalacticraftItems.FLUID_PIPE.white())
                                                         .apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 1.0F)))
                                         )
                                         .when(LootItemKilledByPlayerCondition.killedByPlayer())

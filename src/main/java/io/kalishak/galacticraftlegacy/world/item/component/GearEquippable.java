@@ -29,6 +29,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
@@ -78,7 +79,7 @@ public record GearEquippable(GearEquipmentSlot gearSlot, Holder<SoundEvent> equi
         return builder(gearSlot)
                 .setEquipSound(BuiltInRegistries.SOUND_EVENT.wrapAsHolder(SoundEvents.WOOL_PLACE))
                 .setAsset(assetId)
-                .setAllowedEntities(EntityType.PLAYER)
+                .setAllowedEntities(EntityTypes.PLAYER)
                 .build();
     }
 

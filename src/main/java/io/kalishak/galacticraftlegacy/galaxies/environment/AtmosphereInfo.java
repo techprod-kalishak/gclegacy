@@ -9,7 +9,7 @@ package io.kalishak.galacticraftlegacy.galaxies.environment;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import io.kalishak.galacticraftlegacy.references.GalacricraftFluidIds;
+import io.kalishak.galacticraftlegacy.references.GalacticraftFluidIds;
 import it.unimi.dsi.fastutil.objects.Object2DoubleArrayMap;
 import it.unimi.dsi.fastutil.objects.Object2DoubleMap;
 import net.minecraft.core.registries.Registries;
@@ -42,10 +42,10 @@ public class AtmosphereInfo {
     );
     public static final AtmosphereInfo EARTH = builder()
             .rainy()
-            .gas(GalacricraftFluidIds.NITROGEN, 78.08)
-            .gas(GalacricraftFluidIds.OXYGEN, 20.95)
-            .gas(GalacricraftFluidIds.ARGON, 0.93)
-            .gas(GalacricraftFluidIds.CO2, 0.04)
+            .gas(GalacticraftFluidIds.NITROGEN, 78.08)
+            .gas(GalacticraftFluidIds.OXYGEN, 20.95)
+            .gas(GalacticraftFluidIds.ARGON, 0.93)
+            .gas(GalacticraftFluidIds.CO2, 0.04)
             .build();
 
     private final boolean isCorrosive;
@@ -81,7 +81,7 @@ public class AtmosphereInfo {
     }
 
     public boolean isBreathable() {
-        double oxygenLevel = getGasComposition().getOrDefault(GalacricraftFluidIds.OXYGEN, 0.0);
+        double oxygenLevel = getGasComposition().getOrDefault(GalacticraftFluidIds.OXYGEN, 0.0);
         return oxygenLevel >= 19.5D && !isCorrosive();
     }
 

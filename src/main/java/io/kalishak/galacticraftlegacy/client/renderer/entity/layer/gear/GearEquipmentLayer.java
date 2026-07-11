@@ -33,7 +33,7 @@ import net.minecraft.client.resources.model.sprite.SpriteGetter;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.context.ContextKey;
-import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.player.PlayerModelType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.equipment.EquipmentAsset;
@@ -76,13 +76,13 @@ public abstract class GearEquipmentLayer<S extends LivingEntityRenderState, M ex
         AvatarRenderer<?> wideAvatarRenderer = event.getPlayerRenderer(PlayerModelType.WIDE);
         registerLayerForPlayerRenderer(wideAvatarRenderer, modelSet, equipmentRenderer, equipmentAssets, spriteGetter);
 
-        CreeperRenderer creeperRenderer = event.getRenderer(EntityType.CREEPER);
+        CreeperRenderer creeperRenderer = event.getRenderer(EntityTypes.CREEPER);
         registerLayerForRenderer(creeperRenderer, modelSet, equipmentRenderer, equipmentAssets);
 
-        SkeletonRenderer skeletonRenderer = event.getRenderer(EntityType.SKELETON);
+        SkeletonRenderer skeletonRenderer = event.getRenderer(EntityTypes.SKELETON);
         registerLayerForRenderer(skeletonRenderer, modelSet, equipmentRenderer, equipmentAssets);
 
-        ZombieRenderer zombieRenderer = event.getRenderer(EntityType.ZOMBIE);
+        ZombieRenderer zombieRenderer = event.getRenderer(EntityTypes.ZOMBIE);
         registerLayerForRenderer(zombieRenderer, modelSet, equipmentRenderer, equipmentAssets);
     }
 

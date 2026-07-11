@@ -12,7 +12,6 @@ import io.kalishak.galacticraftlegacy.Galacticraft;
 import io.kalishak.galacticraftlegacy.references.GalacticraftItemIds;
 import io.kalishak.galacticraftlegacy.registry.SchematicVariants;
 import io.kalishak.galacticraftlegacy.registry.deferred.DeferredItemRegister;
-import io.kalishak.galacticraftlegacy.registry.deferred.DeferredWeatheringCopperItems;
 import io.kalishak.galacticraftlegacy.transfer.capability.fluid.ItemAccessFluidTank;
 import io.kalishak.galacticraftlegacy.world.entity.GalacticraftEntityType;
 import io.kalishak.galacticraftlegacy.world.entity.GearEquipmentSlot;
@@ -29,12 +28,14 @@ import io.kalishak.galacticraftlegacy.world.level.block.GalacticraftBlocks;
 import io.kalishak.galacticraftlegacy.world.level.material.fluid.GalacticraftFluids;
 import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponents;
-import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.equipment.ArmorType;
 import net.minecraft.world.item.equipment.Equippable;
+import net.minecraft.world.level.block.ColorCollection;
+import net.minecraft.world.level.block.WeatheringCopperCollection;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
@@ -138,85 +139,10 @@ public final class GalacticraftItems {
             GalacticraftItemIds.WRENCH,
             properties -> properties.durability(256)
     );
-    public static final DeferredItem<GearItem> BLACK_PARACHUTE = REGISTRY.registerItem(
-            GalacticraftItemIds.PARACHUTES.get(DyeColor.BLACK),
+    public static final ColorCollection<DeferredItem<GearItem>> PARACHUTE = REGISTRY.registerColoredItems(
+            GalacticraftItemIds.PARACHUTE,
             GearItem::new,
-            () -> GearItem.parachute(DyeColor.BLACK)
-    );
-    public static final DeferredItem<GearItem> BLUE_PARACHUTE = REGISTRY.registerItem(
-            GalacticraftItemIds.PARACHUTES.get(DyeColor.BLUE),
-            GearItem::new,
-            () -> GearItem.parachute(DyeColor.BLUE)
-    );
-    public static final DeferredItem<GearItem> BROWN_PARACHUTE = REGISTRY.registerItem(
-            GalacticraftItemIds.PARACHUTES.get(DyeColor.BROWN),
-            GearItem::new,
-            () -> GearItem.parachute(DyeColor.BROWN)
-    );
-    public static final DeferredItem<GearItem> CYAN_PARACHUTE = REGISTRY.registerItem(
-            GalacticraftItemIds.PARACHUTES.get(DyeColor.CYAN),
-            GearItem::new,
-            () -> GearItem.parachute(DyeColor.CYAN)
-    );
-    public static final DeferredItem<GearItem> GRAY_PARACHUTE = REGISTRY.registerItem(
-            GalacticraftItemIds.PARACHUTES.get(DyeColor.GRAY),
-            GearItem::new,
-            () -> GearItem.parachute(DyeColor.GRAY)
-    );
-    public static final DeferredItem<GearItem> GREEN_PARACHUTE = REGISTRY.registerItem(
-            GalacticraftItemIds.PARACHUTES.get(DyeColor.GREEN),
-            GearItem::new,
-            () -> GearItem.parachute(DyeColor.GREEN)
-    );
-    public static final DeferredItem<GearItem> LIGHT_BLUE_PARACHUTE = REGISTRY.registerItem(
-            GalacticraftItemIds.PARACHUTES.get(DyeColor.LIGHT_BLUE),
-            GearItem::new,
-            () -> GearItem.parachute(DyeColor.LIGHT_BLUE)
-    );
-    public static final DeferredItem<GearItem> LIGHT_GRAY_PARACHUTE = REGISTRY.registerItem(
-            GalacticraftItemIds.PARACHUTES.get(DyeColor.LIGHT_GRAY),
-            GearItem::new,
-            () -> GearItem.parachute(DyeColor.LIGHT_GRAY)
-    );
-    public static final DeferredItem<GearItem> LIME_PARACHUTE = REGISTRY.registerItem(
-            GalacticraftItemIds.PARACHUTES.get(DyeColor.LIME),
-            GearItem::new,
-            () -> GearItem.parachute(DyeColor.LIME)
-    );
-    public static final DeferredItem<GearItem> MAGENTA_PARACHUTE = REGISTRY.registerItem(
-            GalacticraftItemIds.PARACHUTES.get(DyeColor.MAGENTA),
-            GearItem::new,
-            () -> GearItem.parachute(DyeColor.MAGENTA)
-    );
-    public static final DeferredItem<GearItem> ORANGE_PARACHUTE = REGISTRY.registerItem(
-            GalacticraftItemIds.PARACHUTES.get(DyeColor.ORANGE),
-            GearItem::new,
-            () -> GearItem.parachute(DyeColor.ORANGE)
-    );
-    public static final DeferredItem<GearItem> PINK_PARACHUTE = REGISTRY.registerItem(
-            GalacticraftItemIds.PARACHUTES.get(DyeColor.PINK),
-            GearItem::new,
-            () -> GearItem.parachute(DyeColor.PINK)
-    );
-    public static final DeferredItem<GearItem> PURPLE_PARACHUTE = REGISTRY.registerItem(
-            GalacticraftItemIds.PARACHUTES.get(DyeColor.PURPLE),
-            GearItem::new,
-            () -> GearItem.parachute(DyeColor.PURPLE)
-    );
-    public static final DeferredItem<GearItem> RED_PARACHUTE = REGISTRY.registerItem(
-            GalacticraftItemIds.PARACHUTES.get(DyeColor.RED),
-            GearItem::new,
-            () -> GearItem.parachute(DyeColor.RED)
-    );
-    public static final DeferredItem<GearItem> WHITE_PARACHUTE = REGISTRY.registerItem(
-            GalacticraftItemIds.PARACHUTES.get(DyeColor.WHITE),
-            GearItem::new,
-            () -> GearItem.parachute(DyeColor.WHITE)
-    );
-    public static final DeferredItem<GearItem> YELLOW_PARACHUTE = REGISTRY.registerItem(
-            GalacticraftItemIds.PARACHUTES.get(DyeColor.YELLOW),
-            GearItem::new,
-            () -> GearItem.parachute(DyeColor.YELLOW)
+            GearItem::parachute
     );
     public static final DeferredItem<GearItem> PROTO_SHIELD_CONTROLLER = REGISTRY.registerItem(
             GalacticraftItemIds.PROTO_SHIELD_CONTROLLER,
@@ -267,7 +193,7 @@ public final class GalacticraftItems {
                     .component(
                             DataComponents.EQUIPPABLE,
                             Equippable.builder(EquipmentSlot.HEAD)
-                                    .setAllowedEntities(EntityType.PLAYER)
+                                    .setAllowedEntities(EntityTypes.PLAYER)
                                     .setAsset(GearEquipmentAssets.SENSOR_GLASSES).build()
                     )
     );
@@ -580,22 +506,11 @@ public final class GalacticraftItems {
 
     public static final DeferredItem<BlockItem> ALUMINUM_WIRE = REGISTRY.registerSimpleBlockItemWithDescription(GalacticraftBlocks.ALUMINUM_WIRE);
     public static final DeferredItem<BlockItem> HEAVY_ALUMINUM_WIRE = REGISTRY.registerSimpleBlockItemWithDescription(GalacticraftBlocks.HEAVY_ALUMINUM_WIRE);
-    public static final DeferredItem<BlockItem> WHITE_PIPE = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.WHITE_PIPE);
-    public static final DeferredItem<BlockItem> ORANGE_PIPE = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.ORANGE_PIPE);
-    public static final DeferredItem<BlockItem> MAGENTA_PIPE = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.MAGENTA_PIPE);
-    public static final DeferredItem<BlockItem> LIGHT_BLUE_PIPE = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.LIGHT_BLUE_PIPE);
-    public static final DeferredItem<BlockItem> YELLOW_PIPE = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.YELLOW_PIPE);
-    public static final DeferredItem<BlockItem> LIME_PIPE = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.LIME_PIPE);
-    public static final DeferredItem<BlockItem> PINK_PIPE = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.PINK_PIPE);
-    public static final DeferredItem<BlockItem> GRAY_PIPE = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.GRAY_PIPE);
-    public static final DeferredItem<BlockItem> LIGHT_GRAY_PIPE = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.LIGHT_GRAY_PIPE);
-    public static final DeferredItem<BlockItem> CYAN_PIPE = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.CYAN_PIPE);
-    public static final DeferredItem<BlockItem> PURPLE_PIPE = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.PURPLE_PIPE);
-    public static final DeferredItem<BlockItem> BLUE_PIPE = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.BLUE_PIPE);
-    public static final DeferredItem<BlockItem> BROWN_PIPE = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.BROWN_PIPE);
-    public static final DeferredItem<BlockItem> GREEN_PIPE = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.GREEN_PIPE);
-    public static final DeferredItem<BlockItem> RED_PIPE = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.RED_PIPE);
-    public static final DeferredItem<BlockItem> BLACK_PIPE = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.BLACK_PIPE);
+    public static final ColorCollection<DeferredItem<BlockItem>> FLUID_PIPE = REGISTRY.registerBlockItemColorCollection(
+            GalacticraftBlocks.FLUID_PIPE,
+            BlockItem::new,
+            _ -> new Item.Properties()
+    );
     public static final DeferredItem<BlockItem> GRATING = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.GRATING);
     public static final DeferredItem<BlockItem> OXYGEN_DETECTOR = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.OXYGEN_DETECTOR);
     public static final DeferredItem<BlockItem> CHEESE = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.CHEESE);
@@ -650,7 +565,7 @@ public final class GalacticraftItems {
             )
     );
     public static final DeferredItem<BlockItem> UNLIT_LANTERN = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.UNLIT_LANTERN);
-    public static final DeferredWeatheringCopperItems UNLIT_COPPER_LANTERNS = DeferredWeatheringCopperItems.create(GalacticraftBlocks.UNLIT_COPPER_LANTERN, REGISTRY::registerSimpleBlockItem);
+    public static final WeatheringCopperCollection<DeferredItem<BlockItem>> UNLIT_COPPER_LANTERN = REGISTRY.registerWeatheringCopperItems(GalacticraftBlocks.UNLIT_COPPER_LANTERN);
     public static final DeferredItem<BlockItem> MAGNETIC_CRAFTING_TABLE = REGISTRY.registerSimpleBlockItemWithDescription(GalacticraftBlocks.MAGNETIC_CRAFTING_TABLE);
     public static final DeferredItem<BlockItem> ASTEROID_ROCK = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.ASTEROID_ROCK);
     public static final DeferredItem<BlockItem> ASTEROID_ROCK_SLAB = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.ASTEROID_ROCK_SLAB);
