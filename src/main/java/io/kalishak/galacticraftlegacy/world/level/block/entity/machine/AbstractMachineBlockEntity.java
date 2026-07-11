@@ -111,28 +111,13 @@ public abstract class AbstractMachineBlockEntity extends BaseItemStorageBlockEnt
             EnergyHandler itemCapacitor = battery.getCapability(Capabilities.Energy.ITEM, ItemAccess.forStack(battery));
 
             if (itemCapacitor != null && itemCapacitor.getAmountAsInt() > 0) {
-                int toMove = Math.min(machine.capacitor.getCapacityAsInt() - machine.capacitor.getAmountAsInt(), Math.min(itemCapacitor.getAmountAsInt(), machine.getMaxEnergyTransferRate()));
+                int toMove = Math.min(itemCapacitor.getAmountAsInt(), machine.getMaxEnergyTransferRate());
 
                 try (Transaction childTx = Transaction.open(tx)) {
                     if (EnergyHandlerUtil.move(itemCapacitor, machine.capacitor, toMove, childTx) > 0) {
                         childTx.commit();
                         doCommit = true;
                     }
-                }
-            }
-        }
-
-        int toExtract = energyBasePerOperation;
-
-        if (enableLeak) {
-            toExtract += MACHINE_ENERGY_LEAK;
-        }
-
-        if (toExtract > 0) {
-            try (Transaction childTx = Transaction.open(tx)) {
-                if (machine.capacitor.extract(toExtract, childTx) > 0) {
-                    childTx.commit();
-                    doCommit = true;
                 }
             }
         }
@@ -208,18 +193,18 @@ public abstract class AbstractMachineBlockEntity extends BaseItemStorageBlockEnt
         return this.capacitor.getAmountAsInt() > getMaxEnergyTransferRate();
     }
 
-    @Override
-    public void setItem(int slot, ItemStack itemStack) {
-        ItemStack currentStack = getItem(slot);
-        boolean sameItem = !itemStack.isEmpty() && ItemStack.isSameItemSameComponents(currentStack, itemStack);
-
-        itemStack.limitSize(itemStack.getMaxStackSize());
-        super.setItem(slot, itemStack);
-
-        if (!sameItem) {
-            onItemChange(slot);
-        }
-    }
+//    @Override
+//    public void setItem(int slot, ItemStack itemStack) {
+//        ItemStack currentStack = getItem(slot);
+//        boolean sameItem = !itemStack.isEmpty() && ItemStack.isSameItemSameComponents(currentStack, itemStack);
+//
+//        itemStack.limitSize(itemStack.getMaxStackSize());
+//        super.setItem(slot, itemStack);
+//
+//        if (!sameItem) {
+//            onItemChange(slot);
+//        }
+//    }
 
     protected void onItemChange(int slot) {
     }

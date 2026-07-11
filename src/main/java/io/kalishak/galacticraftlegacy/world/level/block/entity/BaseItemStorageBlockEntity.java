@@ -48,7 +48,7 @@ public abstract class BaseItemStorageBlockEntity extends BlockEntity implements 
         @Override
         protected void onContentsChanged(int index, ItemStack previousContents) {
             super.onContentsChanged(index, previousContents);
-            BaseItemStorageBlockEntity.this.setChanged();
+            BaseItemStorageBlockEntity.this.onItemChange(index);
         }
     };
 
@@ -188,7 +188,18 @@ public abstract class BaseItemStorageBlockEntity extends BlockEntity implements 
     }
 
     public final void setItem(int slot, ItemResource resource, int count) {
+        ItemStack currentStack = getItem(slot);
+        boolean sameResource = !resource.isEmpty() && resource.matches(currentStack);
+
         this.items.set(slot, resource, count);
+
+        if (!sameResource) {
+            onItemChange(slot);
+        }
+    }
+
+    protected void onItemChange(int slot) {
+
     }
 
     public boolean stillValid(Player player) {

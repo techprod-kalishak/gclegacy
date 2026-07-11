@@ -115,6 +115,10 @@ public abstract class AbstractElectricFurnaceBlockEntity<R extends ElectricCooki
     public static <R extends ElectricCookingRecipe> void serverTick(ServerLevel level, BlockPos pos, BlockState state, AbstractElectricFurnaceBlockEntity<R> entity) {
         AbstractMachineBlockEntity.extractBattery(entity, false, 250, null);
 
+        if (entity.cookingTimer > 0) {
+            consumeBattery(entity.capacitor, null);
+        }
+
         boolean changed = false;
 
         ItemStack ingredient = ItemUtil.getStack(entity.items, SLOT_INPUT);
@@ -131,7 +135,6 @@ public abstract class AbstractElectricFurnaceBlockEntity<R extends ElectricCooki
                 try (Transaction transaction = Transaction.open(null)) {
                     if (!heatResult.isEmpty() && canHeat(entity.items, heatResult, entity.capacitor, transaction)) {
                         entity.cookingTimer++;
-                        consumeBattery(entity.capacitor, transaction);
 
                         if (entity.cookingTimer == entity.cookingTotalTime) {
                             entity.cookingTimer = 0;
@@ -139,9 +142,10 @@ public abstract class AbstractElectricFurnaceBlockEntity<R extends ElectricCooki
                             heat(entity.items, heatResult, entity.capacitor, transaction);
                             entity.setRecipeUsed(recipe);
                             changed = true;
+                            transaction.commit();
                         }
                     } else {
-                        entity.cookingTimer = 0;
+                        entity.cookingTotalTime = 0;
                     }
                 }
             }
@@ -156,7 +160,7 @@ public abstract class AbstractElectricFurnaceBlockEntity<R extends ElectricCooki
 
     protected static boolean consumeBattery(EnergyHandler handler, @Nullable Transaction rootTransaction) {
         try (Transaction tx = Transaction.open(rootTransaction)) {
-            if (handler.extract(25, tx) >= 25) {
+            if (handler.extract(25, tx) > 0) {
                 tx.commit();
                 return true;
             }
@@ -190,7 +194,7 @@ public abstract class AbstractElectricFurnaceBlockEntity<R extends ElectricCooki
         try (Transaction childTransaction = Transaction.open(rootTransaction)) {
             int populated = items.insert(ItemResource.of(result), result.getCount(), childTransaction);
 
-            if (populated == result.getCount()) {
+            if (populated > 0) {
                 if (items.extract(SLOT_INPUT, items.getResource(SLOT_INPUT), 1, childTransaction) > 0) {
                     if (consumeBattery(capacitor, childTransaction)) {
                         childTransaction.commit();

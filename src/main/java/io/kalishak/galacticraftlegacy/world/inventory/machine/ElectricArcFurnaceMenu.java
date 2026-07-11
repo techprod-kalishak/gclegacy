@@ -11,6 +11,7 @@ import io.kalishak.galacticraftlegacy.EnumExtensions;
 import io.kalishak.galacticraftlegacy.transfer.ResourcefulHelper;
 import io.kalishak.galacticraftlegacy.world.inventory.GalacticraftMenuType;
 import io.kalishak.galacticraftlegacy.world.inventory.slot.CapabilityHandlerSlot;
+import io.kalishak.galacticraftlegacy.world.inventory.slot.NotPlaceableResourceHandlerSlot;
 import io.kalishak.galacticraftlegacy.world.inventory.slot.ResultResourceHandlerSlot;
 import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.ArcHeatingRecipe;
 import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.GalacticraftRecipeType;
@@ -39,8 +40,8 @@ public class ElectricArcFurnaceMenu extends AbstractElectricFurnaceMenu<ArcHeati
 
         addSlot(new ResourceHandlerSlot(this.resourceHandler, machine::setItem, 0, 56, 25));
         addSlot(new CapabilityHandlerSlot<>(this.resourceHandler, machine::setItem, Capabilities.Energy.ITEM, 1, 8, 49));
-        addSlot(new ResultResourceHandlerSlot(playerInventory.player, this.resourceHandler, machine::awardUsedRecipes, 2, 109, 25));
-        addSlot(new ResultResourceHandlerSlot(playerInventory.player, this.resourceHandler, machine::awardUsedRecipes, 3, 127, 25));
+        addSlot(new NotPlaceableResourceHandlerSlot( this.resourceHandler,  2, 109, 25));
+        addSlot(new NotPlaceableResourceHandlerSlot( this.resourceHandler,  3, 127, 25));
         addStandardInventorySlots(playerInventory, 8, 84);
     }
 
