@@ -15,11 +15,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.RecipeBookMenu;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.transfer.ResourceHandler;
-import net.neoforged.neoforge.transfer.access.ItemAccess;
 import net.neoforged.neoforge.transfer.energy.EnergyHandler;
 import net.neoforged.neoforge.transfer.item.ItemResource;
 
@@ -40,10 +37,6 @@ public abstract class AbstractMachineRecipeBookMenu<M extends AbstractMachineBlo
         this.level = playerInventory.player.level();
         this.player = playerInventory.player;
         addDataSlots(containerData);
-    }
-
-    public static boolean isBattery(ItemStack stack) {
-        return stack.getCapability(Capabilities.Energy.ITEM, ItemAccess.forStack(stack)) != null;
     }
 
     @Override

@@ -8,6 +8,7 @@
 package io.kalishak.galacticraftlegacy.world.inventory.machine;
 
 import io.kalishak.galacticraftlegacy.transfer.ResourcefulHelper;
+import io.kalishak.galacticraftlegacy.world.item.component.ItemAccessEnergyUtils;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.AbstractOxygenBlockEntity;
 import io.kalishak.galacticraftlegacy.world.level.material.fluid.GalacticraftFluids;
 import net.minecraft.world.Container;
@@ -67,7 +68,7 @@ public abstract class AbstractOxygenMachineMenu<M extends AbstractOxygenBlockEnt
             swappedStack = newStack.copy();
 
             if (slotIndex != 0) {
-                if (AbstractMachineRecipeBookMenu.isBattery(newStack)) {
+                if (ItemAccessEnergyUtils.hasEnergyHandler(newStack)) {
                     if (!this.moveItemStackTo(newStack, 0, 1, false)) {
                         return ItemStack.EMPTY;
                     }

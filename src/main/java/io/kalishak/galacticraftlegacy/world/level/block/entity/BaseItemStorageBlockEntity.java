@@ -8,6 +8,7 @@
 package io.kalishak.galacticraftlegacy.world.level.block.entity;
 
 import io.kalishak.galacticraftlegacy.transfer.ResourcefulHelper;
+import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.AbstractMachineBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponentGetter;
@@ -47,8 +48,17 @@ public abstract class BaseItemStorageBlockEntity extends BlockEntity implements 
     protected final ItemStacksResourceHandler items = new ItemStacksResourceHandler(getItemsSize()) {
         @Override
         protected void onContentsChanged(int index, ItemStack previousContents) {
-            super.onContentsChanged(index, previousContents);
-            BaseItemStorageBlockEntity.this.setChanged();
+            ItemResource resource = BaseItemStorageBlockEntity.this.items.getResource(index);
+            boolean sameResource = !resource.isEmpty() && resource.matches(previousContents);
+
+            if (!sameResource) {
+                onItemChange(index, previousContents);
+            }
+        }
+
+        @Override
+        public boolean isValid(int index, ItemResource resource) {
+            return BaseItemStorageBlockEntity.this.isValid(index, ItemUtil.getStack(BaseItemStorageBlockEntity.this.items, index));
         }
     };
 
@@ -114,6 +124,12 @@ public abstract class BaseItemStorageBlockEntity extends BlockEntity implements 
 
     public ResourceHandler<ItemResource> getResourceHandler() {
         return this.items;
+    }
+
+    @Override
+    public void onLoad() {
+        refreshSlots();
+        super.onLoad();
     }
 
     @Override
@@ -189,6 +205,18 @@ public abstract class BaseItemStorageBlockEntity extends BlockEntity implements 
 
     public final void setItem(int slot, ItemResource resource, int count) {
         this.items.set(slot, resource, count);
+    }
+
+    protected void refreshSlots() {
+
+    }
+
+    protected void onItemChange(int slot, ItemStack previousStack) {
+
+    }
+
+    protected boolean isValid(int slot, ItemStack stack) {
+        return true;
     }
 
     public boolean stillValid(Player player) {

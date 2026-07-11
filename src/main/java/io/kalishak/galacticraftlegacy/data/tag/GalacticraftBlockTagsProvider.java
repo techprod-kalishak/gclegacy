@@ -72,12 +72,13 @@ public class GalacticraftBlockTagsProvider extends BlockTagsProvider {
                 .addTag(GalacticraftTags.Blocks.MACHINE_ADVANCED);
         tag(GalacticraftTags.BlockItems.MACHINE_BASIC)
                 .add(GalacticraftBlockItemIds.COAL_GENERATOR)
+                .add(GalacticraftBlockItemIds.ELECTRIC_FURNACE)
                 .add(GalacticraftBlockItemIds.OXYGEN_DETECTOR)
                 .add(GalacticraftBlockItemIds.CIRCUIT_FABRICATOR)
                 .add(GalacticraftBlockItemIds.COMPRESSOR)
                 .add(GalacticraftBlockItemIds.OXYGEN_COLLECTOR);
         tag(GalacticraftTags.BlockItems.MACHINE_ADVANCED)
-                .add(GalacticraftBlockItemIds.ELECTRIC_FURNACE)
+                .add(GalacticraftBlockItemIds.ELECTRIC_COMPRESSOR)
                 .add(GalacticraftBlockItemIds.ELECTRIC_ARC_FURNACE);
         tag(BlockTags.NEEDS_STONE_TOOL)
                 .add(GalacticraftBlockItemIds.COAL_GENERATOR.block())

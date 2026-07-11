@@ -7,6 +7,7 @@
 
 package io.kalishak.galacticraftlegacy.world.inventory.machine;
 
+import io.kalishak.galacticraftlegacy.world.item.component.ItemAccessEnergyUtils;
 import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.ElectricCookingRecipe;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.AbstractElectricFurnaceBlockEntity;
 import net.minecraft.server.level.ServerLevel;
@@ -22,8 +23,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.SingleRecipeInput;
-import net.neoforged.neoforge.registries.datamaps.builtin.FurnaceFuel;
-import net.neoforged.neoforge.registries.datamaps.builtin.NeoForgeDataMaps;
 import org.jspecify.annotations.Nullable;
 
 import java.util.Optional;
@@ -74,7 +73,7 @@ public abstract class AbstractElectricFurnaceMenu<R extends ElectricCookingRecip
                     if (!moveItemStackTo(stack, 0, 1, false)) {
                         return ItemStack.EMPTY;
                     }
-                } else if (isFuel(stack)) {
+                } else if (ItemAccessEnergyUtils.hasEnergyHandler(stack)) {
                     if (!moveItemStackTo(stack, 1, 2, false)) {
                         return ItemStack.EMPTY;
                     }
@@ -128,11 +127,5 @@ public abstract class AbstractElectricFurnaceMenu<R extends ElectricCookingRecip
 
     private void setLastUsedRecipe(@Nullable RecipeHolder<R> lastUsedRecipe) {
         this.lastUsedRecipe = lastUsedRecipe;
-    }
-
-    protected boolean isFuel(ItemStack stack) {
-        FurnaceFuel furnaceFuel = stack.typeHolder().getData(NeoForgeDataMaps.FURNACE_FUELS);
-
-        return furnaceFuel != null && furnaceFuel.burnTime() > 0;
     }
 }

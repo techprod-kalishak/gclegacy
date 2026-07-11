@@ -7,6 +7,7 @@
 
 package io.kalishak.galacticraftlegacy.world.level.block.entity.machine;
 
+import io.kalishak.galacticraftlegacy.world.inventory.container.WorldlyStorage;
 import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.ElectricCookingRecipe;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -21,18 +22,15 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
-import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
-import net.neoforged.neoforge.transfer.RangedResourceHandler;
 import net.neoforged.neoforge.transfer.ResourceHandler;
-import net.neoforged.neoforge.transfer.access.ItemAccess;
 import net.neoforged.neoforge.transfer.energy.EnergyHandler;
 import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.neoforged.neoforge.transfer.item.ItemUtil;
 import net.neoforged.neoforge.transfer.transaction.Transaction;
 import org.jspecify.annotations.Nullable;
 
-public abstract class AbstractElectricFurnaceBlockEntity<R extends ElectricCookingRecipe> extends RecipeMachineBlockEntity<SingleRecipeInput, R> {
+public abstract class AbstractElectricFurnaceBlockEntity<R extends ElectricCookingRecipe> extends RecipeMachineBlockEntity<SingleRecipeInput, R> implements WorldlyStorage {
     public static final int SLOT_INPUT = 0;
     public static final int SLOT_BATTERY = 1;
     public static final int SLOT_RESULT = 2;
@@ -75,22 +73,7 @@ public abstract class AbstractElectricFurnaceBlockEntity<R extends ElectricCooki
 
     public static <BE extends AbstractElectricFurnaceBlockEntity<?>> void registerCapabilities(RegisterCapabilitiesEvent event, BlockEntityType<BE> entityType) {
         registerEnergyCapability(entityType, event);
-        event.registerBlockEntity(
-                Capabilities.Item.BLOCK,
-                entityType,
-                (entity, side) -> switch (side) {
-                    case UP -> RangedResourceHandler.ofSingleIndex(() -> entity.items, SLOT_INPUT);
-                    case DOWN -> {
-                        if (entity instanceof ElectricArcFurnaceBlockEntity) {
-                            yield RangedResourceHandler.of(() -> entity.items, SLOT_RESULT, SLOT_DOUBLE_RESULT + 1);
-                        } else {
-                            yield RangedResourceHandler.ofSingleIndex(() -> entity.items, SLOT_RESULT);
-                        }
-                    }
-                    case null -> entity.items;
-                    default -> RangedResourceHandler.ofSingleIndex(() -> entity.items, SLOT_BATTERY);
-                }
-        );
+        registerItemCapability(entityType, event);
     }
 
     @Override
@@ -115,6 +98,10 @@ public abstract class AbstractElectricFurnaceBlockEntity<R extends ElectricCooki
     public static <R extends ElectricCookingRecipe> void serverTick(ServerLevel level, BlockPos pos, BlockState state, AbstractElectricFurnaceBlockEntity<R> entity) {
         AbstractMachineBlockEntity.extractBattery(entity, false, 250, null);
 
+        if (entity.cookingTimer > 0) {
+            consumeBattery(entity.capacitor, null);
+        }
+
         boolean changed = false;
 
         ItemStack ingredient = ItemUtil.getStack(entity.items, SLOT_INPUT);
@@ -131,17 +118,17 @@ public abstract class AbstractElectricFurnaceBlockEntity<R extends ElectricCooki
                 try (Transaction transaction = Transaction.open(null)) {
                     if (!heatResult.isEmpty() && canHeat(entity.items, heatResult, entity.capacitor, transaction)) {
                         entity.cookingTimer++;
-                        consumeBattery(entity.capacitor, transaction);
 
                         if (entity.cookingTimer == entity.cookingTotalTime) {
+                            heat(entity.items, heatResult, entity.capacitor, transaction);
                             entity.cookingTimer = 0;
                             entity.cookingTotalTime = recipe.value().cookingTime();
-                            heat(entity.items, heatResult, entity.capacitor, transaction);
                             entity.setRecipeUsed(recipe);
                             changed = true;
+                            transaction.commit();
                         }
                     } else {
-                        entity.cookingTimer = 0;
+                        entity.cookingTotalTime = 0;
                     }
                 }
             }
@@ -156,7 +143,7 @@ public abstract class AbstractElectricFurnaceBlockEntity<R extends ElectricCooki
 
     protected static boolean consumeBattery(EnergyHandler handler, @Nullable Transaction rootTransaction) {
         try (Transaction tx = Transaction.open(rootTransaction)) {
-            if (handler.extract(25, tx) >= 25) {
+            if (handler.extract(25, tx) > 0) {
                 tx.commit();
                 return true;
             }
@@ -177,7 +164,7 @@ public abstract class AbstractElectricFurnaceBlockEntity<R extends ElectricCooki
                     return false;
                 }
 
-                if (resultAtSlot.isEmpty() || items.insert(SLOT_DOUBLE_RESULT, heatResultResource, count, childTransaction) > count) {
+                if (resultAtSlot.isEmpty() || items.insert(heatResultResource, count, childTransaction) > 0) {
                     return true;
                 }
             }
@@ -186,12 +173,21 @@ public abstract class AbstractElectricFurnaceBlockEntity<R extends ElectricCooki
         return false;
     }
 
+    protected static boolean insertInOutputSlot(ResourceHandler<ItemResource> items, ItemStack toPut, Transaction tx) {
+        int slotCandidate = items.insert(SLOT_RESULT, ItemResource.of(toPut), toPut.count(), tx);
+
+        if (slotCandidate > 0) {
+            return true;
+        }
+
+        return items.size() > 3 && items.insert(SLOT_DOUBLE_RESULT, ItemResource.of(toPut), toPut.count(), tx) > 0;
+    }
+
     protected static void heat(ResourceHandler<ItemResource> items, ItemStack result, EnergyHandler capacitor, @Nullable Transaction rootTransaction) {
         try (Transaction childTransaction = Transaction.open(rootTransaction)) {
-            int populated = items.insert(ItemResource.of(result), result.getCount(), childTransaction);
+            if (insertInOutputSlot(items, result, rootTransaction)) {
+                if (items.extract(items.getResource(SLOT_INPUT), 1, childTransaction) > 0) {
 
-            if (populated == result.getCount()) {
-                if (items.extract(SLOT_INPUT, items.getResource(SLOT_INPUT), 1, childTransaction) > 0) {
                     if (consumeBattery(capacitor, childTransaction)) {
                         childTransaction.commit();
                     }
@@ -206,28 +202,46 @@ public abstract class AbstractElectricFurnaceBlockEntity<R extends ElectricCooki
         return entity.quickCheck.getRecipeFor(input, level).map(recipeHolder -> recipeHolder.value().cookingTime()).orElse(100);
     }
 
+    @Override
     public boolean canPlaceItemThroughFace(int slot, ItemStack itemStack, @Nullable Direction direction) {
-        return canPlaceItem(slot, itemStack);
+        return isValid(slot, itemStack);
     }
 
+    @Override
     public boolean canTakeItemThroughFace(int slot, ItemStack itemStack, Direction direction) {
         return direction == Direction.DOWN;
     }
 
     @Override
-    protected void onItemChange(int slot) {
-        if (slot == SLOT_INPUT && this.level instanceof ServerLevel serverLevel) {
+    protected void refreshSlots() {
+        if (this.cookingTimer == 0 && this.level instanceof ServerLevel serverLevel) {
+            ItemResource resource = this.items.getResource(SLOT_INPUT);
+
+            if (!resource.isEmpty()) {
+                this.cookingTotalTime = getTotalCookTime(serverLevel, this);
+                this.cookingTimer = 0;
+                setChanged();
+            }
+        }
+    }
+
+    @Override
+    protected void onItemChange(int slot, ItemStack previousStack) {
+        ItemResource resource = this.items.getResource(slot);
+
+        if (!resource.matches(previousStack) && slot == SLOT_INPUT && this.level instanceof ServerLevel serverLevel) {
             this.cookingTotalTime = getTotalCookTime(serverLevel, this);
             this.cookingTimer = 0;
             setChanged();
         }
     }
 
-    public boolean canPlaceItem(int slot, ItemStack itemStack) {
-        if (slot == SLOT_INPUT) {
-            return true;
-        }
+    @Override
+    protected boolean isValid(int slot, ItemStack stack) {
+//        if (slot == getBatterySlotIndex()) {
+//            return ItemAccessEnergyUtils.hasEnergyHandler(stack);
+//        }
 
-        return slot == SLOT_BATTERY && itemStack.getCapability(Capabilities.Energy.ITEM, ItemAccess.forStack(itemStack)) != null;
+        return true;
     }
 }

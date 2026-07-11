@@ -83,12 +83,12 @@ public class GalacticraftModelProvider extends ModelProvider {
         litMachine(blockModels, GalacticraftBlocks.COAL_GENERATOR.get());
         machine(blockModels, GalacticraftBlocks.CIRCUIT_FABRICATOR.get());
         machine(blockModels, GalacticraftBlocks.ELECTRIC_FURNACE.get());
-        machine(blockModels, GalacticraftBlocks.ELECTRIC_ARC_FURNACE.get());
+        advancedMachine(blockModels, GalacticraftBlocks.ELECTRIC_ARC_FURNACE.get());
         blockModels.createNonTemplateModelBlock(GalacticraftBlocks.OIL.get());
         blockModels.createNonTemplateModelBlock(GalacticraftBlocks.FUEL.get());
         GalacticraftBlockFamilies.getFamilies().forEach(blockFamily -> blockModels.family(blockFamily.getBaseBlock()).generateFor(blockFamily));
         machine(blockModels, GalacticraftBlocks.COMPRESSOR.get());
-        machine(blockModels, GalacticraftBlocks.ELECTRIC_COMPRESSOR.get());
+        advancedMachine(blockModels, GalacticraftBlocks.ELECTRIC_COMPRESSOR.get());
         blockModels.createTrivialCube(GalacticraftBlocks.MOON_DIRT.get());
         blockModels.createRotatedMirroredVariantBlock(GalacticraftBlocks.MOON_TURF.get());
         blockModels.createTrivialCube(GalacticraftBlocks.MOON_ROCK.get());
@@ -369,9 +369,9 @@ public class GalacticraftModelProvider extends ModelProvider {
     }
 
     private void litMachine(BlockModelGenerators gen, Block block) {
-        MultiVariant regularVariant = BlockModelGenerators.plainVariant(GalacticraftTexturedModel.SIMPLE_MACHINE.create(block, gen.modelOutput));
+        MultiVariant regularVariant = BlockModelGenerators.plainVariant(GalacticraftTexturedModel.BASIC_MACHINE.create(block, gen.modelOutput));
         Material litTexture = TextureMapping.getBlockTexture(block, "_front_on");
-        MultiVariant litVariant = BlockModelGenerators.plainVariant(GalacticraftTexturedModel.SIMPLE_MACHINE.get(block).updateTextures(mapping -> mapping.put(TextureSlot.NORTH, litTexture)).createWithSuffix(block, "_on", gen.modelOutput));
+        MultiVariant litVariant = BlockModelGenerators.plainVariant(GalacticraftTexturedModel.BASIC_MACHINE.get(block).updateTextures(mapping -> mapping.put(TextureSlot.NORTH, litTexture)).createWithSuffix(block, "_on", gen.modelOutput));
         gen.blockStateOutput.accept(
                 MultiVariantGenerator.dispatch(block)
                         .with(BlockModelGenerators.createBooleanModelDispatch(BlockStateProperties.LIT, litVariant, regularVariant))
@@ -389,7 +389,11 @@ public class GalacticraftModelProvider extends ModelProvider {
     }
 
     private void machine(BlockModelGenerators gen, Block block) {
-        rotationalMachine(gen, GalacticraftTexturedModel.SIMPLE_MACHINE, block);
+        rotationalMachine(gen, GalacticraftTexturedModel.BASIC_MACHINE, block);
+    }
+
+    private void advancedMachine(BlockModelGenerators gen, Block block) {
+        rotationalMachine(gen, GalacticraftTexturedModel.ADVANCED_MACHINE, block);
     }
 
     private Identifier generatePipeBaseModel(Block block, BiConsumer<Identifier, ModelInstance> maker) {

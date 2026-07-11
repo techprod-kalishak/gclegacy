@@ -28,7 +28,7 @@ public class DungeonChestMenu extends AbstractContainerMenu {
 
         for (int i = 0; i < 3; ++i) {
             for (int j = 0; j < 9; ++j) {
-                addSlot(new NotPlaceableResourceHandlerSlot(blockEntity.getResourceHandler(), j + i * 9, 8 + j * 18, 13 + i * 18));
+                addSlot(new NotPlaceableResourceHandlerSlot(blockEntity.getResourceHandler(), blockEntity::setItem, j + i * 9, 8 + j * 18, 13 + i * 18));
             }
         }
 

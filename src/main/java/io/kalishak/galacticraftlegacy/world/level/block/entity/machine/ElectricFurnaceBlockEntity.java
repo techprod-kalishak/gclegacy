@@ -27,6 +27,7 @@ public class ElectricFurnaceBlockEntity extends AbstractElectricFurnaceBlockEnti
         return 3;
     }
 
+    @Override
     public int[] getSlotsForFace(Direction direction) {
         if (direction == Direction.DOWN) {
             return SLOTS_FOR_DOWN;

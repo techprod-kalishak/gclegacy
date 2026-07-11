@@ -131,7 +131,7 @@ public class CoalGeneratorBlockEntity extends AbstractMachineBlockEntity {
     }
 
     @Override
-    protected void onItemChange(int slot) {
+    protected void onItemChange(int slot, ItemStack previousStack) {
         assert this.level != null;
 
         ItemStack setStack = getItem(slot);

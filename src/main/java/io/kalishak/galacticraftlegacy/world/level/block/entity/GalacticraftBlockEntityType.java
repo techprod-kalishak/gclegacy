@@ -130,6 +130,7 @@ public final class GalacticraftBlockEntityType {
         DungeonChestBlockEntity.registerCapabilities(event);
         ElectricCompressorBlockEntity.registerCapabilities(event);
         AbstractElectricFurnaceBlockEntity.registerCapabilities(event, ELECTRIC_FURNACE.get());
+        AbstractElectricFurnaceBlockEntity.registerCapabilities(event, ELECTRIC_ARC_FURNACE.get());
         FlammableCauldronBlockEntity.registerCapability(event);
         MagneticCraftingBlockEntity.registerCapabilities(event);
         ParachestBlockEntity.registerCapabilities(event);

@@ -31,6 +31,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.transfer.ResourceHandler;
 import net.neoforged.neoforge.transfer.access.ItemAccess;
 import net.neoforged.neoforge.transfer.energy.EnergyHandler;
+import net.neoforged.neoforge.transfer.energy.SimpleEnergyHandler;
 import net.neoforged.neoforge.transfer.fluid.FluidResource;
 
 import java.util.Comparator;
@@ -241,8 +242,8 @@ public final class GalacticraftCreativeModeTabs {
         ItemStack stack = new ItemStack(item);
         EnergyHandler energyHandler = stack.getCapability(Capabilities.Energy.ITEM, ItemAccess.forStack(stack));
 
-        if (energyHandler != null) {
-            stack.set(GalacticraftDataComponents.STORED_ENERGY, energyHandler.getCapacityAsInt());
+        if (energyHandler instanceof SimpleEnergyHandler simple) {
+            simple.set(simple.getCapacityAsInt());
             output.accept(stack);
         }
     }

@@ -9,10 +9,8 @@ package io.kalishak.galacticraftlegacy.client.gui.screens.inventory;
 
 import io.kalishak.galacticraftlegacy.references.Constants;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
-import net.minecraft.client.gui.screens.inventory.FurnaceScreen;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.resources.Identifier;
-import net.minecraft.util.Mth;
 
 public interface MachineScreen {
     Identifier ENERGY_BAR_SPRITE = Constants.id("container/power_bar");
@@ -42,7 +40,7 @@ public interface MachineScreen {
             graphics.blitSprite(RenderPipelines.GUI_TEXTURED, ENERGY_INDICATOR_SPRITE, INDICATOR_WIDTH, INDICATOR_HEIGHT, 0, 0, energyIndicator.x(), energyIndicator.y(), INDICATOR_WIDTH, INDICATOR_HEIGHT);
 
             Bounds energyBar = offset(getEnergyBarBounds(), leftOffset, topOffset);
-            int length = (int) Math.floor(getEnergyProgress()  * energyBar.x());
+            int length = (int) Math.floor(getEnergyProgress()  * BAR_WIDTH);
             graphics.blitSprite(RenderPipelines.GUI_TEXTURED, ENERGY_BAR_SPRITE, BAR_WIDTH, BAR_HEIGHT, 0, 0, energyBar.x(), energyBar.y(), length, BAR_HEIGHT);
         }
     }

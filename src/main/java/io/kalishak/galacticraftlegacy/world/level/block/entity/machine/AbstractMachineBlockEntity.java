@@ -11,9 +11,9 @@ import io.kalishak.galacticraftlegacy.attachment.GalacticraftAttachments;
 import io.kalishak.galacticraftlegacy.attachment.block.SyncedEnergyHandler;
 import io.kalishak.galacticraftlegacy.transfer.capability.fluid.TankWrapper;
 import io.kalishak.galacticraftlegacy.transfer.capability.fluid.WorldlyTankWrapper;
-import io.kalishak.galacticraftlegacy.transfer.capability.item.WorldlyItemResourceHandler;
 import io.kalishak.galacticraftlegacy.transfer.node.NodeNetwork;
 import io.kalishak.galacticraftlegacy.world.inventory.container.Tank;
+import io.kalishak.galacticraftlegacy.world.inventory.container.WorldlyStorage;
 import io.kalishak.galacticraftlegacy.world.inventory.container.WorldlyTank;
 import io.kalishak.galacticraftlegacy.world.item.component.GalacticraftDataComponents;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.BaseItemStorageBlockEntity;
@@ -30,7 +30,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
-import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -40,10 +39,17 @@ import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
+import net.neoforged.neoforge.transfer.CombinedResourceHandler;
+import net.neoforged.neoforge.transfer.RangedResourceHandler;
+import net.neoforged.neoforge.transfer.ResourceHandler;
 import net.neoforged.neoforge.transfer.access.ItemAccess;
 import net.neoforged.neoforge.transfer.energy.*;
+import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.neoforged.neoforge.transfer.transaction.Transaction;
 import org.jspecify.annotations.Nullable;
+
+import java.util.ArrayList;
+import java.util.SequencedCollection;
 
 public abstract class AbstractMachineBlockEntity extends BaseItemStorageBlockEntity implements TransmitterBlockEntity {
     public static final int BASIC_MACHINE_ENERGY_CAPACITY = 25000;
@@ -69,12 +75,23 @@ public abstract class AbstractMachineBlockEntity extends BaseItemStorageBlockEnt
         event.registerBlockEntity(
                 Capabilities.Item.BLOCK,
                 type,
-                (blockEntity, side) -> {
-                    if (blockEntity instanceof WorldlyContainer worldlyContainer) {
-                        return new WorldlyItemResourceHandler(() -> blockEntity.items, worldlyContainer, side);
+                (entity, side) -> {
+                    if (side == null) {
+                        return entity.items;
                     }
 
-                    return blockEntity.items;
+                    if (entity instanceof WorldlyStorage worldlyStorage) {
+                        SequencedCollection<ResourceHandler<ItemResource>> collection = new ArrayList<>();
+                        int[] slotsForFace = worldlyStorage.getSlotsForFace(side);
+
+                        for (int i : slotsForFace) {
+                            collection.add(RangedResourceHandler.ofSingleIndex(() -> entity.items, i));
+                        }
+
+                        return new CombinedResourceHandler<>(collection);
+                    }
+
+                    return entity.items;
                 }
         );
     }
@@ -111,28 +128,13 @@ public abstract class AbstractMachineBlockEntity extends BaseItemStorageBlockEnt
             EnergyHandler itemCapacitor = battery.getCapability(Capabilities.Energy.ITEM, ItemAccess.forStack(battery));
 
             if (itemCapacitor != null && itemCapacitor.getAmountAsInt() > 0) {
-                int toMove = Math.min(machine.capacitor.getCapacityAsInt() - machine.capacitor.getAmountAsInt(), Math.min(itemCapacitor.getAmountAsInt(), machine.getMaxEnergyTransferRate()));
+                int toMove = Math.min(itemCapacitor.getAmountAsInt(), machine.getMaxEnergyTransferRate());
 
                 try (Transaction childTx = Transaction.open(tx)) {
                     if (EnergyHandlerUtil.move(itemCapacitor, machine.capacitor, toMove, childTx) > 0) {
                         childTx.commit();
                         doCommit = true;
                     }
-                }
-            }
-        }
-
-        int toExtract = energyBasePerOperation;
-
-        if (enableLeak) {
-            toExtract += MACHINE_ENERGY_LEAK;
-        }
-
-        if (toExtract > 0) {
-            try (Transaction childTx = Transaction.open(tx)) {
-                if (machine.capacitor.extract(toExtract, childTx) > 0) {
-                    childTx.commit();
-                    doCommit = true;
                 }
             }
         }
@@ -208,20 +210,7 @@ public abstract class AbstractMachineBlockEntity extends BaseItemStorageBlockEnt
         return this.capacitor.getAmountAsInt() > getMaxEnergyTransferRate();
     }
 
-    @Override
-    public void setItem(int slot, ItemStack itemStack) {
-        ItemStack currentStack = getItem(slot);
-        boolean sameItem = !itemStack.isEmpty() && ItemStack.isSameItemSameComponents(currentStack, itemStack);
-
-        itemStack.limitSize(itemStack.getMaxStackSize());
-        super.setItem(slot, itemStack);
-
-        if (!sameItem) {
-            onItemChange(slot);
-        }
-    }
-
-    protected void onItemChange(int slot) {
+    protected void onItemChange(int slot, ItemStack previousStack) {
     }
 
     @Override

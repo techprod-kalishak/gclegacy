@@ -19,6 +19,7 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.TooltipProvider;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.transfer.access.ItemAccess;
+import net.neoforged.neoforge.transfer.energy.EmptyEnergyHandler;
 import net.neoforged.neoforge.transfer.energy.EnergyHandler;
 import net.neoforged.neoforge.transfer.energy.InfiniteEnergyHandler;
 import net.neoforged.neoforge.transfer.energy.VoidingEnergyHandler;
@@ -43,15 +44,17 @@ public interface ItemAccessEnergyUtils extends TooltipProvider {
     }
 
     static boolean hasEnergyHandler(ItemStack stack) {
+        if (stack.isEmpty()) return false;
+
         EnergyHandler energyHandler = stack.getCapability(Capabilities.Energy.ITEM, ItemAccess.forStack(stack));
 
-        return energyHandler != null && energyHandler != VoidingEnergyHandler.INSTANCE;
+        return energyHandler != null;
     }
 
     static EnergyHandler getEnergyHandler(ItemStack stack) {
         EnergyHandler energyHandler = stack.getCapability(Capabilities.Energy.ITEM, ItemAccess.forStack(stack));
 
-        return energyHandler == null ? new VoidingEnergyHandler() : energyHandler;
+        return energyHandler == null ? EmptyEnergyHandler.INSTANCE : energyHandler;
     }
 
     static void addTooltip(@NonNull EnergyHandler energyHandler, Supplier<EnergyUnit> energyUnit, Consumer<Component> tooltipAdder) {

@@ -41,13 +41,14 @@ public class ParachestMenu extends AbstractContainerMenu {
         this.rows = (parachest.getItemsSize() - 3) / 9;
 
         addSlot(new CapabilityHandlerSlot<>(this.resourceHandler, parachest::setItem, Capabilities.Fluid.ITEM, 0,  75, (this.rows == 0 ? 24 : 26) + this.rows * 18));
-        addSlot(new NotPlaceableResourceHandlerSlot(this.resourceHandler, 1, 125, (this.rows == 0 ? 24 : 26) + this.rows * 18));
-        addSlot(new NotPlaceableResourceHandlerSlot(this.resourceHandler, 2, 125 + 18, (this.rows == 0 ? 24 : 26) + this.rows * 18));
+        addSlot(new NotPlaceableResourceHandlerSlot(this.resourceHandler, parachest::setItem, 1, 125, (this.rows == 0 ? 24 : 26) + this.rows * 18));
+        addSlot(new NotPlaceableResourceHandlerSlot(this.resourceHandler, parachest::setItem, 2, 125 + 18, (this.rows == 0 ? 24 : 26) + this.rows * 18));
 
         for (int i = 0; i < this.rows; i++) {
             for (int j = 0; j < 9; j++) {
                 addSlot(new NotPlaceableResourceHandlerSlot(
                         this.resourceHandler,
+                        parachest::setItem,
                         2 + j + i * 9,
                         8 + j * 18,
                         18 + j * 18
