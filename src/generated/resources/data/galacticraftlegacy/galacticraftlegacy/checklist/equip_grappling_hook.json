@@ -1,7 +1,7 @@
 {
   "id": "equip_grappling_hook",
   "required_items": {
-    "telemetry": {
+    "frequency_module": {
       "items": "galacticraftlegacy:sensor_glasses"
     }
   }

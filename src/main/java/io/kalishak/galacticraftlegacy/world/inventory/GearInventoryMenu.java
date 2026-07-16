@@ -52,7 +52,7 @@ public class GearInventoryMenu extends AbstractContainerMenu {
         case GEAR -> EMPTY_SLOT_GEAR;
         case TANK, ADDITIONAL_TANK -> EMPTY_SLOT_TANK;
         case PARACHUTE -> EMPTY_SLOT_PARACHUTE;
-        case TELEMETRY -> EMPTY_SLOT_TELEMETRY;
+        case FREQUENCY_MODULE -> EMPTY_SLOT_TELEMETRY;
         case SHIELD -> EMPTY_SLOT_SHIELD;
     });
     private static final GearEquipmentSlot[] SLOTS_IDS = GearEquipmentSlot.values();
@@ -89,7 +89,7 @@ public class GearInventoryMenu extends AbstractContainerMenu {
         addSlot(new GearSlot(gearHandler, equipment, player, GearEquipmentSlot.TANK, EMPTY_SLOT_TANK, 6, 116, 62));
         addSlot(new GearSlot(gearHandler, equipment, player, GearEquipmentSlot.ADDITIONAL_TANK, EMPTY_SLOT_TANK, 7, 134, 62));
         addSlot(new GearSlot(gearHandler, equipment, player, GearEquipmentSlot.PARACHUTE, EMPTY_SLOT_PARACHUTE, 8, 143, 26));
-        addSlot(new GearSlot(gearHandler, equipment, player, GearEquipmentSlot.TELEMETRY, EMPTY_SLOT_TELEMETRY, 9, 107, 26));
+        addSlot(new GearSlot(gearHandler, equipment, player, GearEquipmentSlot.FREQUENCY_MODULE, EMPTY_SLOT_TELEMETRY, 9, 107, 26));
         addSlot(new GearSlot(gearHandler, equipment, player, GearEquipmentSlot.SHIELD, EMPTY_SLOT_SHIELD, 10, 125, 8));
 
         for (int i = 0; i < 4; i++) {

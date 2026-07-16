@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "hanging=false": {
+      "model": "galacticraftlegacy:block/exposed_unlit_copper_lantern"
+    },
+    "hanging=true": {
+      "model": "galacticraftlegacy:block/exposed_unlit_copper_lantern_hanging"
+    }
+  }
+}

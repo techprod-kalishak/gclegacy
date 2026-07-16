@@ -1,0 +1,14 @@
+{
+  "clock": "galacticraftlegacy:orbit",
+  "tracks": {
+    "minecraft:visual/star_brightness": {
+      "keyframes": [
+        {
+          "ticks": 1,
+          "value": 1.0
+        }
+      ],
+      "modifier": "maximum"
+    }
+  }
+}

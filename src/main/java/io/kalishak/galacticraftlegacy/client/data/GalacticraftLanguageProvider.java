@@ -7,18 +7,29 @@
 
 package io.kalishak.galacticraftlegacy.client.data;
 
+import com.google.common.collect.Iterators;
 import io.kalishak.galacticraftlegacy.Galacticraft;
 import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.data.GalacticraftTags;
+import io.kalishak.galacticraftlegacy.references.GalacticraftBlockItemIds;
+import io.kalishak.galacticraftlegacy.references.GalacticraftComponents;
+import io.kalishak.galacticraftlegacy.references.GalacticraftItemIds;
 import io.kalishak.galacticraftlegacy.world.entity.GalacticraftEntityType;
 import io.kalishak.galacticraftlegacy.world.item.GalacticraftItems;
 import io.kalishak.galacticraftlegacy.registry.SchematicVariants;
 import io.kalishak.galacticraftlegacy.world.level.block.GalacticraftBlocks;
 import net.minecraft.core.Holder;
 import net.minecraft.data.PackOutput;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.util.Util;
 import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.block.ColorCollection;
+import net.minecraft.world.level.block.WeatheringCopperCollection;
 import net.neoforged.neoforge.common.data.LanguageProvider;
+
+import java.util.Iterator;
+import java.util.function.Function;
 
 public class GalacticraftLanguageProvider extends LanguageProvider {
     public GalacticraftLanguageProvider(PackOutput output) {
@@ -33,19 +44,16 @@ public class GalacticraftLanguageProvider extends LanguageProvider {
         addAdvancement("wafers", "Tasty wafers", "Craft a basic wafer. (It's silicon so please don't eat it!)");
         addAdvancement("golden_wafers", "Golden wafers", "Craft an advanced wafer. (You still can't eat it!)");
         addAdvancement("compressed", "Compressed", "Craft a compressor");
-
         add("pack.galacticraftlegacy.description", "Galacticraft Legacy data pack");
         add("item.galacticraftlegacy.tank.tooltip", "Oxygen Remaining: ");
         add("galacticraftlegacy.networking_failed", "There was an error on the network thread: ");
-        add("item.galacticraftlegacy.battery.tooltip", "Energy Stored: ");
+        add("item.galacticraftlegacy.battery.tooltip", "Energy Stored:");
         add("item.galacticraftlegact.fluid_tank.empty", "Tank is empty");
         add("item.galacticraftlegacy.fluid_tank.tooltip", "Fluid in tank %s: %s");
         add("itemGroup.galacticraftlegacy.blocks", "Galacticraft Legacy Blocks");
         add("itemGroup.galacticraftlegacy.items", "Galacticraft Legacy Items");
         add("galacticraftlegacy.space_travel.loading", "That's one small step for a player, one giant leap for the server");
-
         add("block.galacticraftlegacy.bed.sleep_in_cryo_chamber", "I should sleep in a Cryo-chamber");
-
         add("container.coal_generator.generating", "Generating");
         add("container.coal_generator.not_generating", "Not generating");
         add("container.coal_generator.heat_level", "Hull Heat: %s");
@@ -54,8 +62,22 @@ public class GalacticraftLanguageProvider extends LanguageProvider {
         add("item.galacticraftlegacy.creative_only", "Creative Only");
         add("item.galacticraftlegacy.press_shift", "Press LSHIFT for more info");
         add("space_race.galacticraftlegacy.team_flag", "%s team's flag");
-
         add("gui.recipebook.toggleRecipes.heatable", "Showing Heatable");
+        add("gui.recipebook.toggleRecipes.arc_heatable", "Showing Arc Heatable");
+        add("item.galacticraftlegacy.team_flag", "Owned by: %s");
+        add("gui.spacestation.type_command", "Type");
+        add("gui.spacestation.playername", "<playername>");
+        add("gui.spacestation.to_allow_entry", "to allow another player to enter this space station!");
+        add(GalacticraftComponents.FREQUENCY_MODULE_WARNING, "I'll probably need a if I want to hear properly here.");
+        add("container.gear", "Gear Inventory");
+        add("item.galacticraftlegacy.energy_per_tick", "Energy per tick: %s");
+        add("item.hot_content.description", "Remaining warm: %s");
+        add("item.galacticraftlegacy.tank.more_fluids", "More stored fluids");
+        add("item.galacticraftlegacy.tank.fluid_amount", "Stored fluid %s %s");
+        add("galacticraftlegacy.container.dungeon_chest", "Dungeon Treasure Chest");
+        add("galacticraftlegacy.container.parachest", "Parachest");
+
+        add("commands.space_race.add.duplicate", "");
 
         addBlock(GalacticraftBlocks.ALUMINUM_ORE, "Aluminum Ore");
         addBlock(GalacticraftBlocks.DEEPSLATE_ALUMINUM_ORE, "Deepslate Aluminum Ore");
@@ -99,23 +121,7 @@ public class GalacticraftLanguageProvider extends LanguageProvider {
         addBlock(GalacticraftBlocks.PARACHEST, "Parachest");
         addWithDescription(GalacticraftBlocks.ALUMINUM_WIRE, "Aluminum Wire", "Aluminum Wire is used to connect energy sources to energy consuming machines.");
         addWithDescription(GalacticraftBlocks.HEAVY_ALUMINUM_WIRE, "Heavy Aluminum Wire", "Heavy Aluminum Wire is used to connect energy sources to energy consuming machines. Its higher capacity boosts efficiency for Tier 2 machines.");
-        addBlock(GalacticraftBlocks.FLUID_PIPE.white(), "White Pipe");
-        addBlock(GalacticraftBlocks.FLUID_PIPE.orange(), "Orange Pipe");
-        addBlock(GalacticraftBlocks.FLUID_PIPE.magenta(), "Magenta Pipe");
-        addBlock(GalacticraftBlocks.FLUID_PIPE.lightBlue(), "Light Blue Pipe");
-        addBlock(GalacticraftBlocks.FLUID_PIPE.yellow(), "Yellow Pipe");
-        addBlock(GalacticraftBlocks.FLUID_PIPE.lime(), "Lime Pipe");
-        addBlock(GalacticraftBlocks.FLUID_PIPE.pink(), "Pink Pipe");
-        addBlock(GalacticraftBlocks.FLUID_PIPE.gray(), "Gray Pipe");
-        addBlock(GalacticraftBlocks.FLUID_PIPE.lightGray(), "Light Gray Pipe");
-        addBlock(GalacticraftBlocks.FLUID_PIPE.cyan(), "Cyan Pipe");
-        addBlock(GalacticraftBlocks.FLUID_PIPE.purple(), "Purple Pipe");
-        addBlock(GalacticraftBlocks.FLUID_PIPE.blue(), "Blue Pipe");
-        addBlock(GalacticraftBlocks.FLUID_PIPE.brown(), "Brown Pipe");
-        addBlock(GalacticraftBlocks.FLUID_PIPE.green(), "Green Pipe");
-        addBlock(GalacticraftBlocks.FLUID_PIPE.red(), "Red Pipe");
-        addBlock(GalacticraftBlocks.FLUID_PIPE.black(), "Black Pipe");
-
+        addColorCollection(GalacticraftBlockItemIds.FLUID_PIPE, id -> id.block().identifier(), "block");
         addBlock(GalacticraftBlocks.MOON_DIRT, "Moon Dirt");
         addBlock(GalacticraftBlocks.MOON_TURF, "Moon Turf");
         addBlock(GalacticraftBlocks.MOON_ROCK, "Moon Rock");
@@ -132,14 +138,7 @@ public class GalacticraftLanguageProvider extends LanguageProvider {
         addBlock(GalacticraftBlocks.UNLIT_TORCH, "Unlit Torch");
         addBlock(GalacticraftBlocks.UNLIT_COPPER_TORCH, "Unlit Copper Torch");
         addBlock(GalacticraftBlocks.UNLIT_LANTERN, "Unlit Lantern");
-        addBlock(GalacticraftBlocks.UNLIT_COPPER_LANTERN.weathering().unaffected(), "Unlit Copper Lantern");
-        addBlock(GalacticraftBlocks.UNLIT_COPPER_LANTERN.weathering().exposed(), "Unlit Exposed Copper Lantern");
-        addBlock(GalacticraftBlocks.UNLIT_COPPER_LANTERN.weathering().weathered(), "Unlit Weathered Copper Lantern");
-        addBlock(GalacticraftBlocks.UNLIT_COPPER_LANTERN.weathering().oxidized(), "Unlit Oxidized Copper Lantern");
-        addBlock(GalacticraftBlocks.UNLIT_COPPER_LANTERN.waxed().unaffected(), "Unlit Waxed Copper Lantern");
-        addBlock(GalacticraftBlocks.UNLIT_COPPER_LANTERN.waxed().exposed(), "Unlit Waxed Exposed Copper Lantern");
-        addBlock(GalacticraftBlocks.UNLIT_COPPER_LANTERN.waxed().weathered(), "Unlit Waxed Weathered Copper Lantern");
-        addBlock(GalacticraftBlocks.UNLIT_COPPER_LANTERN.waxed().oxidized(), "Unlit Waxed Oxidized Copper Lantern");
+        addCopperCollection(GalacticraftBlockItemIds.UNLIT_COPPER_LANTERN, c -> c.block().identifier(), "block");
         addBlock(GalacticraftBlocks.TIN_DECORATION_BLOCK, "Tin Decoration Block");
         addBlock(GalacticraftBlocks.TIN_DECORATION_CUT_BLOCK, "Cut Tin Decoration Block");
         addBlock(GalacticraftBlocks.TIN_DECORATION_SLAB, "Tin Decoration Slab");
@@ -161,6 +160,7 @@ public class GalacticraftLanguageProvider extends LanguageProvider {
 
         addItem(GalacticraftItems.BATTERY, "Battery");
         addItem(GalacticraftItems.INFINITE_BATTERY, "Battery");
+        addWithDescription(GalacticraftItems.FREQUENCY_MODULE, "Frequency Module", "Can receive weak sound, waves and distant signals");
         addItem(GalacticraftItems.DUNGEON_LOCATOR, "Dungeon Locator");
         addItem(GalacticraftItems.THERMAL_CLOTH, "Thermal Cloth");
         addItem(GalacticraftItems.ISOTHERMAL_FABRIC, "Isothermal Fabric");
@@ -178,22 +178,7 @@ public class GalacticraftLanguageProvider extends LanguageProvider {
         addItem(GalacticraftItems.INFINITE_OXYGEN_TANK, "Oxygen Tank");
         addItem(GalacticraftItems.OXYGEN_MASK, "Oxygen Mask");
         addItem(GalacticraftItems.OXYGEN_GEAR, "Oxygen Gear");
-        addItem(GalacticraftItems.PARACHUTE.black(), "Black Parachute");
-        addItem(GalacticraftItems.PARACHUTE.blue(),  "Blue Parachute");
-        addItem(GalacticraftItems.PARACHUTE.brown(),  "Brown Parachute");
-        addItem(GalacticraftItems.PARACHUTE.cyan(),  "Cyan Parachute");
-        addItem(GalacticraftItems.PARACHUTE.gray(),  "Gray Parachute");
-        addItem(GalacticraftItems.PARACHUTE.green(),  "Green Parachute");
-        addItem(GalacticraftItems.PARACHUTE.lightBlue(),  "Light Blue Parachute");
-        addItem(GalacticraftItems.PARACHUTE.lightGray(),  "Light Gray Parachute");
-        addItem(GalacticraftItems.PARACHUTE.lime(),  "Lime Parachute");
-        addItem(GalacticraftItems.PARACHUTE.magenta(),  "Magenta Parachute");
-        addItem(GalacticraftItems.PARACHUTE.orange(),  "Orange Parachute");
-        addItem(GalacticraftItems.PARACHUTE.pink(),  "Pink Parachute");
-        addItem(GalacticraftItems.PARACHUTE.purple(),  "Purple Parachute");
-        addItem(GalacticraftItems.PARACHUTE.red(),  "Red Parachute");
-        addItem(GalacticraftItems.PARACHUTE.white(),  "White Parachute");
-        addItem(GalacticraftItems.PARACHUTE.yellow(),  "Yellow Parachute");
+        addColorCollection(GalacticraftItemIds.PARACHUTE, ResourceKey::identifier, "item");
         addItem(GalacticraftItems.PROTO_SHIELD_CONTROLLER, "Prototype Shield Controller");
         addWithDescription(GalacticraftItems.SHIELD_CONTROLLER, "Shield Controller", "Shield Controller protects armor from ALL forms of damage - including atmospheric corrosion!");
         addItem(GalacticraftItems.SENSOR_GLASSES, "Sensor Glasses");
@@ -340,6 +325,43 @@ public class GalacticraftLanguageProvider extends LanguageProvider {
         add("galacticraftlegacy.configuration.entities", "Entities settings");
         add("galacticraftlegacy.configgui.server.suffocation_damage", "Amount of suffocation damage");
         add("galacticraftlegacy.configgui.server.boss_health_modifier", "Increase bosses' health");
+    }
+
+    private <Id> void addColorCollection(ColorCollection<Id> colorCollection, Function<Id, Identifier> toIdentifier, String targetPath) {
+        colorCollection.forEach(id -> {
+            Identifier identifier = toIdentifier.apply(id);
+            String capitalized = capitalizeFirstCharForAll(identifier.getPath().split("_"));
+
+            add(Util.makeDescriptionId(targetPath, identifier), capitalized);
+        });
+    }
+
+    private <Id> void addCopperCollection(WeatheringCopperCollection<Id> collection, Function<Id, Identifier> toIdentifier, String targetPath) {
+        collection.forEach(id -> {
+            Identifier identifier = toIdentifier.apply(id);
+            String capitalized = capitalizeFirstCharForAll(identifier.getPath().split("_"));
+
+            add(Util.makeDescriptionId(targetPath, identifier), capitalized);
+        });
+    }
+
+    private static String capitalizeFirstChar(String origin) {
+        return Character.toUpperCase(origin.charAt(0)) + origin.substring(1);
+    }
+
+    private static String capitalizeFirstCharForAll(String... splitStrings) {
+        StringBuilder stringBuilder = new StringBuilder();
+        Iterator<String> parts = Iterators.forArray(splitStrings);
+
+        while (parts.hasNext()) {
+            stringBuilder.append(capitalizeFirstChar(parts.next()));
+
+            if (parts.hasNext()) {
+                stringBuilder.append(" ");
+            }
+        }
+
+        return stringBuilder.toString();
     }
 
     private <R extends ItemLike> void addWithDescription(Holder<R> entry, String name, String description) {

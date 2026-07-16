@@ -73,6 +73,7 @@ public final class GalacticraftCreativeModeTabs {
         emptyAndFilled(output, GalacticraftItems.HEAVY_TANK, GalacticraftFluids.OXYGEN);
         output.accept(GalacticraftItems.INFINITE_OXYGEN_TANK);
         output.accept(GalacticraftItems.SENSOR_GLASSES);
+        output.accept(GalacticraftItems.FREQUENCY_MODULE);
         GalacticraftItems.PARACHUTE.forEach(output::accept);
         output.accept(GalacticraftItems.PROTO_SHIELD_CONTROLLER);
         output.accept(GalacticraftItems.SHIELD_CONTROLLER);
@@ -239,11 +240,12 @@ public final class GalacticraftCreativeModeTabs {
     }
 
     private static void emptyAndCharged(CreativeModeTab.Output output, ItemLike item) {
+        output.accept(item, CreativeModeTab.TabVisibility.SEARCH_TAB_ONLY);
         ItemStack stack = new ItemStack(item);
         EnergyHandler energyHandler = stack.getCapability(Capabilities.Energy.ITEM, ItemAccess.forStack(stack));
 
-        if (energyHandler instanceof SimpleEnergyHandler simple) {
-            simple.set(simple.getCapacityAsInt());
+        if (energyHandler != null) {
+            stack.set(GalacticraftDataComponents.STORED_ENERGY, energyHandler.getCapacityAsInt());
             output.accept(stack);
         }
     }

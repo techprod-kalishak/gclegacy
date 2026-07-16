@@ -129,7 +129,7 @@ public class NoGravityMovingBlockEntity extends Entity {
 
     @Override
     public boolean displayFireAnimation() {
-        return level().dimensionTypeRegistration().is(GalacticraftTags.DimensionTypes.OPEN_SPACE);
+        return level().dimensionTypeRegistration().is(GalacticraftTags.DimensionTypes.NEEDS_FREQUENCY_MODULE);
     }
 
     @Override

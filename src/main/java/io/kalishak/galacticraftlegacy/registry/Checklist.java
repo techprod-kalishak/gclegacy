@@ -75,7 +75,7 @@ public final class Checklist {
         register(
                 cxt,
                 EQUIP_GRAPPLING_HOOK,
-                map -> map.put(GearEquipmentSlot.TELEMETRY, ItemPredicate.Builder.item().of(itemHolderGetter, GalacticraftItems.SENSOR_GLASSES).build())
+                map -> map.put(GearEquipmentSlot.FREQUENCY_MODULE, ItemPredicate.Builder.item().of(itemHolderGetter, GalacticraftItems.SENSOR_GLASSES).build())
         );
     }
 

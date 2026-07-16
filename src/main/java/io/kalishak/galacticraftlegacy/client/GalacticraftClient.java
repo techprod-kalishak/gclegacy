@@ -96,6 +96,7 @@ public class GalacticraftClient {
         container.registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);
 
         NeoForge.EVENT_BUS.register(new NeoForgeClientEventHandler());
+        NeoForge.EVENT_BUS.addListener(SpaceSkyRenderer::extractSkyRenderState);
     }
 
     private void registerAtlases(RegisterTextureAtlasesEvent event) {
@@ -124,10 +125,11 @@ public class GalacticraftClient {
     }
 
     private void registerEnvironmentEffects(RegisterCustomEnvironmentEffectRendererEvent event) {
-        MoonSkyRenderer.create(event::registerSkyboxRenderer);
-        OrbitalSkyRenderer.create(event::registerSkyboxRenderer);
-        SpaceCloudsRenderer.create(event::registerCloudRenderer);
-        SpaceWeatherRenderer.create(event::registerWeatherEffectRenderer);
+        event.registerSkyboxRenderer(MoonSkyRenderer.ID, new MoonSkyRenderer());
+        event.registerSkyboxRenderer(OrbitalSkyRenderer.ID, new OrbitalSkyRenderer());
+
+        event.registerCloudRenderer(DummyCloudsRenderer.ID, new DummyCloudsRenderer());
+        event.registerWeatherEffectRenderer(DummyWeatherRenderer.ID, new DummyWeatherRenderer());
     }
 
     private void registerFluidModels(RegisterFluidModelsEvent event) {

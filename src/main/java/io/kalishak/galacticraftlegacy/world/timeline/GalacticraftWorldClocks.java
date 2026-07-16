@@ -14,12 +14,14 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.clock.WorldClock;
 
 public interface GalacticraftWorldClocks {
+    ResourceKey<WorldClock> ORBIT = Constants.key(Registries.WORLD_CLOCK, "orbit");
     ResourceKey<WorldClock> MOON = Constants.key(Registries.WORLD_CLOCK, "moon");
     ResourceKey<WorldClock> MARS = Constants.key(Registries.WORLD_CLOCK, "mars");
     ResourceKey<WorldClock> VENUS = Constants.key(Registries.WORLD_CLOCK, "venus");
     ResourceKey<WorldClock> ASTEROIDS = Constants.key(Registries.WORLD_CLOCK, "asteroids");
 
     static void bootstrap(BootstrapContext<WorldClock> cxt) {
+        register(cxt, ORBIT);
         register(cxt, MOON);
         register(cxt, MARS);
         register(cxt, VENUS);

@@ -21,7 +21,7 @@ public final class GalacticraftBlockItemIds {
     public static final BlockItemId UNLIT_COPPER_TORCH = create("unlit_copper_torch");
     public static final BlockItemId UNLIT_COPPER_WALL_TORCH = create("unlit_copper_wall_torch");
     public static final BlockItemId UNLIT_LANTERN = create("unlit_lantern");
-    public static final WeatheringCopperCollection<BlockItemId> UNLIT_COPPER_LANTERN = createWeatheringCopper("copper_lantern");
+    public static final WeatheringCopperCollection<BlockItemId> UNLIT_COPPER_LANTERN = createWeatheringCopper("unlit_copper_lantern");
     public static final BlockItemId UNLIT_WAXED_COPPER_LANTERN = create("unlit_waxed_copper_lantern");
     public static final BlockItemId LANDING_PAD = create("landing_pad");
     public static final BlockItemId FUELING_PAD = create("fueling_pad");

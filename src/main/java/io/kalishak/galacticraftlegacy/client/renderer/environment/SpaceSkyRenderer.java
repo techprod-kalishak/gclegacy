@@ -20,11 +20,10 @@ import com.mojang.math.Axis;
 import io.kalishak.galacticraftlegacy.client.data.GalacticraftSpritesProvider;
 import io.kalishak.galacticraftlegacy.config.ClientConfig;
 import io.kalishak.galacticraftlegacy.references.Constants;
-import io.kalishak.galacticraftlegacy.client.renderer.environment.state.SpaceSkyRenderState;
+import io.kalishak.galacticraftlegacy.world.level.EarthPhase;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderPipelines;
-import net.minecraft.client.renderer.SkyRenderer;
 import net.minecraft.client.renderer.state.level.LevelRenderState;
 import net.minecraft.client.renderer.state.level.SkyRenderState;
 import net.minecraft.client.renderer.texture.TextureAtlas;
@@ -33,38 +32,91 @@ import net.minecraft.client.resources.model.sprite.AtlasManager;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.attribute.EnvironmentAttributeProbe;
+import net.minecraft.world.level.MoonPhase;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.client.CustomSkyboxRenderer;
 import net.neoforged.neoforge.client.event.ExtractLevelRenderStateEvent;
-import net.neoforged.neoforge.client.event.RenderLevelStageEvent;
+import net.neoforged.neoforge.client.event.TextureAtlasStitchedEvent;
 import org.joml.*;
 
 import java.lang.Math;
 import java.util.Optional;
 import java.util.OptionalDouble;
-import java.util.OptionalInt;
 
-public abstract class SpaceSkyRenderer implements CustomSkyboxRenderer, AutoCloseable {
+public class SpaceSkyRenderer implements CustomSkyboxRenderer, AutoCloseable {
     protected static final Identifier ORBITAL_SUN_SPRITE = Constants.id("orbital_sun");
     protected static final Identifier PLANETARY_SUN_SPRITE = Constants.id("atmospheric_sun");
-    protected final TextureAtlas celestialsAtlas;
-    protected final RenderTarget renderTarget;
-    protected final GpuBuffer starBuffer;
-    protected final GpuBuffer sunBuffer;
-    protected final RenderSystem.AutoStorageIndexBuffer quadIndices = RenderSystem.getSequentialBuffer(PrimitiveTopology.QUADS);
+    protected static final Identifier FULL_EARTH_SPRITE = Constants.id("full_orbital_earth");
+    protected static final Identifier FULL_ORBITAL_MOON_SPRITE = Constants.id("full_orbital_moon");
+    protected final RenderSystem.AutoStorageIndexBuffer quadIndices;
+    protected TextureAtlas celestialsAtlas;
+    protected RenderTarget renderTarget;
+    protected GpuBuffer starBuffer;
+    protected GpuBuffer sunBuffer;
+    protected GpuBuffer earthBuffer;
+    protected GpuBuffer moonBuffer;
+
     protected int starIndexCount;
+    private boolean seenAtlas = false;
 
     static int starCount = 1500;
 
-    protected SpaceSkyRenderer(AtlasManager atlasManager, RenderTarget renderTarget) {
+    public SpaceSkyRenderer() {
         SpaceSkyRenderer.starCount = ClientConfig.MORE_STARS.get() ? 5000 : 1500;
-        this.celestialsAtlas = atlasManager.getAtlasOrThrow(GalacticraftSpritesProvider.CELESTIAL_BODIES);
-        this.starBuffer = buildStars();
-        this.sunBuffer = buildSunQuad(this.celestialsAtlas);
-        this.renderTarget = renderTarget;
+        this.quadIndices = RenderSystem.getSequentialBuffer(PrimitiveTopology.QUADS);
     }
 
-    protected abstract void extractSky(PoseStack poseStack, Camera camera, LevelRenderState levelRenderState, Matrix4fc modelViewMatrix, Runnable setupFog);
+    protected void extractRenderState(LevelRenderState levelRenderState, EnvironmentAttributeProbe attributeProbe, float partialTicks) {
+
+    }
+
+    @Override
+    public final boolean renderSky(LevelRenderState levelRenderState, SkyRenderState skyRenderState, Matrix4fc modelViewMatrix, Runnable setupFog) {
+        if (!this.seenAtlas) {
+            createBuffers(Minecraft.getInstance().getAtlasManager());
+        }
+
+        PoseStack poseStack = new PoseStack();
+        Camera camera = Minecraft.getInstance().gameRenderer.mainCamera();
+
+        renderSkybox(poseStack, camera, levelRenderState, modelViewMatrix, setupFog);
+
+        return true;
+    }
+
+    protected void renderSkybox(PoseStack poseStack, Camera camera, LevelRenderState levelRenderState, Matrix4fc modelViewMatrix, Runnable setupFog) {
+
+    }
+
+    @SubscribeEvent
+    public static void extractSkyRenderState(ExtractLevelRenderStateEvent event) {
+        LevelRenderState renderState = event.getRenderState();
+        Camera camera = event.getCamera();
+        EnvironmentAttributeProbe attributeProbe = camera.attributeProbe();
+        float partialTicks = camera.getCameraEntityPartialTicks(event.getDeltaTracker());
+        CustomSkyboxRenderer renderer = event.getRenderState().customSkyboxRenderer;
+
+        if (renderer instanceof SpaceSkyRenderer skyRenderer) {
+            skyRenderer.extractRenderState(renderState, attributeProbe, partialTicks);
+        }
+    }
+
+    @SubscribeEvent
+    public void onAtlasBuilt(TextureAtlasStitchedEvent event) {
+        AtlasManager atlasManager = Minecraft.getInstance().getAtlasManager();
+        createBuffers(atlasManager);
+    }
+
+    private void createBuffers(AtlasManager atlasManager) {
+        this.celestialsAtlas = atlasManager.getAtlasOrThrow(GalacticraftSpritesProvider.CELESTIAL_BODIES);
+        this.renderTarget = Minecraft.getInstance().gameRenderer.mainRenderTarget();
+        this.starBuffer = buildStars();
+        this.sunBuffer = buildSunQuad(this.celestialsAtlas);
+        this.earthBuffer = buildEarth(this.celestialsAtlas);
+        this.moonBuffer = buildMoon(this.celestialsAtlas);
+        this.seenAtlas = true;
+    }
 
     /**
      * Each SpaceSkyRenderer should declare its own celestial features to be rendered, this class will have only common renderers
@@ -73,7 +125,7 @@ public abstract class SpaceSkyRenderer implements CustomSkyboxRenderer, AutoClos
      * @param starAngle angle of stars
      * @param starBrightness brightness of stars
      */
-    public void renderSunAndStars(PoseStack poseStack, float sunAngle, float starAngle, float starBrightness) {
+    public void renderSunStars(PoseStack poseStack, float sunAngle, float starAngle, float starBrightness, boolean renderStars) {
         poseStack.pushPose();
         poseStack.mulPose(Axis.YP.rotationDegrees(-90.0F));
         poseStack.pushPose();
@@ -82,7 +134,7 @@ public abstract class SpaceSkyRenderer implements CustomSkyboxRenderer, AutoClos
         renderSun(-1, poseStack);
         poseStack.popPose();
 
-        if (starBrightness > 0.0F) {
+        if (renderStars) {
             poseStack.pushPose();
             poseStack.mulPose(Axis.XP.rotation(starAngle));
             renderStars(starBrightness, poseStack);
@@ -92,8 +144,71 @@ public abstract class SpaceSkyRenderer implements CustomSkyboxRenderer, AutoClos
         poseStack.popPose();
     }
 
+    protected void transformEarth(PoseStack poseStack, float earthAngle, EarthPhase earthPhase) {
+        poseStack.pushPose();
+        poseStack.mulPose(Axis.XP.rotation(earthAngle));
+        renderEarth(this.earthBuffer, earthPhase, poseStack);
+        poseStack.popPose();
+    }
+
     protected Identifier getSunSprite() {
         return ORBITAL_SUN_SPRITE;
+    }
+
+    protected void renderMoon(PoseStack poseStack) {
+        int baseVertex = MoonPhase.FULL_MOON.index() * 4;
+        Matrix4fStack modelViewStack = RenderSystem.getModelViewStack();
+        modelViewStack.pushMatrix();
+        modelViewStack.mul(poseStack.last().pose());
+        modelViewStack.translate(0.0F, 100.0F, 0.0F);
+        modelViewStack.scale(20.0F, 1.0F, 20.0F);
+        GpuBufferSlice dynamicTransforms = RenderSystem.getDynamicUniforms()
+                .writeTransform(new Matrix4f(modelViewStack), new Vector4f(1.0F, 1.0F, 1.0F, -1));
+        GpuTextureView color = this.renderTarget.getColorTextureView();
+        GpuTextureView depth = this.renderTarget.getDepthTextureView();
+        GpuBuffer indexBuffer = this.quadIndices.getBuffer(6);
+
+        try (RenderPass renderPass = RenderSystem.getDevice()
+                .createCommandEncoder()
+                .createRenderPass(() -> "Sky moon", color, Optional.empty(), depth, OptionalDouble.empty())) {
+            renderPass.setPipeline(RenderPipelines.CELESTIAL);
+            RenderSystem.bindDefaultUniforms(renderPass);
+            renderPass.setUniform("DynamicTransforms", dynamicTransforms);
+            renderPass.bindTexture("Sampler0", this.celestialsAtlas.getTextureView(), this.celestialsAtlas.getSampler());
+            renderPass.setVertexBuffer(0, this.moonBuffer.slice());
+            renderPass.setIndexBuffer(indexBuffer, this.quadIndices.type());
+            renderPass.drawIndexed(6, 1, 0, baseVertex, 0);
+        }
+
+        modelViewStack.popMatrix();
+    }
+
+    protected void renderEarth(GpuBuffer earthBuffer, EarthPhase earthPhase, PoseStack poseStack) {
+        int baseVertex = earthPhase.getIndex() * 4;
+        Matrix4fStack modelViewStack = RenderSystem.getModelViewStack();
+        modelViewStack.pushMatrix();
+        modelViewStack.mul(poseStack.last().pose());
+        modelViewStack.translate(0.0F, 100.0F, 0.0F);
+        modelViewStack.scale(20.0F, 1.0F, 20.0F);
+        GpuBufferSlice dynamicTransforms = RenderSystem.getDynamicUniforms()
+                .writeTransform(modelViewStack, new Vector4f(1.0F, 1.0F, 1.0F, 1.0F), new Vector3f(), new Matrix4f());
+        GpuTextureView color = this.renderTarget.getColorTextureView();
+        GpuTextureView depth = this.renderTarget.getDepthTextureView();
+        GpuBuffer indexBuffer = this.quadIndices.getBuffer(6);
+
+        try (RenderPass renderPass = RenderSystem.getDevice()
+                .createCommandEncoder()
+                .createRenderPass(() -> "Sky earth", color, Optional.empty(), depth, OptionalDouble.empty())) {
+            renderPass.setPipeline(RenderPipelines.CELESTIAL);
+            RenderSystem.bindDefaultUniforms(renderPass);
+            renderPass.setUniform("DynamicTransforms", dynamicTransforms);
+            renderPass.bindTexture("Sampler0", this.celestialsAtlas.getTextureView(), this.celestialsAtlas.getSampler());
+            renderPass.setVertexBuffer(0, earthBuffer.slice());
+            renderPass.setIndexBuffer(indexBuffer, this.quadIndices.type());
+            renderPass.drawIndexed(baseVertex, 0, 6, baseVertex, 1);
+        }
+
+        modelViewStack.popMatrix();
     }
 
     protected void renderSun(float rainBrightness, PoseStack poseStack) {
@@ -151,13 +266,12 @@ public abstract class SpaceSkyRenderer implements CustomSkyboxRenderer, AutoClos
 
     protected GpuBuffer buildStars() {
         RandomSource random = RandomSource.createThreadLocalInstance(10842L);
-        float starDistance = 100.0F;
-
         GpuBuffer buffer;
-        try (ByteBufferBuilder byteBufferBuilder = ByteBufferBuilder.exactlySized(DefaultVertexFormat.POSITION.getVertexSize() * MoonSkyRenderer.starCount * 4)) {
+
+        try (ByteBufferBuilder byteBufferBuilder = ByteBufferBuilder.exactlySized(DefaultVertexFormat.POSITION.getVertexSize() * SpaceSkyRenderer.starCount * 4)) {
             BufferBuilder bufferBuilder = new BufferBuilder(byteBufferBuilder, PrimitiveTopology.QUADS, DefaultVertexFormat.POSITION);
 
-            for (int i = 0; i < MoonSkyRenderer.starCount; i++) {
+            for (int i = 0; i < SpaceSkyRenderer.starCount; ++i) {
                 float x = random.nextFloat() * 2.0F - 1.0F;
                 float y = random.nextFloat() * 2.0F - 1.0F;
                 float z = random.nextFloat() * 2.0F - 1.0F;
@@ -165,13 +279,14 @@ public abstract class SpaceSkyRenderer implements CustomSkyboxRenderer, AutoClos
                 float lengthSq = Mth.lengthSquared(x, y, z);
 
                 if (!(lengthSq <= 0.010000001F) && !(lengthSq >= 1.0F)) {
-                    Vector3f starCenter = new Vector3f(x, y, z).normalize(starDistance);
-                    float zRot = (float)(random.nextDouble() * (float) Math.PI * 2.0);
-                    Matrix3f rotation = new Matrix3f().rotateTowards(new Vector3f(starCenter).negate(), new Vector3f(0.0F, 1.0F, 0.0F)).rotateZ(-zRot);
-                    bufferBuilder.addVertex(new Vector3f(starSize, -starSize, 0.0F).mul(rotation).add(starCenter));
-                    bufferBuilder.addVertex(new Vector3f(starSize, starSize, 0.0F).mul(rotation).add(starCenter));
-                    bufferBuilder.addVertex(new Vector3f(-starSize, starSize, 0.0F).mul(rotation).add(starCenter));
-                    bufferBuilder.addVertex(new Vector3f(-starSize, -starSize, 0.0F).mul(rotation).add(starCenter));
+                    Vector3f starCenter = (new Vector3f(x, y, z)).normalize(100.0F);
+                    float zRot = (float)(random.nextDouble() * (double)(float)Math.PI * (double)2.0F);
+                    Matrix3f rotation = (new Matrix3f()).rotateTowards((new Vector3f(starCenter)).negate(), new Vector3f(0.0F, 1.0F, 0.0F)).rotateZ(-zRot);
+
+                    bufferBuilder.addVertex((new Vector3f(starSize, -starSize, 0.0F)).mul(rotation).add(starCenter));
+                    bufferBuilder.addVertex((new Vector3f(starSize, starSize, 0.0F)).mul(rotation).add(starCenter));
+                    bufferBuilder.addVertex((new Vector3f(-starSize, starSize, 0.0F)).mul(rotation).add(starCenter));
+                    bufferBuilder.addVertex((new Vector3f(-starSize, -starSize, 0.0F)).mul(rotation).add(starCenter));
                 }
             }
 
@@ -207,18 +322,21 @@ public abstract class SpaceSkyRenderer implements CustomSkyboxRenderer, AutoClos
         return buildCelestialQuad("Sun quad", atlas.getSprite(getSunSprite()));
     }
 
-    @Override
-    public void close() {
-        this.starBuffer.close();
-        this.sunBuffer.close();
+    protected GpuBuffer buildEarth(TextureAtlas atlas) {
+        return buildCelestialQuad("Earth quad", atlas.getSprite(FULL_EARTH_SPRITE));
     }
 
-    protected interface SkyboxRendererSupplier extends CustomSkyboxRenderer {
-        @Override
-        default boolean renderSky(LevelRenderState levelRenderState, SkyRenderState skyRenderState, Matrix4fc modelViewMatrix, Runnable setupFog) {
-            return true;
-        }
+    protected GpuBuffer buildMoon(TextureAtlas atlas) {
+        return buildCelestialQuad("Moon quad", atlas.getSprite(FULL_ORBITAL_MOON_SPRITE));
+    }
 
-        SpaceSkyRenderer create(AtlasManager atlasManager);
+    @Override
+    public void close() {
+        if (!this.seenAtlas) {
+            this.starBuffer.close();
+            this.sunBuffer.close();
+            this.earthBuffer.close();
+            this.moonBuffer.close();
+        }
     }
 }

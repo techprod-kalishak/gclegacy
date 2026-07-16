@@ -151,7 +151,7 @@ Please note that the following list is a preliminary outline of planned features
 - [ ] Oxygen Gear ✅
 - [ ] Oxygen Tanks ✅
 - [ ] Sensor Glasses ⏳ (Missing UI)
-- [ ] Frequency Module ⏳ (Missing render and functionality)
+- [ ] Frequency Module ⏳ (Missing render)
 - [ ] Parachute ⏳ (Missing render and functionality)
 - [ ] Space Emergency Kit ❌
 - [ ] Shield Controller (Missing render)

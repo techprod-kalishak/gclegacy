@@ -30,6 +30,7 @@ public class GalacticraftTimelines {
     public static final ResourceKey<Timeline> MOON_DAY = Constants.key(Registries.TIMELINE, "moon_day");
     public static final ResourceKey<Timeline> MARS_DAY = Constants.key(Registries.TIMELINE, "mars_day");
     public static final ResourceKey<Timeline> EARTH = Constants.key(Registries.TIMELINE, "earth");
+    public static final ResourceKey<Timeline> ORBIT = Constants.key(Registries.TIMELINE, "orbit");
 
     public static void bootstrap(BootstrapContext<Timeline> cxt) {
         HolderGetter<WorldClock> worldClocks = cxt.lookup(Registries.WORLD_CLOCK);
@@ -276,5 +277,15 @@ public class GalacticraftTimelines {
             }
         });
         cxt.register(EARTH, earthPhases.build());
+        cxt.register(
+                ORBIT,
+                Timeline.builder(worldClocks.getOrThrow(GalacticraftWorldClocks.ORBIT))
+                        .addModifierTrack(
+                                EnvironmentAttributes.STAR_BRIGHTNESS,
+                                FloatModifier.MAXIMUM,
+                                (track) -> track.addKeyframe(1, 1.0F)
+                        )
+                        .build()
+        );
     }
 }

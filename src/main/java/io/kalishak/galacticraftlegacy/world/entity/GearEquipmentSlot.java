@@ -28,7 +28,7 @@ public enum GearEquipmentSlot implements SerializableEnum {
     TANK(EquipmentSlot.CHEST, 6, "tank"),
     ADDITIONAL_TANK(EquipmentSlot.CHEST, 7, "additional_tank"),
     PARACHUTE(EquipmentSlot.CHEST, 8, "parachute"),
-    TELEMETRY(EquipmentSlot.HEAD, 9, "telemetry"),
+    FREQUENCY_MODULE(EquipmentSlot.HEAD, 9, "frequency_module"),
     SHIELD(EquipmentSlot.BODY, 10, "shield");
 
     public static final EnumCodec<GearEquipmentSlot> CODEC = StringRepresentable.fromEnum(GearEquipmentSlot::values);

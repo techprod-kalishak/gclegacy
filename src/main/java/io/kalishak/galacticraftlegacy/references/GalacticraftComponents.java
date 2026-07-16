@@ -22,6 +22,8 @@ import java.util.function.Function;
 
 public class GalacticraftComponents {
     //private static final List<Component> UNTRANSLATED_COMPONENTS = new ArrayList<>();
+    public static final String FREQUENCY_MODULE_DESC = "item.galacticraftlegacy.frequency_module.desc";
+    public static final String FREQUENCY_MODULE_WARNING = "item.galacticraftlegacy.frequency_module.warning";
 
     // Misc
     public static final Component DATAPACK_DESCRIPTION = Component.translatable("pack.galacticraftlegacy.description");

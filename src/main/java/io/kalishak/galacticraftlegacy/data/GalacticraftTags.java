@@ -134,7 +134,7 @@ public final class GalacticraftTags {
 
     public static class DimensionTypes {
         public static final TagKey<DimensionType> GRAVITY_OVERRIDDEN = tagKey(Registries.DIMENSION_TYPE, "gravity_overridden");
-        public static final TagKey<DimensionType> OPEN_SPACE = tagKey(Registries.DIMENSION_TYPE, "open_space");
+        public static final TagKey<DimensionType> NEEDS_FREQUENCY_MODULE = tagKey(Registries.DIMENSION_TYPE, "needs_frequency_module");
         public static final TagKey<DimensionType> REQUIRES_CRYOCHAMBER = tagKey(Registries.DIMENSION_TYPE, "requires_cryochamber");
         public static final TagKey<DimensionType> HAS_DISABLED_ROCKETS = tagKey(Registries.DIMENSION_TYPE, "has_disabled_rockets");
         public static final TagKey<DimensionType> HAS_METEORS = tagKey(Registries.DIMENSION_TYPE, "has_meteors");

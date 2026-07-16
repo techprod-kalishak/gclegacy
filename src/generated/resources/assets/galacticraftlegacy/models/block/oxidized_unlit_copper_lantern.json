@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/template_lantern",
+  "textures": {
+    "lantern": "galacticraftlegacy:block/oxidized_unlit_copper_lantern"
+  }
+}

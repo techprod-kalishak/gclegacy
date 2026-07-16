@@ -7,11 +7,8 @@
 
 package io.kalishak.galacticraftlegacy.world.level.dimension;
 
+import io.kalishak.galacticraftlegacy.client.renderer.environment.*;
 import io.kalishak.galacticraftlegacy.references.Constants;
-import io.kalishak.galacticraftlegacy.client.renderer.environment.MoonSkyRenderer;
-import io.kalishak.galacticraftlegacy.client.renderer.environment.OrbitalSkyRenderer;
-import io.kalishak.galacticraftlegacy.client.renderer.environment.SpaceCloudsRenderer;
-import io.kalishak.galacticraftlegacy.client.renderer.environment.SpaceWeatherRenderer;
 import io.kalishak.galacticraftlegacy.data.GalacticraftTags;
 import io.kalishak.galacticraftlegacy.world.attribute.GalacticraftEnvironmentAttributes;
 import io.kalishak.galacticraftlegacy.world.attribute.GalacticraftWorldAttributes;
@@ -64,6 +61,8 @@ public class GalacticraftDimensionTypes {
                         CardinalLighting.Type.DEFAULT,
                         EnvironmentAttributeMap.builder()
                                 .set(NeoForgeEnvironmentAttributes.CUSTOM_SKYBOX, OrbitalSkyRenderer.ID)
+                                .set(NeoForgeEnvironmentAttributes.CUSTOM_CLOUDS, DummyCloudsRenderer.ID)
+                                .set(NeoForgeEnvironmentAttributes.CUSTOM_WEATHER_EFFECTS, DummyWeatherRenderer.ID)
                                 .set(EnvironmentAttributes.BED_RULE, GalacticraftWorldAttributes.BED_RULE_CRYO_CHAMBER)
                                 .set(EnvironmentAttributes.WATER_EVAPORATES, true)
                                 .set(GalacticraftEnvironmentAttributes.GRAVITY.get(), 0.01F)
@@ -91,8 +90,8 @@ public class GalacticraftDimensionTypes {
                         CardinalLighting.Type.DEFAULT,
                         EnvironmentAttributeMap.builder()
                                 .set(NeoForgeEnvironmentAttributes.CUSTOM_SKYBOX, MoonSkyRenderer.ID)
-                                .set(NeoForgeEnvironmentAttributes.CUSTOM_CLOUDS, SpaceCloudsRenderer.ID)
-                                .set(NeoForgeEnvironmentAttributes.CUSTOM_WEATHER_EFFECTS, SpaceWeatherRenderer.ID)
+                                .set(NeoForgeEnvironmentAttributes.CUSTOM_CLOUDS, DummyCloudsRenderer.ID)
+                                .set(NeoForgeEnvironmentAttributes.CUSTOM_WEATHER_EFFECTS, DummyWeatherRenderer.ID)
                                 .set(EnvironmentAttributes.SKY_COLOR, 0)
                                 .set(EnvironmentAttributes.BACKGROUND_MUSIC, GalacticraftWorldAttributes.MUSIC_SPACE)
                                 .set(EnvironmentAttributes.BED_RULE, GalacticraftWorldAttributes.BED_RULE_CRYO_CHAMBER)

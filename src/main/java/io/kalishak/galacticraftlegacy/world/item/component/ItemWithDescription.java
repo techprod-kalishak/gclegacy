@@ -16,7 +16,9 @@ import io.kalishak.galacticraftlegacy.references.GalacticraftComponents;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.component.DataComponentGetter;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.Identifier;
@@ -24,17 +26,20 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.TooltipProvider;
 
+import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-public record ItemWithDescription(String translationKey, int energyPerTick) implements TooltipProvider {
+public record ItemWithDescription(String translationKey, int energyPerTick, Optional<Style> style) implements TooltipProvider {
     public static final Codec<ItemWithDescription> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             Codec.STRING.fieldOf("translation_key").forGetter(ItemWithDescription::translationKey),
-            Codec.INT.optionalFieldOf("energy_per_tick", 0).forGetter(ItemWithDescription::energyPerTick)
+            Codec.INT.optionalFieldOf("energy_per_tick", 0).forGetter(ItemWithDescription::energyPerTick),
+            Style.Serializer.CODEC.optionalFieldOf("style").forGetter(ItemWithDescription::style)
     ).apply(instance, ItemWithDescription::new));
-    public static final StreamCodec<ByteBuf, ItemWithDescription> STREAM_CODEC = StreamCodec.composite(
+    public static final StreamCodec<RegistryFriendlyByteBuf, ItemWithDescription> STREAM_CODEC = StreamCodec.composite(
             ByteBufCodecs.STRING_UTF8, ItemWithDescription::translationKey,
             ByteBufCodecs.INT, ItemWithDescription::energyPerTick,
+            Style.Serializer.TRUSTED_STREAM_CODEC.apply(ByteBufCodecs::optional), ItemWithDescription::style,
             ItemWithDescription::new
     );
 
@@ -42,8 +47,12 @@ public record ItemWithDescription(String translationKey, int energyPerTick) impl
         return () -> properties.get().component(GalacticraftDataComponents.ITEM_WITH_DESCRIPTION, new ItemWithDescription(id.toLanguageKey("item", "desc")));
     }
 
+    public ItemWithDescription(String translationKey, int energyPerTick) {
+        this(translationKey, energyPerTick, Optional.empty());
+    }
+
     public ItemWithDescription(String translationKey) {
-        this(translationKey, 0);
+        this(translationKey, 0, Optional.empty());
     }
 
     @Override
@@ -59,7 +68,7 @@ public record ItemWithDescription(String translationKey, int energyPerTick) impl
         if (!flag.hasShiftDown()) {
             tooltipAdder.accept(GalacticraftComponents.TOOLTIP_MORE);
         } else {
-            tooltipAdder.accept(Component.translatable(this.translationKey).withStyle(ChatFormatting.GRAY));
+            tooltipAdder.accept(Component.translatable(this.translationKey).withStyle(this.style.orElse(Style.EMPTY.applyFormat(ChatFormatting.GRAY))));
         }
     }
 }

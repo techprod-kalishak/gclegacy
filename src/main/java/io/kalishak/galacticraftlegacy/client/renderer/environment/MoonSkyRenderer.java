@@ -9,47 +9,34 @@ package io.kalishak.galacticraftlegacy.client.renderer.environment;
 
 import com.mojang.blaze3d.PrimitiveTopology;
 import com.mojang.blaze3d.buffers.GpuBuffer;
-import com.mojang.blaze3d.buffers.GpuBufferSlice;
-import com.mojang.blaze3d.pipeline.RenderTarget;
-import com.mojang.blaze3d.systems.RenderPass;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.textures.GpuTextureView;
 import com.mojang.blaze3d.vertex.*;
-import com.mojang.math.Axis;
 import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.client.renderer.environment.state.SpaceSkyRenderState;
+import io.kalishak.galacticraftlegacy.world.attribute.GalacticraftEnvironmentAttributes;
 import io.kalishak.galacticraftlegacy.world.level.EarthPhase;
 import net.minecraft.client.Camera;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.client.renderer.state.level.LevelRenderState;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.resources.model.sprite.AtlasManager;
 import net.minecraft.resources.Identifier;
-import net.neoforged.neoforge.client.CustomSkyboxRenderer;
+import net.minecraft.world.attribute.EnvironmentAttributeProbe;
 import org.joml.*;
 
-import java.util.Optional;
-import java.util.OptionalDouble;
-import java.util.OptionalInt;
-import java.util.function.BiConsumer;
+import java.lang.Math;
 
 public class MoonSkyRenderer extends SpaceSkyRenderer {
     public static final Identifier ID = Constants.id("moon");
-    private final GpuBuffer earthBuffer;
 
-    public MoonSkyRenderer(AtlasManager atlasManager, RenderTarget renderTarget) {
-        super(atlasManager, renderTarget);
-        this.earthBuffer = buildEarthPhases(this.celestialsAtlas);
-    }
-
-    public static void create(BiConsumer<Identifier, CustomSkyboxRenderer> registry) {
-
+    @Override
+    protected void extractRenderState(LevelRenderState levelRenderState, EnvironmentAttributeProbe attributeProbe, float partialTicks) {
+        levelRenderState.setRenderData(SpaceSkyRenderState.TYPE_ID, MoonSkyRenderer.ID);
+        levelRenderState.setRenderData(SpaceSkyRenderState.EARTH_ANGLE_ID, attributeProbe.getValue(GalacticraftEnvironmentAttributes.EARTH_ANGLE.get(), partialTicks) * ((float) Math.PI / 180.0F));
+        levelRenderState.setRenderData(SpaceSkyRenderState.EARTH_PHASE_ID, attributeProbe.getValue(GalacticraftEnvironmentAttributes.EARTH_PHASE.get(), partialTicks));
     }
 
     @Override
-    protected void extractSky(PoseStack poseStack, Camera camera, LevelRenderState levelRenderState, Matrix4fc modelViewMatrix, Runnable setupFog) {
+    protected void renderSkybox(PoseStack poseStack, Camera camera, LevelRenderState levelRenderState, Matrix4fc modelViewMatrix, Runnable setupFog) {
         renderMoonSky(
                 poseStack,
                 levelRenderState.skyRenderState.sunAngle,
@@ -60,52 +47,18 @@ public class MoonSkyRenderer extends SpaceSkyRenderer {
         );
     }
 
+    private void renderMoonSky(PoseStack poseStack, float sunAngle, float starAngle, float earthAngle, EarthPhase earthPhase, float starBrightness) {
+        renderSunStars(poseStack, sunAngle, starAngle, starBrightness, starBrightness > 0.5F);
+        transformEarth(poseStack, earthAngle, earthPhase);
+    }
+
     @Override
     protected Identifier getSunSprite() {
         return PLANETARY_SUN_SPRITE;
     }
 
-    private void renderMoonSky(PoseStack poseStack, float sunAngle, float starAngle, float earthAngle, EarthPhase earthPhase, float starBrightness) {
-        renderSunAndStars(poseStack, sunAngle, starAngle, starBrightness);
-        renderEarth(poseStack, earthAngle, earthPhase);
-    }
-
-    private void renderEarth(PoseStack poseStack, float earthAngle, EarthPhase earthPhase) {
-        poseStack.pushPose();
-        poseStack.mulPose(Axis.XP.rotation(earthAngle));
-        renderEarth(earthPhase, poseStack);
-        poseStack.popPose();
-    }
-
-    private void renderEarth(EarthPhase earthPhase, PoseStack poseStack) {
-        int baseVertex = earthPhase.getIndex() * 4;
-        Matrix4fStack modelViewStack = RenderSystem.getModelViewStack();
-        modelViewStack.pushMatrix();
-        modelViewStack.mul(poseStack.last().pose());
-        modelViewStack.translate(0.0F, 100.0F, 0.0F);
-        modelViewStack.scale(20.0F, 1.0F, 20.0F);
-        GpuBufferSlice dynamicTransforms = RenderSystem.getDynamicUniforms()
-                .writeTransform(modelViewStack, new Vector4f(1.0F, 1.0F, 1.0F, 1.0F), new Vector3f(), new Matrix4f());
-        GpuTextureView color = this.renderTarget.getColorTextureView();
-        GpuTextureView depth = this.renderTarget.getDepthTextureView();
-        GpuBuffer indexBuffer = this.quadIndices.getBuffer(6);
-
-        try (RenderPass renderPass = RenderSystem.getDevice()
-                .createCommandEncoder()
-                .createRenderPass(() -> "Sky earth", color, Optional.empty(), depth, OptionalDouble.empty())) {
-            renderPass.setPipeline(RenderPipelines.CELESTIAL);
-            RenderSystem.bindDefaultUniforms(renderPass);
-            renderPass.setUniform("DynamicTransforms", dynamicTransforms);
-            renderPass.bindTexture("Sampler0", this.celestialsAtlas.getTextureView(), this.celestialsAtlas.getSampler());
-            renderPass.setVertexBuffer(0, this.earthBuffer.slice());
-            renderPass.setIndexBuffer(indexBuffer, this.quadIndices.type());
-            renderPass.drawIndexed(baseVertex, 0, 6, baseVertex, 1);
-        }
-
-        modelViewStack.popMatrix();
-    }
-
-    private GpuBuffer buildEarthPhases(TextureAtlas atlas) {
+    @Override
+    protected GpuBuffer buildEarth(TextureAtlas atlas) {
         EarthPhase[] phases = EarthPhase.values();
         VertexFormat format = DefaultVertexFormat.POSITION_TEX;
 
@@ -128,11 +81,5 @@ public class MoonSkyRenderer extends SpaceSkyRenderer {
         }
 
         return currentBuffer;
-    }
-
-    @Override
-    public void close() {
-        super.close();
-        this.earthBuffer.close();
     }
 }

@@ -53,7 +53,7 @@ public interface GearRenderState {
         reusedState.setRenderData(GearRenderState.THERMAL_SOCKS, spaceGearEquipment.get(GearEquipmentSlot.THERMAL_SOCKS));
         appendCommonRenderStates(entity, reusedState);
         reusedState.setRenderData(GearRenderState.PARACHUTE, spaceGearEquipment.get(GearEquipmentSlot.PARACHUTE));
-        reusedState.setRenderData(GearRenderState.TELEMETRY_MODULE, spaceGearEquipment.get(GearEquipmentSlot.TELEMETRY));
+        reusedState.setRenderData(GearRenderState.TELEMETRY_MODULE, spaceGearEquipment.get(GearEquipmentSlot.FREQUENCY_MODULE));
         reusedState.setRenderData(GearRenderState.SHIELD_CONTROLLER, spaceGearEquipment.get(GearEquipmentSlot.SHIELD));
 
         AttachmentHelper.getMap(entity.level(), GalacticraftAttachments.CELESTIAL_BODY, levelData -> levelData.value().atmosphereInfo().getTemperatureModifier())

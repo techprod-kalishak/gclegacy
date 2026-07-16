@@ -26,15 +26,24 @@ public class GalacticraftDimensionTypeTags extends TagsProvider<DimensionType> {
 
     @Override
     protected void addTags(HolderLookup.Provider registries) {
+        tag(GalacticraftTags.DimensionTypes.GRAVITY_OVERRIDDEN)
+                .add(GalacticraftDimensionTypes.MOON)
+                .add(GalacticraftDimensionTypes.OVERWORLD_ORBIT)
+                .add(GalacticraftDimensionTypes.MARS)
+                .add(GalacticraftDimensionTypes.VENUS)
+                .add(GalacticraftDimensionTypes.ASTEROIDS);
         tag(GalacticraftTags.DimensionTypes.HAS_DISABLED_ROCKETS)
                 .add(BuiltinDimensionTypes.NETHER)
                 .add(BuiltinDimensionTypes.END);
         tag(GalacticraftTags.DimensionTypes.HAS_METEORS)
                 .add(GalacticraftDimensionTypes.MOON)
                 .add(GalacticraftDimensionTypes.MARS);
-        tag(GalacticraftTags.DimensionTypes.OPEN_SPACE)
+        tag(GalacticraftTags.DimensionTypes.NEEDS_FREQUENCY_MODULE)
                 .add(GalacticraftDimensionTypes.OVERWORLD_ORBIT)
-                .add(GalacticraftDimensionTypes.ASTEROIDS);
+                .add(GalacticraftDimensionTypes.MOON)
+                .add(GalacticraftDimensionTypes.MARS)
+                .add(GalacticraftDimensionTypes.ASTEROIDS)
+                .add(GalacticraftDimensionTypes.VENUS);
         tag(GalacticraftTags.DimensionTypes.REQUIRES_CRYOCHAMBER)
                 .add(GalacticraftDimensionTypes.OVERWORLD_ORBIT)
                 .add(GalacticraftDimensionTypes.MOON)

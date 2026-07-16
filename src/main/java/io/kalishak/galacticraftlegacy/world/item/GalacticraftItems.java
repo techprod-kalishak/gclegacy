@@ -9,6 +9,7 @@ package io.kalishak.galacticraftlegacy.world.item;
 
 import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.Galacticraft;
+import io.kalishak.galacticraftlegacy.references.GalacticraftComponents;
 import io.kalishak.galacticraftlegacy.references.GalacticraftItemIds;
 import io.kalishak.galacticraftlegacy.registry.SchematicVariants;
 import io.kalishak.galacticraftlegacy.registry.deferred.DeferredItemRegister;
@@ -26,8 +27,10 @@ import io.kalishak.galacticraftlegacy.world.item.gear.OxygenTankItem;
 import io.kalishak.galacticraftlegacy.world.item.gear.ShieldControllerItem;
 import io.kalishak.galacticraftlegacy.world.level.block.GalacticraftBlocks;
 import io.kalishak.galacticraftlegacy.world.level.material.fluid.GalacticraftFluids;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.network.chat.Style;
 import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -42,13 +45,13 @@ import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.fluids.SimpleFluidContent;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.transfer.InfiniteResourceHandler;
-import net.neoforged.neoforge.transfer.access.ItemAccess;
 import net.neoforged.neoforge.transfer.energy.InfiniteEnergyHandler;
 import net.neoforged.neoforge.transfer.energy.ItemAccessEnergyHandler;
 import net.neoforged.neoforge.transfer.fluid.FluidResource;
 import net.neoforged.neoforge.transfer.fluid.ItemAccessFluidHandler;
 
 import java.util.List;
+import java.util.Optional;
 
 public final class GalacticraftItems {
     private static final DeferredItemRegister REGISTRY = new DeferredItemRegister(Galacticraft.MODID);
@@ -62,6 +65,19 @@ public final class GalacticraftItems {
             properties -> properties
                     .stacksTo(1)
                     .component(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)
+    );
+    public static final DeferredItem<Item> FREQUENCY_MODULE = REGISTRY.registerItem(
+            "frequency_module",
+            GearItem::new,
+            () -> GearItem.simpleGear(GearEquipmentSlot.FREQUENCY_MODULE)
+                    .component(
+                            GalacticraftDataComponents.ITEM_WITH_DESCRIPTION,
+                            new ItemWithDescription(
+                                    GalacticraftComponents.FREQUENCY_MODULE_DESC,
+                                    0,
+                                    Optional.of(Style.EMPTY.applyFormat(ChatFormatting.AQUA))
+                            )
+                    )
     );
     public static final DeferredItem<Item> THERMAL_CLOTH = REGISTRY.registerSimpleItem(GalacticraftItemIds.THERMAL_CLOTH);
     public static final DeferredItem<Item> ISOTHERMAL_FABRIC = REGISTRY.registerSimpleItem(GalacticraftItemIds.ISOTHERMAL_FABRIC);
