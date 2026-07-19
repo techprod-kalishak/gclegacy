@@ -26,6 +26,11 @@ public class GalacticraftModelLayers {
             createLocation("legs_thermal_padding"),
             createLocation("foot_thermal_padding")
     );
+    public static final ModelLayerLocation TIER_1_ROCKET = createLocation("tier_1_rocket");
+    public static final ModelLayerLocation MOON_BUGGY = createLocation("moon_buggy");
+    public static final ModelLayerLocation TIER_2_ROCKET = createLocation("tier_2_rocket");
+    public static final ModelLayerLocation TIER_3_ROCKET = createLocation("tier_3_rocket");
+    public static final ModelLayerLocation ASTRO_MINER = createLocation("astro_miner");
 
     private static ModelLayerLocation createLocation(String path, String model) {
         return new ModelLayerLocation(Constants.id(path), model);

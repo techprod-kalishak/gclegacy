@@ -9,6 +9,13 @@ package io.kalishak.galacticraftlegacy.client;
 
 import com.google.common.reflect.TypeToken;
 import io.kalishak.galacticraftlegacy.Galacticraft;
+import io.kalishak.galacticraftlegacy.client.gui.screens.inventory.workbench.NasaWorkbenchEmptyPageScreen;
+import io.kalishak.galacticraftlegacy.client.gui.screens.inventory.workbench.NasaWorkbenchScreen;
+import io.kalishak.galacticraftlegacy.client.gui.screens.inventory.workbench.NasaWorkbenchPageScreen;
+import io.kalishak.galacticraftlegacy.client.renderer.environment.sky.MoonSkyRenderer;
+import io.kalishak.galacticraftlegacy.client.renderer.environment.sky.OrbitalSkyRenderer;
+import io.kalishak.galacticraftlegacy.client.renderer.environment.sky.SpaceSkyRenderer;
+import io.kalishak.galacticraftlegacy.client.renderer.special.VehicleSpecialRenderer;
 import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.client.gui.SensorGlassesOverlay;
 import io.kalishak.galacticraftlegacy.client.gui.TanksLayer;
@@ -215,6 +222,10 @@ public class GalacticraftClient {
         event.register(GalacticraftMenuType.MAGNETIC_CRAFTING.get(), MagneticCraftingTableScreen::new);
         event.register(GalacticraftMenuType.PARACHEST.get(), ParachestScreen::new);
         event.register(GalacticraftMenuType.OXYGEN_COLLECTOR.get(), OxygenCollectorScreen::new);
+
+        event.register(GalacticraftMenuType.NASA_WORKBENCH.get(), NasaWorkbenchScreen::new);
+        event.register(GalacticraftMenuType.NASA_WORKBENCH_PAGE.get(), NasaWorkbenchPageScreen::new);
+        event.register(GalacticraftMenuType.NASA_WORKBENCH_EMPTY_PAGE.get(), NasaWorkbenchEmptyPageScreen::new);
     }
 
     private void registerDimensionTransitionScreen(RegisterDimensionTransitionScreenEvent event) {
@@ -236,6 +247,7 @@ public class GalacticraftClient {
 
     private void registerSpecialRenderers(RegisterSpecialModelRendererEvent event) {
         event.register(Constants.id("key_renderer"), KeySpecialRenderer.Unbaked.MAP_CODEC);
+        event.register(Constants.id("vehicle_renderer"), VehicleSpecialRenderer.Unbaked.MAP_CODEC);
     }
 
     private void addRenderStates(RegisterRenderStateModifiersEvent event) {

@@ -7,7 +7,8 @@
 
 package io.kalishak.galacticraftlegacy.data;
 
-import io.kalishak.galacticraftlegacy.client.data.GalacticraftSoundProvider;
+import io.kalishak.galacticraftlegacy.Galacticraft;
+import io.kalishak.galacticraftlegacy.client.data.*;
 import io.kalishak.galacticraftlegacy.client.data.models.GalacticraftEquipmentAssetProvider;
 import io.kalishak.galacticraftlegacy.data.advancement.GalacticraftAdvancementProvider;
 import io.kalishak.galacticraftlegacy.data.loot.GalacticraftLootTableProvider;
@@ -17,11 +18,11 @@ import io.kalishak.galacticraftlegacy.references.GalacticraftComponents;
 import io.kalishak.galacticraftlegacy.registry.CelestialBodyLevelDataEntries;
 import io.kalishak.galacticraftlegacy.registry.Checklist;
 import io.kalishak.galacticraftlegacy.registry.GalacticraftRegistries;
-import io.kalishak.galacticraftlegacy.client.data.GalacticraftLanguageProvider;
-import io.kalishak.galacticraftlegacy.client.data.GalacticraftModelProvider;
-import io.kalishak.galacticraftlegacy.client.data.GalacticraftSpritesProvider;
 import io.kalishak.galacticraftlegacy.registry.SchematicVariants;
 import io.kalishak.galacticraftlegacy.world.damagesource.GalacticraftDamageTypes;
+import io.kalishak.galacticraftlegacy.world.inventory.workbench.VehicleCraftingPages;
+import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.rocket.VehicleCraftingDataRecipes;
+import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.rocket.VehicleCraftingSlotTypes;
 import io.kalishak.galacticraftlegacy.world.item.equipment.trim.GalacticraftTrimMaterials;
 import io.kalishak.galacticraftlegacy.world.level.biome.GalacticraftBiomes;
 import io.kalishak.galacticraftlegacy.world.level.dimension.GalacticraftDimensionTypes;
@@ -45,6 +46,8 @@ import net.minecraft.util.InclusiveRange;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
 
+import java.util.Set;
+
 public class GalacticraftData {
     private static final RegistrySetBuilder SET_BUILDER = new RegistrySetBuilder()
             .add(Registries.BIOME, GalacticraftBiomes::bootstrap)
@@ -63,6 +66,9 @@ public class GalacticraftData {
             .add(Registries.WORLD_CLOCK, GalacticraftWorldClocks::bootstrap)
             .add(NeoForgeRegistries.Keys.BIOME_MODIFIERS, GalacticraftBiomeModifiers::bootstrap)
             .add(GalacticraftRegistries.Keys.CHECKLIST, Checklist::bootstrap)
+            .add(GalacticraftRegistries.Keys.VEHICLE_CRAFTING_SLOT_TYPE, VehicleCraftingSlotTypes::bootstrap)
+            .add(GalacticraftRegistries.Keys.VEHICLE_CRAFTING_RECIPE_DATA, VehicleCraftingDataRecipes::bootstrap)
+            .add(GalacticraftRegistries.Keys.VEHICLE_CRAFTING_PAGE, VehicleCraftingPages::bootstrap)
             .add(GalacticraftRegistries.Keys.SCHEMATIC, SchematicVariants::bootstrap)
             .add(GalacticraftRegistries.Keys.CELESTIAL_BODY_LEVEL_DATA, CelestialBodyLevelDataEntries::bootstrap)
             .add(GalacticraftRegistries.Keys.SPACE_STATION_RECIPE, SpaceStationRecipe::bootstrap);
@@ -78,8 +84,9 @@ public class GalacticraftData {
         event.createProvider(GalacticraftModelProvider::new);
         event.createProvider(GalacticraftEquipmentAssetProvider::new);
         event.createProvider(GalacticraftSoundProvider::new);
+        event.createProvider(GalacticraftParticleProvider::new);
 
-        event.createDatapackRegistryObjects(SET_BUILDER);
+        event.createDatapackRegistryObjects(SET_BUILDER, Set.of(Galacticraft.MODID, "vanilla"));
         event.createProvider(GalacticraftLootTableProvider::create);
         event.createProvider(GalacticraftAdvancementProvider::create);
         event.createProvider(GalacticraftRecipeProvider.Runner::new);

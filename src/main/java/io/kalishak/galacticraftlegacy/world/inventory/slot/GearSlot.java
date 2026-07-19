@@ -24,7 +24,7 @@ import net.neoforged.neoforge.transfer.ResourceHandler;
 import net.neoforged.neoforge.transfer.item.ItemResource;
 import org.jspecify.annotations.Nullable;
 
-public class GearSlot extends MutableHandlerSlot {
+public class GearSlot extends ConditionalHandlerSlot {
     private final LivingEntity owner;
     private final GearEquipmentSlot slot;
     private final @Nullable Identifier icon;

@@ -57,19 +57,25 @@ import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidType;
+import net.neoforged.neoforge.transfer.EmptyResourceHandler;
+import net.neoforged.neoforge.transfer.ResourceHandler;
+import net.neoforged.neoforge.transfer.VoidingResourceHandler;
 import net.neoforged.neoforge.transfer.fluid.FluidResource;
+import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.function.BiPredicate;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
 
 public abstract class AbstractAutoRocket extends AbstractSpaceShip implements LandingEntity, SoundboundEntity {
     public static final int INVALID_FREQUENCY_ID = -1;
+    public static final int FUEL_CAPACITY = FluidType.BUCKET_VOLUME * 6;
     protected static final EntityDataAccessor<Integer> DATA_AUTO_LAUNCH_PHASE_ID = SynchedEntityData.defineId(AbstractAutoRocket.class, EntityDataSerializers.INT);
     protected static final EntityDataAccessor<Integer> DATA_TARGET_FREQUENCY_ID = SynchedEntityData.defineId(AbstractAutoRocket.class, EntityDataSerializers.INT);
     protected static final EntityDataAccessor<Boolean> DATA_AWAITING_FOR_PLAYER_ID = SynchedEntityData.defineId(AbstractAutoRocket.class, EntityDataSerializers.BOOLEAN);
@@ -79,36 +85,36 @@ public abstract class AbstractAutoRocket extends AbstractSpaceShip implements La
     protected static final EntityDataAccessor<Byte> DATA_STATUS_ID = SynchedEntityData.defineId(AbstractAutoRocket.class, EntityDataSerializers.BYTE);
     protected static final EntityDataAccessor<Long> DATA_STATUS_COOLDOWN_ID = SynchedEntityData.defineId(AbstractAutoRocket.class, EntityDataSerializers.LONG);
     protected static final EntityDataAccessor<Long> DATA_LAST_STATUS_COOLDOWN_ID = SynchedEntityData.defineId(AbstractAutoRocket.class, EntityDataSerializers.LONG);
-    protected final @Nullable NonNullList<ItemStack> inventory;
-    protected final @Nullable ItemStacksResourceHandler itemStacksResourceHandler;
-    protected final SingleTankResourceHandler tankResourceHandler = new SingleTankResourceHandler(FluidType.BUCKET_VOLUME * 8);
-    protected FluidStack fuel = FluidStack.EMPTY;
+    protected final ItemStacksResourceHandler itemStacksResourceHandler;
+    protected final SingleTankResourceHandler tankResourceHandler = new SingleTankResourceHandler(FUEL_CAPACITY);
     protected @Nullable LaunchControllerBlockEntity launchController;
     protected @Nullable BlockEntity landingPad;
     protected RocketSoundInstance soundUpdater;
     private boolean playRocketSound = false;
 
-    protected AbstractAutoRocket(EntityType<?> entityType, Level level, Supplier<Item> droppedItemSupplier, Player owner, int storageSize, boolean preFueled) {
+    protected AbstractAutoRocket(EntityType<?> entityType, Level level, Supplier<Item> droppedItemSupplier, @Nullable Player owner, int storageSize, boolean preFueled) {
         super(entityType, level, droppedItemSupplier, owner);
 
-        this.inventory = storageSize > 0 ? NonNullList.withSize(storageSize, ItemStack.EMPTY) : null;
-        this.itemStacksResourceHandler = storageSize > 0 ? new ItemStacksResourceHandler(this.inventory) : null;
+        this.itemStacksResourceHandler = new ItemStacksResourceHandler(storageSize);
 
         if (preFueled) {
-            this.fuel = new FluidStack(GalacticraftFluids.FUEL, FluidType.BUCKET_VOLUME * 8);
+            preFuel(this.tankResourceHandler);
         }
     }
 
-    protected AbstractAutoRocket(EntityType<?> entityType, Level level, Supplier<Item> droppedItemSupplier, Player owner) {
-        this(entityType, level, droppedItemSupplier, owner, 2, false);
+    protected AbstractAutoRocket(EntityType<?> entityType, Level level, Supplier<Item> droppedItemSupplier, int storageSize,  boolean preFueled) {
+        this(entityType, level, droppedItemSupplier, null, storageSize, preFueled);
+    }
+
+    private static void preFuel(SingleTankResourceHandler fuelHandler) {
+        FluidStack fullFuel = new FluidStack(GalacticraftFluids.FUEL, FUEL_CAPACITY);
+        fuelHandler.setFluidStack(fullFuel);
     }
 
     protected static <T extends AbstractAutoRocket> void registerCapabilities(RegisterCapabilitiesEvent event, EntityType<? extends T> rocket) {
         event.registerEntity(Capabilities.Item.ENTITY_AUTOMATION, rocket, (entity, context) -> {
-            if (entity.hasInventory()) {
-                if (context == null || context == Direction.DOWN) {
-                    return entity.itemStacksResourceHandler;
-                }
+            if (context == null || context == Direction.DOWN) {
+                return entity.itemStacksResourceHandler;
             }
 
             return null;
@@ -130,17 +136,17 @@ public abstract class AbstractAutoRocket extends AbstractSpaceShip implements La
             return false;
         }
 
-        return rocket.tankResourceHandler.getAmountAsInt(0) > requiredAmount;
+        return rocket.tankResourceHandler.getAmountAsInt(0) >= requiredAmount;
     }
 
-    protected static boolean hasEnoughFuel(AbstractAutoRocket rocket, Predicate<Integer> requiredAmount) {
+    protected static boolean hasEnoughFuel(AbstractAutoRocket rocket, BiPredicate<Integer, Integer> requiredAmount) {
         FluidResource fluidResource = rocket.tankResourceHandler.getResource(0);
 
         if (fluidResource.isEmpty() || !fluidResource.is(GalacticraftTags.Fluids.IS_FUEL)) {
             return false;
         }
 
-        return requiredAmount.test(rocket.tankResourceHandler.getCapacityAsInt(0, fluidResource));
+        return requiredAmount.test(rocket.tankResourceHandler.getAmount(), rocket.tankResourceHandler.getCapacityAsInt(0, fluidResource));
     }
 
     @Override
@@ -295,7 +301,7 @@ public abstract class AbstractAutoRocket extends AbstractSpaceShip implements La
 
             switch(getAutoLaunchState()) {
                 case ROCKET_IS_FUELED -> {
-                    if (hasEnoughFuel(this, this.tankResourceHandler.getCapacityAsInt(0, FluidResource.of(this.fuel))) && (!(this instanceof TieredRocket) || !getPassengers().isEmpty())) {
+                    if (hasEnoughFuel(this, FUEL_CAPACITY) && (!(this instanceof TieredRocket) || !getPassengers().isEmpty())) {
                         autoLaunch();
                     }
                 }
@@ -346,7 +352,7 @@ public abstract class AbstractAutoRocket extends AbstractSpaceShip implements La
                 boolean shouldAutoLaunch = this.launchController.canAutoLaunch();
 
                 if (shouldAutoLaunch) {
-                    if (hasEnoughFuel(this, cap -> this.fuel.getAmount() > cap * 2 / 5)) {
+                    if (hasEnoughFuel(this, (amount, cap) -> amount > cap * 2 / 5)) {
                         ignite();
                     } else {
                         triggerFailureMessage(AutoLaunchStatus.NOT_ENOUGH);
@@ -622,10 +628,6 @@ public abstract class AbstractAutoRocket extends AbstractSpaceShip implements La
         if (!level().isClientSide() && !getPassengers().isEmpty() && getFirstPassenger() instanceof ServerPlayer player) {
             player.sendSystemMessage(status.getDescription());
         }
-    }
-
-    public boolean hasInventory() {
-        return this.inventory != null;
     }
 
     public AutoLaunchState getAutoLaunchState() {

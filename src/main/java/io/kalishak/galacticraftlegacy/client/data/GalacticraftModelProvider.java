@@ -7,6 +7,8 @@
 
 package io.kalishak.galacticraftlegacy.client.data;
 
+import io.kalishak.galacticraftlegacy.client.data.models.model.GalacticraftModelTemplates;
+import io.kalishak.galacticraftlegacy.client.renderer.special.VehicleSpecialRenderer;
 import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.Galacticraft;
 import io.kalishak.galacticraftlegacy.client.item.ColorByFluid;
@@ -21,6 +23,7 @@ import io.kalishak.galacticraftlegacy.world.item.GearEquipmentAssets;
 import io.kalishak.galacticraftlegacy.world.item.component.GalacticraftDataComponents;
 import io.kalishak.galacticraftlegacy.world.item.equipment.trim.GalacticraftMaterialAssetGroup;
 import io.kalishak.galacticraftlegacy.world.item.equipment.trim.GalacticraftTrimMaterials;
+import io.kalishak.galacticraftlegacy.world.item.vehicle.RocketItem;
 import io.kalishak.galacticraftlegacy.world.level.block.GalacticraftBlocks;
 import io.kalishak.galacticraftlegacy.world.level.block.MagneticCraftingBlock;
 import io.kalishak.galacticraftlegacy.world.level.block.wire.HeavyWireBlock;
@@ -127,6 +130,7 @@ public class GalacticraftModelProvider extends ModelProvider {
         blockModels.createTrivialCube(GalacticraftBlocks.ASTEROID_ALUMINUM_ORE.get());
         blockModels.createTrivialBlock(GalacticraftBlocks.TIN_DECORATION_CUT_BLOCK.get(), TexturedModel.CUBE_TOP_BOTTOM);
         blockModels.createTrivialCube(GalacticraftBlocks.SPACE_STATION.get());
+        blockModels.createTrivialCube(GalacticraftBlocks.NASA_WORKBENCH.get());
         blockModels.createNonTemplateModelBlock(GalacticraftBlocks.GRATING.get());
         createMeteor(blockModels, GalacticraftBlocks.FALLEN_METEOR.get());
 
@@ -231,6 +235,7 @@ public class GalacticraftModelProvider extends ModelProvider {
         itemModels.generateFlatItem(GalacticraftItems.EVOLVED_ZOMBIE_SPAWN_EGG.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(GalacticraftItems.RAW_METEORIC_IRON.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(GalacticraftItems.METEORIC_IRON_INGOT.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.STEEL_POLE.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(GalacticraftItems.COMPRESSED_ALUMINUM.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(GalacticraftItems.COMPRESSED_BRONZE.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(GalacticraftItems.COMPRESSED_COPPER.get(), ModelTemplates.FLAT_ITEM);
@@ -243,6 +248,23 @@ public class GalacticraftModelProvider extends ModelProvider {
         itemModels.generateFlatItem(GalacticraftItems.HEAVY_DUTY_PLATE.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(GalacticraftItems.HEAVY_DUTY_PLATE_TIER_2.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(GalacticraftItems.HEAVY_DUTY_PLATE_TIER_3.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.ROCKET_NOSE_CONE.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.ROCKET_FIN.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.ROCKET_ENGINE.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.ROCKET_BOOSTER.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.HEAVY_NOSE_CONE.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.HEAVY_FIN.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.HEAVY_ROCKET_ENGINE.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.BUGGY_SEAT.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.BUGGY_WHEEL.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.BUGGY_STORAGE_BOX.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.ORION_DRIVE.get(), ModelTemplates.FLAT_ITEM);
+        vehicle(itemModels, GalacticraftItems.TIER_1_ROCKET.get());
+        vehicle(itemModels, GalacticraftItems.BUGGY.get());
+        vehicle(itemModels, GalacticraftItems.TIER_2_ROCKET.get());
+        vehicle(itemModels, GalacticraftItems.CARGO_ROCKET.get());
+        vehicle(itemModels, GalacticraftItems.TIER_3_ROCKET.get());
+        vehicle(itemModels, GalacticraftItems.ASTRO_MINER.get());
     }
 
     private void simpleParent(BlockModelGenerators blockModels, Block block, UnaryOperator<ExtendedModelTemplateBuilder> builder, TextureSlot... slots) {
@@ -471,5 +493,11 @@ public class GalacticraftModelProvider extends ModelProvider {
                 block,
                 plainVariant(ModelTemplates.CAULDRON_FULL.create(block, TextureMapping.cauldron(TextureMapping.getBlockTexture(liquidBlock, "_still")), gen.modelOutput)))
         );
+    }
+
+    private void vehicle(ItemModelGenerators gen, RocketItem rocketItem) {
+        Identifier model = GalacticraftModelTemplates.VEHICLE_INVENTORY.create(rocketItem, TextureMapping.particle(GalacticraftBlocks.ASTEROID_ROCK.get()), gen.modelOutput);
+        ItemModel.Unbaked unbakedModel = ItemModelUtils.specialModel(model, new VehicleSpecialRenderer.Unbaked(rocketItem.getVehicleType()));
+        gen.itemModelOutput.accept(rocketItem, unbakedModel);
     }
 }

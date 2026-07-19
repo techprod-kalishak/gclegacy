@@ -13,9 +13,12 @@ import io.kalishak.galacticraftlegacy.attachment.level.CelestialBodyLevelData;
 import io.kalishak.galacticraftlegacy.galaxies.CelestialBodyType;
 import io.kalishak.galacticraftlegacy.galaxies.CelestialObject;
 import io.kalishak.galacticraftlegacy.transfer.node.NodeNetwork;
+import io.kalishak.galacticraftlegacy.world.inventory.workbench.VehicleCraftingPage;
+import io.kalishak.galacticraftlegacy.world.inventory.workbench.VehicleCraftingPages;
+import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.rocket.VehicleCraftingSlotType;
+import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.rocket.VehicleCraftingDataRecipe;
 import io.kalishak.galacticraftlegacy.world.level.dimension.SpaceStationRecipe;
 import io.kalishak.galacticraftlegacy.world.level.dimension.transition.PlanetaryTransition;
-import io.kalishak.galacticraftlegacy.world.level.dimension.transition.TransitionType;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -45,6 +48,9 @@ public class GalacticraftRegistries {
         event.dataPackRegistry(Keys.SCHEMATIC, SchematicVariant.DIRECT_CODEC, SchematicVariant.DIRECT_CODEC, builder -> builder.sync(true).defaultKey(SchematicVariants.TIER_2_ROCKET));
         event.dataPackRegistry(Keys.CELESTIAL_BODY_LEVEL_DATA, CelestialBodyLevelData.DIRECT_CODEC, CelestialBodyLevelData.DIRECT_CODEC, builder -> builder.sync(true).defaultKey(CelestialBodyLevelDataEntries.OVERWORLD));
         event.dataPackRegistry(Keys.SPACE_STATION_RECIPE, SpaceStationRecipe.DIRECT_CODEC, SpaceStationRecipe.DIRECT_CODEC, builder -> builder.sync(true));
+        event.dataPackRegistry(Keys.VEHICLE_CRAFTING_RECIPE_DATA, VehicleCraftingDataRecipe.DIRECT_CODEC, VehicleCraftingDataRecipe.DIRECT_CODEC, builder -> builder.sync(true));
+        event.dataPackRegistry(Keys.VEHICLE_CRAFTING_PAGE, VehicleCraftingPage.DIRECT_CODEC, VehicleCraftingPage.DIRECT_CODEC, builder -> builder.sync(true));
+        event.dataPackRegistry(Keys.VEHICLE_CRAFTING_SLOT_TYPE, VehicleCraftingSlotType.DIRECT_CODEC, VehicleCraftingSlotType.DIRECT_CODEC, builder -> builder.sync(true));
     }
 
     public static class Keys {
@@ -56,5 +62,8 @@ public class GalacticraftRegistries {
         public static final ResourceKey<Registry<MapCodec<? extends NodeNetwork.PackedNode>>> PACKED_NODE_TYPE = ResourceKey.createRegistryKey(Constants.id("packed_node_type"));
         public static final ResourceKey<Registry<SchematicVariant>> SCHEMATIC = ResourceKey.createRegistryKey(Constants.id("schematic"));
         public static final ResourceKey<Registry<SpaceStationRecipe>> SPACE_STATION_RECIPE = ResourceKey.createRegistryKey(Constants.id("space_station_recipe"));
+        public static final ResourceKey<Registry<VehicleCraftingDataRecipe>> VEHICLE_CRAFTING_RECIPE_DATA = ResourceKey.createRegistryKey(Constants.id("vehicle_crafting_recipe"));
+        public static final ResourceKey<Registry<VehicleCraftingPage>> VEHICLE_CRAFTING_PAGE = ResourceKey.createRegistryKey(Constants.id("vehicle_crafting_page"));
+        public static final ResourceKey<Registry<VehicleCraftingSlotType>> VEHICLE_CRAFTING_SLOT_TYPE = ResourceKey.createRegistryKey(Constants.id("vehicle_crafting_slot_type"));
     }
 }

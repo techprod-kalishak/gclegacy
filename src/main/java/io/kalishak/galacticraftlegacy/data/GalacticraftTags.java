@@ -69,6 +69,7 @@ public final class GalacticraftTags {
         public static final TagKey<Block> MACHINE = BlockItems.MACHINE.block();
         public static final TagKey<Block> MACHINE_BASIC = BlockItems.MACHINE_BASIC.block();
         public static final TagKey<Block> MACHINE_ADVANCED = BlockItems.MACHINE_ADVANCED.block();
+        public static final TagKey<Block> NASA_WORKBENCHES = BlockItems.NASA_WORKBENCHES.block();
         public static final TagKey<Block> ORES_ALUMINUM = BlockItems.ORES_ALUMINUM.block();
         public static final TagKey<Block> ORES_CHEESE = BlockItems.ORES_CHEESE.block();
         public static final TagKey<Block> ORES_SAPPHIRE = BlockItems.ORES_SAPPHIRE.block();
@@ -102,6 +103,7 @@ public final class GalacticraftTags {
         public static final BlockItemTagId MACHINE = combinedTagKey("machine");
         public static final BlockItemTagId MACHINE_BASIC = combinedTagKey("machine/basic");
         public static final BlockItemTagId MACHINE_ADVANCED = combinedTagKey("machine/advanced");
+        public static final BlockItemTagId NASA_WORKBENCHES = combinedTagKey("nasa_workbenches");
         public static final BlockItemTagId ORES_ALUMINUM = combinedTagKey("ores/aluminum");
         public static final BlockItemTagId ORES_CHEESE = combinedTagKey("ores/cheese");
         public static final BlockItemTagId ORES_SAPPHIRE = combinedTagKey("ores/sapphire");
@@ -166,7 +168,6 @@ public final class GalacticraftTags {
         public static final TagKey<Item> INGOTS_TIN = shared(Registries.ITEM, "ingots/tin");
         public static final TagKey<Item> INGOTS_TITANIUM = shared(Registries.ITEM, "ingots/titanium");
         public static final TagKey<Item> INGOTS_LEAD = shared(Registries.ITEM, "ingots/lead");
-        public static final TagKey<Item> NUGGETS_LEAD = shared(Registries.ITEM, "nuggets/lead");
         public static final TagKey<Item> NUGGETS_DESH = shared(Registries.ITEM, "nuggets/desh");
         public static final TagKey<Item> NUGGETS_STEEL = shared(Registries.ITEM, "nuggets/steel");
         public static final TagKey<Item> NUGGETS_TITANIUM = shared(Registries.ITEM, "nuggets/titanium");
@@ -205,6 +206,16 @@ public final class GalacticraftTags {
         public static final TagKey<Item> REPAIRS_DESH_TOOL = shared(Registries.ITEM, "desh_tool_materials");
         public static final TagKey<Item> REPAIRS_STEEL_TOOL = shared(Registries.ITEM, "steel_tool_materials");
         public static final TagKey<Item> REPAIRS_TITANIUM_TOOL = shared(Registries.ITEM, "titanium_tool_materials");
+        public static final TagKey<Item> VEHICLE_INGREDIENTS = tagKey(Registries.ITEM, "vehicle_ingredient");
+        public static final TagKey<Item> VEHICLE_INGREDIENT_CONE = tagKey(Registries.ITEM, "vehicle_ingredient/cone");
+        public static final TagKey<Item> VEHICLE_INGREDIENT_PLATING = tagKey(Registries.ITEM, "vehicle_ingredient/plating");
+        public static final TagKey<Item> VEHICLE_INGREDIENT_FIN = tagKey(Registries.ITEM, "vehicle_ingredient/fin");
+        public static final TagKey<Item> VEHICLE_INGREDIENT_ENGINE = tagKey(Registries.ITEM, "vehicle_ingredient/engine");
+        public static final TagKey<Item> VEHICLE_INGREDIENT_BOOSTER = tagKey(Registries.ITEM, "vehicle_ingredient/booster");
+        public static final TagKey<Item> VEHICLE_INGREDIENT_STORAGE = tagKey(Registries.ITEM, "vehicle_ingredient/storage");
+        public static final TagKey<Item> VEHICLE_INGREDIENT_WHEEL = tagKey(Registries.ITEM, "vehicle_ingredient/wheel");
+        public static final TagKey<Item> VEHICLE_INGREDIENT_SEAT = tagKey(Registries.ITEM, "vehicle_ingredient/seat");
+        public static final TagKey<Item> VEHICLE_INGREDIENT_MISC = tagKey(Registries.ITEM, "vehicle_ingredient/misc");
         public static final TagKey<Item> STORAGE_BLOCKS_ALUMINUM = shared(Registries.ITEM, "storage_blocks/aluminum");
         public static final TagKey<Item> STORAGE_BLOCKS_RAW_ALUMINUM = shared(Registries.ITEM, "storage_blocks/raw_aluminum");
         public static final TagKey<Item> STORAGE_BLOCKS_TIN = shared(Registries.ITEM, "storage_blocks/tin");

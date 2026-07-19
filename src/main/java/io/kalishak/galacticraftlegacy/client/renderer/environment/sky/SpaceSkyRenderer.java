@@ -5,7 +5,7 @@
  * See LICENSE file for more details
  */
 
-package io.kalishak.galacticraftlegacy.client.renderer.environment;
+package io.kalishak.galacticraftlegacy.client.renderer.environment.sky;
 
 import com.mojang.blaze3d.PrimitiveTopology;
 import com.mojang.blaze3d.buffers.GpuBuffer;
@@ -18,6 +18,7 @@ import com.mojang.blaze3d.textures.GpuTextureView;
 import com.mojang.blaze3d.vertex.*;
 import com.mojang.math.Axis;
 import io.kalishak.galacticraftlegacy.client.data.GalacticraftSpritesProvider;
+import io.kalishak.galacticraftlegacy.client.renderer.environment.CelestialSpritesLocations;
 import io.kalishak.galacticraftlegacy.config.ClientConfig;
 import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.world.level.EarthPhase;
@@ -45,10 +46,6 @@ import java.util.Optional;
 import java.util.OptionalDouble;
 
 public class SpaceSkyRenderer implements CustomSkyboxRenderer, AutoCloseable {
-    protected static final Identifier ORBITAL_SUN_SPRITE = Constants.id("orbital_sun");
-    protected static final Identifier PLANETARY_SUN_SPRITE = Constants.id("atmospheric_sun");
-    protected static final Identifier FULL_EARTH_SPRITE = Constants.id("full_orbital_earth");
-    protected static final Identifier FULL_ORBITAL_MOON_SPRITE = Constants.id("full_orbital_moon");
     protected final RenderSystem.AutoStorageIndexBuffer quadIndices;
     protected TextureAtlas celestialsAtlas;
     protected RenderTarget renderTarget;
@@ -97,7 +94,7 @@ public class SpaceSkyRenderer implements CustomSkyboxRenderer, AutoCloseable {
         float partialTicks = camera.getCameraEntityPartialTicks(event.getDeltaTracker());
         CustomSkyboxRenderer renderer = event.getRenderState().customSkyboxRenderer;
 
-        if (renderer instanceof SpaceSkyRenderer skyRenderer) {
+        if (renderer instanceof SpaceSkyRenderer skyRenderer && skyRenderer.seenAtlas) {
             skyRenderer.extractRenderState(renderState, attributeProbe, partialTicks);
         }
     }
@@ -152,7 +149,7 @@ public class SpaceSkyRenderer implements CustomSkyboxRenderer, AutoCloseable {
     }
 
     protected Identifier getSunSprite() {
-        return ORBITAL_SUN_SPRITE;
+        return CelestialSpritesLocations.ORBITAL_SUN_SPRITE;
     }
 
     protected void renderMoon(PoseStack poseStack) {
@@ -323,11 +320,11 @@ public class SpaceSkyRenderer implements CustomSkyboxRenderer, AutoCloseable {
     }
 
     protected GpuBuffer buildEarth(TextureAtlas atlas) {
-        return buildCelestialQuad("Earth quad", atlas.getSprite(FULL_EARTH_SPRITE));
+        return buildCelestialQuad("Earth quad", atlas.getSprite(CelestialSpritesLocations.FULL_EARTH_SPRITE));
     }
 
     protected GpuBuffer buildMoon(TextureAtlas atlas) {
-        return buildCelestialQuad("Moon quad", atlas.getSprite(FULL_ORBITAL_MOON_SPRITE));
+        return buildCelestialQuad("Moon quad", atlas.getSprite(CelestialSpritesLocations.FULL_ORBITAL_MOON_SPRITE));
     }
 
     @Override

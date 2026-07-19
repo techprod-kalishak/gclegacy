@@ -255,6 +255,7 @@ public class GalacticraftLanguageProvider extends LanguageProvider {
         addItem(GalacticraftItems.DEHYDRATED_BEETROOT, "Dehydrated Beetroot");
         addItem(GalacticraftItems.CANNED_BEEF, "Canned Beef");
         addItem(GalacticraftItems.TIN_CANISTER, "Tin Canister");
+        addItem(GalacticraftItems.STEEL_POLE, "Steel Pole");
         addItem(GalacticraftItems.COMPRESSED_ALUMINUM, "Compressed Aluminum");
         addItem(GalacticraftItems.COMPRESSED_BRONZE, "Compressed Bronze");
         addItem(GalacticraftItems.COMPRESSED_COPPER, "Compressed Copper");
@@ -362,6 +363,10 @@ public class GalacticraftLanguageProvider extends LanguageProvider {
         }
 
         return stringBuilder.toString();
+    }
+
+    private <R> void addById(ResourceKey<R> id, String translation) {
+        add(Util.makeDescriptionId(id.registry().getPath(), id.identifier()), translation);
     }
 
     private <R extends ItemLike> void addWithDescription(Holder<R> entry, String name, String description) {

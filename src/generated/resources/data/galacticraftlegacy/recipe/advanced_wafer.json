@@ -1,5 +1,5 @@
 {
-  "type": "galacticraftlegacy:circuit",
+  "type": "galacticraftlegacy:fabricating",
   "category": "advanced",
   "ingredients": "minecraft:repeater",
   "result": {

@@ -16,15 +16,15 @@ import net.neoforged.neoforge.transfer.item.ResourceHandlerSlot;
 
 import java.util.function.Predicate;
 
-public class MutableHandlerSlot extends ResourceHandlerSlot {
+public class ConditionalHandlerSlot extends ResourceHandlerSlot {
     protected final Predicate<ItemStack> isValid;
 
-    public MutableHandlerSlot(ResourceHandler<ItemResource> handler, IndexModifier<ItemResource> slotModifier, Predicate<ItemStack> isValid, int index, int xPosition, int yPosition) {
+    public ConditionalHandlerSlot(ResourceHandler<ItemResource> handler, IndexModifier<ItemResource> slotModifier, Predicate<ItemStack> isValid, int index, int xPosition, int yPosition) {
         super(handler, slotModifier, index, xPosition, yPosition);
         this.isValid = isValid;
     }
 
-    public MutableHandlerSlot(ItemStacksResourceHandler handler, Predicate<ItemStack> isValid, int index, int xPosition, int yPosition) {
+    public ConditionalHandlerSlot(ItemStacksResourceHandler handler, Predicate<ItemStack> isValid, int index, int xPosition, int yPosition) {
         this(handler, handler::set, isValid,  index, xPosition, yPosition);
     }
 

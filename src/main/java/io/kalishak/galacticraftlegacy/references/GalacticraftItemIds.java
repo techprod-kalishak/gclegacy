@@ -32,11 +32,15 @@ public class GalacticraftItemIds {
     public static final ResourceKey<Item> OXYGEN_VENT = create("oxygen_vent");
     public static final ResourceKey<Item> OXYGEN_FAN = create("oxygen_fan");
     public static final ResourceKey<Item> OXYGEN_CONCENTRATOR = create("oxygen_concentrator");
-    public static final ResourceKey<Item> T1_ROCKET_ENGINE = create("t1_rocket_engine");
-    public static final ResourceKey<Item> T1_ROCKET_BOOSTER = create("t1_rocket_booster");
+    public static final ResourceKey<Item> ROCKET_ENGINE = create("rocket_engine");
+    public static final ResourceKey<Item> ROCKET_BOOSTER = create("rocket_booster");
     public static final ResourceKey<Item> HEAVY_DUTY_PLATE = create("heavy_duty_plate");
     public static final ResourceKey<Item> ROCKET_NOSE_CONE = create("rocket_nose_cone");
     public static final ResourceKey<Item> ROCKET_FIN = create("rocket_fin");
+    public static final ResourceKey<Item> TIER_1_ROCKET = create("tier_1_rocket");
+    public static final ResourceKey<Item> TIER_2_ROCKET = create("tier_2_rocket");
+    public static final ResourceKey<Item> CARGO_ROCKET = create("cargo_rocket");
+    public static final ResourceKey<Item> TIER_3_ROCKET = create("tier_3_rocket");
     public static final ResourceKey<Item> STEEL_POLE = create("steel_pole");
     public static final ResourceKey<Item> CANVAS = create("canvas");
     public static final ResourceKey<Item> BUGGY_WHEEL = create("buggy_wheel");
@@ -80,7 +84,7 @@ public class GalacticraftItemIds {
     public static final ResourceKey<Item> GRAPPLE_GUN = create("grapple_gun");
     public static final ResourceKey<Item> ASTRO_MINER = create("astro_miner");
     public static final ResourceKey<Item> HEAVY_ROCKET_ENGINE = create("heavy_rocket_engine");
-    public static final ResourceKey<Item> HEAVY_ROCKET_FINS = create("heavy_rocket_fins");
+    public static final ResourceKey<Item> HEAVY_FIN = create("heavy_rocket_fins");
     public static final ResourceKey<Item> IRON_SHARD = create("iron_shard");
     public static final ResourceKey<Item> TITANIUM_SHARD = create("titanium_shard");
     public static final ResourceKey<Item> THERMAL_CLOTH = create("thermal_cloth");

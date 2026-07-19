@@ -8,6 +8,8 @@
 package io.kalishak.galacticraftlegacy.world.level.dimension;
 
 import io.kalishak.galacticraftlegacy.client.renderer.environment.*;
+import io.kalishak.galacticraftlegacy.client.renderer.environment.sky.MoonSkyRenderer;
+import io.kalishak.galacticraftlegacy.client.renderer.environment.sky.OrbitalSkyRenderer;
 import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.data.GalacticraftTags;
 import io.kalishak.galacticraftlegacy.world.attribute.GalacticraftEnvironmentAttributes;

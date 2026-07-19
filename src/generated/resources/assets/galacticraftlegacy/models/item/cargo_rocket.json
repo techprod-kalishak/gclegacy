@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/template_vehicle",
+  "textures": {
+    "particle": "galacticraftlegacy:block/asteroid_rock"
+  }
+}

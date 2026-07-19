@@ -39,24 +39,28 @@ import java.util.List;
 public class PlayerSpaceData extends GearInventoryProvider {
     public static final MapCodec<PlayerSpaceData> MAP_CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             SpaceGearEquipment.CODEC.fieldOf("GearEquipment").forGetter(PlayerSpaceData::getGearEquipment),
+            Schematics.CODEC.fieldOf("Schematics").forGetter(PlayerSpaceData::getSchematics),
             Codec.BOOL.optionalFieldOf("IsSensorGlassesActivated", false).forGetter(PlayerSpaceData::isSensorGlassesActivated),
             Codec.BOOL.optionalFieldOf("InPlanetSelection", false).forGetter(PlayerSpaceData::inPlanetSelection)
     ).apply(instance, PlayerSpaceData::sync));
     public static final StreamCodec<RegistryFriendlyByteBuf, PlayerSpaceData> STREAM_CODEC = StreamCodec.composite(
             SpaceGearEquipment.STREAM_CODEC, GearInventoryProvider::getGearEquipment,
+            Schematics.STREAM_CODEC, PlayerSpaceData::getSchematics,
             ByteBufCodecs.BOOL, PlayerSpaceData::isSensorGlassesActivated,
             ByteBufCodecs.BOOL, PlayerSpaceData::inPlanetSelection,
             PlayerSpaceData::sync
     );
     private boolean isSensorGlassesActivated = false;
     private boolean inPlanetSelection = false;
+    private final Schematics unlockedSchematics = Schematics.empty();
 
     private PlayerSpaceData(SpaceGearEquipment gearEquipment) {
         super(gearEquipment);
     }
 
-    private static PlayerSpaceData sync(SpaceGearEquipment spaceGearEquipment, boolean isSensorGlassesActivated, boolean inPlanetSelection) {
+    private static PlayerSpaceData sync(SpaceGearEquipment spaceGearEquipment, Schematics schematics, boolean isSensorGlassesActivated, boolean inPlanetSelection) {
         PlayerSpaceData spaceData = new PlayerSpaceData(spaceGearEquipment);
+        spaceData.unlockedSchematics.sync(schematics);
         spaceData.toggleSensorGlasses(isSensorGlassesActivated);
         spaceData.togglePlanetSelection(inPlanetSelection);
 
@@ -138,6 +142,10 @@ public class PlayerSpaceData extends GearInventoryProvider {
     @Override
     public SpaceGearEquipment getGearEquipment() {
         return this.gearEquipment;
+    }
+
+    public Schematics getSchematics() {
+        return this.unlockedSchematics;
     }
 
     public void toggleSensorGlasses(boolean state) {

@@ -5,7 +5,7 @@
  * See LICENSE file for more details
  */
 
-package io.kalishak.galacticraftlegacy.client.renderer.environment;
+package io.kalishak.galacticraftlegacy.client.renderer.environment.sky;
 
 import com.mojang.blaze3d.vertex.*;
 import com.mojang.math.Axis;
@@ -14,7 +14,6 @@ import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.world.attribute.GalacticraftEnvironmentAttributes;
 import io.kalishak.galacticraftlegacy.world.level.EarthPhase;
 import net.minecraft.client.Camera;
-import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.state.level.LevelRenderState;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.attribute.EnvironmentAttributeProbe;
@@ -35,7 +34,6 @@ public class OrbitalSkyRenderer extends SpaceSkyRenderer {
 
     @Override
     protected void extractRenderState(LevelRenderState levelRenderState, EnvironmentAttributeProbe attributeProbe, float partialTicks) {
-        levelRenderState.setRenderData(SpaceSkyRenderState.TYPE_ID, OrbitalSkyRenderer.ID);
         levelRenderState.setRenderData(SpaceSkyRenderState.EARTH_ANGLE_ID, attributeProbe.getValue(GalacticraftEnvironmentAttributes.EARTH_ANGLE.get(), partialTicks) * ((float) Math.PI / 180.0F));
     }
 

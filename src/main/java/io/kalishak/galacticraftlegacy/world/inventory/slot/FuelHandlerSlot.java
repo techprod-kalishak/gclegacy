@@ -14,7 +14,7 @@ import net.neoforged.neoforge.transfer.IndexModifier;
 import net.neoforged.neoforge.transfer.ResourceHandler;
 import net.neoforged.neoforge.transfer.item.ItemResource;
 
-public class FuelHandlerSlot extends MutableHandlerSlot {
+public class FuelHandlerSlot extends ConditionalHandlerSlot {
     public FuelHandlerSlot(ResourceHandler<ItemResource> handler, IndexModifier<ItemResource> slotModifier, int index, int xPosition, int yPosition) {
         super(handler, slotModifier, stack -> CoalGeneratorMenu.isFuel(stack.typeHolder()), index, xPosition, yPosition);
     }

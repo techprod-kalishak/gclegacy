@@ -23,7 +23,7 @@ public interface Tank extends Clearable {
     void setFluid(int index, FluidStack fluidStack);
 
     default int getMaxFluidAmount() {
-        return 8 * FluidType.BUCKET_VOLUME;
+        return 6 * FluidType.BUCKET_VOLUME;
     }
 
     void onTankChange(int index, FluidStack previousContents);

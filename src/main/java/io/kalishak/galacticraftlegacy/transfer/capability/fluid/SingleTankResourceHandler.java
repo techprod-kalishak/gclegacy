@@ -33,11 +33,11 @@ public class SingleTankResourceHandler extends SnapshotJournal<FluidStack> imple
     }
 
     public @NonNull FluidStack getFluidStack() {
-        return this.stack;
+        return this.stack.copy();
     }
 
     public void setFluidStack(@NonNull FluidStack stack) {
-        this.stack = stack;
+        this.stack = stack.copy();
     }
 
     protected boolean isValid(FluidResource resource) {

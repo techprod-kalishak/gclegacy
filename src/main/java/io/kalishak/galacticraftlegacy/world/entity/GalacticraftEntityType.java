@@ -15,11 +15,16 @@ import io.kalishak.galacticraftlegacy.world.entity.monster.EvolvedMonster;
 import io.kalishak.galacticraftlegacy.world.entity.monster.EvolvedSkeleton;
 import io.kalishak.galacticraftlegacy.world.entity.monster.EvolvedZombie;
 import io.kalishak.galacticraftlegacy.world.entity.projectile.ThrownMeteorChunk;
+import io.kalishak.galacticraftlegacy.world.entity.vehicle.AstroMiner;
+import io.kalishak.galacticraftlegacy.world.entity.vehicle.MoonBuggy;
 import io.kalishak.galacticraftlegacy.world.entity.vehicle.lander.EntryPod;
 import io.kalishak.galacticraftlegacy.world.entity.vehicle.lander.Lander;
 import io.kalishak.galacticraftlegacy.world.entity.vehicle.lander.LandingBalloons;
+import io.kalishak.galacticraftlegacy.world.entity.vehicle.rocket.Tier1Rocket;
+import io.kalishak.galacticraftlegacy.world.entity.vehicle.rocket.TieredRocket;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.phys.Vec3;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
@@ -131,6 +136,8 @@ public final class GalacticraftEntityType {
                     .clientTrackingRange(8)
                     .notInPeaceful()
     );
+
+    //Misc
     public static final DeferredHolder<EntityType<?>, EntityType<ThrownMeteorChunk>> THROWN_METEOR_CHUNK = REGISTRY.registerEntityType(
             GalacticraftEntityIds.METEOR_CHUNK,
             ThrownMeteorChunk::new, MobCategory.MISC,
@@ -139,6 +146,52 @@ public final class GalacticraftEntityType {
                     .sized(0.25F, 0.25F)
                     .clientTrackingRange(4)
                     .updateInterval(10)
+    );
+    public static final DeferredHolder<EntityType<?>, EntityType<TieredRocket>> TIER_1_ROCKET = REGISTRY.registerEntityType(
+            GalacticraftEntityIds.TIER_1_ROCKET,
+            Tier1Rocket::new, MobCategory.MISC,
+            builder -> builder
+                    .noLootTable()
+                    .sized(0.98F, 4.0F)
+                    .attach(EntityAttachment.PASSENGER, new Vec3(0.0D, 0.5D, 0.0D))
+    );
+    public static final DeferredHolder<EntityType<?>, EntityType<MoonBuggy>> BUGGY = REGISTRY.registerEntityType(
+            GalacticraftEntityIds.BUGGY,
+            MoonBuggy::new, MobCategory.MISC,
+            builder -> builder
+                    .noLootTable()
+                    .sized(0.98F, 4.0F)
+                    .attach(EntityAttachment.PASSENGER, new Vec3(0.0D, 0.5D, 0.0D))
+    );
+    public static final DeferredHolder<EntityType<?>, EntityType<TieredRocket>> TIER_2_ROCKET = REGISTRY.registerEntityType(
+            GalacticraftEntityIds.TIER_2_ROCKET,
+            Tier1Rocket::new, MobCategory.MISC,
+            builder -> builder
+                    .noLootTable()
+                    .sized(0.98F, 4.0F)
+                    .attach(EntityAttachment.PASSENGER, new Vec3(0.0D, 0.5D, 0.0D))
+    );
+    public static final DeferredHolder<EntityType<?>, EntityType<TieredRocket>> CARGO_ROCKET = REGISTRY.registerEntityType(
+            GalacticraftEntityIds.CARGO_ROCKET,
+            Tier1Rocket::new, MobCategory.MISC,
+            builder -> builder
+                    .noLootTable()
+                    .sized(0.98F, 4.0F)
+    );
+    public static final DeferredHolder<EntityType<?>, EntityType<TieredRocket>> TIER_3_ROCKET = REGISTRY.registerEntityType(
+            GalacticraftEntityIds.TIER_3_ROCKET,
+            Tier1Rocket::new, MobCategory.MISC,
+            builder -> builder
+                    .noLootTable()
+                    .sized(0.98F, 4.0F)
+                    .attach(EntityAttachment.PASSENGER, new Vec3(0.0D, 0.5D, 0.0D))
+    );
+    public static final DeferredHolder<EntityType<?>, EntityType<AstroMiner>> ASTRO_MINER = REGISTRY.registerEntityType(
+            GalacticraftEntityIds.ASTRO_MINER,
+            AstroMiner::new, MobCategory.MISC,
+            builder -> builder
+                    .noLootTable()
+                    .sized(0.98F, 4.0F)
     );
 
     public static void init(IEventBus bus) {

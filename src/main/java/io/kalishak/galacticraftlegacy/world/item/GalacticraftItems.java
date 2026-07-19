@@ -10,6 +10,7 @@ package io.kalishak.galacticraftlegacy.world.item;
 import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.Galacticraft;
 import io.kalishak.galacticraftlegacy.references.GalacticraftComponents;
+import io.kalishak.galacticraftlegacy.references.GalacticraftEntityIds;
 import io.kalishak.galacticraftlegacy.references.GalacticraftItemIds;
 import io.kalishak.galacticraftlegacy.registry.SchematicVariants;
 import io.kalishak.galacticraftlegacy.registry.deferred.DeferredItemRegister;
@@ -25,11 +26,13 @@ import io.kalishak.galacticraftlegacy.world.item.gear.FluidTankItem;
 import io.kalishak.galacticraftlegacy.world.item.gear.GearItem;
 import io.kalishak.galacticraftlegacy.world.item.gear.OxygenTankItem;
 import io.kalishak.galacticraftlegacy.world.item.gear.ShieldControllerItem;
+import io.kalishak.galacticraftlegacy.world.item.vehicle.RocketItem;
 import io.kalishak.galacticraftlegacy.world.level.block.GalacticraftBlocks;
 import io.kalishak.galacticraftlegacy.world.level.material.fluid.GalacticraftFluids;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Style;
 import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -464,6 +467,7 @@ public final class GalacticraftItems {
             GalacticraftItemIds.CANNED_BEEF,
             () -> CannedFood.createProperties(GalacticraftFoods.CANNED_BEEF)
     );
+    public static final DeferredItem<Item> STEEL_POLE = REGISTRY.registerSimpleItem(GalacticraftItemIds.STEEL_POLE);
     public static final DeferredItem<Item> COMPRESSED_ALUMINUM = REGISTRY.registerSimpleItem(GalacticraftItemIds.COMPRESSED_ALUMINUM);
     public static final DeferredItem<Item> COMPRESSED_BRONZE = REGISTRY.registerSimpleItem(GalacticraftItemIds.COMPRESSED_BRONZE);
     public static final DeferredItem<Item> COMPRESSED_COPPER = REGISTRY.registerSimpleItem(GalacticraftItemIds.COMPRESSED_COPPER);
@@ -519,6 +523,42 @@ public final class GalacticraftItems {
     public static final DeferredItem<ThrowableMeteorItem> THROWABLE_METEOR_CHUNK = REGISTRY.registerItem(
             GalacticraftItemIds.THROWABLE_METEOR_CHUNK,
             ThrowableMeteorItem::new
+    );
+    public static final DeferredItem<Item> ROCKET_NOSE_CONE = REGISTRY.registerSimpleItem(GalacticraftItemIds.ROCKET_NOSE_CONE);
+    public static final DeferredItem<Item> ROCKET_FIN = REGISTRY.registerSimpleItem(GalacticraftItemIds.ROCKET_FIN);
+    public static final DeferredItem<Item> ROCKET_ENGINE = REGISTRY.registerSimpleItem(GalacticraftItemIds.ROCKET_ENGINE, properties -> properties.stacksTo(1));
+    public static final DeferredItem<Item> ROCKET_BOOSTER = REGISTRY.registerSimpleItem(GalacticraftItemIds.ROCKET_BOOSTER, properties -> properties.stacksTo(1));
+    public static final DeferredItem<Item> HEAVY_NOSE_CONE = REGISTRY.registerSimpleItem(GalacticraftItemIds.HEAVY_NOSE_CONE);
+    public static final DeferredItem<Item> HEAVY_FIN = REGISTRY.registerSimpleItem(GalacticraftItemIds.HEAVY_FIN);
+    public static final DeferredItem<Item> HEAVY_ROCKET_ENGINE = REGISTRY.registerSimpleItem(GalacticraftItemIds.HEAVY_ROCKET_ENGINE, properties -> properties.stacksTo(1));
+    public static final DeferredItem<Item> BUGGY_SEAT = REGISTRY.registerSimpleItem(GalacticraftItemIds.BUGGY_SEAT, properties -> properties.stacksTo(1));
+    public static final DeferredItem<Item> BUGGY_WHEEL = REGISTRY.registerSimpleItem(GalacticraftItemIds.BUGGY_WHEEL, properties -> properties.stacksTo(1));
+    public static final DeferredItem<Item> BUGGY_STORAGE_BOX = REGISTRY.registerSimpleItem(GalacticraftItemIds.BUGGY_STORAGE_BOX, properties -> properties.stacksTo(1));
+    public static final DeferredItem<Item> ORION_DRIVE = REGISTRY.registerSimpleItem(GalacticraftItemIds.ORION_DRIVE);
+
+    public static final DeferredItem<RocketItem> TIER_1_ROCKET = REGISTRY.registerItem(
+            GalacticraftItemIds.TIER_1_ROCKET,
+            properties -> new RocketItem(GalacticraftEntityType.TIER_1_ROCKET, RocketItem.PlacementRule.LANDING_PAD, properties)
+    );
+    public static final DeferredItem<RocketItem> BUGGY = REGISTRY.registerItem(
+            GalacticraftItemIds.BUGGY,
+            properties -> new RocketItem(GalacticraftEntityType.BUGGY, RocketItem.PlacementRule.FUEL_PAD, properties)
+    );
+    public static final DeferredItem<RocketItem> TIER_2_ROCKET = REGISTRY.registerItem(
+            GalacticraftItemIds.TIER_2_ROCKET,
+            properties -> new RocketItem(GalacticraftEntityType.TIER_2_ROCKET, RocketItem.PlacementRule.LANDING_PAD, properties)
+    );
+    public static final DeferredItem<RocketItem> CARGO_ROCKET = REGISTRY.registerItem(
+            GalacticraftItemIds.CARGO_ROCKET,
+            properties -> new RocketItem(GalacticraftEntityType.CARGO_ROCKET, RocketItem.PlacementRule.LANDING_PAD, properties)
+    );
+    public static final DeferredItem<RocketItem> TIER_3_ROCKET = REGISTRY.registerItem(
+            GalacticraftItemIds.TIER_3_ROCKET,
+            properties -> new RocketItem(GalacticraftEntityType.TIER_3_ROCKET, RocketItem.PlacementRule.LANDING_PAD, properties)
+    );
+    public static final DeferredItem<RocketItem> ASTRO_MINER = REGISTRY.registerItem(
+            GalacticraftItemIds.ASTRO_MINER,
+            properties -> new RocketItem(GalacticraftEntityType.ASTRO_MINER, RocketItem.PlacementRule.ASTRO_MINER, properties)
     );
 
     public static final DeferredItem<BlockItem> ALUMINUM_WIRE = REGISTRY.registerSimpleBlockItemWithDescription(GalacticraftBlocks.ALUMINUM_WIRE);
@@ -599,6 +639,8 @@ public final class GalacticraftItems {
     public static final DeferredItem<BlockItem> TIN_DECORATION_SLAB = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.TIN_DECORATION_SLAB);
     public static final DeferredItem<BlockItem> TIN_DECORATION_STAIRS = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.TIN_DECORATION_STAIRS);
     public static final DeferredItem<BlockItem> TIN_DECORATION_WALL = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.TIN_DECORATION_WALL);
+    public static final DeferredItem<BlockItem> NASA_WORKBENCH = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.NASA_WORKBENCH);
+
 
     public static void init(IEventBus bus) {
         REGISTRY.register(bus);

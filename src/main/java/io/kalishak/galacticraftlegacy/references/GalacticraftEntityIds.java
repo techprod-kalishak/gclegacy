@@ -19,10 +19,10 @@ public class GalacticraftEntityIds {
     public static final ResourceKey<EntityType<?>> METEOR_CHUNK = create("thrown_meteor_chunk");
     public static final ResourceKey<EntityType<?>> LANDER = create("moon_lander");
     public static final ResourceKey<EntityType<?>> LANDING_BALLOONS = create("landing_balloons");
-    public static final ResourceKey<EntityType<?>> T1_ROCKET = create("t1_rocket");
+    public static final ResourceKey<EntityType<?>> TIER_1_ROCKET = create("tier_1_rocket");
     public static final ResourceKey<EntityType<?>> CARGO_ROCKET = create("cargo_rocket");
-    public static final ResourceKey<EntityType<?>> T2_ROCKET = create("t2_rocket");
-    public static final ResourceKey<EntityType<?>> T3_ROCKET = create("t3_rocket");
+    public static final ResourceKey<EntityType<?>> TIER_2_ROCKET = create("tier_2_rocket");
+    public static final ResourceKey<EntityType<?>> TIER_3_ROCKET = create("tier_3_rocket");
     public static final ResourceKey<EntityType<?>> BUGGY = create("buggy");
     public static final ResourceKey<EntityType<?>> ASTRO_MINER = create("astro_miner");
     public static final ResourceKey<EntityType<?>> FLAG = create("flag");

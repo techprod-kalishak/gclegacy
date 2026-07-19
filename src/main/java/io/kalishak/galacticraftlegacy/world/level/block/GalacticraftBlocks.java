@@ -576,6 +576,14 @@ public final class GalacticraftBlocks {
                     .strength(-1.0F, 3600000.0F)
                     .noLootTable()
     );
+    public static final DeferredBlock<NasaWorkbenchBlock> NASA_WORKBENCH = REGISTRY.registerBlock(
+            GalacticraftBlockItemIds.NASA_WORKBENCH,
+            NasaWorkbenchBlock::new,
+            builder -> builder
+                    .strength(2.5F)
+                    .mapColor(MapColor.METAL)
+                    .sound(SoundType.METAL)
+    );
 
     /** Machines */
     public static final DeferredBlock<OxygenDetectorBlock> OXYGEN_DETECTOR = REGISTRY.registerBlock(

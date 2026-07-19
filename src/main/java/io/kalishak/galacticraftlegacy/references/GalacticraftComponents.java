@@ -37,6 +37,8 @@ public class GalacticraftComponents {
             .append(SPACE_STATION_ALLOW_ENTRY);
 
     // Inventory
+    public static final Component NASA_WORKBENCH_TITLE = Component.translatable("container.nasa_workbench");
+    public static final Component NASA_COMPACT_WORKBENCH_TITLE = Component.translatable("container.nasa_compact_workbench");
     public static final Component INVENTORY_TAB = Component.translatable("container.inventory");
     public static final Component GEAR_TAB = Component.translatable("container.gear");
     public static final Component CREATIVE_MODE_TAB_ITEMS = Component.translatable("itemGroup.galacticraftlegacy.items");

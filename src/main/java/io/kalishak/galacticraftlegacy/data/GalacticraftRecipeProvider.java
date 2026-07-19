@@ -8,18 +8,25 @@
 package io.kalishak.galacticraftlegacy.data;
 
 import io.kalishak.galacticraftlegacy.data.recipes.builder.ElectricCookingRecipeBuilder;
+import io.kalishak.galacticraftlegacy.data.recipes.builder.VehicleCraftingRecipeBuilder;
 import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.client.data.GalacticraftBlockFamilies;
 import io.kalishak.galacticraftlegacy.data.recipes.builder.CompressingRecipeBuilder;
 import io.kalishak.galacticraftlegacy.data.recipes.builder.FabricatingRecipeBuilder;
+import io.kalishak.galacticraftlegacy.registry.GalacticraftRegistries;
+import io.kalishak.galacticraftlegacy.registry.SchematicVariant;
+import io.kalishak.galacticraftlegacy.registry.SchematicVariants;
 import io.kalishak.galacticraftlegacy.world.item.GalacticraftItems;
 import io.kalishak.galacticraftlegacy.world.item.crafting.FabricatingBookCategory;
+import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.rocket.VehicleCraftingDataRecipe;
+import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.rocket.VehicleCraftingDataRecipes;
 import net.minecraft.advancements.predicates.DistancePredicate;
 import net.minecraft.advancements.predicates.LocationPredicate;
 import net.minecraft.advancements.predicates.MinMaxBounds;
 import net.minecraft.advancements.predicates.entity.EntityPredicate;
 import net.minecraft.advancements.predicates.entity.PlayerPredicate;
 import net.minecraft.advancements.triggers.DistanceTrigger;
+import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -84,6 +91,30 @@ public class GalacticraftRecipeProvider extends RecipeProvider {
 
     GalacticraftRecipeProvider(HolderLookup.Provider registries, RecipeOutput output) {
         super(registries, output);
+    }
+
+    private void buildVehicleCrafting() {
+        HolderGetter<VehicleCraftingDataRecipe> vehicleData = this.registries.lookupOrThrow(GalacticraftRegistries.Keys.VEHICLE_CRAFTING_RECIPE_DATA);
+        HolderGetter<SchematicVariant> schematics = this.registries.lookupOrThrow(GalacticraftRegistries.Keys.SCHEMATIC);
+
+        VehicleCraftingRecipeBuilder.rocket(vehicleData, VehicleCraftingDataRecipes.TIER_1_ROCKET)
+                .unlockedBy(getHasName(GalacticraftItems.NASA_WORKBENCH), has(GalacticraftItems.NASA_WORKBENCH))
+                .save(this.output);
+        VehicleCraftingRecipeBuilder.rocket(vehicleData, VehicleCraftingDataRecipes.MOON_BUGGY)
+                .hasSchematic(schematics, SchematicVariants.MOON_BUGGY)
+                .save(this.output);
+        VehicleCraftingRecipeBuilder.rocket(vehicleData, VehicleCraftingDataRecipes.TIER_2_ROCKET)
+                .hasSchematic(schematics, SchematicVariants.TIER_2_ROCKET)
+                .save(this.output);
+        VehicleCraftingRecipeBuilder.rocket(vehicleData, VehicleCraftingDataRecipes.CARGO_ROCKET)
+                .hasSchematic(schematics, SchematicVariants.CARGO_ROCKET)
+                .save(this.output);
+        VehicleCraftingRecipeBuilder.rocket(vehicleData, VehicleCraftingDataRecipes.TIER_3_ROCKET)
+                .hasSchematic(schematics, SchematicVariants.TIER_3_ROCKET)
+                .save(this.output);
+        VehicleCraftingRecipeBuilder.rocket(vehicleData, VehicleCraftingDataRecipes.ASTRO_MINER)
+                .hasSchematic(schematics, SchematicVariants.ASTRO_MINER)
+                .save(this.output);
     }
 
     @Override
@@ -390,7 +421,13 @@ public class GalacticraftRecipeProvider extends RecipeProvider {
                 .pattern("###")
                 .unlockedBy(getHasName(GalacticraftItems.TIN_INGOT), has(GalacticraftTags.Items.INGOTS_TIN))
                 .save(this.output, Constants.key(Registries.RECIPE, getItemName(GalacticraftItems.TIN_CANISTER)));
-
+        ShapedRecipeBuilder.shaped(this.items, RecipeCategory.MISC, GalacticraftItems.STEEL_POLE, 3)
+                .define('#', GalacticraftTags.Items.PLATE_STEEL)
+                .pattern("#")
+                .pattern("#")
+                .pattern("#")
+                .unlockedBy(getHasName(GalacticraftItems.COMPRESSED_STEEL), has(GalacticraftTags.Items.PLATE_STEEL))
+                .save(this.output, Constants.key(Registries.RECIPE, getItemName(GalacticraftItems.STEEL_POLE)));
 
         FabricatingRecipeBuilder.classic(GalacticraftItems.BASIC_WAFER, 1, Ingredient.of(Items.REDSTONE_TORCH), FabricatingBookCategory.BASIC)
                 .unlockedBy(getHasName(GalacticraftItems.RAW_SILICON), has(GalacticraftTags.Items.RAW_MATERIALS_SILICON))

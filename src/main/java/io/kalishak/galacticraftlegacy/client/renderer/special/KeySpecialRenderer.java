@@ -74,7 +74,7 @@ public class KeySpecialRenderer implements SpecialModelRenderer<FeatureTier> {
         }
 
         @Override
-        public SpecialModelRenderer<FeatureTier> bake(BakingContext bakingContext) {
+        public KeySpecialRenderer bake(BakingContext bakingContext) {
             return new KeySpecialRenderer(new KeyModel(bakingContext.entityModelSet().bakeLayer(GalacticraftModelLayers.KEY)));
         }
     }

@@ -15,6 +15,7 @@ import io.netty.buffer.ByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceKey;
+import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +25,10 @@ public class Schematics {
     public static final StreamCodec<ByteBuf, Schematics> STREAM_CODEC = ResourceKey.streamCodec(GalacticraftRegistries.Keys.SCHEMATIC).apply(ByteBufCodecs.list())
             .map(Schematics::new, schematics -> schematics.unlockedSchematics);
     private final List<ResourceKey<SchematicVariant>> unlockedSchematics;
+
+    public Schematics(List<ResourceKey<SchematicVariant>> unlockedSchematics) {
+        this.unlockedSchematics = unlockedSchematics;
+    }
 
     public static Schematics empty() {
         return new Schematics(new ArrayList<>());
@@ -36,8 +41,24 @@ public class Schematics {
         return new Schematics(copied);
     }
 
-    public Schematics(List<ResourceKey<SchematicVariant>> unlockedSchematics) {
-        this.unlockedSchematics = unlockedSchematics;
+    public void sync(Schematics other) {
+        this.unlockedSchematics.clear();
+        this.unlockedSchematics.addAll(other.unlockedSchematics);
+    }
+
+    /**
+     * Return next unlocked schematics
+     * @param current previous
+     * @return next schematic or null if there is no next
+     */
+    public @Nullable ResourceKey<SchematicVariant> nextBy(ResourceKey<SchematicVariant> current) {
+        int index = this.unlockedSchematics.indexOf(current);
+
+        if (index == -1 || index >= this.unlockedSchematics.size()) {
+            return null;
+        }
+
+        return this.unlockedSchematics.get(index + 1);
     }
 
     public boolean unlock(ResourceKey<SchematicVariant> key) {

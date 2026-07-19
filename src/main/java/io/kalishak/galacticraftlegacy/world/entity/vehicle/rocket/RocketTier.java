@@ -24,7 +24,7 @@ public interface RocketTier {
         SMALL_STORAGE("small_storage", 1, false, 20),
         MEDIUM_STORAGE("medium_storage", 2, false, 38),
         LARGE_STORAGE("large_storage", 3, false, 56),
-        PREFUELED("prefueled", 4, true, 2);
+        PREFUELED("prefueled", 4, true, 56);
 
         public static final Codec<Type> CODEC = SerializableEnum.codec(Type.class);
         public static final StreamCodec<ByteBuf, Type> STREAM_CODEC = SerializableEnum.streamCodec(Type.class);

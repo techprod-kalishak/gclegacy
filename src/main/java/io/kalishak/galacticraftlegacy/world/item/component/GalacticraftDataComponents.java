@@ -19,6 +19,7 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.entity.EntityReference;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Items;
@@ -99,6 +100,10 @@ public final class GalacticraftDataComponents {
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<GlobalPos>> STRUCTURE_POS = REGISTRY.registerComponentType(
             "structure_pos",
             builder -> builder.persistent(GlobalPos.CODEC).networkSynchronized(GlobalPos.STREAM_CODEC)
+    );
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<Integer>> VEHICLE_STORAGE = REGISTRY.registerComponentType(
+            "vehicle_storage",
+            builder -> builder.persistent(ExtraCodecs.intRange(0, 4)).networkSynchronized(ByteBufCodecs.INT)
     );
 
     public static void init(IEventBus bus) {

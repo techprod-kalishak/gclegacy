@@ -43,11 +43,15 @@ public abstract class TieredRocket extends AbstractAutoRocket implements RocketT
     protected int launchCooldown;
     public float rumble;
 
-    protected TieredRocket(EntityType<?> entityType, Level level, FeatureTier featureTier, RocketTier.Type type, Supplier<Item> droppedItemSupplier, Player owner, int storageSize, boolean preFueled) {
-        super(entityType, level, droppedItemSupplier, owner, storageSize, preFueled);
+    protected TieredRocket(EntityType<?> entityType, Level level, FeatureTier featureTier, RocketTier.Type type, Supplier<Item> droppedItemSupplier, Player owner) {
+        super(entityType, level, droppedItemSupplier, owner, type.getInventorySize(), type.isPrefueled());
         this.tier = featureTier;
         this.type = type;
         //size 0.98, 4
+    }
+
+    protected TieredRocket(EntityType<?> entityType, Level level, FeatureTier featureTier, RocketTier.Type type, Supplier<Item> droppedItemSupplier) {
+        this(entityType, level, featureTier, type, droppedItemSupplier, null);
     }
 
     @Override

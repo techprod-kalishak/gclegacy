@@ -53,7 +53,7 @@ import org.slf4j.LoggerFactory;
 import java.util.Collection;
 import java.util.function.Supplier;
 
-public abstract class AbstractSpaceShip extends VehicleEntity implements Trackable {
+public abstract class AbstractSpaceShip extends VehicleEntity implements Trackable<AbstractSpaceShip> {
     protected static final Logger LOGGER = LoggerFactory.getLogger(AbstractSpaceShip.class);
     protected static final EntityDataAccessor<Byte> DATA_LAUNCH_PHASE_ID = SynchedEntityData.defineId(AbstractSpaceShip.class, EntityDataSerializers.BYTE);
     protected static final EntityDataAccessor<Float> DATA_ROLL_ID = SynchedEntityData.defineId(AbstractSpaceShip.class, EntityDataSerializers.FLOAT);
@@ -65,12 +65,16 @@ public abstract class AbstractSpaceShip extends VehicleEntity implements Trackab
 
     protected EntityReference<Player> owner;
 
-    protected AbstractSpaceShip(EntityType<?> entityType, Level level, Supplier<Item> droppedItemSupplier, Player owner) {
+    protected AbstractSpaceShip(EntityType<?> entityType, Level level, Supplier<Item> droppedItemSupplier, @Nullable Player owner) {
         super(entityType, level);
         this.droppedItemSupplier = droppedItemSupplier;
 
         this.owner = EntityReference.of(owner);
         this.addToTelemetry = true;
+    }
+
+    protected AbstractSpaceShip(EntityType<?> entityType, Level level, Supplier<Item> droppedItemSupplier) {
+        this(entityType, level, droppedItemSupplier, null);
     }
 
     protected static int getScaledFuel(AbstractAutoRocket rocket) {
@@ -409,6 +413,10 @@ public abstract class AbstractSpaceShip extends VehicleEntity implements Trackab
 
     public void increaseTimeUntilLaunch(int delta) {
         setTimeUntilLaunch(getTimeUntilLaunch() + delta);
+    }
+
+    public void setOwner(Player player) {
+        this.owner = EntityReference.of(player);
     }
 
     public TeamColor getSpaceRaceTeamConeColor() {

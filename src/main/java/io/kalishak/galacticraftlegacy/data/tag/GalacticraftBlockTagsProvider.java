@@ -80,6 +80,9 @@ public class GalacticraftBlockTagsProvider extends BlockTagsProvider {
         tag(GalacticraftTags.BlockItems.MACHINE_ADVANCED)
                 .add(GalacticraftBlockItemIds.ELECTRIC_COMPRESSOR)
                 .add(GalacticraftBlockItemIds.ELECTRIC_ARC_FURNACE);
+        tag(GalacticraftTags.Blocks.NASA_WORKBENCHES)
+                .add(GalacticraftBlockItemIds.NASA_WORKBENCH.block());
+                //.add(GalacticraftBlockItemIds.COMPACT_NASA_WORKBENCH.block());
         tag(BlockTags.NEEDS_STONE_TOOL)
                 .add(GalacticraftBlockItemIds.COAL_GENERATOR.block())
                 .add(GalacticraftBlockItemIds.CIRCUIT_FABRICATOR.block())

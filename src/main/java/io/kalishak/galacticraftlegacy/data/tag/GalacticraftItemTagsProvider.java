@@ -9,7 +9,6 @@ package io.kalishak.galacticraftlegacy.data.tag;
 
 import io.kalishak.galacticraftlegacy.Galacticraft;
 import io.kalishak.galacticraftlegacy.data.GalacticraftTags;
-import io.kalishak.galacticraftlegacy.references.GalacticraftBlockIds;
 import io.kalishak.galacticraftlegacy.references.GalacticraftBlockItemIds;
 import io.kalishak.galacticraftlegacy.references.GalacticraftItemIds;
 import net.minecraft.core.HolderLookup;
@@ -125,7 +124,6 @@ public class GalacticraftItemTagsProvider extends BlockTagCopyingItemTagProvider
                 .addTag(GalacticraftTags.Items.INGOTS_TITANIUM);
         tag(Tags.Items.NUGGETS)
                 .addTag(GalacticraftTags.Items.NUGGETS_DESH)
-                .addTag(GalacticraftTags.Items.NUGGETS_LEAD)
                 .addTag(GalacticraftTags.Items.NUGGETS_STEEL)
                 .addTag(GalacticraftTags.Items.NUGGETS_TITANIUM);
         tag(GalacticraftTags.Items.PLATES)
@@ -229,6 +227,42 @@ public class GalacticraftItemTagsProvider extends BlockTagCopyingItemTagProvider
                 .addTag(GalacticraftTags.Items.INGOTS_STEEL);
         tag(GalacticraftTags.Items.REPAIRS_TITANIUM_TOOL)
                 .addTag(GalacticraftTags.Items.INGOTS_TITANIUM);
+        tag(GalacticraftTags.Items.VEHICLE_INGREDIENTS)
+                .addTag(GalacticraftTags.Items.VEHICLE_INGREDIENT_CONE)
+                .addTag(GalacticraftTags.Items.VEHICLE_INGREDIENT_FIN)
+                .addTag(GalacticraftTags.Items.VEHICLE_INGREDIENT_ENGINE)
+                .addTag(GalacticraftTags.Items.VEHICLE_INGREDIENT_BOOSTER)
+                .addTag(GalacticraftTags.Items.VEHICLE_INGREDIENT_WHEEL)
+                .addTag(GalacticraftTags.Items.VEHICLE_INGREDIENT_SEAT)
+                .addTag(GalacticraftTags.Items.VEHICLE_INGREDIENT_PLATING)
+                .addTag(GalacticraftTags.Items.VEHICLE_INGREDIENT_STORAGE)
+                .addTag(GalacticraftTags.Items.VEHICLE_INGREDIENT_MISC);
+        tag(GalacticraftTags.Items.VEHICLE_INGREDIENT_CONE)
+                .add(GalacticraftItemIds.ROCKET_NOSE_CONE)
+                .add(GalacticraftItemIds.HEAVY_NOSE_CONE);
+        tag(GalacticraftTags.Items.VEHICLE_INGREDIENT_FIN)
+                .add(GalacticraftItemIds.ROCKET_FIN)
+                .add(GalacticraftItemIds.HEAVY_FIN);
+        tag(GalacticraftTags.Items.VEHICLE_INGREDIENT_ENGINE)
+                .add(GalacticraftItemIds.ROCKET_ENGINE)
+                .add(GalacticraftItemIds.HEAVY_ROCKET_ENGINE);
+        tag(GalacticraftTags.Items.VEHICLE_INGREDIENT_BOOSTER)
+                .add(GalacticraftItemIds.ROCKET_BOOSTER);
+        tag(GalacticraftTags.Items.VEHICLE_INGREDIENT_WHEEL)
+                .add(GalacticraftItemIds.BUGGY_WHEEL);
+        tag(GalacticraftTags.Items.VEHICLE_INGREDIENT_SEAT)
+                .add(GalacticraftItemIds.BUGGY_SEAT);
+        tag(GalacticraftTags.Items.VEHICLE_INGREDIENT_PLATING)
+                .add(GalacticraftItemIds.HEAVY_DUTY_PLATE)
+                .add(GalacticraftItemIds.T2_HEAVY_DUTY_PLATE)
+                .add(GalacticraftItemIds.T3_HEAVY_DUTY_PLATE);
+        tag(GalacticraftTags.Items.VEHICLE_INGREDIENT_STORAGE)
+                .add(GalacticraftItemIds.BUGGY_STORAGE_BOX)
+                .addTag(Tags.Items.CHESTS);
+        tag(GalacticraftTags.Items.VEHICLE_INGREDIENT_MISC)
+                .add(GalacticraftItemIds.ADVANCED_WAFER)
+                .add(GalacticraftItemIds.COMPRESSED_ALUMINUM)
+                .add(GalacticraftItemIds.STEEL_POLE);
         tag(GalacticraftTags.Items.WRENCH)
                 .add(GalacticraftItemIds.WRENCH);
     }

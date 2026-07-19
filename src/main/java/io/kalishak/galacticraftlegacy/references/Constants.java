@@ -37,6 +37,10 @@ public class Constants {
         return ResourceKey.create(registryKey, id(name));
     }
 
+    public static <R, T> ResourceKey<T> castKey(ResourceKey<R> original, ResourceKey<? extends Registry<T>> targetRegistry) {
+        return ResourceKey.create(targetRegistry, original.identifier());
+    }
+
     public static <R> String translatable(ResourceKey<R> resourceKey, String suffix) {
         return resourceKey.identifier().toLanguageKey(resourceKey.registry().getPath(), suffix);
     }

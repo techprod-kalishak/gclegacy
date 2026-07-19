@@ -1,0 +1,10 @@
+{
+  "model": {
+    "type": "minecraft:special",
+    "base": "galacticraftlegacy:item/tier_1_rocket",
+    "model": {
+      "type": "galacticraftlegacy:vehicle_renderer",
+      "vehicle_type": "galacticraftlegacy:tier_1_rocket"
+    }
+  }
+}
