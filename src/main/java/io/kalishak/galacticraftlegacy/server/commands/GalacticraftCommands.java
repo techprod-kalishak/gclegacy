@@ -7,6 +7,7 @@
 
 package io.kalishak.galacticraftlegacy.server.commands;
 
+import io.kalishak.galacticraftlegacy.server.commands.arguments.SchematicArgument;
 import io.kalishak.galacticraftlegacy.server.commands.arguments.SpaceRaceTeamArgument;
 import net.minecraft.commands.synchronization.ArgumentTypeInfos;
 import net.minecraft.commands.synchronization.SingletonArgumentInfo;
@@ -17,8 +18,10 @@ public class GalacticraftCommands {
     @SubscribeEvent
     public static void registerCommands(RegisterCommandsEvent event) {
         ArgumentTypeInfos.registerByClass(SpaceRaceTeamArgument.class, SingletonArgumentInfo.contextFree(SpaceRaceTeamArgument::spaceRace));
+        ArgumentTypeInfos.registerByClass(SchematicArgument.class, SingletonArgumentInfo.contextFree(SchematicArgument::schematic));
 
         EmergencyEquipCommand.register(event.getDispatcher());
         SpaceRaceCommand.register(event.getDispatcher(), event.getBuildContext());
+        UnlockSchematicCommand.register(event.getDispatcher(), event.getBuildContext());
     }
 }

@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2026 Kalishak
+ *
+ * Licensed under the MIT license
+ * See LICENSE file for more details
+ */
+
 package io.kalishak.galacticraftlegacy.world.item.crafting.recipe.rocket;
 
 import com.mojang.serialization.Codec;
@@ -83,14 +90,9 @@ public record VehicleCraftingDataRecipe(NonNullList<VehicleCraftingEntry> inputS
                 throw new IllegalStateException("Cannot build recipe without valid input and output!");
             }
 
-            NonNullList<VehicleCraftingEntry> nonNullSlots = NonNullList.withSize(this.size, VehicleCraftingEntry.EMPTY);
-
-            for (int index = 0; index < this.inputSlots.size() - 3; index++) {
-                nonNullSlots.set(index, this.inputSlots.get(index));
-            }
 
             return new VehicleCraftingDataRecipe(
-                    nonNullSlots,
+                    NonNullList.copyOf(this.inputSlots),
                     this.outputSlot,
                     new ItemStackTemplate(this.resultItem)
             );

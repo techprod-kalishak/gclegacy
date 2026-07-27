@@ -1,0 +1,6 @@
+{
+  "background": "galacticraftlegacy:textures/gui/container/workbench_page/astro_miner.png",
+  "inventory_height": 140,
+  "schematic": "galacticraftlegacy:astro_miner",
+  "vehicle_recipe": "galacticraftlegacy:astro_miner"
+}

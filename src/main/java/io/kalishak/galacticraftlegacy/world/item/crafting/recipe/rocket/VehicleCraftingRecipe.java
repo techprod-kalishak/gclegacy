@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2026 Kalishak
+ *
+ * Licensed under the MIT license
+ * See LICENSE file for more details
+ */
+
 package io.kalishak.galacticraftlegacy.world.item.crafting.recipe.rocket;
 
 import com.mojang.serialization.MapCodec;
@@ -12,17 +19,14 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponentPatch;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.item.crafting.display.RecipeDisplay;
 import net.minecraft.world.level.Level;
-import net.neoforged.neoforge.transfer.item.ItemUtil;
 import org.jspecify.annotations.Nullable;
 
 import java.util.List;
-import java.util.Optional;
 
 public class VehicleCraftingRecipe implements Recipe<ResourceHandlerInput> {
     public static final MapCodec<VehicleCraftingRecipe> MAP_CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
@@ -50,16 +54,10 @@ public class VehicleCraftingRecipe implements Recipe<ResourceHandlerInput> {
 
     @Override
     public boolean matches(ResourceHandlerInput resourceHandlerInput, Level level) {
-        VehicleCraftingDataRecipe recipeData = this.recipeHolder.value();
+        for (VehicleCraftingEntry entry : this.recipeHolder.value().inputSlots()) {
+            ItemStack stack = resourceHandlerInput.getItem(entry.slotIndex());
 
-        for (VehicleCraftingEntry entry : recipeData.inputSlots()) {
-            ItemStack stackAtSlot = resourceHandlerInput.getItem(entry.slotIndex());
-
-            Optional<Ingredient> ingredient = entry.input();
-
-            if (ingredient.isPresent() && !ingredient.get().test(stackAtSlot)) {
-                return false;
-            } else if (!entry.isOutputSlot()) {
+            if (entry.input().isEmpty() || !entry.input().get().test(stack)) {
                 return false;
             }
         }
@@ -69,22 +67,18 @@ public class VehicleCraftingRecipe implements Recipe<ResourceHandlerInput> {
 
     @Override
     public ItemStack assemble(ResourceHandlerInput resourceHandlerInput) {
-        ItemStackTemplate template = this.recipeHolder.value().resultItem();
+        ItemStackTemplate result = this.recipeHolder.value().resultItem();
         DataComponentPatch.Builder patchBuilder = DataComponentPatch.builder();
-        int size = getStorageSlotCount(resourceHandlerInput);
 
-        if (size > 0) {
-            patchBuilder.set(GalacticraftDataComponents.VEHICLE_STORAGE.get(), size);
+        int storageSize = this.recipeHolder.value().inputSlots().stream()
+                .filter(entry -> entry.slotType().is(VehicleCraftingSlotTypes.STORAGE))
+                .mapToInt(_ -> 1).sum();
+
+        if (storageSize > 0) {
+            patchBuilder.set(GalacticraftDataComponents.VEHICLE_STORAGE.get(), storageSize);
         }
 
-        return template.apply(patchBuilder.build());
-    }
-
-    private int getStorageSlotCount(ResourceHandlerInput resourceHandlerInput) {
-        return this.recipeHolder.value().inputSlots().stream()
-                .filter(entry -> entry.slotType().is(VehicleCraftingSlotTypes.STORAGE) && entry.input().isPresent())
-                .filter(entry -> entry.input().get().test(ItemUtil.getStack(resourceHandlerInput.delegate(), entry.slotIndex())))
-                .toArray().length;
+        return result.apply(patchBuilder.build());
     }
 
     @Override

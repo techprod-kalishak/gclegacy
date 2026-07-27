@@ -27,15 +27,17 @@ import net.minecraft.world.item.component.TooltipProvider;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-public record SchematicVariant(FeatureTier tier, Identifier assetId, Component title) implements TooltipProvider {
+public record SchematicVariant(int orderIndex, FeatureTier tier, Identifier assetId, Component title) implements TooltipProvider {
     public static final Codec<SchematicVariant> DIRECT_CODEC = RecordCodecBuilder.create(instance -> instance.group(
-            FeatureTier.CODEC.fieldOf("level").forGetter(SchematicVariant::tier),
+            Codec.INT.fieldOf("order_index").forGetter(SchematicVariant::orderIndex),
+            FeatureTier.CODEC.fieldOf("tier").forGetter(SchematicVariant::tier),
             Identifier.CODEC.fieldOf("asset_id").forGetter(SchematicVariant::assetId),
             ComponentSerialization.CODEC.fieldOf("title").forGetter(SchematicVariant::title)
     ).apply(instance, SchematicVariant::new));
     public static final Codec<Holder<SchematicVariant>> CODEC = RegistryFixedCodec.create(GalacticraftRegistries.Keys.SCHEMATIC);
     public static final MapCodec<Holder<SchematicVariant>> MAP_CODEC = CODEC.fieldOf("variant");
     public static final StreamCodec<RegistryFriendlyByteBuf, SchematicVariant> DIRECT_STREAM_CODEC = StreamCodec.composite(
+            ByteBufCodecs.VAR_INT, SchematicVariant::orderIndex,
             FeatureTier.STREAM_CODEC, SchematicVariant::tier,
             Identifier.STREAM_CODEC, SchematicVariant::assetId,
             ComponentSerialization.TRUSTED_STREAM_CODEC, SchematicVariant::title,

@@ -474,17 +474,6 @@ public class SpaceRaceCommand {
         return 1;
     }
 
-    private static int unlockSchematic(CommandSourceStack source, SpaceRaceTeam spaceRaceTeam, ResourceKey<SchematicVariant> schematic) throws CommandSyntaxException {
-        if (spaceRaceTeam.getUnlockedSchematics().isUnlocked(schematic)) {
-            throw ERROR_SPACE_RACE_SCHEMATIC_ALREADY_UNLOCKED.create();
-        }
-
-        spaceRaceTeam.getUnlockedSchematics().unlock(schematic);
-        source.sendSuccess(() -> GalacticraftComponents.COMMAND_SUCCESS_SPACE_RACE_SCHEMATIC.apply(spaceRaceTeam.getFormattedDisplayName(), schematic.identifier()), true);
-
-        return 1;
-    }
-
     private static int createFromPlayerTeam(CommandSourceStack source, PlayerTeam spaceRace) throws CommandSyntaxException {
         SpaceRaceScoreboard scoreboard = SpaceRaceHooks.getFromServer(source.getServer());
 

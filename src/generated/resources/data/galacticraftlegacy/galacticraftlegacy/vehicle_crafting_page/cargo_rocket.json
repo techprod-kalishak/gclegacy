@@ -1,0 +1,5 @@
+{
+  "background": "galacticraftlegacy:textures/gui/container/workbench_page/cargo_rocket.png",
+  "schematic": "galacticraftlegacy:cargo_rocket",
+  "vehicle_recipe": "galacticraftlegacy:cargo_rocket"
+}

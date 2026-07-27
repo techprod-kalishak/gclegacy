@@ -1,0 +1,6 @@
+{
+  "background": "galacticraftlegacy:textures/gui/container/workbench_page/tier_2_rocket.png",
+  "inventory_height": 156,
+  "schematic": "galacticraftlegacy:tier_2_rocket",
+  "vehicle_recipe": "galacticraftlegacy:tier_2_rocket"
+}

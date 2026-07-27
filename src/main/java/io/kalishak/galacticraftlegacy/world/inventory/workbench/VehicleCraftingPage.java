@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2026 Kalishak
+ *
+ * Licensed under the MIT license
+ * See LICENSE file for more details
+ */
+
 package io.kalishak.galacticraftlegacy.world.inventory.workbench;
 
 import com.mojang.serialization.Codec;
@@ -18,6 +25,7 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.resources.RegistryFixedCodec;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.transfer.IndexModifier;
 import net.neoforged.neoforge.transfer.ResourceHandler;
@@ -48,6 +56,11 @@ public record VehicleCraftingPage(Holder<SchematicVariant> schematic, Holder<Veh
             slotAdder.accept(new VehicleCraftingSlotResourceHandler(level, blockPos, resourceHandler, indexModifier, entry.slotIndex(), entry.slotOffsetX(), entry.slotOffsetY()));
         }
 
-        slotAdder.accept(new ResourceHandlerSlot(resourceHandler, ResourcefulHelper::notPlaceable, output.slotIndex(), output.slotOffsetX(), output.slotOffsetY()));
+        slotAdder.accept(new ResourceHandlerSlot(resourceHandler, ResourcefulHelper::notPlaceable, output.slotIndex(), output.slotOffsetX(), output.slotOffsetY()) {
+            @Override
+            public boolean mayPlace(ItemStack stack) {
+                return false;
+            }
+        });
     }
 }

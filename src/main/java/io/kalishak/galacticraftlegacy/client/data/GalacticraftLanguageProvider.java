@@ -76,8 +76,21 @@ public class GalacticraftLanguageProvider extends LanguageProvider {
         add("item.galacticraftlegacy.tank.fluid_amount", "Stored fluid %s %s");
         add("galacticraftlegacy.container.dungeon_chest", "Dungeon Treasure Chest");
         add("galacticraftlegacy.container.parachest", "Parachest");
+        add("container.nasa_workbench.next_button", "Next");
+        add("container.nasa_workbench.previous_button", "Back");
+        add("container.nasa_workbench.unlock_schematic", "Unlock schematic");
+        add("container.nasa_workbench.add_new_schematic", "Add new schematic");
 
-        add("commands.space_race.add.duplicate", "");
+        add("galacticraftlegacy.commands.space_race.add.duplicate", "Space Race Team already exists!");
+        add("galacticraftlegacy.commands.schematics.add.error", "Schematic is already unlocked!");
+        add("galacticraftlegacy.commands.schematics.remove.error", "Cannot remove Schematic as it is not unlocked!");
+        add("galacticraftlegacy.commands.schematics.list.success", "%s has unlocked %d schematics: %s");
+        add("galacticraftlegacy.commands.schematics.list.empty", "%s does not have any schematics unlocked!");
+        add("galacticraftlegacy.commands.schematics.add.all", "%s has been granted all schematics.");
+        add("galacticraftlegacy.commands.schematics.remove.all", "Revoked all schematics from %s!");
+        add("galacticraftlegacy.commands.schematics.add", "%s has been granted %s");
+        add("galacticraftlegacy.commands.schematics.remove", "%s was revoked from %s!");
+        add("galacticraft.argument.schematic.invalid", "Unregistered Schematic: %s!");
 
         addBlock(GalacticraftBlocks.ALUMINUM_ORE, "Aluminum Ore");
         addBlock(GalacticraftBlocks.DEEPSLATE_ALUMINUM_ORE, "Deepslate Aluminum Ore");

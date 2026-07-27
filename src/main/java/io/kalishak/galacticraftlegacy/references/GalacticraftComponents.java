@@ -21,7 +21,6 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 public class GalacticraftComponents {
-    //private static final List<Component> UNTRANSLATED_COMPONENTS = new ArrayList<>();
     public static final String FREQUENCY_MODULE_DESC = "item.galacticraftlegacy.frequency_module.desc";
     public static final String FREQUENCY_MODULE_WARNING = "item.galacticraftlegacy.frequency_module.warning";
 
@@ -37,8 +36,6 @@ public class GalacticraftComponents {
             .append(SPACE_STATION_ALLOW_ENTRY);
 
     // Inventory
-    public static final Component NASA_WORKBENCH_TITLE = Component.translatable("container.nasa_workbench");
-    public static final Component NASA_COMPACT_WORKBENCH_TITLE = Component.translatable("container.nasa_compact_workbench");
     public static final Component INVENTORY_TAB = Component.translatable("container.inventory");
     public static final Component GEAR_TAB = Component.translatable("container.gear");
     public static final Component CREATIVE_MODE_TAB_ITEMS = Component.translatable("itemGroup.galacticraftlegacy.items");
@@ -53,6 +50,10 @@ public class GalacticraftComponents {
     public static final Function<Number, MutableComponent> TOOLTIP_HOT_CONTENT = (amount) -> Component.translatable("item.hot_content.description", amount + "s");
     public static final Function<Number, Component> TOOLTIP_MORE_FLUIDS = amount -> Component.translatable("item.galacticraftlegacy.tank.more_fluids", amount).withStyle(ChatFormatting.ITALIC);
     public static final Function<FluidStack, Component> TOOLTIP_SINGLE_FLUID = fluidStack -> Component.translatable("item.galacticraftlegacy.tank.fluid_amount", fluidStack.getHoverName(), fluidStack.getAmount());
+    public static final Component NEXT_PAGE = Component.translatable("container.nasa_workbench.next_button");
+    public static final Component PREVIOUS_PAGE = Component.translatable("container.nasa_workbench.previous_button");
+    public static final Component UNLOCK_SCHEMATIC = Component.translatable("container.nasa_workbench.unlock_schematic");
+    public static final Component NEW_SCHEMATIC = Component.translatable("container.nasa_workbench.add_new_schematic");
 
     // Items
     public static final Component ITEM_DEHYDRATED_APPLE = Component.translatable("item.galacticraftlegacy.dehydrated_apple").withStyle(ChatFormatting.YELLOW);
@@ -90,47 +91,54 @@ public class GalacticraftComponents {
     public static final Component ADVANCEMENT_COMPRESSED_DESC = Component.translatable("advancements.galacticraftlegacy.compressed.description");
 
     // Commands
-    public static final Component COMMAND_ERROR_SPACE_RACE_DUPE = Component.translatable("commands.space_race.add.duplicate");
-    public static final Component COMMAND_ERROR_SPACE_RACE_UNCHANGED = Component.translatable("commands.space_race.empty.unchanged");
-    public static final Component COMMAND_ERROR_SPACE_RACE_NAME = Component.translatable("commands.space_race.option.name.unchanged");
-    public static final Component COMMAND_ERROR_SPACE_RACE_COLOR = Component.translatable("commands.space_race.option.color.unchanged");
-    public static final Component COMMAND_ERROR_SPACE_RACE_FRIENDLY_FIRE_ENABLED = Component.translatable("commands.space_race.option.friendlyfire.alreadyEnabled");
-    public static final Component COMMAND_ERROR_SPACE_RACE_FRIENDLY_FIRE_DISABLED = Component.translatable("commands.space_race.option.friendlyfire.alreadyDisabled");
-    public static final Component COMMAND_ERROR_SPACE_RACE_FRIENDLY_INVISIBLES_ENABLED = Component.translatable("commands.space_race.option.seeFriendlyInvisibles.alreadyEnabled");
-    public static final Component COMMAND_ERROR_SPACE_RACE_FRIENDLY_INVISIBLES_DISABLED = Component.translatable("commands.space_race.option.seeFriendlyInvisibles.alreadyEnabled");
-    public static final Component COMMAND_ERROR_SPACE_RACE_NAME_TAG = Component.translatable("commands.space_race.option.nametagVisibility.unchanged");
-    public static final Component COMMAND_ERROR_SPACE_RACE_DEATH_MESSAGE = Component.translatable("commands.space_race.option.deathMessageVisibility.unchanged");
-    public static final Component COMMAND_ERROR_SPACE_RACE_COLLISION_RULE = Component.translatable("commands.space_race.option.collisionRule.unchanged");
-    public static final Component COMMAND_ERROR_SPACE_RACE_SCHEMATIC = Component.translatable("commands.space_race.schematics.duplicate");
-    public static final Dynamic2CommandExceptionType.Function COMMAND_ERROR_NOT_EQUIPABLE = (entity, equipment) -> Component.translatableEscape("galacticraftlegacy.arguments.equipment.not_equippable", entity, equipment);
-    public static final Function<Object, Message> COMMAND_ERROR_INVALID_GEAR_OWNER = entity -> Component.translatableEscape("galacticraftlegacy.arguments.invalid_entity", entity);
-    public static final Function<Object, Message> COMMAND_ERROR_SPACE_RACE_DONT_EXIST = name -> Component.translatableEscape("space_race.notFound", name);
+    public static final Component COMMAND_ERROR_SPACE_RACE_DUPE = Component.translatable("galacticraftlegacy.commands.space_race.add.duplicate");
+    public static final Component COMMAND_ERROR_SPACE_RACE_UNCHANGED = Component.translatable("galacticraftlegacy.commands.space_race.empty.unchanged");
+    public static final Component COMMAND_ERROR_SPACE_RACE_NAME = Component.translatable("galacticraftlegacy.commands.space_race.option.name.unchanged");
+    public static final Component COMMAND_ERROR_SPACE_RACE_COLOR = Component.translatable("galacticraftlegacy.commands.space_race.option.color.unchanged");
+    public static final Component COMMAND_ERROR_SPACE_RACE_FRIENDLY_FIRE_ENABLED = Component.translatable("galacticraftlegacy.commands.space_race.option.friendlyfire.alreadyEnabled");
+    public static final Component COMMAND_ERROR_SPACE_RACE_FRIENDLY_FIRE_DISABLED = Component.translatable("galacticraftlegacy.commands.space_race.option.friendlyfire.alreadyDisabled");
+    public static final Component COMMAND_ERROR_SPACE_RACE_FRIENDLY_INVISIBLES_ENABLED = Component.translatable("galacticraftlegacy.commands.space_race.option.seeFriendlyInvisibles.alreadyEnabled");
+    public static final Component COMMAND_ERROR_SPACE_RACE_FRIENDLY_INVISIBLES_DISABLED = Component.translatable("galacticraftlegacy.commands.space_race.option.seeFriendlyInvisibles.alreadyEnabled");
+    public static final Component COMMAND_ERROR_SPACE_RACE_NAME_TAG = Component.translatable("galacticraftlegacy.commands.space_race.option.nametagVisibility.unchanged");
+    public static final Component COMMAND_ERROR_SPACE_RACE_DEATH_MESSAGE = Component.translatable("galacticraftlegacy.commands.space_race.option.deathMessageVisibility.unchanged");
+    public static final Component COMMAND_ERROR_SPACE_RACE_COLLISION_RULE = Component.translatable("galacticraftlegacy.commands.space_race.option.collisionRule.unchanged");
+    public static final Component COMMAND_ERROR_SPACE_RACE_SCHEMATIC = Component.translatable("galacticraftlegacy.commands.space_race.schematics.duplicate");
+    public static final Dynamic2CommandExceptionType.Function COMMAND_ERROR_NOT_EQUIPABLE = (entity, equipment) -> Component.translatableEscape("galacticraftlegacy.commands.equipment.not_equippable", entity, equipment);
+    public static final Function<Object, Message> COMMAND_ERROR_INVALID_GEAR_OWNER = entity -> Component.translatableEscape("galacticraftlegacy.commands.invalid_gear_owner", entity);
+    public static final Function<Object, Message> COMMAND_ERROR_SPACE_RACE_DONT_EXIST = name -> Component.translatableEscape("galacticraftlegacy.commands.space_race.notFound", name);
 
-    public static final MutableComponent COMMAND_SUCCESS_SPACE_RACE_LEAVE_SINGLE = Component.translatable("commands.space_race.leave.success.single");
-    public static final MutableComponent COMMAND_SUCCESS_SPACE_RACE_LEAVE_MULTIPLE = Component.translatable("commands.space_race.leave.success.multiple");
-    public static final MutableComponent COMMAND_SUCCESS_SPACE_RACE_JOIN_SINGLE = Component.translatable("commands.space_race.join.success.single");
-    public static final MutableComponent COMMAND_SUCCESS_SPACE_RACE_JOIN_MULTIPLE = Component.translatable("commands.space_race.join.success.multiple");
-    public static final BiFunction<Component, Component, Component> COMMAND_SUCCESS_SPACE_RACE_NAMETAG_CHANGE = (formattedName, displayName) -> Component.translatable("commands.space_race.option.nametagVisibility.success", formattedName, displayName);
-    public static final BiFunction<Component, Component, Component> COMMAND_SUCCESS_SPACE_RACE_DEATH_MESSAGE_CHANGE = (formattedName, displayName) -> Component.translatable("commands.space_race.option.deathMessageVisibility.success", formattedName, displayName);
-    public static final BiFunction<Component, Component, Component> COMMAND_SUCCESS_SPACE_RACE_COLLISION_RULE_CHANGE = (formattedName, displayName) -> Component.translatable("commands.space_race.option.collisionRule.success", formattedName, displayName);
-    public static final MutableComponent COMMAND_SUCCESS_SPACE_RACE_FRIENDLY_INVISIBLES_ENABLED = Component.translatable("commands.space_race.option.seeFriendlyInvisibles.enabled");
-    public static final MutableComponent COMMAND_SUCCESS_SPACE_RACE_FRIENDLY_INVISIBLES_DISABLED = Component.translatable("commands.space_race.option.seeFriendlyInvisibles.disabled");
-    public static final MutableComponent COMMAND_SUCCESS_SPACE_RACE_FRIENDLY_FIRE_ENABLED = Component.translatable("commands.space_race.option.friendlyfire.enabled");
-    public static final MutableComponent COMMAND_SUCCESS_SPACE_RACE_FRIENDLY_FIRE_DISABLED = Component.translatable("commands.space_race.option.friendlyfire.disabled");
-    public static final MutableComponent COMMAND_SUCCESS_SPACE_RACE_NAME_SET = Component.translatable("commands.space_race.option.name.success");
-    public static final BiFunction<Component, String, Component> COMMAND_SUCCESS_SPACE_RACE_COLOR_SET = (formattedName, colorName) -> Component.translatable("commands.space_race.option.color.success", formattedName, colorName);
-    public static final BiFunction<Number, Component, Component> COMMAND_SUCCESS_SPACE_RACE_EMPTY = (size, formattedName) -> Component.translatable("commands.space_race.empty.success", String.valueOf(size), formattedName);
-    public static final MutableComponent COMMAND_SUCCESS_SPACE_RACE_REMOVE = Component.translatable("commands.space_race.remove.success");
-    public static final MutableComponent COMMAND_SUCCESS_SPACE_RACE_ADD = Component.translatable("commands.space_race.add.success");
-    public static final MutableComponent COMMAND_SUCCESS_SPACE_RACE_LIST_EMPTY = Component.translatable("commands.space_race.list.members.empty");
-    public static final TriFunction<Component, Number, Component, Component> COMMAND_SUCCESS_SPACE_RACE_LIST = (formattedName, size, members) ->  Component.translatable("commands.space_race.list.members.success", formattedName, size, members);
-    public static final Component COMMAND_SUCCESS_SPACE_RACES_EMPTY = Component.translatable("commands.space_race.list.space_races.empty");
-    public static final BiFunction<Number, Component, Component> COMMAND_SUCCESS_SPACE_RACES_EXIST = (size, members) -> Component.translatable("commands.space_race.list.space_races.sucess", size, members);
-    public static final MutableComponent COMMAND_SUCCESS_SPACE_RACE_PREFIX = Component.translatable("commands.space_race.option.prefix.success");
-    public static final MutableComponent COMMAND_SUCCESS_SPACE_RACE_SUFFIX = Component.translatable("commands.space_race.option.suffix.success");
-    public static final BiFunction<Component, Identifier, Component> COMMAND_SUCCESS_SPACE_RACE_SCHEMATIC = (formattedName, schematicId) -> Component.translatable("commands.space_race.option.schematic.success", formattedName, schematicId);
+    public static final MutableComponent COMMAND_SUCCESS_SPACE_RACE_LEAVE_SINGLE = Component.translatable("galacticraftlegacy.commands.space_race.leave.success.single");
+    public static final MutableComponent COMMAND_SUCCESS_SPACE_RACE_LEAVE_MULTIPLE = Component.translatable("galacticraftlegacy.commands.space_race.leave.success.multiple");
+    public static final MutableComponent COMMAND_SUCCESS_SPACE_RACE_JOIN_SINGLE = Component.translatable("galacticraftlegacy.commands.space_race.join.success.single");
+    public static final MutableComponent COMMAND_SUCCESS_SPACE_RACE_JOIN_MULTIPLE = Component.translatable("galacticraftlegacy.commands.space_race.join.success.multiple");
+    public static final BiFunction<Component, Component, Component> COMMAND_SUCCESS_SPACE_RACE_NAMETAG_CHANGE = (formattedName, displayName) -> Component.translatable("galacticraftlegacy.commands.space_race.option.nametagVisibility.success", formattedName, displayName);
+    public static final BiFunction<Component, Component, Component> COMMAND_SUCCESS_SPACE_RACE_DEATH_MESSAGE_CHANGE = (formattedName, displayName) -> Component.translatable("galacticraftlegacy.commands.space_race.option.deathMessageVisibility.success", formattedName, displayName);
+    public static final BiFunction<Component, Component, Component> COMMAND_SUCCESS_SPACE_RACE_COLLISION_RULE_CHANGE = (formattedName, displayName) -> Component.translatable("galacticraftlegacy.commands.space_race.option.collisionRule.success", formattedName, displayName);
+    public static final MutableComponent COMMAND_SUCCESS_SPACE_RACE_FRIENDLY_INVISIBLES_ENABLED = Component.translatable("galacticraftlegacy.commands.space_race.option.seeFriendlyInvisibles.enabled");
+    public static final MutableComponent COMMAND_SUCCESS_SPACE_RACE_FRIENDLY_INVISIBLES_DISABLED = Component.translatable("galacticraftlegacy.commands.space_race.option.seeFriendlyInvisibles.disabled");
+    public static final MutableComponent COMMAND_SUCCESS_SPACE_RACE_FRIENDLY_FIRE_ENABLED = Component.translatable("galacticraftlegacy.commands.space_race.option.friendlyfire.enabled");
+    public static final MutableComponent COMMAND_SUCCESS_SPACE_RACE_FRIENDLY_FIRE_DISABLED = Component.translatable("galacticraftlegacy.commands.space_race.option.friendlyfire.disabled");
+    public static final MutableComponent COMMAND_SUCCESS_SPACE_RACE_NAME_SET = Component.translatable("galacticraftlegacy.commands.space_race.option.name.success");
+    public static final BiFunction<Component, String, Component> COMMAND_SUCCESS_SPACE_RACE_COLOR_SET = (formattedName, colorName) -> Component.translatable("galacticraftlegacy.commands.space_race.option.color.success", formattedName, colorName);
+    public static final BiFunction<Number, Component, Component> COMMAND_SUCCESS_SPACE_RACE_EMPTY = (size, formattedName) -> Component.translatable("galacticraftlegacy.commands.space_race.empty.success", String.valueOf(size), formattedName);
+    public static final MutableComponent COMMAND_SUCCESS_SPACE_RACE_REMOVE = Component.translatable("galacticraftlegacy.commands.space_race.remove.success");
+    public static final MutableComponent COMMAND_SUCCESS_SPACE_RACE_ADD = Component.translatable("galacticraftlegacy.commands.space_race.add.success");
+    public static final MutableComponent COMMAND_SUCCESS_SPACE_RACE_LIST_EMPTY = Component.translatable("galacticraftlegacy.commands.space_race.list.members.empty");
+    public static final TriFunction<Component, Number, Component, Component> COMMAND_SUCCESS_SPACE_RACE_LIST = (formattedName, size, members) ->  Component.translatable("galacticraftlegacy.commands.space_race.list.members.success", formattedName, size, members);
+    public static final Component COMMAND_SUCCESS_SPACE_RACES_EMPTY = Component.translatable("galacticraftlegacy.commands.space_race.list.space_races.empty");
+    public static final BiFunction<Number, Component, Component> COMMAND_SUCCESS_SPACE_RACES_EXIST = (size, members) -> Component.translatable("galacticraftlegacy.commands.space_race.list.space_races.sucess", size, members);
+    public static final MutableComponent COMMAND_SUCCESS_SPACE_RACE_PREFIX = Component.translatable("galacticraftlegacy.commands.space_race.option.prefix.success");
+    public static final MutableComponent COMMAND_SUCCESS_SPACE_RACE_SUFFIX = Component.translatable("galacticraftlegacy.commands.space_race.option.suffix.success");
+    public static final BiFunction<Component, String, Component> COMMAND_SUCCESS_SPACE_RACE_SCHEMATIC = (formattedName, schematicId) -> Component.translatable("galacticraftlegacy.commands.space_race.option.schematic.success", formattedName, schematicId);
     public static final BiFunction<Component, Number, Component> COMMAND_SUCCESS_EQUIP_EMERGENCY_GEAR = (formattedName, amount) -> Component.translatable("galacticraftlegacy.commands.emergency_equip.success", formattedName, amount);
-
+    public static final Component COMMAND_ERROR_SCHEMATIC_ALREADY_UNLOCKED = Component.translatable("galacticraftlegacy.commands.schematics.add.error");
+    public static final Component COMMAND_ERROR_SCHEMATIC_NOT_UNLOCKED = Component.translatable("galacticraftlegacy.commands.schematics.remove.error");
+    public static final TriFunction<Component, Number, Component, Component> COMMAND_SUCCESS_SCHEMATICS_LIST = (playerName, unlockedCount, schematics) ->  Component.translatable("galacticraftlegacy.commands.schematics.list.success", playerName, unlockedCount, schematics);
+    public static final Function<Component, MutableComponent> COMMAND_SUCCESS_SCHEMATIC_ADD_ALL = name -> Component.translatable("galacticraftlegacy.commands.schematics.add.all", name);
+    public static final Function<Component, MutableComponent> COMMAND_SUCCESS_SCHEMATIC_REMOVE_ALL = name -> Component.translatable("galacticraftlegacy.commands.schematics.remove.all", name);
+    public static final Function<Component, MutableComponent> COMMAND_SUCCESS_SCHEMATIC_EMPTY_LIST = playerName -> Component.translatable("galacticraftlegacy.commands.schematics.list.empty", playerName);
+    public static final BiFunction<Component, String, MutableComponent> COMMAND_SUCCESS_SCHEMATIC_ADD = (name, id) -> Component.translatable("galacticraftlegacy.commands.schematics.add", name, id);
+    public static final BiFunction<Component, String, MutableComponent> COMMAND_SUCCESS_SCHEMATIC_REMOVE = (name, id) -> Component.translatable("galacticraftlegacy.commands.schematics.remove", id, name);
 
     public static void infinite(Consumer<Component> tooltipAdder) {
         tooltipAdder.accept(INFINITE);
@@ -141,21 +149,4 @@ public class GalacticraftComponents {
         consumer.accept(Component.translatable("galacticraftlegacy.networking_failed", throwable.getLocalizedMessage()));
         return null;
     }
-
-    /*private static Component withRegistry(Component component) {
-        UNTRANSLATED_COMPONENTS.add(component);
-        return component;
-    }
-
-    public static Component withRegistryTranslatable(String translationKey) {
-        return withRegistry(Component.translatable(translationKey));
-    }
-
-    public static Component withRegistryTranslatable(String translationKey, Object... args) {
-        return withRegistry(Component.translatable(translationKey, args));
-    }
-
-    public static Component withRegistryTranslatable(String translationKey, UnaryOperator<MutableComponent> componentBuilder, Object... args) {
-        return withRegistry(componentBuilder.apply(Component.translatable(translationKey, args)));
-    }*/
 }

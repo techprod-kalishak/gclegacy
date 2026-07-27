@@ -9,9 +9,9 @@ package io.kalishak.galacticraftlegacy.network.payload;
 
 import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.world.entity.vehicle.rocket.AbstractAutoRocket;
+import io.netty.buffer.ByteBuf;
 import net.minecraft.core.UUIDUtil;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
@@ -22,10 +22,10 @@ import net.minecraft.world.level.Level;
 import java.util.Optional;
 import java.util.UUID;
 
-public record EntityPlanetaryTransitionPayload(UUID entityId, ResourceKey<Level> destination, boolean transferItems, Optional<UUID> rocketId) implements CustomPacketPayload {
+public record EntityPlanetaryTransitionPayload(UUID entity, ResourceKey<Level> destination, boolean transferItems, Optional<UUID> rocketId) implements CustomPacketPayload {
     public static final Type<EntityPlanetaryTransitionPayload> TYPE = new Type<>(Constants.id("entity_planetary_transition"));
-    public static final StreamCodec<RegistryFriendlyByteBuf, EntityPlanetaryTransitionPayload> STREAM_CODEC = StreamCodec.composite(
-            UUIDUtil.STREAM_CODEC, EntityPlanetaryTransitionPayload::entityId,
+    public static final StreamCodec<ByteBuf, EntityPlanetaryTransitionPayload> STREAM_CODEC = StreamCodec.composite(
+            UUIDUtil.STREAM_CODEC, EntityPlanetaryTransitionPayload::entity,
             ResourceKey.streamCodec(Registries.DIMENSION), EntityPlanetaryTransitionPayload::destination,
             ByteBufCodecs.BOOL, EntityPlanetaryTransitionPayload::transferItems,
             UUIDUtil.STREAM_CODEC.apply(ByteBufCodecs::optional), EntityPlanetaryTransitionPayload::rocketId,

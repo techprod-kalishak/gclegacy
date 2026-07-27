@@ -1,0 +1,5 @@
+{
+  "background": "galacticraftlegacy:textures/gui/container/workbench_page/moon_buggy.png",
+  "schematic": "galacticraftlegacy:moon_buggy",
+  "vehicle_recipe": "galacticraftlegacy:moon_buggy"
+}

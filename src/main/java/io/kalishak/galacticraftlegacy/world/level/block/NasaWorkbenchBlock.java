@@ -1,6 +1,12 @@
+/*
+ * Copyright (c) 2026 Kalishak
+ *
+ * Licensed under the MIT license
+ * See LICENSE file for more details
+ */
+
 package io.kalishak.galacticraftlegacy.world.level.block;
 
-import io.kalishak.galacticraftlegacy.references.GalacticraftComponents;
 import io.kalishak.galacticraftlegacy.world.inventory.workbench.NasaWorkbenchMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -27,15 +33,11 @@ public class NasaWorkbenchBlock extends Block {
         return InteractionResult.SUCCESS;
     }
 
-    protected Component getTitle() {
-        return GalacticraftComponents.NASA_WORKBENCH_TITLE;
-    }
-
     @Override
     protected MenuProvider getMenuProvider(BlockState state, Level level, BlockPos pos) {
         return new SimpleMenuProvider(
                 (containerId, inventory, _) -> new NasaWorkbenchMenu(containerId, inventory, level, pos),
-                getTitle()
+                Component.empty()
         );
     }
 }

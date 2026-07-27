@@ -1,6 +1,7 @@
 {
   "asset_id": "galacticraftlegacy:tier_3_rocket",
-  "level": "advanced",
+  "order_index": 4,
+  "tier": "advanced",
   "title": {
     "color": "yellow",
     "translate": "schematic.galacticraftlegacy.tier_3_rocket.title"

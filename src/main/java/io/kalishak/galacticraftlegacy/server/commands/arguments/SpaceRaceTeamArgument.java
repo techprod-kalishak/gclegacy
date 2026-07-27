@@ -30,19 +30,6 @@ public class SpaceRaceTeamArgument implements ArgumentType<String> {
     private static final Collection<String> EXAMPLES = Arrays.asList("spaceM", "MASA");
     private static final DynamicCommandExceptionType ERROR_SPACE_RACE_NOT_FOUND = new DynamicCommandExceptionType(GalacticraftComponents.COMMAND_ERROR_SPACE_RACE_DONT_EXIST);
 
-    public static SpaceRaceTeamArgument spaceRace() {
-        return new SpaceRaceTeamArgument();
-    }
-
-    public static SpaceRaceTeam getSpaceRace(CommandContext<CommandSourceStack> context, String name) throws CommandSyntaxException {
-        String id = context.getArgument(name, String.class);
-        SpaceRaceScoreboard scoreboard = SpaceRaceHooks.getFromServer(context.getSource().getServer());
-
-        if (scoreboard.getSpaceRaceTeam(name) == null) throw ERROR_SPACE_RACE_NOT_FOUND.create(id);
-
-        return scoreboard.getSpaceRaceTeam(id);
-    }
-
     @Override
     public String parse(StringReader reader) {
         return reader.readUnquotedString();
@@ -62,5 +49,18 @@ public class SpaceRaceTeamArgument implements ArgumentType<String> {
     @Override
     public Collection<String> getExamples() {
         return EXAMPLES;
+    }
+
+    public static SpaceRaceTeamArgument spaceRace() {
+        return new SpaceRaceTeamArgument();
+    }
+
+    public static SpaceRaceTeam getSpaceRace(CommandContext<CommandSourceStack> context, String name) throws CommandSyntaxException {
+        String id = context.getArgument(name, String.class);
+        SpaceRaceScoreboard scoreboard = SpaceRaceHooks.getFromServer(context.getSource().getServer());
+
+        if (scoreboard.getSpaceRaceTeam(name) == null) throw ERROR_SPACE_RACE_NOT_FOUND.create(id);
+
+        return scoreboard.getSpaceRaceTeam(id);
     }
 }

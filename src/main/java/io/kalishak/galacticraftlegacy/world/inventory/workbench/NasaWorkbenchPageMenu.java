@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2026 Kalishak
+ *
+ * Licensed under the MIT license
+ * See LICENSE file for more details
+ */
+
 package io.kalishak.galacticraftlegacy.world.inventory.workbench;
 
 import io.kalishak.galacticraftlegacy.world.inventory.GalacticraftMenuType;
@@ -5,11 +12,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
 
 public class NasaWorkbenchPageMenu extends AbstractNasaWorkbenchMenu {
     private final VehicleCraftingPage currentPage;

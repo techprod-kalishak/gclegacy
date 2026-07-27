@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2026 Kalishak
+ *
+ * Licensed under the MIT license
+ * See LICENSE file for more details
+ */
+
 package io.kalishak.galacticraftlegacy.world.item.crafting.recipe.rocket;
 
 import com.mojang.serialization.Codec;
@@ -26,7 +33,6 @@ public record VehicleCraftingEntry(Holder<VehicleCraftingSlotType> slotType, int
             Ingredient.CONTENTS_STREAM_CODEC.apply(ByteBufCodecs::optional), VehicleCraftingEntry::input,
             VehicleCraftingEntry::new
     );
-    public static final VehicleCraftingEntry EMPTY = new VehicleCraftingEntry(null, -1, 0, 0, Optional.empty());
 
     public boolean isOutputSlot() {
         return this.input.isEmpty();

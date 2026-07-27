@@ -1,6 +1,7 @@
 {
   "asset_id": "galacticraftlegacy:moon_buggy",
-  "level": "basic",
+  "order_index": 1,
+  "tier": "basic",
   "title": {
     "color": "yellow",
     "translate": "schematic.galacticraftlegacy.moon_buggy.title"

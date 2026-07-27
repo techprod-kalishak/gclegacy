@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2026 Kalishak
+ *
+ * Licensed under the MIT license
+ * See LICENSE file for more details
+ */
+
 package io.kalishak.galacticraftlegacy.world.item.crafting.recipe.rocket;
 
 import io.kalishak.galacticraftlegacy.data.GalacticraftTags;
@@ -135,6 +142,9 @@ public class VehicleCraftingDataRecipes {
                         .inputSlot(ROCKET_BOOSTER, 75, 91, GalacticraftItems.ROCKET_BOOSTER)
                         .inputSlot(ROCKET_FIN, 75, 109, GalacticraftItems.HEAVY_FIN)
                         .inputSlot(ROCKET_FIN, 75, 127, GalacticraftItems.HEAVY_FIN)
+                        .inputSlot(STORAGE, 93, 12, Ingredient.of(chests))
+                        .inputSlot(STORAGE, 119, 12, Ingredient.of(chests))
+                        .inputSlot(STORAGE, 145, 12, Ingredient.of(chests))
                         .outputSlot(142, 114, GalacticraftItems.TIER_3_ROCKET)
                         .build()
         );
@@ -176,12 +186,12 @@ public class VehicleCraftingDataRecipes {
                 .inputSlot(ROCKET_NOSE_CONE, 48, 19, GalacticraftItems.ROCKET_NOSE_CONE)
                 .inputSlot(PLATING, 39, 37, Ingredient.of(heavyDutyPlates))
                 .inputSlot(PLATING, 39, 55, Ingredient.of(heavyDutyPlates))
-                .inputSlot(PLATING, 39, 83, Ingredient.of(heavyDutyPlates))
-                .inputSlot(PLATING, 39, 101, Ingredient.of(heavyDutyPlates))
+                .inputSlot(PLATING, 39, 73, Ingredient.of(heavyDutyPlates))
+                .inputSlot(PLATING, 39, 91, Ingredient.of(heavyDutyPlates))
                 .inputSlot(PLATING, 57, 37, Ingredient.of(heavyDutyPlates))
                 .inputSlot(PLATING, 57, 55, Ingredient.of(heavyDutyPlates))
-                .inputSlot(PLATING, 57, 83, Ingredient.of(heavyDutyPlates))
-                .inputSlot(PLATING, 57, 101, Ingredient.of(heavyDutyPlates))
+                .inputSlot(PLATING, 57, 73, Ingredient.of(heavyDutyPlates))
+                .inputSlot(PLATING, 57, 91, Ingredient.of(heavyDutyPlates))
                 .inputSlot(ROCKET_FIN, 21, 91, GalacticraftItems.ROCKET_FIN)
                 .inputSlot(ROCKET_FIN, 21, 109, GalacticraftItems.ROCKET_FIN)
                 .inputSlot(ROCKET_ENGINE, 48, 109, GalacticraftItems.ROCKET_ENGINE)

@@ -31,7 +31,6 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.transfer.ResourceHandler;
 import net.neoforged.neoforge.transfer.access.ItemAccess;
 import net.neoforged.neoforge.transfer.energy.EnergyHandler;
-import net.neoforged.neoforge.transfer.energy.SimpleEnergyHandler;
 import net.neoforged.neoforge.transfer.fluid.FluidResource;
 
 import java.util.Comparator;
@@ -39,7 +38,7 @@ import java.util.Comparator;
 public final class GalacticraftCreativeModeTabs {
     private static final DeferredRegister<CreativeModeTab> REGISTRY = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, Galacticraft.MODID);
     private static final Comparator<Holder<SchematicVariant>> SCHEMATIC_SORTER = Comparator.comparing(
-            Holder::value, Comparator.comparingInt(schematic -> schematic.tier().getLevel())
+            Holder::value, Comparator.comparingInt(SchematicVariant::orderIndex)
     );
 
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> ITEMS = REGISTRY.register(

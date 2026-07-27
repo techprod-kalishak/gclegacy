@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2026 Kalishak
+ *
+ * Licensed under the MIT license
+ * See LICENSE file for more details
+ */
+
 package io.kalishak.galacticraftlegacy.world.inventory.workbench;
 
 import io.kalishak.galacticraftlegacy.references.Constants;
@@ -27,7 +34,7 @@ public class VehicleCraftingPages {
         register(cxt, schematics, vehicleRecipes, ASTRO_MINER, 140);
     }
 
-    private static ResourceKey<VehicleCraftingPage> fromSchematic(ResourceKey<SchematicVariant> schematic) {
+    public static ResourceKey<VehicleCraftingPage> fromSchematic(ResourceKey<SchematicVariant> schematic) {
         return Constants.castKey(schematic, GalacticraftRegistries.Keys.VEHICLE_CRAFTING_PAGE);
     }
 
@@ -38,7 +45,7 @@ public class VehicleCraftingPages {
                         schematics.getOrThrow(Constants.castKey(identifier, GalacticraftRegistries.Keys.SCHEMATIC)),
                         vehicleRecipes.getOrThrow(Constants.castKey(identifier, GalacticraftRegistries.Keys.VEHICLE_CRAFTING_RECIPE_DATA)),
                         height,
-                        identifier.identifier().withPath(path -> "gui/container/workbench_page/" + path + ".png")
+                        identifier.identifier().withPath(path -> "textures/gui/container/workbench_page/" + path + ".png")
                 )
         );
     }
