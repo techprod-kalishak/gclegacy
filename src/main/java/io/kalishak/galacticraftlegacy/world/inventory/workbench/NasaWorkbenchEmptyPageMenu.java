@@ -29,9 +29,9 @@ public class NasaWorkbenchEmptyPageMenu extends AbstractNasaWorkbenchMenu {
                 itemStack -> itemStack.has(GalacticraftDataComponents.SCHEMATIC),
                 0,
                 80,
-                1
+                28
         ));
-        addStandardInventorySlots(inventory, 18, 111);
+        addStandardInventorySlots(inventory, 8, 95);
     }
 
     public NasaWorkbenchEmptyPageMenu(int containerId, Inventory inventory, RegistryFriendlyByteBuf data) {
@@ -40,7 +40,7 @@ public class NasaWorkbenchEmptyPageMenu extends AbstractNasaWorkbenchMenu {
 
     public void onSchematicUnlocked() {
         try (Transaction tx = Transaction.open(null)) {
-            if (this.resourceHandler.extract(ItemResource.of(GalacticraftItems.SCHEMATIC.getDelegate()), 1, tx) > 0) {
+            if (this.resourceHandler.extract(ItemResource.of(getSlot(0).getItem()), 1, tx) > 0) {
                 tx.commit();
             }
         }

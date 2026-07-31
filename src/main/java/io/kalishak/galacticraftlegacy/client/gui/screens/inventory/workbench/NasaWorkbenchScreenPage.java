@@ -7,6 +7,7 @@
 
 package io.kalishak.galacticraftlegacy.client.gui.screens.inventory.workbench;
 
+import io.kalishak.galacticraftlegacy.attachment.entity.Schematics;
 import io.kalishak.galacticraftlegacy.network.payload.MoveVehiclePagePayload;
 import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.references.GalacticraftComponents;
@@ -17,14 +18,21 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceKey;
 import net.neoforged.neoforge.client.network.ClientPacketDistributor;
+import org.jspecify.annotations.Nullable;
+
+import java.util.Optional;
 
 public interface NasaWorkbenchScreenPage {
-    int getPageIndex();
+    @Nullable ResourceKey<SchematicVariant> getPage();
 
     AbstractNasaWorkbenchMenu getMenu();
 
+    default Optional<ResourceKey<SchematicVariant>> getOptionalPage() {
+        return Optional.ofNullable(getPage());
+    }
+
     default Button createNextButton(int width, int height) {
-        return Button.builder(GalacticraftComponents.NEXT_PAGE, _ -> ClientPacketDistributor.sendToServer(new MoveVehiclePagePayload(getMenu().containerId, getPageIndex(), MoveVehiclePagePayload.Action.NEXT, getMenu().getBlockPos())))
+        return Button.builder(GalacticraftComponents.NEXT_PAGE, _ -> ClientPacketDistributor.sendToServer(new MoveVehiclePagePayload(getMenu().containerId, getOptionalPage(), Schematics.Picker.NEXT, getMenu().getBlockPos())))
                 .pos(width / 2 - 130, height / 2 - 110)
                 .size(40, 20)
                 .createNarration(_ -> (MutableComponent) GalacticraftComponents.NEXT_PAGE)
@@ -32,7 +40,7 @@ public interface NasaWorkbenchScreenPage {
     }
 
     default Button createPreviousButton(int width, int height) {
-        return Button.builder(GalacticraftComponents.PREVIOUS_PAGE, _ -> ClientPacketDistributor.sendToServer(new MoveVehiclePagePayload(getMenu().containerId, getPageIndex(), MoveVehiclePagePayload.Action.PREVIOUS, getMenu().getBlockPos())))
+        return Button.builder(GalacticraftComponents.PREVIOUS_PAGE, _ -> ClientPacketDistributor.sendToServer(new MoveVehiclePagePayload(getMenu().containerId, getOptionalPage(), Schematics.Picker.PREVIOUS, getMenu().getBlockPos())))
                 .pos(width / 2 - 130, height / 2 - 85)
                 .size(40, 20)
                 .createNarration(_ -> (MutableComponent) GalacticraftComponents.PREVIOUS_PAGE)

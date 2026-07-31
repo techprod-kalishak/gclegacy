@@ -8,7 +8,6 @@
 package io.kalishak.galacticraftlegacy.client.gui.screens.inventory;
 
 import io.kalishak.galacticraftlegacy.Galacticraft;
-import io.kalishak.galacticraftlegacy.client.gui.ClientResourceHandlerTextUtils;
 import io.kalishak.galacticraftlegacy.references.GalacticraftComponents;
 import io.kalishak.galacticraftlegacy.world.inventory.machine.CoalGeneratorMenu;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.CoalGeneratorBlockEntity;
@@ -75,7 +74,7 @@ public class CoalGeneratorScreen extends AbstractContainerScreen<CoalGeneratorMe
                     false
             );
         } else if (this.menu.getHeatLevel() < CoalGeneratorBlockEntity.MAX_ENERGY_PER_HEAT) {
-            status = ClientResourceHandlerTextUtils.energyComponent((int) Math.floor(this.menu.getHeatLevel() - CoalGeneratorBlockEntity.MIN_ENERGY_PER_HEAT), true);
+            status = GalacticraftComponents.energyComponent((int) Math.floor(this.menu.getHeatLevel() - CoalGeneratorBlockEntity.MIN_ENERGY_PER_HEAT), true);
             guiGraphics.text(
                     this.font,
                     status,

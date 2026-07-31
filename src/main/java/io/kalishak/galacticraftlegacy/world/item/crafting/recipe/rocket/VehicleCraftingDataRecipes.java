@@ -166,7 +166,7 @@ public class VehicleCraftingDataRecipes {
                         .inputSlot(ORION_DRIVE, 80, 71, GalacticraftItems.ORION_DRIVE)
                         .inputSlot(MISC, 8, 77, GalacticraftItems.COMPRESSED_ALUMINUM)
                         .inputSlot(MISC, 26, 77, GalacticraftItems.STEEL_POLE)
-                        .outputSlot(142, 72, GalacticraftItems.ASTRO_MINER)
+                        .outputSlot(142, 70, GalacticraftItems.ASTRO_MINER)
                         .build()
         );
     }

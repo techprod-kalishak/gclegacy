@@ -10,11 +10,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "galacticraftlegacy:tin_decoration"
+          "name": "galacticraftlegacy:tin_decoration_block"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "galacticraftlegacy:blocks/tin_decoration"
+  "random_sequence": "galacticraftlegacy:blocks/tin_decoration_block"
 }

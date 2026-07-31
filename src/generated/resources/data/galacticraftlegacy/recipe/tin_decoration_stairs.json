@@ -3,7 +3,7 @@
   "category": "building",
   "group": "tin_decoration_stairs",
   "key": {
-    "#": "galacticraftlegacy:tin_decoration"
+    "#": "galacticraftlegacy:tin_decoration_block"
   },
   "pattern": [
     "#  ",

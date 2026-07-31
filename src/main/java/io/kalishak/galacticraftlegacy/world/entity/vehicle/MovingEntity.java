@@ -119,8 +119,8 @@ public abstract class MovingEntity extends Entity {
     @Override
     public void onPassengerTurned(Entity entityToUpdate) {
         if (hasPassenger(entityToUpdate)) {
-            double xOffset = Math.cos(this.getXRot() / Constants.RTD + 114.8D) * -0.5D;
-            double zOffset = Math.sin(this.getXRot() / Constants.RTD + 114.8D) * -0.5D;
+            double xOffset = Math.cos(this.getXRot() / Constants.RADIANS_TO_DEGREES + 114.8D) * -0.5D;
+            double zOffset = Math.sin(this.getXRot() / Constants.RADIANS_TO_DEGREES + 114.8D) * -0.5D;
             entityToUpdate.setPos(this.getX() + xOffset, this.getY() + getVehicleAttachmentPoint(entityToUpdate).y, this.getZ() + zOffset);
         }
     }

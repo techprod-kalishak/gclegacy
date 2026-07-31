@@ -27,24 +27,25 @@ public class VehicleCraftingPages {
         HolderGetter<SchematicVariant> schematics = cxt.lookup(GalacticraftRegistries.Keys.SCHEMATIC);
         HolderGetter<VehicleCraftingDataRecipe> vehicleRecipes = cxt.lookup(GalacticraftRegistries.Keys.VEHICLE_CRAFTING_RECIPE_DATA);
 
-        register(cxt, schematics, vehicleRecipes, TIER_2_ROCKET, 156);
-        register(cxt, schematics, vehicleRecipes, CARGO_ROCKET, 138);
-        register(cxt, schematics, vehicleRecipes, TIER_3_ROCKET, 156);
-        register(cxt, schematics, vehicleRecipes, MOON_BUGGY, 138);
-        register(cxt, schematics, vehicleRecipes, ASTRO_MINER, 140);
+        register(cxt, schematics, vehicleRecipes, TIER_2_ROCKET, 156, 237);
+        register(cxt, schematics, vehicleRecipes, CARGO_ROCKET, 138, 219);
+        register(cxt, schematics, vehicleRecipes, TIER_3_ROCKET, 156, 237);
+        register(cxt, schematics, vehicleRecipes, MOON_BUGGY, 138, 219);
+        register(cxt, schematics, vehicleRecipes, ASTRO_MINER, 114, 196);
     }
 
     public static ResourceKey<VehicleCraftingPage> fromSchematic(ResourceKey<SchematicVariant> schematic) {
         return Constants.castKey(schematic, GalacticraftRegistries.Keys.VEHICLE_CRAFTING_PAGE);
     }
 
-    private static void register(BootstrapContext<VehicleCraftingPage> cxt, HolderGetter<SchematicVariant> schematics, HolderGetter<VehicleCraftingDataRecipe> vehicleRecipes, ResourceKey<VehicleCraftingPage> identifier, int height) {
+    private static void register(BootstrapContext<VehicleCraftingPage> cxt, HolderGetter<SchematicVariant> schematics, HolderGetter<VehicleCraftingDataRecipe> vehicleRecipes, ResourceKey<VehicleCraftingPage> identifier, int height, int imageHeight) {
         cxt.register(
                 identifier,
                 new VehicleCraftingPage(
                         schematics.getOrThrow(Constants.castKey(identifier, GalacticraftRegistries.Keys.SCHEMATIC)),
                         vehicleRecipes.getOrThrow(Constants.castKey(identifier, GalacticraftRegistries.Keys.VEHICLE_CRAFTING_RECIPE_DATA)),
                         height,
+                        imageHeight,
                         identifier.identifier().withPath(path -> "textures/gui/container/workbench_page/" + path + ".png")
                 )
         );

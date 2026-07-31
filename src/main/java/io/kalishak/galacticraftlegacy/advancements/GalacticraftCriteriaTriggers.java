@@ -33,6 +33,10 @@ public final class GalacticraftCriteriaTriggers {
             "launch_rocket",
             LaunchRocketTrigger::new
     );
+    public static final DeferredHolder<CriterionTrigger<?>, SchematicUnlockedTrigger> UNLOCKED_SCHEMATIC = REGISTRY.register(
+            "unlocked_schematic",
+            SchematicUnlockedTrigger::new
+    );
 
     public static void init(IEventBus bus) {
         REGISTRY.register(bus);

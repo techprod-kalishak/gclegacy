@@ -1,6 +1,18 @@
 {
   "model": {
-    "type": "minecraft:model",
-    "model": "galacticraftlegacy:block/nasa_workbench"
+    "type": "minecraft:composite",
+    "models": [
+      {
+        "type": "minecraft:model",
+        "model": "galacticraftlegacy:block/nasa_workbench"
+      },
+      {
+        "type": "minecraft:special",
+        "base": "galacticraftlegacy:block/nasa_workbench",
+        "model": {
+          "type": "galacticraftlegacy:nasa_workbench_renderer"
+        }
+      }
+    ]
   }
 }

@@ -41,7 +41,7 @@ public class BedUsedInSpaceTrigger extends SimpleCriterionTrigger<BedUsedInSpace
         public static final Codec<TriggerInstance> CODEC = RecordCodecBuilder.create(instance -> instance.group(
                 EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("playerName").forGetter(TriggerInstance::player),
                 DimensionType.CODEC.fieldOf("level").forGetter(TriggerInstance::level),
-                BlockPos.CODEC.fieldOf("bed_position").forGetter(TriggerInstance::bedPosition)
+                BlockPos.CODEC.fieldOf("bedPosition").forGetter(TriggerInstance::bedPosition)
         ).apply(instance, TriggerInstance::new));
 
         public static Criterion<TriggerInstance> triedToLayInBed(Level level, BlockPos bedPosition) {

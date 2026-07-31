@@ -23,7 +23,7 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 public class Constants {
-    public static final double RTD = 180.0D / Math.PI;
+    public static final double RADIANS_TO_DEGREES = 180.0D / Math.PI;
 
     public static Identifier id(String assetName) {
         return Identifier.fromNamespaceAndPath(Galacticraft.MODID, assetName);

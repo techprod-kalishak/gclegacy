@@ -7,8 +7,6 @@
 
 package io.kalishak.galacticraftlegacy.network;
 
-import io.kalishak.galacticraftlegacy.network.handler.CloseVehiclePagePayload;
-import io.kalishak.galacticraftlegacy.network.handler.client.CloseVehiclePageClientHandler;
 import io.kalishak.galacticraftlegacy.network.handler.client.ToggleGearInventoryClientHandler;
 import io.kalishak.galacticraftlegacy.network.handler.client.UpdateEnergyNodeNetworkClientHandler;
 import io.kalishak.galacticraftlegacy.network.handler.client.UpdateFluidNodeNetworkClientHandler;
@@ -17,7 +15,6 @@ import io.kalishak.galacticraftlegacy.network.handler.server.ToggleGearInventory
 import io.kalishak.galacticraftlegacy.network.handler.server.ToggleSensorGlassesServerHandler;
 import io.kalishak.galacticraftlegacy.network.handler.server.UnlockSchematicServerHandler;
 import io.kalishak.galacticraftlegacy.network.payload.*;
-import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 
@@ -57,11 +54,6 @@ public final class GalacticraftNetworkHandler {
                 UpdateEnergyNodeNetworkPayload.TYPE,
                 UpdateEnergyNodeNetworkPayload.STREAM_CODEC,
                 UpdateEnergyNodeNetworkClientHandler::handleClient
-        );
-        registrar.playToClient(
-                CloseVehiclePagePayload.TYPE,
-                CloseVehiclePagePayload.STREAM_CODEC,
-                CloseVehiclePageClientHandler::handleClient
         );
     }
 }

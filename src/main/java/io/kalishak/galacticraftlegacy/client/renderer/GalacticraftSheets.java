@@ -23,7 +23,7 @@ public class GalacticraftSheets {
     public static final Identifier PARACHUTE_SHEET = Constants.id("textures/atlas/parachutes.png");
     public static final Identifier CELESTIAL_BODY_SHEET = Constants.id("textures/atlas/celestial_bodies.png");
     public static final Identifier SCHEMATIC_SHEET = Constants.id("textures/atlas/schematics.png");
-    public static final SpriteId PARACHEST = Sheets.CHEST_MAPPER.apply(Constants.id("parachest"));
+    public static final SpriteId PARACHEST = Sheets.CHEST_MAPPER.apply(Constants.id("entity/chest/parachest"));
     public static final SpriteMapper PARACHUTE_MAPPER = new SpriteMapper(PARACHUTE_SHEET, "entity/equipment/galacticraftlegacy/parachute");
     public static final List<SpriteId> PARACHUTE_TEXTURE_LOCATION = Arrays.stream(DyeColor.values())
             .sorted(Comparator.comparingInt(DyeColor::getId))

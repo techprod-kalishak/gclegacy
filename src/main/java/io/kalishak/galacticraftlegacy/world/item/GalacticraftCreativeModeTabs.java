@@ -81,6 +81,14 @@ public final class GalacticraftCreativeModeTabs {
         emptyAndFilled(output, GalacticraftItems.FLUID_TANK, GalacticraftFluids.OXYGEN);
         emptyAndFilled(output, GalacticraftItems.FLUID_TANK, GalacticraftFluids.OIL);
         emptyAndFilled(output, GalacticraftItems.FLUID_TANK, GalacticraftFluids.FUEL);
+        output.accept(GalacticraftItems.ROCKET_ENGINE);
+        output.accept(GalacticraftItems.ROCKET_BOOSTER);
+        output.accept(GalacticraftItems.HEAVY_DUTY_PLATE);
+        output.accept(GalacticraftItems.ROCKET_NOSE_CONE);
+        output.accept(GalacticraftItems.ROCKET_FIN);
+        output.accept(GalacticraftItems.BUGGY_WHEEL);
+        output.accept(GalacticraftItems.BUGGY_SEAT);
+        output.accept(GalacticraftItems.BUGGY_STORAGE_BOX);
         output.accept(GalacticraftItems.RAW_SILICON);
         output.accept(GalacticraftItems.SOLAR_WAFER);
         output.accept(GalacticraftItems.BASIC_WAFER);
@@ -134,7 +142,6 @@ public final class GalacticraftCreativeModeTabs {
         output.accept(GalacticraftItems.COMPRESSED_STEEL);
         output.accept(GalacticraftItems.COMPRESSED_BRONZE);
         output.accept(GalacticraftItems.COMPRESSED_IRON);
-        output.accept(GalacticraftItems.HEAVY_DUTY_PLATE);
         output.accept(GalacticraftItems.COMPRESSED_METEORIC_IRON);
         output.accept(GalacticraftItems.HEAVY_DUTY_PLATE_TIER_2);
         output.accept(GalacticraftItems.COMPRESSED_DESH);
@@ -188,6 +195,8 @@ public final class GalacticraftCreativeModeTabs {
                 output.accept(fluidPipe, CreativeModeTab.TabVisibility.SEARCH_TAB_ONLY);
             }
         });
+        output.accept(GalacticraftItems.NASA_WORKBENCH);
+        output.accept(GalacticraftItems.COMPACT_NASA_WORKBENCH);
         output.accept(GalacticraftItems.TIN_ORE);
         output.accept(GalacticraftItems.DEEPSLATE_TIN_ORE);
         output.accept(GalacticraftItems.ALUMINUM_ORE);

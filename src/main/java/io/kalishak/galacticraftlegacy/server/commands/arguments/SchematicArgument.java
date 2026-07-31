@@ -19,6 +19,7 @@ import io.kalishak.galacticraftlegacy.registry.SchematicVariant;
 import io.kalishak.galacticraftlegacy.registry.SchematicVariants;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.SharedSuggestionProvider;
+import net.minecraft.commands.arguments.DimensionArgument;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
@@ -45,7 +46,7 @@ public class SchematicArgument implements ArgumentType<Identifier> {
     @Override
     public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, SuggestionsBuilder builder) {
         return context.getSource() instanceof SharedSuggestionProvider provider
-                ? SharedSuggestionProvider.suggestResource(provider.registryAccess().lookupOrThrow(GalacticraftRegistries.Keys.SCHEMATIC).registryKeySet().stream().map(ResourceKey::identifier), builder)
+                ? SharedSuggestionProvider.suggestResource(provider.registryAccess().lookupOrThrow(GalacticraftRegistries.Keys.SCHEMATIC).keySet(), builder)
                 : Suggestions.empty();
     }
 

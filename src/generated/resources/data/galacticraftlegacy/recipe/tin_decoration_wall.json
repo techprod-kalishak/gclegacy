@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "group": "tin_decoration_wall",
   "key": {
-    "#": "galacticraftlegacy:tin_decoration"
+    "#": "galacticraftlegacy:tin_decoration_block"
   },
   "pattern": [
     "###",

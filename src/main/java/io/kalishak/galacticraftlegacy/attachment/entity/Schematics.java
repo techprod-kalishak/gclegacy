@@ -8,26 +8,26 @@
 package io.kalishak.galacticraftlegacy.attachment.entity;
 
 import com.mojang.serialization.Codec;
-import io.kalishak.galacticraftlegacy.Galacticraft;
 import io.kalishak.galacticraftlegacy.attachment.GalacticraftAttachments;
 import io.kalishak.galacticraftlegacy.registry.GalacticraftRegistries;
+import io.kalishak.galacticraftlegacy.registry.SchematicVariants;
 import io.kalishak.galacticraftlegacy.world.inventory.workbench.VehicleCraftingPage;
 import io.kalishak.galacticraftlegacy.world.inventory.workbench.VehicleCraftingPages;
 import io.kalishak.galacticraftlegacy.world.score.race.SpaceRaceTeam;
 import io.kalishak.galacticraftlegacy.registry.SchematicVariant;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.core.Holder;
-import net.minecraft.core.HolderGetter;
-import net.minecraft.core.Registry;
 import net.minecraft.core.RegistryAccess;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.player.Player;
-import org.jetbrains.annotations.VisibleForTesting;
+import net.neoforged.neoforge.network.codec.NeoForgeStreamCodecs;
 import org.jspecify.annotations.Nullable;
 
 import java.util.*;
+import java.util.function.BiFunction;
 
 public class Schematics {
     public static final Codec<Schematics> CODEC = ResourceKey.codec(GalacticraftRegistries.Keys.SCHEMATIC).listOf().xmap(Schematics::new, schematics -> schematics.unlockedSchematics);
@@ -51,6 +51,7 @@ public class Schematics {
 
         return new Schematics(copied);
     }
+
     public void sync(Schematics other) {
         this.unlockedSchematics.clear();
         this.unlockedSchematics.addAll(other.unlockedSchematics);
@@ -61,9 +62,8 @@ public class Schematics {
             return false;
         }
 
-        this.unlockedSchematics.add(key);
         this.shouldSort = true;
-        return true;
+        return this.unlockedSchematics.add(key);
     }
 
     public boolean remove(ResourceKey<SchematicVariant> key) {
@@ -71,13 +71,8 @@ public class Schematics {
             return false;
         }
 
-        this.unlockedSchematics.remove(key);
         this.shouldSort = true;
-        return true;
-    }
-
-    public void schematicUnlockedByTeam(ResourceKey<SchematicVariant> schematicId) {
-        unlock(schematicId);
+        return this.unlockedSchematics.remove(key);
     }
 
     public void updateSpaceRaceTeam(SpaceRaceTeam spaceRaceTeam) {
@@ -87,7 +82,7 @@ public class Schematics {
     }
 
     public boolean isUnlocked(ResourceKey<SchematicVariant> schematicId) {
-        return this.unlockedSchematics.stream().anyMatch(id -> id.identifier().equals(schematicId.identifier()));
+        return schematicId.equals(SchematicVariants.TIER_1_ROCKET) || this.unlockedSchematics.contains(schematicId);
     }
 
     public int unlockedCount() {
@@ -104,54 +99,48 @@ public class Schematics {
                 .toList();
     }
 
-
-    public @Nullable ResourceKey<SchematicVariant> getSorted(RegistryAccess registryAccess, int index) {
-        Registry<SchematicVariant> schematics = registryAccess.lookupOrThrow(GalacticraftRegistries.Keys.SCHEMATIC);
-        int validateCount = schematics.size();
-        if (this.shouldSort) {
-
-            this.unlockedSchematics.sort(Comparator.comparingInt(key -> schematics.get(key).map(holder -> holder.value().orderIndex()).orElse(-1)));
-            this.shouldSort = false;
-        }
-
-        logAllOwned();
-
-        if (index >= validateCount) {
-            return null;
-        }
-
-        if (index >= unlockedCount()) {
-            index = Math.min(index, unlockedCount() - 1);
-        }
-
-        return this.unlockedSchematics.get(index);
+    public boolean canPickAnother(@Nullable ResourceKey<SchematicVariant> key, Picker picker) {
+        return key == null || picker.pick(this, key).isPresent();
     }
 
-    public Optional<ResourceKey<SchematicVariant>> getOptionalSorted(RegistryAccess registryAccess, int index) {
-        return Optional.ofNullable(getSorted(registryAccess, index));
+    public @Nullable ResourceKey<SchematicVariant> getNext(ResourceKey<SchematicVariant> current) {
+        int indexOf = indexOf(current);
+
+        return indexOf < unlockedCount() - 1 ? this.unlockedSchematics.get(indexOf + 1) : null;
     }
 
-    @VisibleForTesting
-    public void logAllOwned() {
-        List<String> keys = new ArrayList<>(this.unlockedSchematics.size());
+    public @Nullable ResourceKey<SchematicVariant> getPrevious(ResourceKey<SchematicVariant> current) {
+        int indexOf = indexOf(current);
 
-        for (int i = 0; i < this.unlockedSchematics.size(); i++) {
-            keys.add(i + ": " + this.unlockedSchematics.get(i).identifier() + "\n");
+        if (indexOf < 1) {
+            return SchematicVariants.TIER_1_ROCKET;
         }
 
-        Galacticraft.LOGGER.debug("Owns keys: {}", keys);
+        return this.unlockedSchematics.get(indexOf - 1);
     }
 
-    public static @Nullable Holder<VehicleCraftingPage> getPage(Player player, int currentPageIndex, int newPageIndex) {
+    private int indexOf(ResourceKey<SchematicVariant> key) {
+        return key.equals(SchematicVariants.TIER_1_ROCKET) ? -1 : this.unlockedSchematics.indexOf(key);
+    }
+
+    private static void sort(RegistryAccess registryAccess, Schematics schematics) {
+        if (schematics.shouldSort) {
+            schematics.unlockedSchematics.sort(Comparator.comparingInt(key -> registryAccess.get(key).map(holder -> holder.value().orderIndex()).orElse(-1)));
+            schematics.shouldSort = false;
+        }
+    }
+
+    public static @Nullable Holder<VehicleCraftingPage> getPage(Player player, ResourceKey<SchematicVariant> currentSchematic, Picker picker) {
         Schematics playerSchematics = player.getData(GalacticraftAttachments.PLAYER_SPACE_DATA).getSchematics();
 
-        if (playerSchematics.isEmpty() || newPageIndex <= 0 ||  currentPageIndex >= playerSchematics.unlockedCount()) {
+        if (!playerSchematics.canPickAnother(currentSchematic, picker)) {
             return null;
         }
 
-        Optional<ResourceKey<SchematicVariant>> schematic = playerSchematics.getOptionalSorted(player.registryAccess(), newPageIndex);
+        sort(player.registryAccess(), playerSchematics);
+        Optional<ResourceKey<SchematicVariant>> next = picker.pick(playerSchematics, currentSchematic);
 
-        return schematic
+        return next
                 .flatMap(
                         key -> player.registryAccess()
                                 .lookupOrThrow(GalacticraftRegistries.Keys.VEHICLE_CRAFTING_PAGE)
@@ -160,7 +149,26 @@ public class Schematics {
                 .orElse(null);
     }
 
-    public static int getPageNumber(VehicleCraftingPage page) {
-        return page.schematic().value().orderIndex();
+    public static @Nullable Holder<VehicleCraftingPage> getLastPage(Player player) {
+        Schematics playerSchematics = player.getData(GalacticraftAttachments.PLAYER_SPACE_DATA).getSchematics();
+
+        return playerSchematics.isEmpty() ? null : player.registryAccess().get(VehicleCraftingPages.fromSchematic(playerSchematics.unlockedSchematics.getLast())).map(Holder.Reference::getDelegate).orElseThrow();
+    }
+
+    public enum Picker {
+        NEXT(Schematics::getNext),
+        PREVIOUS(Schematics::getPrevious);
+
+        public static final StreamCodec<RegistryFriendlyByteBuf, Picker> STREAM_CODEC = NeoForgeStreamCodecs.enumCodec(Picker.class);
+
+        private final BiFunction<Schematics, ResourceKey<SchematicVariant>, @Nullable ResourceKey<SchematicVariant>> pickFactory;
+
+        Picker(BiFunction<Schematics, ResourceKey<SchematicVariant>, @Nullable ResourceKey<SchematicVariant>> pickFactory) {
+            this.pickFactory = pickFactory;
+        }
+
+        public Optional<ResourceKey<SchematicVariant>> pick(Schematics schematics, ResourceKey<SchematicVariant> currentSchematic) {
+            return Optional.ofNullable(this.pickFactory.apply(schematics, currentSchematic));
+        }
     }
 }

@@ -85,14 +85,14 @@
       "slot_type": "galacticraftlegacy:booster"
     },
     {
-      "input": "galacticraftlegacy:rocket_fin",
+      "input": "galacticraftlegacy:rocket_fins",
       "slot_index": 12,
       "slot_offset_x": 21,
       "slot_offset_y": 109,
       "slot_type": "galacticraftlegacy:fin"
     },
     {
-      "input": "galacticraftlegacy:rocket_fin",
+      "input": "galacticraftlegacy:rocket_fins",
       "slot_index": 13,
       "slot_offset_x": 21,
       "slot_offset_y": 127,
@@ -113,14 +113,14 @@
       "slot_type": "galacticraftlegacy:booster"
     },
     {
-      "input": "galacticraftlegacy:rocket_fin",
+      "input": "galacticraftlegacy:rocket_fins",
       "slot_index": 16,
       "slot_offset_x": 75,
       "slot_offset_y": 109,
       "slot_type": "galacticraftlegacy:fin"
     },
     {
-      "input": "galacticraftlegacy:rocket_fin",
+      "input": "galacticraftlegacy:rocket_fins",
       "slot_index": 17,
       "slot_offset_x": 75,
       "slot_offset_y": 127,

@@ -36,7 +36,7 @@ public class GalacticraftItemIds {
     public static final ResourceKey<Item> ROCKET_BOOSTER = create("rocket_booster");
     public static final ResourceKey<Item> HEAVY_DUTY_PLATE = create("heavy_duty_plate");
     public static final ResourceKey<Item> ROCKET_NOSE_CONE = create("rocket_nose_cone");
-    public static final ResourceKey<Item> ROCKET_FIN = create("rocket_fin");
+    public static final ResourceKey<Item> ROCKET_FIN = create("rocket_fins");
     public static final ResourceKey<Item> TIER_1_ROCKET = create("tier_1_rocket");
     public static final ResourceKey<Item> TIER_2_ROCKET = create("tier_2_rocket");
     public static final ResourceKey<Item> CARGO_ROCKET = create("cargo_rocket");

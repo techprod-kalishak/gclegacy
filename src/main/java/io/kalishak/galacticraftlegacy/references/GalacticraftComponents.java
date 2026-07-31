@@ -9,16 +9,20 @@ package io.kalishak.galacticraftlegacy.references;
 
 import com.mojang.brigadier.Message;
 import com.mojang.brigadier.exceptions.Dynamic2CommandExceptionType;
+import io.kalishak.galacticraftlegacy.config.ClientConfig;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.Style;
 import net.minecraft.resources.Identifier;
 import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.transfer.energy.EnergyHandler;
 import org.apache.commons.lang3.function.TriFunction;
 
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.UnaryOperator;
 
 public class GalacticraftComponents {
     public static final String FREQUENCY_MODULE_DESC = "item.galacticraftlegacy.frequency_module.desc";
@@ -139,6 +143,26 @@ public class GalacticraftComponents {
     public static final Function<Component, MutableComponent> COMMAND_SUCCESS_SCHEMATIC_EMPTY_LIST = playerName -> Component.translatable("galacticraftlegacy.commands.schematics.list.empty", playerName);
     public static final BiFunction<Component, String, MutableComponent> COMMAND_SUCCESS_SCHEMATIC_ADD = (name, id) -> Component.translatable("galacticraftlegacy.commands.schematics.add", name, id);
     public static final BiFunction<Component, String, MutableComponent> COMMAND_SUCCESS_SCHEMATIC_REMOVE = (name, id) -> Component.translatable("galacticraftlegacy.commands.schematics.remove", id, name);
+
+    public static Component energyComponent(int amount, boolean applyPerTickSuffix, UnaryOperator<Style> withStyle) {
+        return Component.literal(ClientConfig.ENERGY_UNIT.get().calculate(amount) + " " + ClientConfig.ENERGY_UNIT.get().getUnit() + (applyPerTickSuffix ? "/t" : "")).withStyle(withStyle);
+    }
+
+    public static Component energyComponent(int amount, boolean applyPerTickSuffix) {
+        return energyComponent(amount, applyPerTickSuffix, UnaryOperator.identity());
+    }
+
+    public static Component energyComponent(EnergyHandler energyHandler, boolean applyPerTickSuffix, UnaryOperator<Style> withStyle) {
+        return energyComponent(energyHandler.getAmountAsInt(), applyPerTickSuffix, withStyle);
+    }
+
+    public static Component energyComponentWithCapacity(int amount, int capacity, UnaryOperator<Style> withStyle) {
+        return GalacticraftComponents.TOOLTIP_BATTERY.apply(ClientConfig.ENERGY_UNIT.get().calculate(amount) + "/" + ClientConfig.ENERGY_UNIT.get().calculate(capacity) + " " + ClientConfig.ENERGY_UNIT.get().getUnit()).withStyle(withStyle);
+    }
+
+    public static Component energyComponentWithCapacity(EnergyHandler energyHandler, UnaryOperator<Style> withStyle) {
+        return energyComponentWithCapacity(energyHandler.getAmountAsInt(), energyHandler.getCapacityAsInt(), withStyle);
+    }
 
     public static void infinite(Consumer<Component> tooltipAdder) {
         tooltipAdder.accept(INFINITE);

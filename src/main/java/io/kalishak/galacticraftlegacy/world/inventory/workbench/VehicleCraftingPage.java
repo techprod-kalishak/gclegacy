@@ -34,11 +34,12 @@ import net.neoforged.neoforge.transfer.item.ResourceHandlerSlot;
 
 import java.util.function.Consumer;
 
-public record VehicleCraftingPage(Holder<SchematicVariant> schematic, Holder<VehicleCraftingDataRecipe> vehicleRecipe, int inventoryHeight, Identifier background) {
+public record VehicleCraftingPage(Holder<SchematicVariant> schematic, Holder<VehicleCraftingDataRecipe> vehicleRecipe, int inventoryHeight, int imageHeight, Identifier background) {
     public static final Codec<VehicleCraftingPage> DIRECT_CODEC =  RecordCodecBuilder.create(instance -> instance.group(
             SchematicVariant.CODEC.fieldOf("schematic").forGetter(VehicleCraftingPage::schematic),
             VehicleCraftingDataRecipe.CODEC.fieldOf("vehicle_recipe").forGetter(VehicleCraftingPage::vehicleRecipe),
             ExtraCodecs.NON_NEGATIVE_INT.optionalFieldOf("inventory_height", 138).forGetter(VehicleCraftingPage::inventoryHeight),
+            ExtraCodecs.NON_NEGATIVE_INT.optionalFieldOf("image_height", 166).forGetter(VehicleCraftingPage::imageHeight),
             Identifier.CODEC.fieldOf("background").forGetter(VehicleCraftingPage::background)
     ).apply(instance, VehicleCraftingPage::new));
     public static final Codec<Holder<VehicleCraftingPage>> CODEC = RegistryFixedCodec.create(GalacticraftRegistries.Keys.VEHICLE_CRAFTING_PAGE);

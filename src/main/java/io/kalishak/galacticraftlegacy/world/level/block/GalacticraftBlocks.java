@@ -584,6 +584,14 @@ public final class GalacticraftBlocks {
                     .mapColor(MapColor.METAL)
                     .sound(SoundType.METAL)
     );
+    public static final DeferredBlock<CompactNasaWorkbenchBlock> COMPACT_NASA_WORKBENCH = REGISTRY.registerBlock(
+            GalacticraftBlockItemIds.COMPACT_NASA_WORKBENCH,
+            CompactNasaWorkbenchBlock::new,
+            builder -> builder
+                    .strength(2.5F)
+                    .mapColor(MapColor.METAL)
+                    .sound(SoundType.METAL)
+    );
 
     /** Machines */
     public static final DeferredBlock<OxygenDetectorBlock> OXYGEN_DETECTOR = REGISTRY.registerBlock(

@@ -20,11 +20,8 @@ import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
-import net.minecraft.client.renderer.rendertype.RenderType;
-import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.sprite.SpriteGetter;
 import net.minecraft.client.resources.model.sprite.SpriteId;
 import net.minecraft.core.BlockPos;
@@ -35,11 +32,11 @@ import net.minecraft.world.phys.Vec3;
 import org.jspecify.annotations.Nullable;
 
 public class ParachestBlockRenderer implements BlockEntityRenderer<ParachestBlockEntity, ParachestBlockRenderState> {
-    private final SpriteGetter spriteGetter;
+    private final SpriteGetter sprites;
     private final ChestModel model;
 
     public ParachestBlockRenderer(BlockEntityRendererProvider.Context context) {
-        this.spriteGetter = context.sprites();
+        this.sprites = context.sprites();
         this.model = new ChestModel(context.bakeLayer(ModelLayers.CHEST));
     }
 
@@ -63,24 +60,11 @@ public class ParachestBlockRenderer implements BlockEntityRenderer<ParachestBloc
         poseStack.translate(0.5F, 0.5F, 0.5F);
         poseStack.mulPose(Axis.YP.rotationDegrees(-renderState.angle));
         poseStack.translate(-0.5F, -0.5F, -0.5F);
-        float openess = renderState.open;
-        openess = 1.0F - openess;
-        openess = 1.0F - openess * openess * openess;
+        float open = renderState.open;
+        open = 1.0F - open;
+        open = 1.0F - open * open * open;
         SpriteId spriteId = GalacticraftSheets.PARACHEST;
-        RenderType renderType = spriteId.renderType(RenderTypes::entityCutout);
-        TextureAtlasSprite sprite = this.spriteGetter.get(spriteId);
-        submitNodeCollector.submitModel(
-                this.model,
-                openess,
-                poseStack,
-                renderType,
-                renderState.lightCoords,
-                OverlayTexture.NO_OVERLAY,
-                -1,
-                sprite,
-                0,
-                renderState.breakProgress
-        );
+        submitNodeCollector.submitModel(this.model, open, poseStack, renderState.lightCoords, OverlayTexture.NO_OVERLAY, -1, spriteId, this.sprites, 0, renderState.breakProgress);
         poseStack.popPose();
     }
 

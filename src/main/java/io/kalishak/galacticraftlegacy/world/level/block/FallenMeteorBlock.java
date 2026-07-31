@@ -63,18 +63,14 @@ public class FallenMeteorBlock extends FallingBlock implements EntityBlock, Simp
             Vec3 col = new Vec3(198, 108, 58);
             col.add(200 - meteor.getScaledHeatLevel() * 200);
 
-            return to32BitColor(255, (byte) Math.min(255, col.x), (byte) Math.min(255, col.y), (byte) Math.min(255, col.z));
+            return to32BitColor(255, (int) Math.min(255, col.x), (int) Math.min(255, col.y), (int) Math.min(255, col.z));
         }
 
         return 16777215;
     }
 
     public static int to32BitColor(int a, int r, int g, int b) {
-        a = a << 24;
-        r = r << 16;
-        g = g << 8;
-
-        return a | r | g | b;
+        return a << 24 | r << 16 | g << 8 | b;
     }
 
     @Override

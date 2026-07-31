@@ -640,6 +640,7 @@ public final class GalacticraftItems {
     public static final DeferredItem<BlockItem> TIN_DECORATION_STAIRS = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.TIN_DECORATION_STAIRS);
     public static final DeferredItem<BlockItem> TIN_DECORATION_WALL = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.TIN_DECORATION_WALL);
     public static final DeferredItem<BlockItem> NASA_WORKBENCH = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.NASA_WORKBENCH);
+    public static final DeferredItem<BlockItem> COMPACT_NASA_WORKBENCH = REGISTRY.registerSimpleBlockItemWithDescription(GalacticraftBlocks.COMPACT_NASA_WORKBENCH);
 
 
     public static void init(IEventBus bus) {

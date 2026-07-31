@@ -64,14 +64,14 @@
       "slot_type": "galacticraftlegacy:plating"
     },
     {
-      "input": "galacticraftlegacy:rocket_fin",
+      "input": "galacticraftlegacy:rocket_fins",
       "slot_index": 9,
       "slot_offset_x": 21,
       "slot_offset_y": 91,
       "slot_type": "galacticraftlegacy:fin"
     },
     {
-      "input": "galacticraftlegacy:rocket_fin",
+      "input": "galacticraftlegacy:rocket_fins",
       "slot_index": 10,
       "slot_offset_x": 21,
       "slot_offset_y": 109,
@@ -85,14 +85,14 @@
       "slot_type": "galacticraftlegacy:engine"
     },
     {
-      "input": "galacticraftlegacy:rocket_fin",
+      "input": "galacticraftlegacy:rocket_fins",
       "slot_index": 12,
       "slot_offset_x": 75,
       "slot_offset_y": 91,
       "slot_type": "galacticraftlegacy:fin"
     },
     {
-      "input": "galacticraftlegacy:rocket_fin",
+      "input": "galacticraftlegacy:rocket_fins",
       "slot_index": 13,
       "slot_offset_x": 75,
       "slot_offset_y": 109,

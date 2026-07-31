@@ -80,6 +80,7 @@ public class GalacticraftBlockLootSubProvider extends BlockLootSubProvider {
         add(GalacticraftBlocks.TIN_DECORATION_SLAB.get(), this::createSlabItemTable);
         dropSelf(GalacticraftBlocks.TIN_DECORATION_STAIRS.get());
         dropSelf(GalacticraftBlocks.TIN_DECORATION_WALL.get());
+        dropSelf(GalacticraftBlocks.COMPACT_NASA_WORKBENCH.get());
         dropSelf(GalacticraftBlocks.NASA_WORKBENCH.get());
     }
 

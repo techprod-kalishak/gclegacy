@@ -121,6 +121,11 @@ public final class GalacticraftBlockEntityType {
             DenseWireBlockEntity::new,
             GalacticraftBlocks.HEAVY_ALUMINUM_WIRE
     );
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<NasaWorkbenchBlockEntity>> NASA_WORKBENCH = REGISTRY.registerBlockEntity(
+            "nasa_workbench",
+            NasaWorkbenchBlockEntity::new,
+            GalacticraftBlocks.NASA_WORKBENCH
+    );
 
     private static void registerCapabilities(RegisterCapabilitiesEvent event) {
         CircuitFabricatorBlockEntity.registerCapabilities(event);

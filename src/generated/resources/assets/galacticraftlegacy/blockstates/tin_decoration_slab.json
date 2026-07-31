@@ -4,7 +4,7 @@
       "model": "galacticraftlegacy:block/tin_decoration_slab"
     },
     "type=double": {
-      "model": "galacticraftlegacy:block/tin_decoration"
+      "model": "galacticraftlegacy:block/tin_decoration_block"
     },
     "type=top": {
       "model": "galacticraftlegacy:block/tin_decoration_slab_top"

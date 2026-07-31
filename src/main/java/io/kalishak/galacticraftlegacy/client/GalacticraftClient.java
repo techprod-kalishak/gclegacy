@@ -12,9 +12,12 @@ import io.kalishak.galacticraftlegacy.Galacticraft;
 import io.kalishak.galacticraftlegacy.client.gui.screens.inventory.workbench.NasaWorkbenchEmptyPageScreen;
 import io.kalishak.galacticraftlegacy.client.gui.screens.inventory.workbench.NasaWorkbenchScreen;
 import io.kalishak.galacticraftlegacy.client.gui.screens.inventory.workbench.NasaWorkbenchPageScreen;
+import io.kalishak.galacticraftlegacy.client.model.object.NasaWorkbenchModel;
+import io.kalishak.galacticraftlegacy.client.renderer.blockentity.NasaWorkbenchBlockRenderer;
 import io.kalishak.galacticraftlegacy.client.renderer.environment.sky.MoonSkyRenderer;
 import io.kalishak.galacticraftlegacy.client.renderer.environment.sky.OrbitalSkyRenderer;
 import io.kalishak.galacticraftlegacy.client.renderer.environment.sky.SpaceSkyRenderer;
+import io.kalishak.galacticraftlegacy.client.renderer.special.NasaWorkbenchSpecialRenderer;
 import io.kalishak.galacticraftlegacy.client.renderer.special.VehicleSpecialRenderer;
 import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.client.gui.SensorGlassesOverlay;
@@ -186,6 +189,7 @@ public class GalacticraftClient {
 
         event.registerBlockEntityRenderer(GalacticraftBlockEntityType.PARACHEST.get(), ParachestBlockRenderer::new);
         event.registerBlockEntityRenderer(GalacticraftBlockEntityType.DUNGEON_CHEST.get(), DungeonBlockRenderer::new);
+        event.registerBlockEntityRenderer(GalacticraftBlockEntityType.NASA_WORKBENCH.get(), NasaWorkbenchBlockRenderer::new);
     }
 
     private void registerOverlays(RegisterGuiLayersEvent event) {
@@ -200,6 +204,7 @@ public class GalacticraftClient {
         event.registerLayerDefinition(GalacticraftModelLayers.HEAVY_OXYGEN_TANK, OxygenTankModel::createHeavyTankLayer);
         event.registerLayerDefinition(GalacticraftModelLayers.MEDIUM_OXYGEN_TANK, OxygenTankModel::createMediumTankLayer);
         event.registerLayerDefinition(GalacticraftModelLayers.LIGHT_OXYGEN_TANK, OxygenTankModel::createLightTankLayer);
+        event.registerLayerDefinition(GalacticraftModelLayers.NASA_WORKBENCH, NasaWorkbenchModel::createArmLayer);
         event.registerLayerDefinition(GalacticraftModelLayers.PARACHUTE, ParachuteModel::createParachuteLayer);
         ArmorModelSet<LayerDefinition> thermalPadding = PlayerModel.createArmorMeshSet(new CubeDeformation(0.032F), new CubeDeformation(0.06F)).map(layer -> LayerDefinition.create(layer, 64, 32));
         event.registerLayerDefinition(GalacticraftModelLayers.THERMAL_PADDING.head(), thermalPadding::head);
@@ -248,6 +253,7 @@ public class GalacticraftClient {
     private void registerSpecialRenderers(RegisterSpecialModelRendererEvent event) {
         event.register(Constants.id("key_renderer"), KeySpecialRenderer.Unbaked.MAP_CODEC);
         event.register(Constants.id("vehicle_renderer"), VehicleSpecialRenderer.Unbaked.MAP_CODEC);
+        event.register(Constants.id("nasa_workbench_renderer"), NasaWorkbenchSpecialRenderer.Unbaked.MAP_CODEC);
     }
 
     private void addRenderStates(RegisterRenderStateModifiersEvent event) {

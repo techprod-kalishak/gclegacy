@@ -10,6 +10,7 @@ package io.kalishak.galacticraftlegacy.server.commands;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
+import io.kalishak.galacticraftlegacy.Galacticraft;
 import io.kalishak.galacticraftlegacy.attachment.GalacticraftAttachments;
 import io.kalishak.galacticraftlegacy.attachment.entity.Schematics;
 import io.kalishak.galacticraftlegacy.references.GalacticraftComponents;
@@ -25,9 +26,13 @@ import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.ComponentUtils;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.server.commands.GiveCommand;
 import net.minecraft.server.level.ServerPlayer;
+import org.jetbrains.annotations.VisibleForTesting;
 
 import java.util.Collection;
+import java.util.List;
+import java.util.Set;
 import java.util.function.BiPredicate;
 
 public class UnlockSchematicCommand {
@@ -61,7 +66,7 @@ public class UnlockSchematicCommand {
                                                         .executes(c -> showPlayerSchematics(c.getSource(), EntityArgument.getPlayers(c, "targets")))
                                         )
                         )
-                        .then(
+                        /*.then(
                                 Commands.argument("team", SpaceRaceTeamArgument.spaceRace())
                                         .then(
                                                 Commands.literal("unlock")
@@ -83,7 +88,7 @@ public class UnlockSchematicCommand {
                                                 Commands.literal("list")
                                                         .executes(c -> showSpaceRaceSchematics(c.getSource(), SpaceRaceTeamArgument.getSpaceRace(c, "spaceRace")))
                                         )
-                        )
+                        )*/
         );
     }
 
@@ -237,6 +242,15 @@ public class UnlockSchematicCommand {
     }
 
     private static Collection<ResourceKey<SchematicVariant>> getRegisteredSchematics(RegistryAccess registryAccess) {
-        return registryAccess.lookupOrThrow(GalacticraftRegistries.Keys.SCHEMATIC).registryKeySet();
+        return logAllSchematics(registryAccess);
+    }
+
+    @VisibleForTesting
+    private static Collection<ResourceKey<SchematicVariant>> logAllSchematics(RegistryAccess registryAccess) {
+        Set<ResourceKey<SchematicVariant>> keys = registryAccess.lookupOrThrow(GalacticraftRegistries.Keys.SCHEMATIC).registryKeySet();
+
+        Galacticraft.LOGGER.debug("Registered the following schematics: {}", keys);
+
+        return keys;
     }
 }

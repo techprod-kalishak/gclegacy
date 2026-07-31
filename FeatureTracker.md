@@ -21,8 +21,8 @@ Please note that the following list is a preliminary outline of planned features
 - [ ] Fuel Loader ❌
 - [ ] Cargo Loader ❌
 - [ ] Cargo Unloader ❌
-- [ ] NASA Workbench ❌
-- [ ] Compact NASA Workbench ❌
+- [ ] NASA Workbench ✅
+- [ ] Compact NASA Workbench ✅
 - [ ] Tin Decoration Block & Variants ❌
 - [ ] Tin Wall Block & Variants ❌
 - [ ] Tin Ore Block & Generation ✅
@@ -163,16 +163,16 @@ Please note that the following list is a preliminary outline of planned features
 - [ ] Oxygen Vent ❌
 - [ ] Oxygen Fan ❌
 - [ ] Oxygen Concentrator ❌
-- [ ] Tier 1 Rocket Engine ❌
-- [ ] Tier 1 Booster ❌
-- [ ] Heavy-Duty Plate ⏳ (Missing art)
-- [ ] Nose Cone ❌
-- [ ] Rocket Fins ❌
+- [ ] Tier 1 Rocket Engine ✅
+- [ ] Tier 1 Booster ✅
+- [ ] Heavy-Duty Plate ✅
+- [ ] Nose Cone ✅
+- [ ] Rocket Fins ✅
 - [ ] Steel Pole ❌
 - [ ] Canvas ❌
-- [ ] Buggy Wheel ❌
-- [ ] Buggy Seat ❌
-- [ ] Buggy Storage Box ❌
+- [ ] Buggy Wheel ✅
+- [ ] Buggy Seat ✅
+- [ ] Buggy Storage Box ✅
 - [ ] Buggy Item ❌
 - [ ] Single Solar Module ❌
 - [ ] Full Solar Panel ❌

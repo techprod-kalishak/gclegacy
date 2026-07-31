@@ -7,31 +7,19 @@
 
 package io.kalishak.galacticraftlegacy.client.gui.screens.inventory.workbench;
 
-import io.kalishak.galacticraftlegacy.attachment.entity.Schematics;
-import io.kalishak.galacticraftlegacy.registry.GalacticraftRegistries;
+import io.kalishak.galacticraftlegacy.registry.SchematicVariant;
 import io.kalishak.galacticraftlegacy.world.inventory.workbench.NasaWorkbenchPageMenu;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.player.Inventory;
 
 public class NasaWorkbenchPageScreen extends AbstractNasaWorkbenchScreen<NasaWorkbenchPageMenu> implements NasaWorkbenchScreenPage {
     public NasaWorkbenchPageScreen(NasaWorkbenchPageMenu menu, Inventory inventory, Component title) {
-        super(menu, inventory, title, menu.getCurrentPage().background());
-    }
-
-
-    @Override
-    public int getPageIndex() {
-        return Schematics.getPageNumber(this.menu.getCurrentPage());
+        super(menu, inventory, title, DEFAULT_IMAGE_WIDTH, menu.getCurrentPage().imageHeight(), menu.getCurrentPage().background());
     }
 
     @Override
-    protected boolean activateBackButton() {
-        return true;
-    }
-
-    @Override
-    protected boolean activateNextButton() {
-        assert this.minecraft.player != null;
-        return this.minecraft.player.registryAccess().lookupOrThrow(GalacticraftRegistries.Keys.SCHEMATIC).size() < getPageIndex();
+    public ResourceKey<SchematicVariant> getPage() {
+        return this.menu.getCurrentPage().schematic().getKey();
     }
 }

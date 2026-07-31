@@ -11,7 +11,6 @@ import io.kalishak.galacticraftlegacy.world.inventory.workbench.AbstractNasaWork
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
-import net.minecraft.client.gui.screens.inventory.BeaconScreen;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
@@ -21,7 +20,12 @@ public abstract class AbstractNasaWorkbenchScreen<T extends AbstractNasaWorkbenc
     protected final Identifier backgroundTextures;
 
     public AbstractNasaWorkbenchScreen(T menu, Inventory inventory, Component title, Identifier backgroundTextures) {
-        super(menu, inventory, title, 176, 220);
+        super(menu, inventory, title);
+        this.backgroundTextures = backgroundTextures;
+    }
+
+    public AbstractNasaWorkbenchScreen(T menu, Inventory inventory, Component title, int imageWidth, int imageHeight, Identifier backgroundTextures) {
+        super(menu, inventory, title, imageWidth, imageHeight);
         this.backgroundTextures = backgroundTextures;
     }
 
@@ -41,6 +45,11 @@ public abstract class AbstractNasaWorkbenchScreen<T extends AbstractNasaWorkbenc
         previousButton.active = activateBackButton();
     }
 
-    protected abstract boolean activateBackButton();
-    protected abstract boolean activateNextButton();
+    protected boolean activateBackButton() {
+        return true;
+    }
+
+    protected boolean activateNextButton() {
+        return true;
+    }
 }

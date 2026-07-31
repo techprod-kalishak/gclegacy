@@ -42,7 +42,7 @@ public final class GalacticraftBlockItemIds {
     public static final BlockItemId CARGO_UNLOADER = create("cargo_unloader");
     public static final BlockItemId NASA_WORKBENCH = create("nasa_workbench");
     public static final BlockItemId COMPACT_NASA_WORKBENCH = create("compact_nasa_workbench");
-    public static final BlockItemId TIN_DECORATION_BLOCK = create("tin_decoration");
+    public static final BlockItemId TIN_DECORATION_BLOCK = create("tin_decoration_block");
     public static final BlockItemId TIN_DECORATION_SLAB = create("tin_decoration_slab");
     public static final BlockItemId TIN_DECORATION_STAIRS = create("tin_decoration_stairs");
     public static final BlockItemId TIN_DECORATION_WALL = create("tin_decoration_wall");

@@ -19,6 +19,7 @@ public class GalacticraftModelLayers {
     public static final ModelLayerLocation HEAVY_OXYGEN_TANK = createLocation("heavy_oxygen_tank");
     public static final ModelLayerLocation MEDIUM_OXYGEN_TANK = createLocation("medium_oxygen_tank");
     public static final ModelLayerLocation LIGHT_OXYGEN_TANK = createLocation("light_oxygen_tank");
+    public static final ModelLayerLocation NASA_WORKBENCH = createLocation("nasa_workbench/workbench_arms");
     public static final ModelLayerLocation PARACHUTE = createLocation("parachute");
     public static final ArmorModelSet<ModelLayerLocation> THERMAL_PADDING = new ArmorModelSet<>(
             createLocation("head_thermal_padding"),

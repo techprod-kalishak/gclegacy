@@ -125,7 +125,8 @@ public class GalacticraftLanguageProvider extends LanguageProvider {
         //addWithDescription(GalacticraftBlocks.FUEL_LOADER, "Fuel Loader", "After being connected to fuel pad, a Fuel Loader will allow fuel to passed into the connected Rocket of vehicle.");
         //addWithDescription(GalacticraftBlocks.CARGO_LOADER, "Cargo Loader", "Cargo Loaders will pass blocks and items onto Rockets and other vehicles with cargo space. Must be attached to Landing/Fueling pad.");
         //addWithDescription(GalacticraftBlocks.CARGO_UNLOADER, "Cargo Unloader", "Cargo Unloaders will extract blocks and items from Rockets and other vehicles with cargo space. Must be attached to Landing/Fueling pad.");
-        //addWithDescription(GalacticraftBlocks.COMPACT_NASA_WORKBENCH, "Compact NASA Workbench", "Compact variant of the NASA workbench.");
+        addBlock(GalacticraftBlocks.NASA_WORKBENCH, "NASA Workbench");
+        addWithDescription(GalacticraftBlocks.COMPACT_NASA_WORKBENCH, "Compact NASA Workbench", "Compact variant of the NASA workbench.");
         //addWithDescription(GalacticraftBlocks.AIR_LOCK_FRAME, "Air Lock Frame", "Air Lock Frames, when arranged in a portal-like formation, with a single block replaced with a controller, will function as a working air lock.");
         //addWithDescription(GalacticraftBlocks.AIR_LOCK_CONTROLLER, "Air Lock Controller", "Air Lock Frames, when arranged in a portal-like formation, with a single block replaced with a controller, will function as a working air lock.");
         //addWithDescription(GalacticraftBlocks.CLEAR_VACCUM_GLASS, "Vaccum Glass (Clear)", "Clear glass for great views of space, can also provide a great view underwater");
@@ -281,6 +282,17 @@ public class GalacticraftLanguageProvider extends LanguageProvider {
         addItem(GalacticraftItems.HEAVY_DUTY_PLATE, "Heavy Duty Plate");
         addItem(GalacticraftItems.HEAVY_DUTY_PLATE_TIER_2, "Heavy Duty Plate Tier 2");
         addItem(GalacticraftItems.HEAVY_DUTY_PLATE_TIER_3, "Heavy Duty Plate Tier 3");
+        addItem(GalacticraftItems.ROCKET_NOSE_CONE, "Rocket Nose Cone");
+        addItem(GalacticraftItems.ROCKET_FIN, "Rocket Fins");
+        addItem(GalacticraftItems.ROCKET_ENGINE, "Rocket Engine");
+        addItem(GalacticraftItems.ROCKET_BOOSTER, "Rocket Booster");
+        addItem(GalacticraftItems.HEAVY_NOSE_CONE, "Heavy Nose Cone");
+        addItem(GalacticraftItems.HEAVY_FIN, "Heavy Rocket Fins");
+        addItem(GalacticraftItems.HEAVY_ROCKET_ENGINE, "Heavy Rocket Engine");
+        addItem(GalacticraftItems.BUGGY_SEAT, "Buggy Seat");
+        addItem(GalacticraftItems.BUGGY_WHEEL, "Buggy Wheel");
+        addItem(GalacticraftItems.BUGGY_STORAGE_BOX, "Buggy Storage Box");
+        addItem(GalacticraftItems.ORION_DRIVE, "Orion Drive");
 
         addItem(GalacticraftItems.EVOLVED_SKELETON_SPAWN_EGG, "Evolved Skeleton Spawn Egg");
         addItem(GalacticraftItems.EVOLVED_ZOMBIE_SPAWN_EGG, "Evolved Zombie Spawn Egg");

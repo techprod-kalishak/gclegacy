@@ -8,6 +8,7 @@
 package io.kalishak.galacticraftlegacy.client.data;
 
 import io.kalishak.galacticraftlegacy.client.data.models.model.GalacticraftModelTemplates;
+import io.kalishak.galacticraftlegacy.client.renderer.special.NasaWorkbenchSpecialRenderer;
 import io.kalishak.galacticraftlegacy.client.renderer.special.VehicleSpecialRenderer;
 import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.Galacticraft;
@@ -38,6 +39,7 @@ import net.minecraft.client.data.models.model.*;
 import net.minecraft.client.renderer.item.ItemModel;
 import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.core.Direction;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Util;
@@ -130,7 +132,8 @@ public class GalacticraftModelProvider extends ModelProvider {
         blockModels.createTrivialCube(GalacticraftBlocks.ASTEROID_ALUMINUM_ORE.get());
         blockModels.createTrivialBlock(GalacticraftBlocks.TIN_DECORATION_CUT_BLOCK.get(), TexturedModel.CUBE_TOP_BOTTOM);
         blockModels.createTrivialCube(GalacticraftBlocks.SPACE_STATION.get());
-        blockModels.createTrivialCube(GalacticraftBlocks.NASA_WORKBENCH.get());
+        noBlockGen(blockModels, GalacticraftBlocks.COMPACT_NASA_WORKBENCH.get());
+        nasaWorkbench(blockModels, GalacticraftBlocks.NASA_WORKBENCH.get());
         blockModels.createNonTemplateModelBlock(GalacticraftBlocks.GRATING.get());
         createMeteor(blockModels, GalacticraftBlocks.FALLEN_METEOR.get());
 
@@ -267,18 +270,16 @@ public class GalacticraftModelProvider extends ModelProvider {
         vehicle(itemModels, GalacticraftItems.ASTRO_MINER.get());
     }
 
-    private void simpleParent(BlockModelGenerators blockModels, Block block, UnaryOperator<ExtendedModelTemplateBuilder> builder, TextureSlot... slots) {
-        Material material = TextureMapping.getBlockTexture(block);
-        TextureMapping textureMapping = Util.make(new TextureMapping(), mapping -> Arrays.stream(slots).forEach(slot -> mapping.put(slot, material)));
-        Identifier modelId = builder.apply(ModelTemplates.create(slots).extend()).build().create(block, textureMapping, blockModels.modelOutput);
-
-        blockModels.blockStateOutput.accept(MultiVariantGenerator.dispatch(block, BlockModelGenerators.plainVariant(modelId)));
-    }
-
     private void createMeteor(BlockModelGenerators blockModels, Block block) {
         Identifier blockModel = Constants.id("block/fallen_meteor");
         blockModels.createNonTemplateModelBlock(block);
         blockModels.registerSimpleTintedItemModel(block, blockModel, ItemModelUtils.constantTint(0));
+    }
+
+    private void noBlockGen(BlockModelGenerators blockModels, Block block) {
+        Identifier blockModel = BuiltInRegistries.BLOCK.getKey(block).withPrefix("block/");
+        blockModels.createNonTemplateModelBlock(block);
+        blockModels.registerSimpleItemModel(block, blockModel);
     }
 
     private void magneticCraftingTable(BlockModelGenerators blockModels, MagneticCraftingBlock block) {
@@ -499,5 +500,16 @@ public class GalacticraftModelProvider extends ModelProvider {
         Identifier model = GalacticraftModelTemplates.VEHICLE_INVENTORY.create(rocketItem, TextureMapping.particle(GalacticraftBlocks.ASTEROID_ROCK.get()), gen.modelOutput);
         ItemModel.Unbaked unbakedModel = ItemModelUtils.specialModel(model, new VehicleSpecialRenderer.Unbaked(rocketItem.getVehicleType()));
         gen.itemModelOutput.accept(rocketItem, unbakedModel);
+    }
+
+    private void nasaWorkbench(BlockModelGenerators gen, Block block) {
+        Identifier baseModel = ModelTemplates.CUBE_BOTTOM_TOP.create(block, TextureMapping.cubeBottomTop(block), gen.modelOutput);
+        gen.blockStateOutput.accept(createSimpleBlock(block, plainVariant(baseModel)));
+
+        ItemModel.Unbaked model = ItemModelUtils.composite(
+                ItemModelUtils.plainModel(baseModel),
+                ItemModelUtils.specialModel(baseModel, new NasaWorkbenchSpecialRenderer.Unbaked())
+        );
+        gen.itemModelOutput.accept(block.asItem(), model);
     }
 }

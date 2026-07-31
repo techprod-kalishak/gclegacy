@@ -246,7 +246,7 @@ public class SpaceRaceTeam extends Team {
     }
 
     public void addNewSchematic(ResourceKey<SchematicVariant> schematicId) {
-        this.unlockedSchematics.schematicUnlockedByTeam(schematicId);
+        this.unlockedSchematics.unlock(schematicId);
         this.spaceRaceScoreboard.onTeamChanged(this);
     }
 
