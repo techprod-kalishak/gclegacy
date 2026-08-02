@@ -100,13 +100,13 @@ public interface ResourcefulHelper {
     }
 
     static void collectContainerComponent(DataComponentMap.Builder components, ResourceHandler<ItemResource> items) {
-        NonNullList<ItemStack> stacks = orderedHandlerCopy(items, ItemStack.EMPTY, ItemResource::toStack);
+        NonNullList<ItemStack> stacks = nonNullList(items, ItemStack.EMPTY, ItemResource::toStack);
 
         components.set(DataComponents.CONTAINER, ItemContainerContents.fromItems(stacks));
     }
 
     static void collectTankComponent(DataComponentMap.Builder components, ResourceHandler<FluidResource> fluids) {
-        NonNullList<FluidStack> stacks = orderedHandlerCopy(fluids, FluidStack.EMPTY, FluidResource::toStack);
+        NonNullList<FluidStack> stacks = nonNullList(fluids, FluidStack.EMPTY, FluidResource::toStack);
 
         components.set(GalacticraftDataComponents.FLUID_TANK_CONTENTS, FluidTankContents.fromFluids(stacks));
     }
@@ -198,7 +198,7 @@ public interface ResourcefulHelper {
         return cap != null ? cap : EmptyResourceHandler.instance();
     }
 
-    static <R extends Resource, S> NonNullList<S> orderedHandlerCopy(ResourceHandler<R> resourceHandler, S emptyStack, BiFunction<R, Integer, S> stacker) {
+    static <R extends Resource, S> NonNullList<S> nonNullList(ResourceHandler<R> resourceHandler, S emptyStack, BiFunction<R, Integer, S> stacker) {
         NonNullList<S> stacks = NonNullList.withSize(resourceHandler.size(), emptyStack);
 
         for (int i = 0; i < resourceHandler.size(); i++) {

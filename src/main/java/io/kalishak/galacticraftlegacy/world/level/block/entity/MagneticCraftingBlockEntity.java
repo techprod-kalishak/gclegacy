@@ -9,7 +9,7 @@ package io.kalishak.galacticraftlegacy.world.level.block.entity;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import io.kalishak.galacticraftlegacy.world.inventory.MagneticCraftingMenu;
+import io.kalishak.galacticraftlegacy.world.inventory.magnetic_crafting.MagneticCraftingMenu;
 import io.kalishak.galacticraftlegacy.world.inventory.container.CraftingStorage;
 import io.kalishak.galacticraftlegacy.world.item.component.GalacticraftDataComponents;
 import net.minecraft.core.BlockPos;
@@ -89,7 +89,8 @@ public class MagneticCraftingBlockEntity extends BaseItemStorageBlockEntity impl
                     .ifPresent(recipe -> {
                         setRecipeUsed(recipe);
                         ItemStack result = recipe.value().assemble(craftInput);
-                        stackConsumer.accept(result);
+                        //stackConsumer.accept(result);
+                        setItem(0, result);
                     });
         }
     }

@@ -50,14 +50,14 @@
       "slot_type": "galacticraftlegacy:circuit"
     },
     {
-      "input": "#c:chests",
+      "input": "minecraft:chest",
       "slot_index": 7,
       "slot_offset_x": 70,
       "slot_offset_y": 53,
       "slot_type": "galacticraftlegacy:storage"
     },
     {
-      "input": "#c:chests",
+      "input": "minecraft:chest",
       "slot_index": 8,
       "slot_offset_x": 88,
       "slot_offset_y": 53,

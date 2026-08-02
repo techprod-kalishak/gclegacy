@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "A": "#c:plates/aluminum",
+    "I": "#c:plates/iron",
+    "P": "minecraft:repeater",
+    "R": "minecraft:redstone",
+    "W": "galacticraftlegacy:basic_wafer"
+  },
+  "pattern": [
+    " A ",
+    "IPI",
+    "RWR"
+  ],
+  "result": {
+    "id": "galacticraftlegacy:frequency_module"
+  }
+}

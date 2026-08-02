@@ -1,0 +1,33 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "galacticraftlegacy:frequency_module"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "was_in_space": {
+      "conditions": {
+        "location": {
+          "biomes": "#galacticraftlegacy:is_orbit"
+        },
+        "slots": [
+          "frequency_module"
+        ]
+      },
+      "trigger": "galacticraftlegacy:missing_gear"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "was_in_space"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "galacticraftlegacy:frequency_module"
+    ]
+  }
+}

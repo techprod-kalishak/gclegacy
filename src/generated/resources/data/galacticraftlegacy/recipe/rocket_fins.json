@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "H": "#c:plates/heavy_duty",
+    "S": "#c:plates/steel"
+  },
+  "pattern": [
+    " S ",
+    "HSH",
+    "H H"
+  ],
+  "result": {
+    "id": "galacticraftlegacy:rocket_fins"
+  }
+}

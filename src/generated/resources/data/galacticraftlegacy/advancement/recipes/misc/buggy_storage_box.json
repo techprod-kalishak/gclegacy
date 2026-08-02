@@ -1,0 +1,30 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_schematic": {
+      "conditions": {
+        "schematics": [
+          "galacticraftlegacy:moon_buggy"
+        ]
+      },
+      "trigger": "galacticraftlegacy:unlocked_schematic"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "galacticraftlegacy:buggy_storage_box"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_schematic"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "galacticraftlegacy:buggy_storage_box"
+    ]
+  }
+}

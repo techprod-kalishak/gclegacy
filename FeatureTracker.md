@@ -160,7 +160,7 @@ Please note that the following list is a preliminary outline of planned features
 - [ ] Copper Canister ❌
 - [ ] Canisters (Empty, Fluid, Oxygen. etc.) ✅
 - [ ] Sensor Lens ❌
-- [ ] Oxygen Vent ❌
+- [ ] Oxygen Vent ✅
 - [ ] Oxygen Fan ❌
 - [ ] Oxygen Concentrator ❌
 - [ ] Tier 1 Rocket Engine ✅
@@ -169,18 +169,18 @@ Please note that the following list is a preliminary outline of planned features
 - [ ] Nose Cone ✅
 - [ ] Rocket Fins ✅
 - [ ] Steel Pole ❌
-- [ ] Canvas ❌
+- [ ] Canvas ✅
 - [ ] Buggy Wheel ✅
 - [ ] Buggy Seat ✅
 - [ ] Buggy Storage Box ✅
 - [ ] Buggy Item ❌
-- [ ] Single Solar Module ❌
-- [ ] Full Solar Panel ❌
+- [ ] Single Solar Module ✅
+- [ ] Full Solar Panel ✅
 - [ ] Raw Silicon ✅
 - [ ] Blue Solar Wafer ✅
 - [ ] Basic Wafer ✅
 - [ ] Advanced Wafer ✅
-- [ ] Ambient Thermal Controller ❌
+- [ ] Ambient Thermal Controller ✅
 - [ ] Can of Food 
 - - [ ] Dehydrated Apple ✅
 - - [ ] Dehydrated Carrot ✅
@@ -235,21 +235,21 @@ Please note that the following list is a preliminary outline of planned features
 - [ ] Desh Armor (Missing model art) ⏳
 - [ ] Thermal Padding ⏳ (Model fixes)
 - [ ] Titanium Armor (Missing model art) ⏳
-- [ ] Isothermal Padding ⏳ (Model fixes)
-- [ ] Compressed Copper ⏳ (Missing art)
-- [ ] Compressed Tin ⏳ (Missing art)
-- [ ] Compressed Aluminum ⏳ (Missing art)
-- [ ] Compressed Steel ⏳ (Missing art)
-- [ ] Compressed Bronze ⏳ (Missing art)
-- [ ] Compressed Iron ⏳ (Missing art)
-- [ ] Compressed Meteoric Iron ⏳ (Missing art)
-- [ ] Compressed Heavy Duty Plate (Tier 2) ⏳ (Missing art)
-- [ ] Compressed Desh ⏳ (Missing art)
-- [ ] Compressed Heavy Duty Plate (Tier 3) ⏳ (Missing art)
-- [ ] Compressed Titanium ⏳ (Missing art)
+- [ ] Isothermal Padding ✅
+- [ ] Compressed Copper ✅
+- [ ] Compressed Tin ✅
+- [ ] Compressed Aluminum ✅
+- [ ] Compressed Steel ✅
+- [ ] Compressed Bronze ✅
+- [ ] Compressed Iron ✅
+- [ ] Compressed Meteoric Iron ✅
+- [ ] Compressed Heavy Duty Plate (Tier 2) ✅
+- [ ] Compressed Desh ✅
+- [ ] Compressed Heavy Duty Plate (Tier 3) ✅
+- [ ] Compressed Titanium ✅
 - [ ] Tin Ingot ✅
 - [ ] Aluminum Ingot ✅
-- [ ] Meteoric Iron Ingot ❌
+- [ ] Meteoric Iron Ingot ✅
 - [ ] Desh Ingot ✅
 - [ ] Titanium Ingot ✅
 - [ ] Lead Ingot ✅

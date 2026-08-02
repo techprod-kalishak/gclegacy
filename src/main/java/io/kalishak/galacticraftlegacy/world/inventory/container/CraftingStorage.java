@@ -30,7 +30,7 @@ public interface CraftingStorage extends StackedContentsCompatible {
     ItemStack removeItem(int slot, int count);
 
     default List<ItemStack> getItems() {
-        return ResourcefulHelper.orderedHandlerCopy(getResourceHandler(), ItemStack.EMPTY, ItemResource::toStack);
+        return ResourcefulHelper.nonNullList(getResourceHandler(), ItemStack.EMPTY, ItemResource::toStack);
     }
 
     default CraftingInput asCraftInput() {

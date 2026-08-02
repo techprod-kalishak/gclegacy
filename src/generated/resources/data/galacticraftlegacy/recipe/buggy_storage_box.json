@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "C": "#c:chests",
+    "I": "#c:plates/iron",
+    "S": "#c:plates/steel"
+  },
+  "pattern": [
+    "SSS",
+    "ICI",
+    "SSS"
+  ],
+  "result": {
+    "id": "galacticraftlegacy:buggy_storage_box"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    "minecraft:beetroot",
+    "minecraft:beetroot",
+    "galacticraftlegacy:tin_canister"
+  ],
+  "result": {
+    "id": "galacticraftlegacy:dehydrated_beetroot"
+  }
+}

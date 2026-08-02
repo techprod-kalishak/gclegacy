@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "A": "galacticraftlegacy:aluminum_wire",
+    "G": "#c:glass_blocks",
+    "S": "galacticraftlegacy:single_solar_module"
+  },
+  "pattern": [
+    "GGG",
+    "SSS",
+    "AAA"
+  ],
+  "result": {
+    "id": "galacticraftlegacy:full_solar_panel"
+  }
+}

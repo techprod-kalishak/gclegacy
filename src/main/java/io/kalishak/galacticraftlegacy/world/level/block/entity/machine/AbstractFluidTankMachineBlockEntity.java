@@ -34,7 +34,7 @@ public abstract class AbstractFluidTankMachineBlockEntity extends AbstractMachin
         super.onLoad();
 
         if (this.level != null && !this.level.isClientSide()) {
-            AbstractFluidTankMachineBlockEntity.this.setData(GalacticraftAttachments.SYNC_FLUID_STORAGE, new SyncedFluidResource(ResourcefulHelper.orderedHandlerCopy(AbstractFluidTankMachineBlockEntity.this.tanks, FluidStack.EMPTY, FluidResource::toStack)));
+            AbstractFluidTankMachineBlockEntity.this.setData(GalacticraftAttachments.SYNC_FLUID_STORAGE, new SyncedFluidResource(ResourcefulHelper.nonNullList(AbstractFluidTankMachineBlockEntity.this.tanks, FluidStack.EMPTY, FluidResource::toStack)));
         }
     }
 
@@ -43,7 +43,7 @@ public abstract class AbstractFluidTankMachineBlockEntity extends AbstractMachin
         AbstractFluidTankMachineBlockEntity.this.getExistingData(GalacticraftAttachments.SYNC_FLUID_STORAGE).ifPresentOrElse(syncedFluidResource -> {
             syncedFluidResource.updateFluidStack(index, previousContents);
         }, () -> {
-            AbstractFluidTankMachineBlockEntity.this.setData(GalacticraftAttachments.SYNC_FLUID_STORAGE, new SyncedFluidResource(ResourcefulHelper.orderedHandlerCopy(AbstractFluidTankMachineBlockEntity.this.tanks, FluidStack.EMPTY, FluidResource::toStack)));
+            AbstractFluidTankMachineBlockEntity.this.setData(GalacticraftAttachments.SYNC_FLUID_STORAGE, new SyncedFluidResource(ResourcefulHelper.nonNullList(AbstractFluidTankMachineBlockEntity.this.tanks, FluidStack.EMPTY, FluidResource::toStack)));
         });
     }
 

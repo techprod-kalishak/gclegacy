@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "B": "#c:plates/bronze",
+    "R": "minecraft:redstone",
+    "S": "#c:plates/steel",
+    "V": "galacticraftlegacy:oxygen_vent",
+    "W": "galacticraftlegacy:basic_wafer"
+  },
+  "pattern": [
+    "RVR",
+    "BSB",
+    "BWB"
+  ],
+  "result": {
+    "id": "galacticraftlegacy:thermal_controller"
+  }
+}

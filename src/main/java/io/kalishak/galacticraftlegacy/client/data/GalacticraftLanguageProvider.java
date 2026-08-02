@@ -208,6 +208,11 @@ public class GalacticraftLanguageProvider extends LanguageProvider {
         addItem(GalacticraftItems.BASIC_WAFER, "Basic Wafer");
         addItem(GalacticraftItems.ADVANCED_WAFER, "Advanced Wafer");
         addItem(GalacticraftItems.SOLAR_WAFER, "Solar Wafer");
+        addItem(GalacticraftItems.SINGLE_SOLAR_MODULE, "Single Solar Module");
+        addItem(GalacticraftItems.FULL_SOLAR_PANEL, "Full Solar Module");
+        addItem(GalacticraftItems.OXYGEN_VENT, "Oxygen Vent");
+        addItem(GalacticraftItems.THERMAL_CONTROLLER, "Ambient Thermal Controller");
+        addItem(GalacticraftItems.CANVAS, "Canvas");
         addItem(GalacticraftItems.FLAG, "Flag");
         addItem(GalacticraftItems.SCHEMATIC, "Schematics");
         addItem(GalacticraftItems.FLUID_TANK, "Fluid Tank");

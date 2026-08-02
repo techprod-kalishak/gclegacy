@@ -9,7 +9,6 @@ package io.kalishak.galacticraftlegacy.world.inventory.workbench;
 
 import io.kalishak.galacticraftlegacy.data.GalacticraftTags;
 import io.kalishak.galacticraftlegacy.transfer.ResourcefulHelper;
-import io.kalishak.galacticraftlegacy.world.inventory.container.ResourceHandlerCraftingResultInventory;
 import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.GalacticraftRecipeType;
 import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.input.ResourceHandlerInput;
 import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.rocket.VehicleCraftingRecipe;
@@ -21,11 +20,9 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
-import net.neoforged.neoforge.transfer.CombinedResourceHandler;
 import net.neoforged.neoforge.transfer.IndexModifier;
 import net.neoforged.neoforge.transfer.ResourceHandler;
 import net.neoforged.neoforge.transfer.item.ItemResource;
-import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
 
 import java.util.Optional;
 
@@ -36,13 +33,6 @@ public interface VehicleCraftingMenuProvider {
 
     static boolean stillValid(ContainerLevelAccess levelAccess, Player player) {
         return levelAccess.evaluate((level, pos) -> level.getBlockState(pos).is(GalacticraftTags.Blocks.NASA_WORKBENCHES) && player.isWithinBlockInteractionRange(pos, 4.0F), true);
-    }
-
-    static ResourceHandler<ItemResource> createCraftingHandler(VehicleCraftingPage page) {
-        return new CombinedResourceHandler<>(
-                new ItemStacksResourceHandler(page.getInputSlotSize()),
-                new ResourceHandlerCraftingResultInventory()
-        );
     }
 
     static void slotChangedCraftingGrid(AbstractContainerMenu menu, ServerLevel level, Player player, ResourceHandler<ItemResource> resourceHandler, IndexModifier<ItemResource> indexModifier, VehicleCraftingPage page) {

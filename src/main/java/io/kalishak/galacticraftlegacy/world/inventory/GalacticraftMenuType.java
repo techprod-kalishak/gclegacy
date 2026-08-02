@@ -9,6 +9,7 @@ package io.kalishak.galacticraftlegacy.world.inventory;
 
 import io.kalishak.galacticraftlegacy.Galacticraft;
 import io.kalishak.galacticraftlegacy.world.inventory.machine.*;
+import io.kalishak.galacticraftlegacy.world.inventory.magnetic_crafting.MagneticCraftingMenu;
 import io.kalishak.galacticraftlegacy.world.inventory.workbench.NasaWorkbenchEmptyPageMenu;
 import io.kalishak.galacticraftlegacy.world.inventory.workbench.NasaWorkbenchMenu;
 import io.kalishak.galacticraftlegacy.world.inventory.workbench.NasaWorkbenchPageMenu;

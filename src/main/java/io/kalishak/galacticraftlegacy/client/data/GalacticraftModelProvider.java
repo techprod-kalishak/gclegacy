@@ -18,6 +18,7 @@ import io.kalishak.galacticraftlegacy.client.renderer.item.properties.range.Flui
 import io.kalishak.galacticraftlegacy.client.renderer.item.properties.select.SchematicTierProperty;
 import io.kalishak.galacticraftlegacy.client.data.models.model.GalacticraftTexturedModel;
 import io.kalishak.galacticraftlegacy.client.renderer.special.KeySpecialRenderer;
+import io.kalishak.galacticraftlegacy.references.GalacticraftItemIds;
 import io.kalishak.galacticraftlegacy.world.item.FeatureTier;
 import io.kalishak.galacticraftlegacy.world.item.GalacticraftItems;
 import io.kalishak.galacticraftlegacy.world.item.GearEquipmentAssets;
@@ -173,6 +174,11 @@ public class GalacticraftModelProvider extends ModelProvider {
         itemModels.generateFlatItem(GalacticraftItems.BASIC_WAFER.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(GalacticraftItems.ADVANCED_WAFER.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(GalacticraftItems.SOLAR_WAFER.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.SINGLE_SOLAR_MODULE.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.FULL_SOLAR_PANEL.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.OXYGEN_VENT.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.THERMAL_CONTROLLER.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.CANVAS.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(GalacticraftItems.FLAG.get(), ModelTemplates.FLAT_ITEM);
         schematic(itemModels, GalacticraftItems.SCHEMATIC.get());
         fluidTank(itemModels, GalacticraftItems.FLUID_TANK.get());

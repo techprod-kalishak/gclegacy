@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    "minecraft:melon_slice",
+    "minecraft:melon_slice",
+    "galacticraftlegacy:tin_canister"
+  ],
+  "result": {
+    "id": "galacticraftlegacy:dehydrated_melon"
+  }
+}

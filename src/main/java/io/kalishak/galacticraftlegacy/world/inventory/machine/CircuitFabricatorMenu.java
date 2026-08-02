@@ -136,7 +136,7 @@ public class CircuitFabricatorMenu extends AbstractMachineRecipeBookMenu<Circuit
 
             @Override
             public boolean recipeMatches(RecipeHolder<CircuitRecipe> recipe) {
-                return recipe.value().matches(CraftingInput.of(3, 2, ResourcefulHelper.orderedHandlerCopy(CircuitFabricatorMenu.this.machine.getResourceHandler(), ItemStack.EMPTY, ItemResource::toStack) .subList(CircuitFabricatorBlockEntity.SLOT_DIAMOND, CircuitFabricatorBlockEntity.SLOT_COUNT)), level);
+                return recipe.value().matches(CraftingInput.of(3, 2, ResourcefulHelper.nonNullList(CircuitFabricatorMenu.this.machine.getResourceHandler(), ItemStack.EMPTY, ItemResource::toStack) .subList(CircuitFabricatorBlockEntity.SLOT_DIAMOND, CircuitFabricatorBlockEntity.SLOT_COUNT)), level);
             }
         }, 3, 2, craftingSlots, craftingSlots, playerInventory, (RecipeHolder<CircuitRecipe>) recipe, useMaxItems, isCreative);
     }

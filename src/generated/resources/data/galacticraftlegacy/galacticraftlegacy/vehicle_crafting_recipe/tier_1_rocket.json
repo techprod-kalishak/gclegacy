@@ -99,21 +99,21 @@
       "slot_type": "galacticraftlegacy:fin"
     },
     {
-      "input": "#c:chests",
+      "input": "minecraft:chest",
       "slot_index": 14,
       "slot_offset_x": 93,
       "slot_offset_y": 12,
       "slot_type": "galacticraftlegacy:storage"
     },
     {
-      "input": "#c:chests",
+      "input": "minecraft:chest",
       "slot_index": 15,
       "slot_offset_x": 119,
       "slot_offset_y": 12,
       "slot_type": "galacticraftlegacy:storage"
     },
     {
-      "input": "#c:chests",
+      "input": "minecraft:chest",
       "slot_index": 16,
       "slot_offset_x": 145,
       "slot_offset_y": 12,

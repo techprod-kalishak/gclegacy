@@ -12,6 +12,7 @@ import io.kalishak.galacticraftlegacy.client.data.*;
 import io.kalishak.galacticraftlegacy.client.data.models.GalacticraftEquipmentAssetProvider;
 import io.kalishak.galacticraftlegacy.data.advancement.GalacticraftAdvancementProvider;
 import io.kalishak.galacticraftlegacy.data.loot.GalacticraftLootTableProvider;
+import io.kalishak.galacticraftlegacy.data.recipes.GalacticraftRecipeProvider;
 import io.kalishak.galacticraftlegacy.data.tag.*;
 import io.kalishak.galacticraftlegacy.data.worldgen.GalacticraftCarvers;
 import io.kalishak.galacticraftlegacy.references.GalacticraftComponents;

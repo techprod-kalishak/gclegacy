@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    "minecraft:beef",
+    "minecraft:beef",
+    "galacticraftlegacy:tin_canister"
+  ],
+  "result": {
+    "id": "galacticraftlegacy:canned_beef"
+  }
+}

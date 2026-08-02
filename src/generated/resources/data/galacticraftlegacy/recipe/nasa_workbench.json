@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "A": "galacticraftlegacy:advanced_wafer",
+    "C": "minecraft:crafting_table",
+    "L": "minecraft:lever",
+    "S": "#c:plates/steel",
+    "T": "minecraft:redstone_torch"
+  },
+  "pattern": [
+    "SCS",
+    "LAL",
+    "STS"
+  ],
+  "result": {
+    "id": "galacticraftlegacy:nasa_workbench"
+  }
+}

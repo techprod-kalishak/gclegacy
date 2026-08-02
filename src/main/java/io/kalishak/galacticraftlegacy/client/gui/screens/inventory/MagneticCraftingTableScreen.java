@@ -7,11 +7,11 @@
 
 package io.kalishak.galacticraftlegacy.client.gui.screens.inventory;
 
-import io.kalishak.galacticraftlegacy.world.inventory.MagneticCraftingMenu;
+import io.kalishak.galacticraftlegacy.client.gui.screens.recipebook.MagneticRecipeBookComponent;
+import io.kalishak.galacticraftlegacy.world.inventory.magnetic_crafting.MagneticCraftingMenu;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.navigation.ScreenPosition;
 import net.minecraft.client.gui.screens.inventory.AbstractRecipeBookScreen;
-import net.minecraft.client.gui.screens.recipebook.CraftingRecipeBookComponent;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
@@ -21,7 +21,7 @@ public class MagneticCraftingTableScreen extends AbstractRecipeBookScreen<Magnet
     private static final Identifier CRAFTING_TABLE_LOCATION = Identifier.withDefaultNamespace("textures/gui/container/crafting_table.png");
 
     public MagneticCraftingTableScreen(MagneticCraftingMenu menu, Inventory inventory, Component title) {
-        super(menu, new CraftingRecipeBookComponent(menu), inventory, title);
+        super(menu, new MagneticRecipeBookComponent(menu), inventory, title);
     }
 
     @Override

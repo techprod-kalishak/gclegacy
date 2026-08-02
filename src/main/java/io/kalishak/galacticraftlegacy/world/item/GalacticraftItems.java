@@ -10,7 +10,6 @@ package io.kalishak.galacticraftlegacy.world.item;
 import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.Galacticraft;
 import io.kalishak.galacticraftlegacy.references.GalacticraftComponents;
-import io.kalishak.galacticraftlegacy.references.GalacticraftEntityIds;
 import io.kalishak.galacticraftlegacy.references.GalacticraftItemIds;
 import io.kalishak.galacticraftlegacy.registry.SchematicVariants;
 import io.kalishak.galacticraftlegacy.registry.deferred.DeferredItemRegister;
@@ -32,7 +31,6 @@ import io.kalishak.galacticraftlegacy.world.level.material.fluid.GalacticraftFlu
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponents;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Style;
 import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -233,6 +231,11 @@ public final class GalacticraftItems {
     public static final DeferredItem<Item> BASIC_WAFER = REGISTRY.registerSimpleItem(GalacticraftItemIds.BASIC_WAFER);
     public static final DeferredItem<Item> ADVANCED_WAFER = REGISTRY.registerSimpleItem(GalacticraftItemIds.ADVANCED_WAFER);
     public static final DeferredItem<Item> SOLAR_WAFER = REGISTRY.registerSimpleItem(GalacticraftItemIds.SOLAR_WAFER);
+    public static final DeferredItem<Item> SINGLE_SOLAR_MODULE = REGISTRY.registerSimpleItem(GalacticraftItemIds.SINGLE_SOLAR_MODULE);
+    public static final DeferredItem<Item> FULL_SOLAR_PANEL = REGISTRY.registerSimpleItem(GalacticraftItemIds.FULL_SOLAR_PANEL);
+    public static final DeferredItem<Item> OXYGEN_VENT = REGISTRY.registerSimpleItem(GalacticraftItemIds.OXYGEN_VENT);
+    public static final DeferredItem<Item> THERMAL_CONTROLLER = REGISTRY.registerSimpleItem(GalacticraftItemIds.THERMAL_CONTROLLER);
+    public static final DeferredItem<Item> CANVAS = REGISTRY.registerSimpleItem(GalacticraftItemIds.CANVAS);
     public static final DeferredItem<Item> FLAG = REGISTRY.registerItem(GalacticraftItemIds.FLAG, FlagItem::new, properties -> properties.stacksTo(1));
     public static final DeferredItem<SchematicItem> SCHEMATIC = REGISTRY.registerItem(
             GalacticraftItemIds.NASA_WORKBENCH_SCHEMATIC,

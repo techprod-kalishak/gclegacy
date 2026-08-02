@@ -53,7 +53,7 @@ public class GalacticraftItemIds {
     public static final ResourceKey<Item> SOLAR_WAFER = create("solar_wafer");
     public static final ResourceKey<Item> BASIC_WAFER = create("basic_wafer");
     public static final ResourceKey<Item> ADVANCED_WAFER = create("advanced_wafer");
-    public static final ResourceKey<Item> AMBIENT_THERMAL_CONTROLLER = create("ambient_thermal_controller");
+    public static final ResourceKey<Item> THERMAL_CONTROLLER = create("thermal_controller");
     public static final ResourceKey<Item> DEHYDRATED_APPLE = create("dehydrated_apple");
     public static final ResourceKey<Item> DEHYDRATED_CARROT = create("dehydrated_carrot");
     public static final ResourceKey<Item> DEHYDRATED_MELON = create("dehydrated_melon");

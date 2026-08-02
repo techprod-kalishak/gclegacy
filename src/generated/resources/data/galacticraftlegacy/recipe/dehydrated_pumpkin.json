@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    "minecraft:pumpkin_seeds",
+    "minecraft:pumpkin_seeds",
+    "galacticraftlegacy:tin_canister"
+  ],
+  "result": {
+    "id": "galacticraftlegacy:dehydrated_pumpkin"
+  }
+}

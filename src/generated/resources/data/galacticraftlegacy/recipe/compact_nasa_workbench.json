@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "#": "galacticraftlegacy:nasa_workbench"
+  },
+  "pattern": [
+    "#"
+  ],
+  "result": {
+    "id": "galacticraftlegacy:compact_nasa_workbench"
+  }
+}

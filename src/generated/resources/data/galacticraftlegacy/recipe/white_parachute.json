@@ -1,13 +1,11 @@
 {
   "type": "minecraft:crafting_shaped",
-  "category": "equipment",
-  "group": "parachute",
   "key": {
-    "#": "minecraft:white_wool",
+    "C": "galacticraftlegacy:canvas",
     "S": "minecraft:string"
   },
   "pattern": [
-    "###",
+    "CCC",
     "S S",
     " S "
   ],

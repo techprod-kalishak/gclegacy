@@ -33,8 +33,4 @@ public record VehicleCraftingEntry(Holder<VehicleCraftingSlotType> slotType, int
             Ingredient.CONTENTS_STREAM_CODEC.apply(ByteBufCodecs::optional), VehicleCraftingEntry::input,
             VehicleCraftingEntry::new
     );
-
-    public boolean isOutputSlot() {
-        return this.input.isEmpty();
-    }
 }
