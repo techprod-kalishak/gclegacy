@@ -23,7 +23,7 @@ public class ElectricArcFurnaceBlockEntity extends AbstractElectricFurnaceBlockE
     }
 
     @Override
-    public int getItemsSize() {
+    public int getSize() {
         return 4;
     }
 

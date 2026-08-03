@@ -209,7 +209,7 @@ public class CircuitFabricatorBlockEntity extends RecipeMachineBlockEntity<Craft
     }
 
     @Override
-    public int getItemsSize() {
+    public int getSize() {
         return SLOT_COUNT;
     }
 

@@ -55,7 +55,7 @@ public interface RandomizableStorage {
 
     ItemStack getItem(int slot);
 
-    int getItemsSize();
+    int getSize();
 
     default boolean tryLoadLootTable(ValueInput base) {
         ResourceKey<LootTable> lootTable = base.read("LootTable", LootTable.KEY_CODEC).orElse(null);
@@ -131,7 +131,7 @@ public interface RandomizableStorage {
     private static List<Integer> getAvailableSlots(RandomizableStorage randomizableStorage, RandomSource random) {
         ObjectArrayList<Integer> slots = new ObjectArrayList<>();
 
-        for (int i = 0; i < randomizableStorage.getItemsSize(); i++) {
+        for (int i = 0; i < randomizableStorage.getSize(); i++) {
             if (randomizableStorage.getItem(i).isEmpty()) {
                 slots.add(i);
             }

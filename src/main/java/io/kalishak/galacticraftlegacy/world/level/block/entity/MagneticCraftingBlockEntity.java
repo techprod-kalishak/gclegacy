@@ -7,23 +7,21 @@
 
 package io.kalishak.galacticraftlegacy.world.level.block.entity;
 
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
+import io.kalishak.galacticraftlegacy.world.inventory.container.memory.MemorableContainer;
+import io.kalishak.galacticraftlegacy.world.inventory.container.memory.CraftingMemory;
 import io.kalishak.galacticraftlegacy.world.inventory.magnetic_crafting.MagneticCraftingMenu;
 import io.kalishak.galacticraftlegacy.world.inventory.container.CraftingStorage;
 import io.kalishak.galacticraftlegacy.world.item.component.GalacticraftDataComponents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.NonNullList;
 import net.minecraft.core.component.DataComponentGetter;
 import net.minecraft.core.component.DataComponentMap;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.StackedItemContents;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.RecipeCraftingHolder;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.block.state.BlockState;
@@ -32,15 +30,18 @@ import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.transfer.ResourceHandler;
 import net.neoforged.neoforge.transfer.item.ItemResource;
+import net.neoforged.neoforge.transfer.item.ItemUtil;
+import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
+import java.util.List;
+import java.util.Optional;
 import java.util.function.Consumer;
 
-public class MagneticCraftingBlockEntity extends BaseItemStorageBlockEntity implements CraftingStorage, RecipeCraftingHolder {
-    public static final Codec<RecipeHolder<?>> RECIPE_HOLDER_CODEC = RecordCodecBuilder.create(instance -> instance.group(
-            ResourceKey.codec(Registries.RECIPE).fieldOf("id").forGetter(RecipeHolder::id),
-            Recipe.CODEC.fieldOf("value").forGetter(RecipeHolder::value)
-    ).apply(instance, RecipeHolder::new));
+public class MagneticCraftingBlockEntity extends BaseItemStorageBlockEntity implements CraftingStorage, MemorableContainer {
+    private NonNullList<ItemStack> memories = NonNullList.withSize(9, ItemStack.EMPTY);
+    private boolean isMemoryOverridden;
+    private @NonNull ItemStack lastRecipeResult = ItemStack.EMPTY;
     private @Nullable RecipeHolder<?> recipeUsed;
 
     public MagneticCraftingBlockEntity(BlockPos worldPosition, BlockState blockState) {
@@ -67,8 +68,13 @@ public class MagneticCraftingBlockEntity extends BaseItemStorageBlockEntity impl
     }
 
     @Override
-    public int getItemsSize() {
+    public int getSize() {
         return 10;
+    }
+
+    @Override
+    public int getMemorySize() {
+        return 9;
     }
 
     @Override
@@ -89,10 +95,125 @@ public class MagneticCraftingBlockEntity extends BaseItemStorageBlockEntity impl
                     .ifPresent(recipe -> {
                         setRecipeUsed(recipe);
                         ItemStack result = recipe.value().assemble(craftInput);
-                        //stackConsumer.accept(result);
-                        setItem(0, result);
+                        stackConsumer.accept(result);
                     });
         }
+    }
+
+    @Override
+    public boolean overrideMemory(@NonNull ItemStack newMemory, NonNullList<ItemStack> memories) {
+        boolean allEmpty = true;
+
+        for (int i = 0; i < getMemorySize(); i++) {
+            if (!this.items.getResource(i).isEmpty()) {
+                allEmpty = false;
+                break;
+            }
+        }
+
+        if (allEmpty) {
+            return false;
+        }
+
+        Optional<RecipeHolder<CraftingRecipe>> recipe = Optional.empty();
+
+        if (this.level instanceof ServerLevel serverLevel) {
+            recipe = serverLevel.recipeAccess().getRecipeFor(RecipeType.CRAFTING, asCraftInput(), serverLevel);
+        }
+
+        if (recipe.isPresent()) {
+            boolean fuzzyMatch = true;
+
+            for (int i = 0; i < getMemorySize(); i++) {
+                ItemStack stack = ItemUtil.getStack(this.items, i);
+                ItemStack memory = this.memories.get(i);
+
+                if (!ItemStack.isSameItemSameComponents(stack, memory)) {
+                    fuzzyMatch = false;
+                    break;
+                }
+            }
+
+            if (!fuzzyMatch) {
+                for (int i = 0; i < getMemorySize(); i++) {
+                    ItemStack stack = ItemUtil.getStack(this.items, i);
+
+                    if (ItemStack.isSameItemSameComponents(newMemory, stack)) {
+                        for (int j = 0; j < getMemorySize(); j++) {
+                            memories.set(j, ItemUtil.getStack(this.items, j));
+                        }
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
+
+    @Override
+    public void updateMemory(@NonNull ItemStack resultStack) {
+        if (this.level instanceof ServerLevel serverLevel) {
+            Optional<RecipeHolder<CraftingRecipe>> recipe = serverLevel.recipeAccess().getRecipeFor(RecipeType.CRAFTING, asCraftInput(), serverLevel);
+
+            if (recipe.isPresent()) {
+                setRecipeUsed(recipe.get());
+                setLastResult(resultStack);
+
+                for (int i = 0; i < getMemorySize(); i++) {
+                    ItemStack currentStack = ItemUtil.getStack(this.items, i);
+
+                    if (!currentStack.isEmpty()) {
+                        this.memories.set(i, currentStack);
+                    }
+                }
+            }
+        }
+    }
+
+    @Override
+    public NonNullList<ItemStack> getMemories() {
+        return this.memories;
+    }
+
+    @Override
+    public void setMemories(List<ItemStack> memories) {
+        this.memories = NonNullList.withSize(getMemorySize(), ItemStack.EMPTY);
+
+        for (int i = 0; i < getMemorySize(); i++) {
+            this.memories.set(i, memories.get(i));
+        }
+    }
+
+    @Override
+    public boolean isMemoryOverridden() {
+        if (this.level instanceof ServerLevel serverLevel) {
+            Optional<RecipeHolder<CraftingRecipe>> recipe = serverLevel.recipeAccess().getRecipeFor(RecipeType.CRAFTING, asCraftInput(), serverLevel);
+
+            if (recipe.isPresent()) {
+                for (int i = 0; i < getMemorySize(); i++) {
+                    if (!this.items.getResource(i).isEmpty() && !ItemStack.isSameItemSameComponents(ItemUtil.getStack(this.items, i), this.memories.get(i))) {
+                        this.isMemoryOverridden = true;
+                    }
+                }
+            }
+        }
+
+        return this.isMemoryOverridden;
+    }
+
+    @Override
+    public void setMemoryOverridden(boolean isMemoryOverridden) {
+        this.isMemoryOverridden = isMemoryOverridden;
+    }
+
+    @Override
+    public void setLastResult(@NonNull ItemStack resultStack) {
+        this.lastRecipeResult = resultStack;
+    }
+
+    @Override
+    public @NonNull ItemStack getLastResult() {
+        return this.lastRecipeResult;
     }
 
     @Override
@@ -106,30 +227,49 @@ public class MagneticCraftingBlockEntity extends BaseItemStorageBlockEntity impl
     }
 
     @Override
+    protected void onItemChange(int slot, ItemStack previousStack) {
+        super.onItemChange(slot, previousStack);
+        refreshRecipeResult(null, result -> setItem(0, result));
+    }
+
+    @Override
     protected void saveAdditional(ValueOutput output) {
         super.saveAdditional(output);
-
-        if (this.recipeUsed != null) {
-            output.store("LastRecipe", RECIPE_HOLDER_CODEC, this.recipeUsed);
-        }
+        MemorableContainer.save(output, this);
     }
 
     @Override
     protected void loadAdditional(ValueInput input) {
         super.loadAdditional(input);
-        input.read("LastRecipe", RECIPE_HOLDER_CODEC).ifPresent(this::setRecipeUsed);
+        MemorableContainer.load(input, this);
     }
 
     @Override
     protected void collectImplicitComponents(DataComponentMap.Builder components) {
         super.collectImplicitComponents(components);
-        components.set(GalacticraftDataComponents.RECIPE_HOLDER, this.recipeUsed);
+
+        if (!this.memories.isEmpty()) {
+            CraftingMemory craftingMemory = new CraftingMemory(
+                    this.memories,
+                    this.isMemoryOverridden,
+                    this.lastRecipeResult,
+                    Optional.ofNullable(this.recipeUsed)
+            );
+            components.set(GalacticraftDataComponents.CRAFTING_MEMORY, craftingMemory);
+        }
     }
 
     @Override
     protected void applyImplicitComponents(DataComponentGetter components) {
         super.applyImplicitComponents(components);
-        this.recipeUsed = components.get(GalacticraftDataComponents.RECIPE_HOLDER);
+        CraftingMemory craftingMemory = components.getOrDefault(GalacticraftDataComponents.CRAFTING_MEMORY, CraftingMemory.FORGOTTEN);
+
+        if (!craftingMemory.memories().isEmpty()) {
+            setMemories(craftingMemory.memories());
+            setMemoryOverridden(craftingMemory.isOverridden());
+            setLastResult(craftingMemory.lastResult());
+            craftingMemory.lastRecipe().ifPresent(this::setRecipeUsed);
+        }
     }
 
     @Override

@@ -105,7 +105,7 @@ public class ParachestBlockEntity extends BaseItemStorageBlockEntity implements 
     }
 
     @Override
-    public int getItemsSize() {
+    public int getSize() {
         return this.slotCount;
     }
 
@@ -163,13 +163,13 @@ public class ParachestBlockEntity extends BaseItemStorageBlockEntity implements 
     }
 
     public void copyItemsFrom(NonNullList<ItemStack> items) {
-        for (int i = 0; i < getItemsSize(); i++) {
+        for (int i = 0; i < getSize(); i++) {
             setItem(i, items.get(i));
         }
     }
 
     public void copyItems(NonNullList<ItemStack> items) {
-        for (int i = 0; i < getItemsSize(); i++) {
+        for (int i = 0; i < getSize(); i++) {
             items.set(i, ItemUtil.getStack(this.items, i));
         }
     }

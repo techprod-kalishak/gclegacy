@@ -150,7 +150,7 @@ public class CoalGeneratorBlockEntity extends AbstractMachineBlockEntity {
     }
 
     @Override
-    public int getItemsSize() {
+    public int getSize() {
         return 1;
     }
 

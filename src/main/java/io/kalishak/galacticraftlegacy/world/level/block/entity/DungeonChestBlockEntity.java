@@ -60,7 +60,7 @@ public class DungeonChestBlockEntity extends KeyLockedBlockEntity implements Lid
     }
 
     @Override
-    public int getItemsSize() {
+    public int getSize() {
         return 27;
     }
 

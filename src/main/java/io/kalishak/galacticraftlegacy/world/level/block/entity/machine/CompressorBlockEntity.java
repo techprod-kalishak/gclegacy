@@ -219,7 +219,7 @@ public class CompressorBlockEntity extends BaseItemStorageBlockEntity implements
     }
 
     @Override
-    public int getItemsSize() {
+    public int getSize() {
         return AlloyCompressor.INVENTORY_SIZE_BASIC;
     }
 

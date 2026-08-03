@@ -23,7 +23,6 @@ import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.transfer.ResourceHandler;
 import net.neoforged.neoforge.transfer.fluid.FluidResource;
 import net.neoforged.neoforge.transfer.item.ItemResource;
-import net.neoforged.neoforge.transfer.item.ResourceHandlerSlot;
 
 public class ParachestMenu extends AbstractContainerMenu {
     private final ResourceHandler<ItemResource> resourceHandler;
@@ -38,7 +37,7 @@ public class ParachestMenu extends AbstractContainerMenu {
         this.fluidResourceHandler = ResourcefulHelper.getResourceHandler(Capabilities.Fluid.BLOCK, FluidResource.EMPTY, parachest, null);
         this.parachest = parachest;
         this.player = playerInventory.player;
-        this.rows = (parachest.getItemsSize() - 3) / 9;
+        this.rows = (parachest.getSize() - 3) / 9;
 
         addSlot(new CapabilityHandlerSlot<>(this.resourceHandler, parachest::setItem, Capabilities.Fluid.ITEM, 0,  75, (this.rows == 0 ? 24 : 26) + this.rows * 18));
         addSlot(new NotPlaceableResourceHandlerSlot(this.resourceHandler, parachest::setItem, 1, 125, (this.rows == 0 ? 24 : 26) + this.rows * 18));

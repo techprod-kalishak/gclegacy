@@ -10,10 +10,11 @@ package io.kalishak.galacticraftlegacy.world.item.component;
 import com.mojang.serialization.Codec;
 import io.kalishak.galacticraftlegacy.Galacticraft;
 import io.kalishak.galacticraftlegacy.registry.SchematicVariant;
+import io.kalishak.galacticraftlegacy.world.inventory.container.memory.MemorableContainer;
+import io.kalishak.galacticraftlegacy.world.inventory.container.memory.CraftingMemory;
 import io.kalishak.galacticraftlegacy.world.item.FeatureTier;
 import io.kalishak.galacticraftlegacy.world.item.KeyLock;
 import io.kalishak.galacticraftlegacy.world.item.VehicleComponentType;
-import io.kalishak.galacticraftlegacy.world.level.block.entity.MagneticCraftingBlockEntity;
 import net.minecraft.core.GlobalPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponentType;
@@ -40,6 +41,10 @@ public final class GalacticraftDataComponents {
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<CannedFood.CannedComponent>> CANNED_FOOD = REGISTRY.registerComponentType(
             "canned_food",
             builder -> builder.persistent(CannedFood.CannedComponent.CODEC).networkSynchronized(CannedFood.CannedComponent.STREAM_CODEC).cacheEncoding()
+    );
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<CraftingMemory>> CRAFTING_MEMORY = REGISTRY.registerComponentType(
+            "crafting_memory",
+            builder -> builder.persistent(CraftingMemory.CODEC).networkSynchronized(CraftingMemory.STREAM_CODEC).cacheEncoding()
     );
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<EntityReference<Player>>> PLAYER_REFERENCE = REGISTRY.registerComponentType(
             "entity_reference",
@@ -79,7 +84,7 @@ public final class GalacticraftDataComponents {
     );
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<RecipeHolder<?>>> RECIPE_HOLDER = REGISTRY.registerComponentType(
             "recipe_holder",
-            builder -> builder.persistent(MagneticCraftingBlockEntity.RECIPE_HOLDER_CODEC).networkSynchronized(RecipeHolder.STREAM_CODEC).cacheEncoding().ignoreSwapAnimation()
+            builder -> builder.persistent(MemorableContainer.RECIPE_HOLDER_CODEC).networkSynchronized(RecipeHolder.STREAM_CODEC).cacheEncoding().ignoreSwapAnimation()
     );
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<VehiclePart>> ROCKET_PART = REGISTRY.registerComponentType(
             "rocket_part",

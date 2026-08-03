@@ -125,7 +125,7 @@ public class OxygenCollectorBlockEntity extends AbstractOxygenBlockEntity {
     }
 
     @Override
-    public int getItemsSize() {
+    public int getSize() {
         return 1;
     }
 

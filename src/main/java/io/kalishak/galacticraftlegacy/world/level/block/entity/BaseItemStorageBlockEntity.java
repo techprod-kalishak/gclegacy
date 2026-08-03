@@ -8,7 +8,6 @@
 package io.kalishak.galacticraftlegacy.world.level.block.entity;
 
 import io.kalishak.galacticraftlegacy.transfer.ResourcefulHelper;
-import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.AbstractMachineBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponentGetter;
@@ -45,7 +44,7 @@ import java.util.function.BiConsumer;
 public abstract class BaseItemStorageBlockEntity extends BlockEntity implements MenuProvider, Nameable {
     private LockCode lockKey = LockCode.NO_LOCK;
     private @Nullable Component name;
-    protected final ItemStacksResourceHandler items = new ItemStacksResourceHandler(getItemsSize()) {
+    protected final ItemStacksResourceHandler items = new ItemStacksResourceHandler(getSize()) {
         @Override
         protected void onContentsChanged(int index, ItemStack previousContents) {
             ItemResource resource = BaseItemStorageBlockEntity.this.items.getResource(index);
@@ -114,10 +113,10 @@ public abstract class BaseItemStorageBlockEntity extends BlockEntity implements 
         );
     }
 
-    protected abstract int getItemsSize();
+    protected abstract int getSize();
 
     protected void forEachResource(BiConsumer<ItemResource, Integer> consumer) {
-        for (int i = 0; i < getItemsSize(); i++) {
+        for (int i = 0; i < getSize(); i++) {
             consumer.accept(this.items.getResource(i), this.items.getAmountAsInt(i));
         }
     }
@@ -224,7 +223,7 @@ public abstract class BaseItemStorageBlockEntity extends BlockEntity implements 
     }
 
     public void clearContent() {
-        for (int i = 0; i < getItemsSize(); i++) {
+        for (int i = 0; i < getSize(); i++) {
             setItem(i, ItemStack.EMPTY);
         }
     }

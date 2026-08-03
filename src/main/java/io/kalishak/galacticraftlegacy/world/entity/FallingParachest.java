@@ -9,7 +9,6 @@ package io.kalishak.galacticraftlegacy.world.entity;
 
 import com.mojang.logging.LogUtils;
 import io.kalishak.galacticraftlegacy.attachment.entity.ParachuteFalling;
-import io.kalishak.galacticraftlegacy.data.GalacticraftTags;
 import io.kalishak.galacticraftlegacy.transfer.capability.fluid.SingleTankResourceHandler;
 import io.kalishak.galacticraftlegacy.world.level.block.GalacticraftBlocks;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.ParachestBlockEntity;
@@ -45,9 +44,7 @@ import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidType;
-import net.neoforged.neoforge.transfer.fluid.FluidResource;
 import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
-import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 
@@ -78,7 +75,7 @@ public class FallingParachest extends FallingBlockEntity implements ParachuteFal
         this.zo = z;
 
         if (blockEntity instanceof ParachestBlockEntity parachestBlockEntity) {
-            this.inventory = NonNullList.withSize(parachestBlockEntity.getItemsSize(), ItemStack.EMPTY);
+            this.inventory = NonNullList.withSize(parachestBlockEntity.getSize(), ItemStack.EMPTY);
             parachestBlockEntity.copyItems(this.inventory);
             this.fuelTank = parachestBlockEntity.copyTank();
 

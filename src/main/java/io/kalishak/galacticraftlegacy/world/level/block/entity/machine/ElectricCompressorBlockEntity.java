@@ -127,7 +127,7 @@ public class ElectricCompressorBlockEntity extends RecipeMachineBlockEntity<Craf
     }
 
     @Override
-    public int getItemsSize() {
+    public int getSize() {
         return AlloyCompressor.INVENTORY_SIZE_ADVANCED;
     }
 
