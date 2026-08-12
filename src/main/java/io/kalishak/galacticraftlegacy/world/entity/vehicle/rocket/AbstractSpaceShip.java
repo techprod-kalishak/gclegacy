@@ -10,16 +10,13 @@ package io.kalishak.galacticraftlegacy.world.entity.vehicle.rocket;
 import com.mojang.serialization.Codec;
 import io.kalishak.galacticraftlegacy.attachment.GalacticraftAttachments;
 import io.kalishak.galacticraftlegacy.attachment.entity.PlayerSpaceData;
-import io.kalishak.galacticraftlegacy.world.entity.FlagData;
 import io.kalishak.galacticraftlegacy.world.score.race.SpaceRaceHooks;
 import io.kalishak.galacticraftlegacy.world.score.race.SpaceRaceScoreboard;
-import io.kalishak.galacticraftlegacy.world.score.race.SpaceRaceScoreboardSaveData;
 import io.kalishak.galacticraftlegacy.world.score.race.SpaceRaceTeam;
 import io.kalishak.galacticraftlegacy.codec.SerializableEnum;
 import io.kalishak.galacticraftlegacy.world.damagesource.GalacticraftDamageTypes;
 import io.kalishak.galacticraftlegacy.world.entity.Trackable;
 import io.netty.buffer.ByteBuf;
-import net.minecraft.ChatFormatting;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -78,9 +75,9 @@ public abstract class AbstractSpaceShip extends VehicleEntity implements Trackab
     }
 
     protected static int getScaledFuel(AbstractAutoRocket rocket) {
-        FluidResource fuel = rocket.tankResourceHandler.getResource(0);
+        FluidResource fuel = rocket.fluid.getResource(0);
 
-        return Mth.floor((float) rocket.tankResourceHandler.getAmountAsInt(0) / (float) rocket.tankResourceHandler.getCapacityAsInt(0, fuel) * 100.0F);
+        return Mth.floor((float) rocket.fluid.getAmountAsInt(0) / (float) rocket.fluid.getCapacityAsInt(0, fuel) * 100.0F);
     }
 
     @Override
@@ -256,7 +253,7 @@ public abstract class AbstractSpaceShip extends VehicleEntity implements Trackab
         double deltaX = -(50 * Math.cos(getXRot() / 180 / Math.PI) * Math.sin(getY() * 0.01 / 180 / Math.PI));
         double deltaZ = -(50 * Math.sin(getXRot() / 180 / Math.PI) * Math.sin(getY() * 0.01 / 180 / Math.PI));
 
-        setDeltaMovement(deltaX, getDeltaMovement().y, deltaZ);
+        move(MoverType.SELF, new Vec3(deltaX, 0.0D, deltaZ));
 
         if (getLaunchPhase() == LaunchPhase.IGNITED || getLaunchPhase() == LaunchPhase.UNIGNITED) {
             setDeltaMovement(Vec3.ZERO);
@@ -373,6 +370,10 @@ public abstract class AbstractSpaceShip extends VehicleEntity implements Trackab
 
     public LaunchPhase getLaunchPhase() {
         return LaunchPhase.values()[this.entityData.get(DATA_LAUNCH_PHASE_ID)];
+    }
+
+    public boolean isLaunched() {
+        return getLaunchPhase() == LaunchPhase.LAUNCHED || getLaunchPhase() == LaunchPhase.LANDING;
     }
 
     public float getRollAmplitude() {

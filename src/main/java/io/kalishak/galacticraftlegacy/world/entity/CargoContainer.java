@@ -25,6 +25,6 @@ public interface CargoContainer {
     }
 
     record Result(LoadingState loadingState, ItemStack stack) {
-
+        public static final Result EMPTY = new Result(LoadingState.NO_TARGET, ItemStack.EMPTY);
     }
 }

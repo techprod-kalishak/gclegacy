@@ -10,6 +10,7 @@
     "temperature_modifier": -0.5
   },
   "celestial_object_reference": "galacticraftlegacy:mars",
+  "fuel_usage_multiplier": 0.4,
   "gravity_scale": 0.38,
   "transition": {
     "type": "galacticraftlegacy:with_lander",

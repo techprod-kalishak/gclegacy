@@ -27,7 +27,7 @@ public class LandingBalloons extends AbstractLander {
     private float rotationYawSpeed;
 
     public LandingBalloons(EntityType<?> entityType, Level level) {
-        super(entityType, level);
+        super(entityType, level, 1);
     }
 
     @Override

@@ -19,10 +19,6 @@ public class ClientConfig {
             .comment("Setting this to false will revert night skies back to default Minecraft star count")
             .translation("galacticraftlegacy.configgui.client.more_stars")
             .define("enableMoreStars", true);
-    public static final ModConfigSpec.BooleanValue DISABLE_ROCKET_PARTICLES = BUILDER
-            .comment("If you have FPS problems, setting this to true will help if rocket particles are in your sights")
-            .translation("galacticraftlegacy.configgui.client.disable_rocket_particles")
-            .define("disableRocketParticles", false);
     public static final ModConfigSpec.BooleanValue DISABLE_VEHICLE_THIRD_PERSON_VIEW = BUILDER
             .comment("If you're using this mod in virtual reality, or if you don't want the camera changes when entering a Galacticraft vehicle, set this to true.")
             .translation("galacticraftlegacy.configgui.client.disable_vehicle_tpv")

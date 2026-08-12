@@ -23,7 +23,7 @@ import java.util.Map;
 
 public class EntryPod extends AbstractLander {
     public EntryPod(EntityType<?> entityType, Level level) {
-        super(entityType, level);
+        super(entityType, level, 1);
     }
 
     @Override

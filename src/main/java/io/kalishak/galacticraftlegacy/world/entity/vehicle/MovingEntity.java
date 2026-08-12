@@ -10,6 +10,7 @@ package io.kalishak.galacticraftlegacy.world.entity.vehicle;
 import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.attachment.GalacticraftAttachments;
 import io.kalishak.galacticraftlegacy.attachment.entity.AdvancedMovement;
+import io.kalishak.galacticraftlegacy.world.entity.EntityWithInventory;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.server.level.ServerLevel;
@@ -32,8 +33,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 
-public abstract class MovingEntity extends Entity {
-    private static final Logger log = LoggerFactory.getLogger(MovingEntity.class);
+public abstract class MovingEntity extends EntityWithInventory {
     protected long ticks = 0;
     public float currentDamage;
     public int timeSinceHit;
@@ -42,13 +42,13 @@ public abstract class MovingEntity extends Entity {
 
     protected boolean lastOnGround;
 
-    public MovingEntity(EntityType<?> entityType, Level level) {
-        super(entityType, level);
+    public MovingEntity(EntityType<?> entityType, Level level, int inventorySize) {
+        super(entityType, level, inventorySize);
         this.noPhysics = true;
     }
 
-    public MovingEntity(EntityType<?> entityType, Level level, double x, double y, double z) {
-        this(entityType, level);
+    public MovingEntity(EntityType<?> entityType, Level level, int inventorySize, double x, double y, double z) {
+        this(entityType, level, inventorySize);
         setPos(x, y, z);
     }
 

@@ -7,8 +7,9 @@
 
 package io.kalishak.galacticraftlegacy.world.level.block.entity;
 
+import io.kalishak.galacticraftlegacy.data.TriStateBoolean;
+import io.kalishak.galacticraftlegacy.transfer.capability.item.MemorableResourceHandler;
 import io.kalishak.galacticraftlegacy.world.inventory.container.memory.MemorableContainer;
-import io.kalishak.galacticraftlegacy.world.inventory.container.memory.CraftingMemory;
 import io.kalishak.galacticraftlegacy.world.inventory.magnetic_crafting.MagneticCraftingMenu;
 import io.kalishak.galacticraftlegacy.world.inventory.container.CraftingStorage;
 import io.kalishak.galacticraftlegacy.world.item.component.GalacticraftDataComponents;
@@ -19,18 +20,24 @@ import net.minecraft.core.component.DataComponentGetter;
 import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.StackedItemContents;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
+import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
+import net.neoforged.neoforge.transfer.RangedResourceHandler;
 import net.neoforged.neoforge.transfer.ResourceHandler;
 import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.neoforged.neoforge.transfer.item.ItemUtil;
+import net.neoforged.neoforge.transfer.transaction.Transaction;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
@@ -38,23 +45,38 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
 
-public class MagneticCraftingBlockEntity extends BaseItemStorageBlockEntity implements CraftingStorage, MemorableContainer {
-    private NonNullList<ItemStack> memories = NonNullList.withSize(9, ItemStack.EMPTY);
-    private boolean isMemoryOverridden;
+public class MagneticCraftingBlockEntity extends BlockEntity implements MenuProvider, CraftingStorage, MemorableContainer {
+    private final MemorableResourceHandler items;
+    private NonNullList<ItemResource> memories = NonNullList.withSize(9, ItemResource.EMPTY);
+    private @NonNull TriStateBoolean isMemoryOverridden = TriStateBoolean.NONE;
     private @NonNull ItemStack lastRecipeResult = ItemStack.EMPTY;
     private @Nullable RecipeHolder<?> recipeUsed;
 
     public MagneticCraftingBlockEntity(BlockPos worldPosition, BlockState blockState) {
-        super(GalacticraftBlockEntityType.MAGNETIC_CRAFTING.get(), worldPosition, blockState);
+        super(GalacticraftBlockEntityType.MAGNETIC_CRAFTING_TABLE.get(), worldPosition, blockState);
+        this.items = new MemorableResourceHandler(this, 10) {
+            @Override
+            protected void onContentsChanged(int index, ItemStack previousContents) {
+                super.onContentsChanged(index, previousContents);
+                refreshRecipeResult(null, result -> setItem(0, result));
+            }
+        };
     }
 
     public static void registerCapabilities(RegisterCapabilitiesEvent event) {
-        BaseItemStorageBlockEntity.registerDirectionalSlots(event, GalacticraftBlockEntityType.MAGNETIC_CRAFTING.get(), Direction.UP, 1, 10, Direction.DOWN, 0);
-    }
+        event.registerBlockEntity(
+                Capabilities.Item.BLOCK,
+                GalacticraftBlockEntityType.MAGNETIC_CRAFTING_TABLE.get(),
+                (entity, side) -> {
+                    if (side == Direction.UP) {
+                        return RangedResourceHandler.of(() -> entity.items, 1, 10);
+                    } else if (side == Direction.DOWN) {
+                        return RangedResourceHandler.ofSingleIndex(() -> entity.items, 0);
+                    }
 
-    @Override
-    public Component getDefaultName() {
-        return getBlockState().getBlock().getName();
+                    return entity.items;
+                }
+        );
     }
 
     @Override
@@ -68,23 +90,23 @@ public class MagneticCraftingBlockEntity extends BaseItemStorageBlockEntity impl
     }
 
     @Override
-    public int getSize() {
-        return 10;
-    }
-
-    @Override
     public int getMemorySize() {
         return 9;
     }
 
     @Override
-    public ResourceHandler<ItemResource> getResourceHandler() {
-        return this.items;
+    public int getOutputSlotIndex() {
+        return 0;
     }
 
     @Override
-    public void fillStackedContents(StackedItemContents contents) {
-        forEachResource((resource, count) -> contents.accountStack(resource.toStack(count)));
+    public Component getDisplayName() {
+        return Component.translatable("block.galacticraftlegacy.magnetic_crafting_table");
+    }
+
+    @Override
+    public ResourceHandler<ItemResource> getResourceHandler() {
+        return this.items;
     }
 
     public void refreshRecipeResult(@Nullable RecipeHolder<CraftingRecipe> recipeHint, Consumer<ItemStack> stackConsumer) {
@@ -101,7 +123,7 @@ public class MagneticCraftingBlockEntity extends BaseItemStorageBlockEntity impl
     }
 
     @Override
-    public boolean overrideMemory(@NonNull ItemStack newMemory, NonNullList<ItemStack> memories) {
+    public boolean overrideMemory(@NonNull ItemResource newMemory, NonNullList<ItemResource> memories) {
         boolean allEmpty = true;
 
         for (int i = 0; i < getMemorySize(); i++) {
@@ -125,10 +147,10 @@ public class MagneticCraftingBlockEntity extends BaseItemStorageBlockEntity impl
             boolean fuzzyMatch = true;
 
             for (int i = 0; i < getMemorySize(); i++) {
-                ItemStack stack = ItemUtil.getStack(this.items, i);
-                ItemStack memory = this.memories.get(i);
+                ItemResource resource = this.items.getResource(i);
+                ItemResource memory = this.memories.get(i);
 
-                if (!ItemStack.isSameItemSameComponents(stack, memory)) {
+                if (!resource.matches(memory.toStack())) {
                     fuzzyMatch = false;
                     break;
                 }
@@ -136,11 +158,11 @@ public class MagneticCraftingBlockEntity extends BaseItemStorageBlockEntity impl
 
             if (!fuzzyMatch) {
                 for (int i = 0; i < getMemorySize(); i++) {
-                    ItemStack stack = ItemUtil.getStack(this.items, i);
+                    ItemResource resource = this.items.getResource(i);
 
-                    if (ItemStack.isSameItemSameComponents(newMemory, stack)) {
+                    if (newMemory.matches(resource.toStack())) {
                         for (int j = 0; j < getMemorySize(); j++) {
-                            memories.set(j, ItemUtil.getStack(this.items, j));
+                            memories.set(j, this.items.getResource(j));
                         }
                     }
                 }
@@ -160,10 +182,10 @@ public class MagneticCraftingBlockEntity extends BaseItemStorageBlockEntity impl
                 setLastResult(resultStack);
 
                 for (int i = 0; i < getMemorySize(); i++) {
-                    ItemStack currentStack = ItemUtil.getStack(this.items, i);
+                    ItemResource resource = this.items.getResource(i);
 
-                    if (!currentStack.isEmpty()) {
-                        this.memories.set(i, currentStack);
+                    if (!resource.isEmpty()) {
+                        this.memories.set(i, resource);
                     }
                 }
             }
@@ -171,13 +193,13 @@ public class MagneticCraftingBlockEntity extends BaseItemStorageBlockEntity impl
     }
 
     @Override
-    public NonNullList<ItemStack> getMemories() {
+    public NonNullList<ItemResource> getMemories() {
         return this.memories;
     }
 
     @Override
-    public void setMemories(List<ItemStack> memories) {
-        this.memories = NonNullList.withSize(getMemorySize(), ItemStack.EMPTY);
+    public void setMemories(List<ItemResource> memories) {
+        this.memories = NonNullList.withSize(getMemorySize(), ItemResource.EMPTY);
 
         for (int i = 0; i < getMemorySize(); i++) {
             this.memories.set(i, memories.get(i));
@@ -186,24 +208,37 @@ public class MagneticCraftingBlockEntity extends BaseItemStorageBlockEntity impl
 
     @Override
     public boolean isMemoryOverridden() {
+        if (this.isMemoryOverridden.isBound()) {
+            return this.isMemoryOverridden.value();
+        }
+
         if (this.level instanceof ServerLevel serverLevel) {
             Optional<RecipeHolder<CraftingRecipe>> recipe = serverLevel.recipeAccess().getRecipeFor(RecipeType.CRAFTING, asCraftInput(), serverLevel);
 
             if (recipe.isPresent()) {
                 for (int i = 0; i < getMemorySize(); i++) {
-                    if (!this.items.getResource(i).isEmpty() && !ItemStack.isSameItemSameComponents(ItemUtil.getStack(this.items, i), this.memories.get(i))) {
-                        this.isMemoryOverridden = true;
+                    ItemResource resource = this.items.getResource(i);
+
+                    if (!resource.isEmpty() && !resource.matches(this.memories.get(i).toStack())) {
+                        this.isMemoryOverridden = TriStateBoolean.TRUE;
+                        return true;
                     }
                 }
             }
         }
 
-        return this.isMemoryOverridden;
+        this.isMemoryOverridden = TriStateBoolean.FALSE;
+        return false;
     }
 
     @Override
     public void setMemoryOverridden(boolean isMemoryOverridden) {
-        this.isMemoryOverridden = isMemoryOverridden;
+        this.isMemoryOverridden = TriStateBoolean.of(isMemoryOverridden);
+    }
+
+    @Override
+    public void updateOverrideStatus() {
+        this.isMemoryOverridden = TriStateBoolean.NONE;
     }
 
     @Override
@@ -227,21 +262,43 @@ public class MagneticCraftingBlockEntity extends BaseItemStorageBlockEntity impl
     }
 
     @Override
-    protected void onItemChange(int slot, ItemStack previousStack) {
-        super.onItemChange(slot, previousStack);
-        refreshRecipeResult(null, result -> setItem(0, result));
+    public void setItem(int slot, ItemStack stack) {
+        this.items.set(slot, ItemResource.of(stack), stack.getCount());
+    }
+
+    public void setItem(int slot, ItemResource resource, int amount) {
+        this.items.set(slot, resource, amount);
+    }
+
+    @Override
+    public ItemStack getItem(int slot) {
+        return ItemUtil.getStack(this.items, slot);
+    }
+
+    @Override
+    public ItemStack removeItem(int slot, int count) {
+        try (Transaction transaction = Transaction.open(null)) {
+            ItemResource resource = this.items.getResource(slot);
+            int extracted = this.items.extract(slot, resource, count, transaction);
+
+            if (extracted > 0) {
+                return resource.toStack(extracted);
+            }
+        }
+
+        return ItemStack.EMPTY;
     }
 
     @Override
     protected void saveAdditional(ValueOutput output) {
         super.saveAdditional(output);
-        MemorableContainer.save(output, this);
+        saveMemories(output);
     }
 
     @Override
     protected void loadAdditional(ValueInput input) {
         super.loadAdditional(input);
-        MemorableContainer.load(input, this);
+        loadMemories(input);
     }
 
     @Override
@@ -249,31 +306,23 @@ public class MagneticCraftingBlockEntity extends BaseItemStorageBlockEntity impl
         super.collectImplicitComponents(components);
 
         if (!this.memories.isEmpty()) {
-            CraftingMemory craftingMemory = new CraftingMemory(
-                    this.memories,
-                    this.isMemoryOverridden,
-                    this.lastRecipeResult,
-                    Optional.ofNullable(this.recipeUsed)
-            );
-            components.set(GalacticraftDataComponents.CRAFTING_MEMORY, craftingMemory);
+            components.set(GalacticraftDataComponents.CRAFTING_MEMORY, saveAsComponent());
         }
     }
 
     @Override
     protected void applyImplicitComponents(DataComponentGetter components) {
         super.applyImplicitComponents(components);
-        CraftingMemory craftingMemory = components.getOrDefault(GalacticraftDataComponents.CRAFTING_MEMORY, CraftingMemory.FORGOTTEN);
-
-        if (!craftingMemory.memories().isEmpty()) {
-            setMemories(craftingMemory.memories());
-            setMemoryOverridden(craftingMemory.isOverridden());
-            setLastResult(craftingMemory.lastResult());
-            craftingMemory.lastRecipe().ifPresent(this::setRecipeUsed);
-        }
+        readFromComponent(components);
     }
 
     @Override
-    public @Nullable AbstractContainerMenu createMenu(int containerId, Inventory inventory) {
+    public void fillStackedContents(StackedItemContents stackedItemContents) {
+        this.items.copyToList().forEach(stackedItemContents::accountStack);
+    }
+
+    @Override
+    public @Nullable AbstractContainerMenu createMenu(int containerId, Inventory inventory, Player player) {
         return new MagneticCraftingMenu(containerId, inventory, this);
     }
 }

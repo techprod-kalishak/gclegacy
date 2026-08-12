@@ -7,6 +7,7 @@
 
 package io.kalishak.galacticraftlegacy.world.level.block.entity.machine;
 
+import io.kalishak.galacticraftlegacy.world.level.block.entity.AbstractPadBlockEntity;
 import io.kalishak.galacticraftlegacy.world.level.telemetry.TelemetryTracker;
 import io.kalishak.galacticraftlegacy.world.entity.vehicle.rocket.AbstractAutoRocket;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityType;
@@ -55,5 +56,9 @@ public class LaunchControllerBlockEntity extends BlockEntity {
 
     public AbstractAutoRocket.AutoLaunchState getAutoLaunchState() {
         return AbstractAutoRocket.AutoLaunchState.CARGO_IS_FULL;
+    }
+
+    public void setAttachedPad(AbstractPadBlockEntity abstractPadBlockEntity) {
+
     }
 }

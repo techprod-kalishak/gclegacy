@@ -8,6 +8,7 @@
 package io.kalishak.galacticraftlegacy.world.level.block;
 
 import com.mojang.serialization.MapCodec;
+import io.kalishak.galacticraftlegacy.world.item.component.GalacticraftDataComponents;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.MagneticCraftingBlockEntity;
 import io.kalishak.galacticraftlegacy.world.level.block.machine.RotatedByToolBlock;
 import net.minecraft.core.BlockPos;
@@ -19,6 +20,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -73,6 +75,21 @@ public class MagneticCraftingBlock extends BaseEntityBlock implements RotatedByT
         }
 
         return InteractionResult.SUCCESS;
+    }
+
+    @Override
+    public ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state, boolean includeData, Player player) {
+        ItemStack stack = super.getCloneItemStack(level, pos, state, includeData, player);
+
+        if (!stack.isEmpty() && includeData) {
+            BlockEntity entity = level.getBlockEntity(pos);
+
+            if (entity instanceof MagneticCraftingBlockEntity magneticCrafting && !magneticCrafting.getMemories().isEmpty()) {
+                stack.set(GalacticraftDataComponents.CRAFTING_MEMORY, magneticCrafting.saveAsComponent());
+            }
+        }
+
+        return stack;
     }
 
     @Override

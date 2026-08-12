@@ -35,34 +35,39 @@ import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
 import java.util.List;
+import java.util.Optional;
 
 public class PlayerSpaceData extends GearInventoryProvider {
     public static final MapCodec<PlayerSpaceData> MAP_CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             SpaceGearEquipment.CODEC.fieldOf("GearEquipment").forGetter(PlayerSpaceData::getGearEquipment),
             Schematics.CODEC.fieldOf("Schematics").forGetter(PlayerSpaceData::getSchematics),
             Codec.BOOL.optionalFieldOf("IsSensorGlassesActivated", false).forGetter(PlayerSpaceData::isSensorGlassesActivated),
-            Codec.BOOL.optionalFieldOf("InPlanetSelection", false).forGetter(PlayerSpaceData::inPlanetSelection)
+            Codec.BOOL.optionalFieldOf("InPlanetSelection", false).forGetter(PlayerSpaceData::inPlanetSelection),
+            TransitionalRocketInfo.CODEC.optionalFieldOf("transitionalRocketInfo").forGetter(spaceData -> Optional.ofNullable(spaceData.transitionalRocketInfo))
     ).apply(instance, PlayerSpaceData::sync));
     public static final StreamCodec<RegistryFriendlyByteBuf, PlayerSpaceData> STREAM_CODEC = StreamCodec.composite(
             SpaceGearEquipment.STREAM_CODEC, GearInventoryProvider::getGearEquipment,
             Schematics.STREAM_CODEC, PlayerSpaceData::getSchematics,
             ByteBufCodecs.BOOL, PlayerSpaceData::isSensorGlassesActivated,
             ByteBufCodecs.BOOL, PlayerSpaceData::inPlanetSelection,
+            TransitionalRocketInfo.STREAM_CODEC.apply(ByteBufCodecs::optional), spaceData -> Optional.ofNullable(spaceData.transitionalRocketInfo),
             PlayerSpaceData::sync
     );
     private boolean isSensorGlassesActivated = false;
     private boolean inPlanetSelection = false;
+    private @Nullable TransitionalRocketInfo transitionalRocketInfo;
     private final Schematics unlockedSchematics = Schematics.empty();
 
     private PlayerSpaceData(SpaceGearEquipment gearEquipment) {
         super(gearEquipment);
     }
 
-    private static PlayerSpaceData sync(SpaceGearEquipment spaceGearEquipment, Schematics schematics, boolean isSensorGlassesActivated, boolean inPlanetSelection) {
+    private static PlayerSpaceData sync(SpaceGearEquipment spaceGearEquipment, Schematics schematics, boolean isSensorGlassesActivated, boolean inPlanetSelection, Optional<TransitionalRocketInfo> transitionalRocketInfo) {
         PlayerSpaceData spaceData = new PlayerSpaceData(spaceGearEquipment);
         spaceData.unlockedSchematics.sync(schematics);
         spaceData.toggleSensorGlasses(isSensorGlassesActivated);
         spaceData.togglePlanetSelection(inPlanetSelection);
+        transitionalRocketInfo.ifPresent(spaceData::setTransitionalRocket);
 
         return spaceData;
     }
@@ -162,5 +167,13 @@ public class PlayerSpaceData extends GearInventoryProvider {
 
     public boolean inPlanetSelection() {
         return this.inPlanetSelection;
+    }
+
+    public void setTransitionalRocket(@Nullable TransitionalRocketInfo transitionalRocketInfo) {
+        this.transitionalRocketInfo = transitionalRocketInfo;
+    }
+
+    public @Nullable TransitionalRocketInfo getTransitionalRocketInfo() {
+        return this.transitionalRocketInfo;
     }
 }

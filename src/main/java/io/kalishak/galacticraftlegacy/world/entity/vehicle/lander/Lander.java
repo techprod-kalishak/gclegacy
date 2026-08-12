@@ -25,7 +25,7 @@ public class Lander extends AbstractLander {
     private double lastYMovement;
 
     public Lander(EntityType<?> entityType, Level level) {
-        super(entityType, level);
+        super(entityType, level, 1);
     }
 
     @Override

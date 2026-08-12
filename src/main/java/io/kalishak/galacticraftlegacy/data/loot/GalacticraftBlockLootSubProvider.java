@@ -8,15 +8,24 @@
 package io.kalishak.galacticraftlegacy.data.loot;
 
 import io.kalishak.galacticraftlegacy.world.item.GalacticraftItems;
+import io.kalishak.galacticraftlegacy.world.item.component.GalacticraftDataComponents;
 import io.kalishak.galacticraftlegacy.world.level.block.GalacticraftBlocks;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.storage.loot.LootPool;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.functions.CopyComponentsFunction;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 
 import java.util.Set;
+import java.util.function.UnaryOperator;
 
 public class GalacticraftBlockLootSubProvider extends BlockLootSubProvider {
     private static final Set<Item> EXPLOSION_RESISTANT = Set.of();
@@ -68,7 +77,7 @@ public class GalacticraftBlockLootSubProvider extends BlockLootSubProvider {
         dropSelf(GalacticraftBlocks.UNLIT_COPPER_TORCH.get());
         dropSelf(GalacticraftBlocks.UNLIT_LANTERN.get());
         GalacticraftBlocks.UNLIT_COPPER_LANTERN.forEach(blockSupplier -> dropSelf(blockSupplier.get()));
-        dropSelf(GalacticraftBlocks.MAGNETIC_CRAFTING_TABLE.get());
+        add(GalacticraftBlocks.MAGNETIC_CRAFTING_TABLE.get(), block -> createComponentsBlockEntityTable(block, builder -> builder.include(GalacticraftDataComponents.CRAFTING_MEMORY.get())));
         dropSelf(GalacticraftBlocks.ASTEROID_ROCK.get());
         add(GalacticraftBlocks.ASTEROID_ROCK_SLAB.get(), this::createSlabItemTable);
         dropSelf(GalacticraftBlocks.ASTEROID_ROCK_STAIRS.get());
@@ -82,10 +91,27 @@ public class GalacticraftBlockLootSubProvider extends BlockLootSubProvider {
         dropSelf(GalacticraftBlocks.TIN_DECORATION_WALL.get());
         dropSelf(GalacticraftBlocks.COMPACT_NASA_WORKBENCH.get());
         dropSelf(GalacticraftBlocks.NASA_WORKBENCH.get());
+        dropSelf(GalacticraftBlocks.LANDING_PAD.get());
+        dropSelf(GalacticraftBlocks.FUELING_PAD.get());
     }
 
     @Override
     protected Iterable<Block> getKnownBlocks() {
         return GalacticraftBlocks.getEntries().toList();
+    }
+
+    protected LootTable.Builder createComponentsBlockEntityTable(Block drop, UnaryOperator<CopyComponentsFunction.Builder> builder) {
+        return LootTable.lootTable()
+                .withPool(
+                        applyExplosionCondition(
+                                drop,
+                                LootPool.lootPool()
+                                        .setRolls(ConstantValue.exactly(1.0F))
+                                        .add(
+                                                LootItem.lootTableItem(drop)
+                                                        .apply(builder.apply(CopyComponentsFunction.copyComponentsFromBlockEntity(LootContextParams.BLOCK_ENTITY)))
+                                        )
+                        )
+                );
     }
 }

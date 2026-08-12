@@ -61,6 +61,7 @@ public class GalacticraftLanguageProvider extends LanguageProvider {
         add("item.galacticraftlegacy.infinite", "Infinite");
         add("item.galacticraftlegacy.creative_only", "Creative Only");
         add("item.galacticraftlegacy.press_shift", "Press LSHIFT for more info");
+        add("item.galacticraftlegacy.crafting_memory.tooltip", "Last recipe: %s");
         add("space_race.galacticraftlegacy.team_flag", "%s team's flag");
         add("gui.recipebook.toggleRecipes.heatable", "Showing Heatable");
         add("gui.recipebook.toggleRecipes.arc_heatable", "Showing Arc Heatable");
@@ -165,6 +166,8 @@ public class GalacticraftLanguageProvider extends LanguageProvider {
         addBlock(GalacticraftBlocks.ASTEROID_ROCK_WALL, "Asteroids Rock Wall");
         addBlock(GalacticraftBlocks.ASTEROID_ALUMINUM_ORE, "Asteroid Aluminum Ore");
         addWithDescription(GalacticraftBlocks.FALLEN_METEOR, "Fallen Meteor", "Fallen Meteors can be found in many planets/moons which have little or no atmosphere. Will drop Meteoric Iron when broken.");
+        addBlock(GalacticraftBlocks.LANDING_PAD, "Landing Pad");
+        addBlock(GalacticraftBlocks.FUELING_PAD, "Fueling Pad");
 
         addEntityType(GalacticraftEntityType.FLAG, "Flag");
         addEntityType(GalacticraftEntityType.FALLING_PARACHEST, "Parachest");

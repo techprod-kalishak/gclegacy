@@ -53,6 +53,10 @@ public class CommonConfig {
             .comment("If this is true, the Player will parachute onto celestial bodies instead - use only in debug situations.")
             .translation("galacticraftlegacy.configgui.common.disable_landers")
             .define("disableLanders", false);
+    public static final ModConfigSpec.BooleanValue DISABLE_ROCKET_PARTICLES = BUILDER
+            .comment("If you have FPS problems, setting this to true will help if rocket particles are in your sights")
+            .translation("galacticraftlegacy.configgui.client.disable_rocket_particles")
+            .define("disableRocketParticles", false);
 
     public static final ModConfigSpec SPEC = BUILDER.pop().build();
 

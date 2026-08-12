@@ -30,15 +30,66 @@ public class ParachuteModel<S extends EntityRenderState> extends Model<S> {
     public ParachuteModel(ModelPart root) {
         super(root, RenderTypes::entitySolid);
         this.parachute = root.getChild("parachute");
-        this.parachuteSideLeft = this.parachute.getChild("side_left");
-        this.parachuteSideRight = this.parachute.getChild("side_right");
-        this.leftString = this.parachute.getChild("left_string");
-        this.rightString = this.parachute.getChild("right_string");
-        this.leftRearString = this.parachute.getChild("left_rear_string");
-        this.rightRearString = this.parachute.getChild("right_rear_string");
+        this.parachuteSideLeft = root.getChild("side_left");
+        this.parachuteSideRight = root.getChild("side_right");
+        this.leftString = root.getChild("left_string");
+        this.rightString = root.getChild("right_string");
+        this.leftRearString = root.getChild("left_rear_string");
+        this.rightRearString = root.getChild("right_rear_string");
     }
 
     public static LayerDefinition createParachuteLayer() {
+        MeshDefinition meshDefinition = new MeshDefinition();
+        PartDefinition partDefinition = meshDefinition.getRoot();
+
+        partDefinition.addOrReplaceChild(
+                "parachute",
+                CubeListBuilder.create().texOffs(0, 0)
+                        .addBox(-20.0F, -45.0F, -20.0F, 10, 2, 40),
+                PartPose.offset(15.0F, 4.0F, 0.0F)
+        );
+        partDefinition.addOrReplaceChild(
+                "side_left",
+                CubeListBuilder.create().texOffs(0, 42)
+                        .addBox(-20.0F, -45.0F, -20.0F, 40, 2, 40),
+                PartPose.offset(0.0F, 0.0F, 0.0F)
+        );
+        partDefinition.addOrReplaceChild(
+                "side_right",
+                CubeListBuilder.create().texOffs(0, 0)
+                        .addBox(-20.0F, -45.0F, -20.0F, 10, 2, 40),
+                PartPose.offset(11.0F, -11.0F, 0.0F)
+        );
+
+        partDefinition.addOrReplaceChild(
+                "left_string",
+                CubeListBuilder.create().texOffs(100, 0)
+                        .addBox(-0.5F, 0.0F, -0.5F, 1, 40, 1),
+                PartPose.offset(0.0F, 0.0F, 0.0F)
+        );
+        partDefinition.addOrReplaceChild(
+                "right_string",
+                CubeListBuilder.create().texOffs(100, 0)
+                        .addBox(-0.5F, 0.0F, -0.5F, 1, 40, 1),
+                PartPose.offset(0.0F, 0.0F, 0.0F)
+        );
+        partDefinition.addOrReplaceChild(
+                "left_rear_string",
+                CubeListBuilder.create().texOffs(100, 0)
+                        .addBox(-0.5F, 0.0F, -0.5F, 1, 40, 1),
+                PartPose.offset(0.0F, 0.0F, 0.0F)
+        );
+        partDefinition.addOrReplaceChild(
+                "right_rear_string",
+                CubeListBuilder.create().texOffs(100, 0)
+                        .addBox(-0.5F, 0.0F, -0.5F, 1, 40, 1),
+                PartPose.offset(0.0F, 0.0F, 0.0F)
+        );
+
+        return LayerDefinition.create(meshDefinition, 256, 256);
+    }
+
+    public static LayerDefinition createParachuteLayerOLD() {
         MeshDefinition meshDefinition = new MeshDefinition();
         PartDefinition partDefinition = meshDefinition.getRoot();
 

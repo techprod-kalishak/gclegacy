@@ -8,8 +8,9 @@
 package io.kalishak.galacticraftlegacy.world.entity;
 
 import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.FuelableDock;
+import net.minecraft.world.level.entity.UniquelyIdentifyable;
 
-public interface DockingEntity extends CargoContainer {
+public interface DockingEntity extends UniquelyIdentifyable, CargoContainer {
     void setPad(FuelableDock pad);
 
     FuelableDock getPad();

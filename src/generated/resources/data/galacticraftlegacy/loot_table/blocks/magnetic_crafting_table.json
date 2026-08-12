@@ -10,6 +10,15 @@
       "entries": [
         {
           "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:copy_components",
+              "include": [
+                "galacticraftlegacy:crafting_memory"
+              ],
+              "source": "block_entity"
+            }
+          ],
           "name": "galacticraftlegacy:magnetic_crafting_table"
         }
       ],

@@ -6,6 +6,7 @@
     "temperature_modifier": -0.9
   },
   "celestial_object_reference": "galacticraftlegacy:moon",
+  "fuel_usage_multiplier": 0.2,
   "gravity_scale": 0.165,
   "transition": {
     "type": "galacticraftlegacy:with_lander",

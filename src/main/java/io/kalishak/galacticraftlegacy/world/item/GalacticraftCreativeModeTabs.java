@@ -190,6 +190,8 @@ public final class GalacticraftCreativeModeTabs {
     }
 
     private static void buildBlocks(CreativeModeTab.ItemDisplayParameters itemDisplayParameters, CreativeModeTab.Output output) {
+        output.accept(GalacticraftItems.LANDING_PAD);
+        output.accept(GalacticraftItems.FUELING_PAD);
         output.accept(GalacticraftItems.OXYGEN_COLLECTOR);
         output.accept(GalacticraftItems.OXYGEN_DETECTOR);
         output.accept(GalacticraftItems.ALUMINUM_WIRE);

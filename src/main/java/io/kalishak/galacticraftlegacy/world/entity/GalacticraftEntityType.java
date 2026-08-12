@@ -82,6 +82,7 @@ public final class GalacticraftEntityType {
                     .noLootTable()
                     .fireImmune()
                     .sized(3.0F, 4.25F)
+                    .passengerAttachments(2.25F)
     );
     public static final DeferredHolder<EntityType<?>, EntityType<LandingBalloons>> LANDING_BALLOONS = REGISTRY.registerEntityType(
             GalacticraftEntityIds.LANDING_BALLOONS,
@@ -152,8 +153,8 @@ public final class GalacticraftEntityType {
             Tier1Rocket::new, MobCategory.MISC,
             builder -> builder
                     .noLootTable()
-                    .sized(0.98F, 4.0F)
-                    .attach(EntityAttachment.PASSENGER, new Vec3(0.0D, 0.5D, 0.0D))
+                    .sized(1.2F, 3.5F)
+                    .attach(EntityAttachment.PASSENGER, new Vec3(0.0D, 0.3D, 0.0D))
     );
     public static final DeferredHolder<EntityType<?>, EntityType<MoonBuggy>> BUGGY = REGISTRY.registerEntityType(
             GalacticraftEntityIds.BUGGY,

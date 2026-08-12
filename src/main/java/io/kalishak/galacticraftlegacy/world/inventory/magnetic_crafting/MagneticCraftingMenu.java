@@ -24,6 +24,7 @@ import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
+import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.neoforged.neoforge.transfer.item.ResourceHandlerSlot;
 import org.jspecify.annotations.Nullable;
 
@@ -48,7 +49,7 @@ public class MagneticCraftingMenu extends RecipeBookMenu implements ContainerLis
     }
 
     public MagneticCraftingMenu(int containerId, Inventory playerInventory, RegistryFriendlyByteBuf data) {
-        this(containerId, playerInventory, ResourcefulHelper.readBlockEntity(GalacticraftBlockEntityType.MAGNETIC_CRAFTING.get(), playerInventory.player.level(), data));
+        this(containerId, playerInventory, ResourcefulHelper.readBlockEntity(GalacticraftBlockEntityType.MAGNETIC_CRAFTING_TABLE.get(), playerInventory.player.level(), data));
     }
 
     private void addCraftingSlots() {
@@ -161,7 +162,7 @@ public class MagneticCraftingMenu extends RecipeBookMenu implements ContainerLis
 
                 @Override
                 public void clearCraftingContent() {
-                    MagneticCraftingMenu.this.blockEntity.clearContent();
+                    ResourcefulHelper.clear(MagneticCraftingMenu.this.blockEntity.getResourceHandler(), MagneticCraftingMenu.this.blockEntity::setItem, ItemResource.EMPTY);
                 }
 
                 @Override

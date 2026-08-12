@@ -40,29 +40,36 @@ import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
 import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 public abstract class BaseItemStorageBlockEntity extends BlockEntity implements MenuProvider, Nameable {
     private LockCode lockKey = LockCode.NO_LOCK;
     private @Nullable Component name;
-    protected final ItemStacksResourceHandler items = new ItemStacksResourceHandler(getSize()) {
-        @Override
-        protected void onContentsChanged(int index, ItemStack previousContents) {
-            ItemResource resource = BaseItemStorageBlockEntity.this.items.getResource(index);
-            boolean sameResource = !resource.isEmpty() && resource.matches(previousContents);
-
-            if (!sameResource) {
-                onItemChange(index, previousContents);
-            }
-        }
-
-        @Override
-        public boolean isValid(int index, ItemResource resource) {
-            return BaseItemStorageBlockEntity.this.isValid(index, ItemUtil.getStack(BaseItemStorageBlockEntity.this.items, index));
-        }
-    };
+    protected final ItemStacksResourceHandler items;
 
     protected BaseItemStorageBlockEntity(BlockEntityType<?> type, BlockPos worldPosition, BlockState blockState) {
         super(type, worldPosition, blockState);
+        this.items = new ItemStacksResourceHandler(getSize()) {
+            @Override
+            protected void onContentsChanged(int index, ItemStack previousContents) {
+                ItemResource resource = BaseItemStorageBlockEntity.this.items.getResource(index);
+                boolean sameResource = !resource.isEmpty() && resource.matches(previousContents);
+
+                if (!sameResource) {
+                    onItemChange(index, previousContents);
+                }
+            }
+
+            @Override
+            public boolean isValid(int index, ItemResource resource) {
+                return BaseItemStorageBlockEntity.this.isValid(index, ItemUtil.getStack(BaseItemStorageBlockEntity.this.items, index));
+            }
+        };
+    }
+
+    protected BaseItemStorageBlockEntity(BlockEntityType<?> type, BlockPos worldPosition, BlockState blockState, Function<Integer, ItemStacksResourceHandler> itemsSource) {
+        super(type, worldPosition, blockState);
+        this.items = itemsSource.apply(getSize());
     }
 
     public static <BE extends BaseItemStorageBlockEntity> void registerDirectionalSlots(RegisterCapabilitiesEvent event, BlockEntityType<@NonNull BE> blockEntityType, Direction faceForInput, int inputSlotStart, int inputSlotEnd, Direction faceForOutput, int outputSlotStart, int outputSlotEnd) {

@@ -23,6 +23,7 @@ import io.kalishak.galacticraftlegacy.world.level.material.fluid.GalacticraftFlu
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.valueproviders.ConstantInt;
 import net.minecraft.util.valueproviders.UniformInt;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.*;
@@ -654,6 +655,30 @@ public final class GalacticraftBlocks {
                     .sound(SoundType.METAL)
                     .strength(1.5F)
     );
+    public static final DeferredBlock<LandingPadBlock> LANDING_PAD = REGISTRY.registerBlock(
+            GalacticraftBlockItemIds.LANDING_PAD,
+            LandingPadBlock::new,
+            () -> BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.METAL)
+                    .sound(SoundType.METAL)
+                    .requiresCorrectToolForDrops()
+                    .strength(1.0F, 10.0F)
+                    .forceSolidOn()
+                    .isRedstoneConductor(GalacticraftBlocks::never)
+                    .isValidSpawn(GalacticraftBlocks::never)
+    );
+    public static final DeferredBlock<FuelingPadBlock> FUELING_PAD = REGISTRY.registerBlock(
+            GalacticraftBlockItemIds.FUELING_PAD,
+            FuelingPadBlock::new,
+            () -> BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.METAL)
+                    .sound(SoundType.METAL)
+                    .requiresCorrectToolForDrops()
+                    .strength(1.0F, 10.0F)
+                    .forceSolidOn()
+                    .isRedstoneConductor(GalacticraftBlocks::never)
+                    .isValidSpawn(GalacticraftBlocks::never)
+    );
 
     private static BlockBehaviour.Properties wallVariant(Supplier<Block> baseBlock, boolean overrideDescription, UnaryOperator<BlockBehaviour.Properties> properties) {
         BlockBehaviour.Properties wallProperties = BlockBehaviour.Properties.of().overrideLootTable(baseBlock.get().getLootTable());
@@ -683,6 +708,10 @@ public final class GalacticraftBlocks {
     }
 
     private static boolean never(BlockState blockState, BlockGetter blockGetter, BlockPos blockPos) {
+        return false;
+    }
+
+    private static boolean never(BlockState state, BlockGetter blockGetter, BlockPos blockPos, EntityType<?> entityType) {
         return false;
     }
 

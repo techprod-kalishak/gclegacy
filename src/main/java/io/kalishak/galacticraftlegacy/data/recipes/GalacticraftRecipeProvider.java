@@ -706,7 +706,7 @@ public class GalacticraftRecipeProvider extends RecipeProvider {
         buildFabricatorRecipes();
         buildCompressorRecipes();
         buildHeatingOnlyRecipes();
-        buildVehicleCrafting();
+        //buildVehicleCrafting();
     }
 
     protected void foodCanister(ItemLike cannedFood, ItemLike ingredient) {

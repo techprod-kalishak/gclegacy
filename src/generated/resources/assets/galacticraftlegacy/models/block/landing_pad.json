@@ -1,0 +1,6 @@
+{
+  "parent": "galacticraftlegacy:block/pad",
+  "textures": {
+    "texture": "galacticraftlegacy:block/landing_pad"
+  }
+}

@@ -16,6 +16,7 @@ import io.kalishak.galacticraftlegacy.network.payload.EntityPlanetaryTransitionP
 import io.kalishak.galacticraftlegacy.network.payload.OpenGalaxySelectionScreenPayload;
 import io.kalishak.galacticraftlegacy.world.entity.CameraOperator;
 import io.kalishak.galacticraftlegacy.world.item.FeatureTier;
+import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.FuelableDock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.GlobalPos;
 import net.minecraft.core.Holder;
@@ -29,10 +30,12 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.portal.TeleportTransition;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.network.PacketDistributor;
+import net.neoforged.neoforge.transfer.transaction.Transaction;
 import org.jspecify.annotations.Nullable;
 
 import java.util.function.Supplier;
@@ -44,7 +47,7 @@ public abstract class TieredRocket extends AbstractAutoRocket implements RocketT
     public float rumble;
 
     protected TieredRocket(EntityType<?> entityType, Level level, FeatureTier featureTier, RocketTier.Type type, Supplier<Item> droppedItemSupplier, Player owner) {
-        super(entityType, level, droppedItemSupplier, owner, type.getInventorySize(), type.isPrefueled());
+        super(entityType, level, droppedItemSupplier, owner, type.getAdditionalSlots(), type.isPrefueled());
         this.tier = featureTier;
         this.type = type;
         //size 0.98, 4
@@ -68,10 +71,9 @@ public abstract class TieredRocket extends AbstractAutoRocket implements RocketT
                         }
 
                         setAwaitingForPlayer(false);
-                        setDeltaMovement(getDeltaMovement().x, -0.5D, getDeltaMovement().z);
+                        move(MoverType.SELF, new Vec3(0.0D, -0.5D, 0.0D));
                     } else {
                         setDeltaMovement(Vec3.ZERO);
-                        passenger.setDeltaMovement(Vec3.ZERO);
                     }
                 }
             } else {
@@ -240,6 +242,36 @@ public abstract class TieredRocket extends AbstractAutoRocket implements RocketT
         }
 
         return super.teleport(teleportTransition);
+    }
+
+    @Override
+    public LoadingState addCargo(ItemStack stack, boolean simulate, @Nullable Transaction tx) {
+        return LoadingState.NO_TARGET;
+    }
+
+    @Override
+    public Result removeCargo(boolean simulate, @Nullable Transaction tx) {
+        return new Result(LoadingState.NO_TARGET, ItemStack.EMPTY);
+    }
+
+    @Override
+    public void setPad(FuelableDock pad) {
+
+    }
+
+    @Override
+    public FuelableDock getPad() {
+        return null;
+    }
+
+    @Override
+    public void onPadDestroyed() {
+
+    }
+
+    @Override
+    public boolean isDockValid(FuelableDock dock) {
+        return false;
     }
 
     @Override

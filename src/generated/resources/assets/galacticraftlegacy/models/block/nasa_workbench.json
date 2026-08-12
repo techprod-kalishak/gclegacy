@@ -1,5 +1,48 @@
 {
   "parent": "minecraft:block/cube_bottom_top",
+  "display": {
+    "on_shelf": {
+      "scale": [
+        0.8,
+        0.8,
+        0.8
+      ]
+    },
+    "thirdperson_lefthand": {
+      "rotation": [
+        10,
+        -45,
+        170
+      ],
+      "scale": [
+        0.375,
+        0.375,
+        0.375
+      ],
+      "translation": [
+        0,
+        1.5,
+        2.75
+      ]
+    },
+    "thirdperson_righthand": {
+      "rotation": [
+        10,
+        -45,
+        170
+      ],
+      "scale": [
+        0.375,
+        0.375,
+        0.375
+      ],
+      "translation": [
+        0,
+        1.5,
+        -2.75
+      ]
+    }
+  },
   "textures": {
     "bottom": "galacticraftlegacy:block/nasa_workbench_bottom",
     "side": "galacticraftlegacy:block/nasa_workbench_side",

@@ -20,24 +20,22 @@ public interface RocketTier {
     FeatureTier getFeatureTier();
 
     enum Type implements SerializableEnum {
-        DEFAULT("default", 0, false, 2),
-        SMALL_STORAGE("small_storage", 1, false, 20),
-        MEDIUM_STORAGE("medium_storage", 2, false, 38),
-        LARGE_STORAGE("large_storage", 3, false, 56),
-        PREFUELED("prefueled", 4, true, 56);
+        DEFAULT("default", 0, 0),
+        SMALL_STORAGE("small_storage", 1, 18),
+        MEDIUM_STORAGE("medium_storage", 2, 36),
+        LARGE_STORAGE("large_storage", 3, 54),
+        PREFUELED("prefueled", 4, 54);
 
         public static final Codec<Type> CODEC = SerializableEnum.codec(Type.class);
         public static final StreamCodec<ByteBuf, Type> STREAM_CODEC = SerializableEnum.streamCodec(Type.class);
         private final String name;
         private final int index;
-        private final boolean prefueled;
-        private final int inventorySize;
+        private final int additionalSlots;
 
-        Type(String name, int index, boolean prefueled, int inventorySize) {
+        Type(String name, int index, int additionalSlots) {
             this.name = name;
             this.index = index;
-            this.prefueled = prefueled;
-            this.inventorySize = inventorySize;
+            this.additionalSlots = additionalSlots;
         }
 
         @Override
@@ -51,11 +49,11 @@ public interface RocketTier {
         }
 
         public boolean isPrefueled() {
-            return this.prefueled;
+            return this == PREFUELED;
         }
 
-        public int getInventorySize() {
-            return this.inventorySize;
+        public int getAdditionalSlots() {
+            return this.additionalSlots;
         }
     }
 }

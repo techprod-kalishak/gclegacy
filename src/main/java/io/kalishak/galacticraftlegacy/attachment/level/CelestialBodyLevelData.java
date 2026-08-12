@@ -27,6 +27,7 @@ import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.attachment.IAttachmentHolder;
 
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * Immutable data regarding every space object. Do not have to be habitable by the Player
@@ -35,7 +36,7 @@ import java.util.Map;
  * @param gravityScale Modifier used to modify entity's gravity attribute
  * @param transition Information about transitions to this celestial body
  */
-public record CelestialBodyLevelData(Holder<CelestialObject> celestialObject, AtmosphereInfo atmosphereInfo, float gravityScale, PlanetaryTransition transition) {
+public record CelestialBodyLevelData(Holder<CelestialObject> celestialObject, AtmosphereInfo atmosphereInfo, float gravityScale, PlanetaryTransition transition, Optional<Float> fuelUsageMultiplier) {
     private static final Map<ResourceKey<Level>, ResourceKey<CelestialBodyLevelData>> KEYS = ImmutableMap.<ResourceKey<Level>, ResourceKey<CelestialBodyLevelData>>builder()
             .put(Level.OVERWORLD, CelestialBodyLevelDataEntries.OVERWORLD)
             .put(GalacticraftDimensions.MOON, CelestialBodyLevelDataEntries.MOON)
@@ -49,7 +50,8 @@ public record CelestialBodyLevelData(Holder<CelestialObject> celestialObject, At
             CelestialObject.CODEC.fieldOf("celestial_object_reference").forGetter(CelestialBodyLevelData::celestialObject),
             AtmosphereInfo.CODEC.fieldOf("atmosphere_info").forGetter(CelestialBodyLevelData::atmosphereInfo),
             Codec.FLOAT.fieldOf("gravity_scale").forGetter(CelestialBodyLevelData::gravityScale),
-            TransitionType.CODEC.fieldOf("transition").forGetter(CelestialBodyLevelData::transition)
+            TransitionType.CODEC.fieldOf("transition").forGetter(CelestialBodyLevelData::transition),
+            Codec.FLOAT.optionalFieldOf("fuel_usage_multiplier").forGetter(CelestialBodyLevelData::fuelUsageMultiplier)
     ).apply(instance, CelestialBodyLevelData::new));
     public static final Codec<Holder<CelestialBodyLevelData>> CODEC = RegistryFixedCodec.create(GalacticraftRegistries.Keys.CELESTIAL_BODY_LEVEL_DATA);
     public static final StreamCodec<RegistryFriendlyByteBuf, CelestialBodyLevelData> DIRECT_STREAM_CODEC = StreamCodec.composite(
@@ -57,6 +59,7 @@ public record CelestialBodyLevelData(Holder<CelestialObject> celestialObject, At
             AtmosphereInfo.STREAM_CODEC, CelestialBodyLevelData::atmosphereInfo,
             ByteBufCodecs.FLOAT, CelestialBodyLevelData::gravityScale,
             TransitionType.STREAM_CODEC, CelestialBodyLevelData::transition,
+            ByteBufCodecs.FLOAT.apply(ByteBufCodecs::optional), CelestialBodyLevelData::fuelUsageMultiplier,
             CelestialBodyLevelData::new
     );
     public static final StreamCodec<RegistryFriendlyByteBuf, Holder<CelestialBodyLevelData>> STREAM_CODEC = ByteBufCodecs.holder(

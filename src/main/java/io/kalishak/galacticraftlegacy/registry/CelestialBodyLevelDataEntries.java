@@ -19,6 +19,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 
+import java.util.Optional;
 import java.util.function.Supplier;
 
 public class CelestialBodyLevelDataEntries {
@@ -35,7 +36,8 @@ public class CelestialBodyLevelDataEntries {
             GalacticraftGalaxies.OVERWORLD,
             AtmosphereInfo.EARTH,
             1.0F,
-            new EarthPlanetaryTranstion()
+            new EarthPlanetaryTranstion(),
+            Optional.empty()
     );
 
     public static void bootstrap(BootstrapContext<CelestialBodyLevelData> cxt) {
@@ -63,7 +65,8 @@ public class CelestialBodyLevelDataEntries {
                                 .temperatureModifier(-0.9F)
                                 .build(),
                         0.165F,
-                        FixedPlanetaryTransition.spaceStation()
+                        FixedPlanetaryTransition.spaceStation(),
+                        Optional.of(0.2F)
                 )
         );
         cxt.register(
@@ -74,7 +77,8 @@ public class CelestialBodyLevelDataEntries {
                                 .temperatureModifier(-0.9F)
                                 .build(),
                         0.165F,
-                        new LanderPlanetaryTransition(GalacticraftEntityType.LANDER)
+                        new LanderPlanetaryTransition(GalacticraftEntityType.LANDER),
+                        Optional.of(0.2F)
                 )
         );
         cxt.register(
@@ -88,7 +92,8 @@ public class CelestialBodyLevelDataEntries {
                                 .temperatureModifier(-0.5F)
                                 .build(),
                         0.38F,
-                        new LanderPlanetaryTransition(GalacticraftEntityType.LANDING_BALLOONS)
+                        new LanderPlanetaryTransition(GalacticraftEntityType.LANDING_BALLOONS),
+                        Optional.of(0.4F)
                 )
         );
         cxt.register(
@@ -99,7 +104,8 @@ public class CelestialBodyLevelDataEntries {
                                 .temperatureModifier(-0.9F)
                                 .build(),
                         0.01F,
-                        new LanderPlanetaryTransition(GalacticraftEntityType.ENTRY_POD)
+                        new LanderPlanetaryTransition(GalacticraftEntityType.ENTRY_POD),
+                        Optional.of(0.1F)
                 )
         );
         cxt.register(
@@ -112,7 +118,8 @@ public class CelestialBodyLevelDataEntries {
                                 .temperatureModifier(2.0F)
                                 .build(),
                         0.904F,
-                        new LanderPlanetaryTransition(GalacticraftEntityType.ENTRY_POD)
+                        new LanderPlanetaryTransition(GalacticraftEntityType.ENTRY_POD),
+                        Optional.of(0.9F)
                 )
         );
     }

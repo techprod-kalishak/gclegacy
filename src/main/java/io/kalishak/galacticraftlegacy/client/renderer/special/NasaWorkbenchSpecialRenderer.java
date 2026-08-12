@@ -35,9 +35,7 @@ public class NasaWorkbenchSpecialRenderer implements NoDataSpecialModelRenderer 
     @Override
     public void submit(PoseStack poseStack, SubmitNodeCollector submitNodeCollector, int lightCoords, int overlayCoords, boolean hasFoil, int outlineColor) {
         poseStack.pushPose();
-        poseStack.translate(0.5F, 0.5F, 0.5F);
-        poseStack.mulPose(Axis.ZP.rotationDegrees(180.0F));
-        poseStack.translate(0.0F, -2.0F, 0.0F);
+        poseStack.translate(0.5F, 1.0F, 0.5F);
         submitNodeCollector.submitModel(this.model, null, poseStack, lightCoords, overlayCoords, -1, this.sprite, this.sprites, outlineColor, null);
         poseStack.popPose();
     }

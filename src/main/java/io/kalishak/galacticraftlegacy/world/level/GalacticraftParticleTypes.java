@@ -26,6 +26,14 @@ public class GalacticraftParticleTypes {
             "sparks",
             () -> new SimpleParticleType(false)
     );
+    public static final DeferredHolder<ParticleType<?>, SimpleParticleType> LAUNCH_FLAME = REGISTRY.register(
+            "launch_flame",
+            () -> new SimpleParticleType(false)
+    );
+    public static final DeferredHolder<ParticleType<?>, SimpleParticleType> FLYING_FLAME = REGISTRY.register(
+            "flying_flame",
+            () -> new SimpleParticleType(false)
+    );
 
     public static void init(IEventBus bus) {
         REGISTRY.register(bus);

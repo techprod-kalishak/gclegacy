@@ -41,9 +41,7 @@ public class NasaWorkbenchBlockRenderer implements BlockEntityRenderer<NasaWorkb
     @Override
     public void submit(BlockEntityRenderState renderState, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, CameraRenderState cameraRenderState) {
         poseStack.pushPose();
-        poseStack.translate(0.5F, 0.5F, 0.5F);
-        poseStack.mulPose(Axis.ZP.rotationDegrees(180.0F));
-        poseStack.translate(0.0F, -2.0F, 0.0F);
+        poseStack.translate(0.5F, 1.1F, 0.5F);
         submitNodeCollector.submitModel(this.model, renderState, poseStack, renderState.lightCoords, OverlayTexture.NO_OVERLAY, -1, NASA_WORKBENCH_TEXTURE, this.sprites, 0, renderState.breakProgress);
         poseStack.popPose();
     }

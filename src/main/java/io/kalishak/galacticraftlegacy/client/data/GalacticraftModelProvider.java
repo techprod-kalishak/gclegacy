@@ -7,6 +7,7 @@
 
 package io.kalishak.galacticraftlegacy.client.data;
 
+import com.mojang.math.Transformation;
 import io.kalishak.galacticraftlegacy.client.data.models.model.GalacticraftModelTemplates;
 import io.kalishak.galacticraftlegacy.client.renderer.special.NasaWorkbenchSpecialRenderer;
 import io.kalishak.galacticraftlegacy.client.renderer.special.VehicleSpecialRenderer;
@@ -38,6 +39,8 @@ import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
 import net.minecraft.client.data.models.blockstates.PropertyDispatch;
 import net.minecraft.client.data.models.model.*;
 import net.minecraft.client.renderer.item.ItemModel;
+import net.minecraft.client.resources.model.cuboid.ItemTransform;
+import net.minecraft.client.resources.model.cuboid.ItemTransforms;
 import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -45,10 +48,13 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Util;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.neoforged.neoforge.client.model.generators.template.ExtendedModelTemplateBuilder;
+import org.joml.Vector3f;
+import org.joml.Vector3fc;
 
 import java.util.Arrays;
 import java.util.EnumMap;
@@ -137,6 +143,8 @@ public class GalacticraftModelProvider extends ModelProvider {
         nasaWorkbench(blockModels, GalacticraftBlocks.NASA_WORKBENCH.get());
         blockModels.createNonTemplateModelBlock(GalacticraftBlocks.GRATING.get());
         createMeteor(blockModels, GalacticraftBlocks.FALLEN_METEOR.get());
+        padBlock(blockModels, GalacticraftBlocks.LANDING_PAD.get());
+        padBlock(blockModels, GalacticraftBlocks.FUELING_PAD.get());
 
         blockModels.registerSimpleFlatItemModel(GalacticraftBlocks.GRATING.get());
         itemModels.generateFlatItem(GalacticraftItems.THROWABLE_METEOR_CHUNK.get(), ModelTemplates.FLAT_ITEM);
@@ -509,7 +517,7 @@ public class GalacticraftModelProvider extends ModelProvider {
     }
 
     private void nasaWorkbench(BlockModelGenerators gen, Block block) {
-        Identifier baseModel = ModelTemplates.CUBE_BOTTOM_TOP.create(block, TextureMapping.cubeBottomTop(block), gen.modelOutput);
+        Identifier baseModel = GalacticraftModelTemplates.NASA_WORKBENCH.create(block, TextureMapping.cubeBottomTop(block), gen.modelOutput);
         gen.blockStateOutput.accept(createSimpleBlock(block, plainVariant(baseModel)));
 
         ItemModel.Unbaked model = ItemModelUtils.composite(
@@ -517,5 +525,11 @@ public class GalacticraftModelProvider extends ModelProvider {
                 ItemModelUtils.specialModel(baseModel, new NasaWorkbenchSpecialRenderer.Unbaked())
         );
         gen.itemModelOutput.accept(block.asItem(), model);
+    }
+
+    private void padBlock(BlockModelGenerators gen, Block block) {
+        Identifier model = GalacticraftModelTemplates.PAD.create(block, TextureMapping.defaultTexture(block), gen.modelOutput);
+        gen.blockStateOutput.accept(createSimpleBlock(block, plainVariant(model)));
+        gen.registerSimpleItemModel(block.asItem(), model);
     }
 }
