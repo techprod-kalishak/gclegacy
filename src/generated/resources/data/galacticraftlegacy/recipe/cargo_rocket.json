@@ -1,0 +1,28 @@
+{
+  "type": "galacticraftlegacy:vehicle_crafting",
+  "category": "rocket",
+  "group": "rocket",
+  "ingredients": [
+    "galacticraftlegacy:rocket_nose_cone",
+    "#c:plates/heavy_duty",
+    "#c:plates/heavy_duty",
+    "#c:plates/heavy_duty",
+    "#c:plates/heavy_duty",
+    "#c:plates/heavy_duty",
+    "#c:plates/heavy_duty",
+    "#c:plates/heavy_duty",
+    "#c:plates/heavy_duty",
+    "#c:plates/heavy_duty",
+    "#c:plates/heavy_duty",
+    "#c:plates/heavy_duty",
+    "galacticraftlegacy:rocket_fins",
+    "galacticraftlegacy:rocket_fins",
+    "galacticraftlegacy:rocket_engine",
+    "galacticraftlegacy:rocket_fins",
+    "galacticraftlegacy:rocket_fins"
+  ],
+  "recipe_holder": "galacticraftlegacy:cargo_rocket",
+  "result": {
+    "id": "galacticraftlegacy:cargo_rocket"
+  }
+}

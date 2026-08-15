@@ -34,6 +34,7 @@ import net.minecraft.advancements.triggers.Criterion;
 import net.minecraft.advancements.triggers.DistanceTrigger;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
@@ -96,24 +97,68 @@ public class GalacticraftRecipeProvider extends RecipeProvider {
 
     private void buildVehicleCrafting() {
         HolderGetter<VehicleCraftingDataRecipe> vehicleData = this.registries.lookupOrThrow(GalacticraftRegistries.Keys.VEHICLE_CRAFTING_RECIPE_DATA);
+        HolderSet<Item> heavyDutyPlates = this.items.getOrThrow(GalacticraftTags.Items.PLATE_HEAVY_DUTY);
 
-        VehicleCraftingRecipeBuilder.rocket(vehicleData, VehicleCraftingDataRecipes.TIER_1_ROCKET)
+        VehicleCraftingRecipeBuilder.rocket(vehicleData, VehicleCraftingDataRecipes.TIER_1_ROCKET, GalacticraftItems.TIER_1_ROCKET)
                 .unlockedBy(getHasName(GalacticraftItems.NASA_WORKBENCH), has(GalacticraftItems.NASA_WORKBENCH))
+                .withIngredient(GalacticraftItems.ROCKET_NOSE_CONE)
+                .withIngredients(heavyDutyPlates, 8)
+                .withIngredients(GalacticraftItems.ROCKET_FIN, 2)
+                .withIngredient(GalacticraftItems.ROCKET_ENGINE)
+                .withIngredients(GalacticraftItems.ROCKET_FIN, 2)
                 .save(this.output);
-        VehicleCraftingRecipeBuilder.rocket(vehicleData, VehicleCraftingDataRecipes.MOON_BUGGY)
+        VehicleCraftingRecipeBuilder.rocket(vehicleData, VehicleCraftingDataRecipes.MOON_BUGGY, GalacticraftItems.BUGGY)
                 .hasSchematic(SchematicVariants.MOON_BUGGY)
+                .withIngredients(heavyDutyPlates, 5)
+                .withIngredient(GalacticraftItems.BUGGY_SEAT)
+                .withIngredients(heavyDutyPlates, 6)
+                .withIngredients(GalacticraftItems.BUGGY_WHEEL, 4)
                 .save(this.output);
-        VehicleCraftingRecipeBuilder.rocket(vehicleData, VehicleCraftingDataRecipes.TIER_2_ROCKET)
+        VehicleCraftingRecipeBuilder.rocket(vehicleData, VehicleCraftingDataRecipes.TIER_2_ROCKET, GalacticraftItems.TIER_2_ROCKET)
                 .hasSchematic(SchematicVariants.TIER_2_ROCKET)
+                .withIngredient(GalacticraftItems.ROCKET_NOSE_CONE)
+                .withIngredients(this.items.getOrThrow(GalacticraftTags.Items.PLATE_HEAVY_DUTY_2), 10)
+                .withIngredient(GalacticraftItems.ROCKET_BOOSTER)
+                .withIngredients(GalacticraftItems.ROCKET_FIN, 2)
+                .withIngredient(GalacticraftItems.ROCKET_ENGINE)
+                .withIngredient(GalacticraftItems.ROCKET_BOOSTER)
+                .withIngredients(GalacticraftItems.ROCKET_FIN, 2)
                 .save(this.output);
-        VehicleCraftingRecipeBuilder.rocket(vehicleData, VehicleCraftingDataRecipes.CARGO_ROCKET)
+        VehicleCraftingRecipeBuilder.rocket(vehicleData, VehicleCraftingDataRecipes.CARGO_ROCKET, GalacticraftItems.CARGO_ROCKET)
                 .hasSchematic(SchematicVariants.CARGO_ROCKET)
+                .withIngredient(GalacticraftItems.ROCKET_NOSE_CONE)
+                .withIngredients(heavyDutyPlates, 11)
+                .withIngredients(GalacticraftItems.ROCKET_FIN, 2)
+                .withIngredient(GalacticraftItems.ROCKET_ENGINE)
+                .withIngredients(GalacticraftItems.ROCKET_FIN, 2)
                 .save(this.output);
-        VehicleCraftingRecipeBuilder.rocket(vehicleData, VehicleCraftingDataRecipes.TIER_3_ROCKET)
+        VehicleCraftingRecipeBuilder.rocket(vehicleData, VehicleCraftingDataRecipes.TIER_3_ROCKET, GalacticraftItems.TIER_3_ROCKET)
                 .hasSchematic(SchematicVariants.TIER_3_ROCKET)
+                .withIngredient(GalacticraftItems.HEAVY_NOSE_CONE)
+                .withIngredients(this.items.getOrThrow(GalacticraftTags.Items.PLATE_HEAVY_DUTY_3), 10)
+                .withIngredient(GalacticraftItems.ROCKET_BOOSTER)
+                .withIngredients(GalacticraftItems.HEAVY_FIN, 2)
+                .withIngredient(GalacticraftItems.HEAVY_ROCKET_ENGINE)
+                .withIngredient(GalacticraftItems.ROCKET_BOOSTER)
+                .withIngredients(GalacticraftItems.HEAVY_FIN, 2)
                 .save(this.output);
-        VehicleCraftingRecipeBuilder.rocket(vehicleData, VehicleCraftingDataRecipes.ASTRO_MINER)
+        VehicleCraftingRecipeBuilder.rocket(vehicleData, VehicleCraftingDataRecipes.ASTRO_MINER, GalacticraftItems.ASTRO_MINER)
                 .hasSchematic(SchematicVariants.ASTRO_MINER)
+                .withIngredient(heavyDutyPlates)
+                .withIngredient(GalacticraftItems.ORION_DRIVE)
+                .withIngredient(heavyDutyPlates)
+                .withIngredient(GalacticraftItems.ORION_DRIVE)
+                .withIngredient(heavyDutyPlates)
+                .withIngredient(GalacticraftItems.ORION_DRIVE)
+                .withIngredient(GalacticraftItems.ADVANCED_WAFER)
+                .withIngredients(this.items.getOrThrow(Tags.Items.CHESTS), 2)
+                .withIngredient(GalacticraftItems.ORION_DRIVE)
+                .withIngredient(GalacticraftItems.ORION_DRIVE)
+                .withIngredient(heavyDutyPlates)
+                .withIngredient(GalacticraftItems.ORION_DRIVE)
+                .withIngredient(this.items.getOrThrow(GalacticraftTags.Items.PLATE_ALUMINUM))
+                .withIngredient(GalacticraftItems.STEEL_POLE)
+                .withIngredient(GalacticraftItems.ADVANCED_WAFER)
                 .save(this.output);
     }
 
@@ -706,7 +751,7 @@ public class GalacticraftRecipeProvider extends RecipeProvider {
         buildFabricatorRecipes();
         buildCompressorRecipes();
         buildHeatingOnlyRecipes();
-        //buildVehicleCrafting();
+        buildVehicleCrafting();
     }
 
     protected void foodCanister(ItemLike cannedFood, ItemLike ingredient) {

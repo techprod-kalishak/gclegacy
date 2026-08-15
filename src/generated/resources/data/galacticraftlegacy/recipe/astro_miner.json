@@ -1,0 +1,27 @@
+{
+  "type": "galacticraftlegacy:vehicle_crafting",
+  "category": "rocket",
+  "group": "rocket",
+  "ingredients": [
+    "#c:plates/heavy_duty",
+    "galacticraftlegacy:orion_drive",
+    "#c:plates/heavy_duty",
+    "galacticraftlegacy:orion_drive",
+    "#c:plates/heavy_duty",
+    "galacticraftlegacy:orion_drive",
+    "galacticraftlegacy:advanced_wafer",
+    "#c:chests",
+    "#c:chests",
+    "galacticraftlegacy:orion_drive",
+    "galacticraftlegacy:orion_drive",
+    "#c:plates/heavy_duty",
+    "galacticraftlegacy:orion_drive",
+    "#c:plates/aluminum",
+    "galacticraftlegacy:steel_pole",
+    "galacticraftlegacy:advanced_wafer"
+  ],
+  "recipe_holder": "galacticraftlegacy:astro_miner",
+  "result": {
+    "id": "galacticraftlegacy:astro_miner"
+  }
+}

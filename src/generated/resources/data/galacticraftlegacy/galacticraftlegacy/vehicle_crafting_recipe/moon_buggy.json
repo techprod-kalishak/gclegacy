@@ -1,142 +1,120 @@
 {
   "input_slots": [
     {
-      "input": "#c:plates/heavy_duty",
       "slot_index": 0,
       "slot_offset_x": 39,
       "slot_offset_y": 41,
       "slot_type": "galacticraftlegacy:plating"
     },
     {
-      "input": "#c:plates/heavy_duty",
       "slot_index": 1,
       "slot_offset_x": 57,
       "slot_offset_y": 41,
       "slot_type": "galacticraftlegacy:plating"
     },
     {
-      "input": "#c:plates/heavy_duty",
       "slot_index": 2,
       "slot_offset_x": 75,
       "slot_offset_y": 41,
       "slot_type": "galacticraftlegacy:plating"
     },
     {
-      "input": "#c:plates/heavy_duty",
       "slot_index": 3,
       "slot_offset_x": 39,
       "slot_offset_y": 59,
       "slot_type": "galacticraftlegacy:plating"
     },
     {
-      "input": "#c:plates/heavy_duty",
       "slot_index": 4,
       "slot_offset_x": 57,
       "slot_offset_y": 59,
       "slot_type": "galacticraftlegacy:plating"
     },
     {
-      "input": "galacticraftlegacy:buggy_seat",
       "slot_index": 5,
       "slot_offset_x": 75,
       "slot_offset_y": 59,
       "slot_type": "galacticraftlegacy:seat"
     },
     {
-      "input": "#c:plates/heavy_duty",
       "slot_index": 6,
       "slot_offset_x": 39,
       "slot_offset_y": 77,
       "slot_type": "galacticraftlegacy:plating"
     },
     {
-      "input": "#c:plates/heavy_duty",
       "slot_index": 7,
       "slot_offset_x": 57,
       "slot_offset_y": 77,
       "slot_type": "galacticraftlegacy:plating"
     },
     {
-      "input": "#c:plates/heavy_duty",
       "slot_index": 8,
       "slot_offset_x": 75,
       "slot_offset_y": 77,
       "slot_type": "galacticraftlegacy:plating"
     },
     {
-      "input": "#c:plates/heavy_duty",
       "slot_index": 9,
       "slot_offset_x": 39,
       "slot_offset_y": 95,
       "slot_type": "galacticraftlegacy:plating"
     },
     {
-      "input": "#c:plates/heavy_duty",
       "slot_index": 10,
       "slot_offset_x": 57,
       "slot_offset_y": 95,
       "slot_type": "galacticraftlegacy:plating"
     },
     {
-      "input": "#c:plates/heavy_duty",
       "slot_index": 11,
       "slot_offset_x": 75,
       "slot_offset_y": 95,
       "slot_type": "galacticraftlegacy:plating"
     },
     {
-      "input": "galacticraftlegacy:buggy_wheel",
       "slot_index": 12,
       "slot_offset_x": 21,
       "slot_offset_y": 41,
       "slot_type": "galacticraftlegacy:wheel"
     },
     {
-      "input": "galacticraftlegacy:buggy_wheel",
       "slot_index": 13,
       "slot_offset_x": 93,
       "slot_offset_y": 41,
       "slot_type": "galacticraftlegacy:wheel"
     },
     {
-      "input": "galacticraftlegacy:buggy_wheel",
       "slot_index": 14,
       "slot_offset_x": 21,
       "slot_offset_y": 95,
       "slot_type": "galacticraftlegacy:wheel"
     },
     {
-      "input": "galacticraftlegacy:buggy_wheel",
       "slot_index": 15,
       "slot_offset_x": 93,
       "slot_offset_y": 95,
       "slot_type": "galacticraftlegacy:wheel"
     },
     {
-      "input": "galacticraftlegacy:buggy_storage_box",
       "slot_index": 16,
       "slot_offset_x": 93,
       "slot_offset_y": 12,
       "slot_type": "galacticraftlegacy:storage"
     },
     {
-      "input": "galacticraftlegacy:buggy_storage_box",
       "slot_index": 17,
       "slot_offset_x": 119,
       "slot_offset_y": 12,
       "slot_type": "galacticraftlegacy:storage"
     },
     {
-      "input": "galacticraftlegacy:buggy_storage_box",
       "slot_index": 18,
       "slot_offset_x": 145,
       "slot_offset_y": 12,
       "slot_type": "galacticraftlegacy:storage"
     }
   ],
-  "item": {
-    "id": "galacticraftlegacy:buggy"
-  },
   "output_slot": {
     "slot_index": 19,
     "slot_offset_x": 142,

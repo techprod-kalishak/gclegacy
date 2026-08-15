@@ -1,0 +1,29 @@
+{
+  "type": "galacticraftlegacy:vehicle_crafting",
+  "category": "rocket",
+  "group": "rocket",
+  "ingredients": [
+    "galacticraftlegacy:heavy_nose_cone",
+    "#c:plates/heavy_duty_tier_3",
+    "#c:plates/heavy_duty_tier_3",
+    "#c:plates/heavy_duty_tier_3",
+    "#c:plates/heavy_duty_tier_3",
+    "#c:plates/heavy_duty_tier_3",
+    "#c:plates/heavy_duty_tier_3",
+    "#c:plates/heavy_duty_tier_3",
+    "#c:plates/heavy_duty_tier_3",
+    "#c:plates/heavy_duty_tier_3",
+    "#c:plates/heavy_duty_tier_3",
+    "galacticraftlegacy:rocket_booster",
+    "galacticraftlegacy:heavy_rocket_fins",
+    "galacticraftlegacy:heavy_rocket_fins",
+    "galacticraftlegacy:heavy_rocket_engine",
+    "galacticraftlegacy:rocket_booster",
+    "galacticraftlegacy:heavy_rocket_fins",
+    "galacticraftlegacy:heavy_rocket_fins"
+  ],
+  "recipe_holder": "galacticraftlegacy:tier_3_rocket",
+  "result": {
+    "id": "galacticraftlegacy:tier_3_rocket"
+  }
+}

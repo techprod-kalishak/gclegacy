@@ -13,24 +13,19 @@ import net.minecraft.core.Holder;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.world.item.crafting.Ingredient;
 
-import java.util.Optional;
-
-public record VehicleCraftingEntry(Holder<VehicleCraftingSlotType> slotType, int slotIndex, int slotOffsetX, int slotOffsetY, Optional<Ingredient> input) {
+public record VehicleCraftingEntry(Holder<VehicleCraftingSlotType> slotType, int slotIndex, int slotOffsetX, int slotOffsetY) {
     public static final Codec<VehicleCraftingEntry> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             VehicleCraftingSlotType.CODEC.fieldOf("slot_type").forGetter(VehicleCraftingEntry::slotType),
             Codec.INT.fieldOf("slot_index").forGetter(VehicleCraftingEntry::slotIndex),
             Codec.INT.fieldOf("slot_offset_x").forGetter(VehicleCraftingEntry::slotOffsetX),
-            Codec.INT.fieldOf("slot_offset_y").forGetter(VehicleCraftingEntry::slotOffsetY),
-            Ingredient.CODEC.optionalFieldOf("input").forGetter(VehicleCraftingEntry::input)
+            Codec.INT.fieldOf("slot_offset_y").forGetter(VehicleCraftingEntry::slotOffsetY)
     ).apply(instance, VehicleCraftingEntry::new));
     public static final StreamCodec<RegistryFriendlyByteBuf, VehicleCraftingEntry> STREAM_CODEC = StreamCodec.composite(
             VehicleCraftingSlotType.STREAM_CODEC, VehicleCraftingEntry::slotType,
             ByteBufCodecs.VAR_INT, VehicleCraftingEntry::slotIndex,
             ByteBufCodecs.VAR_INT, VehicleCraftingEntry::slotOffsetX,
             ByteBufCodecs.VAR_INT, VehicleCraftingEntry::slotOffsetY,
-            Ingredient.CONTENTS_STREAM_CODEC.apply(ByteBufCodecs::optional), VehicleCraftingEntry::input,
             VehicleCraftingEntry::new
     );
 }

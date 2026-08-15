@@ -1,0 +1,30 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_schematic_astro_miner": {
+      "conditions": {
+        "schematics": [
+          "galacticraftlegacy:astro_miner"
+        ]
+      },
+      "trigger": "galacticraftlegacy:unlocked_schematic"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "galacticraftlegacy:astro_miner"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_schematic_astro_miner"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "galacticraftlegacy:astro_miner"
+    ]
+  }
+}

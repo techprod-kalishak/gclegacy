@@ -1,0 +1,27 @@
+{
+  "type": "galacticraftlegacy:vehicle_crafting",
+  "category": "rocket",
+  "group": "rocket",
+  "ingredients": [
+    "#c:plates/heavy_duty",
+    "#c:plates/heavy_duty",
+    "#c:plates/heavy_duty",
+    "#c:plates/heavy_duty",
+    "#c:plates/heavy_duty",
+    "galacticraftlegacy:buggy_seat",
+    "#c:plates/heavy_duty",
+    "#c:plates/heavy_duty",
+    "#c:plates/heavy_duty",
+    "#c:plates/heavy_duty",
+    "#c:plates/heavy_duty",
+    "#c:plates/heavy_duty",
+    "galacticraftlegacy:buggy_wheel",
+    "galacticraftlegacy:buggy_wheel",
+    "galacticraftlegacy:buggy_wheel",
+    "galacticraftlegacy:buggy_wheel"
+  ],
+  "recipe_holder": "galacticraftlegacy:moon_buggy",
+  "result": {
+    "id": "galacticraftlegacy:buggy"
+  }
+}
