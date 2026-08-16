@@ -12,6 +12,7 @@ import io.kalishak.galacticraftlegacy.Galacticraft;
 import io.kalishak.galacticraftlegacy.client.gui.screens.inventory.workbench.NasaWorkbenchEmptyPageScreen;
 import io.kalishak.galacticraftlegacy.client.gui.screens.inventory.workbench.NasaWorkbenchScreen;
 import io.kalishak.galacticraftlegacy.client.gui.screens.inventory.workbench.NasaWorkbenchPageScreen;
+import io.kalishak.galacticraftlegacy.client.model.entity.Tier1RocketModel;
 import io.kalishak.galacticraftlegacy.client.model.object.NasaWorkbenchModel;
 import io.kalishak.galacticraftlegacy.client.renderer.blockentity.NasaWorkbenchBlockRenderer;
 import io.kalishak.galacticraftlegacy.client.renderer.environment.sky.MoonSkyRenderer;
@@ -186,6 +187,7 @@ public class GalacticraftClient {
         event.registerEntityRenderer(GalacticraftEntityType.EVOLVED_SKELETON.get(), EvolvedSkeletonRenderer::new);
         event.registerEntityRenderer(GalacticraftEntityType.EVOLVED_ZOMBIE.get(), EvolvedZombieRenderer::new);
         event.registerEntityRenderer(GalacticraftEntityType.NO_GRAVITY_MOVING_BLOCK.get(), NoGravityMovingBlockRenderer::new);
+        event.registerEntityRenderer(GalacticraftEntityType.TIER_1_ROCKET.get(), Tier1RocketRenderer::new);
 
         event.registerBlockEntityRenderer(GalacticraftBlockEntityType.PARACHEST.get(), ParachestBlockRenderer::new);
         event.registerBlockEntityRenderer(GalacticraftBlockEntityType.DUNGEON_CHEST.get(), DungeonBlockRenderer::new);
@@ -211,7 +213,7 @@ public class GalacticraftClient {
         event.registerLayerDefinition(GalacticraftModelLayers.THERMAL_PADDING.chest(), thermalPadding::chest);
         event.registerLayerDefinition(GalacticraftModelLayers.THERMAL_PADDING.legs(), thermalPadding::legs);
         event.registerLayerDefinition(GalacticraftModelLayers.THERMAL_PADDING.feet(), thermalPadding::feet);
-
+        event.registerLayerDefinition(GalacticraftModelLayers.TIER_1_ROCKET, Tier1RocketModel::createLayer);
         event.registerLayerDefinition(GalacticraftModelLayers.FLAG, FlagModel::createLayer);
     }
 

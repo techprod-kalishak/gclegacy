@@ -148,7 +148,7 @@ public final class GalacticraftEntityType {
                     .clientTrackingRange(4)
                     .updateInterval(10)
     );
-    public static final DeferredHolder<EntityType<?>, EntityType<TieredRocket>> TIER_1_ROCKET = REGISTRY.registerEntityType(
+    public static final DeferredHolder<EntityType<?>, EntityType<Tier1Rocket>> TIER_1_ROCKET = REGISTRY.registerEntityType(
             GalacticraftEntityIds.TIER_1_ROCKET,
             Tier1Rocket::new, MobCategory.MISC,
             builder -> builder
