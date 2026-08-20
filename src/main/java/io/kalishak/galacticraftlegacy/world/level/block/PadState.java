@@ -15,9 +15,7 @@ import org.jspecify.annotations.NonNull;
 
 public enum PadState implements SerializableEnum {
     NONE("none", 0),
-    CENTER("center", 1),
-    CORNER("corner", 2),
-    SIDE("side", 3);
+    CENTER("center", 1);
 
     public static final Codec<PadState> CODEC = SerializableEnum.codec(PadState.class);
     public static final StreamCodec<ByteBuf, PadState> STREAM_CODEC = SerializableEnum.streamCodec(PadState.class);

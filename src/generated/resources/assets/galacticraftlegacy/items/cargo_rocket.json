@@ -3,8 +3,7 @@
     "type": "minecraft:special",
     "base": "galacticraftlegacy:item/cargo_rocket",
     "model": {
-      "type": "galacticraftlegacy:vehicle_renderer",
-      "vehicle_type": "galacticraftlegacy:cargo_rocket"
+      "type": "galacticraftlegacy:cargo_rocket"
     }
   }
 }

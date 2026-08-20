@@ -45,6 +45,7 @@ public class GalacticraftLanguageProvider extends LanguageProvider {
         addAdvancement("golden_wafers", "Golden wafers", "Craft an advanced wafer. (You still can't eat it!)");
         addAdvancement("compressed", "Compressed", "Craft a compressor");
         add("pack.galacticraftlegacy.description", "Galacticraft Legacy data pack");
+        add("pack.galacticraftlegacy.developers_art.description", "Galacticraft 4 Developer's Art");
         add("item.galacticraftlegacy.tank.tooltip", "Oxygen Remaining: ");
         add("galacticraftlegacy.networking_failed", "There was an error on the network thread: ");
         add("item.galacticraftlegacy.battery.tooltip", "Energy Stored:");

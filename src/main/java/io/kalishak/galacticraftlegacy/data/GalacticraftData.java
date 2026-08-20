@@ -15,6 +15,7 @@ import io.kalishak.galacticraftlegacy.data.loot.GalacticraftLootTableProvider;
 import io.kalishak.galacticraftlegacy.data.recipes.GalacticraftRecipeProvider;
 import io.kalishak.galacticraftlegacy.data.tag.*;
 import io.kalishak.galacticraftlegacy.data.worldgen.GalacticraftCarvers;
+import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.references.GalacticraftComponents;
 import io.kalishak.galacticraftlegacy.registry.CelestialBodyLevelDataEntries;
 import io.kalishak.galacticraftlegacy.registry.Checklist;
@@ -43,8 +44,11 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.data.metadata.PackMetadataGenerator;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.metadata.pack.PackMetadataSection;
+import net.minecraft.server.packs.repository.Pack;
+import net.minecraft.server.packs.repository.PackSource;
 import net.minecraft.util.InclusiveRange;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
+import net.neoforged.neoforge.event.AddPackFindersEvent;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
 
 import java.util.Set;
@@ -75,18 +79,16 @@ public class GalacticraftData {
             .add(GalacticraftRegistries.Keys.SPACE_STATION_RECIPE, SpaceStationRecipe::bootstrap);
 
     public static void gatherData(GatherDataEvent.Client event) {
-        event.createProvider(output -> new PackMetadataGenerator(output)
+        event.createProvider(PackMetadataGenerator::new)
                 .add(PackMetadataSection.SERVER_TYPE, new PackMetadataSection(
                         GalacticraftComponents.DATAPACK_DESCRIPTION,
-                        new InclusiveRange<>(DetectedVersion.BUILT_IN.packVersion(PackType.SERVER_DATA)))));
-
+                        new InclusiveRange<>(DetectedVersion.BUILT_IN.packVersion(PackType.SERVER_DATA))));
         event.createProvider(GalacticraftSpritesProvider::new);
         event.createProvider(GalacticraftLanguageProvider::new);
         event.createProvider(GalacticraftModelProvider::new);
         event.createProvider(GalacticraftEquipmentAssetProvider::new);
         event.createProvider(GalacticraftSoundProvider::new);
         event.createProvider(GalacticraftParticleProvider::new);
-
         event.createDatapackRegistryObjects(SET_BUILDER, Set.of(Galacticraft.MODID, "vanilla"));
         event.createProvider(GalacticraftLootTableProvider::create);
         event.createProvider(GalacticraftAdvancementProvider::create);
@@ -99,7 +101,16 @@ public class GalacticraftData {
         event.createProvider(GalacticraftFluidTagsProvider::new);
         event.createBlockAndItemTags(GalacticraftBlockTagsProvider::new, GalacticraftItemTagsProvider::new);
         event.createProvider(GalacticraftTimelinesTagsProvider::new);
+    }
 
-        // VanillaRegistries for lookup
+    public static void addClassicAssets(AddPackFindersEvent event) {
+        event.addPackFinders(
+                Constants.id("developers_art"),
+                PackType.CLIENT_RESOURCES,
+                GalacticraftComponents.CLASSIC_ASSETS_DESCRIPTION,
+                PackSource.BUILT_IN,
+                false,
+                Pack.Position.BOTTOM
+        );
     }
 }

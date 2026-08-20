@@ -3,8 +3,7 @@
     "type": "minecraft:special",
     "base": "galacticraftlegacy:item/astro_miner",
     "model": {
-      "type": "galacticraftlegacy:vehicle_renderer",
-      "vehicle_type": "galacticraftlegacy:astro_miner"
+      "type": "galacticraftlegacy:astro_miner"
     }
   }
 }

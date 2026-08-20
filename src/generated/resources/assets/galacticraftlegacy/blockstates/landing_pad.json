@@ -1,6 +1,9 @@
 {
   "variants": {
-    "": {
+    "pad_type=center": {
+      "model": "galacticraftlegacy:block/landing_pad_full"
+    },
+    "pad_type=none": {
       "model": "galacticraftlegacy:block/landing_pad"
     }
   }

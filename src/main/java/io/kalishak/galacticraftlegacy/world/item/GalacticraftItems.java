@@ -25,7 +25,6 @@ import io.kalishak.galacticraftlegacy.world.item.gear.FluidTankItem;
 import io.kalishak.galacticraftlegacy.world.item.gear.GearItem;
 import io.kalishak.galacticraftlegacy.world.item.gear.OxygenTankItem;
 import io.kalishak.galacticraftlegacy.world.item.gear.ShieldControllerItem;
-import io.kalishak.galacticraftlegacy.world.item.vehicle.RocketItem;
 import io.kalishak.galacticraftlegacy.world.level.block.GalacticraftBlocks;
 import io.kalishak.galacticraftlegacy.world.level.material.fluid.GalacticraftFluids;
 import net.minecraft.ChatFormatting;
@@ -539,29 +538,29 @@ public final class GalacticraftItems {
     public static final DeferredItem<Item> BUGGY_STORAGE_BOX = REGISTRY.registerSimpleItem(GalacticraftItemIds.BUGGY_STORAGE_BOX, properties -> properties.stacksTo(1));
     public static final DeferredItem<Item> ORION_DRIVE = REGISTRY.registerSimpleItem(GalacticraftItemIds.ORION_DRIVE);
 
-    public static final DeferredItem<RocketItem> TIER_1_ROCKET = REGISTRY.registerItem(
+    public static final DeferredItem<VehicleItem> TIER_1_ROCKET = REGISTRY.registerItem(
             GalacticraftItemIds.TIER_1_ROCKET,
-            properties -> new RocketItem(GalacticraftEntityType.TIER_1_ROCKET, RocketItem.PlacementRule.LANDING_PAD, properties)
+            properties -> new VehicleItem(GalacticraftEntityType.TIER_1_ROCKET::value, GalacticraftBlocks.LANDING_PAD, properties)
     );
-    public static final DeferredItem<RocketItem> BUGGY = REGISTRY.registerItem(
+    public static final DeferredItem<VehicleItem> BUGGY = REGISTRY.registerItem(
             GalacticraftItemIds.BUGGY,
-            properties -> new RocketItem(GalacticraftEntityType.BUGGY, RocketItem.PlacementRule.FUEL_PAD, properties)
+            properties -> new VehicleItem(GalacticraftEntityType.BUGGY::value, GalacticraftBlocks.FUELING_PAD, properties)
     );
-    public static final DeferredItem<RocketItem> TIER_2_ROCKET = REGISTRY.registerItem(
+    public static final DeferredItem<VehicleItem> TIER_2_ROCKET = REGISTRY.registerItem(
             GalacticraftItemIds.TIER_2_ROCKET,
-            properties -> new RocketItem(GalacticraftEntityType.TIER_2_ROCKET, RocketItem.PlacementRule.LANDING_PAD, properties)
+            properties -> new VehicleItem(GalacticraftEntityType.TIER_2_ROCKET::value, GalacticraftBlocks.LANDING_PAD, properties)
     );
-    public static final DeferredItem<RocketItem> CARGO_ROCKET = REGISTRY.registerItem(
+    public static final DeferredItem<VehicleItem> CARGO_ROCKET = REGISTRY.registerItem(
             GalacticraftItemIds.CARGO_ROCKET,
-            properties -> new RocketItem(GalacticraftEntityType.CARGO_ROCKET, RocketItem.PlacementRule.LANDING_PAD, properties)
+            properties -> new VehicleItem(GalacticraftEntityType.CARGO_ROCKET::value, GalacticraftBlocks.LANDING_PAD, properties)
     );
-    public static final DeferredItem<RocketItem> TIER_3_ROCKET = REGISTRY.registerItem(
+    public static final DeferredItem<VehicleItem> TIER_3_ROCKET = REGISTRY.registerItem(
             GalacticraftItemIds.TIER_3_ROCKET,
-            properties -> new RocketItem(GalacticraftEntityType.TIER_3_ROCKET, RocketItem.PlacementRule.LANDING_PAD, properties)
+            properties -> new VehicleItem(GalacticraftEntityType.TIER_3_ROCKET::value, GalacticraftBlocks.LANDING_PAD, properties)
     );
-    public static final DeferredItem<RocketItem> ASTRO_MINER = REGISTRY.registerItem(
+    public static final DeferredItem<VehicleItem> ASTRO_MINER = REGISTRY.registerItem(
             GalacticraftItemIds.ASTRO_MINER,
-            properties -> new RocketItem(GalacticraftEntityType.ASTRO_MINER, RocketItem.PlacementRule.ASTRO_MINER, properties)
+            properties -> new VehicleItem(GalacticraftEntityType.ASTRO_MINER::value, GalacticraftBlocks.ASTRO_MINER_BASE, properties)
     );
 
     public static final DeferredItem<BlockItem> ALUMINUM_WIRE = REGISTRY.registerSimpleBlockItemWithDescription(GalacticraftBlocks.ALUMINUM_WIRE);

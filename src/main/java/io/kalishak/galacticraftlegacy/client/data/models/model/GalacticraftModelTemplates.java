@@ -16,7 +16,15 @@ import net.minecraft.world.item.ItemDisplayContext;
 import net.neoforged.neoforge.client.model.generators.template.ExtendedModelTemplateBuilder;
 
 public class GalacticraftModelTemplates {
-    public static final ModelTemplate VEHICLE_INVENTORY = ModelTemplates.createItem("template_vehicle", TextureSlot.PARTICLE);
+    public static final ModelTemplate ROTATING_ITEM = ExtendedModelTemplateBuilder.of(ModelTemplates.PARTICLE_ONLY)
+            .transform(
+                    ItemDisplayContext.GUI,
+                    builder -> builder
+                            .rotation(30.0F, 45.0F, 0.0F)
+                            .translation(0.0F, 1.0F, 0.0F)
+                            .scale(0.5F)
+            )
+            .build();
     public static final ModelTemplate NASA_WORKBENCH = ExtendedModelTemplateBuilder.of(ModelTemplates.CUBE_BOTTOM_TOP)
             .transform(
                     ItemDisplayContext.THIRD_PERSON_LEFT_HAND,
@@ -38,5 +46,14 @@ public class GalacticraftModelTemplates {
                             .scale(0.8F)
             )
             .build();
-    public static final ModelTemplate PAD = ExtendedModelTemplateBuilder.builder().requiredTextureSlot(TextureSlot.TEXTURE).parent(Constants.id("block/pad")).build();
+    public static final ModelTemplate PAD = ExtendedModelTemplateBuilder.builder()
+            .requiredTextureSlot(TextureSlot.TEXTURE)
+            .parent(Constants.id("block/pad"))
+            .build();
+    public static final ModelTemplate FULL_PAD = ExtendedModelTemplateBuilder.builder()
+            .requiredTextureSlot(TextureSlot.TEXTURE)
+            .requiredTextureSlot(TextureSlot.TOP)
+            .parent(Constants.id("block/full_pad"))
+            .suffix("_full")
+            .build();
 }

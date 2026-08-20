@@ -98,6 +98,7 @@ public class Galacticraft {
 
         GalacticraftCauldronInteraction.init(modEventBus);
         modEventBus.addListener(GalacticraftData::gatherData);
+        modEventBus.addListener(GalacticraftData::addClassicAssets);
         modEventBus.addListener(GalacticraftNetworkHandler::registerPackets);
         modEventBus.addListener(GalacticraftDataMaps::registerDataMaps);
         modEventBus.register(GalacticraftRegistries.class);

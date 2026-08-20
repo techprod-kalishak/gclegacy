@@ -30,6 +30,7 @@ public class GalacticraftComponents {
 
     // Misc
     public static final Component DATAPACK_DESCRIPTION = Component.translatable("pack.galacticraftlegacy.description");
+    public static final Component CLASSIC_ASSETS_DESCRIPTION = Component.translatable("pack.galacticraftlegacy.developers_art.description");
     public static final Component SPACE_TRAVEL_TEXT = Component.translatable("galacticraftlegacy.space_travel.loading");
     public static final Component BED_RULE_CRYOGENIC_CHAMBER = Component.translatable("block.galacticraftlegacy.bed.sleep_in_cryo_chamber");
     public static final MutableComponent SPACE_STATION_SSINVITE = Component.literal("/ssinvite").withStyle(ChatFormatting.AQUA);

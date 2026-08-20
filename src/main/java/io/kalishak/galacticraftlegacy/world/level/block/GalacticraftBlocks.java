@@ -679,6 +679,11 @@ public final class GalacticraftBlocks {
                     .isRedstoneConductor(GalacticraftBlocks::never)
                     .isValidSpawn(GalacticraftBlocks::never)
     );
+    public static final DeferredBlock<Block> ASTRO_MINER_BASE = REGISTRY.registerSimpleBlock(
+            GalacticraftBlockItemIds.ASTRO_MINER_BASE,
+            () -> BlockBehaviour.Properties.of()
+                    .noLootTable()
+    );
 
     private static BlockBehaviour.Properties wallVariant(Supplier<Block> baseBlock, boolean overrideDescription, UnaryOperator<BlockBehaviour.Properties> properties) {
         BlockBehaviour.Properties wallProperties = BlockBehaviour.Properties.of().overrideLootTable(baseBlock.get().getLootTable());

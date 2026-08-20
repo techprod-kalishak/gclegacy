@@ -7,10 +7,9 @@
 
 package io.kalishak.galacticraftlegacy.client.data;
 
-import com.mojang.math.Transformation;
 import io.kalishak.galacticraftlegacy.client.data.models.model.GalacticraftModelTemplates;
-import io.kalishak.galacticraftlegacy.client.renderer.special.NasaWorkbenchSpecialRenderer;
-import io.kalishak.galacticraftlegacy.client.renderer.special.VehicleSpecialRenderer;
+import io.kalishak.galacticraftlegacy.client.data.models.model.GalacticraftTextureMapping;
+import io.kalishak.galacticraftlegacy.client.renderer.special.*;
 import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.Galacticraft;
 import io.kalishak.galacticraftlegacy.client.item.ColorByFluid;
@@ -18,17 +17,17 @@ import io.kalishak.galacticraftlegacy.client.renderer.item.properties.numeric.Du
 import io.kalishak.galacticraftlegacy.client.renderer.item.properties.range.FluidAmountProperty;
 import io.kalishak.galacticraftlegacy.client.renderer.item.properties.select.SchematicTierProperty;
 import io.kalishak.galacticraftlegacy.client.data.models.model.GalacticraftTexturedModel;
-import io.kalishak.galacticraftlegacy.client.renderer.special.KeySpecialRenderer;
-import io.kalishak.galacticraftlegacy.references.GalacticraftItemIds;
 import io.kalishak.galacticraftlegacy.world.item.FeatureTier;
 import io.kalishak.galacticraftlegacy.world.item.GalacticraftItems;
 import io.kalishak.galacticraftlegacy.world.item.GearEquipmentAssets;
+import io.kalishak.galacticraftlegacy.world.item.VehicleItem;
 import io.kalishak.galacticraftlegacy.world.item.component.GalacticraftDataComponents;
 import io.kalishak.galacticraftlegacy.world.item.equipment.trim.GalacticraftMaterialAssetGroup;
 import io.kalishak.galacticraftlegacy.world.item.equipment.trim.GalacticraftTrimMaterials;
-import io.kalishak.galacticraftlegacy.world.item.vehicle.RocketItem;
+import io.kalishak.galacticraftlegacy.world.level.block.AbstractPadBlock;
 import io.kalishak.galacticraftlegacy.world.level.block.GalacticraftBlocks;
 import io.kalishak.galacticraftlegacy.world.level.block.MagneticCraftingBlock;
+import io.kalishak.galacticraftlegacy.world.level.block.PadState;
 import io.kalishak.galacticraftlegacy.world.level.block.wire.HeavyWireBlock;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
@@ -39,30 +38,22 @@ import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
 import net.minecraft.client.data.models.blockstates.PropertyDispatch;
 import net.minecraft.client.data.models.model.*;
 import net.minecraft.client.renderer.item.ItemModel;
-import net.minecraft.client.resources.model.cuboid.ItemTransform;
-import net.minecraft.client.resources.model.cuboid.ItemTransforms;
 import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.Identifier;
-import net.minecraft.util.Util;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.neoforged.neoforge.client.model.generators.template.ExtendedModelTemplateBuilder;
-import org.joml.Vector3f;
-import org.joml.Vector3fc;
 
-import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
-import java.util.function.UnaryOperator;
 
 import static net.minecraft.client.data.models.BlockModelGenerators.*;
 
@@ -145,6 +136,7 @@ public class GalacticraftModelProvider extends ModelProvider {
         createMeteor(blockModels, GalacticraftBlocks.FALLEN_METEOR.get());
         padBlock(blockModels, GalacticraftBlocks.LANDING_PAD.get());
         padBlock(blockModels, GalacticraftBlocks.FUELING_PAD.get());
+        blockModels.createNonTemplateModelBlock(GalacticraftBlocks.ASTRO_MINER_BASE.get());
 
         blockModels.registerSimpleFlatItemModel(GalacticraftBlocks.GRATING.get());
         itemModels.generateFlatItem(GalacticraftItems.THROWABLE_METEOR_CHUNK.get(), ModelTemplates.FLAT_ITEM);
@@ -276,12 +268,12 @@ public class GalacticraftModelProvider extends ModelProvider {
         itemModels.generateFlatItem(GalacticraftItems.BUGGY_WHEEL.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(GalacticraftItems.BUGGY_STORAGE_BOX.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(GalacticraftItems.ORION_DRIVE.get(), ModelTemplates.FLAT_ITEM);
-        vehicle(itemModels, GalacticraftItems.TIER_1_ROCKET.get());
-        vehicle(itemModels, GalacticraftItems.BUGGY.get());
-        vehicle(itemModels, GalacticraftItems.TIER_2_ROCKET.get());
-        vehicle(itemModels, GalacticraftItems.CARGO_ROCKET.get());
-        vehicle(itemModels, GalacticraftItems.TIER_3_ROCKET.get());
-        vehicle(itemModels, GalacticraftItems.ASTRO_MINER.get());
+        vehicle(itemModels, GalacticraftItems.TIER_1_ROCKET.get(), new Tier1RocketSpecialRenderer.Unbaked());
+        vehicle(itemModels, GalacticraftItems.BUGGY.get(), new BuggySpecialRenderer.Unbaked());
+        vehicle(itemModels, GalacticraftItems.TIER_2_ROCKET.get(), new Tier2RocketSpecialRenderer.Unbaked());
+        vehicle(itemModels, GalacticraftItems.CARGO_ROCKET.get(), new CargoRocketSpecialRenderer.Unbaked());
+        vehicle(itemModels, GalacticraftItems.TIER_3_ROCKET.get(), new Tier3RocketSpecialRenderer.Unbaked());
+        vehicle(itemModels, GalacticraftItems.ASTRO_MINER.get(), new AstroMinerSpecialRenderer.Unbaked());
     }
 
     private void createMeteor(BlockModelGenerators blockModels, Block block) {
@@ -510,9 +502,9 @@ public class GalacticraftModelProvider extends ModelProvider {
         );
     }
 
-    private void vehicle(ItemModelGenerators gen, RocketItem rocketItem) {
-        Identifier model = GalacticraftModelTemplates.VEHICLE_INVENTORY.create(rocketItem, TextureMapping.particle(GalacticraftBlocks.ASTEROID_ROCK.get()), gen.modelOutput);
-        ItemModel.Unbaked unbakedModel = ItemModelUtils.specialModel(model, new VehicleSpecialRenderer.Unbaked(rocketItem.getVehicleType()));
+    private void vehicle(ItemModelGenerators gen, VehicleItem rocketItem, SpecialVehicleRenderer.Unbaked<?> unbaked) {
+        Identifier model = GalacticraftModelTemplates.ROTATING_ITEM.create(rocketItem, TextureMapping.particle(GalacticraftBlocks.ASTEROID_ROCK.get()), gen.modelOutput);
+        ItemModel.Unbaked unbakedModel = ItemModelUtils.specialModel(model, unbaked);
         gen.itemModelOutput.accept(rocketItem, unbakedModel);
     }
 
@@ -529,7 +521,16 @@ public class GalacticraftModelProvider extends ModelProvider {
 
     private void padBlock(BlockModelGenerators gen, Block block) {
         Identifier model = GalacticraftModelTemplates.PAD.create(block, TextureMapping.defaultTexture(block), gen.modelOutput);
-        gen.blockStateOutput.accept(createSimpleBlock(block, plainVariant(model)));
+        MultiVariant centerVariant = plainVariant(GalacticraftModelTemplates.FULL_PAD.create(block, GalacticraftTextureMapping.fullPad(block), gen.modelOutput));
+
+        gen.blockStateOutput.accept(
+                MultiVariantGenerator.dispatch(block)
+                        .with(
+                                PropertyDispatch.initial(AbstractPadBlock.PAD_STATE)
+                                        .select(PadState.NONE, plainVariant(model))
+                                        .select(PadState.CENTER, centerVariant)
+                        )
+        );
         gen.registerSimpleItemModel(block.asItem(), model);
     }
 }

@@ -18,8 +18,7 @@ import io.kalishak.galacticraftlegacy.client.renderer.blockentity.NasaWorkbenchB
 import io.kalishak.galacticraftlegacy.client.renderer.environment.sky.MoonSkyRenderer;
 import io.kalishak.galacticraftlegacy.client.renderer.environment.sky.OrbitalSkyRenderer;
 import io.kalishak.galacticraftlegacy.client.renderer.environment.sky.SpaceSkyRenderer;
-import io.kalishak.galacticraftlegacy.client.renderer.special.NasaWorkbenchSpecialRenderer;
-import io.kalishak.galacticraftlegacy.client.renderer.special.VehicleSpecialRenderer;
+import io.kalishak.galacticraftlegacy.client.renderer.special.*;
 import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.client.gui.SensorGlassesOverlay;
 import io.kalishak.galacticraftlegacy.client.gui.TanksLayer;
@@ -44,7 +43,6 @@ import io.kalishak.galacticraftlegacy.client.renderer.item.properties.numeric.Du
 import io.kalishak.galacticraftlegacy.client.renderer.item.properties.range.FluidAmountProperty;
 import io.kalishak.galacticraftlegacy.client.renderer.item.properties.select.SchematicTierProperty;
 import io.kalishak.galacticraftlegacy.client.data.GalacticraftSpritesProvider;
-import io.kalishak.galacticraftlegacy.client.renderer.special.KeySpecialRenderer;
 import io.kalishak.galacticraftlegacy.world.entity.GalacticraftEntityType;
 import io.kalishak.galacticraftlegacy.world.inventory.GalacticraftMenuType;
 import io.kalishak.galacticraftlegacy.world.level.block.GalacticraftBlocks;
@@ -254,8 +252,14 @@ public class GalacticraftClient {
 
     private void registerSpecialRenderers(RegisterSpecialModelRendererEvent event) {
         event.register(Constants.id("key_renderer"), KeySpecialRenderer.Unbaked.MAP_CODEC);
-        event.register(Constants.id("vehicle_renderer"), VehicleSpecialRenderer.Unbaked.MAP_CODEC);
         event.register(Constants.id("nasa_workbench_renderer"), NasaWorkbenchSpecialRenderer.Unbaked.MAP_CODEC);
+
+        event.register(Constants.id("tier_1_rocket"), Tier1RocketSpecialRenderer.Unbaked.MAP_CODEC);
+        event.register(Constants.id("buggy"), BuggySpecialRenderer.Unbaked.MAP_CODEC);
+        event.register(Constants.id("tier_2_rocket"), Tier2RocketSpecialRenderer.Unbaked.MAP_CODEC);
+        event.register(Constants.id("tier_3_rocket"), Tier3RocketSpecialRenderer.Unbaked.MAP_CODEC);
+        event.register(Constants.id("cargo_rocket"), CargoRocketSpecialRenderer.Unbaked.MAP_CODEC);
+        event.register(Constants.id("astro_miner"), AstroMinerSpecialRenderer.Unbaked.MAP_CODEC);
     }
 
     private void addRenderStates(RegisterRenderStateModifiersEvent event) {

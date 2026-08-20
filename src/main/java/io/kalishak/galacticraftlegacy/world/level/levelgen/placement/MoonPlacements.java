@@ -61,6 +61,7 @@ public class MoonPlacements {
                 crater,
                 List.of(
                         RarityFilter.onAverageOnceEvery(24),
+                        BiomeFilter.biome(),
                         InSquarePlacement.spread(),
                         PlacementUtils.HEIGHTMAP
                 )
@@ -71,6 +72,7 @@ public class MoonPlacements {
                 craterLarge,
                 List.of(
                         RarityFilter.onAverageOnceEvery(4),
+                        BiomeFilter.biome(),
                         InSquarePlacement.spread(),
                         PlacementUtils.HEIGHTMAP
                 )

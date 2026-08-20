@@ -23,7 +23,7 @@ import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.client.model.obj.ObjModel;
 
 public class TelemetryModuleLayer<S extends LivingEntityRenderState, M extends EntityModel<S>> extends GearEquipmentLayer<S, M> {
-    public static final Identifier TEXTURES = Constants.texture("model/telemetry_module.png");
+    public static final Identifier TEXTURES = Constants.texture("model/frequency_module.png");
 
     public TelemetryModuleLayer(RenderLayerParent<S, M> renderer, EquipmentLayerRenderer layerRenderer, EquipmentAssetManager equipmentAssetManager) {
         super(renderer, null, layerRenderer, equipmentAssetManager);

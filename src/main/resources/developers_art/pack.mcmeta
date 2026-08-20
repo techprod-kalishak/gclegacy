@@ -1,0 +1,12 @@
+{
+  "pack": {
+    "pack_format": 15,
+    "description": "Classic texture pack for Galacticraft Legacy, made by the original developers of Galacticraft",
+    "min_format": 0,
+    "max_format": 88,
+    "supported_formats": {
+      "min_inclusive": 0,
+      "max_inclusive": 88
+    }
+  }
+}

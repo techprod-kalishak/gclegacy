@@ -24,14 +24,14 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public abstract class AbstractPadBlock extends BaseEntityBlock implements SimpleWaterloggedBlock, SealableBlock {
-    //public static final EnumProperty<PadState> PAD_STATE = EnumProperty.create("pad_type", PadState.class);
+    public static final EnumProperty<PadState> PAD_STATE = EnumProperty.create("pad_type", PadState.class);
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     protected static final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 3.0D, 0.0D);
+    protected static final VoxelShape CENTER_SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 4.0D, 0.0D);
 
     public AbstractPadBlock(Properties properties) {
         super(properties);
-
-        registerDefaultState(this.stateDefinition.any()/*.setValue(PAD_STATE, PadState.NONE)*/.setValue(WATERLOGGED, false));
+        registerDefaultState(this.stateDefinition.any().setValue(PAD_STATE, PadState.NONE).setValue(WATERLOGGED, false));
     }
 
     @Override
@@ -39,23 +39,9 @@ public abstract class AbstractPadBlock extends BaseEntityBlock implements Simple
 
     @Override
     protected boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
-        boolean survives = Direction.stream()
+        return Direction.stream()
                 .filter(s -> s.getAxis().isHorizontal())
                 .allMatch(side -> isSameAxis(level, pos, defaultBlockState(), side));
-
-        if (!survives) {
-            return false;
-        }
-
-        for (int x = -1; x < 2; x++) {
-            for (int z = -1; z < 2; z++) {
-                if (!super.canSurvive(state, level, pos.offset(x, 0, z))) {
-                    return false;
-                }
-            }
-        }
-
-        return true;
     }
 
     @Override
@@ -65,12 +51,12 @@ public abstract class AbstractPadBlock extends BaseEntityBlock implements Simple
 
     @Override
     protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        return SHAPE;
+        return state.getValue(PAD_STATE) == PadState.CENTER ? CENTER_SHAPE : SHAPE;
     }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(/*PAD_STATE,*/ WATERLOGGED);
+        builder.add(PAD_STATE, WATERLOGGED);
     }
 
     protected static boolean isSameAxis(LevelReader level, BlockPos blockPos, BlockState block, Direction direction) {

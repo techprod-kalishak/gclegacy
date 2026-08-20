@@ -1,0 +1,7 @@
+{
+  "parent": "galacticraftlegacy:block/full_pad",
+  "textures": {
+    "texture": "galacticraftlegacy:block/fueling_pad",
+    "top": "galacticraftlegacy:block/fueling_pad_top"
+  }
+}

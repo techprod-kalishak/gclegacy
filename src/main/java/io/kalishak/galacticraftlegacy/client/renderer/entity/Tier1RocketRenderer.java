@@ -17,7 +17,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.phys.AABB;
 
 public class Tier1RocketRenderer extends EntityRenderer<Tier1Rocket, RocketRenderState> {
-    private static final Identifier TEXTURES = Constants.texture("");
+    public static final Identifier TEXTURES = Constants.texture("");
     private final Tier1RocketModel model;
 
     public Tier1RocketRenderer(EntityRendererProvider.Context context) {

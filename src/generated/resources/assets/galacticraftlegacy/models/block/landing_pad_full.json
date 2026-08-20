@@ -1,0 +1,7 @@
+{
+  "parent": "galacticraftlegacy:block/full_pad",
+  "textures": {
+    "texture": "galacticraftlegacy:block/landing_pad",
+    "top": "galacticraftlegacy:block/landing_pad_top"
+  }
+}
