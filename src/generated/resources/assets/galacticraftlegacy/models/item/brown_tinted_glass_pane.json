@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "galacticraftlegacy:block/brown_tinted_glass_pane"
+  }
+}

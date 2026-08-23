@@ -95,7 +95,7 @@
             },
             {
               "fluid": "galacticraftlegacy:oxygen",
-              "function": "galacticraftlegacy:fluid_tank",
+              "function": "galacticraftlegacy:set_fluid_in_tank",
               "value": {
                 "type": "minecraft:uniform",
                 "max_inclusive": 500,

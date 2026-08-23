@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/template_bars_post_ends",
+  "textures": {
+    "bars": "galacticraftlegacy:block/red_tinted_glass_pane",
+    "edge": "galacticraftlegacy:block/red_tinted_glass_pane"
+  }
+}

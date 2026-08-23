@@ -7,9 +7,7 @@
 
 package io.kalishak.galacticraftlegacy.client.data;
 
-import com.google.common.collect.Iterators;
 import io.kalishak.galacticraftlegacy.Galacticraft;
-import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.data.GalacticraftTags;
 import io.kalishak.galacticraftlegacy.references.GalacticraftBlockItemIds;
 import io.kalishak.galacticraftlegacy.references.GalacticraftComponents;
@@ -18,20 +16,13 @@ import io.kalishak.galacticraftlegacy.world.entity.GalacticraftEntityType;
 import io.kalishak.galacticraftlegacy.world.item.GalacticraftItems;
 import io.kalishak.galacticraftlegacy.registry.SchematicVariants;
 import io.kalishak.galacticraftlegacy.world.level.block.GalacticraftBlocks;
+import io.kalishak.galacticraftlegacy.aunified.data.ExtendedLanguageProvider;
 import net.minecraft.core.Holder;
 import net.minecraft.data.PackOutput;
-import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.util.Util;
 import net.minecraft.world.level.ItemLike;
-import net.minecraft.world.level.block.ColorCollection;
-import net.minecraft.world.level.block.WeatheringCopperCollection;
-import net.neoforged.neoforge.common.data.LanguageProvider;
 
-import java.util.Iterator;
-import java.util.function.Function;
-
-public class GalacticraftLanguageProvider extends LanguageProvider {
+public class GalacticraftLanguageProvider extends ExtendedLanguageProvider {
     public GalacticraftLanguageProvider(PackOutput output) {
         super(output, Galacticraft.MODID, "en_us");
     }
@@ -138,6 +129,8 @@ public class GalacticraftLanguageProvider extends LanguageProvider {
         addWithDescription(GalacticraftBlocks.ALUMINUM_WIRE, "Aluminum Wire", "Aluminum Wire is used to connect energy sources to energy consuming machines.");
         addWithDescription(GalacticraftBlocks.HEAVY_ALUMINUM_WIRE, "Heavy Aluminum Wire", "Heavy Aluminum Wire is used to connect energy sources to energy consuming machines. Its higher capacity boosts efficiency for Tier 2 machines.");
         addColorCollection(GalacticraftBlockItemIds.FLUID_PIPE, id -> id.block().identifier(), "block");
+        addColorCollection(GalacticraftBlockItemIds.COLORED_TINTED_GLASS_PANE, id -> id.block().identifier(), "block");
+        addBlock(GalacticraftBlocks.TINTED_GLASS_PANE, "Tinted Glass Pane");
         addBlock(GalacticraftBlocks.MOON_DIRT, "Moon Dirt");
         addBlock(GalacticraftBlocks.MOON_TURF, "Moon Turf");
         addBlock(GalacticraftBlocks.MOON_ROCK, "Moon Rock");
@@ -306,11 +299,11 @@ public class GalacticraftLanguageProvider extends LanguageProvider {
         addItem(GalacticraftItems.EVOLVED_SKELETON_SPAWN_EGG, "Evolved Skeleton Spawn Egg");
         addItem(GalacticraftItems.EVOLVED_ZOMBIE_SPAWN_EGG, "Evolved Zombie Spawn Egg");
 
-        addKey(SchematicVariants.ASTRO_MINER, "title", "Astro Miner");
-        addKey(SchematicVariants.CARGO_ROCKET, "title", "Cargo Rocket");
-        addKey(SchematicVariants.MOON_BUGGY, "title", "Moon Buggy");
-        addKey(SchematicVariants.TIER_2_ROCKET, "title", "Rocket Tier 2");
-        addKey(SchematicVariants.TIER_3_ROCKET, "title", "Rocket Tier 3");
+        addWithSuffix(SchematicVariants.ASTRO_MINER, "title", "Astro Miner");
+        addWithSuffix(SchematicVariants.CARGO_ROCKET, "title", "Cargo Rocket");
+        addWithSuffix(SchematicVariants.MOON_BUGGY, "title", "Moon Buggy");
+        addWithSuffix(SchematicVariants.TIER_2_ROCKET, "title", "Rocket Tier 2");
+        addWithSuffix(SchematicVariants.TIER_3_ROCKET, "title", "Rocket Tier 3");
 
         add(GalacticraftTags.Blocks.MACHINE, "Machine");
         add(GalacticraftTags.Blocks.MACHINE_BASIC, "Basic machine");
@@ -362,58 +355,8 @@ public class GalacticraftLanguageProvider extends LanguageProvider {
         add("galacticraftlegacy.configgui.server.boss_health_modifier", "Increase bosses' health");
     }
 
-    private <Id> void addColorCollection(ColorCollection<Id> colorCollection, Function<Id, Identifier> toIdentifier, String targetPath) {
-        colorCollection.forEach(id -> {
-            Identifier identifier = toIdentifier.apply(id);
-            String capitalized = capitalizeFirstCharForAll(identifier.getPath().split("_"));
-
-            add(Util.makeDescriptionId(targetPath, identifier), capitalized);
-        });
-    }
-
-    private <Id> void addCopperCollection(WeatheringCopperCollection<Id> collection, Function<Id, Identifier> toIdentifier, String targetPath) {
-        collection.forEach(id -> {
-            Identifier identifier = toIdentifier.apply(id);
-            String capitalized = capitalizeFirstCharForAll(identifier.getPath().split("_"));
-
-            add(Util.makeDescriptionId(targetPath, identifier), capitalized);
-        });
-    }
-
-    private static String capitalizeFirstChar(String origin) {
-        return Character.toUpperCase(origin.charAt(0)) + origin.substring(1);
-    }
-
-    private static String capitalizeFirstCharForAll(String... splitStrings) {
-        StringBuilder stringBuilder = new StringBuilder();
-        Iterator<String> parts = Iterators.forArray(splitStrings);
-
-        while (parts.hasNext()) {
-            stringBuilder.append(capitalizeFirstChar(parts.next()));
-
-            if (parts.hasNext()) {
-                stringBuilder.append(" ");
-            }
-        }
-
-        return stringBuilder.toString();
-    }
-
-    private <R> void addById(ResourceKey<R> id, String translation) {
-        add(Util.makeDescriptionId(id.registry().getPath(), id.identifier()), translation);
-    }
-
-    private <R extends ItemLike> void addWithDescription(Holder<R> entry, String name, String description) {
+    protected <R extends ItemLike> void addWithDescription(Holder<R> entry, String name, String description) {
         add(entry.value().asItem(), name);
         add(entry.unwrapKey().orElseThrow().identifier().toLanguageKey("item", "desc"), description);
-    }
-
-    private <R> void addKey(ResourceKey<R> resourceKey, String suffix, String translation) {
-        add(Constants.translatable(resourceKey, suffix), translation);
-    }
-
-    private void addAdvancement(String id, String title, String description) {
-        add("advancements.galacticraftlegacy." + id + ".title", title);
-        add("advancements.galacticraftlegacy." + id + ".description", description);
     }
 }

@@ -78,6 +78,41 @@
           "model": "galacticraftlegacy:item/desh_leggings_resin_trim"
         },
         "when": "minecraft:resin"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "galacticraftlegacy:item/desh_leggings_steel_trim"
+        },
+        "when": "galacticraftlegacy:steel"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "galacticraftlegacy:item/desh_leggings_cheese_trim"
+        },
+        "when": "galacticraftlegacy:cheese"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "galacticraftlegacy:item/desh_leggings_desh_trim"
+        },
+        "when": "galacticraftlegacy:desh"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "galacticraftlegacy:item/desh_leggings_titanium_trim"
+        },
+        "when": "galacticraftlegacy:titanium"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "galacticraftlegacy:item/desh_leggings_lead_trim"
+        },
+        "when": "galacticraftlegacy:lead"
       }
     ],
     "fallback": {

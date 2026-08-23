@@ -593,6 +593,34 @@ public final class GalacticraftBlocks {
                     .mapColor(MapColor.METAL)
                     .sound(SoundType.METAL)
     );
+    public static final ColorCollection<DeferredBlock<TintedGlassPaneBlock>> COLORED_TINTED_GLASS_PANE = REGISTRY.registerColoredBlocks(
+            GalacticraftBlockItemIds.COLORED_TINTED_GLASS_PANE,
+            (_, properties) -> new TintedGlassPaneBlock(properties),
+            dyeColor -> BlockBehaviour.Properties.of()
+                    .mapColor(dyeColor)
+                    .instrument(NoteBlockInstrument.HAT)
+                    .strength(0.3F)
+                    .sound(SoundType.GLASS)
+                    .isValidSpawn(GalacticraftBlocks::never)
+                    .isRedstoneConductor(GalacticraftBlocks::never)
+                    .isSuffocating(GalacticraftBlocks::never)
+                    .isViewBlocking(GalacticraftBlocks::never)
+                    .noOcclusion()
+    );
+    public static final DeferredBlock<TintedGlassPaneBlock> TINTED_GLASS_PANE = REGISTRY.registerBlock(
+            GalacticraftBlockItemIds.TINTED_GLASS_PANE,
+            TintedGlassPaneBlock::new,
+            () -> BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.COLOR_GRAY)
+                    .instrument(NoteBlockInstrument.HAT)
+                    .strength(0.3F)
+                    .sound(SoundType.GLASS)
+                    .isValidSpawn(GalacticraftBlocks::never)
+                    .isRedstoneConductor(GalacticraftBlocks::never)
+                    .isSuffocating(GalacticraftBlocks::never)
+                    .isViewBlocking(GalacticraftBlocks::never)
+                    .noOcclusion()
+    );
 
     /** Machines */
     public static final DeferredBlock<OxygenDetectorBlock> OXYGEN_DETECTOR = REGISTRY.registerBlock(

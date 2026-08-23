@@ -9,7 +9,6 @@ package io.kalishak.galacticraftlegacy.world.item;
 
 import io.kalishak.galacticraftlegacy.Galacticraft;
 import io.kalishak.galacticraftlegacy.references.GalacticraftComponents;
-import io.kalishak.galacticraftlegacy.references.GalacticraftItemIds;
 import io.kalishak.galacticraftlegacy.registry.GalacticraftRegistries;
 import io.kalishak.galacticraftlegacy.registry.SchematicVariant;
 import io.kalishak.galacticraftlegacy.world.item.component.GalacticraftDataComponents;
@@ -203,6 +202,8 @@ public final class GalacticraftCreativeModeTabs {
                 output.accept(fluidPipe, CreativeModeTab.TabVisibility.SEARCH_TAB_ONLY);
             }
         });
+        output.accept(GalacticraftItems.TINTED_GLASS_PANE);
+        GalacticraftItems.COLORED_TINTED_GLASS_PANE.forEach(tintedGlassPane -> output.accept(tintedGlassPane, CreativeModeTab.TabVisibility.SEARCH_TAB_ONLY));
         output.accept(GalacticraftItems.NASA_WORKBENCH);
         output.accept(GalacticraftItems.COMPACT_NASA_WORKBENCH);
         output.accept(GalacticraftItems.TIN_ORE);

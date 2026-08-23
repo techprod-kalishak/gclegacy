@@ -54,7 +54,7 @@ public class SetItemFluidTankFunction extends LootItemConditionalFunction {
         return itemStack;
     }
 
-    public static <T> LootItemConditionalFunction.Builder<?> setFluid(Holder<Fluid> fluid, IntProvider value) {
+    public static LootItemConditionalFunction.Builder<?> setFluid(Holder<Fluid> fluid, IntProvider value) {
         return simpleBuilder(conditions -> new SetItemFluidTankFunction(conditions, fluid, value));
     }
 }

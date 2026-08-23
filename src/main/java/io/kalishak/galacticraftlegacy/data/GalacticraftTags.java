@@ -60,12 +60,13 @@ public final class GalacticraftTags {
         public static final TagKey<Block> BASE_STONE_MOON = BlockItems.BASE_STONE_MOON.block();
         public static final TagKey<Block> BREATHABLE_AIR = tagKey(Registries.BLOCK, "breathable_air");
         public static final TagKey<Block> CRUDE_OIL_POOL_REPLACEABLE = tagKey(Registries.BLOCK, "crude_oil_pool_replaceable");
+        public static final TagKey<Block> CONNECTS_TO_TINTED_GLASS_PANES = tagKey(Registries.BLOCK, "connects_to_tinted_glass_panes");
         public static final TagKey<Block> MOON_CARVER_REPLACEABLES = tagKey(Registries.BLOCK, "moon_carver_replaceables");
         public static final TagKey<Block> INCORRECT_FOR_DESH_TOOL = tagKey(Registries.BLOCK, "incorrect_for_desh_tool");
         public static final TagKey<Block> INCORRECT_FOR_STEEL_TOOL = tagKey(Registries.BLOCK, "incorrect_for_steel_tool");
         public static final TagKey<Block> INCORRECT_FOR_TITANIUM_TOOL = tagKey(Registries.BLOCK, "incorrect_for_titanium_tool");
         public static final TagKey<Block> INFINIBURN_OPEN_SPACE = tagKey(Registries.BLOCK, "infiniburn_open_space");
-        public static final TagKey<Block> INFINIBURN_VENUS = tagKey(Registries.BLOCK, "infiniburn_open_space");
+        public static final TagKey<Block> INFINIBURN_VENUS = tagKey(Registries.BLOCK, "infiniburn_venus");
         public static final TagKey<Block> MACHINE = BlockItems.MACHINE.block();
         public static final TagKey<Block> MACHINE_BASIC = BlockItems.MACHINE_BASIC.block();
         public static final TagKey<Block> MACHINE_ADVANCED = BlockItems.MACHINE_ADVANCED.block();

@@ -11,7 +11,6 @@ import io.kalishak.galacticraftlegacy.world.item.GalacticraftItems;
 import io.kalishak.galacticraftlegacy.world.item.component.GalacticraftDataComponents;
 import io.kalishak.galacticraftlegacy.world.level.block.GalacticraftBlocks;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.component.DataComponents;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Item;
@@ -93,6 +92,8 @@ public class GalacticraftBlockLootSubProvider extends BlockLootSubProvider {
         dropSelf(GalacticraftBlocks.NASA_WORKBENCH.get());
         dropSelf(GalacticraftBlocks.LANDING_PAD.get());
         dropSelf(GalacticraftBlocks.FUELING_PAD.get());
+        GalacticraftBlocks.COLORED_TINTED_GLASS_PANE.forEach(block -> add(block.get(), this::createSilkTouchOnlyTable));
+        add(GalacticraftBlocks.TINTED_GLASS_PANE.get(), this::createSilkTouchOnlyTable);
     }
 
     @Override

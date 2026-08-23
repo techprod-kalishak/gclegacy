@@ -18,7 +18,7 @@
   "has_ender_dragon_fight": false,
   "has_skylight": true,
   "height": 256,
-  "infiniburn": "#galacticraftlegacy:infiniburn_open_space",
+  "infiniburn": "#galacticraftlegacy:infiniburn_venus",
   "logical_height": 128,
   "min_y": 0,
   "monster_spawn_block_light_limit": 15,

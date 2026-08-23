@@ -60,6 +60,10 @@ public class GalacticraftBlockTagsProvider extends BlockTagsProvider {
                 .add(BlockIds.VOID_AIR)
                 .add(BlockIds.CAVE_AIR)
                 .add(GalacticraftBlockIds.OXYGEN_AIR);
+        tag(GalacticraftTags.Blocks.CONNECTS_TO_TINTED_GLASS_PANES)
+                .addTag(BlockTags.WALLS)
+                .addTag(Tags.Blocks.GLASS_PANES)
+                .addTag(Tags.Blocks.BARS);
         tag(GalacticraftTags.Blocks.CRUDE_OIL_POOL_REPLACEABLE)
                 .addTag(BlockTags.BASE_STONE_OVERWORLD)
                 .addTag(BlockTags.SAND)

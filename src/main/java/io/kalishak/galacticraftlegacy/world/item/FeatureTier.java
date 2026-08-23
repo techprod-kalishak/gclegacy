@@ -11,10 +11,8 @@ import com.mojang.serialization.Codec;
 import io.kalishak.galacticraftlegacy.codec.SerializableEnum;
 import io.kalishak.galacticraftlegacy.data.GalacticraftTags;
 import io.netty.buffer.ByteBuf;
-import net.minecraft.core.BlockPos;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.tags.TagKey;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 import org.jspecify.annotations.NonNull;
 
@@ -29,15 +27,15 @@ public enum FeatureTier implements SerializableEnum {
     private final String celestialBodyName;
     private final int id;
     private final int level;
-    private final int energyConsumption;
+    private final int energyConsumptionBase;
     private final TagKey<Biome> availableIn;
 
-    FeatureTier(String name, String celestialBodyName, int id, int level, int energyConsumption, TagKey<Biome> availableIn) {
+    FeatureTier(String name, String celestialBodyName, int id, int level, int energyConsumptionBase, TagKey<Biome> availableIn) {
         this.name = name;
         this.celestialBodyName = celestialBodyName;
         this.id = id;
         this.level = level;
-        this.energyConsumption = energyConsumption;
+        this.energyConsumptionBase = energyConsumptionBase;
         this.availableIn = availableIn;
     }
 
@@ -59,15 +57,15 @@ public enum FeatureTier implements SerializableEnum {
         return this.level;
     }
 
-    public int getEnergyConsumption() {
-        return this.energyConsumption;
+    public String getSuffix() {
+        return "_tier_" + this.level;
+    }
+
+    public int getEnergyConsumptionBase() {
+        return this.energyConsumptionBase;
     }
 
     public TagKey<Biome> getAvailableIn() {
         return this.availableIn;
-    }
-
-    public boolean isAvailableAt(Level level, BlockPos pos) {
-        return level.getBiome(pos).is(this.availableIn);
     }
 }

@@ -645,7 +645,8 @@ public final class GalacticraftItems {
     public static final DeferredItem<BlockItem> COMPACT_NASA_WORKBENCH = REGISTRY.registerSimpleBlockItemWithDescription(GalacticraftBlocks.COMPACT_NASA_WORKBENCH);
     public static final DeferredItem<BlockItem> LANDING_PAD = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.LANDING_PAD);
     public static final DeferredItem<BlockItem> FUELING_PAD = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.FUELING_PAD);
-
+    public static final ColorCollection<DeferredItem<BlockItem>> COLORED_TINTED_GLASS_PANE = REGISTRY.registerBlockItemColorCollection(GalacticraftBlocks.COLORED_TINTED_GLASS_PANE, BlockItem::new, _ -> new Item.Properties());
+    public static final DeferredItem<BlockItem> TINTED_GLASS_PANE = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.TINTED_GLASS_PANE);
 
     public static void init(IEventBus bus) {
         REGISTRY.register(bus);

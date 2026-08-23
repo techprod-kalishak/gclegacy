@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/template_bars_cap_alt",
+  "textures": {
+    "bars": "galacticraftlegacy:block/brown_tinted_glass_pane",
+    "edge": "galacticraftlegacy:block/brown_tinted_glass_pane"
+  }
+}

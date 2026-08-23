@@ -8,10 +8,7 @@
 package io.kalishak.galacticraftlegacy.references;
 
 import net.minecraft.core.registries.Registries;
-import net.minecraft.references.BlockIds;
 import net.minecraft.references.BlockItemId;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.ColorCollection;
 import net.minecraft.world.level.block.WeatheringCopperCollection;
 
@@ -36,6 +33,8 @@ public final class GalacticraftBlockItemIds {
     public static final BlockItemId ALUMINUM_WIRE_SWITCH = create("aluminum_wire_switch");
     public static final BlockItemId HEAVY_ALUMINUM_WIRE_SWITCH = create("heavy_aluminum_wire_switch");
     public static final ColorCollection<BlockItemId> FLUID_PIPE = createSimpleColored("fluid_pipe");
+    public static final ColorCollection<BlockItemId> COLORED_TINTED_GLASS_PANE = createSimpleColored("tinted_glass_pane");
+    public static final BlockItemId TINTED_GLASS_PANE = create("tinted_glass_pane");
     public static final BlockItemId REFINERY = create("refinery");
     public static final BlockItemId FUEL_LOADER = create("fuel_loader");
     public static final BlockItemId CARGO_LOADER = create("cargo_loader");

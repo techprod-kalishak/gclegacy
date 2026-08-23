@@ -19,12 +19,16 @@ public class GalacticraftLootFunctions {
     private static final DeferredRegister<MapCodec<? extends LootItemFunction>> REGISTRY = DeferredRegister.create(Registries.LOOT_FUNCTION_TYPE, Galacticraft.MODID);
 
     public static final DeferredHolder<MapCodec<? extends LootItemFunction>, MapCodec<SetItemFluidTankFunction>> FLUID_TANK = REGISTRY.register(
-            "fluid_tank",
+            "set_fluid_in_tank",
             () -> SetItemFluidTankFunction.MAP_CODEC
     );
     public static final DeferredHolder<MapCodec<? extends LootItemFunction>, MapCodec<SetItemCapacitorFunction>> CAPACITOR = REGISTRY.register(
-            "capacitor",
+            "charged_capacitor",
             () -> SetItemCapacitorFunction.MAP_CODEC
+    );
+    public static final DeferredHolder<MapCodec<? extends LootItemFunction>, MapCodec<SetRandomSchematicVariantFunction>> SCHEMATIC = REGISTRY.register(
+            "set_schematic_variant",
+            () -> SetRandomSchematicVariantFunction.MAP_CODEC
     );
 
     public static void init(IEventBus bus) {

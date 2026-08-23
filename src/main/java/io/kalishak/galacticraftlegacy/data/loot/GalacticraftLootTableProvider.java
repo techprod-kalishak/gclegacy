@@ -21,6 +21,7 @@ import java.util.concurrent.CompletableFuture;
 public class GalacticraftLootTableProvider extends LootTableProvider {
     private static final List<SubProviderEntry> ENTRIES = List.of(
             new SubProviderEntry(GalacticraftBlockLootSubProvider::new, LootContextParamSets.BLOCK),
+            new SubProviderEntry(GalacticraftChestLootSubProvider::new, LootContextParamSets.CHEST),
             new SubProviderEntry(GalacticraftEntityLootSubProvider::new, LootContextParamSets.ENTITY)
     );
 
