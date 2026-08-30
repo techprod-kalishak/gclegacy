@@ -1,0 +1,8 @@
+{
+  "flip_v": true,
+  "loader": "neoforge:obj",
+  "model": "galacticraftlegacy:models/entity/frequency_module.obj",
+  "visibility": {
+    "Radar": false
+  }
+}

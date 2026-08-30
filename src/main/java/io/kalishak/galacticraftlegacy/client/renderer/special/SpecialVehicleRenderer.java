@@ -1,8 +1,11 @@
 package io.kalishak.galacticraftlegacy.client.renderer.special;
 
+import com.mojang.blaze3d.vertex.PoseStack;
 import io.kalishak.galacticraftlegacy.client.renderer.entity.state.RocketRenderState;
 import net.minecraft.client.model.Model;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.special.SpecialModelRenderer;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import org.joml.Vector3fc;
 import org.jspecify.annotations.Nullable;
@@ -19,5 +22,20 @@ public interface SpecialVehicleRenderer<S extends RocketRenderState, T extends M
     @Override
     default @Nullable T extractArgument(ItemStack stack) {
         return model();
+    }
+
+    default void submitModel(SubmitNodeCollector submitNodeCollector, S renderState, PoseStack poseStack, Identifier textures, int lightCoords, int overlayCoords, int outlineColor) {
+        submitNodeCollector.submitModel(
+                model(),
+                renderState,
+                poseStack,
+                model().renderType(textures),
+                lightCoords,
+                overlayCoords,
+                0,
+                null,
+                outlineColor,
+                null
+        );
     }
 }

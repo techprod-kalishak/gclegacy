@@ -3,7 +3,7 @@
   "category": "equipment",
   "key": {
     "I": "#c:ingots/desh",
-    "S": "minecraft:stick"
+    "S": "galacticraftlegacy:desh_stick"
   },
   "pattern": [
     "III",

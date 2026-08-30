@@ -87,7 +87,7 @@ public record GearEquippable(GearEquipmentSlot gearSlot, Holder<SoundEvent> equi
         HolderGetter<EntityType<?>> holdergetter = BuiltInRegistries.acquireBootstrapRegistrationLookup(BuiltInRegistries.ENTITY_TYPE);
         return builder(GearEquipmentSlot.PARACHUTE)
                 .setEquipSound(SoundEvents.HARNESS_EQUIP)
-                .setAsset(GearEquipmentAssets.PARACHUTES.get(color))
+                .setAsset(GearEquipmentAssets.PARACHUTES.pick(color))
                 .setAllowedEntities(holdergetter.getOrThrow(GalacticraftTags.EntityTypes.CAN_EQUIP_PARACHUTE))
                 .build();
     }

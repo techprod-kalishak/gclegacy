@@ -1,0 +1,5 @@
+{
+  "flip_v": true,
+  "loader": "neoforge:obj",
+  "model": "galacticraftlegacy:models/entity/frequency_module_radar.obj"
+}

@@ -7,6 +7,7 @@
 
 package io.kalishak.galacticraftlegacy.client.model;
 
+import io.kalishak.galacticraftlegacy.client.model.gear.FrequencyModuleModel;
 import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.Galacticraft;
 import net.minecraft.client.resources.model.UnbakedModel;
@@ -28,52 +29,17 @@ import java.util.Map;
 
 @EventBusSubscriber(modid = Galacticraft.MODID, value = Dist.CLIENT)
 public class GalacticraftObjModelKeys {
-    /**
-     * 32 Tin Ingot
-     * 16 Aluminum Ingot
-     * 1 Advanced Wafer
-     * 24 Iron Ingot
-     */
-
-    private static final Identifier TELEMETRY_MODULE = Constants.id("telemetry_module");
     private static final Identifier THROWN_METEOR_CHUNK = Constants.id("thrown_meteor_chunk");
-    public static final StandaloneModelKey<ObjModel> TELEMETRY_MODULE_KEY = new StandaloneModelKey<>(TELEMETRY_MODULE::toString);
     public static final StandaloneModelKey<ObjModel> THROWN_METEOR_CHUNK_KEY = new StandaloneModelKey<>(THROWN_METEOR_CHUNK::toString);
-    public static final ObjGeometry.Settings TELEMETRY_SETTINGS = new ObjGeometry.Settings(
-            TELEMETRY_MODULE.withPrefix("entity/"),
-            false,
-            true,
-            false,
-            false,
-            null
-    );
     public static final ObjGeometry.Settings THROWN_METEOR_SETTINGS = new ObjGeometry.Settings(
-            TELEMETRY_MODULE.withPrefix("entity/"),
+            THROWN_METEOR_CHUNK.withPrefix("entity/"),
             false,
             true,
             false,
             false,
             null
     );
-    public static final SimpleUnbakedStandaloneModel<ObjModel> TELEMETRY_MODEL_BAKER = new SimpleUnbakedStandaloneModel<>(
-            TELEMETRY_MODULE,
-            (_, _, _) -> new ObjModel(
-                    new StandardModelParameters(
-                            null,
-                            new TextureSlots.Data.Builder()
-                                    .addTexture(
-                                            "surface",
-                                            new Material(TELEMETRY_MODULE.withPath(path -> "textures/model/" + path + ".png"))
-                                    ).build(),
-                            null,
-                            true,
-                            UnbakedModel.GuiLight.FRONT,
-                            null,
-                            Map.of()
-
-            ), ObjLoader.INSTANCE.loadGeometry(TELEMETRY_SETTINGS))
-    );
-    public static final SimpleUnbakedStandaloneModel<ObjModel> THROWN_METEOR_BAKER = new SimpleUnbakedStandaloneModel<>(
+    public static final SimpleUnbakedStandaloneModel<ObjModel> THROWN_METEOR_UNBAKED_MODEL = new SimpleUnbakedStandaloneModel<>(
             THROWN_METEOR_CHUNK,
             (_, _, _) -> new ObjModel(
                     new StandardModelParameters(
@@ -95,7 +61,7 @@ public class GalacticraftObjModelKeys {
 
     @SubscribeEvent
     public static void modelLoad(ModelEvent.RegisterStandalone event) {
-        event.register(TELEMETRY_MODULE_KEY, TELEMETRY_MODEL_BAKER);
-        event.register(THROWN_METEOR_CHUNK_KEY, TELEMETRY_MODEL_BAKER);
+        FrequencyModuleModel.load(event::register);
+        event.register(THROWN_METEOR_CHUNK_KEY, THROWN_METEOR_UNBAKED_MODEL);
     }
 }

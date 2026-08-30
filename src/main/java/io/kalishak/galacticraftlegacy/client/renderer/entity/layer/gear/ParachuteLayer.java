@@ -26,7 +26,6 @@ import net.minecraft.client.resources.model.EquipmentAssetManager;
 import net.minecraft.client.resources.model.sprite.SpriteGetter;
 import net.minecraft.client.resources.model.sprite.SpriteId;
 import net.minecraft.resources.Identifier;
-import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 
 public class ParachuteLayer<S extends LivingEntityRenderState, M extends EntityModel<S>> extends GearEquipmentLayer<S, M> implements ParachuteRenderable<S> {
@@ -54,7 +53,7 @@ public class ParachuteLayer<S extends LivingEntityRenderState, M extends EntityM
     @Override
     public SpriteId getParachuteMaterial(S renderState) {
         ItemStack stack = extractFromRenderState(renderState, GearRenderState.PARACHUTE, GearRenderState::parachute);
-        Identifier path = GearEquippable.extractAssetId(stack).orElse(GearEquipmentAssets.PARACHUTES.get(DyeColor.RED)).identifier();
+        Identifier path = GearEquippable.extractAssetId(stack).orElse(GearEquipmentAssets.PARACHUTES.red()).identifier();
 
         return new SpriteId(GalacticraftSheets.PARACHUTE_SHEET, path);
     }

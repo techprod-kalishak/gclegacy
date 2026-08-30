@@ -11,6 +11,7 @@ import io.kalishak.galacticraftlegacy.Galacticraft;
 import io.kalishak.galacticraftlegacy.client.data.*;
 import io.kalishak.galacticraftlegacy.client.data.models.GalacticraftEquipmentAssetProvider;
 import io.kalishak.galacticraftlegacy.client.data.models.GalacticraftModelProvider;
+import io.kalishak.galacticraftlegacy.client.data.models.GalacticraftCustomModelProvider;
 import io.kalishak.galacticraftlegacy.data.advancement.GalacticraftAdvancementProvider;
 import io.kalishak.galacticraftlegacy.data.loot.GalacticraftLootTableProvider;
 import io.kalishak.galacticraftlegacy.data.recipes.GalacticraftRecipeProvider;
@@ -87,6 +88,7 @@ public class GalacticraftData {
         event.createProvider(GalacticraftSpritesProvider::new);
         event.createProvider(GalacticraftLanguageProvider::new);
         event.createProvider(GalacticraftModelProvider::new);
+        event.createProvider(GalacticraftCustomModelProvider::new);
         event.createProvider(GalacticraftEquipmentAssetProvider::new);
         event.createProvider(GalacticraftSoundProvider::new);
         event.createProvider(GalacticraftParticleProvider::new);

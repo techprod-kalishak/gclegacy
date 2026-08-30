@@ -78,41 +78,6 @@
           "model": "galacticraftlegacy:item/desh_helmet_resin_trim"
         },
         "when": "minecraft:resin"
-      },
-      {
-        "model": {
-          "type": "minecraft:model",
-          "model": "galacticraftlegacy:item/desh_helmet_steel_trim"
-        },
-        "when": "galacticraftlegacy:steel"
-      },
-      {
-        "model": {
-          "type": "minecraft:model",
-          "model": "galacticraftlegacy:item/desh_helmet_cheese_trim"
-        },
-        "when": "galacticraftlegacy:cheese"
-      },
-      {
-        "model": {
-          "type": "minecraft:model",
-          "model": "galacticraftlegacy:item/desh_helmet_desh_trim"
-        },
-        "when": "galacticraftlegacy:desh"
-      },
-      {
-        "model": {
-          "type": "minecraft:model",
-          "model": "galacticraftlegacy:item/desh_helmet_titanium_trim"
-        },
-        "when": "galacticraftlegacy:titanium"
-      },
-      {
-        "model": {
-          "type": "minecraft:model",
-          "model": "galacticraftlegacy:item/desh_helmet_lead_trim"
-        },
-        "when": "galacticraftlegacy:lead"
       }
     ],
     "fallback": {

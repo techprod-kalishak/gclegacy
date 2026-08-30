@@ -3,7 +3,7 @@
   "category": "equipment",
   "key": {
     "I": "#c:ingots/titanium",
-    "S": "minecraft:stick"
+    "S": "minecraft:iron_ingot"
   },
   "pattern": [
     "I",

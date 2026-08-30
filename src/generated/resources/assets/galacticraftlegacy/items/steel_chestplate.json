@@ -78,41 +78,6 @@
           "model": "galacticraftlegacy:item/steel_chestplate_resin_trim"
         },
         "when": "minecraft:resin"
-      },
-      {
-        "model": {
-          "type": "minecraft:model",
-          "model": "galacticraftlegacy:item/steel_chestplate_steel_trim"
-        },
-        "when": "galacticraftlegacy:steel"
-      },
-      {
-        "model": {
-          "type": "minecraft:model",
-          "model": "galacticraftlegacy:item/steel_chestplate_cheese_trim"
-        },
-        "when": "galacticraftlegacy:cheese"
-      },
-      {
-        "model": {
-          "type": "minecraft:model",
-          "model": "galacticraftlegacy:item/steel_chestplate_desh_trim"
-        },
-        "when": "galacticraftlegacy:desh"
-      },
-      {
-        "model": {
-          "type": "minecraft:model",
-          "model": "galacticraftlegacy:item/steel_chestplate_titanium_trim"
-        },
-        "when": "galacticraftlegacy:titanium"
-      },
-      {
-        "model": {
-          "type": "minecraft:model",
-          "model": "galacticraftlegacy:item/steel_chestplate_lead_trim"
-        },
-        "when": "galacticraftlegacy:lead"
       }
     ],
     "fallback": {

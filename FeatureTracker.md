@@ -203,7 +203,7 @@ Please note that the following list is a preliminary outline of planned features
 - [ ] Dungeon Locator ✅
 - [ ] Fragmented Carbon ❌
 - [ ] (Raw) Unrefined Desh ✅
-- [ ] Desh Stick ❌
+- [ ] Desh Stick ✅
 - [ ] Slimeling Inventory Bag ❌
 - [ ] Fluid manipulator ❌
 - [ ] Grapple Gun ❌

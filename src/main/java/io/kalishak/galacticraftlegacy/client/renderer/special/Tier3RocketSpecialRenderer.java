@@ -17,18 +17,7 @@ public record Tier3RocketSpecialRenderer(Tier1RocketModel model) implements Spec
         poseStack.translate(0.5D, 0.5D, 0.5D);
         poseStack.scale(0.25F, 0.25F, 0.25F);
 
-        submitNodeCollector.submitModel(
-                this.model,
-                RocketRenderState.INSTANCE,
-                poseStack,
-                this.model.renderType(Tier1RocketRenderer.TEXTURES),
-                lightCoords,
-                overlayCoords,
-                0,
-                null,
-                outlineColor,
-                null
-        );
+        submitModel(submitNodeCollector, RocketRenderState.INSTANCE, poseStack, Tier1RocketRenderer.TEXTURES, lightCoords, overlayCoords, outlineColor);
         poseStack.popPose();
     }
 

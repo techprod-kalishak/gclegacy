@@ -1,5 +1,6 @@
 package io.kalishak.galacticraftlegacy.client.data.models.model;
 
+import com.google.common.collect.Lists;
 import io.kalishak.galacticraftlegacy.aunified.data.model.ExtendedItemModelGenerator;
 import io.kalishak.galacticraftlegacy.client.item.ColorByFluid;
 import io.kalishak.galacticraftlegacy.client.renderer.item.properties.numeric.DungeonLocatorAngle;
@@ -37,7 +38,11 @@ public class GalacticraftItemModelGenerators extends ExtendedItemModelGenerator 
     
     public GalacticraftItemModelGenerators(ItemModelGenerators gen) {
         super(gen.itemModelOutput, gen.modelOutput);
-        addTrims(MODDED_TRIMS);
+    }
+
+    @Override
+    public List<TrimMaterialData> getExtraTrims() {
+        return MODDED_TRIMS;
     }
 
     public void createDungeonLocator(Item item) {

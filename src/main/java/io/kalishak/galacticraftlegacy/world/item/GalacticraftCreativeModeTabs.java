@@ -114,6 +114,7 @@ public final class GalacticraftCreativeModeTabs {
         output.accept(GalacticraftItems.FLAG);
         output.accept(GalacticraftItems.DUNGEON_LOCATOR);
         output.accept(GalacticraftItems.RAW_DESH);
+        output.accept(GalacticraftItems.DESH_STICK);
         output.accept(GalacticraftItems.OIL_BUCKET);
         output.accept(GalacticraftItems.FUEL_BUCKET);
         itemDisplayParameters.holders().lookup(GalacticraftRegistries.Keys.SCHEMATIC).ifPresent(registry -> {

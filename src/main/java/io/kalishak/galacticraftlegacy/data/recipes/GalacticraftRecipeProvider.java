@@ -95,6 +95,16 @@ public class GalacticraftRecipeProvider extends RecipeProvider {
         super(registries, output);
     }
 
+    @Override
+    protected void buildRecipes() {
+        buildCraftingRecipes();
+        buildCookingRecipes();
+        buildFabricatorRecipes();
+        buildCompressorRecipes();
+        buildHeatingOnlyRecipes();
+        buildVehicleCrafting();
+    }
+
     private void buildVehicleCrafting() {
         HolderGetter<VehicleCraftingDataRecipe> vehicleData = this.registries.lookupOrThrow(GalacticraftRegistries.Keys.VEHICLE_CRAFTING_RECIPE_DATA);
         HolderSet<Item> heavyDutyPlates = this.items.getOrThrow(GalacticraftTags.Items.PLATE_HEAVY_DUTY);
@@ -279,7 +289,9 @@ public class GalacticraftRecipeProvider extends RecipeProvider {
                 .unlockedBy(getHasName(GalacticraftItems.NASA_WORKBENCH), has(GalacticraftItems.NASA_WORKBENCH))
                 .save(this.output);
 
-        toolSet(GalacticraftTags.Items.PLATE_STEEL,
+        toolSet(Items.STICK,
+                GalacticraftItems.COMPRESSED_STEEL,
+                GalacticraftTags.Items.PLATE_STEEL,
                 GalacticraftItems.STEEL_SWORD,
                 GalacticraftItems.STEEL_SPEAR,
                 GalacticraftItems.STEEL_SHOVEL,
@@ -287,7 +299,8 @@ public class GalacticraftRecipeProvider extends RecipeProvider {
                 GalacticraftItems.STEEL_AXE,
                 GalacticraftItems.STEEL_HOE
         );
-        armorSet(GalacticraftTags.Items.PLATE_STEEL,
+        armorSet(GalacticraftItems.COMPRESSED_STEEL,
+                GalacticraftTags.Items.PLATE_STEEL,
                 GalacticraftItems.STEEL_HELMET,
                 GalacticraftItems.STEEL_CHESTPLATE,
                 GalacticraftItems.STEEL_LEGGINGS,
@@ -304,7 +317,15 @@ public class GalacticraftRecipeProvider extends RecipeProvider {
                 null
         );
 
-        toolSet(GalacticraftTags.Items.INGOTS_DESH,
+        ShapedRecipeBuilder.shaped(this.items, RecipeCategory.MISC, GalacticraftItems.DESH_STICK)
+                .define('#', GalacticraftItems.DESH_INGOT)
+                .pattern("#")
+                .pattern("#")
+                .unlockedBy(getHasName(GalacticraftItems.DESH_INGOT), has(GalacticraftItems.DESH_INGOT))
+                .save(this.output);
+        toolSet(GalacticraftItems.DESH_STICK,
+                GalacticraftItems.DESH_INGOT,
+                GalacticraftTags.Items.INGOTS_DESH,
                 GalacticraftItems.DESH_SWORD,
                 GalacticraftItems.DESH_SPEAR,
                 GalacticraftItems.DESH_SHOVEL,
@@ -312,7 +333,8 @@ public class GalacticraftRecipeProvider extends RecipeProvider {
                 GalacticraftItems.DESH_AXE,
                 GalacticraftItems.DESH_HOE
         );
-        armorSet(GalacticraftTags.Items.INGOTS_DESH,
+        armorSet(GalacticraftItems.DESH_INGOT,
+                GalacticraftTags.Items.INGOTS_DESH,
                 GalacticraftItems.DESH_HELMET,
                 GalacticraftItems.DESH_CHESTPLATE,
                 GalacticraftItems.DESH_LEGGINGS,
@@ -328,7 +350,9 @@ public class GalacticraftRecipeProvider extends RecipeProvider {
                 getItemId(GalacticraftItems.DESH_INGOT) + "_from_desh_nugget",
                 null
         );
-        toolSet(GalacticraftTags.Items.INGOTS_TITANIUM,
+        toolSet(Items.IRON_INGOT,
+                GalacticraftItems.TITANIUM_INGOT,
+                GalacticraftTags.Items.INGOTS_TITANIUM,
                 GalacticraftItems.TITANIUM_SWORD,
                 GalacticraftItems.TITANIUM_SPEAR,
                 GalacticraftItems.TITANIUM_SHOVEL,
@@ -336,7 +360,8 @@ public class GalacticraftRecipeProvider extends RecipeProvider {
                 GalacticraftItems.TITANIUM_AXE,
                 GalacticraftItems.TITANIUM_HOE
         );
-        armorSet(GalacticraftTags.Items.INGOTS_TITANIUM,
+        armorSet(GalacticraftItems.TITANIUM_INGOT,
+                GalacticraftTags.Items.INGOTS_TITANIUM,
                 GalacticraftItems.TITANIUM_HELMET,
                 GalacticraftItems.TITANIUM_CHESTPLATE,
                 GalacticraftItems.TITANIUM_LEGGINGS,
@@ -359,7 +384,7 @@ public class GalacticraftRecipeProvider extends RecipeProvider {
                 .pattern("#")
                 .unlockedBy(getHasName(Items.CRAFTING_TABLE), has(Items.CRAFTING_TABLE))
                 .unlockedBy(getHasName(GalacticraftItems.COMPRESSED_IRON), has(GalacticraftTags.Items.PLATE_IRON))
-                .save(this.output, Constants.key(Registries.RECIPE, getSimpleRecipeName(GalacticraftItems.MAGNETIC_CRAFTING_TABLE)));
+                .save(this.output);
         ShapedRecipeBuilder.shaped(this.items, RecipeCategory.MISC, GalacticraftItems.THERMAL_CLOTH)
                 .define('W', ItemTags.WOOL)
                 .define('R', Items.REDSTONE)
@@ -368,47 +393,47 @@ public class GalacticraftRecipeProvider extends RecipeProvider {
                 .pattern(" W ")
                 .unlockedBy("has_wool", has(ItemTags.WOOL))
                 .unlockedBy(getHasName(Items.REDSTONE), has(Items.REDSTONE))
-                .save(this.output, Constants.key(Registries.RECIPE, getItemName(GalacticraftItems.THERMAL_CLOTH)));
+                .save(this.output);
         ShapedRecipeBuilder.shaped(this.items, RecipeCategory.MISC, GalacticraftItems.THERMAL_PADDING_HELM)
                 .define('#', GalacticraftItems.THERMAL_CLOTH)
                 .pattern("###")
                 .pattern("# #")
                 .unlockedBy(getHasName(GalacticraftItems.THERMAL_CLOTH), has(GalacticraftItems.THERMAL_CLOTH))
-                .save(this.output, Constants.key(Registries.RECIPE, getItemName(GalacticraftItems.THERMAL_PADDING_HELM)));
+                .save(this.output);
         ShapedRecipeBuilder.shaped(this.items, RecipeCategory.MISC, GalacticraftItems.THERMAL_PADDING_CHESTPIECE)
                 .define('#', GalacticraftItems.THERMAL_CLOTH)
                 .pattern("# #")
                 .pattern("###")
                 .pattern("###")
                 .unlockedBy(getHasName(GalacticraftItems.THERMAL_CLOTH), has(GalacticraftItems.THERMAL_CLOTH))
-                .save(this.output, Constants.key(Registries.RECIPE, getItemName(GalacticraftItems.THERMAL_PADDING_CHESTPIECE)));
+                .save(this.output);
         ShapedRecipeBuilder.shaped(this.items, RecipeCategory.MISC, GalacticraftItems.THERMAL_PADDING_LEGGINGS)
                 .define('#', GalacticraftItems.THERMAL_CLOTH)
                 .pattern("###")
                 .pattern("# #")
                 .pattern("# #")
                 .unlockedBy(getHasName(GalacticraftItems.THERMAL_CLOTH), has(GalacticraftItems.THERMAL_CLOTH))
-                .save(this.output, Constants.key(Registries.RECIPE, getItemName(GalacticraftItems.THERMAL_PADDING_LEGGINGS)));
+                .save(this.output);
         ShapedRecipeBuilder.shaped(this.items, RecipeCategory.MISC, GalacticraftItems.THERMAL_PADDING_BOOTS)
                 .define('#', GalacticraftItems.THERMAL_CLOTH)
                 .pattern("# #")
                 .pattern("# #")
                 .unlockedBy(getHasName(GalacticraftItems.THERMAL_CLOTH), has(GalacticraftItems.THERMAL_CLOTH))
-                .save(this.output, Constants.key(Registries.RECIPE, getItemName(GalacticraftItems.THERMAL_PADDING_BOOTS)));
+                .save(this.output);
         ShapedRecipeBuilder.shaped(this.items, RecipeCategory.MISC, GalacticraftItems.TIN_CANISTER, 2)
                 .define('#', GalacticraftTags.Items.INGOTS_TIN)
                 .pattern("# #")
                 .pattern("# #")
                 .pattern("###")
                 .unlockedBy(getHasName(GalacticraftItems.TIN_INGOT), has(GalacticraftTags.Items.INGOTS_TIN))
-                .save(this.output, Constants.key(Registries.RECIPE, getItemName(GalacticraftItems.TIN_CANISTER)));
+                .save(this.output);
         ShapedRecipeBuilder.shaped(this.items, RecipeCategory.MISC, GalacticraftItems.STEEL_POLE, 3)
                 .define('#', GalacticraftTags.Items.PLATE_STEEL)
                 .pattern("#")
                 .pattern("#")
                 .pattern("#")
                 .unlockedBy(getHasName(GalacticraftItems.COMPRESSED_STEEL), has(GalacticraftTags.Items.PLATE_STEEL))
-                .save(this.output, Constants.key(Registries.RECIPE, getItemName(GalacticraftItems.STEEL_POLE)));
+                .save(this.output);
         ShapedRecipeBuilder.shaped(this.items, RecipeCategory.MISC, GalacticraftItems.PARACHUTE.white())
                 .define('C', GalacticraftItems.CANVAS)
                 .define('S', Items.STRING)
@@ -744,16 +769,6 @@ public class GalacticraftRecipeProvider extends RecipeProvider {
         );
     }
 
-    @Override
-    protected void buildRecipes() {
-        buildCraftingRecipes();
-        buildCookingRecipes();
-        buildFabricatorRecipes();
-        buildCompressorRecipes();
-        buildHeatingOnlyRecipes();
-        buildVehicleCrafting();
-    }
-
     protected void foodCanister(ItemLike cannedFood, ItemLike ingredient) {
         ShapelessRecipeBuilder.shapeless(this.items, RecipeCategory.FOOD, cannedFood)
                 .requires(ingredient)
@@ -827,84 +842,84 @@ public class GalacticraftRecipeProvider extends RecipeProvider {
         input.forEach(itemHolder -> heating(itemHolder, recipeCategory, cookingBookCategory, result, heatingTime, group));
     }
 
-    public void toolSet(TagKey<Item> ingredient, ItemLike sword, ItemLike spear, ItemLike shovel, ItemLike pickaxe, ItemLike axe, ItemLike hoe) {
+    public void toolSet(ItemLike rodItem, ItemLike baseItem, TagKey<Item> ingredient, ItemLike sword, ItemLike spear, ItemLike shovel, ItemLike pickaxe, ItemLike axe, ItemLike hoe) {
         shaped(RecipeCategory.COMBAT, sword)
-                .define('S', Items.STICK)
+                .define('S', rodItem)
                 .define('I', ingredient)
                 .pattern("I")
                 .pattern("I")
                 .pattern("S")
-                .unlockedBy(getHasName(GalacticraftItems.STEEL_INGOT), has(ingredient))
-                .save(this.output, Constants.key(Registries.RECIPE, getItemName(sword)));
+                .unlockedBy(getHasName(baseItem), has(ingredient))
+                .save(this.output);
         shaped(RecipeCategory.COMBAT, spear)
-                .define('S', Items.STICK)
+                .define('S', rodItem)
                 .define('I', ingredient)
                 .pattern("  I")
                 .pattern(" I ")
                 .pattern("S  ")
-                .unlockedBy(getHasName(GalacticraftItems.STEEL_INGOT), has(ingredient))
-                .save(this.output, Constants.key(Registries.RECIPE, getItemName(spear)));
+                .unlockedBy(getHasName(baseItem), has(ingredient))
+                .save(this.output);
         shaped(RecipeCategory.TOOLS, shovel)
-                .define('S', Items.STICK)
+                .define('S', rodItem)
                 .define('I', ingredient)
                 .pattern("I")
                 .pattern("S")
                 .pattern("S")
-                .unlockedBy(getHasName(GalacticraftItems.STEEL_INGOT), has(ingredient))
-                .save(this.output, Constants.key(Registries.RECIPE, getItemName(shovel)));
+                .unlockedBy(getHasName(baseItem), has(ingredient))
+                .save(this.output);
         shaped(RecipeCategory.TOOLS, pickaxe)
-                .define('S', Items.STICK)
+                .define('S', rodItem)
                 .define('I', ingredient)
                 .pattern("III")
                 .pattern(" S ")
                 .pattern(" S ")
-                .unlockedBy(getHasName(GalacticraftItems.STEEL_INGOT), has(ingredient))
-                .save(this.output, Constants.key(Registries.RECIPE, getItemName(pickaxe)));
+                .unlockedBy(getHasName(baseItem), has(ingredient))
+                .save(this.output);
         shaped(RecipeCategory.TOOLS, axe)
-                .define('S', Items.STICK)
+                .define('S', rodItem)
                 .define('I', ingredient)
                 .pattern("II")
                 .pattern("IS")
                 .pattern(" S")
-                .unlockedBy(getHasName(GalacticraftItems.STEEL_INGOT), has(ingredient))
-                .save(this.output, Constants.key(Registries.RECIPE, getItemName(axe)));
+                .unlockedBy(getHasName(baseItem), has(ingredient))
+                .save(this.output);
         shaped(RecipeCategory.TOOLS, hoe)
-                .define('S', Items.STICK)
+                .define('S', rodItem)
                 .define('I', ingredient)
                 .pattern("II")
                 .pattern(" S")
                 .pattern(" S")
-                .unlockedBy(getHasName(GalacticraftItems.STEEL_INGOT), has(ingredient))
-                .save(this.output, Constants.key(Registries.RECIPE, getItemName(hoe)));
+                .unlockedBy(getHasName(baseItem), has(ingredient))
+                .save(this.output);
     }
 
-    public void armorSet(TagKey<Item> ingredient, ItemLike helmet, ItemLike chestplate, ItemLike leggings, ItemLike boots) {
+    public void armorSet(ItemLike baseItem, TagKey<Item> ingredient, ItemLike helmet, ItemLike chestplate, ItemLike leggings, ItemLike boots) {
         shaped(RecipeCategory.COMBAT, helmet)
                 .define('I', ingredient)
                 .pattern("III")
                 .pattern("I I")
-                .unlockedBy(getHasName(GalacticraftItems.STEEL_INGOT), has(ingredient))
-                .save(this.output, Constants.key(Registries.RECIPE, getItemName(helmet)));
+                .unlockedBy(getHasName(baseItem), has(ingredient))
+                .save(this.output);
         shaped(RecipeCategory.COMBAT, chestplate)
                 .define('I', ingredient)
                 .pattern("I I")
                 .pattern("III")
                 .pattern("III")
-                .unlockedBy(getHasName(GalacticraftItems.STEEL_INGOT), has(ingredient))
-                .save(this.output, Constants.key(Registries.RECIPE, getItemName(chestplate)));
+                .unlockedBy(getHasName(baseItem), has(ingredient))
+                .save(this.output);
         shaped(RecipeCategory.TOOLS, leggings)
                 .define('I', ingredient)
                 .pattern("III")
                 .pattern("I I")
                 .pattern("I I")
-                .unlockedBy(getHasName(GalacticraftItems.STEEL_INGOT), has(ingredient))
-                .save(this.output, Constants.key(Registries.RECIPE, getItemName(leggings)));
+                .unlockedBy(getHasName(baseItem), has(ingredient))
+                .save(this.output);
         shaped(RecipeCategory.TOOLS, boots)
                 .define('I', ingredient)
                 .pattern("I I")
                 .pattern("I I")
-                .unlockedBy(getHasName(GalacticraftItems.STEEL_INGOT), has(ingredient))
-                .save(this.output, Constants.key(Registries.RECIPE, getItemName(boots)));
+                .unlockedBy(getHasName(baseItem), has(ingredient))
+                .save(this.output);
     }
 
     private static String conversionName(ItemLike result, String conversionName, ItemLike ingredient) {

@@ -243,6 +243,7 @@ public class GalacticraftLanguageProvider extends ExtendedLanguageProvider {
         addItem(GalacticraftItems.DESH_CHESTPLATE, "Desh Chestplate");
         addItem(GalacticraftItems.DESH_LEGGINGS, "Desh Leggings");
         addItem(GalacticraftItems.DESH_BOOTS, "Desh Boots");
+        addItem(GalacticraftItems.DESH_STICK, "Desh Stick");
         addItem(GalacticraftItems.RAW_TITANIUM, "Raw Titanium");
         addItem(GalacticraftItems.TITANIUM_INGOT, "Titanium Ingot");
         addItem(GalacticraftItems.TITANIUM_NUGGET, "Titanium Nugget");

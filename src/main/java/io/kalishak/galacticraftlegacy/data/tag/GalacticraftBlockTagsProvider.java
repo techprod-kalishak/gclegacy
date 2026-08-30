@@ -14,6 +14,7 @@ import io.kalishak.galacticraftlegacy.references.GalacticraftBlockItemIds;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.BlockItemTagAppender;
+import net.minecraft.data.tags.TagAppender;
 import net.minecraft.references.BlockIds;
 import net.minecraft.references.BlockItemId;
 import net.minecraft.references.BlockItemIds;
@@ -45,6 +46,8 @@ public class GalacticraftBlockTagsProvider extends BlockTagsProvider {
     protected void addTags(HolderLookup.Provider provider) {
         tag(GalacticraftTags.Blocks.INFINIBURN_OPEN_SPACE)
                 .add(GalacticraftBlockIds.EMPTY_AIR);
+        tag(GalacticraftTags.Blocks.INFINIBURN_VENUS)
+                .addOptional(GalacticraftBlockItemIds.VENUS_SOFT_ROCK.block());
         tag(GalacticraftTags.Blocks.METEOR_BLOCK_REPLACEABLE)
                 .add(GalacticraftBlockItemIds.ASTEROID_ROCK.block())
                 .add(GalacticraftBlockItemIds.ASTEROID_ALUMINUM_ORE.block());
@@ -60,10 +63,11 @@ public class GalacticraftBlockTagsProvider extends BlockTagsProvider {
                 .add(BlockIds.VOID_AIR)
                 .add(BlockIds.CAVE_AIR)
                 .add(GalacticraftBlockIds.OXYGEN_AIR);
-        tag(GalacticraftTags.Blocks.CONNECTS_TO_TINTED_GLASS_PANES)
+        TagAppender<Block> tintedGlasses = tag(GalacticraftTags.Blocks.CONNECTS_TO_TINTED_GLASS_PANES)
                 .addTag(BlockTags.WALLS)
                 .addTag(Tags.Blocks.GLASS_PANES)
                 .addTag(Tags.Blocks.BARS);
+        GalacticraftBlockItemIds.COLORED_TINTED_GLASS_PANE.forEach(id -> tintedGlasses.add(id.block()));
         tag(GalacticraftTags.Blocks.CRUDE_OIL_POOL_REPLACEABLE)
                 .addTag(BlockTags.BASE_STONE_OVERWORLD)
                 .addTag(BlockTags.SAND)

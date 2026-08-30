@@ -3,6 +3,7 @@ package io.kalishak.galacticraftlegacy.aunified.data;
 import com.google.common.collect.Iterators;
 import net.minecraft.data.PackOutput;
 import net.minecraft.references.BlockItemId;
+import net.minecraft.references.ItemIds;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.Util;

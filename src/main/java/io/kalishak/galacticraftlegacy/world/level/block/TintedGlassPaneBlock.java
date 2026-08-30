@@ -18,6 +18,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
+import net.neoforged.neoforge.common.Tags;
 
 public class TintedGlassPaneBlock extends CrossCollisionTransparentBlock {
     public static final MapCodec<TintedGlassPaneBlock> MAP_CODEC = simpleCodec(TintedGlassPaneBlock::new);
@@ -79,7 +80,7 @@ public class TintedGlassPaneBlock extends CrossCollisionTransparentBlock {
 
     @Override
     protected boolean skipRendering(BlockState state, BlockState neighborState, Direction direction) {
-        if (neighborState.is(this) || neighborState.is(BlockTags.BARS) && state.is(BlockTags.BARS) && neighborState.hasProperty(PROPERTY_BY_DIRECTION.get(direction.getOpposite()))) {
+        if (neighborState.is(this) || neighborState.is(Tags.Blocks.GLASS_PANES) && state.is(Tags.Blocks.GLASS_PANES) && neighborState.hasProperty(PROPERTY_BY_DIRECTION.get(direction.getOpposite()))) {
             if (!direction.getAxis().isHorizontal()) {
                 return true;
             }

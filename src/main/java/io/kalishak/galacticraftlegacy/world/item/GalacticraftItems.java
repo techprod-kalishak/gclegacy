@@ -67,7 +67,7 @@ public final class GalacticraftItems {
                     .component(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)
     );
     public static final DeferredItem<Item> FREQUENCY_MODULE = REGISTRY.registerItem(
-            "frequency_module",
+            GalacticraftItemIds.FREQUENCY_MODULE,
             GearItem::new,
             () -> GearItem.simpleGear(GearEquipmentSlot.FREQUENCY_MODULE)
                     .component(
@@ -362,6 +362,7 @@ public final class GalacticraftItems {
             GalacticraftItemIds.DESH_HOE,
             properties -> new HoeItem(GalacticraftToolMaterials.DESH, -4.0F, 0.0F, properties)
     );
+    public static final DeferredItem<Item> DESH_STICK = REGISTRY.registerSimpleItem(GalacticraftItemIds.DESH_STICK);
 
     public static final DeferredItem<Item> RAW_TITANIUM = REGISTRY.registerSimpleItem(GalacticraftItemIds.RAW_TITANIUM);
     public static final DeferredItem<Item> TITANIUM_INGOT = REGISTRY.registerSimpleItem(
@@ -369,8 +370,8 @@ public final class GalacticraftItems {
             properties -> properties.trimMaterial(GalacticraftTrimMaterials.TITANIUM)
     );
     public static final DeferredItem<Item> TITANIUM_NUGGET = REGISTRY.registerSimpleItem(GalacticraftItemIds.TITANIUM_NUGGET);
+
     //TITANIUM ARMOR & TOOL SET
-    //TODO change wooden stick to desh
     public static final DeferredItem<Item> TITANIUM_HELMET = REGISTRY.registerSimpleItem(
             GalacticraftItemIds.TITANIUM_HELMET,
             properties -> properties.humanoidArmor(GalacticraftArmorMaterials.TITANIUM, ArmorType.HELMET)

@@ -14,10 +14,9 @@ import net.minecraft.client.data.models.EquipmentAssetProvider;
 import net.minecraft.client.resources.model.EquipmentClientInfo;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.equipment.EquipmentAsset;
+import net.minecraft.world.level.block.ColorCollection;
 
-import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Supplier;
 
@@ -70,19 +69,18 @@ public class GalacticraftEquipmentAssetProvider extends EquipmentAssetProvider {
                 custom(GearEquipmentAssets.LIGHT_TANK, EnumExtensions.LAYER_TYPE_TANK::getValue)
         );
 
-        for (Map.Entry<DyeColor, ResourceKey<EquipmentAsset>> entry : GearEquipmentAssets.PARACHUTES.entrySet()) {
-            DyeColor dyeColor = entry.getKey();
-            ResourceKey<EquipmentAsset> resourceKey = entry.getValue();
-            output.accept(
-                    resourceKey,
-                    EquipmentClientInfo.builder()
-                            .addLayers(
-                                    EnumExtensions.LAYER_TYPE_PARACHUTE.getValue(),
-                                    EquipmentClientInfo.Layer.onlyIfDyed(Constants.id(dyeColor.getSerializedName()), false)
-                            )
-                            .build()
-            );
-        }
+        ColorCollection.zipApply(
+                GearEquipmentAssets.PARACHUTES,
+                ColorCollection.VALUES,
+                (key, color) -> output.accept(
+                        key,
+                        EquipmentClientInfo.builder()
+                                .addLayers(
+                                        EnumExtensions.LAYER_TYPE_PARACHUTE.getValue(),
+                                        EquipmentClientInfo.Layer.onlyIfDyed(Constants.id(color.getSerializedName()), false)
+                                )
+                                .build()
+                ));
     }
 
     protected static EquipmentClientInfo custom(ResourceKey<EquipmentAsset> assetKey, Supplier<EquipmentClientInfo.LayerType> layerType) {
