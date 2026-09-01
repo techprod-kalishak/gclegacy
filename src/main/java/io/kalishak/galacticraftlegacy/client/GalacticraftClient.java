@@ -13,6 +13,8 @@ import io.kalishak.galacticraftlegacy.client.gui.screens.inventory.workbench.Nas
 import io.kalishak.galacticraftlegacy.client.gui.screens.inventory.workbench.NasaWorkbenchScreen;
 import io.kalishak.galacticraftlegacy.client.gui.screens.inventory.workbench.NasaWorkbenchPageScreen;
 import io.kalishak.galacticraftlegacy.client.model.entity.Tier1RocketModel;
+import io.kalishak.galacticraftlegacy.client.model.gear.FrequencyModuleModel;
+import io.kalishak.galacticraftlegacy.client.model.item.ThrownMeteorChunkModel;
 import io.kalishak.galacticraftlegacy.client.model.object.NasaWorkbenchModel;
 import io.kalishak.galacticraftlegacy.client.renderer.blockentity.NasaWorkbenchBlockRenderer;
 import io.kalishak.galacticraftlegacy.client.renderer.environment.sky.MoonSkyRenderer;
@@ -38,7 +40,7 @@ import io.kalishak.galacticraftlegacy.client.renderer.GalacticraftSheets;
 import io.kalishak.galacticraftlegacy.client.renderer.entity.layer.gear.GearEquipmentLayer;
 import io.kalishak.galacticraftlegacy.client.renderer.entity.state.GearRenderState;
 import io.kalishak.galacticraftlegacy.client.renderer.environment.*;
-import io.kalishak.galacticraftlegacy.client.renderer.item.KeyModel;
+import io.kalishak.galacticraftlegacy.client.model.item.KeyModel;
 import io.kalishak.galacticraftlegacy.client.renderer.item.properties.numeric.DungeonLocatorAngle;
 import io.kalishak.galacticraftlegacy.client.renderer.item.properties.range.FluidAmountProperty;
 import io.kalishak.galacticraftlegacy.client.renderer.item.properties.select.SchematicTierProperty;
@@ -68,6 +70,7 @@ import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtension
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
+import net.neoforged.neoforge.client.model.standalone.SimpleUnbakedStandaloneModel;
 import net.neoforged.neoforge.client.renderstate.RegisterRenderStateModifiersEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import org.slf4j.Logger;
@@ -165,6 +168,12 @@ public class GalacticraftClient {
                         state -> 0xFFECF542
                 ), GalacticraftFluids.FUEL, GalacticraftFluids.FUEL_FLOWING
         );
+    }
+
+    private void registerStandaloneModels(ModelEvent.RegisterStandalone event) {
+        event.register(FrequencyModuleModel.BASE_MODEL_KEY, SimpleUnbakedStandaloneModel.quadCollection(FrequencyModuleModel.ID));
+        event.register(FrequencyModuleModel.RADAR_MODEL_KEY, SimpleUnbakedStandaloneModel.quadCollection(FrequencyModuleModel.RADAR_ID));
+        event.register(ThrownMeteorChunkModel.KEY, SimpleUnbakedStandaloneModel.quadCollection(ThrownMeteorChunkModel.ID));
     }
 
     private void registerClientExtensions(RegisterClientExtensionsEvent event) {

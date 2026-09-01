@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "redstone",
+  "group": "mars_stone_button",
+  "ingredients": [
+    "galacticraftlegacy:mars_stone"
+  ],
+  "result": {
+    "id": "galacticraftlegacy:mars_stone_button"
+  }
+}

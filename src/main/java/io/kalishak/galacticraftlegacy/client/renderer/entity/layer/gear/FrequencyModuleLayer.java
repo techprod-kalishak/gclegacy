@@ -29,7 +29,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
 
 public class FrequencyModuleLayer<S extends LivingEntityRenderState, M extends EntityModel<S>> extends GearEquipmentLayer<S, M> {
-    public static final Identifier TEXTURES = Constants.id("textures/entity/equipment/gear/frequency_module.png");
+    public static final Identifier TEXTURES = Constants.id("textures/model/frequency_module.png");
 
     public FrequencyModuleLayer(RenderLayerParent<S, M> renderer, EquipmentLayerRenderer layerRenderer, EquipmentAssetManager equipmentAssetManager) {
         super(renderer, null, layerRenderer, equipmentAssetManager);

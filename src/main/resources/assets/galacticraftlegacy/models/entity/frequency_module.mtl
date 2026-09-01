@@ -2,4 +2,4 @@ newmtl FrequencyModule
 Ka 1.000000 1.000000 1.000000
 Kd 0.640000 0.640000 0.640000
 d 1.000000
-map_Kd textures/entity/equipment/gear/frequency_module.png
+map_Kd textures/model/frequency_module.png

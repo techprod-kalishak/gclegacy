@@ -11,7 +11,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.kalishak.galacticraftlegacy.client.model.geom.GalacticraftModelLayers;
-import io.kalishak.galacticraftlegacy.client.renderer.item.KeyModel;
+import io.kalishak.galacticraftlegacy.client.model.item.KeyModel;
 import io.kalishak.galacticraftlegacy.world.item.FeatureTier;
 import io.kalishak.galacticraftlegacy.world.item.KeyLock;
 import io.kalishak.galacticraftlegacy.world.item.component.GalacticraftDataComponents;

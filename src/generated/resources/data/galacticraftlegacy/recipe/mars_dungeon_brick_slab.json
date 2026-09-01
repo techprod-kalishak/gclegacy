@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "mars_bricks_slab",
+  "key": {
+    "#": "galacticraftlegacy:mars_dungeon_bricks"
+  },
+  "pattern": [
+    "###"
+  ],
+  "result": {
+    "count": 6,
+    "id": "galacticraftlegacy:mars_dungeon_brick_slab"
+  }
+}

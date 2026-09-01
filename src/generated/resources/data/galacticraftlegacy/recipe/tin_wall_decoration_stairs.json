@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "tin_wall_decoration_stairs",
+  "key": {
+    "#": "galacticraftlegacy:tin_wall_decoration_block"
+  },
+  "pattern": [
+    "#  ",
+    "## ",
+    "###"
+  ],
+  "result": {
+    "count": 4,
+    "id": "galacticraftlegacy:tin_wall_decoration_stairs"
+  }
+}

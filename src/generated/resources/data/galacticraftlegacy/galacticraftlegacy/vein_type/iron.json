@@ -1,0 +1,13 @@
+{
+  "filler": {
+    "Name": "minecraft:tuff"
+  },
+  "max_y": -8,
+  "min_y": -60,
+  "ore": {
+    "Name": "minecraft:deepslate_iron_ore"
+  },
+  "raw_ore_block": {
+    "Name": "minecraft:raw_iron_block"
+  }
+}

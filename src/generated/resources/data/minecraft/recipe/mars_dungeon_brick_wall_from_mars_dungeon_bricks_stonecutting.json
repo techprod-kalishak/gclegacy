@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": "galacticraftlegacy:mars_dungeon_bricks",
+  "result": {
+    "id": "galacticraftlegacy:mars_dungeon_brick_wall"
+  }
+}

@@ -81,6 +81,8 @@ public final class GalacticraftTags {
         public static final TagKey<Block> SENSOR_GLASSES_DETECTABLE = tagKey(Registries.BLOCK, "sensor_glasses_detectable");
         public static final TagKey<Block> STORAGE_BLOCKS_ALUMINUM = BlockItems.STORAGE_BLOCKS_ALUMINUM.block();
         public static final TagKey<Block> STORAGE_BLOCKS_RAW_ALUMINUM = BlockItems.STORAGE_BLOCKS_RAW_ALUMINUM.block();
+        public static final TagKey<Block> STORAGE_BLOCKS_METEORIC_IRON = BlockItems.STORAGE_BLOCKS_METEORIC_IRON.block();
+        public static final TagKey<Block> STORAGE_BLOCKS_RAW_METEORIC_IRON = BlockItems.STORAGE_BLOCKS_RAW_METEORIC_IRON.block();
         public static final TagKey<Block> STORAGE_BLOCKS_TIN = BlockItems.STORAGE_BLOCKS_TIN.block();
         public static final TagKey<Block> STORAGE_BLOCKS_RAW_TIN = BlockItems.STORAGE_BLOCKS_RAW_TIN.block();
         public static final TagKey<Block> STORAGE_BLOCKS_RAW_SILICON = BlockItems.STORAGE_BLOCKS_RAW_SILICON.block();
@@ -115,6 +117,8 @@ public final class GalacticraftTags {
         public static final BlockItemTagId SENSOR_GLASSES_DETECTABLE = combinedTagKey("sensor_glasses_detectable");
         public static final BlockItemTagId STORAGE_BLOCKS_ALUMINUM = combinedTagKey("storage_blocks/aluminum");
         public static final BlockItemTagId STORAGE_BLOCKS_RAW_ALUMINUM = combinedTagKey("storage_blocks/raw_aluminum");
+        public static final BlockItemTagId STORAGE_BLOCKS_METEORIC_IRON = combinedTagKey("storage_blocks/meteoric_iron");
+        public static final BlockItemTagId STORAGE_BLOCKS_RAW_METEORIC_IRON = combinedTagKey("storage_blocks/raw_meteoric_iron");
         public static final BlockItemTagId STORAGE_BLOCKS_TIN = combinedTagKey("storage_blocks/tin");
         public static final BlockItemTagId STORAGE_BLOCKS_RAW_TIN = combinedTagKey("storage_blocks/raw_tin");
         public static final BlockItemTagId STORAGE_BLOCKS_RAW_SILICON = combinedTagKey("storage_blocks/raw_silicon");

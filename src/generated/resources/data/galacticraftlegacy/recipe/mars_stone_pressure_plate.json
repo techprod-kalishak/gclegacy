@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "group": "mars_stone_pressure_plate",
+  "key": {
+    "#": "galacticraftlegacy:mars_stone"
+  },
+  "pattern": [
+    "##"
+  ],
+  "result": {
+    "id": "galacticraftlegacy:mars_stone_pressure_plate"
+  }
+}

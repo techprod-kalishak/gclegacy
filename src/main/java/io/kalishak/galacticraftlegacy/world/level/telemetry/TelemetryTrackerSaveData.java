@@ -19,6 +19,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.entity.UniquelyIdentifyable;
 import net.minecraft.world.level.saveddata.SavedData;
 import net.minecraft.world.level.saveddata.SavedDataType;
+import org.apache.commons.compress.utils.Lists;
+import org.apache.commons.compress.utils.Sets;
 
 import java.util.*;
 
@@ -28,7 +30,7 @@ public class TelemetryTrackerSaveData extends SavedData {
             TelemetryTrackerSaveData::new,
             TelemetryTrackerSaveData::codec
     );
-    private Packed packedTracker;
+    private Packed packedTracker = Packed.EMPTY;
 
     TelemetryTrackerSaveData(ServerLevel serverLevel) {
     }
@@ -58,5 +60,6 @@ public class TelemetryTrackerSaveData extends SavedData {
                 GloballyReferencedEntity.CODEC_SET.optionalFieldOf("trackables", Set.of()).forGetter(Packed::trackables),
                 GlobalPos.CODEC.listOf().optionalFieldOf("launch_controllers", List.of()).forGetter(Packed::launchControllers)
         ).apply(instance, Packed::new));
+        private static final Packed EMPTY = new  Packed(Level.OVERWORLD, Lists.newArrayList(), Sets.newHashSet(), Lists.newArrayList());
     }
 }

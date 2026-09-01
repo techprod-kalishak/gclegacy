@@ -20,9 +20,9 @@ import io.kalishak.galacticraftlegacy.world.level.block.GalacticraftBlocks;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.model.*;
 import net.minecraft.client.resources.model.sprite.Material;
+import net.minecraft.data.BlockFamily;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.level.block.Blocks;
-import net.neoforged.neoforge.client.model.generators.loaders.ObjModelBuilder;
 
 public class GalacticraftModelProvider extends ExtendedModelProvider<GalacticraftBlockModelGenerators, GalacticraftItemModelGenerators> {
     public GalacticraftModelProvider(PackOutput output) {
@@ -31,6 +31,7 @@ public class GalacticraftModelProvider extends ExtendedModelProvider<Galacticraf
 
     @Override
     protected void registerExtendedModels(GalacticraftBlockModelGenerators blockModels, GalacticraftItemModelGenerators itemModels) {
+        GalacticraftBlockFamilies.getFamilies().filter(BlockFamily::shouldGenerateModel).forEach(blockFamily -> blockModels.family(blockFamily.getBaseBlock()).generateFor(blockFamily));
         blockModels.createTrivialCube(GalacticraftBlocks.ALUMINUM_ORE.get());
         blockModels.createTrivialCube(GalacticraftBlocks.DEEPSLATE_ALUMINUM_ORE.get());
         blockModels.createTrivialCube(GalacticraftBlocks.ALUMINUM_BLOCK.get());
@@ -48,7 +49,6 @@ public class GalacticraftModelProvider extends ExtendedModelProvider<Galacticraf
         blockModels.createRotationalMachine(GalacticraftTexturedModel.ADVANCED_MACHINE, GalacticraftBlocks.ELECTRIC_ARC_FURNACE.get());
         blockModels.createNonTemplateModelBlock(GalacticraftBlocks.OIL.get());
         blockModels.createNonTemplateModelBlock(GalacticraftBlocks.FUEL.get());
-        GalacticraftBlockFamilies.getFamilies().forEach(blockFamily -> blockModels.family(blockFamily.getBaseBlock()).generateFor(blockFamily));
         blockModels.createRotationalMachine(GalacticraftTexturedModel.BASIC_MACHINE, GalacticraftBlocks.COMPRESSOR.get());
         blockModels.createRotationalMachine(GalacticraftTexturedModel.ADVANCED_MACHINE, GalacticraftBlocks.ELECTRIC_COMPRESSOR.get());
         blockModels.createTrivialCube(GalacticraftBlocks.MOON_DIRT.get());
@@ -87,12 +87,16 @@ public class GalacticraftModelProvider extends ExtendedModelProvider<Galacticraf
         blockModels.createMagneticCraftingTable(GalacticraftBlocks.MAGNETIC_CRAFTING_TABLE.get());
         blockModels.createRotationalMachine(GalacticraftTexturedModel.OXYGEN_COLLECTOR, GalacticraftBlocks.OXYGEN_COLLECTOR.get());
         blockModels.createTrivialCube(GalacticraftBlocks.ASTEROID_ALUMINUM_ORE.get());
-        blockModels.createTrivialBlock(GalacticraftBlocks.TIN_DECORATION_CUT_BLOCK.get(), TexturedModel.CUBE_TOP_BOTTOM);
+        blockModels.createTrivialBlock(GalacticraftBlocks.TIN_WALL_DECORATION_BLOCK.get(), TexturedModel.CUBE_TOP_BOTTOM);
+        blockModels.createSlab(GalacticraftBlocks.TIN_WALL_DECORATION_SLAB.get(), GalacticraftBlocks.TIN_WALL_DECORATION_BLOCK.get(), TextureMapping::cubeBottomTop);
+        blockModels.createStairs(GalacticraftBlocks.TIN_WALL_DECORATION_STAIRS.get(), GalacticraftBlocks.TIN_WALL_DECORATION_BLOCK.get(), TextureMapping::cubeBottomTop);
         blockModels.createTrivialCube(GalacticraftBlocks.SPACE_STATION.get());
         blockModels.noBlockGen(GalacticraftBlocks.COMPACT_NASA_WORKBENCH.get());
         blockModels.createNasaWorkbench(GalacticraftBlocks.NASA_WORKBENCH.get());
         blockModels.createNonTemplateModelBlock(GalacticraftBlocks.GRATING.get());
         blockModels.createMeteor(GalacticraftBlocks.FALLEN_METEOR.get());
+        blockModels.createTrivialCube(GalacticraftBlocks.RAW_METEORIC_IRON_BLOCK.get());
+        blockModels.createTrivialCube(GalacticraftBlocks.METEORIC_IRON_BLOCK.get());
         blockModels.createPad(GalacticraftBlocks.LANDING_PAD.get());
         blockModels.createPad(GalacticraftBlocks.FUELING_PAD.get());
         blockModels.createNonTemplateModelBlock(GalacticraftBlocks.ASTRO_MINER_BASE.get());

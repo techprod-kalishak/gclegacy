@@ -28,6 +28,7 @@ public interface GearRenderState {
     ContextKey<ItemStack> TANK = new ContextKey<>(Constants.id("left_tank"));
     ContextKey<ItemStack> ADDITIONAL_TANK = new ContextKey<>(Constants.id("right_tank"));
     ContextKey<ItemStack> PARACHUTE = new ContextKey<>(Constants.id("parachute"));
+    ContextKey<Boolean> IS_PARACHUTE_OPEN = new ContextKey<>(Constants.id("is_parachute_open"));
     ContextKey<ItemStack> TELEMETRY_MODULE = new ContextKey<>(Constants.id("telemetry_module"));
     ContextKey<ItemStack> SHIELD_CONTROLLER = new ContextKey<>(Constants.id("shield_controller"));
 
@@ -53,6 +54,7 @@ public interface GearRenderState {
         reusedState.setRenderData(GearRenderState.THERMAL_SOCKS, spaceGearEquipment.get(GearEquipmentSlot.THERMAL_SOCKS));
         appendCommonRenderStates(entity, reusedState);
         reusedState.setRenderData(GearRenderState.PARACHUTE, spaceGearEquipment.get(GearEquipmentSlot.PARACHUTE));
+        reusedState.setRenderData(GearRenderState.IS_PARACHUTE_OPEN, gear.usesParachute());
         reusedState.setRenderData(GearRenderState.TELEMETRY_MODULE, spaceGearEquipment.get(GearEquipmentSlot.FREQUENCY_MODULE));
         reusedState.setRenderData(GearRenderState.SHIELD_CONTROLLER, spaceGearEquipment.get(GearEquipmentSlot.SHIELD));
 

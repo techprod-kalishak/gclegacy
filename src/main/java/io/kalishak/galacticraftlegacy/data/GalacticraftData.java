@@ -37,6 +37,7 @@ import io.kalishak.galacticraftlegacy.world.level.levelgen.GalacticraftNoiseGene
 import io.kalishak.galacticraftlegacy.world.level.levelgen.GalacticraftNoiseRouterData;
 import io.kalishak.galacticraftlegacy.world.level.levelgen.GalacticraftNoises;
 import io.kalishak.galacticraftlegacy.world.level.levelgen.features.GalacticraftFeatures;
+import io.kalishak.galacticraftlegacy.world.level.levelgen.features.ores.DenseOreVeins;
 import io.kalishak.galacticraftlegacy.world.level.levelgen.placement.GalacticraftPlacements;
 import io.kalishak.galacticraftlegacy.world.timeline.GalacticraftTimelines;
 import io.kalishak.galacticraftlegacy.world.timeline.GalacticraftWorldClocks;
@@ -76,6 +77,7 @@ public class GalacticraftData {
             .add(GalacticraftRegistries.Keys.VEHICLE_CRAFTING_SLOT_TYPE, VehicleCraftingSlotTypes::bootstrap)
             .add(GalacticraftRegistries.Keys.VEHICLE_CRAFTING_RECIPE_DATA, VehicleCraftingDataRecipes::bootstrap)
             .add(GalacticraftRegistries.Keys.VEHICLE_CRAFTING_PAGE, VehicleCraftingPages::bootstrap)
+            .add(GalacticraftRegistries.Keys.VEIN_TYPE, DenseOreVeins::bootstrap)
             .add(GalacticraftRegistries.Keys.SCHEMATIC, SchematicVariants::bootstrap)
             .add(GalacticraftRegistries.Keys.CELESTIAL_BODY_LEVEL_DATA, CelestialBodyLevelDataEntries::bootstrap)
             .add(GalacticraftRegistries.Keys.SPACE_STATION_RECIPE, SpaceStationRecipe::bootstrap);

@@ -39,6 +39,7 @@ public class ParachuteLayer<S extends LivingEntityRenderState, M extends EntityM
     @Override
     public void submit(PoseStack poseStack, SubmitNodeCollector nodeCollector, int packedLight, S renderState, float yRot, float xRot) {
         ItemStack stack = extractFromRenderState(renderState, GearRenderState.PARACHUTE, GearRenderState::parachute);
+        boolean useParachute = renderState.getRenderDataOrDefault(GearRenderState.IS_PARACHUTE_OPEN, false);
 
         if (!stack.isEmpty()) {
             renderParachute(poseStack, nodeCollector, packedLight, renderState);

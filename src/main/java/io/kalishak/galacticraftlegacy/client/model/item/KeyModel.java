@@ -5,7 +5,7 @@
  * See LICENSE file for more details
  */
 
-package io.kalishak.galacticraftlegacy.client.renderer.item;
+package io.kalishak.galacticraftlegacy.client.model.item;
 
 import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.world.item.FeatureTier;

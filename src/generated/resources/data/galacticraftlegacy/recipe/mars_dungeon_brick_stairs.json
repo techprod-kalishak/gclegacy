@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "mars_bricks_stairs",
+  "key": {
+    "#": "galacticraftlegacy:mars_dungeon_bricks"
+  },
+  "pattern": [
+    "#  ",
+    "## ",
+    "###"
+  ],
+  "result": {
+    "count": 4,
+    "id": "galacticraftlegacy:mars_dungeon_brick_stairs"
+  }
+}

@@ -1,0 +1,31 @@
+# Blender MTL File: 'buggyWhole.blend'
+# Material Count: 5
+
+newmtl None
+Ka 1.000000 1.000000 1.000000
+Kd 0.640000 0.640000 0.640000
+d 1.000000
+map_Kd textures/entity/buggy/buggy.png
+
+newmtl None.001
+Ka 1.000000 1.000000 1.000000
+Kd 0.640000 0.640000 0.640000
+d 1.000000
+map_Kd textures/entity/buggy/wheels.png
+
+newmtl None.010
+Ka 1.000000 1.000000 1.000000
+Kd 0.640000 0.640000 0.640000
+d 1.000000
+map_Kd textures/entity/buggy/wheels.png
+
+newmtl None.025
+Ka 1.000000 1.000000 1.000000
+Kd 0.640000 0.640000 0.640000
+d 1.000000
+
+newmtl None_storage.png
+Ka 1.000000 1.000000 1.000000
+Kd 0.640000 0.640000 0.640000
+d 1.000000
+map_Kd textures/entity/buggy/storage.png

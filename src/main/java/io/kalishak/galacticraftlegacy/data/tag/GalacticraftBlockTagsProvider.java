@@ -7,11 +7,14 @@
 
 package io.kalishak.galacticraftlegacy.data.tag;
 
+import com.google.common.collect.ImmutableMap;
 import io.kalishak.galacticraftlegacy.Galacticraft;
 import io.kalishak.galacticraftlegacy.data.GalacticraftTags;
 import io.kalishak.galacticraftlegacy.references.GalacticraftBlockIds;
 import io.kalishak.galacticraftlegacy.references.GalacticraftBlockItemIds;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.data.BlockFamily;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.BlockItemTagAppender;
 import net.minecraft.data.tags.TagAppender;
@@ -22,6 +25,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.BlockItemTagId;
 import net.minecraft.tags.BlockItemTags;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
@@ -29,6 +33,12 @@ import net.neoforged.neoforge.common.data.BlockTagsProvider;
 import java.util.concurrent.CompletableFuture;
 
 public class GalacticraftBlockTagsProvider extends BlockTagsProvider {
+    public static final ImmutableMap<BlockFamily.Variant, TagKey<Block>> VARIANTS_TAGS = ImmutableMap.<BlockFamily.Variant, TagKey<Block>>builder()
+            .put(BlockFamily.Variant.STAIRS, BlockTags.STAIRS)
+            .put(BlockFamily.Variant.SLAB, BlockTags.SLABS)
+            .put(BlockFamily.Variant.WALL, BlockTags.WALLS)
+            .build();
+
     public GalacticraftBlockTagsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider) {
         super(output, lookupProvider, Galacticraft.MODID);
     }
@@ -138,10 +148,21 @@ public class GalacticraftBlockTagsProvider extends BlockTagsProvider {
                 .add(GalacticraftBlockItemIds.FUEL_CAULDRON.block())
                 .add(GalacticraftBlockItemIds.FALLEN_METEOR.block())
                 .add(GalacticraftBlockItemIds.TIN_DECORATION_BLOCK.block())
-                .add(GalacticraftBlockItemIds.TIN_DECORATION_CUT_BLOCK.block())
                 .add(GalacticraftBlockItemIds.TIN_DECORATION_SLAB.block())
                 .add(GalacticraftBlockItemIds.TIN_DECORATION_STAIRS.block())
-                .add(GalacticraftBlockItemIds.TIN_DECORATION_WALL.block());
+                .add(GalacticraftBlockItemIds.TIN_DECORATION_WALL.block())
+                .add(GalacticraftBlockItemIds.TIN_WALL_DECORATION_BLOCK.block())
+                .add(GalacticraftBlockItemIds.TIN_WALL_DECORATION_SLAB.block())
+                .add(GalacticraftBlockItemIds.TIN_WALL_DECORATION_STAIRS.block())
+                .add(GalacticraftBlockItemIds.MARS_STONE.block())
+                .add(GalacticraftBlockItemIds.MARS_STONE_SLAB.block())
+                .add(GalacticraftBlockItemIds.MARS_STONE_STAIRS.block())
+                .add(GalacticraftBlockItemIds.MARS_STONE_PRESSURE_PLATE.block())
+                .add(GalacticraftBlockItemIds.MARS_STONE_BUTTON.block())
+                .add(GalacticraftBlockItemIds.MARS_DUNGEON_BRICKS.block())
+                .add(GalacticraftBlockItemIds.MARS_DUNGEON_BRICK_SLAB.block())
+                .add(GalacticraftBlockItemIds.MARS_DUNGEON_BRICK_STAIRS.block())
+                .add(GalacticraftBlockItemIds.MARS_DUNGEON_BRICK_WALL.block());
         tag(GalacticraftTags.BlockItems.ORES_ALUMINUM)
                 .add(GalacticraftBlockItemIds.ALUMINUM_ORE)
                 .add(GalacticraftBlockItemIds.DEEPSLATE_ALUMINUM_ORE)
@@ -161,6 +182,10 @@ public class GalacticraftBlockTagsProvider extends BlockTagsProvider {
                 .add(GalacticraftBlockItemIds.ALUMINUM_BLOCK);
         tag(GalacticraftTags.BlockItems.STORAGE_BLOCKS_RAW_ALUMINUM)
                 .add(GalacticraftBlockItemIds.RAW_ALUMINUM_BLOCK);
+        tag(GalacticraftTags.BlockItems.STORAGE_BLOCKS_METEORIC_IRON)
+                .add(GalacticraftBlockItemIds.METEORIC_IRON_BLOCK.block());
+        tag(GalacticraftTags.BlockItems.STORAGE_BLOCKS_RAW_METEORIC_IRON)
+                .add(GalacticraftBlockItemIds.RAW_METEORIC_IRON_BLOCK.block());
         tag(GalacticraftTags.BlockItems.STORAGE_BLOCKS_TIN)
                 .add(GalacticraftBlockItemIds.TIN_BLOCK);
         tag(GalacticraftTags.BlockItems.STORAGE_BLOCKS_RAW_TIN)
@@ -195,21 +220,34 @@ public class GalacticraftBlockTagsProvider extends BlockTagsProvider {
         tag(BlockItemTags.SLABS)
                 .add(GalacticraftBlockItemIds.MOON_DUNGEON_BRICK_SLAB)
                 .add(GalacticraftBlockItemIds.ASTEROID_ROCK_SLAB)
-                .add(GalacticraftBlockItemIds.TIN_DECORATION_SLAB);
+                .add(GalacticraftBlockItemIds.TIN_DECORATION_SLAB)
+                .add(GalacticraftBlockItemIds.TIN_WALL_DECORATION_SLAB)
+                .add(GalacticraftBlockItemIds.MARS_STONE_SLAB)
+                .add(GalacticraftBlockItemIds.MARS_DUNGEON_BRICK_SLAB);
         tag(BlockItemTags.STAIRS)
                 .add(GalacticraftBlockItemIds.MOON_DUNGEON_BRICK_STAIRS)
                 .add(GalacticraftBlockItemIds.ASTEROID_ROCK_STAIRS)
-                .add(GalacticraftBlockItemIds.TIN_DECORATION_STAIRS);
+                .add(GalacticraftBlockItemIds.TIN_DECORATION_STAIRS)
+                .add(GalacticraftBlockItemIds.TIN_WALL_DECORATION_STAIRS)
+                .add(GalacticraftBlockItemIds.MARS_STONE_STAIRS)
+                .add(GalacticraftBlockItemIds.MARS_DUNGEON_BRICK_STAIRS);
+        tag(BlockTags.STONE_BUTTONS)
+                .add(GalacticraftBlockItemIds.MARS_STONE_BUTTON.block());
+        tag(BlockTags.STONE_PRESSURE_PLATES)
+                .add(GalacticraftBlockItemIds.MARS_STONE_PRESSURE_PLATE.block());
         tag(Tags.Blocks.STORAGE_BLOCKS)
                 .addTag(GalacticraftTags.Blocks.STORAGE_BLOCKS_ALUMINUM)
                 .addTag(GalacticraftTags.Blocks.STORAGE_BLOCKS_RAW_ALUMINUM)
+                .addTag(GalacticraftTags.Blocks.STORAGE_BLOCKS_RAW_METEORIC_IRON)
+                .addTag(GalacticraftTags.Blocks.STORAGE_BLOCKS_METEORIC_IRON)
                 .addTag(GalacticraftTags.Blocks.STORAGE_BLOCKS_TIN)
                 .addTag(GalacticraftTags.Blocks.STORAGE_BLOCKS_RAW_TIN)
                 .addTag(GalacticraftTags.Blocks.STORAGE_BLOCKS_RAW_SILICON);
         tag(BlockItemTags.WALLS)
                 .add(GalacticraftBlockItemIds.MOON_DUNGEON_BRICK_WALL)
                 .add(GalacticraftBlockItemIds.ASTEROID_ROCK_WALL)
-                .add(GalacticraftBlockItemIds.TIN_DECORATION_WALL);
+                .add(GalacticraftBlockItemIds.TIN_DECORATION_WALL)
+                .add(GalacticraftBlockItemIds.MARS_DUNGEON_BRICK_WALL);
         tag(GalacticraftTags.BlockItems.LIT_TORCHES_STANDING)
                 .add(BlockItemIds.TORCH)
                 .add(BlockItemIds.SOUL_TORCH)
@@ -221,5 +259,15 @@ public class GalacticraftBlockTagsProvider extends BlockTagsProvider {
         tag(GalacticraftTags.BlockItems.LIT_TORCHES)
                 .addTag(GalacticraftTags.Blocks.LIT_TORCHES_STANDING)
                 .addTag(GalacticraftTags.Blocks.LIT_TORCHES_WALL);
+    }
+
+    public void appendTagsForFamily(BlockFamily family) {
+        family.getVariants().forEach((variant, block) -> {
+            TagKey<Block> tag = VARIANTS_TAGS.get(variant);
+
+            if (tag != null) {
+                tag(tag).add(BuiltInRegistries.BLOCK.getResourceKey(block).orElseThrow());
+            }
+        });
     }
 }

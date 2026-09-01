@@ -207,6 +207,13 @@ public final class GalacticraftCreativeModeTabs {
         GalacticraftItems.COLORED_TINTED_GLASS_PANE.forEach(tintedGlassPane -> output.accept(tintedGlassPane, CreativeModeTab.TabVisibility.SEARCH_TAB_ONLY));
         output.accept(GalacticraftItems.NASA_WORKBENCH);
         output.accept(GalacticraftItems.COMPACT_NASA_WORKBENCH);
+        output.accept(GalacticraftItems.TIN_DECORATION_BLOCK);
+        output.accept(GalacticraftItems.TIN_DECORATION_SLAB);
+        output.accept(GalacticraftItems.TIN_DECORATION_STAIRS);
+        output.accept(GalacticraftItems.TIN_DECORATION_WALL);
+        output.accept(GalacticraftItems.TIN_WALL_DECORATION_BLOCK);
+        output.accept(GalacticraftItems.TIN_WALL_DECORATION_SLAB);
+        output.accept(GalacticraftItems.TIN_WALL_DECORATION_STAIRS);
         output.accept(GalacticraftItems.TIN_ORE);
         output.accept(GalacticraftItems.DEEPSLATE_TIN_ORE);
         output.accept(GalacticraftItems.ALUMINUM_ORE);
@@ -217,6 +224,8 @@ public final class GalacticraftCreativeModeTabs {
         output.accept(GalacticraftItems.TIN_BLOCK);
         output.accept(GalacticraftItems.RAW_ALUMINUM_BLOCK);
         output.accept(GalacticraftItems.ALUMINUM_BLOCK);
+        output.accept(GalacticraftItems.RAW_METEORIC_IRON_BLOCK);
+        output.accept(GalacticraftItems.METEORIC_IRON_BLOCK);
         output.accept(GalacticraftItems.RAW_SILICON_BLOCK);
         output.accept(GalacticraftItems.MAGNETIC_CRAFTING_TABLE);
         output.accept(GalacticraftItems.COAL_GENERATOR);
@@ -238,6 +247,15 @@ public final class GalacticraftCreativeModeTabs {
         output.accept(GalacticraftItems.MOON_BRICK_WALL);
         output.accept(GalacticraftItems.CHEESE);
         output.accept(GalacticraftItems.GRATING);
+        output.accept(GalacticraftItems.MARS_STONE);
+        output.accept(GalacticraftItems.MARS_STONE_SLAB);
+        output.accept(GalacticraftItems.MARS_STONE_STAIRS);
+        output.accept(GalacticraftItems.MARS_STONE_PRESSURE_PLATE);
+        output.accept(GalacticraftItems.MARS_STONE_BUTTON);
+        output.accept(GalacticraftItems.MARS_BRICKS);
+        output.accept(GalacticraftItems.MARS_BRICK_SLAB);
+        output.accept(GalacticraftItems.MARS_BRICK_STAIRS);
+        output.accept(GalacticraftItems.MARS_BRICK_WALL);
         output.accept(GalacticraftItems.ASTEROID_ROCK);
         output.accept(GalacticraftItems.ASTEROID_ROCK_SLAB);
         output.accept(GalacticraftItems.ASTEROID_ROCK_STAIRS);

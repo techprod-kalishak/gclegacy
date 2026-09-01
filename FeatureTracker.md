@@ -23,8 +23,8 @@ Please note that the following list is a preliminary outline of planned features
 - [ ] Cargo Unloader ❌
 - [ ] NASA Workbench ✅
 - [ ] Compact NASA Workbench ✅
-- [ ] Tin Decoration Block & Variants ❌
-- [ ] Tin Wall Block & Variants ❌
+- [ ] Tin Decoration Block & Variants ✅
+- [ ] Tin Wall Block & Variants ✅
 - [ ] Tin Ore Block & Generation ✅
 - [ ] Aluminum Ore & Generation ✅
 - [ ] Silicon Ore & Generation ✅
@@ -32,8 +32,8 @@ Please note that the following list is a preliminary outline of planned features
 - [ ] Raw Tin Block ✅
 - [ ] Aluminum Block ✅
 - [ ] Raw Aluminum Block ✅
-- [ ] Solid Meteoric Block ❌
-- [ ] Raw Meteoric Block ❌
+- [ ] Solid Meteoric Block ✅
+- [ ] Raw Meteoric Block ✅
 - [ ] Raw Silicon Block ✅
 - [ ] Air Lock Frame ❌
 - [ ] Air Lock Frame Controller ❌
@@ -78,7 +78,6 @@ Please note that the following list is a preliminary outline of planned features
 - [ ] Arc Lamp ❌
 - [ ] Treasure Chest ⏳
 - [ ] Fluid Tank ❌
-- [ ] Stairs, Walls & Slabs for all blocks ✅
 - [ ] Sealed Redstone Wire ❌
 - [ ] Sealed Redstone Repeater ❌
 - [ ] Sealed Redstone Comparator ❌ (Need review)
@@ -92,11 +91,10 @@ Please note that the following list is a preliminary outline of planned features
 - [ ] Mars Iron Ore & Generation ❌
 - [ ] Mars Cobblestone & Variants ❌
 - [ ] Mars Fine Regolith & Variants ❌
-- [ ] Mars Regolith & Variants ❌
-- [ ] Mars Dungeon Block & Variants ❌
+- [ ] Mars Stone & Variants ✅
+- [ ] Mars Dungeon Block & Variants ✅
 - [ ] Desh Block ❌
 - [ ] Raw Desh Block ❌
-- [ ] Mars Stone & Variants ❌
 - [ ] Cavernous Vines ❌
 - [ ] Slimeling Eggs ❌
 - [ ] Creeper Egg ❌

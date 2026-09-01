@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/button",
+  "textures": {
+    "texture": "galacticraftlegacy:block/mars_stone"
+  }
+}

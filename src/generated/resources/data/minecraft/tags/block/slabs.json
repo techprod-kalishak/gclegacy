@@ -2,6 +2,9 @@
   "values": [
     "galacticraftlegacy:moon_dungeon_brick_slab",
     "galacticraftlegacy:asteroid_rock_slab",
-    "galacticraftlegacy:tin_decoration_slab"
+    "galacticraftlegacy:tin_decoration_slab",
+    "galacticraftlegacy:tin_wall_decoration_slab",
+    "galacticraftlegacy:mars_stone_slab",
+    "galacticraftlegacy:mars_dungeon_brick_slab"
   ]
 }

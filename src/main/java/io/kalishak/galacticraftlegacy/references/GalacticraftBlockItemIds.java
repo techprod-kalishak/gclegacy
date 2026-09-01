@@ -45,7 +45,9 @@ public final class GalacticraftBlockItemIds {
     public static final BlockItemId TIN_DECORATION_SLAB = create("tin_decoration_slab");
     public static final BlockItemId TIN_DECORATION_STAIRS = create("tin_decoration_stairs");
     public static final BlockItemId TIN_DECORATION_WALL = create("tin_decoration_wall");
-    public static final BlockItemId TIN_DECORATION_CUT_BLOCK = create("tin_decoration_cut_block");
+    public static final BlockItemId TIN_WALL_DECORATION_BLOCK = create("tin_wall_decoration_block");
+    public static final BlockItemId TIN_WALL_DECORATION_SLAB = create("tin_wall_decoration_slab");
+    public static final BlockItemId TIN_WALL_DECORATION_STAIRS = create("tin_wall_decoration_stairs");
     public static final BlockItemId TIN_ORE = create("tin_ore");
     public static final BlockItemId DEEPSLATE_TIN_ORE = create("deepslate_tin_ore");
     public static final BlockItemId ALUMINUM_ORE = create("aluminum_ore");
@@ -57,8 +59,8 @@ public final class GalacticraftBlockItemIds {
     public static final BlockItemId ALUMINUM_BLOCK = create("aluminum_block");
     public static final BlockItemId RAW_ALUMINUM_BLOCK = create("raw_aluminum_block");
     public static final BlockItemId RAW_SILICON_BLOCK = create("raw_silicon_block");
-    public static final BlockItemId METEORIC_BLOCK = create("meteoric_block");
-    public static final BlockItemId RAW_METEORIC_BLOCK = create("raw_meteoric_block");
+    public static final BlockItemId METEORIC_IRON_BLOCK = create("meteoric_iron_block");
+    public static final BlockItemId RAW_METEORIC_IRON_BLOCK = create("raw_meteoric_iron_block");
     public static final BlockItemId AIR_LOCK = create("air_lock");
     public static final BlockItemId AIR_LOCK_FRAME = create("air_lock_frame");
     public static final BlockItemId VACUUM_CLEAR_GLASS = create("vacuum_clear_glass");
@@ -146,6 +148,8 @@ public final class GalacticraftBlockItemIds {
     public static final BlockItemId MARS_STONE = create("mars_stone");
     public static final BlockItemId MARS_STONE_SLAB = create("mars_stone_slab");
     public static final BlockItemId MARS_STONE_STAIRS = create("mars_stone_stairs");
+    public static final BlockItemId MARS_STONE_PRESSURE_PLATE = create("mars_stone_pressure_plate");
+    public static final BlockItemId MARS_STONE_BUTTON = create("mars_stone_button");
     public static final BlockItemId CAVERNOUS_VINES = create("cavernous_vines");
     public static final BlockItemId SLIMELING_EGG = create("slimeling_egg");
     public static final BlockItemId CREEPER_EGG = create("crepper_egg");

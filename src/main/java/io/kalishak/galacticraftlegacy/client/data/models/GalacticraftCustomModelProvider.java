@@ -16,5 +16,7 @@ public class GalacticraftCustomModelProvider extends CustomModelGenerator {
                 .visibility("Radar", false);
         obj(prefixed("frequency_module_radar"))
                 .flipV(true);
+        obj(prefixed("thrown_meteor_chunk"))
+                .flipV(true);
     }
 }

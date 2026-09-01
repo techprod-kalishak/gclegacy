@@ -1,0 +1,13 @@
+{
+  "filler": {
+    "Name": "minecraft:granite"
+  },
+  "max_y": 50,
+  "min_y": 0,
+  "ore": {
+    "Name": "minecraft:copper_ore"
+  },
+  "raw_ore_block": {
+    "Name": "minecraft:raw_copper_block"
+  }
+}

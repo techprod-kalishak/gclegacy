@@ -44,11 +44,18 @@ public class GalacticraftSpritesProvider extends SpriteSourceProvider {
                 ),
                 PalettedPermutations.DEFAULT_SEPARATOR
         ));
-        atlas(AtlasIds.CHESTS).addSource(new SingleFile(Constants.id("entity/chest/parachest")));
-        atlas(AtlasIds.GUI).addSource(new DirectoryLister("gui/sprites", ""));
-        atlas(AtlasIds.BLOCKS).addSource(new SingleFile(Constants.id("entity/nasa_workbench/workbench_arms")));
-        atlas(CELESTIAL_BODIES).addSource(new DirectoryLister("galaxy", ""));
-        atlas(PARACHUTES).addSource(new DirectoryLister("entity/equipment/galacticraftlegacy/parachute", ""));
-        atlas(SCHEMATICS).addSource(new DirectoryLister("schematic", ""));
+        atlas(AtlasIds.CHESTS)
+                .addSource(new SingleFile(Constants.id("entity/chest/parachest")));
+        atlas(AtlasIds.GUI)
+                .addSource(new DirectoryLister("gui/sprites", ""));
+        atlas(AtlasIds.BLOCKS)
+                .addSource(new SingleFile(Constants.id("entity/nasa_workbench/workbench_arms")))
+                .addSource(new SingleFile(Constants.id("model/frequency_module")));
+        atlas(CELESTIAL_BODIES)
+                .addSource(new DirectoryLister("galaxy", ""));
+        atlas(PARACHUTES)
+                .addSource(new DirectoryLister("entity/equipment/galacticraftlegacy/parachute", ""));
+        atlas(SCHEMATICS)
+                .addSource(new DirectoryLister("schematic", ""));
     }
 }

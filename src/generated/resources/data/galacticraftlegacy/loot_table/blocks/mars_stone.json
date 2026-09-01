@@ -10,11 +10,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "galacticraftlegacy:tin_decoration_cut_block"
+          "name": "galacticraftlegacy:mars_stone"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "galacticraftlegacy:blocks/tin_decoration_cut_block"
+  "random_sequence": "galacticraftlegacy:blocks/mars_stone"
 }

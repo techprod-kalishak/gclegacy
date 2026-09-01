@@ -1,6 +1,6 @@
 # Blender v2.68 (sub 0) OBJ File: 'meteorChunk.blend'
 # www.blender.org
-mtllib meteorChunk.mtl
+mtllib thrown_meteor_chunk.mtl
 o Icosphere
 v 0.000000 -0.990000 0.000000
 v 0.544018 -0.193648 0.382001

@@ -7,10 +7,12 @@
 
 package io.kalishak.galacticraftlegacy.data.loot;
 
+import io.kalishak.galacticraftlegacy.client.data.GalacticraftBlockFamilies;
 import io.kalishak.galacticraftlegacy.world.item.GalacticraftItems;
 import io.kalishak.galacticraftlegacy.world.item.component.GalacticraftDataComponents;
 import io.kalishak.galacticraftlegacy.world.level.block.GalacticraftBlocks;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.data.BlockFamily;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Item;
@@ -22,19 +24,38 @@ import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.CopyComponentsFunction;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
+import net.neoforged.neoforge.registries.DeferredItem;
 
+import java.util.List;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.function.UnaryOperator;
+import java.util.stream.Collectors;
 
 public class GalacticraftBlockLootSubProvider extends BlockLootSubProvider {
-    private static final Set<Item> EXPLOSION_RESISTANT = Set.of();
-
     protected GalacticraftBlockLootSubProvider(HolderLookup.Provider registries) {
-        super(EXPLOSION_RESISTANT, FeatureFlags.DEFAULT_FLAGS, registries);
+        super(getExplosionResistant(), FeatureFlags.DEFAULT_FLAGS, registries);
+    }
+
+    private static Set<Item> getExplosionResistant() {
+        return Set.of(
+                GalacticraftItems.RAW_METEORIC_IRON,
+                GalacticraftItems.RAW_METEORIC_IRON_BLOCK
+        ).stream().map(DeferredItem::asItem).collect(Collectors.toSet());
     }
 
     @Override
     protected void generate() {
+        List<BlockFamily> families = List.of(
+                GalacticraftBlockFamilies.ASTEROID_ROCKS,
+                GalacticraftBlockFamilies.MOON_BRICKS,
+                GalacticraftBlockFamilies.TIN_DECORATION,
+                GalacticraftBlockFamilies.TIN_WALL_DECORATION,
+                GalacticraftBlockFamilies.MARS_BRICKS
+        );
+        families.forEach(this::generateForBlockFamily);
+        generateForBlockFamily(GalacticraftBlockFamilies.MARS_STONE, this::createSingleItemTable); //block -> createSilkTouchOnlyTable(GalacticraftBlocks.MARS_COBBLESTONE)
+
         dropSelf(GalacticraftBlocks.GRATING.get());
         add(GalacticraftBlocks.CHEESE.get(), noDrop());
         add(GalacticraftBlocks.COAL_GENERATOR.get(), this::createNameableBlockEntityTable);
@@ -66,10 +87,8 @@ public class GalacticraftBlockLootSubProvider extends BlockLootSubProvider {
         add(GalacticraftBlocks.MOON_TIN_ORE.get(), block -> createOreDrop(block, GalacticraftItems.RAW_TIN.get()));
         add(GalacticraftBlocks.MOON_SAPPHIRE_ORE.get(), block -> createOreDrop(block, GalacticraftItems.SAPPHIRE.get()));
         add(GalacticraftBlocks.MOON_CHEESE_ORE.get(), block -> createOreDrop(block, GalacticraftItems.CHEESE_CHUNK.get()));
-        dropSelf(GalacticraftBlocks.MOON_BRICKS.get());
-        dropSelf(GalacticraftBlocks.MOON_BRICK_STAIRS.get());
-        dropSelf(GalacticraftBlocks.MOON_BRICK_SLAB.get());
-        dropSelf(GalacticraftBlocks.MOON_BRICK_WALL.get());
+        dropSelf(GalacticraftBlocks.RAW_METEORIC_IRON_BLOCK.get());
+        dropSelf(GalacticraftBlocks.METEORIC_IRON_BLOCK.get());
         dropOther(GalacticraftBlocks.OIL_CAULDRON.get(), Items.CAULDRON);
         dropOther(GalacticraftBlocks.FUEL_CAULDRON.get(), Items.CAULDRON);
         dropSelf(GalacticraftBlocks.UNLIT_TORCH.get());
@@ -77,17 +96,8 @@ public class GalacticraftBlockLootSubProvider extends BlockLootSubProvider {
         dropSelf(GalacticraftBlocks.UNLIT_LANTERN.get());
         GalacticraftBlocks.UNLIT_COPPER_LANTERN.forEach(blockSupplier -> dropSelf(blockSupplier.get()));
         add(GalacticraftBlocks.MAGNETIC_CRAFTING_TABLE.get(), block -> createComponentsBlockEntityTable(block, builder -> builder.include(GalacticraftDataComponents.CRAFTING_MEMORY.get())));
-        dropSelf(GalacticraftBlocks.ASTEROID_ROCK.get());
-        add(GalacticraftBlocks.ASTEROID_ROCK_SLAB.get(), this::createSlabItemTable);
-        dropSelf(GalacticraftBlocks.ASTEROID_ROCK_STAIRS.get());
-        dropSelf(GalacticraftBlocks.ASTEROID_ROCK_WALL.get());
         add(GalacticraftBlocks.ASTEROID_ALUMINUM_ORE.get(), block -> createOreDrop(block, GalacticraftItems.RAW_ALUMINUM.get()));
         add(GalacticraftBlocks.FALLEN_METEOR.get(), block -> createOreDrop(block, GalacticraftItems.RAW_METEORIC_IRON.get()));
-        dropSelf(GalacticraftBlocks.TIN_DECORATION_BLOCK.get());
-        dropSelf(GalacticraftBlocks.TIN_DECORATION_CUT_BLOCK.get());
-        add(GalacticraftBlocks.TIN_DECORATION_SLAB.get(), this::createSlabItemTable);
-        dropSelf(GalacticraftBlocks.TIN_DECORATION_STAIRS.get());
-        dropSelf(GalacticraftBlocks.TIN_DECORATION_WALL.get());
         dropSelf(GalacticraftBlocks.COMPACT_NASA_WORKBENCH.get());
         dropSelf(GalacticraftBlocks.NASA_WORKBENCH.get());
         dropSelf(GalacticraftBlocks.LANDING_PAD.get());
@@ -114,5 +124,20 @@ public class GalacticraftBlockLootSubProvider extends BlockLootSubProvider {
                                         )
                         )
                 );
+    }
+
+    protected void generateForBlockFamily(BlockFamily family, Function<Block, LootTable.Builder> baseBlockBuilder) {
+        add(family.getBaseBlock(), baseBlockBuilder);
+        family.getVariants().forEach((variant, block) -> {
+            if (variant != BlockFamily.Variant.SLAB) {
+                dropSelf(block);
+            } else {
+                add(block, this::createSlabItemTable);
+            }
+        });
+    }
+
+    protected void generateForBlockFamily(BlockFamily family) {
+        generateForBlockFamily(family, this::createSingleItemTable);
     }
 }

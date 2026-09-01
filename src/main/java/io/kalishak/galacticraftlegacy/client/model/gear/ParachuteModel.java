@@ -89,61 +89,6 @@ public class ParachuteModel<S extends EntityRenderState> extends Model<S> {
         return LayerDefinition.create(meshDefinition, 256, 256);
     }
 
-    public static LayerDefinition createParachuteLayerOLD() {
-        MeshDefinition meshDefinition = new MeshDefinition();
-        PartDefinition partDefinition = meshDefinition.getRoot();
-
-        PartDefinition root = partDefinition.addOrReplaceChild("parachute", CubeListBuilder.create()
-                .texOffs(0, 0)
-                .addBox(-14.0F, -22.0F, 0.0F, 12.0F, 1.0F, 16.0F, new CubeDeformation(0.0F)),
-                PartPose.offset(8.0F, 24.0F, -8.0F)
-        );
-        root.addOrReplaceChild(
-                "side_left",
-                CubeListBuilder.create()
-                        .texOffs(0, 17)
-                        .addBox(-12.0F, -11.0F, -6.0F, 10.0F, 1.0F, 16.0F, new CubeDeformation(0.0F)),
-                PartPose.offsetAndRotation(-8.0F, -12.0F, 6.0F, 0.0F, 0.0F, -0.3491F)
-        );
-        root.addOrReplaceChild(
-                "side_right",
-                CubeListBuilder.create()
-                        .texOffs(0, 17)
-                        .addBox(9.0F, -3.0F, -6.0F, 10.0F, 1.0F, 16.0F, new CubeDeformation(0.0F)),
-                PartPose.offsetAndRotation(-12.0F, -22.0F, 6.0F, 0.0F, 0.0F, 0.3491F)
-        );
-        root.addOrReplaceChild(
-                "left_string",
-                CubeListBuilder.create()
-                        .texOffs(0, 34)
-                        .addBox(-1.0F, -25.0F, 0.0F, 1.0F, 25.0F, 1.0F, new CubeDeformation(-0.45F)),
-                PartPose.offsetAndRotation(-8.0F, 0.0F, 8.0F, 0.3491F, 0.0F, 0.6981F)
-        );
-        root.addOrReplaceChild(
-                "right_string",
-                CubeListBuilder.create()
-                        .texOffs(0, 34)
-                        .addBox(-1.0F, -25.0F, 0.0F, 1.0F, 25.0F, 1.0F, new CubeDeformation(-0.45F)),
-                PartPose.offsetAndRotation(-8.0F, 0.0F, 8.0F, 0.3491F, 0.0F, -0.6545F)
-        );
-        root.addOrReplaceChild(
-                "left_rear_string",
-                CubeListBuilder.create()
-                        .texOffs(0, 34)
-                        .addBox(-1.0F, -25.0F, 0.0F, 1.0F, 25.0F, 1.0F, new CubeDeformation(-0.45F)),
-                PartPose.offsetAndRotation(-8.0F, 0.0F, 8.0F, -0.3054F, 0.0F, 0.6981F)
-        );
-        root.addOrReplaceChild(
-                "right_rear_string",
-                CubeListBuilder.create()
-                        .texOffs(0, 34)
-                        .addBox(-1.0F, -25.0F, 0.0F, 1.0F, 25.0F, 1.0F, new CubeDeformation(-0.45F)),
-                PartPose.offsetAndRotation(-8.0F, 0.0F, 8.0F, -0.3054F, 0.0F, -0.6545F)
-        );
-
-        return LayerDefinition.create(meshDefinition, 64, 64);
-    }
-
     private Set<ModelPart> getModelParts() {
         ImmutableSet.Builder<ModelPart> set = ImmutableSet.<ModelPart>builder()
                 .add(this.parachute)

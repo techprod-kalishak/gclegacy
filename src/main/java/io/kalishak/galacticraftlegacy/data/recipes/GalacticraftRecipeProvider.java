@@ -7,7 +7,6 @@
 
 package io.kalishak.galacticraftlegacy.data.recipes;
 
-import io.kalishak.galacticraftlegacy.Galacticraft;
 import io.kalishak.galacticraftlegacy.advancements.MissingGearTrigger;
 import io.kalishak.galacticraftlegacy.advancements.SchematicUnlockedTrigger;
 import io.kalishak.galacticraftlegacy.data.GalacticraftTags;

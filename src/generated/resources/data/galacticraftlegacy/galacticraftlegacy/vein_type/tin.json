@@ -1,0 +1,13 @@
+{
+  "filler": {
+    "Name": "minecraft:andesite"
+  },
+  "max_y": 20,
+  "min_y": -9,
+  "ore": {
+    "Name": "galacticraftlegacy:tin_ore"
+  },
+  "raw_ore_block": {
+    "Name": "galacticraftlegacy:raw_tin_block"
+  }
+}

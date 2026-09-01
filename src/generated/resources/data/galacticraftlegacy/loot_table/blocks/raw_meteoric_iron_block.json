@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "galacticraftlegacy:raw_meteoric_iron_block"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "galacticraftlegacy:blocks/raw_meteoric_iron_block"
+}

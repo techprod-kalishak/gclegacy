@@ -12,7 +12,7 @@ import com.mojang.math.Axis;
 import io.kalishak.galacticraftlegacy.client.model.geom.GalacticraftModelLayers;
 import io.kalishak.galacticraftlegacy.client.renderer.GalacticraftSheets;
 import io.kalishak.galacticraftlegacy.client.renderer.blockentity.state.DungeonBlockRenderState;
-import io.kalishak.galacticraftlegacy.client.renderer.item.KeyModel;
+import io.kalishak.galacticraftlegacy.client.model.item.KeyModel;
 import io.kalishak.galacticraftlegacy.world.level.block.DungeonChestBlock;
 import io.kalishak.galacticraftlegacy.world.level.block.GalacticraftBlocks;
 import io.kalishak.galacticraftlegacy.world.level.block.ParachestBlock;

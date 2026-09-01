@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "tin_wall_decoration_slab",
+  "key": {
+    "#": "galacticraftlegacy:tin_wall_decoration_block"
+  },
+  "pattern": [
+    "###"
+  ],
+  "result": {
+    "count": 6,
+    "id": "galacticraftlegacy:tin_wall_decoration_slab"
+  }
+}

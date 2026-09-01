@@ -3,6 +3,10 @@
     {
       "type": "minecraft:single",
       "resource": "galacticraftlegacy:entity/nasa_workbench/workbench_arms"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "galacticraftlegacy:model/frequency_module"
     }
   ]
 }

@@ -16,6 +16,7 @@ import io.kalishak.galacticraftlegacy.world.level.block.cauldron.FlammableCauldr
 import io.kalishak.galacticraftlegacy.world.level.block.cauldron.GalacticraftCauldronInteraction;
 import io.kalishak.galacticraftlegacy.world.level.block.machine.*;
 import io.kalishak.galacticraftlegacy.world.level.block.machine.oxygen.OxygenCollectorBlock;
+import io.kalishak.galacticraftlegacy.world.level.block.state.GalacticraftBlockSetType;
 import io.kalishak.galacticraftlegacy.world.level.block.wire.WireBlock;
 import io.kalishak.galacticraftlegacy.world.level.block.wire.ColoredPipeBlock;
 import io.kalishak.galacticraftlegacy.world.level.block.wire.HeavyWireBlock;
@@ -316,6 +317,105 @@ public final class GalacticraftBlocks {
                     .instrument(NoteBlockInstrument.BASS)
                     .requiresCorrectToolForDrops()
     );
+    public static final DeferredBlock<Block> RAW_METEORIC_IRON_BLOCK = REGISTRY.registerSimpleBlock(
+            GalacticraftBlockItemIds.RAW_METEORIC_IRON_BLOCK,
+            () -> BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.TERRACOTTA_BROWN)
+                    .strength(5.5F, 48.0F)
+                    .instrument(NoteBlockInstrument.BASS)
+                    .requiresCorrectToolForDrops()
+    );
+    public static final DeferredBlock<Block> METEORIC_IRON_BLOCK = REGISTRY.registerSimpleBlock(
+            GalacticraftBlockItemIds.METEORIC_IRON_BLOCK,
+            () -> BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.TERRACOTTA_BROWN)
+                    .strength(6.5F, 48.0F)
+                    .instrument(NoteBlockInstrument.BASS)
+                    .requiresCorrectToolForDrops()
+    );
+
+    /** Mars */
+    public static final DeferredBlock<Block> MARS_STONE = REGISTRY.registerSimpleBlock(
+            GalacticraftBlockItemIds.MARS_STONE,
+            () -> BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.TERRACOTTA_RED)
+                    .instrument(NoteBlockInstrument.BASEDRUM)
+                    .requiresCorrectToolForDrops()
+                    .strength(1.5F, 6.0F)
+    );
+    public static final DeferredBlock<SlabBlock> MARS_STONE_SLAB = REGISTRY.registerBlock(
+            GalacticraftBlockItemIds.MARS_STONE_SLAB,
+            SlabBlock::new,
+            () -> BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.TERRACOTTA_RED)
+                    .instrument(NoteBlockInstrument.BASEDRUM)
+                    .requiresCorrectToolForDrops()
+                    .strength(1.5F, 6.0F)
+    );
+    public static final DeferredBlock<StairBlock> MARS_STONE_STAIRS = REGISTRY.registerBlock(
+            GalacticraftBlockItemIds.MARS_STONE_STAIRS,
+            properties -> new StairBlock(MARS_STONE.get().defaultBlockState(), properties),
+            () -> BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.TERRACOTTA_RED)
+                    .instrument(NoteBlockInstrument.BASEDRUM)
+                    .requiresCorrectToolForDrops()
+                    .strength(1.5F, 6.0F)
+    );
+    public static final DeferredBlock<PressurePlateBlock> MARS_STONE_PRESSURE_PLATE = REGISTRY.registerBlock(
+            GalacticraftBlockItemIds.MARS_STONE_PRESSURE_PLATE,
+            properties -> new PressurePlateBlock(GalacticraftBlockSetType.MARS_STONE, properties),
+            () -> BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.TERRACOTTA_RED)
+                    .forceSolidOn()
+                    .instrument(NoteBlockInstrument.BASEDRUM)
+                    .noCollision()
+                    .strength(0.5F)
+                    .pushReaction(PushReaction.DESTROY)
+    );
+    public static final DeferredBlock<ButtonBlock> MARS_STONE_BUTTON = REGISTRY.registerBlock(
+            GalacticraftBlockItemIds.MARS_STONE_BUTTON,
+            properties -> new ButtonBlock(GalacticraftBlockSetType.MARS_STONE, 30, properties),
+            () -> BlockBehaviour.Properties.of()
+                    .noCollision()
+                    .strength(0.5F)
+                    .pushReaction(PushReaction.DESTROY)
+    );
+
+    public static final DeferredBlock<Block> MARS_BRICKS = REGISTRY.registerSimpleBlock(
+            GalacticraftBlockItemIds.MARS_DUNGEON_BRICKS,
+            () -> BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.COLOR_GREEN)
+                    .instrument(NoteBlockInstrument.BASEDRUM)
+                    .requiresCorrectToolForDrops()
+                    .strength(1.5F, 6.0F)
+    );
+    public static final DeferredBlock<SlabBlock> MARS_BRICK_SLAB = REGISTRY.registerBlock(
+            GalacticraftBlockItemIds.MARS_DUNGEON_BRICK_SLAB,
+            SlabBlock::new,
+            () -> BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.COLOR_GREEN)
+                    .instrument(NoteBlockInstrument.BASEDRUM)
+                    .requiresCorrectToolForDrops()
+                    .strength(2.5F, 6.0F)
+    );
+    public static final DeferredBlock<StairBlock> MARS_BRICK_STAIRS = REGISTRY.registerBlock(
+            GalacticraftBlockItemIds.MARS_DUNGEON_BRICK_STAIRS,
+            properties -> new StairBlock(MARS_BRICKS.get().defaultBlockState(), properties),
+            () -> BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.COLOR_GREEN)
+                    .instrument(NoteBlockInstrument.BASEDRUM)
+                    .requiresCorrectToolForDrops()
+                    .strength(2.5F, 6.0F)
+    );
+    public static final DeferredBlock<WallBlock> MARS_BRICK_WALL = REGISTRY.registerBlock(
+            GalacticraftBlockItemIds.MARS_DUNGEON_BRICK_WALL,
+            WallBlock::new,
+            () -> BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.COLOR_GREEN)
+                    .strength(2.5F, 6.0F)
+                    .instrument(NoteBlockInstrument.BASEDRUM)
+                    .requiresCorrectToolForDrops()
+    );
 
     /** Asteroids */
     public static final DeferredBlock<Block> ASTEROID_ROCK = REGISTRY.registerSimpleBlock(
@@ -540,13 +640,6 @@ public final class GalacticraftBlocks {
                     .strength(1.0F, 15.0F)
                     .requiresCorrectToolForDrops()
     );
-    public static final DeferredBlock<Block> TIN_DECORATION_CUT_BLOCK = REGISTRY.registerSimpleBlock(
-            GalacticraftBlockItemIds.TIN_DECORATION_CUT_BLOCK,
-            properties -> properties
-                    .mapColor(DyeColor.LIGHT_GRAY)
-                    .strength(1.0F, 15.0F)
-                    .requiresCorrectToolForDrops()
-    );
     public static final DeferredBlock<SlabBlock> TIN_DECORATION_SLAB = REGISTRY.registerBlock(
             GalacticraftBlockItemIds.TIN_DECORATION_SLAB,
             SlabBlock::new,
@@ -566,6 +659,29 @@ public final class GalacticraftBlocks {
     public static final DeferredBlock<WallBlock> TIN_DECORATION_WALL = REGISTRY.registerBlock(
             GalacticraftBlockItemIds.TIN_DECORATION_WALL,
             WallBlock::new,
+            properties -> properties
+                    .mapColor(DyeColor.LIGHT_GRAY)
+                    .strength(1.0F, 15.0F)
+                    .requiresCorrectToolForDrops()
+    );
+    public static final DeferredBlock<Block> TIN_WALL_DECORATION_BLOCK = REGISTRY.registerSimpleBlock(
+            GalacticraftBlockItemIds.TIN_WALL_DECORATION_BLOCK,
+            properties -> properties
+                    .mapColor(DyeColor.LIGHT_GRAY)
+                    .strength(1.0F, 15.0F)
+                    .requiresCorrectToolForDrops()
+    );
+    public static final DeferredBlock<SlabBlock> TIN_WALL_DECORATION_SLAB = REGISTRY.registerBlock(
+            GalacticraftBlockItemIds.TIN_WALL_DECORATION_SLAB,
+            SlabBlock::new,
+            properties -> properties
+                    .mapColor(DyeColor.LIGHT_GRAY)
+                    .strength(1.0F, 15.0F)
+                    .requiresCorrectToolForDrops()
+    );
+    public static final DeferredBlock<StairBlock> TIN_WALL_DECORATION_STAIRS = REGISTRY.registerBlock(
+            GalacticraftBlockItemIds.TIN_WALL_DECORATION_STAIRS,
+            properties -> new StairBlock(TIN_WALL_DECORATION_BLOCK.get().defaultBlockState(), properties),
             properties -> properties
                     .mapColor(DyeColor.LIGHT_GRAY)
                     .strength(1.0F, 15.0F)

@@ -1,0 +1,5 @@
+{
+  "flip_v": true,
+  "loader": "neoforge:obj",
+  "model": "galacticraftlegacy:models/entity/thrown_meteor_chunk.obj"
+}

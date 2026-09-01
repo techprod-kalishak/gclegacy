@@ -21,9 +21,20 @@
     "galacticraftlegacy:fuel_cauldron",
     "galacticraftlegacy:fallen_meteor",
     "galacticraftlegacy:tin_decoration_block",
-    "galacticraftlegacy:tin_decoration_cut_block",
     "galacticraftlegacy:tin_decoration_slab",
     "galacticraftlegacy:tin_decoration_stairs",
-    "galacticraftlegacy:tin_decoration_wall"
+    "galacticraftlegacy:tin_decoration_wall",
+    "galacticraftlegacy:tin_wall_decoration_block",
+    "galacticraftlegacy:tin_wall_decoration_slab",
+    "galacticraftlegacy:tin_wall_decoration_stairs",
+    "galacticraftlegacy:mars_stone",
+    "galacticraftlegacy:mars_stone_slab",
+    "galacticraftlegacy:mars_stone_stairs",
+    "galacticraftlegacy:mars_stone_pressure_plate",
+    "galacticraftlegacy:mars_stone_button",
+    "galacticraftlegacy:mars_dungeon_bricks",
+    "galacticraftlegacy:mars_dungeon_brick_slab",
+    "galacticraftlegacy:mars_dungeon_brick_stairs",
+    "galacticraftlegacy:mars_dungeon_brick_wall"
   ]
 }

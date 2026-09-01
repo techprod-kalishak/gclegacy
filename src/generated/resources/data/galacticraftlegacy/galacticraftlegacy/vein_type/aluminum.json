@@ -1,0 +1,13 @@
+{
+  "filler": {
+    "Name": "minecraft:diorite"
+  },
+  "max_y": 35,
+  "min_y": -20,
+  "ore": {
+    "Name": "galacticraftlegacy:aluminum_ore"
+  },
+  "raw_ore_block": {
+    "Name": "galacticraftlegacy:raw_aluminum_block"
+  }
+}
