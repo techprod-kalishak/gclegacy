@@ -232,6 +232,33 @@ public final class GalacticraftBlocks {
                     .instrument(NoteBlockInstrument.BASEDRUM)
                     .requiresCorrectToolForDrops()
     );
+    public static final DeferredBlock<SlabBlock> MOON_ROCK_SLAB = REGISTRY.registerBlock(
+            GalacticraftBlockItemIds.MOON_ROCK_SLAB,
+            SlabBlock::new,
+            () -> BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.TERRACOTTA_GRAY)
+                    .strength(1.5F, 6.0F)
+                    .instrument(NoteBlockInstrument.BASEDRUM)
+                    .requiresCorrectToolForDrops()
+    );
+    public static final DeferredBlock<StairBlock> MOON_ROCK_STAIRS = REGISTRY.registerBlock(
+            GalacticraftBlockItemIds.MOON_ROCK_STAIRS,
+            properties -> new StairBlock(MOON_ROCK.get().defaultBlockState(), properties),
+            () -> BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.TERRACOTTA_GRAY)
+                    .strength(1.5F, 6.0F)
+                    .instrument(NoteBlockInstrument.BASEDRUM)
+                    .requiresCorrectToolForDrops()
+    );
+    public static final DeferredBlock<WallBlock> MOON_ROCK_WALL = REGISTRY.registerBlock(
+            GalacticraftBlockItemIds.MOON_ROCK_WALL,
+            WallBlock::new,
+            () -> BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.TERRACOTTA_GRAY)
+                    .strength(1.5F, 6.0F)
+                    .instrument(NoteBlockInstrument.BASEDRUM)
+                    .requiresCorrectToolForDrops()
+    );
 
     public static final DeferredBlock<DropExperienceBlock> MOON_COPPER_ORE = REGISTRY.registerBlock(
             GalacticraftBlockItemIds.MOON_COPPER_ORE,
@@ -341,7 +368,7 @@ public final class GalacticraftBlocks {
                     .mapColor(MapColor.TERRACOTTA_RED)
                     .instrument(NoteBlockInstrument.BASEDRUM)
                     .requiresCorrectToolForDrops()
-                    .strength(1.5F, 6.0F)
+                    .strength(2.5F, 6.0F)
     );
     public static final DeferredBlock<SlabBlock> MARS_STONE_SLAB = REGISTRY.registerBlock(
             GalacticraftBlockItemIds.MARS_STONE_SLAB,
@@ -350,7 +377,7 @@ public final class GalacticraftBlocks {
                     .mapColor(MapColor.TERRACOTTA_RED)
                     .instrument(NoteBlockInstrument.BASEDRUM)
                     .requiresCorrectToolForDrops()
-                    .strength(1.5F, 6.0F)
+                    .strength(2.5F, 6.0F)
     );
     public static final DeferredBlock<StairBlock> MARS_STONE_STAIRS = REGISTRY.registerBlock(
             GalacticraftBlockItemIds.MARS_STONE_STAIRS,
@@ -359,7 +386,7 @@ public final class GalacticraftBlocks {
                     .mapColor(MapColor.TERRACOTTA_RED)
                     .instrument(NoteBlockInstrument.BASEDRUM)
                     .requiresCorrectToolForDrops()
-                    .strength(1.5F, 6.0F)
+                    .strength(2.5F, 6.0F)
     );
     public static final DeferredBlock<PressurePlateBlock> MARS_STONE_PRESSURE_PLATE = REGISTRY.registerBlock(
             GalacticraftBlockItemIds.MARS_STONE_PRESSURE_PLATE,
@@ -380,6 +407,58 @@ public final class GalacticraftBlocks {
                     .strength(0.5F)
                     .pushReaction(PushReaction.DESTROY)
     );
+    public static final DeferredBlock<Block> MARS_COBBLESTONE = REGISTRY.registerSimpleBlock(
+            GalacticraftBlockItemIds.MARS_COBBLESTONE,
+            () -> BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.TERRACOTTA_RED)
+                    .instrument(NoteBlockInstrument.BASEDRUM)
+                    .requiresCorrectToolForDrops()
+                    .strength(2.5F, 6.0F)
+    );
+    public static final DeferredBlock<SlabBlock> MARS_COBBLESTONE_SLAB = REGISTRY.registerBlock(
+            GalacticraftBlockItemIds.MARS_COBBLESTONE_SLAB,
+            SlabBlock::new,
+            () -> BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.TERRACOTTA_RED)
+                    .instrument(NoteBlockInstrument.BASEDRUM)
+                    .requiresCorrectToolForDrops()
+                    .strength(2.5F, 6.0F)
+    );
+    public static final DeferredBlock<StairBlock> MARS_COBBLESTONE_STAIRS = REGISTRY.registerBlock(
+            GalacticraftBlockItemIds.MARS_COBBLESTONE_STAIRS,
+            properties -> new StairBlock(MARS_COBBLESTONE.get().defaultBlockState(), properties),
+            () -> BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.TERRACOTTA_RED)
+                    .instrument(NoteBlockInstrument.BASEDRUM)
+                    .requiresCorrectToolForDrops()
+                    .strength(2.5F, 6.0F)
+    );
+    public static final DeferredBlock<WallBlock> MARS_COBBLESTONE_WALL = REGISTRY.registerBlock(
+            GalacticraftBlockItemIds.MARS_COBBLESTONE_WALL,
+            WallBlock::new,
+            () -> BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.TERRACOTTA_RED)
+                    .strength(2.5F, 6.0F)
+                    .instrument(NoteBlockInstrument.BASEDRUM)
+                    .requiresCorrectToolForDrops()
+    );
+
+    public static final DeferredBlock<Block> MARS_REGOLITH = REGISTRY.registerSimpleBlock(
+            GalacticraftBlockItemIds.MARS_REGOLITH,
+            () -> BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.TERRACOTTA_RED)
+                    .instrument(NoteBlockInstrument.BASEDRUM)
+                    .requiresCorrectToolForDrops()
+                    .strength(1.5F, 6.0F)
+    );
+    public static final DeferredBlock<Block> MARS_FINE_REGOLITH = REGISTRY.registerSimpleBlock(
+            GalacticraftBlockItemIds.MARS_FINE_REGOLITH,
+            () -> BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.TERRACOTTA_RED)
+                    .instrument(NoteBlockInstrument.BASEDRUM)
+                    .requiresCorrectToolForDrops()
+                    .strength(2.0F, 6.0F)
+    );
 
     public static final DeferredBlock<Block> MARS_BRICKS = REGISTRY.registerSimpleBlock(
             GalacticraftBlockItemIds.MARS_DUNGEON_BRICKS,
@@ -387,7 +466,7 @@ public final class GalacticraftBlocks {
                     .mapColor(MapColor.COLOR_GREEN)
                     .instrument(NoteBlockInstrument.BASEDRUM)
                     .requiresCorrectToolForDrops()
-                    .strength(1.5F, 6.0F)
+                    .strength(2.5F, 6.0F)
     );
     public static final DeferredBlock<SlabBlock> MARS_BRICK_SLAB = REGISTRY.registerBlock(
             GalacticraftBlockItemIds.MARS_DUNGEON_BRICK_SLAB,
@@ -415,6 +494,42 @@ public final class GalacticraftBlocks {
                     .strength(2.5F, 6.0F)
                     .instrument(NoteBlockInstrument.BASEDRUM)
                     .requiresCorrectToolForDrops()
+    );
+    public static final DeferredBlock<DropExperienceBlock> MARS_COPPER_ORE = REGISTRY.registerBlock(
+            GalacticraftBlockItemIds.MARS_COPPER_ORE,
+            properties -> new DropExperienceBlock(ConstantInt.ZERO, properties),
+            () -> BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.TERRACOTTA_RED)
+                    .instrument(NoteBlockInstrument.BASEDRUM)
+                    .requiresCorrectToolForDrops()
+                    .strength(4.5F, 6.0F)
+    );
+    public static final DeferredBlock<DropExperienceBlock> MARS_TIN_ORE = REGISTRY.registerBlock(
+            GalacticraftBlockItemIds.MARS_TIN_ORE,
+            properties -> new DropExperienceBlock(ConstantInt.ZERO, properties),
+            () -> BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.TERRACOTTA_RED)
+                    .instrument(NoteBlockInstrument.BASEDRUM)
+                    .requiresCorrectToolForDrops()
+                    .strength(4.5F, 6.0F)
+    );
+    public static final DeferredBlock<DropExperienceBlock> MARS_DESH_ORE = REGISTRY.registerBlock(
+            GalacticraftBlockItemIds.MARS_DESH_ORE,
+            properties -> new DropExperienceBlock(ConstantInt.ZERO, properties),
+            () -> BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.TERRACOTTA_RED)
+                    .instrument(NoteBlockInstrument.BASEDRUM)
+                    .requiresCorrectToolForDrops()
+                    .strength(4.5F, 6.0F)
+    );
+    public static final DeferredBlock<DropExperienceBlock> MARS_IRON_ORE = REGISTRY.registerBlock(
+            GalacticraftBlockItemIds.MARS_IRON_ORE,
+            properties -> new DropExperienceBlock(ConstantInt.ZERO, properties),
+            () -> BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.TERRACOTTA_RED)
+                    .instrument(NoteBlockInstrument.BASEDRUM)
+                    .requiresCorrectToolForDrops()
+                    .strength(4.5F, 6.0F)
     );
 
     /** Asteroids */

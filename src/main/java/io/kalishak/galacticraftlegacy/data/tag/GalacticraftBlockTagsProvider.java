@@ -64,8 +64,9 @@ public class GalacticraftBlockTagsProvider extends BlockTagsProvider {
         tag(GalacticraftTags.Blocks.BASE_STONE_ASTEROID)
                 .add(GalacticraftBlockItemIds.ASTEROID_ROCK.block());
         tag(GalacticraftTags.BlockItems.BASE_STONE_MOON)
-                .add(GalacticraftBlockItemIds.MOON_TURF)
                 .add(GalacticraftBlockItemIds.MOON_ROCK);
+        tag(GalacticraftTags.Blocks.BASE_STONE_MARS)
+                .add(GalacticraftBlockItemIds.MARS_STONE.block());
         tag(GalacticraftTags.Blocks.MOON_CARVER_REPLACEABLES)
                 .addTag(GalacticraftTags.Blocks.BASE_STONE_MOON)
                 .add(GalacticraftBlockItemIds.MOON_DIRT.block());
@@ -117,7 +118,10 @@ public class GalacticraftBlockTagsProvider extends BlockTagsProvider {
                 .add(GalacticraftBlockItemIds.ASTEROID_ROCK.block())
                 .add(GalacticraftBlockItemIds.ASTEROID_ROCK_SLAB.block())
                 .add(GalacticraftBlockItemIds.ASTEROID_ROCK_STAIRS.block())
-                .add(GalacticraftBlockItemIds.ASTEROID_ROCK_WALL.block());
+                .add(GalacticraftBlockItemIds.ASTEROID_ROCK_WALL.block())
+                .add(GalacticraftBlockItemIds.MARS_COPPER_ORE.block())
+                .add(GalacticraftBlockItemIds.MARS_TIN_ORE.block())
+                .add(GalacticraftBlockItemIds.MARS_IRON_ORE.block());
         tag(BlockTags.NEEDS_IRON_TOOL)
                 .add(GalacticraftBlockItemIds.ASTEROID_ALUMINUM_ORE.block())
                 .add(GalacticraftBlockItemIds.ALUMINUM_ORE.block())
@@ -125,10 +129,14 @@ public class GalacticraftBlockTagsProvider extends BlockTagsProvider {
                 .add(GalacticraftBlockItemIds.SILICON_ORE.block())
                 .add(GalacticraftBlockItemIds.DEEPSLATE_SILICON_ORE.block())
                 .add(GalacticraftBlockItemIds.MOON_SAPPHIRE_ORE.block())
-                .add(GalacticraftBlockItemIds.FALLEN_METEOR.block());
+                .add(GalacticraftBlockItemIds.FALLEN_METEOR.block())
+                .add(GalacticraftBlockItemIds.MARS_DESH_ORE.block());
         tag(BlockTags.MINEABLE_WITH_PICKAXE)
                 .addTag(GalacticraftTags.Blocks.MACHINE)
                 .add(GalacticraftBlockItemIds.MOON_ROCK.block())
+                .add(GalacticraftBlockItemIds.MOON_ROCK_SLAB.block())
+                .add(GalacticraftBlockItemIds.MOON_ROCK_STAIRS.block())
+                .add(GalacticraftBlockItemIds.MOON_ROCK_WALL.block())
                 .add(GalacticraftBlockItemIds.MOON_COPPER_ORE.block())
                 .add(GalacticraftBlockItemIds.MOON_CHEESE_ORE.block())
                 .add(GalacticraftBlockItemIds.MOON_TIN_ORE.block())
@@ -159,10 +167,18 @@ public class GalacticraftBlockTagsProvider extends BlockTagsProvider {
                 .add(GalacticraftBlockItemIds.MARS_STONE_STAIRS.block())
                 .add(GalacticraftBlockItemIds.MARS_STONE_PRESSURE_PLATE.block())
                 .add(GalacticraftBlockItemIds.MARS_STONE_BUTTON.block())
+                .add(GalacticraftBlockItemIds.MARS_COBBLESTONE.block())
+                .add(GalacticraftBlockItemIds.MARS_COBBLESTONE_SLAB.block())
+                .add(GalacticraftBlockItemIds.MARS_COBBLESTONE_STAIRS.block())
+                .add(GalacticraftBlockItemIds.MARS_COBBLESTONE_WALL.block())
                 .add(GalacticraftBlockItemIds.MARS_DUNGEON_BRICKS.block())
                 .add(GalacticraftBlockItemIds.MARS_DUNGEON_BRICK_SLAB.block())
                 .add(GalacticraftBlockItemIds.MARS_DUNGEON_BRICK_STAIRS.block())
-                .add(GalacticraftBlockItemIds.MARS_DUNGEON_BRICK_WALL.block());
+                .add(GalacticraftBlockItemIds.MARS_DUNGEON_BRICK_WALL.block())
+                .add(GalacticraftBlockItemIds.MARS_COPPER_ORE.block())
+                .add(GalacticraftBlockItemIds.MARS_TIN_ORE.block())
+                .add(GalacticraftBlockItemIds.MARS_DESH_ORE.block())
+                .add(GalacticraftBlockItemIds.MARS_IRON_ORE.block());
         tag(GalacticraftTags.BlockItems.ORES_ALUMINUM)
                 .add(GalacticraftBlockItemIds.ALUMINUM_ORE)
                 .add(GalacticraftBlockItemIds.DEEPSLATE_ALUMINUM_ORE)
@@ -177,7 +193,10 @@ public class GalacticraftBlockTagsProvider extends BlockTagsProvider {
         tag(GalacticraftTags.BlockItems.ORES_TIN)
                 .add(GalacticraftBlockItemIds.TIN_ORE)
                 .add(GalacticraftBlockItemIds.DEEPSLATE_TIN_ORE)
-                .add(GalacticraftBlockItemIds.MOON_TIN_ORE);
+                .add(GalacticraftBlockItemIds.MOON_TIN_ORE)
+                .add(GalacticraftBlockItemIds.MARS_TIN_ORE);
+        tag(GalacticraftTags.BlockItems.ORES_DESH)
+                .add(GalacticraftBlockItemIds.MARS_DESH_ORE);
         tag(GalacticraftTags.BlockItems.STORAGE_BLOCKS_ALUMINUM)
                 .add(GalacticraftBlockItemIds.ALUMINUM_BLOCK);
         tag(GalacticraftTags.BlockItems.STORAGE_BLOCKS_RAW_ALUMINUM)
@@ -193,17 +212,17 @@ public class GalacticraftBlockTagsProvider extends BlockTagsProvider {
         tag(GalacticraftTags.BlockItems.STORAGE_BLOCKS_RAW_SILICON)
                 .add(GalacticraftBlockItemIds.RAW_SILICON_BLOCK);
         tag(Tags.Blocks.ORES)
-                .addTag(GalacticraftTags.Blocks.ORES_ALUMINUM);
-        tag(Tags.Blocks.ORES)
-                .addTag(GalacticraftTags.Blocks.ORES_CHEESE);
-        tag(Tags.Blocks.ORES)
-                .addTag(GalacticraftTags.Blocks.ORES_SAPPHIRE);
-        tag(Tags.Blocks.ORES)
-                .addTag(GalacticraftTags.Blocks.ORES_SILICON);
-        tag(Tags.Blocks.ORES)
+                .addTag(GalacticraftTags.Blocks.ORES_ALUMINUM)
+                .addTag(GalacticraftTags.Blocks.ORES_CHEESE)
+                .addTag(GalacticraftTags.Blocks.ORES_DESH)
+                .addTag(GalacticraftTags.Blocks.ORES_SAPPHIRE)
+                .addTag(GalacticraftTags.Blocks.ORES_SILICON)
                 .addTag(GalacticraftTags.Blocks.ORES_TIN);
         tag(Tags.Blocks.ORES_COPPER)
-                .add(GalacticraftBlockItemIds.MOON_COPPER_ORE.block());
+                .add(GalacticraftBlockItemIds.MOON_COPPER_ORE.block())
+                .add(GalacticraftBlockItemIds.MARS_COPPER_ORE.block());
+        tag(Tags.Blocks.ORES_IRON)
+                .add(GalacticraftBlockItemIds.MARS_IRON_ORE.block());
 
 //        tag(GalacticraftTags.Blocks.SEALABLE)
 //                .addTag(Tags.Blocks.GLASS_PANES);
@@ -218,18 +237,22 @@ public class GalacticraftBlockTagsProvider extends BlockTagsProvider {
                 .add(BlockItemIds.ENCHANTING_TABLE.block())
                 .add(BlockItemIds.STONECUTTER.block());
         tag(BlockItemTags.SLABS)
+                .add(GalacticraftBlockItemIds.MOON_ROCK_SLAB)
                 .add(GalacticraftBlockItemIds.MOON_DUNGEON_BRICK_SLAB)
                 .add(GalacticraftBlockItemIds.ASTEROID_ROCK_SLAB)
                 .add(GalacticraftBlockItemIds.TIN_DECORATION_SLAB)
                 .add(GalacticraftBlockItemIds.TIN_WALL_DECORATION_SLAB)
                 .add(GalacticraftBlockItemIds.MARS_STONE_SLAB)
+                .add(GalacticraftBlockItemIds.MARS_COBBLESTONE_SLAB)
                 .add(GalacticraftBlockItemIds.MARS_DUNGEON_BRICK_SLAB);
         tag(BlockItemTags.STAIRS)
+                .add(GalacticraftBlockItemIds.MOON_ROCK_STAIRS)
                 .add(GalacticraftBlockItemIds.MOON_DUNGEON_BRICK_STAIRS)
                 .add(GalacticraftBlockItemIds.ASTEROID_ROCK_STAIRS)
                 .add(GalacticraftBlockItemIds.TIN_DECORATION_STAIRS)
                 .add(GalacticraftBlockItemIds.TIN_WALL_DECORATION_STAIRS)
                 .add(GalacticraftBlockItemIds.MARS_STONE_STAIRS)
+                .add(GalacticraftBlockItemIds.MARS_COBBLESTONE_STAIRS)
                 .add(GalacticraftBlockItemIds.MARS_DUNGEON_BRICK_STAIRS);
         tag(BlockTags.STONE_BUTTONS)
                 .add(GalacticraftBlockItemIds.MARS_STONE_BUTTON.block());
@@ -244,10 +267,11 @@ public class GalacticraftBlockTagsProvider extends BlockTagsProvider {
                 .addTag(GalacticraftTags.Blocks.STORAGE_BLOCKS_RAW_TIN)
                 .addTag(GalacticraftTags.Blocks.STORAGE_BLOCKS_RAW_SILICON);
         tag(BlockItemTags.WALLS)
+                .add(GalacticraftBlockItemIds.MOON_ROCK_WALL)
                 .add(GalacticraftBlockItemIds.MOON_DUNGEON_BRICK_WALL)
                 .add(GalacticraftBlockItemIds.ASTEROID_ROCK_WALL)
                 .add(GalacticraftBlockItemIds.TIN_DECORATION_WALL)
-                .add(GalacticraftBlockItemIds.MARS_DUNGEON_BRICK_WALL);
+                .add(GalacticraftBlockItemIds.MARS_COBBLESTONE_WALL);
         tag(GalacticraftTags.BlockItems.LIT_TORCHES_STANDING)
                 .add(BlockItemIds.TORCH)
                 .add(BlockItemIds.SOUL_TORCH)

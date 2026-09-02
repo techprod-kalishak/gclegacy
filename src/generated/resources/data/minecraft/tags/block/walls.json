@@ -1,8 +1,9 @@
 {
   "values": [
+    "galacticraftlegacy:moon_rock_wall",
     "galacticraftlegacy:moon_dungeon_brick_wall",
     "galacticraftlegacy:asteroid_rock_wall",
     "galacticraftlegacy:tin_decoration_wall",
-    "galacticraftlegacy:mars_dungeon_brick_wall"
+    "galacticraftlegacy:mars_cobblestone_wall"
   ]
 }

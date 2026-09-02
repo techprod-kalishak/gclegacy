@@ -13,7 +13,21 @@
   "effects": {
     "water_color": "#0671a9"
   },
-  "features": [],
+  "features": [
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [
+      "galacticraftlegacy:mars_copper_ore",
+      "galacticraftlegacy:mars_tin_ore",
+      "galacticraftlegacy:mars_desh_ore",
+      "galacticraftlegacy:mars_iron_ore"
+    ]
+  ],
   "has_precipitation": false,
   "spawn_costs": {},
   "spawners": {

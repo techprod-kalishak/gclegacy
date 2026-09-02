@@ -1,0 +1,17 @@
+{
+  "features": {
+    "enabled": [
+      "galacticraftlegacy:adventure_mode"
+    ]
+  },
+  "pack": {
+    "description": {
+      "translate": "pack.galacticraftlegacy.adventure_mode.description"
+    },
+    "max_format": 107,
+    "min_format": [
+      107,
+      1
+    ]
+  }
+}

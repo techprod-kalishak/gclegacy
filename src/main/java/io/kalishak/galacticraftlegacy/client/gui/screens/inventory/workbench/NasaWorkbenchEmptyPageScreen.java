@@ -31,10 +31,10 @@ public class NasaWorkbenchEmptyPageScreen extends AbstractNasaWorkbenchScreen<Na
     @Override
     protected void init() {
         super.init();
-        addRenderableWidget(Button.builder(GalacticraftComponents.UNLOCK_SCHEMATIC, _ -> ClientPacketDistributor.sendToServer(new UnlockSchematicPayload(this.menu.containerId)))
+        addRenderableWidget(Button.builder(GalacticraftComponents.UNLOCK_SCHEMATIC.asComponent(), _ -> ClientPacketDistributor.sendToServer(new UnlockSchematicPayload(this.menu.containerId)))
                 .pos(this.width / 2 - 46, this.height / 2 - 32)
                 .size(92, 20)
-                .createNarration(_ -> (MutableComponent) GalacticraftComponents.UNLOCK_SCHEMATIC)
+                .createNarration(_ -> GalacticraftComponents.UNLOCK_SCHEMATIC.asComponent())
                 .build()
         );
     }

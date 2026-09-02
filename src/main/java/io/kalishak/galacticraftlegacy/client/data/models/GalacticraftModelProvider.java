@@ -53,7 +53,6 @@ public class GalacticraftModelProvider extends ExtendedModelProvider<Galacticraf
         blockModels.createRotationalMachine(GalacticraftTexturedModel.ADVANCED_MACHINE, GalacticraftBlocks.ELECTRIC_COMPRESSOR.get());
         blockModels.createTrivialCube(GalacticraftBlocks.MOON_DIRT.get());
         blockModels.createRotatedMirroredVariantBlock(GalacticraftBlocks.MOON_TURF.get());
-        blockModels.createTrivialCube(GalacticraftBlocks.MOON_ROCK.get());
         blockModels.createTrivialCube(GalacticraftBlocks.MOON_CHEESE_ORE.get());
         blockModels.createTrivialCube(GalacticraftBlocks.MOON_COPPER_ORE.get());
         blockModels.createTrivialCube(GalacticraftBlocks.MOON_TIN_ORE.get());
@@ -97,13 +96,19 @@ public class GalacticraftModelProvider extends ExtendedModelProvider<Galacticraf
         blockModels.createMeteor(GalacticraftBlocks.FALLEN_METEOR.get());
         blockModels.createTrivialCube(GalacticraftBlocks.RAW_METEORIC_IRON_BLOCK.get());
         blockModels.createTrivialCube(GalacticraftBlocks.METEORIC_IRON_BLOCK.get());
+        blockModels.createTrivialCube(GalacticraftBlocks.MARS_REGOLITH.get());
+        blockModels.createTrivialCube(GalacticraftBlocks.MARS_FINE_REGOLITH.get());
         blockModels.createPad(GalacticraftBlocks.LANDING_PAD.get());
         blockModels.createPad(GalacticraftBlocks.FUELING_PAD.get());
         blockModels.createNonTemplateModelBlock(GalacticraftBlocks.ASTRO_MINER_BASE.get());
         GalacticraftBlocks.COLORED_TINTED_GLASS_PANE.forEach(block -> blockModels.createBarsAndItem(block.get()));
         blockModels.createBarsAndItem(GalacticraftBlocks.TINTED_GLASS_PANE.get(), TextureMapping.bars(Blocks.TINTED_GLASS));
+        blockModels.createTrivialCube(GalacticraftBlocks.MARS_COPPER_ORE.get());
+        blockModels.createTrivialCube(GalacticraftBlocks.MARS_TIN_ORE.get());
+        blockModels.createTrivialCube(GalacticraftBlocks.MARS_DESH_ORE.get());
+        blockModels.createTrivialCube(GalacticraftBlocks.MARS_IRON_ORE.get());
 
-        blockModels.registerSimpleFlatItemModel(GalacticraftBlocks.GRATING.get());
+        blockModels.registerSimpleFlatItemModel(GalacticraftBlocks.GRATING.asItem());
         itemModels.generateFlatItem(GalacticraftItems.THROWABLE_METEOR_CHUNK.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(GalacticraftItems.BATTERY.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(GalacticraftItems.INFINITE_BATTERY.get(), GalacticraftItems.BATTERY.get(), ModelTemplates.FLAT_ITEM);

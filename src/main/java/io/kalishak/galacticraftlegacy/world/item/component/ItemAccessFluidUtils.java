@@ -25,7 +25,7 @@ public interface ItemAccessFluidUtils extends TooltipProvider {
         if (resourceHandler instanceof InfiniteResourceHandler<FluidResource>) {
             GalacticraftComponents.infinite(consumer);
         } else if (resourceHandler.getResource(0).isEmpty()) {
-            consumer.accept(GalacticraftComponents.TOOLTIP_EMPTY_TANK);
+            consumer.accept(GalacticraftComponents.TOOLTIP_EMPTY_TANK.asComponent());
         } else {
             FluidStack fluidStack = FluidUtil.getStack(resourceHandler, 0);
             consumer.accept(Component.translatable(fluidStack.getDescriptionId()).append(": " + fluidStack.getAmount() + "mB").withStyle(ChatFormatting.GRAY));

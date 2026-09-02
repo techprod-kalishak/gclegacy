@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "galacticraftlegacy:block/grating"
+    "layer0": "galacticraftlegacy:item/grating"
   }
 }

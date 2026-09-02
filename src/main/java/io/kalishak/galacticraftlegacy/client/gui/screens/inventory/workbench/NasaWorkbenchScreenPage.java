@@ -32,18 +32,18 @@ public interface NasaWorkbenchScreenPage {
     }
 
     default Button createNextButton(int width, int height) {
-        return Button.builder(GalacticraftComponents.NEXT_PAGE, _ -> ClientPacketDistributor.sendToServer(new MoveVehiclePagePayload(getMenu().containerId, getOptionalPage(), Schematics.Picker.NEXT, getMenu().getBlockPos())))
+        return Button.builder(GalacticraftComponents.NEXT_PAGE.asComponent(), _ -> ClientPacketDistributor.sendToServer(new MoveVehiclePagePayload(getMenu().containerId, getOptionalPage(), Schematics.Picker.NEXT, getMenu().getBlockPos())))
                 .pos(width / 2 - 130, height / 2 - 110)
                 .size(40, 20)
-                .createNarration(_ -> (MutableComponent) GalacticraftComponents.NEXT_PAGE)
+                .createNarration(_ -> GalacticraftComponents.NEXT_PAGE.asComponent())
                 .build();
     }
 
     default Button createPreviousButton(int width, int height) {
-        return Button.builder(GalacticraftComponents.PREVIOUS_PAGE, _ -> ClientPacketDistributor.sendToServer(new MoveVehiclePagePayload(getMenu().containerId, getOptionalPage(), Schematics.Picker.PREVIOUS, getMenu().getBlockPos())))
+        return Button.builder(GalacticraftComponents.PREVIOUS_PAGE.asComponent(), _ -> ClientPacketDistributor.sendToServer(new MoveVehiclePagePayload(getMenu().containerId, getOptionalPage(), Schematics.Picker.PREVIOUS, getMenu().getBlockPos())))
                 .pos(width / 2 - 130, height / 2 - 85)
                 .size(40, 20)
-                .createNarration(_ -> (MutableComponent) GalacticraftComponents.PREVIOUS_PAGE)
+                .createNarration(_ -> GalacticraftComponents.PREVIOUS_PAGE.asComponent())
                 .build();
     }
 

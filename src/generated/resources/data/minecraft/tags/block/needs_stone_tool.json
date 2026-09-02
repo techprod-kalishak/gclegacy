@@ -15,6 +15,9 @@
     "galacticraftlegacy:asteroid_rock",
     "galacticraftlegacy:asteroid_rock_slab",
     "galacticraftlegacy:asteroid_rock_stairs",
-    "galacticraftlegacy:asteroid_rock_wall"
+    "galacticraftlegacy:asteroid_rock_wall",
+    "galacticraftlegacy:mars_copper_ore",
+    "galacticraftlegacy:mars_tin_ore",
+    "galacticraftlegacy:mars_iron_ore"
   ]
 }

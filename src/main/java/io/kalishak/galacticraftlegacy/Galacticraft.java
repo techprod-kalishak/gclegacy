@@ -17,6 +17,7 @@ import io.kalishak.galacticraftlegacy.data.GalacticraftData;
 import io.kalishak.galacticraftlegacy.data.datamap.GalacticraftDataMaps;
 import io.kalishak.galacticraftlegacy.galaxies.GalacticraftGalaxies;
 import io.kalishak.galacticraftlegacy.network.GalacticraftNetworkHandler;
+import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.registry.GalacticraftRegistries;
 import io.kalishak.galacticraftlegacy.registry.PackedNodeNetworkTypes;
 import io.kalishak.galacticraftlegacy.server.commands.GalacticraftCommands;
@@ -46,6 +47,9 @@ import io.kalishak.galacticraftlegacy.world.level.material.fluid.GalacticraftFlu
 import io.kalishak.galacticraftlegacy.world.level.material.fluid.GalacticraftFluids;
 import io.kalishak.galacticraftlegacy.world.level.storage.loot.functions.GalacticraftLootFunctions;
 import io.kalishak.galacticraftlegacy.world.level.storage.loot.predicates.GalacticraftLootItemConditions;
+import net.minecraft.world.flag.FeatureFlag;
+import net.minecraft.world.flag.FeatureFlagSet;
+import net.minecraft.world.flag.FeatureFlags;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.fluids.RegisterCauldronFluidContentEvent;
@@ -61,6 +65,7 @@ import org.slf4j.LoggerFactory;
 public class Galacticraft {
     public static final String MODID = "galacticraftlegacy";
     public static final Logger LOGGER = LoggerFactory.getLogger(MODID);
+    public static final FeatureFlag ADVENTURE_MODE = FeatureFlags.REGISTRY.getFlag(Constants.id("adventure_mode"));
 
     public Galacticraft(IEventBus modEventBus, ModContainer modContainer) {
         GalacticraftAttachments.init(modEventBus);

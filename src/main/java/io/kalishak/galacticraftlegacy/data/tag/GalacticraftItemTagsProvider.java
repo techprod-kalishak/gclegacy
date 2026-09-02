@@ -35,6 +35,7 @@ public class GalacticraftItemTagsProvider extends BlockTagCopyingItemTagProvider
     @Override
     protected void addTags(HolderLookup.Provider provider) {
         copy(GalacticraftTags.BlockItems.BASE_STONE_MOON);
+        copy(GalacticraftTags.BlockItems.BASE_STONE_MARS);
         copy(GalacticraftTags.BlockItems.MACHINE);
         copy(GalacticraftTags.BlockItems.MACHINE_BASIC);
         copy(GalacticraftTags.BlockItems.MACHINE_ADVANCED);
@@ -60,14 +61,19 @@ public class GalacticraftItemTagsProvider extends BlockTagCopyingItemTagProvider
                 .addTag(GalacticraftTags.BlockItems.ORES_SILICON.item())
                 .addTag(GalacticraftTags.BlockItems.ORES_CHEESE.item())
                 .addTag(GalacticraftTags.BlockItems.ORES_SAPPHIRE.item())
-                .addOptionalTag(GalacticraftTags.BlockItems.ORES_ALUMINUM.item())
-                .addOptionalTag(GalacticraftTags.BlockItems.ORES_TIN.item());
+                .addTag(GalacticraftTags.BlockItems.ORES_ALUMINUM.item())
+                .addTag(GalacticraftTags.BlockItems.ORES_TIN.item());
         tag(ItemTags.SULFUR_CUBE_ARCHETYPE_SLOW_BOUNCY)
-                .add(GalacticraftBlockItemIds.MOON_DUNGEON_BRICKS.item());
+                .add(GalacticraftBlockItemIds.MOON_DUNGEON_BRICKS.item())
+                .add(GalacticraftBlockItemIds.MARS_DUNGEON_BRICKS.item());
         tag(GalacticraftTags.Items.SULFUR_CUBE_ARCHETYPE_SPACY)
                 .add(GalacticraftBlockItemIds.MOON_TURF.item())
                 .add(GalacticraftBlockItemIds.MOON_DIRT.item())
-                .add(GalacticraftBlockItemIds.MOON_ROCK.item());
+                .add(GalacticraftBlockItemIds.MOON_ROCK.item())
+                .add(GalacticraftBlockItemIds.MARS_REGOLITH.item())
+                .add(GalacticraftBlockItemIds.MARS_FINE_REGOLITH.item())
+                .add(GalacticraftBlockItemIds.MARS_STONE.item())
+                .add(GalacticraftBlockItemIds.MARS_COBBLESTONE.item());
         tag(ItemTags.AXES)
                 .add(GalacticraftItemIds.DESH_AXE)
                 .add(GalacticraftItemIds.STEEL_AXE)

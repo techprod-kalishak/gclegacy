@@ -66,7 +66,7 @@ public record ItemWithDescription(String translationKey, int energyPerTick, Opti
         }
 
         if (!flag.hasShiftDown()) {
-            tooltipAdder.accept(GalacticraftComponents.TOOLTIP_MORE);
+            tooltipAdder.accept(GalacticraftComponents.TOOLTIP_MORE.asComponent());
         } else {
             tooltipAdder.accept(Component.translatable(this.translationKey).withStyle(this.style.orElse(Style.EMPTY.applyFormat(ChatFormatting.GRAY))));
         }

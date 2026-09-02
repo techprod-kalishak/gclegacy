@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "mars_cobblestone_slab",
+  "key": {
+    "#": "galacticraftlegacy:mars_cobblestone"
+  },
+  "pattern": [
+    "###"
+  ],
+  "result": {
+    "count": 6,
+    "id": "galacticraftlegacy:mars_cobblestone_slab"
+  }
+}

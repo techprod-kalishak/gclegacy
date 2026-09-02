@@ -24,12 +24,12 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.TagMatchTest;
 import java.util.List;
 
 public class OverworldFeatures {
-    public static final ResourceKey<ConfiguredFeature<?, ?>> ORE_ALUMINUM = GalacticraftFeatures.key("ore_aluminum");
-    public static final ResourceKey<ConfiguredFeature<?, ?>> ORE_ALUMINUM_SMALL = GalacticraftFeatures.key("ore_aluminum_small");
-    public static final ResourceKey<ConfiguredFeature<?, ?>> ORE_TIN = GalacticraftFeatures.key("ore_tin");
-    public static final ResourceKey<ConfiguredFeature<?, ?>> ORE_TIN_SMALL = GalacticraftFeatures.key("ore_tin_small");
-    public static final ResourceKey<ConfiguredFeature<?, ?>> ORE_SILICON = GalacticraftFeatures.key("ore_silicon");
-    public static final ResourceKey<ConfiguredFeature<?, ?>> ORE_SILICON_BURIED = GalacticraftFeatures.key("ore_silicon_buried");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> ORE_ALUMINUM = GalacticraftFeatures.key("aluminum_ore");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> ORE_ALUMINUM_SMALL = GalacticraftFeatures.key("aluminum_ore_small");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> ORE_TIN = GalacticraftFeatures.key("tin_ore");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> ORE_TIN_SMALL = GalacticraftFeatures.key("tin_ore_small");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> ORE_SILICON = GalacticraftFeatures.key("silicon_ore");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> ORE_SILICON_BURIED = GalacticraftFeatures.key("silicon_ore_buried");
 
     public static final ResourceKey<ConfiguredFeature<?, ?>> CRUDE_OIL_FOUNTAIN = GalacticraftFeatures.key("crude_oil_fountain");
     public static final ResourceKey<ConfiguredFeature<?, ?>> CRUDE_OIL_FOUNTAIN_SMALL = GalacticraftFeatures.key("crude_oil_small_fountain");
@@ -57,37 +57,37 @@ public class OverworldFeatures {
                 cxt,
                 ORE_ALUMINUM,
                 Feature.ORE,
-                new OreConfiguration(aluminumOres, 8)
+                new OreConfiguration(aluminumOres, 6)
         );
         FeatureUtils.register(
                 cxt,
                 ORE_ALUMINUM_SMALL,
                 Feature.ORE,
-                new OreConfiguration(aluminumOres, 5)
+                new OreConfiguration(aluminumOres, 3)
         );
         FeatureUtils.register(
                 cxt,
                 ORE_TIN,
                 Feature.ORE,
-                new OreConfiguration(tinOres, 14)
+                new OreConfiguration(tinOres, 10)
         );
         FeatureUtils.register(
                 cxt,
                 ORE_TIN_SMALL,
                 Feature.ORE,
-                new OreConfiguration(tinOres, 9)
+                new OreConfiguration(tinOres, 4)
         );
         FeatureUtils.register(
                 cxt,
                 ORE_SILICON,
                 Feature.ORE,
-                new OreConfiguration(siliconOres, 6)
+                new OreConfiguration(siliconOres, 5)
         );
         FeatureUtils.register(
                 cxt,
                 ORE_SILICON_BURIED,
                 Feature.ORE,
-                new OreConfiguration(siliconOres, 6, 0.32F)
+                new OreConfiguration(siliconOres, 4, 0.32F)
         );
 
         FeatureUtils.register(

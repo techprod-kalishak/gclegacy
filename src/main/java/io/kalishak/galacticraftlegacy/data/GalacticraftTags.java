@@ -58,6 +58,7 @@ public final class GalacticraftTags {
         public static final TagKey<Block> METEOR_BLOCK_REPLACEABLE = tagKey(Registries.BLOCK, "meteor_block_replaceable");
         public static final TagKey<Block> BASE_STONE_ASTEROID = BlockItems.BASE_STONE_ASTEROID.block();
         public static final TagKey<Block> BASE_STONE_MOON = BlockItems.BASE_STONE_MOON.block();
+        public static final TagKey<Block> BASE_STONE_MARS = BlockItems.BASE_STONE_MARS.block();
         public static final TagKey<Block> BREATHABLE_AIR = tagKey(Registries.BLOCK, "breathable_air");
         public static final TagKey<Block> CRUDE_OIL_POOL_REPLACEABLE = tagKey(Registries.BLOCK, "crude_oil_pool_replaceable");
         public static final TagKey<Block> CONNECTS_TO_TINTED_GLASS_PANES = tagKey(Registries.BLOCK, "connects_to_tinted_glass_panes");
@@ -73,6 +74,7 @@ public final class GalacticraftTags {
         public static final TagKey<Block> NASA_WORKBENCHES = BlockItems.NASA_WORKBENCHES.block();
         public static final TagKey<Block> ORES_ALUMINUM = BlockItems.ORES_ALUMINUM.block();
         public static final TagKey<Block> ORES_CHEESE = BlockItems.ORES_CHEESE.block();
+        public static final TagKey<Block> ORES_DESH = BlockItems.ORES_DESH.block();
         public static final TagKey<Block> ORES_SAPPHIRE = BlockItems.ORES_SAPPHIRE.block();
         public static final TagKey<Block> ORES_SILICON = BlockItems.ORES_SILICON.block();
         public static final TagKey<Block> ORES_TIN = BlockItems.ORES_TIN.block();
@@ -95,6 +97,7 @@ public final class GalacticraftTags {
         public static final BlockItemTagId METEOR_BLOCK_REPLACEABLE = combinedTagKey("block_meteor_replaceable");
         public static final BlockItemTagId BASE_STONE_ASTEROID = combinedTagKey("base_stone_asteroid");
         public static final BlockItemTagId BASE_STONE_MOON = combinedTagKey("base_stone_moon");
+        public static final BlockItemTagId BASE_STONE_MARS = combinedTagKey("base_stone_mars");
         public static final BlockItemTagId BREATHABLE_AIR = combinedTagKey("breathable_air");
         public static final BlockItemTagId CRUDE_OIL_POOL_REPLACEABLE = combinedTagKey("crude_oil_pool_replaceable");
         public static final BlockItemTagId MOON_CARVER_REPLACEABLES = combinedTagKey("moon_carver_replaceables");
@@ -109,6 +112,7 @@ public final class GalacticraftTags {
         public static final BlockItemTagId NASA_WORKBENCHES = combinedTagKey("nasa_workbenches");
         public static final BlockItemTagId ORES_ALUMINUM = combinedTagKey("ores/aluminum");
         public static final BlockItemTagId ORES_CHEESE = combinedTagKey("ores/cheese");
+        public static final BlockItemTagId ORES_DESH = combinedTagKey("ores/desh");
         public static final BlockItemTagId ORES_SAPPHIRE = combinedTagKey("ores/sapphire");
         public static final BlockItemTagId ORES_SILICON = combinedTagKey("ores/silicon");
         public static final BlockItemTagId ORES_TIN = combinedTagKey("ores/tin");

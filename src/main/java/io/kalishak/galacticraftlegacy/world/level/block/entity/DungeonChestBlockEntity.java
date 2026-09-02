@@ -76,6 +76,6 @@ public class DungeonChestBlockEntity extends KeyLockedBlockEntity implements Lid
 
     @Override
     protected Component getDefaultName() {
-        return GalacticraftComponents.BLOCK_DUNGEON_CHEST;
+        return GalacticraftComponents.BLOCK_DUNGEON_CHEST.asComponent();
     }
 }

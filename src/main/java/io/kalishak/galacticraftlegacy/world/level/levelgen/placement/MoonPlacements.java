@@ -26,20 +26,17 @@ public class MoonPlacements {
     public static final ResourceKey<PlacedFeature> FALLEN_METEOR = GalacticraftPlacements.key("moon_fallen_meteor");
     public static final ResourceKey<PlacedFeature> MOON_CRATER = GalacticraftPlacements.key("moon_crater");
     public static final ResourceKey<PlacedFeature> MOON_CRATER_LARGE = GalacticraftPlacements.key("moon_crater_large");
-    public static final ResourceKey<PlacedFeature> ORE_COPPER_UPPER = GalacticraftPlacements.key("ore_moon_copper_upper");
-    public static final ResourceKey<PlacedFeature> ORE_COPPER_LOWER = GalacticraftPlacements.key("ore_moon_copper_lower");
-    public static final ResourceKey<PlacedFeature> ORE_TIN_UPPER = GalacticraftPlacements.key("ore_moon_tin_upper");
-    public static final ResourceKey<PlacedFeature> ORE_TIN_MIDDLE = GalacticraftPlacements.key("ore_moon_tin_middle");
-    public static final ResourceKey<PlacedFeature> ORE_TIN_LOWER = GalacticraftPlacements.key("ore_moon_tin_lower");
-    public static final ResourceKey<PlacedFeature> ORE_CHEESE = GalacticraftPlacements.key("ore_moon_cheese");
-    public static final ResourceKey<PlacedFeature> ORE_SAPPHIRE = GalacticraftPlacements.key("ore_moon_sapphire");
+    public static final ResourceKey<PlacedFeature> ORE_COPPER = GalacticraftPlacements.key("moon_copper_ore");
+    public static final ResourceKey<PlacedFeature> ORE_TIN = GalacticraftPlacements.key("moon_tin_ore");
+    public static final ResourceKey<PlacedFeature> ORE_CHEESE = GalacticraftPlacements.key("moon_cheese_ore");
+    public static final ResourceKey<PlacedFeature> ORE_SAPPHIRE = GalacticraftPlacements.key("moon_sapphire_ore");
+    public static final ResourceKey<PlacedFeature> DIRT_PATCH = GalacticraftPlacements.key("moon_dirt_patch");
 
     static void bootstrap(BootstrapContext<PlacedFeature> cxt, HolderGetter<ConfiguredFeature<?, ?>> featureGetter) {
         Holder<ConfiguredFeature<?, ?>> fallenMeteor = featureGetter.getOrThrow(MoonFeatures.FALLEN_METEOR);
         Holder<ConfiguredFeature<?, ?>> crater = featureGetter.getOrThrow(MoonFeatures.MOON_CRATER);
         Holder<ConfiguredFeature<?, ?>> craterLarge = featureGetter.getOrThrow(MoonFeatures.MOON_CRATER_LARGE);
         Holder<ConfiguredFeature<?, ?>> copperOre = featureGetter.getOrThrow(MoonFeatures.ORE_MOON_COPPER);
-        Holder<ConfiguredFeature<?, ?>> copperOreSmall = featureGetter.getOrThrow(MoonFeatures.ORE_MOON_COPPER_SMALL);
         Holder<ConfiguredFeature<?, ?>> tinOre = featureGetter.getOrThrow(MoonFeatures.ORE_MOON_TIN);
         Holder<ConfiguredFeature<?, ?>> cheeseOre = featureGetter.getOrThrow(MoonFeatures.ORE_MOON_CHEESE);
         Holder<ConfiguredFeature<?, ?>> sapphireOre = featureGetter.getOrThrow(MoonFeatures.ORE_MOON_SAPPHIRE);
@@ -80,61 +77,25 @@ public class MoonPlacements {
 
         PlacementUtils.register(
                 cxt,
-                ORE_COPPER_UPPER,
+                ORE_COPPER,
                 copperOre,
                 GalacticraftPlacements.commonOrePlacement(
-                        20,
-                        HeightRangePlacement.triangle(
-                                VerticalAnchor.absolute(80),
-                                VerticalAnchor.absolute(120)
+                        26,
+                        HeightRangePlacement.uniform(
+                                VerticalAnchor.bottom(),
+                                VerticalAnchor.aboveBottom(60)
                         )
                 )
         );
         PlacementUtils.register(
                 cxt,
-                ORE_COPPER_LOWER,
-                copperOreSmall,
-                GalacticraftPlacements.commonOrePlacement(
-                        10,
-                        HeightRangePlacement.triangle(
-                                VerticalAnchor.absolute(10),
-                                VerticalAnchor.absolute(70)
-                    )
-                )
-        );
-        PlacementUtils.register(
-                cxt,
-                ORE_TIN_UPPER,
+                ORE_TIN,
                 tinOre,
                 GalacticraftPlacements.commonOrePlacement(
-                        16,
-                        HeightRangePlacement.triangle(
-                                VerticalAnchor.absolute(80),
-                                VerticalAnchor.absolute(120)
-                        )
-                )
-        );
-        PlacementUtils.register(
-                cxt,
-                ORE_TIN_MIDDLE,
-                tinOre,
-                GalacticraftPlacements.commonOrePlacement(
-                        8,
-                        HeightRangePlacement.triangle(
-                                VerticalAnchor.absolute(30),
-                                VerticalAnchor.absolute(90)
-                        )
-                )
-        );
-        PlacementUtils.register(
-                cxt,
-                ORE_TIN_LOWER,
-                tinOre,
-                GalacticraftPlacements.commonOrePlacement(
-                        4,
-                        HeightRangePlacement.triangle(
-                                VerticalAnchor.absolute(10),
-                                VerticalAnchor.absolute(50)
+                        23,
+                        HeightRangePlacement.uniform(
+                                VerticalAnchor.bottom(),
+                                VerticalAnchor.absolute(60)
                         )
                 )
         );
@@ -143,10 +104,10 @@ public class MoonPlacements {
                 ORE_CHEESE,
                 cheeseOre,
                 GalacticraftPlacements.commonOrePlacement(
-                        10,
-                        HeightRangePlacement.triangle(
+                        14,
+                        HeightRangePlacement.uniform(
                                 VerticalAnchor.bottom(),
-                                VerticalAnchor.absolute(120)
+                                VerticalAnchor.absolute(85)
                         )
                 )
         );
@@ -154,12 +115,11 @@ public class MoonPlacements {
                 cxt,
                 ORE_SAPPHIRE,
                 sapphireOre,
-                GalacticraftPlacements.commonOrePlacement(
-                        10,
-                        HeightRangePlacement.triangle(
-                                VerticalAnchor.aboveBottom(10),
-                                VerticalAnchor.absolute(90)
-                        )
+                List.of(
+                        RarityFilter.onAverageOnceEvery(6),
+                        BiomeFilter.biome(),
+                        InSquarePlacement.spread(),
+                        PlacementUtils.HEIGHTMAP
                 )
         );
     }

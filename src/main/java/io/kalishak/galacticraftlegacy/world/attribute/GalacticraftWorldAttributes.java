@@ -22,7 +22,7 @@ public class GalacticraftWorldAttributes {
     public static final BackgroundMusic MUSIC_SPACE = new BackgroundMusic(new Music(GalacticraftSounds.MUSIC_SPACE_RACE, 88500, 265500, false));
 
     public static final BedRule BED_RULE_CRYO_CHAMBER = new BedRule(
-            BedRule.Rule.NEVER, BedRule.Rule.NEVER, false, Optional.of(GalacticraftComponents.BED_RULE_CRYOGENIC_CHAMBER)
+            BedRule.Rule.NEVER, BedRule.Rule.NEVER, false, Optional.of(GalacticraftComponents.BED_RULE_CRYOGENIC_CHAMBER.asComponent())
     );
 
     private static final AmbientMoodSettings AMBIENT_MOOD_SPACE = new AmbientMoodSettings(GalacticraftSounds.AMBIENT_SPACE, 12000, 8, 2.0F);

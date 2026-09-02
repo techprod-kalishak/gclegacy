@@ -52,7 +52,7 @@ public class OverworldPlacements {
                 ORE_ALUMINUM_UPPER,
                 aluminumOre,
                 GalacticraftPlacements.commonOrePlacement(
-                        40,
+                        32,
                         HeightRangePlacement.triangle(
                                 VerticalAnchor.absolute(80),
                                 VerticalAnchor.absolute(225)
@@ -64,7 +64,7 @@ public class OverworldPlacements {
                 ORE_ALUMINUM_LOWER,
                 aluminumOreSmall,
                 GalacticraftPlacements.commonOrePlacement(
-                        10,
+                        8,
                         HeightRangePlacement.triangle(
                                 VerticalAnchor.absolute(-20),
                                 VerticalAnchor.absolute(68)
@@ -76,7 +76,7 @@ public class OverworldPlacements {
                 ORE_TIN_UPPER,
                 tinOre,
                 GalacticraftPlacements.commonOrePlacement(
-                        16,
+                        14,
                         HeightRangePlacement.triangle(
                                 VerticalAnchor.absolute(100),
                                 VerticalAnchor.absolute(134)
@@ -88,7 +88,7 @@ public class OverworldPlacements {
                 ORE_TIN_MIDDLE,
                 tinOreSmall,
                 GalacticraftPlacements.commonOrePlacement(
-                        12,
+                        6,
                         HeightRangePlacement.triangle(
                                 VerticalAnchor.absolute(30),
                                 VerticalAnchor.absolute(120)
@@ -100,7 +100,7 @@ public class OverworldPlacements {
                 ORE_TIN_LOWER,
                 tinOreSmall,
                 GalacticraftPlacements.commonOrePlacement(
-                        20,
+                        10,
                         HeightRangePlacement.triangle(
                                 VerticalAnchor.absolute(-16),
                                 VerticalAnchor.absolute(90)
@@ -112,7 +112,7 @@ public class OverworldPlacements {
                 ORE_SILICON,
                 siliconOre,
                 GalacticraftPlacements.commonOrePlacement(
-                        24,
+                        18,
                         HeightRangePlacement.triangle(
                                 VerticalAnchor.bottom(),
                                 VerticalAnchor.absolute(90)
@@ -124,7 +124,7 @@ public class OverworldPlacements {
                 ORE_SILICON_EXTRA,
                 siliconOreBuried,
                 GalacticraftPlacements.commonOrePlacement(
-                        12,
+                        8,
                         HeightRangePlacement.triangle(
                                 VerticalAnchor.bottom(),
                                 VerticalAnchor.absolute(5)
@@ -136,25 +136,25 @@ public class OverworldPlacements {
                 cxt,
                 CRUDE_OIL_FOUNTAIN,
                 crudeOilFountain,
-                crudeOil(40, HeightmapPlacement.onHeightmap(Heightmap.Types.OCEAN_FLOOR))
+                crudeOil(20, HeightmapPlacement.onHeightmap(Heightmap.Types.OCEAN_FLOOR))
         );
         PlacementUtils.register(
                 cxt,
                 CRUDE_OIL_FOUNTAIN_SMALL,
                 crudeOilFountainSmall,
-                crudeOil(60, HeightmapPlacement.onHeightmap(Heightmap.Types.OCEAN_FLOOR))
+                crudeOil(40, HeightmapPlacement.onHeightmap(Heightmap.Types.OCEAN_FLOOR))
         );
         PlacementUtils.register(
                 cxt,
                 ORE_CRUDE_OIL,
                 crudeOil,
-                crudeOil(60, HeightmapPlacement.onHeightmap(Heightmap.Types.MOTION_BLOCKING))
+                crudeOil(40, HeightmapPlacement.onHeightmap(Heightmap.Types.MOTION_BLOCKING))
         );
         PlacementUtils.register(
                 cxt,
                 ORE_CRUDE_OIL_MAJOR,
                 crudeOilMajor,
-                crudeOil(70, HeightmapPlacement.onHeightmap(Heightmap.Types.MOTION_BLOCKING))
+                crudeOil(50, HeightmapPlacement.onHeightmap(Heightmap.Types.MOTION_BLOCKING))
         );
     }
 

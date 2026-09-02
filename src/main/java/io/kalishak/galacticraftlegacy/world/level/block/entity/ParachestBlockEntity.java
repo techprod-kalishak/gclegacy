@@ -8,6 +8,7 @@
 package io.kalishak.galacticraftlegacy.world.level.block.entity;
 
 import io.kalishak.galacticraftlegacy.references.GalacticraftComponents;
+import io.kalishak.galacticraftlegacy.world.level.block.GalacticraftBlocks;
 import io.kalishak.galacticraftlegacy.world.score.race.SpaceRaceHooks;
 import io.kalishak.galacticraftlegacy.world.score.race.SpaceRaceScoreboard;
 import io.kalishak.galacticraftlegacy.world.score.race.SpaceRaceTeam;
@@ -128,7 +129,7 @@ public class ParachestBlockEntity extends BaseItemStorageBlockEntity implements 
 
     @Override
     protected Component getDefaultName() {
-        return GalacticraftComponents.BLOCK_PARACHEST;
+        return GalacticraftBlocks.PARACHEST.get().getName();
     }
 
     @Override

@@ -22,13 +22,10 @@
     [],
     [],
     [
-      "galacticraftlegacy:ore_moon_copper_upper",
-      "galacticraftlegacy:ore_moon_copper_lower",
-      "galacticraftlegacy:ore_moon_cheese",
-      "galacticraftlegacy:ore_moon_sapphire",
-      "galacticraftlegacy:ore_moon_tin_upper",
-      "galacticraftlegacy:ore_moon_tin_middle",
-      "galacticraftlegacy:ore_moon_tin_lower"
+      "galacticraftlegacy:moon_copper_ore",
+      "galacticraftlegacy:moon_cheese_ore",
+      "galacticraftlegacy:moon_sapphire_ore",
+      "galacticraftlegacy:moon_tin_ore"
     ],
     [],
     [],

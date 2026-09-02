@@ -46,7 +46,7 @@ public final class GalacticraftCreativeModeTabs {
             CreativeModeTab.builder()
                     .icon(GalacticraftItems.OXYGEN_MASK::toStack)
                     .displayItems(GalacticraftCreativeModeTabs::buildItems)
-                    .title(GalacticraftComponents.CREATIVE_MODE_TAB_ITEMS)
+                    .title(GalacticraftComponents.CREATIVE_MODE_TAB_ITEMS.asComponent())
                     ::build
     );
 
@@ -55,7 +55,7 @@ public final class GalacticraftCreativeModeTabs {
             CreativeModeTab.builder()
                     .icon(GalacticraftItems.COAL_GENERATOR::toStack)
                     .displayItems(GalacticraftCreativeModeTabs::buildBlocks)
-                    .title(GalacticraftComponents.CREATIVE_MODE_TAB_BLOCKS)
+                    .title(GalacticraftComponents.CREATIVE_MODE_TAB_BLOCKS.asComponent())
                     ::build
     );
 
@@ -239,6 +239,9 @@ public final class GalacticraftCreativeModeTabs {
         output.accept(GalacticraftItems.MOON_CHEESE_ORE);
         output.accept(GalacticraftItems.MOON_DIRT);
         output.accept(GalacticraftItems.MOON_ROCK);
+        output.accept(GalacticraftItems.MOON_ROCK_SLAB);
+        output.accept(GalacticraftItems.MOON_ROCK_STAIRS);
+        output.accept(GalacticraftItems.MOON_ROCK_WALL);
         output.accept(GalacticraftItems.MOON_TURF);
         output.accept(GalacticraftItems.MOON_SAPPHIRE_ORE);
         output.accept(GalacticraftItems.MOON_BRICKS);
@@ -247,11 +250,21 @@ public final class GalacticraftCreativeModeTabs {
         output.accept(GalacticraftItems.MOON_BRICK_WALL);
         output.accept(GalacticraftItems.CHEESE);
         output.accept(GalacticraftItems.GRATING);
+        output.accept(GalacticraftItems.MARS_COPPER_ORE);
+        output.accept(GalacticraftItems.MARS_TIN_ORE);
+        output.accept(GalacticraftItems.MARS_DESH_ORE);
+        output.accept(GalacticraftItems.MARS_IRON_ORE);
+        output.accept(GalacticraftItems.MARS_REGOLITH);
+        output.accept(GalacticraftItems.MARS_FINE_REGOLITH);
         output.accept(GalacticraftItems.MARS_STONE);
         output.accept(GalacticraftItems.MARS_STONE_SLAB);
         output.accept(GalacticraftItems.MARS_STONE_STAIRS);
         output.accept(GalacticraftItems.MARS_STONE_PRESSURE_PLATE);
         output.accept(GalacticraftItems.MARS_STONE_BUTTON);
+        output.accept(GalacticraftItems.MARS_COBBLESTONE);
+        output.accept(GalacticraftItems.MARS_COBBLESTONE_SLAB);
+        output.accept(GalacticraftItems.MARS_COBBLESTONE_STAIRS);
+        output.accept(GalacticraftItems.MARS_COBBLESTONE_WALL);
         output.accept(GalacticraftItems.MARS_BRICKS);
         output.accept(GalacticraftItems.MARS_BRICK_SLAB);
         output.accept(GalacticraftItems.MARS_BRICK_STAIRS);
@@ -261,7 +274,6 @@ public final class GalacticraftCreativeModeTabs {
         output.accept(GalacticraftItems.ASTEROID_ROCK_STAIRS);
         output.accept(GalacticraftItems.ASTEROID_ROCK_WALL);
         output.accept(GalacticraftItems.ASTEROID_ALUMINUM_ORE);
-
         output.accept(GalacticraftItems.UNLIT_TORCH, CreativeModeTab.TabVisibility.SEARCH_TAB_ONLY);
         output.accept(GalacticraftItems.UNLIT_COPPER_TORCH, CreativeModeTab.TabVisibility.SEARCH_TAB_ONLY);
         output.accept(GalacticraftItems.UNLIT_LANTERN, CreativeModeTab.TabVisibility.SEARCH_TAB_ONLY);

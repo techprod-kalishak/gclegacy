@@ -4,13 +4,25 @@
     {
       "conditions": [
         {
-          "condition": "minecraft:survives_explosion"
+          "condition": "minecraft:match_tool",
+          "predicate": {
+            "predicates": {
+              "minecraft:enchantments": [
+                {
+                  "enchantments": "minecraft:silk_touch",
+                  "levels": {
+                    "min": 1
+                  }
+                }
+              ]
+            }
+          }
         }
       ],
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "galacticraftlegacy:mars_stone"
+          "name": "galacticraftlegacy:mars_cobblestone"
         }
       ],
       "rolls": 1.0

@@ -13,6 +13,7 @@ credits="Team Galacticraft"
 authors="${mod_authors}"
 description='''${mod_description}'''
 
+featureFlags="META-INF/feature_flags.json"
 enumExtensions="META-INF/enumextensions.json"
 
 [[mixins]]

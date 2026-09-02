@@ -134,11 +134,7 @@ public final class GalacticraftBlockItemIds {
     public static final BlockItemId MARS_COBBLESTONE_STAIRS = create("mars_cobblestone_stairs");
     public static final BlockItemId MARS_COBBLESTONE_WALL = create("mars_cobblestone_wall");
     public static final BlockItemId MARS_FINE_REGOLITH = create("mars_fine_regolith");
-    public static final BlockItemId MARS_FINE_REGOLITH_SLAB = create("mars_fine_regolith_slab");
-    public static final BlockItemId MARS_FINE_REGOLITH_STAIRS = create("mars_fine_regolith_stairs");
-    public static final BlockItemId MARS_REGOLITH = create("mars_fine_regolith");
-    public static final BlockItemId MARS_REGOLITH_SLAB = create("mars_regolith_slab");
-    public static final BlockItemId MARS_REGOLITH_STAIRS = create("mars_regolith_stairs");
+    public static final BlockItemId MARS_REGOLITH = create("mars_regolith");
     public static final BlockItemId MARS_DUNGEON_BRICKS = create("mars_dungeon_bricks");
     public static final BlockItemId MARS_DUNGEON_BRICK_SLAB = create("mars_dungeon_brick_slab");
     public static final BlockItemId MARS_DUNGEON_BRICK_STAIRS = create("mars_dungeon_brick_stairs");

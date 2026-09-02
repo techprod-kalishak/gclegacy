@@ -38,8 +38,8 @@ public class GalacticraftAdvancementProvider {
         AdvancementHolder root = Advancement.Builder.advancement()
                 .display(
                         GalacticraftItems.ADVANCED_WAFER,
-                        GalacticraftComponents.ADVANCEMENT_GC,
-                        GalacticraftComponents.ADVANCEMENT_GC_DESC,
+                        GalacticraftComponents.ADVANCEMENT_GC.asComponent(),
+                        GalacticraftComponents.ADVANCEMENT_GC_DESC.asComponent(),
                         Constants.id("gui/advancements/backgrounds/space"),
                         AdvancementType.TASK,
                         false,
@@ -51,8 +51,8 @@ public class GalacticraftAdvancementProvider {
         AdvancementHolder coalPower = Advancement.Builder.advancement()
                 .display(
                         GalacticraftItems.COAL_GENERATOR,
-                        GalacticraftComponents.ADVANCEMENT_COAL_POWER,
-                        GalacticraftComponents.ADVANCEMENT_COAL_POWER_DESC,
+                        GalacticraftComponents.ADVANCEMENT_COAL_POWER.asComponent(),
+                        GalacticraftComponents.ADVANCEMENT_COAL_POWER_DESC.asComponent(),
                         null,
                         AdvancementType.TASK,
                         true,
@@ -65,8 +65,8 @@ public class GalacticraftAdvancementProvider {
         AdvancementHolder fabricated = Advancement.Builder.advancement()
                 .display(
                         GalacticraftItems.CIRCUIT_FABRICATOR,
-                        GalacticraftComponents.ADVANCEMENT_FABRICATED,
-                        GalacticraftComponents.ADVANCEMENT_FABRICATED_DESC,
+                        GalacticraftComponents.ADVANCEMENT_FABRICATED.asComponent(),
+                        GalacticraftComponents.ADVANCEMENT_FABRICATED_DESC.asComponent(),
                         null,
                         AdvancementType.TASK,
                         true,
@@ -79,8 +79,8 @@ public class GalacticraftAdvancementProvider {
         AdvancementHolder wafers = Advancement.Builder.advancement()
                 .display(
                         GalacticraftItems.BASIC_WAFER,
-                        GalacticraftComponents.ADVANCEMENT_WAFERS,
-                        GalacticraftComponents.ADVANCEMENT_WAFERS_DESC,
+                        GalacticraftComponents.ADVANCEMENT_WAFERS.asComponent(),
+                        GalacticraftComponents.ADVANCEMENT_WAFERS_DESC.asComponent(),
                         null,
                         AdvancementType.TASK,
                         true,
@@ -93,8 +93,8 @@ public class GalacticraftAdvancementProvider {
         AdvancementHolder goldenWafers = Advancement.Builder.advancement()
                 .display(
                         GalacticraftItems.ADVANCED_WAFER,
-                        GalacticraftComponents.ADVANCEMENT_GOLDEN_WAFERS,
-                        GalacticraftComponents.ADVANCEMENT_GOLDEN_WAFERS_DESC,
+                        GalacticraftComponents.ADVANCEMENT_GOLDEN_WAFERS.asComponent(),
+                        GalacticraftComponents.ADVANCEMENT_GOLDEN_WAFERS_DESC.asComponent(),
                         null,
                         AdvancementType.TASK,
                         true,
@@ -107,8 +107,8 @@ public class GalacticraftAdvancementProvider {
         AdvancementHolder compressed = Advancement.Builder.advancement()
                 .display(
                         GalacticraftItems.COMPRESSOR,
-                        GalacticraftComponents.ADVANCEMENT_COMPRESSED,
-                        GalacticraftComponents.ADVANCEMENT_COMPRESSED_DESC,
+                        GalacticraftComponents.ADVANCEMENT_COMPRESSED.asComponent(),
+                        GalacticraftComponents.ADVANCEMENT_COMPRESSED_DESC.asComponent(),
                         null,
                         AdvancementType.TASK,
                         true,

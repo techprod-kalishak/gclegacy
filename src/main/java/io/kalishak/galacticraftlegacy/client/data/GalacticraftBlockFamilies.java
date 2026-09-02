@@ -14,6 +14,14 @@ import java.util.stream.Stream;
 
 public class GalacticraftBlockFamilies {
 
+    public static final BlockFamily MOON_ROCK = new BlockFamily.Builder(GalacticraftBlocks.MOON_ROCK.get())
+            .stairs(GalacticraftBlocks.MOON_ROCK_STAIRS.get())
+            .slab(GalacticraftBlocks.MOON_ROCK_SLAB.get())
+            .wall(GalacticraftBlocks.MOON_ROCK_WALL.get())
+            .generateStonecutterRecipe()
+            .recipeUnlockedBy("has_moon_rock")
+            .recipeGroupPrefix("moon_rock")
+            .getFamily();
     public static final BlockFamily ASTEROID_ROCKS = new BlockFamily.Builder(GalacticraftBlocks.ASTEROID_ROCK.get())
             .stairs(GalacticraftBlocks.ASTEROID_ROCK_STAIRS.get())
             .slab(GalacticraftBlocks.ASTEROID_ROCK_SLAB.get())
@@ -30,6 +38,14 @@ public class GalacticraftBlockFamilies {
             .generateStonecutterRecipe()
             .recipeUnlockedBy("has_mars_stone")
             .recipeGroupPrefix("mars_stone")
+            .getFamily();
+    public static final BlockFamily MARS_COBBLESTONE = new BlockFamily.Builder(GalacticraftBlocks.MARS_COBBLESTONE.get())
+            .stairs(GalacticraftBlocks.MARS_COBBLESTONE_STAIRS.get())
+            .slab(GalacticraftBlocks.MARS_COBBLESTONE_SLAB.get())
+            .wall(GalacticraftBlocks.MARS_COBBLESTONE_WALL.get())
+            .generateStonecutterRecipe()
+            .recipeUnlockedBy("has_mars_cobblestone")
+            .recipeGroupPrefix("mars_cobblestone")
             .getFamily();
     public static final BlockFamily MOON_BRICKS = new BlockFamily.Builder(GalacticraftBlocks.MOON_BRICKS.get())
             .stairs(GalacticraftBlocks.MOON_BRICK_STAIRS.get())
@@ -63,6 +79,6 @@ public class GalacticraftBlockFamilies {
             .getFamily();
 
     public static Stream<BlockFamily> getFamilies() {
-        return Stream.of(MOON_BRICKS, MARS_STONE, MARS_BRICKS, ASTEROID_ROCKS, TIN_DECORATION, TIN_WALL_DECORATION);
+        return Stream.of(MOON_ROCK, MOON_BRICKS, MARS_STONE, MARS_COBBLESTONE, MARS_BRICKS, ASTEROID_ROCKS, TIN_DECORATION, TIN_WALL_DECORATION);
     }
 }

@@ -50,7 +50,7 @@ public class CoalGeneratorScreen extends AbstractContainerScreen<CoalGeneratorMe
         int j = this.topPos;
 
         boolean warmingUp = this.menu.getHeatLevel() <= 0 || this.menu.getHeatLevel() < CoalGeneratorBlockEntity.MIN_ENERGY_PER_HEAT;
-        Component generate = warmingUp ? GalacticraftComponents.COAL_GENERATOR_NOT_GENERATING : GalacticraftComponents.COAL_GENERATOR_GENERATING;
+        Component generate = warmingUp ? GalacticraftComponents.COAL_GENERATOR_NOT_GENERATING.asComponent() : GalacticraftComponents.COAL_GENERATOR_GENERATING.asComponent();
         Component status;
 
         guiGraphics.text(
@@ -63,7 +63,7 @@ public class CoalGeneratorScreen extends AbstractContainerScreen<CoalGeneratorMe
         );
 
         if (warmingUp) {
-            status = GalacticraftComponents.COAL_GENERATOR_HEAT_LEVEL.append(Mth.floor(this.menu.getHeatLevel() / CoalGeneratorBlockEntity.MIN_ENERGY_PER_HEAT * 100) + "%");
+            status = GalacticraftComponents.COAL_GENERATOR_HEAT_LEVEL.asComponent().append(Mth.floor(this.menu.getHeatLevel() / CoalGeneratorBlockEntity.MIN_ENERGY_PER_HEAT * 100) + "%");
 
             guiGraphics.text(
                     this.font,

@@ -47,14 +47,16 @@ public class GalacticraftBlockLootSubProvider extends BlockLootSubProvider {
     @Override
     protected void generate() {
         List<BlockFamily> families = List.of(
+                GalacticraftBlockFamilies.MOON_ROCK,
                 GalacticraftBlockFamilies.ASTEROID_ROCKS,
                 GalacticraftBlockFamilies.MOON_BRICKS,
+                GalacticraftBlockFamilies.MARS_COBBLESTONE,
                 GalacticraftBlockFamilies.TIN_DECORATION,
                 GalacticraftBlockFamilies.TIN_WALL_DECORATION,
                 GalacticraftBlockFamilies.MARS_BRICKS
         );
         families.forEach(this::generateForBlockFamily);
-        generateForBlockFamily(GalacticraftBlockFamilies.MARS_STONE, this::createSingleItemTable); //block -> createSilkTouchOnlyTable(GalacticraftBlocks.MARS_COBBLESTONE)
+        generateForBlockFamily(GalacticraftBlockFamilies.MARS_STONE, _ -> createSilkTouchOnlyTable(GalacticraftBlocks.MARS_COBBLESTONE));
 
         dropSelf(GalacticraftBlocks.GRATING.get());
         add(GalacticraftBlocks.CHEESE.get(), noDrop());
@@ -80,6 +82,8 @@ public class GalacticraftBlockLootSubProvider extends BlockLootSubProvider {
         dropSelf(GalacticraftBlocks.RAW_TIN_BLOCK.get());
         dropSelf(GalacticraftBlocks.TIN_BLOCK.get());
         dropSelf(GalacticraftBlocks.RAW_SILICON_BLOCK.get());
+        dropSelf(GalacticraftBlocks.MARS_FINE_REGOLITH.get());
+        dropSelf(GalacticraftBlocks.MARS_REGOLITH.get());
         dropSelf(GalacticraftBlocks.MOON_DIRT.get());
         dropSelf(GalacticraftBlocks.MOON_TURF.get());
         dropSelf(GalacticraftBlocks.MOON_ROCK.get());
@@ -104,6 +108,10 @@ public class GalacticraftBlockLootSubProvider extends BlockLootSubProvider {
         dropSelf(GalacticraftBlocks.FUELING_PAD.get());
         GalacticraftBlocks.COLORED_TINTED_GLASS_PANE.forEach(block -> add(block.get(), this::createSilkTouchOnlyTable));
         add(GalacticraftBlocks.TINTED_GLASS_PANE.get(), this::createSilkTouchOnlyTable);
+        add(GalacticraftBlocks.MARS_COPPER_ORE.get(), this::createCopperOreDrops);
+        add(GalacticraftBlocks.MARS_TIN_ORE.get(), block -> createOreDrop(block, GalacticraftItems.RAW_TIN.get()));
+        add(GalacticraftBlocks.MARS_DESH_ORE.get(), block -> createOreDrop(block, GalacticraftItems.RAW_DESH.get()));
+        add(GalacticraftBlocks.MARS_IRON_ORE.get(), block -> createOreDrop(block, Items.RAW_IRON));
     }
 
     @Override

@@ -2,6 +2,10 @@
   "values": [
     "galacticraftlegacy:moon_turf",
     "galacticraftlegacy:moon_dirt",
-    "galacticraftlegacy:moon_rock"
+    "galacticraftlegacy:moon_rock",
+    "galacticraftlegacy:mars_regolith",
+    "galacticraftlegacy:mars_fine_regolith",
+    "galacticraftlegacy:mars_stone",
+    "galacticraftlegacy:mars_cobblestone"
   ]
 }

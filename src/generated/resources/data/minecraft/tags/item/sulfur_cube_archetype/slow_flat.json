@@ -8,13 +8,7 @@
     "#galacticraftlegacy:ores/silicon",
     "#galacticraftlegacy:ores/cheese",
     "#galacticraftlegacy:ores/sapphire",
-    {
-      "id": "#galacticraftlegacy:ores/aluminum",
-      "required": false
-    },
-    {
-      "id": "#galacticraftlegacy:ores/tin",
-      "required": false
-    }
+    "#galacticraftlegacy:ores/aluminum",
+    "#galacticraftlegacy:ores/tin"
   ]
 }

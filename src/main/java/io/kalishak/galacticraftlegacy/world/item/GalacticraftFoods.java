@@ -23,35 +23,35 @@ public class GalacticraftFoods {
     public static final FoodProperties CHEESE = new FoodProperties.Builder().nutrition(2).saturationModifier(0.2F).build();
 
     public static final CannedFood DEHYDRATED_APPLE = CannedFood.builder()
-            .name(GalacticraftComponents.ITEM_DEHYDRATED_APPLE)
+            .name(GalacticraftComponents.ITEM_DEHYDRATED_APPLE.asComponent())
             .food(builder -> builder.nutrition(8).saturationModifier(0.3F))
             .consumable(builder -> builder.animation(ItemUseAnimation.TOOT_HORN))
             .build();
     public static final CannedFood DEHYDRATED_CARROT = CannedFood.builder()
-            .name(GalacticraftComponents.ITEM_DEHYDRATED_CARROT)
+            .name(GalacticraftComponents.ITEM_DEHYDRATED_CARROT.asComponent())
             .food(builder -> builder.nutrition(8).saturationModifier(0.6F))
             .build();
     public static final CannedFood DEHYDRATED_MELON = CannedFood.builder()
-            .name(GalacticraftComponents.ITEM_DEHYDRATED_MELON)
+            .name(GalacticraftComponents.ITEM_DEHYDRATED_MELON.asComponent())
             .food(builder -> builder.nutrition(4).saturationModifier(0.4F))
             .additionalRemainder(new ItemStackTemplate(Items.MELON_SEEDS))
             .build();
     public static final CannedFood DEHYDRATED_PUMPKIN = CannedFood.builder()
-            .name(GalacticraftComponents.ITEM_DEHYDRATED_PUMPKIN)
+            .name(GalacticraftComponents.ITEM_DEHYDRATED_PUMPKIN.asComponent())
             .food(builder -> builder.nutrition(4).saturationModifier(0.4F))
             .additionalRemainder(new ItemStackTemplate(Items.PUMPKIN_SEEDS))
             .build();
     public static final CannedFood DEHYDRATED_BEET = CannedFood.builder()
-            .name(GalacticraftComponents.ITEM_DEHYDRATED_BEETROOT)
+            .name(GalacticraftComponents.ITEM_DEHYDRATED_BEETROOT.asComponent())
             .food(builder -> builder.nutrition(2).saturationModifier(0.3F))
             .additionalRemainder(new ItemStackTemplate(Items.BEETROOT_SEEDS))
             .build();
     public static final CannedFood DEHYDRATED_POTATO = CannedFood.builder()
-            .name(GalacticraftComponents.ITEM_DEHYDRATED_POTATO)
+            .name(GalacticraftComponents.ITEM_DEHYDRATED_POTATO.asComponent())
             .food(builder -> builder.nutrition(2).saturationModifier(0.3F))
             .build();
     public static final CannedFood CANNED_BEEF = CannedFood.builder()
-            .name(GalacticraftComponents.ITEM_CANNED_BEEF)
+            .name(GalacticraftComponents.ITEM_CANNED_BEEF.asComponent())
             .food(builder -> builder.nutrition(8).saturationModifier(0.6F))
             .build();
 }

@@ -2,6 +2,9 @@
   "values": [
     "#galacticraftlegacy:machine",
     "galacticraftlegacy:moon_rock",
+    "galacticraftlegacy:moon_rock_slab",
+    "galacticraftlegacy:moon_rock_stairs",
+    "galacticraftlegacy:moon_rock_wall",
     "galacticraftlegacy:moon_copper_ore",
     "galacticraftlegacy:moon_cheese_ore",
     "galacticraftlegacy:moon_tin_ore",
@@ -32,9 +35,17 @@
     "galacticraftlegacy:mars_stone_stairs",
     "galacticraftlegacy:mars_stone_pressure_plate",
     "galacticraftlegacy:mars_stone_button",
+    "galacticraftlegacy:mars_cobblestone",
+    "galacticraftlegacy:mars_cobblestone_slab",
+    "galacticraftlegacy:mars_cobblestone_stairs",
+    "galacticraftlegacy:mars_cobblestone_wall",
     "galacticraftlegacy:mars_dungeon_bricks",
     "galacticraftlegacy:mars_dungeon_brick_slab",
     "galacticraftlegacy:mars_dungeon_brick_stairs",
-    "galacticraftlegacy:mars_dungeon_brick_wall"
+    "galacticraftlegacy:mars_dungeon_brick_wall",
+    "galacticraftlegacy:mars_copper_ore",
+    "galacticraftlegacy:mars_tin_ore",
+    "galacticraftlegacy:mars_desh_ore",
+    "galacticraftlegacy:mars_iron_ore"
   ]
 }

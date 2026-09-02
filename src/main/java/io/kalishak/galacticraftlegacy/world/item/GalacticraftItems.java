@@ -584,6 +584,9 @@ public final class GalacticraftItems {
     public static final DeferredItem<BlockItem> MOON_DIRT = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.MOON_DIRT);
     public static final DeferredItem<BlockItem> MOON_TURF = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.MOON_TURF);
     public static final DeferredItem<BlockItem> MOON_ROCK = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.MOON_ROCK);
+    public static final DeferredItem<BlockItem> MOON_ROCK_SLAB = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.MOON_ROCK_SLAB);
+    public static final DeferredItem<BlockItem> MOON_ROCK_STAIRS = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.MOON_ROCK_STAIRS);
+    public static final DeferredItem<BlockItem> MOON_ROCK_WALL = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.MOON_ROCK_WALL);
     public static final DeferredItem<BlockItem> MOON_CHEESE_ORE = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.MOON_CHEESE_ORE);
     public static final DeferredItem<BlockItem> MOON_COPPER_ORE = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.MOON_COPPER_ORE);
     public static final DeferredItem<BlockItem> MOON_TIN_ORE = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.MOON_TIN_ORE);
@@ -653,14 +656,24 @@ public final class GalacticraftItems {
     public static final ColorCollection<DeferredItem<BlockItem>> COLORED_TINTED_GLASS_PANE = REGISTRY.registerBlockItemColorCollection(GalacticraftBlocks.COLORED_TINTED_GLASS_PANE, BlockItem::new, _ -> new Item.Properties());
     public static final DeferredItem<BlockItem> TINTED_GLASS_PANE = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.TINTED_GLASS_PANE);
     public static final DeferredItem<BlockItem> MARS_STONE = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.MARS_STONE);
+    public static final DeferredItem<BlockItem> MARS_REGOLITH = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.MARS_REGOLITH);
+    public static final DeferredItem<BlockItem> MARS_FINE_REGOLITH = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.MARS_FINE_REGOLITH);
     public static final DeferredItem<BlockItem> MARS_STONE_SLAB = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.MARS_STONE_SLAB);
     public static final DeferredItem<BlockItem> MARS_STONE_STAIRS = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.MARS_STONE_STAIRS);
     public static final DeferredItem<BlockItem> MARS_STONE_PRESSURE_PLATE = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.MARS_STONE_PRESSURE_PLATE);
     public static final DeferredItem<BlockItem> MARS_STONE_BUTTON = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.MARS_STONE_BUTTON);
+    public static final DeferredItem<BlockItem> MARS_COBBLESTONE = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.MARS_COBBLESTONE);
+    public static final DeferredItem<BlockItem> MARS_COBBLESTONE_SLAB = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.MARS_COBBLESTONE_SLAB);
+    public static final DeferredItem<BlockItem> MARS_COBBLESTONE_STAIRS = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.MARS_COBBLESTONE_STAIRS);
+    public static final DeferredItem<BlockItem> MARS_COBBLESTONE_WALL = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.MARS_COBBLESTONE_WALL);
     public static final DeferredItem<BlockItem> MARS_BRICKS = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.MARS_BRICKS);
     public static final DeferredItem<BlockItem> MARS_BRICK_SLAB = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.MARS_BRICK_SLAB);
     public static final DeferredItem<BlockItem> MARS_BRICK_STAIRS = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.MARS_BRICK_STAIRS);
     public static final DeferredItem<BlockItem> MARS_BRICK_WALL = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.MARS_BRICK_WALL);
+    public static final DeferredItem<BlockItem> MARS_COPPER_ORE = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.MARS_COPPER_ORE);
+    public static final DeferredItem<BlockItem> MARS_TIN_ORE = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.MARS_TIN_ORE);
+    public static final DeferredItem<BlockItem> MARS_DESH_ORE = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.MARS_DESH_ORE);
+    public static final DeferredItem<BlockItem> MARS_IRON_ORE = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.MARS_IRON_ORE);
 
     public static void init(IEventBus bus) {
         REGISTRY.register(bus);

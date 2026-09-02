@@ -44,12 +44,15 @@ import io.kalishak.galacticraftlegacy.world.timeline.GalacticraftWorldClocks;
 import net.minecraft.DetectedVersion;
 import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.data.DataGenerator;
 import net.minecraft.data.metadata.PackMetadataGenerator;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.metadata.pack.PackMetadataSection;
 import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.PackSource;
 import net.minecraft.util.InclusiveRange;
+import net.minecraft.world.flag.FeatureFlagSet;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.neoforged.neoforge.event.AddPackFindersEvent;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
@@ -85,7 +88,7 @@ public class GalacticraftData {
     public static void gatherData(GatherDataEvent.Client event) {
         event.createProvider(PackMetadataGenerator::new)
                 .add(PackMetadataSection.SERVER_TYPE, new PackMetadataSection(
-                        GalacticraftComponents.DATAPACK_DESCRIPTION,
+                        GalacticraftComponents.DATAPACK_DESCRIPTION.asComponent(),
                         new InclusiveRange<>(DetectedVersion.BUILT_IN.packVersion(PackType.SERVER_DATA))));
         event.createProvider(GalacticraftSpritesProvider::new);
         event.createProvider(GalacticraftLanguageProvider::new);
@@ -106,13 +109,16 @@ public class GalacticraftData {
         event.createProvider(GalacticraftFluidTagsProvider::new);
         event.createBlockAndItemTags(GalacticraftBlockTagsProvider::new, GalacticraftItemTagsProvider::new);
         event.createProvider(GalacticraftTimelinesTagsProvider::new);
+
+        DataGenerator.PackGenerator adventureMode = event.getGenerator().getBuiltinDatapack(true, "galacticraftlegacy", "adventure_mode");
+        adventureMode.addProvider(packOutput -> PackMetadataGenerator.forFeaturePack(packOutput, GalacticraftComponents.ADVENTURE_MODE_DESCRIPTION.asComponent(), FeatureFlagSet.of(Galacticraft.ADVENTURE_MODE)));
     }
 
     public static void addClassicAssets(AddPackFindersEvent event) {
         event.addPackFinders(
                 Constants.id("developers_art"),
                 PackType.CLIENT_RESOURCES,
-                GalacticraftComponents.CLASSIC_ASSETS_DESCRIPTION,
+                GalacticraftComponents.CLASSIC_ASSETS_DESCRIPTION.asComponent(),
                 PackSource.BUILT_IN,
                 false,
                 Pack.Position.BOTTOM

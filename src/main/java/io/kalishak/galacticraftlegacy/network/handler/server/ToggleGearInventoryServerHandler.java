@@ -20,7 +20,7 @@ public class ToggleGearInventoryServerHandler {
             Player player = cxt.player();
 
             if (payload.open()) {
-                player.openMenu(new SimpleMenuProvider(GearInventoryMenu::new, GalacticraftComponents.INVENTORY_TAB));
+                player.openMenu(new SimpleMenuProvider(GearInventoryMenu::new, GalacticraftComponents.INVENTORY_TAB.asComponent()));
             }  else {
                 cxt.reply(new ToggleGearInventoryPayload(true));
             }

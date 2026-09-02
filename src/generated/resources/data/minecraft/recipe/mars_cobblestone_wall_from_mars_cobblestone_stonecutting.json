@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": "galacticraftlegacy:mars_cobblestone",
+  "result": {
+    "id": "galacticraftlegacy:mars_cobblestone_wall"
+  }
+}

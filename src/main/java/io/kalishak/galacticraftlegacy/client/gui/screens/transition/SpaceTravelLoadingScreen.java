@@ -37,7 +37,7 @@ public class SpaceTravelLoadingScreen extends LevelLoadingScreen {
         int yCenter = this.height / 2;
         int textTop = yCenter - 50;
 
-        graphics.centeredText(this.font, GalacticraftComponents.SPACE_TRAVEL_TEXT, xCenter, textTop, -1);
+        graphics.centeredText(this.font, GalacticraftComponents.SPACE_TRAVEL_TEXT.asComponent(), xCenter, textTop, -1);
     }
 
     @Override

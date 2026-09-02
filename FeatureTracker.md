@@ -85,11 +85,11 @@ Please note that the following list is a preliminary outline of planned features
 - [ ] Hydraulic Platform ❌
 - [ ] Emergency Post (Empty and with kit) ❌
 - [ ] Grating ✅
-- [ ] Mars Copper Ore & Generation ❌
-- [ ] Mars Tin Ore & Generation ❌
-- [ ] Mars Desh Ore & Generation ❌
-- [ ] Mars Iron Ore & Generation ❌
-- [ ] Mars Cobblestone & Variants ❌
+- [ ] Mars Copper Ore & Generation ✅
+- [ ] Mars Tin Ore & Generation ✅
+- [ ] Mars Desh Ore & Generation ✅
+- [ ] Mars Iron Ore & Generation ✅
+- [ ] Mars Cobblestone & Variants ✅
 - [ ] Mars Fine Regolith & Variants ❌
 - [ ] Mars Stone & Variants ✅
 - [ ] Mars Dungeon Block & Variants ✅

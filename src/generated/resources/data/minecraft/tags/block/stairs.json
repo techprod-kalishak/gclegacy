@@ -1,10 +1,12 @@
 {
   "values": [
+    "galacticraftlegacy:moon_rock_stairs",
     "galacticraftlegacy:moon_dungeon_brick_stairs",
     "galacticraftlegacy:asteroid_rock_stairs",
     "galacticraftlegacy:tin_decoration_stairs",
     "galacticraftlegacy:tin_wall_decoration_stairs",
     "galacticraftlegacy:mars_stone_stairs",
+    "galacticraftlegacy:mars_cobblestone_stairs",
     "galacticraftlegacy:mars_dungeon_brick_stairs"
   ]
 }

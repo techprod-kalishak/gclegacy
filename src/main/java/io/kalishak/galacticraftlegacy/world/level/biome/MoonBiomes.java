@@ -39,13 +39,11 @@ public class MoonBiomes {
 
         biomeGenerationSettings.addFeature(GenerationStep.Decoration.TOP_LAYER_MODIFICATION, MoonPlacements.FALLEN_METEOR);
 
-        biomeGenerationSettings.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION, MoonPlacements.ORE_COPPER_UPPER);
-        biomeGenerationSettings.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION, MoonPlacements.ORE_COPPER_LOWER);
+        biomeGenerationSettings.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION, MoonPlacements.ORE_COPPER);
         biomeGenerationSettings.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION, MoonPlacements.ORE_CHEESE);
         biomeGenerationSettings.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION, MoonPlacements.ORE_SAPPHIRE);
-        biomeGenerationSettings.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION, MoonPlacements.ORE_TIN_UPPER);
-        biomeGenerationSettings.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION, MoonPlacements.ORE_TIN_MIDDLE);
-        biomeGenerationSettings.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION, MoonPlacements.ORE_TIN_LOWER);
+        biomeGenerationSettings.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION, MoonPlacements.ORE_TIN);
+        //biomeGenerationSettings.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION, MoonPlacements.DIRT_PATCH);
 
         biomeGenerationSettings.addCarver(MoonCarvers.CAVE);
 

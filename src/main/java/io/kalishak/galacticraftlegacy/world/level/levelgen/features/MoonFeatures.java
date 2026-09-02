@@ -16,6 +16,7 @@ import net.minecraft.data.worldgen.features.FeatureUtils;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.valueproviders.ConstantInt;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration;
@@ -27,11 +28,11 @@ public class MoonFeatures {
     public static final ResourceKey<ConfiguredFeature<?, ?>> FALLEN_METEOR = GalacticraftFeatures.key("moon_fallen_meteor");
     public static final ResourceKey<ConfiguredFeature<?, ?>> MOON_CRATER = GalacticraftFeatures.key("moon_crater");
     public static final ResourceKey<ConfiguredFeature<?, ?>> MOON_CRATER_LARGE = GalacticraftFeatures.key("moon_crater_large");
-    public static final ResourceKey<ConfiguredFeature<?, ?>> ORE_MOON_COPPER = GalacticraftFeatures.key("ore_moon_copper");
-    public static final ResourceKey<ConfiguredFeature<?, ?>> ORE_MOON_COPPER_SMALL = GalacticraftFeatures.key("ore_moon_copper_small");
-    public static final ResourceKey<ConfiguredFeature<?, ?>> ORE_MOON_TIN = GalacticraftFeatures.key("ore_moon_tin");
-    public static final ResourceKey<ConfiguredFeature<?, ?>> ORE_MOON_CHEESE = GalacticraftFeatures.key("ore_moon_cheese");
-    public static final ResourceKey<ConfiguredFeature<?, ?>> ORE_MOON_SAPPHIRE = GalacticraftFeatures.key("ore_moon_sapphire");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> ORE_MOON_COPPER = GalacticraftFeatures.key("moon_copper_ore");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> ORE_MOON_TIN = GalacticraftFeatures.key("moon_tin_ore");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> ORE_MOON_CHEESE = GalacticraftFeatures.key("moon_cheese_ore");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> ORE_MOON_SAPPHIRE = GalacticraftFeatures.key("moon_sapphire_ore");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> DIRT_PATCH = GalacticraftFeatures.key("moon_dirt_patch");
 
     static void bootstrap(BootstrapContext<ConfiguredFeature<?, ?>> cxt) {
         RuleTest moonRockReplaceable = new BlockStateMatchTest(GalacticraftBlocks.MOON_ROCK.get().defaultBlockState());
@@ -60,31 +61,31 @@ public class MoonFeatures {
                 cxt,
                 ORE_MOON_COPPER,
                 Feature.ORE,
-                new OreConfiguration(moonRockReplaceable, GalacticraftBlocks.MOON_COPPER_ORE.get().defaultBlockState(), 8)
-        );
-        FeatureUtils.register(
-                cxt,
-                ORE_MOON_COPPER_SMALL,
-                Feature.ORE,
                 new OreConfiguration(moonRockReplaceable, GalacticraftBlocks.MOON_COPPER_ORE.get().defaultBlockState(), 4)
         );
         FeatureUtils.register(
                 cxt,
                 ORE_MOON_TIN,
                 Feature.ORE,
-                new OreConfiguration(moonRockReplaceable, GalacticraftBlocks.MOON_TIN_ORE.get().defaultBlockState(), 9)
+                new OreConfiguration(moonRockReplaceable, GalacticraftBlocks.MOON_TIN_ORE.get().defaultBlockState(), 4)
         );
         FeatureUtils.register(
                 cxt,
                 ORE_MOON_CHEESE,
                 Feature.ORE,
-                new OreConfiguration(moonRockReplaceable, GalacticraftBlocks.MOON_CHEESE_ORE.get().defaultBlockState(), 10)
+                new OreConfiguration(moonRockReplaceable, GalacticraftBlocks.MOON_CHEESE_ORE.get().defaultBlockState(), 3)
         );
         FeatureUtils.register(
                 cxt,
                 ORE_MOON_SAPPHIRE,
                 Feature.ORE,
-                new OreConfiguration(moonRockReplaceable, GalacticraftBlocks.MOON_SAPPHIRE_ORE.get().defaultBlockState(), 4)
+                new OreConfiguration(moonRockReplaceable, GalacticraftBlocks.MOON_SAPPHIRE_ORE.get().defaultBlockState(), 6)
+        );
+        FeatureUtils.register(
+                cxt,
+                DIRT_PATCH,
+                Feature.ORE,
+                new OreConfiguration(moonRockReplaceable, Blocks.DIRT.defaultBlockState(), 32)
         );
     }
 }

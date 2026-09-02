@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/outer_stairs",
+  "textures": {
+    "bottom": "galacticraftlegacy:block/moon_rock",
+    "side": "galacticraftlegacy:block/moon_rock",
+    "top": "galacticraftlegacy:block/moon_rock"
+  }
+}
