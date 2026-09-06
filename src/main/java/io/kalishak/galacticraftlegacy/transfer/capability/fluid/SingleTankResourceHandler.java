@@ -147,13 +147,13 @@ public class SingleTankResourceHandler extends SnapshotJournal<FluidStack> imple
     @Override
     public void serialize(ValueOutput output) {
         if (!this.stack.isEmpty()) {
-            output.store(VALUE_IO_KEY, FluidStack.OPTIONAL_CODEC, this.stack);
+            output.store(VALUE_IO_KEY, FluidStack.CODEC, this.stack);
         }
     }
 
     @Override
     public void deserialize(ValueInput input) {
-        input.read(VALUE_IO_KEY, FluidStack.OPTIONAL_CODEC).ifPresent(this::setFluidStack);
+        input.read(VALUE_IO_KEY, FluidStack.CODEC).ifPresent(this::setFluidStack);
     }
 
     @Override

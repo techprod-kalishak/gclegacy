@@ -4,6 +4,7 @@ import io.kalishak.galacticraftlegacy.aunified.data.model.ExtendedBlockModelGene
 import io.kalishak.galacticraftlegacy.client.renderer.special.NasaWorkbenchSpecialRenderer;
 import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.world.level.block.AbstractPadBlock;
+import io.kalishak.galacticraftlegacy.world.level.block.FluidTankBlock;
 import io.kalishak.galacticraftlegacy.world.level.block.MagneticCraftingBlock;
 import io.kalishak.galacticraftlegacy.world.level.block.PadState;
 import io.kalishak.galacticraftlegacy.world.level.block.wire.HeavyWireBlock;
@@ -20,6 +21,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.neoforged.neoforge.client.model.generators.blockstate.UnbakedMutator;
 import net.neoforged.neoforge.client.model.generators.template.ExtendedModelTemplateBuilder;
 
 import java.util.EnumMap;
@@ -211,7 +213,7 @@ public class GalacticraftBlockModelGenerators extends ExtendedBlockModelGenerato
 
     public void createPad(Block block) {
         Identifier model = GalacticraftModelTemplates.PAD.create(block, TextureMapping.defaultTexture(block), this.modelOutput);
-        MultiVariant centerVariant = plainVariant(GalacticraftModelTemplates.FULL_PAD.create(block, GalacticraftTextureMapping.fullPad(block), this.modelOutput));
+        MultiVariant centerVariant = plainVariant(GalacticraftModelTemplates.FULL_PAD.create(block, GalacticraftTextureMapping.defaultWithTop(block), this.modelOutput));
 
         this.blockStateOutput.accept(
                 MultiVariantGenerator.dispatch(block)
@@ -222,5 +224,24 @@ public class GalacticraftBlockModelGenerators extends ExtendedBlockModelGenerato
                         )
         );
         registerSimpleItemModel(block.asItem(), model);
+    }
+
+    public void createFluidTank(Block block) {
+        Identifier fallBack = ModelLocationUtils.getModelLocation(block);
+        MultiVariant connectedUp = plainVariant(ModelLocationUtils.getModelLocation(block, "_up"));
+        MultiVariant connectedDown = plainVariant(ModelLocationUtils.getModelLocation(block, "_down"));
+        MultiVariant connectedBoth = plainVariant(ModelLocationUtils.getModelLocation(block, "_both"));
+
+        this.blockStateOutput.accept(
+                MultiVariantGenerator.dispatch(block)
+                        .with(
+                                PropertyDispatch.initial(FluidTankBlock.UP_CONNECTION, FluidTankBlock.DOWN_CONNECTION)
+                                        .select(true, true, connectedBoth)
+                                        .select(true, false, connectedUp)
+                                        .select(false, true, connectedDown)
+                                        .select(false, false, plainVariant(fallBack))
+                        )
+        );
+        registerSimpleItemModel(block.asItem(), fallBack);
     }
 }

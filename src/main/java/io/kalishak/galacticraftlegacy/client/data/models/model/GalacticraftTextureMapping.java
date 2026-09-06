@@ -53,7 +53,7 @@ public class GalacticraftTextureMapping {
                 .put(TextureSlot.PARTICLE, getBlockTexture(block, "_side"));
     }
 
-    public static TextureMapping fullPad(Block block) {
+    public static TextureMapping defaultWithTop(Block block) {
         return new TextureMapping()
                 .put(TextureSlot.TEXTURE, getBlockTexture(block))
                 .put(TextureSlot.TOP, getBlockTexture(block, "_top"));

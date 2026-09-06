@@ -118,10 +118,11 @@ public final class GalacticraftBlockItemIds {
     public static final BlockItemId MOON_DUNGEON_CHEST = create("moon_dungeon_chest");
     public static final BlockItemId MARS_DUNGEON_CHEST = create("mars_dungeon_chest");
     public static final BlockItemId VENUS_DUNGEON_CHEST = create("venus_dungeon_chest");
+    public static final BlockItemId FLUID_CANISTER = create("fluid_canister");
     public static final BlockItemId FLUID_TANK = create("fluid_tank");
     public static final BlockItemId SEALED_REDSTONE_WIRE = create("sealed_redstone_wire");
-    public static final BlockItemId SEALED_REDSTONE_REPEATER = create("sealed_redstone_repeater");
-    public static final BlockItemId SEALED_REDSTONE_COMPARATOR = create("sealed_redstone_comparator");
+    public static final BlockItemId SEALED_REPEATER = create("sealed_repeater");
+    public static final BlockItemId SEALED_COMPARATOR = create("sealed_comparator");
     public static final BlockItemId HYDRAULIC_PLATFORM = create("hydraulic_platform");
     public static final BlockItemId EMERGENCY_POST = create("emergency_post");
     public static final BlockItemId GRATING = create("grating");

@@ -5,10 +5,9 @@
  * See LICENSE file for more details
  */
 
-package io.kalishak.galacticraftlegacy.client.data.models;
+package io.kalishak.galacticraftlegacy.client.data;
 
 import io.kalishak.galacticraftlegacy.aunified.data.model.ExtendedModelProvider;
-import io.kalishak.galacticraftlegacy.client.data.GalacticraftBlockFamilies;
 import io.kalishak.galacticraftlegacy.client.data.models.model.*;
 import io.kalishak.galacticraftlegacy.client.renderer.special.*;
 import io.kalishak.galacticraftlegacy.references.Constants;
@@ -79,6 +78,10 @@ public class GalacticraftModelProvider extends ExtendedModelProvider<Galacticraf
         blockModels.pipeLike(GalacticraftBlocks.HEAVY_ALUMINUM_WIRE.get());
         blockModels.createCauldron(GalacticraftBlocks.OIL_CAULDRON.get(), GalacticraftBlocks.OIL.get());
         blockModels.createCauldron(GalacticraftBlocks.FUEL_CAULDRON.get(), GalacticraftBlocks.FUEL.get());
+        blockModels.createFluidTank(GalacticraftBlocks.FLUID_TANK.get());
+        blockModels.copyModel(GalacticraftBlocks.TIN_DECORATION_BLOCK.get(), GalacticraftBlocks.SEALED_REDSTONE_WIRE.get());
+        blockModels.copyModel(GalacticraftBlocks.TIN_DECORATION_BLOCK.get(), GalacticraftBlocks.SEALED_REPEATER.get());
+        blockModels.copyModel(GalacticraftBlocks.TIN_DECORATION_BLOCK.get(), GalacticraftBlocks.SEALED_COMPARATOR.get());
         blockModels.createNormalTorch(GalacticraftBlocks.UNLIT_TORCH.get(), GalacticraftBlocks.UNLIT_WALL_TORCH.get());
         blockModels.createNormalTorch(GalacticraftBlocks.UNLIT_COPPER_TORCH.get(), GalacticraftBlocks.UNLIT_COPPER_WALL_TORCH.get());
         blockModels.createLantern(GalacticraftBlocks.UNLIT_LANTERN.get());
@@ -107,6 +110,8 @@ public class GalacticraftModelProvider extends ExtendedModelProvider<Galacticraf
         blockModels.createTrivialCube(GalacticraftBlocks.MARS_TIN_ORE.get());
         blockModels.createTrivialCube(GalacticraftBlocks.MARS_DESH_ORE.get());
         blockModels.createTrivialCube(GalacticraftBlocks.MARS_IRON_ORE.get());
+        blockModels.createTrivialCube(GalacticraftBlocks.RAW_DESH_BLOCK.get());
+        blockModels.createTrivialCube(GalacticraftBlocks.DESH_BLOCK.get());
 
         blockModels.registerSimpleFlatItemModel(GalacticraftBlocks.GRATING.asItem());
         itemModels.generateFlatItem(GalacticraftItems.THROWABLE_METEOR_CHUNK.get(), ModelTemplates.FLAT_ITEM);
@@ -151,7 +156,7 @@ public class GalacticraftModelProvider extends ExtendedModelProvider<Galacticraf
         itemModels.generateFlatItem(GalacticraftItems.CANVAS.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(GalacticraftItems.FLAG.get(), ModelTemplates.FLAT_ITEM);
         itemModels.createSchematic(GalacticraftItems.SCHEMATIC.get());
-        itemModels.createFluidTank(GalacticraftItems.FLUID_TANK.get());
+        itemModels.createFluidTank(GalacticraftItems.FLUID_CANISTER.get());
         itemModels.generateFlatItem(GalacticraftItems.OIL_BUCKET.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(GalacticraftItems.FUEL_BUCKET.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(GalacticraftItems.RAW_STEEL.get(), ModelTemplates.FLAT_ITEM);

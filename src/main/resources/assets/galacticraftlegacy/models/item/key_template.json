@@ -1,8 +1,5 @@
 {
     "gui_light": "front",
-    "textures": {
-        "particle": "#particle"
-    },
     "display": {
         "gui": {
             "rotation": [ 30, 225, 0 ],

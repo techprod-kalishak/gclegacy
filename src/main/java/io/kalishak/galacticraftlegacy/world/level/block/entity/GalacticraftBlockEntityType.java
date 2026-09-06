@@ -72,6 +72,11 @@ public final class GalacticraftBlockEntityType {
                     GalacticraftBlocks.FUEL_CAULDRON
             )
     );
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<FluidTankBlockEntity>> FLUID_TANK = REGISTRY.registerBlockEntity(
+            GalacticraftBlockEntityIds.FLUID_TANK,
+            FluidTankBlockEntity::new,
+            GalacticraftBlocks.FLUID_TANK
+    );
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<FuelingPadBlockEntity>> FUELING_PAD = REGISTRY.registerBlockEntity(
             GalacticraftBlockEntityIds.FUELING_PAD,
             FuelingPadBlockEntity::new,

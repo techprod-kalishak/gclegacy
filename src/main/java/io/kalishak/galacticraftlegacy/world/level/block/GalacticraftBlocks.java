@@ -466,7 +466,7 @@ public final class GalacticraftBlocks {
                     .mapColor(MapColor.COLOR_GREEN)
                     .instrument(NoteBlockInstrument.BASEDRUM)
                     .requiresCorrectToolForDrops()
-                    .strength(2.5F, 6.0F)
+                    .strength(4.0F, 40.0F)
     );
     public static final DeferredBlock<SlabBlock> MARS_BRICK_SLAB = REGISTRY.registerBlock(
             GalacticraftBlockItemIds.MARS_DUNGEON_BRICK_SLAB,
@@ -475,7 +475,7 @@ public final class GalacticraftBlocks {
                     .mapColor(MapColor.COLOR_GREEN)
                     .instrument(NoteBlockInstrument.BASEDRUM)
                     .requiresCorrectToolForDrops()
-                    .strength(2.5F, 6.0F)
+                    .strength(4.0F, 40.0F)
     );
     public static final DeferredBlock<StairBlock> MARS_BRICK_STAIRS = REGISTRY.registerBlock(
             GalacticraftBlockItemIds.MARS_DUNGEON_BRICK_STAIRS,
@@ -484,14 +484,14 @@ public final class GalacticraftBlocks {
                     .mapColor(MapColor.COLOR_GREEN)
                     .instrument(NoteBlockInstrument.BASEDRUM)
                     .requiresCorrectToolForDrops()
-                    .strength(2.5F, 6.0F)
+                    .strength(4.0F, 40.0F)
     );
     public static final DeferredBlock<WallBlock> MARS_BRICK_WALL = REGISTRY.registerBlock(
             GalacticraftBlockItemIds.MARS_DUNGEON_BRICK_WALL,
             WallBlock::new,
             () -> BlockBehaviour.Properties.of()
                     .mapColor(MapColor.COLOR_GREEN)
-                    .strength(2.5F, 6.0F)
+                    .strength(4.0F, 40.0F)
                     .instrument(NoteBlockInstrument.BASEDRUM)
                     .requiresCorrectToolForDrops()
     );
@@ -502,7 +502,7 @@ public final class GalacticraftBlocks {
                     .mapColor(MapColor.TERRACOTTA_RED)
                     .instrument(NoteBlockInstrument.BASEDRUM)
                     .requiresCorrectToolForDrops()
-                    .strength(4.5F, 6.0F)
+                    .strength(3.5F, 6.0F)
     );
     public static final DeferredBlock<DropExperienceBlock> MARS_TIN_ORE = REGISTRY.registerBlock(
             GalacticraftBlockItemIds.MARS_TIN_ORE,
@@ -511,7 +511,7 @@ public final class GalacticraftBlocks {
                     .mapColor(MapColor.TERRACOTTA_RED)
                     .instrument(NoteBlockInstrument.BASEDRUM)
                     .requiresCorrectToolForDrops()
-                    .strength(4.5F, 6.0F)
+                    .strength(3.5F, 6.0F)
     );
     public static final DeferredBlock<DropExperienceBlock> MARS_DESH_ORE = REGISTRY.registerBlock(
             GalacticraftBlockItemIds.MARS_DESH_ORE,
@@ -520,7 +520,7 @@ public final class GalacticraftBlocks {
                     .mapColor(MapColor.TERRACOTTA_RED)
                     .instrument(NoteBlockInstrument.BASEDRUM)
                     .requiresCorrectToolForDrops()
-                    .strength(4.5F, 6.0F)
+                    .strength(3.5F, 6.0F)
     );
     public static final DeferredBlock<DropExperienceBlock> MARS_IRON_ORE = REGISTRY.registerBlock(
             GalacticraftBlockItemIds.MARS_IRON_ORE,
@@ -529,7 +529,23 @@ public final class GalacticraftBlocks {
                     .mapColor(MapColor.TERRACOTTA_RED)
                     .instrument(NoteBlockInstrument.BASEDRUM)
                     .requiresCorrectToolForDrops()
-                    .strength(4.5F, 6.0F)
+                    .strength(3.5F, 6.0F)
+    );
+    public static final DeferredBlock<Block> RAW_DESH_BLOCK = REGISTRY.registerSimpleBlock(
+            GalacticraftBlockItemIds.RAW_DESH_BLOCK,
+            () -> BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.COLOR_BLACK)
+                    .instrument(NoteBlockInstrument.IRON_XYLOPHONE)
+                    .requiresCorrectToolForDrops()
+                    .strength(4.0F, 60.0F)
+    );
+    public static final DeferredBlock<Block> DESH_BLOCK = REGISTRY.registerSimpleBlock(
+            GalacticraftBlockItemIds.DESH_BLOCK,
+            () -> BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.COLOR_GRAY)
+                    .instrument(NoteBlockInstrument.BASEDRUM)
+                    .requiresCorrectToolForDrops()
+                    .strength(4.0F, 60.0F)
     );
 
     /** Asteroids */
@@ -662,6 +678,39 @@ public final class GalacticraftBlocks {
                     .requiresCorrectToolForDrops()
                     .strength(2.0F)
                     .noOcclusion()
+    );
+    public static final DeferredBlock<SealedRedstoneWireBlock> SEALED_REDSTONE_WIRE = REGISTRY.registerBlock(
+            GalacticraftBlockItemIds.SEALED_REDSTONE_WIRE,
+            SealedRedstoneWireBlock::new,
+            () -> BlockBehaviour.Properties.of()
+                    .mapColor(DyeColor.LIGHT_GRAY)
+                    .strength(1.0F, 4.0F)
+                    .requiresCorrectToolForDrops()
+    );
+    public static final DeferredBlock<SealedRepeaterBlock> SEALED_REPEATER = REGISTRY.registerBlock(
+            GalacticraftBlockItemIds.SEALED_REPEATER,
+            SealedRepeaterBlock::new,
+            () -> BlockBehaviour.Properties.of()
+                    .mapColor(DyeColor.LIGHT_GRAY)
+                    .strength(1.0F, 4.0F)
+                    .requiresCorrectToolForDrops()
+    );
+    public static final DeferredBlock<SealedComparatorBlock> SEALED_COMPARATOR = REGISTRY.registerBlock(
+            GalacticraftBlockItemIds.SEALED_COMPARATOR,
+            SealedComparatorBlock::new,
+            () -> BlockBehaviour.Properties.of()
+                    .mapColor(DyeColor.LIGHT_GRAY)
+                    .strength(1.0F, 4.0F)
+                    .requiresCorrectToolForDrops()
+    );
+    public static final DeferredBlock<FluidTankBlock> FLUID_TANK = REGISTRY.registerBlock(
+            GalacticraftBlockItemIds.FLUID_TANK,
+            FluidTankBlock::new,
+            () -> BlockBehaviour.Properties.of()
+                    .sound(SoundType.GLASS)
+                    .strength(3.0F, 8.0F)
+                    .isRedstoneConductor(GalacticraftBlocks::never)
+                    .pushReaction(PushReaction.IGNORE)
     );
 
     public static final DeferredBlock<GratingBlock> GRATING = REGISTRY.registerBlock(

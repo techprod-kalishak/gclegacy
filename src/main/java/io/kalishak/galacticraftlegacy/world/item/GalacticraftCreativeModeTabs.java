@@ -77,10 +77,10 @@ public final class GalacticraftCreativeModeTabs {
         output.accept(GalacticraftItems.PROTO_SHIELD_CONTROLLER);
         output.accept(GalacticraftItems.SHIELD_CONTROLLER);
         output.accept(GalacticraftItems.TIN_CANISTER);
-        output.accept(GalacticraftItems.FLUID_TANK);
-        emptyAndFilled(output, GalacticraftItems.FLUID_TANK, GalacticraftFluids.OXYGEN);
-        emptyAndFilled(output, GalacticraftItems.FLUID_TANK, GalacticraftFluids.OIL);
-        emptyAndFilled(output, GalacticraftItems.FLUID_TANK, GalacticraftFluids.FUEL);
+        output.accept(GalacticraftItems.FLUID_CANISTER);
+        emptyAndFilled(output, GalacticraftItems.FLUID_CANISTER, GalacticraftFluids.OXYGEN);
+        emptyAndFilled(output, GalacticraftItems.FLUID_CANISTER, GalacticraftFluids.OIL);
+        emptyAndFilled(output, GalacticraftItems.FLUID_CANISTER, GalacticraftFluids.FUEL);
         output.accept(GalacticraftItems.OXYGEN_VENT);
         output.accept(GalacticraftItems.ROCKET_ENGINE);
         output.accept(GalacticraftItems.ROCKET_BOOSTER);
@@ -249,6 +249,10 @@ public final class GalacticraftCreativeModeTabs {
         output.accept(GalacticraftItems.MOON_BRICK_SLAB);
         output.accept(GalacticraftItems.MOON_BRICK_WALL);
         output.accept(GalacticraftItems.CHEESE);
+        output.accept(GalacticraftItems.FLUID_TANK_BLOCK);
+        output.accept(GalacticraftItems.SEALED_REDSTONE_WIRE);
+        output.accept(GalacticraftItems.SEALED_REPEATER);
+        output.accept(GalacticraftItems.SEALED_COMPARATOR);
         output.accept(GalacticraftItems.GRATING);
         output.accept(GalacticraftItems.MARS_COPPER_ORE);
         output.accept(GalacticraftItems.MARS_TIN_ORE);
@@ -269,6 +273,8 @@ public final class GalacticraftCreativeModeTabs {
         output.accept(GalacticraftItems.MARS_BRICK_SLAB);
         output.accept(GalacticraftItems.MARS_BRICK_STAIRS);
         output.accept(GalacticraftItems.MARS_BRICK_WALL);
+        output.accept(GalacticraftItems.RAW_DESH_BLOCK);
+        output.accept(GalacticraftItems.DESH_BLOCK);
         output.accept(GalacticraftItems.ASTEROID_ROCK);
         output.accept(GalacticraftItems.ASTEROID_ROCK_SLAB);
         output.accept(GalacticraftItems.ASTEROID_ROCK_STAIRS);

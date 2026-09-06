@@ -130,7 +130,11 @@ public class GalacticraftBlockTagsProvider extends BlockTagsProvider {
                 .add(GalacticraftBlockItemIds.DEEPSLATE_SILICON_ORE.block())
                 .add(GalacticraftBlockItemIds.MOON_SAPPHIRE_ORE.block())
                 .add(GalacticraftBlockItemIds.FALLEN_METEOR.block())
-                .add(GalacticraftBlockItemIds.MARS_DESH_ORE.block());
+                .add(GalacticraftBlockItemIds.RAW_METEORIC_IRON_BLOCK.block())
+                .add(GalacticraftBlockItemIds.METEORIC_IRON_BLOCK.block())
+                .add(GalacticraftBlockItemIds.MARS_DESH_ORE.block())
+                .add(GalacticraftBlockItemIds.RAW_DESH_BLOCK.block())
+                .add(GalacticraftBlockItemIds.DESH_BLOCK.block());
         tag(BlockTags.MINEABLE_WITH_PICKAXE)
                 .addTag(GalacticraftTags.Blocks.MACHINE)
                 .add(GalacticraftBlockItemIds.MOON_ROCK.block())
@@ -155,6 +159,9 @@ public class GalacticraftBlockTagsProvider extends BlockTagsProvider {
                 .add(GalacticraftBlockItemIds.OIL_CAULDRON.block())
                 .add(GalacticraftBlockItemIds.FUEL_CAULDRON.block())
                 .add(GalacticraftBlockItemIds.FALLEN_METEOR.block())
+                .add(GalacticraftBlockItemIds.SEALED_REDSTONE_WIRE.block())
+                .add(GalacticraftBlockItemIds.SEALED_REPEATER.block())
+                .add(GalacticraftBlockItemIds.SEALED_COMPARATOR.block())
                 .add(GalacticraftBlockItemIds.TIN_DECORATION_BLOCK.block())
                 .add(GalacticraftBlockItemIds.TIN_DECORATION_SLAB.block())
                 .add(GalacticraftBlockItemIds.TIN_DECORATION_STAIRS.block())
@@ -178,7 +185,11 @@ public class GalacticraftBlockTagsProvider extends BlockTagsProvider {
                 .add(GalacticraftBlockItemIds.MARS_COPPER_ORE.block())
                 .add(GalacticraftBlockItemIds.MARS_TIN_ORE.block())
                 .add(GalacticraftBlockItemIds.MARS_DESH_ORE.block())
-                .add(GalacticraftBlockItemIds.MARS_IRON_ORE.block());
+                .add(GalacticraftBlockItemIds.MARS_IRON_ORE.block())
+                .add(GalacticraftBlockItemIds.RAW_METEORIC_IRON_BLOCK.block())
+                .add(GalacticraftBlockItemIds.METEORIC_IRON_BLOCK.block())
+                .add(GalacticraftBlockItemIds.RAW_DESH_BLOCK.block())
+                .add(GalacticraftBlockItemIds.DESH_BLOCK.block());
         tag(GalacticraftTags.BlockItems.ORES_ALUMINUM)
                 .add(GalacticraftBlockItemIds.ALUMINUM_ORE)
                 .add(GalacticraftBlockItemIds.DEEPSLATE_ALUMINUM_ORE)
@@ -201,10 +212,14 @@ public class GalacticraftBlockTagsProvider extends BlockTagsProvider {
                 .add(GalacticraftBlockItemIds.ALUMINUM_BLOCK);
         tag(GalacticraftTags.BlockItems.STORAGE_BLOCKS_RAW_ALUMINUM)
                 .add(GalacticraftBlockItemIds.RAW_ALUMINUM_BLOCK);
+        tag(GalacticraftTags.BlockItems.STORAGE_BLOCKS_DESH)
+                .add(GalacticraftBlockItemIds.DESH_BLOCK);
+        tag(GalacticraftTags.BlockItems.STORAGE_BLOCKS_RAW_DESH)
+                .add(GalacticraftBlockItemIds.RAW_DESH_BLOCK);
         tag(GalacticraftTags.BlockItems.STORAGE_BLOCKS_METEORIC_IRON)
-                .add(GalacticraftBlockItemIds.METEORIC_IRON_BLOCK.block());
+                .add(GalacticraftBlockItemIds.METEORIC_IRON_BLOCK);
         tag(GalacticraftTags.BlockItems.STORAGE_BLOCKS_RAW_METEORIC_IRON)
-                .add(GalacticraftBlockItemIds.RAW_METEORIC_IRON_BLOCK.block());
+                .add(GalacticraftBlockItemIds.RAW_METEORIC_IRON_BLOCK);
         tag(GalacticraftTags.BlockItems.STORAGE_BLOCKS_TIN)
                 .add(GalacticraftBlockItemIds.TIN_BLOCK);
         tag(GalacticraftTags.BlockItems.STORAGE_BLOCKS_RAW_TIN)

@@ -16,6 +16,7 @@ import io.kalishak.galacticraftlegacy.client.model.entity.Tier1RocketModel;
 import io.kalishak.galacticraftlegacy.client.model.gear.FrequencyModuleModel;
 import io.kalishak.galacticraftlegacy.client.model.item.ThrownMeteorChunkModel;
 import io.kalishak.galacticraftlegacy.client.model.object.NasaWorkbenchModel;
+import io.kalishak.galacticraftlegacy.client.renderer.blockentity.FluidTankBlockRenderer;
 import io.kalishak.galacticraftlegacy.client.renderer.blockentity.NasaWorkbenchBlockRenderer;
 import io.kalishak.galacticraftlegacy.client.renderer.environment.sky.MoonSkyRenderer;
 import io.kalishak.galacticraftlegacy.client.renderer.environment.sky.OrbitalSkyRenderer;
@@ -196,9 +197,10 @@ public class GalacticraftClient {
         event.registerEntityRenderer(GalacticraftEntityType.NO_GRAVITY_MOVING_BLOCK.get(), NoGravityMovingBlockRenderer::new);
         event.registerEntityRenderer(GalacticraftEntityType.TIER_1_ROCKET.get(), Tier1RocketRenderer::new);
 
-        event.registerBlockEntityRenderer(GalacticraftBlockEntityType.PARACHEST.get(), ParachestBlockRenderer::new);
+        event.registerBlockEntityRenderer(GalacticraftBlockEntityType.FLUID_TANK.get(), FluidTankBlockRenderer::new);
         event.registerBlockEntityRenderer(GalacticraftBlockEntityType.DUNGEON_CHEST.get(), DungeonBlockRenderer::new);
         event.registerBlockEntityRenderer(GalacticraftBlockEntityType.NASA_WORKBENCH.get(), NasaWorkbenchBlockRenderer::new);
+        event.registerBlockEntityRenderer(GalacticraftBlockEntityType.PARACHEST.get(), ParachestBlockRenderer::new);
     }
 
     private void registerOverlays(RegisterGuiLayersEvent event) {

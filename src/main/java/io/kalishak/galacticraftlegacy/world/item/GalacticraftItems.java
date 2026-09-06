@@ -243,8 +243,8 @@ public final class GalacticraftItems {
                     .stacksTo(1)
                     .delayedHolderComponent(GalacticraftDataComponents.SCHEMATIC.get(), SchematicVariants.TIER_2_ROCKET)
     );
-    public static final DeferredItem<FluidTankItem> FLUID_TANK = REGISTRY.registerItem(
-            GalacticraftItemIds.FLUID_TANK,
+    public static final DeferredItem<FluidTankItem> FLUID_CANISTER = REGISTRY.registerItem(
+            GalacticraftItemIds.FLUID_CANISTER,
             FluidTankItem::new,
             () -> new Item.Properties()
                     .stacksTo(1)
@@ -572,6 +572,10 @@ public final class GalacticraftItems {
             _ -> new Item.Properties()
     );
     public static final DeferredItem<BlockItem> GRATING = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.GRATING);
+    public static final DeferredItem<BlockItem> FLUID_TANK_BLOCK = REGISTRY.registerSimpleBlockItemWithDescription(GalacticraftBlocks.FLUID_TANK);
+    public static final DeferredItem<BlockItem> SEALED_REDSTONE_WIRE = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.SEALED_REDSTONE_WIRE);
+    public static final DeferredItem<BlockItem> SEALED_REPEATER = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.SEALED_REPEATER);
+    public static final DeferredItem<BlockItem> SEALED_COMPARATOR = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.SEALED_COMPARATOR);
     public static final DeferredItem<BlockItem> OXYGEN_DETECTOR = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.OXYGEN_DETECTOR);
     public static final DeferredItem<BlockItem> CHEESE = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.CHEESE);
     public static final DeferredItem<BlockItem> COAL_GENERATOR = REGISTRY.registerSimpleBlockItemWithDescription(GalacticraftBlocks.COAL_GENERATOR);
@@ -674,6 +678,8 @@ public final class GalacticraftItems {
     public static final DeferredItem<BlockItem> MARS_TIN_ORE = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.MARS_TIN_ORE);
     public static final DeferredItem<BlockItem> MARS_DESH_ORE = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.MARS_DESH_ORE);
     public static final DeferredItem<BlockItem> MARS_IRON_ORE = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.MARS_IRON_ORE);
+    public static final DeferredItem<BlockItem> RAW_DESH_BLOCK = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.RAW_DESH_BLOCK);
+    public static final DeferredItem<BlockItem> DESH_BLOCK = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.DESH_BLOCK);
 
     public static void init(IEventBus bus) {
         REGISTRY.register(bus);
@@ -714,7 +720,7 @@ public final class GalacticraftItems {
         event.registerItem(
                 Capabilities.Fluid.ITEM,
                 (_, cxt) -> new ItemAccessFluidHandler(cxt, GalacticraftDataComponents.FLUID_TANK.get(), 8000),
-                FLUID_TANK
+                FLUID_CANISTER
         );
     }
 }

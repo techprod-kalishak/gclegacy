@@ -103,6 +103,10 @@ public class GalacticraftLanguageProvider extends ExtendedLanguageProvider {
         addBlock(GalacticraftBlocks.FUEL, "Fuel");
         addBlock(GalacticraftBlocks.OIL_CAULDRON, "Oil Cauldron");
         addBlock(GalacticraftBlocks.FUEL_CAULDRON, "Fuel Cauldron");
+        addWithDescription(GalacticraftBlocks.FLUID_TANK, "Fluid Tank", "Fluid Tanks will store liquids and gases for later use.");
+        addBlock(GalacticraftBlocks.SEALED_REDSTONE_WIRE, "Sealed Redstone");
+        addBlock(GalacticraftBlocks.SEALED_REPEATER, "Sealed Repeater");
+        addBlock(GalacticraftBlocks.SEALED_COMPARATOR, "Sealed Comparator");
         addWithDescription(GalacticraftBlocks.COAL_GENERATOR, "Coal Generator", "Coal generator will burn coal (or a Coal Block) for energy. The simplest but least efficient energy production method.");
         addWithDescription(GalacticraftBlocks.CIRCUIT_FABRICATOR, "Circuit Fabricator", "Circuit Fabricator will process basic materials into silicon wafers, used for advanced machines.");
         addWithDescription(GalacticraftBlocks.COMPRESSOR, "Compressor", "Compressor will process ingots into their compressed equivalents. The most essential machine in Galacticraft!");
@@ -182,6 +186,8 @@ public class GalacticraftLanguageProvider extends ExtendedLanguageProvider {
         addBlock(GalacticraftBlocks.MARS_TIN_ORE, "Mars Tin Ore");
         addBlock(GalacticraftBlocks.MARS_DESH_ORE, "Mars Desh Ore");
         addBlock(GalacticraftBlocks.MARS_IRON_ORE, "Mars Iron Ore");
+        addBlock(GalacticraftBlocks.RAW_DESH_BLOCK, "Raw Desh Block");
+        addBlock(GalacticraftBlocks.DESH_BLOCK, "Desh Block");
         addBlock(GalacticraftBlocks.ASTEROID_ROCK, "Asteroids Rock");
         addBlock(GalacticraftBlocks.ASTEROID_ROCK_SLAB, "Asteroids Rock Slab");
         addBlock(GalacticraftBlocks.ASTEROID_ROCK_STAIRS, "Asteroids Rock Stairs");
@@ -240,7 +246,7 @@ public class GalacticraftLanguageProvider extends ExtendedLanguageProvider {
         addItem(GalacticraftItems.CANVAS, "Canvas");
         addItem(GalacticraftItems.FLAG, "Flag");
         addItem(GalacticraftItems.SCHEMATIC, "Schematics");
-        addItem(GalacticraftItems.FLUID_TANK, "Fluid Tank");
+        addItem(GalacticraftItems.FLUID_CANISTER, "Fluid Tank");
         addItem(GalacticraftItems.OIL_BUCKET, "Oil Bucket");
         addItem(GalacticraftItems.FUEL_BUCKET, "Fuel Bucket");
         addItem(GalacticraftItems.RAW_STEEL, "Raw Carbon-Iron");

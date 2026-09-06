@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "down_connection=false,up_connection=false": {
+      "model": "galacticraftlegacy:block/fluid_tank"
+    },
+    "down_connection=false,up_connection=true": {
+      "model": "galacticraftlegacy:block/fluid_tank_up"
+    },
+    "down_connection=true,up_connection=false": {
+      "model": "galacticraftlegacy:block/fluid_tank_down"
+    },
+    "down_connection=true,up_connection=true": {
+      "model": "galacticraftlegacy:block/fluid_tank_both"
+    }
+  }
+}

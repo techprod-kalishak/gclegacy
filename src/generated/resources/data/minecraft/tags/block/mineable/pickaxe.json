@@ -23,6 +23,9 @@
     "galacticraftlegacy:oil_cauldron",
     "galacticraftlegacy:fuel_cauldron",
     "galacticraftlegacy:fallen_meteor",
+    "galacticraftlegacy:sealed_redstone_wire",
+    "galacticraftlegacy:sealed_repeater",
+    "galacticraftlegacy:sealed_comparator",
     "galacticraftlegacy:tin_decoration_block",
     "galacticraftlegacy:tin_decoration_slab",
     "galacticraftlegacy:tin_decoration_stairs",
@@ -46,6 +49,10 @@
     "galacticraftlegacy:mars_copper_ore",
     "galacticraftlegacy:mars_tin_ore",
     "galacticraftlegacy:mars_desh_ore",
-    "galacticraftlegacy:mars_iron_ore"
+    "galacticraftlegacy:mars_iron_ore",
+    "galacticraftlegacy:raw_meteoric_iron_block",
+    "galacticraftlegacy:meteoric_iron_block",
+    "galacticraftlegacy:raw_desh_block",
+    "galacticraftlegacy:desh_block"
   ]
 }

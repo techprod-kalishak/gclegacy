@@ -121,6 +121,8 @@ public final class GalacticraftTags {
         public static final BlockItemTagId SENSOR_GLASSES_DETECTABLE = combinedTagKey("sensor_glasses_detectable");
         public static final BlockItemTagId STORAGE_BLOCKS_ALUMINUM = combinedTagKey("storage_blocks/aluminum");
         public static final BlockItemTagId STORAGE_BLOCKS_RAW_ALUMINUM = combinedTagKey("storage_blocks/raw_aluminum");
+        public static final BlockItemTagId STORAGE_BLOCKS_DESH = combinedTagKey("storage_blocks/desh");
+        public static final BlockItemTagId STORAGE_BLOCKS_RAW_DESH = combinedTagKey("storage_blocks/raw_desh");
         public static final BlockItemTagId STORAGE_BLOCKS_METEORIC_IRON = combinedTagKey("storage_blocks/meteoric_iron");
         public static final BlockItemTagId STORAGE_BLOCKS_RAW_METEORIC_IRON = combinedTagKey("storage_blocks/raw_meteoric_iron");
         public static final BlockItemTagId STORAGE_BLOCKS_TIN = combinedTagKey("storage_blocks/tin");

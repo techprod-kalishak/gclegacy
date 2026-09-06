@@ -95,6 +95,10 @@ public class GalacticraftBlockLootSubProvider extends BlockLootSubProvider {
         dropSelf(GalacticraftBlocks.METEORIC_IRON_BLOCK.get());
         dropOther(GalacticraftBlocks.OIL_CAULDRON.get(), Items.CAULDRON);
         dropOther(GalacticraftBlocks.FUEL_CAULDRON.get(), Items.CAULDRON);
+        dropSelf(GalacticraftBlocks.SEALED_REDSTONE_WIRE.get());
+        dropSelf(GalacticraftBlocks.SEALED_REPEATER.get());
+        dropSelf(GalacticraftBlocks.FLUID_TANK.get());
+        dropSelf(GalacticraftBlocks.SEALED_COMPARATOR.get());
         dropSelf(GalacticraftBlocks.UNLIT_TORCH.get());
         dropSelf(GalacticraftBlocks.UNLIT_COPPER_TORCH.get());
         dropSelf(GalacticraftBlocks.UNLIT_LANTERN.get());
@@ -112,6 +116,8 @@ public class GalacticraftBlockLootSubProvider extends BlockLootSubProvider {
         add(GalacticraftBlocks.MARS_TIN_ORE.get(), block -> createOreDrop(block, GalacticraftItems.RAW_TIN.get()));
         add(GalacticraftBlocks.MARS_DESH_ORE.get(), block -> createOreDrop(block, GalacticraftItems.RAW_DESH.get()));
         add(GalacticraftBlocks.MARS_IRON_ORE.get(), block -> createOreDrop(block, Items.RAW_IRON));
+        dropSelf(GalacticraftBlocks.RAW_DESH_BLOCK.get());
+        dropSelf(GalacticraftBlocks.DESH_BLOCK.get());
     }
 
     @Override

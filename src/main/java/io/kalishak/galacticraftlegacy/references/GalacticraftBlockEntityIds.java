@@ -16,6 +16,7 @@ public class GalacticraftBlockEntityIds {
     public static final String ELECTRIC_FURNACE = GalacticraftBlockItemIds.ELECTRIC_FURNACE.block().identifier().getPath();
     public static final String FALLEN_METEOR = GalacticraftBlockItemIds.FALLEN_METEOR.block().identifier().getPath();
     public static final String FLAMMABLE_CAULDRON = "flammable_cauldron";
+    public static final String FLUID_TANK = GalacticraftBlockItemIds.FLUID_TANK.block().identifier().getPath();
     public static final String FUELING_PAD = GalacticraftBlockItemIds.FUELING_PAD.block().identifier().getPath();
     public static final String COAL_GENERATOR = GalacticraftBlockItemIds.COAL_GENERATOR.block().identifier().getPath();
     public static final String CIRCUIT_FABRICATOR = GalacticraftBlockItemIds.CIRCUIT_FABRICATOR.block().identifier().getPath();

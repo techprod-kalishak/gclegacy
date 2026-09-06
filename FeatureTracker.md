@@ -77,10 +77,10 @@ Please note that the following list is a preliminary outline of planned features
 - [ ] Telemetry Unit ❌
 - [ ] Arc Lamp ❌
 - [ ] Treasure Chest ⏳
-- [ ] Fluid Tank ❌
-- [ ] Sealed Redstone Wire ❌
-- [ ] Sealed Redstone Repeater ❌
-- [ ] Sealed Redstone Comparator ❌ (Need review)
+- [ ] Fluid Tank ✅
+- [ ] Sealed Redstone Wire ✅
+- [ ] Sealed Redstone Repeater ✅
+- [ ] Sealed Redstone Comparator ✅
 - [ ] Sealed Player Detector ❌
 - [ ] Hydraulic Platform ❌
 - [ ] Emergency Post (Empty and with kit) ❌
@@ -90,11 +90,11 @@ Please note that the following list is a preliminary outline of planned features
 - [ ] Mars Desh Ore & Generation ✅
 - [ ] Mars Iron Ore & Generation ✅
 - [ ] Mars Cobblestone & Variants ✅
-- [ ] Mars Fine Regolith & Variants ❌
+- [ ] Mars Fine Regolith ✅
 - [ ] Mars Stone & Variants ✅
 - [ ] Mars Dungeon Block & Variants ✅
-- [ ] Desh Block ❌
-- [ ] Raw Desh Block ❌
+- [ ] Desh Block ✅
+- [ ] Raw Desh Block ✅
 - [ ] Cavernous Vines ❌
 - [ ] Slimeling Eggs ❌
 - [ ] Creeper Egg ❌

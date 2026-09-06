@@ -7,6 +7,10 @@
     "galacticraftlegacy:deepslate_silicon_ore",
     "galacticraftlegacy:moon_sapphire_ore",
     "galacticraftlegacy:fallen_meteor",
-    "galacticraftlegacy:mars_desh_ore"
+    "galacticraftlegacy:raw_meteoric_iron_block",
+    "galacticraftlegacy:meteoric_iron_block",
+    "galacticraftlegacy:mars_desh_ore",
+    "galacticraftlegacy:raw_desh_block",
+    "galacticraftlegacy:desh_block"
   ]
 }

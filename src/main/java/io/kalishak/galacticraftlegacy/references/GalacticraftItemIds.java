@@ -26,7 +26,7 @@ public class GalacticraftItemIds {
     public static final ResourceKey<Item> PROTO_SHIELD_CONTROLLER = create("proto_shield_controller");
     public static final ResourceKey<Item> TIN_CANISTER = create("tin_canister");
     public static final ResourceKey<Item> COPPER_CANISTER = create("copper_canister");
-    public static final ResourceKey<Item> FLUID_TANK = create("fluid_tank");
+    public static final ResourceKey<Item> FLUID_CANISTER = create("fluid_canister");
     public static final ResourceKey<Item> SENSOR_LEN = create("sensor_len");
     public static final ResourceKey<Item> SENSOR_GLASSES = create("sensor_glasses");
     public static final ResourceKey<Item> OXYGEN_VENT = create("oxygen_vent");
