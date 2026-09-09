@@ -1,0 +1,13 @@
+{
+  "atmosphere_info": {
+    "gas_composition": {},
+    "has_precipitation": false,
+    "is_corrosive": false,
+    "temperature_modifier": 1.0
+  },
+  "celestial_object_reference": "galacticraftlegacy:sol",
+  "gravity_scale": 1.0,
+  "transition": {
+    "type": "galacticraftlegacy:inaccessible"
+  }
+}

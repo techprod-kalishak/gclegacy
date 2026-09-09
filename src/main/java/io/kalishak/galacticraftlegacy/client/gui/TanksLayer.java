@@ -78,7 +78,7 @@ public class TanksLayer extends GearLayer {
         }
 
         if (player.hasData(GalacticraftAttachments.PLAYER_SPACE_DATA)) {
-            return !CelestialBodyInfo.canLivingBreath(level.dimensionTypeRegistration().getData(GalacticraftDataMaps.CELESTIAL_BODY_DATA));
+            return !CelestialBodyInfo.canLivingBreath(level);
         }
 
         return false;

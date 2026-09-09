@@ -12,7 +12,6 @@ import io.kalishak.galacticraftlegacy.attachment.entity.PlayerSpaceData;
 import io.kalishak.galacticraftlegacy.attachment.entity.TransitionalRocketInfo;
 import io.kalishak.galacticraftlegacy.galaxies.environment.CelestialBodyInfo;
 import io.kalishak.galacticraftlegacy.config.CommonConfig;
-import io.kalishak.galacticraftlegacy.data.datamap.GalacticraftDataMaps;
 import io.kalishak.galacticraftlegacy.world.item.FeatureTier;
 import io.kalishak.galacticraftlegacy.world.item.GalacticraftItems;
 import io.kalishak.galacticraftlegacy.world.item.component.GalacticraftDataComponents;
@@ -66,7 +65,7 @@ public class Tier1Rocket extends TieredRocket {
         }
 
         if (isLaunched()) {
-            CelestialBodyInfo celestialBodyInfo = level().dimensionTypeRegistration().getData(GalacticraftDataMaps.CELESTIAL_BODY_DATA);
+            CelestialBodyInfo celestialBodyInfo = CelestialBodyInfo.getFromLevel(level());
 
             if (celestialBodyInfo != null) {
                 if (getLaunchPhase() == LaunchPhase.LAUNCHED) {

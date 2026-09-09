@@ -8,7 +8,6 @@
 package io.kalishak.galacticraftlegacy.client.renderer.entity.state;
 
 import io.kalishak.galacticraftlegacy.galaxies.environment.CelestialBodyInfo;
-import io.kalishak.galacticraftlegacy.data.datamap.GalacticraftDataMaps;
 import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.attachment.AttachmentHelper;
 import io.kalishak.galacticraftlegacy.attachment.entity.GearInventoryProvider;
@@ -48,7 +47,7 @@ public interface GearRenderState {
     static <E extends LivingEntity, S extends LivingEntityRenderState> void appendPlayerRenderStates(E entity, S reusedState) {
         GearInventoryProvider gear = AttachmentHelper.getGearInventory(entity);
         SpaceGearEquipment spaceGearEquipment = gear.getGearEquipment();
-        CelestialBodyInfo celestialBodyData = entity.level().dimensionTypeRegistration().getData(GalacticraftDataMaps.CELESTIAL_BODY_DATA);
+        CelestialBodyInfo celestialBodyData = CelestialBodyInfo.getFromLevel(entity.level());
         float temperatureModifier = 1.0F;
 
         if (celestialBodyData != null) {

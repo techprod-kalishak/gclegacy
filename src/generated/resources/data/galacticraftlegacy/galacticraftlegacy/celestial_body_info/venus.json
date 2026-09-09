@@ -1,0 +1,18 @@
+{
+  "atmosphere_info": {
+    "gas_composition": {
+      "galacticraftlegacy:carbon_dioxide": 0.965,
+      "galacticraftlegacy:nitrogen": 0.035
+    },
+    "has_precipitation": false,
+    "is_corrosive": false,
+    "temperature_modifier": 2.0
+  },
+  "celestial_object_reference": "galacticraftlegacy:venus",
+  "fuel_usage_multiplier": 0.9,
+  "gravity_scale": 0.904,
+  "transition": {
+    "type": "galacticraftlegacy:with_lander",
+    "lander_type": "galacticraftlegacy:entry_pod"
+  }
+}

@@ -9,7 +9,6 @@ package io.kalishak.galacticraftlegacy.attachment.entity;
 
 import io.kalishak.galacticraftlegacy.galaxies.environment.CelestialBodyInfo;
 import io.kalishak.galacticraftlegacy.data.GalacticraftTags;
-import io.kalishak.galacticraftlegacy.data.datamap.GalacticraftDataMaps;
 import io.kalishak.galacticraftlegacy.transfer.entity.SpaceGearEquipment;
 import io.kalishak.galacticraftlegacy.world.damagesource.GalacticraftDamageTypes;
 import io.kalishak.galacticraftlegacy.world.entity.GearEquipmentSlot;
@@ -60,7 +59,7 @@ public abstract class GearInventoryProvider implements ParachuteFalling {
 
     public void serverGearTick(ServerLevel serverLevel, LivingEntity gearOwner) {
         //Oxygen
-        CelestialBodyInfo celestialBodyInfo = serverLevel.dimensionTypeRegistration().getData(GalacticraftDataMaps.CELESTIAL_BODY_DATA);
+        CelestialBodyInfo celestialBodyInfo = CelestialBodyInfo.getFromLevel(serverLevel);
 
         if (celestialBodyInfo == null) {
             if (!warnedEmptyBodyData) {

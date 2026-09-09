@@ -7,6 +7,7 @@
 
 package io.kalishak.galacticraftlegacy.registry;
 
+import io.kalishak.galacticraftlegacy.data.datamap.CelestialBodyLevelData;
 import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.galaxies.environment.CelestialBodyInfo;
 import io.kalishak.galacticraftlegacy.galaxies.GalacticraftGalaxies;
@@ -18,35 +19,53 @@ import io.kalishak.galacticraftlegacy.world.level.dimension.transition.FixedPlan
 import io.kalishak.galacticraftlegacy.world.level.dimension.transition.InaccessiblePlanetaryTransition;
 import io.kalishak.galacticraftlegacy.world.level.dimension.transition.LanderPlanetaryTransition;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.dimension.BuiltinDimensionTypes;
 import net.minecraft.world.level.dimension.DimensionType;
+import net.neoforged.neoforge.common.data.DataMapProvider;
 
 import java.util.Optional;
-import java.util.function.BiConsumer;
 
 public class CelestialBodyInfoEntries {
-    public static void register(BiConsumer<ResourceKey<DimensionType>, CelestialBodyInfo> consumer) {
-        CelestialBodyInfo inaccessible = new CelestialBodyInfo(
+    public static final ResourceKey<CelestialBodyInfo> INACCESSIBLE = Constants.key(GalacticraftRegistries.Keys.CELESTIAL_BODY_INFO, "inaccessible");
+    public static final ResourceKey<CelestialBodyInfo> OVERWORLD = Constants.key(GalacticraftRegistries.Keys.CELESTIAL_BODY_INFO, "overworld");
+    public static final ResourceKey<CelestialBodyInfo> MOON = Constants.key(GalacticraftRegistries.Keys.CELESTIAL_BODY_INFO, "moon");
+    public static final ResourceKey<CelestialBodyInfo> ORBIT = Constants.key(GalacticraftRegistries.Keys.CELESTIAL_BODY_INFO, "orbit");
+    public static final ResourceKey<CelestialBodyInfo> MARS = Constants.key(GalacticraftRegistries.Keys.CELESTIAL_BODY_INFO, "mars");
+    public static final ResourceKey<CelestialBodyInfo> ASTEROIDS = Constants.key(GalacticraftRegistries.Keys.CELESTIAL_BODY_INFO, "asteroids");
+    public static final ResourceKey<CelestialBodyInfo> VENUS = Constants.key(GalacticraftRegistries.Keys.CELESTIAL_BODY_INFO, "venus");
+
+    public static void buildDataMaps(DataMapProvider.Builder<CelestialBodyLevelData, DimensionType> dataMapBuilder) {
+        CelestialBodyLevelData inaccessible = new CelestialBodyLevelData(INACCESSIBLE);
+        dataMapBuilder.add(BuiltinDimensionTypes.OVERWORLD, new CelestialBodyLevelData(OVERWORLD), false)
+                .add(BuiltinDimensionTypes.OVERWORLD_CAVES, inaccessible, false)
+                .add(BuiltinDimensionTypes.NETHER, inaccessible, false)
+                .add(BuiltinDimensionTypes.END, inaccessible, false)
+                .add(GalacticraftDimensionTypes.OVERWORLD_ORBIT, new CelestialBodyLevelData(ORBIT), false)
+                .add(GalacticraftDimensionTypes.MOON, new CelestialBodyLevelData(MOON), false)
+                .add(GalacticraftDimensionTypes.MARS, new CelestialBodyLevelData(MARS), false)
+                .add(GalacticraftDimensionTypes.ASTEROIDS, new CelestialBodyLevelData(ASTEROIDS), false)
+                .add(GalacticraftDimensionTypes.VENUS, new CelestialBodyLevelData(VENUS), false);
+    }
+    public static void bootstrap(BootstrapContext<CelestialBodyInfo> cxt) {
+        cxt.register(INACCESSIBLE, new CelestialBodyInfo(
                 GalacticraftGalaxies.SOL,
                 AtmosphereInfo.builder().build(),
                 1.0F,
                 InaccessiblePlanetaryTransition.INSTANCE,
                 Optional.empty()
-        );
+        ));
 
-        consumer.accept(BuiltinDimensionTypes.OVERWORLD, new CelestialBodyInfo(
+        cxt.register(OVERWORLD, new CelestialBodyInfo(
                 GalacticraftGalaxies.OVERWORLD,
                 AtmosphereInfo.EARTH,
                 1.0F,
                 EarthPlanetaryTranstion.INSTANCE,
                 Optional.empty()
         ));
-        consumer.accept(BuiltinDimensionTypes.OVERWORLD_CAVES, inaccessible);
-        consumer.accept(BuiltinDimensionTypes.END, inaccessible);
-        consumer.accept(BuiltinDimensionTypes.NETHER, inaccessible);
-        consumer.accept(
-                GalacticraftDimensionTypes.OVERWORLD_ORBIT,
+        cxt.register(
+                ORBIT,
                 new CelestialBodyInfo(
                         GalacticraftGalaxies.SATELLITE,
                         AtmosphereInfo.builder()
@@ -57,8 +76,8 @@ public class CelestialBodyInfoEntries {
                         Optional.of(0.2F)
                 )
         );
-        consumer.accept(
-                GalacticraftDimensionTypes.MOON,
+        cxt.register(
+                MOON,
                 new CelestialBodyInfo(
                         GalacticraftGalaxies.MOON,
                         AtmosphereInfo.builder()
@@ -69,8 +88,8 @@ public class CelestialBodyInfoEntries {
                         Optional.of(0.2F)
                 )
         );
-        consumer.accept(
-                GalacticraftDimensionTypes.MARS,
+        cxt.register(
+                MARS,
                 new CelestialBodyInfo(
                         GalacticraftGalaxies.MARS,
                         AtmosphereInfo.builder()
@@ -84,8 +103,8 @@ public class CelestialBodyInfoEntries {
                         Optional.of(0.4F)
                 )
         );
-        consumer.accept(
-                GalacticraftDimensionTypes.ASTEROIDS,
+        cxt.register(
+                ASTEROIDS,
                 new CelestialBodyInfo(
                         GalacticraftGalaxies.ASTEROIDS,
                         AtmosphereInfo.builder()
@@ -96,8 +115,8 @@ public class CelestialBodyInfoEntries {
                         Optional.of(0.1F)
                 )
         );
-        consumer.accept(
-                GalacticraftDimensionTypes.VENUS,
+        cxt.register(
+                VENUS,
                 new CelestialBodyInfo(
                         GalacticraftGalaxies.VENUS,
                         AtmosphereInfo.builder()

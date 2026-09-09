@@ -1,0 +1,24 @@
+{
+  "atmosphere_info": {
+    "gas_composition": {},
+    "has_precipitation": false,
+    "is_corrosive": false,
+    "temperature_modifier": -0.9
+  },
+  "celestial_object_reference": "galacticraftlegacy:satellite",
+  "fuel_usage_multiplier": 0.2,
+  "gravity_scale": 0.165,
+  "transition": {
+    "type": "galacticraftlegacy:fixed",
+    "parachest_pos": [
+      -8,
+      90,
+      -1
+    ],
+    "pos": [
+      0,
+      65,
+      0
+    ]
+  }
+}

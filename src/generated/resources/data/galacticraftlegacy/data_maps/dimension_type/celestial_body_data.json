@@ -1,195 +1,31 @@
 {
   "values": {
     "galacticraftlegacy:asteroids": {
-      "neoforge:conditions": [
-        {
-          "type": "neoforge:always"
-        }
-      ],
-      "atmosphere_info": {
-        "gas_composition": {},
-        "has_precipitation": false,
-        "is_corrosive": false,
-        "temperature_modifier": -0.9
-      },
-      "celestial_object_reference": "galacticraftlegacy:asteroids",
-      "fuel_usage_multiplier": 0.1,
-      "gravity_scale": 0.01,
-      "transition": {
-        "type": "galacticraftlegacy:with_lander",
-        "lander_type": "galacticraftlegacy:entry_pod"
-      }
+      "celestial_body_info": "galacticraftlegacy:asteroids"
     },
     "galacticraftlegacy:mars": {
-      "neoforge:conditions": [
-        {
-          "type": "neoforge:always"
-        }
-      ],
-      "atmosphere_info": {
-        "gas_composition": {
-          "galacticraftlegacy:argon": 0.02,
-          "galacticraftlegacy:carbon_dioxide": 0.95,
-          "galacticraftlegacy:nitrogen": 0.03
-        },
-        "has_precipitation": false,
-        "is_corrosive": false,
-        "temperature_modifier": -0.5
-      },
-      "celestial_object_reference": "galacticraftlegacy:mars",
-      "fuel_usage_multiplier": 0.4,
-      "gravity_scale": 0.38,
-      "transition": {
-        "type": "galacticraftlegacy:with_lander",
-        "lander_type": "galacticraftlegacy:landing_balloons"
-      }
+      "celestial_body_info": "galacticraftlegacy:mars"
     },
     "galacticraftlegacy:moon": {
-      "neoforge:conditions": [
-        {
-          "type": "neoforge:always"
-        }
-      ],
-      "atmosphere_info": {
-        "gas_composition": {},
-        "has_precipitation": false,
-        "is_corrosive": false,
-        "temperature_modifier": -0.9
-      },
-      "celestial_object_reference": "galacticraftlegacy:moon",
-      "fuel_usage_multiplier": 0.2,
-      "gravity_scale": 0.165,
-      "transition": {
-        "type": "galacticraftlegacy:with_lander",
-        "lander_type": "galacticraftlegacy:moon_lander"
-      }
+      "celestial_body_info": "galacticraftlegacy:moon"
     },
     "galacticraftlegacy:overworld_orbit": {
-      "neoforge:conditions": [
-        {
-          "type": "neoforge:always"
-        }
-      ],
-      "atmosphere_info": {
-        "gas_composition": {},
-        "has_precipitation": false,
-        "is_corrosive": false,
-        "temperature_modifier": -0.9
-      },
-      "celestial_object_reference": "galacticraftlegacy:satellite",
-      "fuel_usage_multiplier": 0.2,
-      "gravity_scale": 0.165,
-      "transition": {
-        "type": "galacticraftlegacy:fixed",
-        "parachest_pos": [
-          -8,
-          90,
-          -1
-        ],
-        "pos": [
-          0,
-          65,
-          0
-        ]
-      }
+      "celestial_body_info": "galacticraftlegacy:orbit"
     },
     "galacticraftlegacy:venus": {
-      "neoforge:conditions": [
-        {
-          "type": "neoforge:always"
-        }
-      ],
-      "atmosphere_info": {
-        "gas_composition": {
-          "galacticraftlegacy:carbon_dioxide": 0.965,
-          "galacticraftlegacy:nitrogen": 0.035
-        },
-        "has_precipitation": false,
-        "is_corrosive": false,
-        "temperature_modifier": 2.0
-      },
-      "celestial_object_reference": "galacticraftlegacy:venus",
-      "fuel_usage_multiplier": 0.9,
-      "gravity_scale": 0.904,
-      "transition": {
-        "type": "galacticraftlegacy:with_lander",
-        "lander_type": "galacticraftlegacy:entry_pod"
-      }
+      "celestial_body_info": "galacticraftlegacy:venus"
     },
     "minecraft:overworld": {
-      "neoforge:conditions": [
-        {
-          "type": "neoforge:always"
-        }
-      ],
-      "atmosphere_info": {
-        "gas_composition": {
-          "galacticraftlegacy:argon": 0.93,
-          "galacticraftlegacy:carbon_dioxide": 0.04,
-          "galacticraftlegacy:nitrogen": 78.08,
-          "galacticraftlegacy:oxygen": 20.95
-        },
-        "has_precipitation": true,
-        "is_corrosive": false,
-        "temperature_modifier": 1.0
-      },
-      "celestial_object_reference": "galacticraftlegacy:overworld",
-      "gravity_scale": 1.0,
-      "transition": {}
+      "celestial_body_info": "galacticraftlegacy:overworld"
     },
     "minecraft:overworld_caves": {
-      "neoforge:conditions": [
-        {
-          "type": "neoforge:always"
-        }
-      ],
-      "atmosphere_info": {
-        "gas_composition": {},
-        "has_precipitation": false,
-        "is_corrosive": false,
-        "temperature_modifier": 1.0
-      },
-      "celestial_object_reference": "galacticraftlegacy:sol",
-      "gravity_scale": 1.0,
-      "transition": {
-        "type": "galacticraftlegacy:inaccessible"
-      }
+      "celestial_body_info": "galacticraftlegacy:inaccessible"
     },
     "minecraft:the_end": {
-      "neoforge:conditions": [
-        {
-          "type": "neoforge:always"
-        }
-      ],
-      "atmosphere_info": {
-        "gas_composition": {},
-        "has_precipitation": false,
-        "is_corrosive": false,
-        "temperature_modifier": 1.0
-      },
-      "celestial_object_reference": "galacticraftlegacy:sol",
-      "gravity_scale": 1.0,
-      "transition": {
-        "type": "galacticraftlegacy:inaccessible"
-      }
+      "celestial_body_info": "galacticraftlegacy:inaccessible"
     },
     "minecraft:the_nether": {
-      "neoforge:conditions": [
-        {
-          "type": "neoforge:always"
-        }
-      ],
-      "atmosphere_info": {
-        "gas_composition": {},
-        "has_precipitation": false,
-        "is_corrosive": false,
-        "temperature_modifier": 1.0
-      },
-      "celestial_object_reference": "galacticraftlegacy:sol",
-      "gravity_scale": 1.0,
-      "transition": {
-        "type": "galacticraftlegacy:inaccessible"
-      }
+      "celestial_body_info": "galacticraftlegacy:inaccessible"
     }
   }
 }
