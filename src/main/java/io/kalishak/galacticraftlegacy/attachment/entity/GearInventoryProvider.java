@@ -7,9 +7,9 @@
 
 package io.kalishak.galacticraftlegacy.attachment.entity;
 
-import io.kalishak.galacticraftlegacy.attachment.GalacticraftAttachments;
-import io.kalishak.galacticraftlegacy.attachment.level.CelestialBodyLevelData;
+import io.kalishak.galacticraftlegacy.galaxies.environment.CelestialBodyInfo;
 import io.kalishak.galacticraftlegacy.data.GalacticraftTags;
+import io.kalishak.galacticraftlegacy.data.datamap.GalacticraftDataMaps;
 import io.kalishak.galacticraftlegacy.transfer.entity.SpaceGearEquipment;
 import io.kalishak.galacticraftlegacy.world.damagesource.GalacticraftDamageTypes;
 import io.kalishak.galacticraftlegacy.world.entity.GearEquipmentSlot;
@@ -18,7 +18,6 @@ import io.kalishak.galacticraftlegacy.world.item.component.GearEquippable;
 import io.kalishak.galacticraftlegacy.world.item.component.ShieldController;
 import io.kalishak.galacticraftlegacy.world.level.material.fluid.GalacticraftFluids;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.EntityTypeTags;
@@ -41,8 +40,12 @@ import net.neoforged.neoforge.transfer.item.LivingEntityEquipmentWrapper;
 import net.neoforged.neoforge.transfer.transaction.Transaction;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public abstract class GearInventoryProvider implements ParachuteFalling {
+    private static final Logger LOGGER = LoggerFactory.getLogger(GearInventoryProvider.class);
+    private static boolean warnedEmptyBodyData;
     protected final SpaceGearEquipment gearEquipment;
     protected int parachuteFallingTicks;
     protected int lastSuffocationDamageTick = 0;
@@ -57,12 +60,21 @@ public abstract class GearInventoryProvider implements ParachuteFalling {
 
     public void serverGearTick(ServerLevel serverLevel, LivingEntity gearOwner) {
         //Oxygen
+        CelestialBodyInfo celestialBodyInfo = serverLevel.dimensionTypeRegistration().getData(GalacticraftDataMaps.CELESTIAL_BODY_DATA);
+
+        if (celestialBodyInfo == null) {
+            if (!warnedEmptyBodyData) {
+                LOGGER.warn("The following DimensionType of : {} does not have CelestialBodyData defined, gear inventory will cautiously stop ticking.", serverLevel.dimension());
+                warnedEmptyBodyData = true;
+            }
+            return;
+        }
+
         this.gearEquipment.tick(gearOwner);
         SpaceGearEquipment spaceGearEquipment = getGearEquipment();
-        Holder<CelestialBodyLevelData> celestialBodyLevelData = serverLevel.getData(GalacticraftAttachments.CELESTIAL_BODY);
 
         if (!gearOwner.is(EntityTypeTags.UNDEAD)) {
-            if (!celestialBodyLevelData.value().atmosphereInfo().isBreathable()) {
+            if (!celestialBodyInfo.atmosphereInfo().isBreathable()) {
                 if (!mayBreath(gearOwner) || !depleteOxygen()) {
                     if (this.lastSuffocationDamageTick++ > 120) {
                         gearOwner.hurtServer(serverLevel, serverLevel.damageSources().source(GalacticraftDamageTypes.SUFFOCATION), 0.2F);
@@ -75,14 +87,14 @@ public abstract class GearInventoryProvider implements ParachuteFalling {
                 }
             }
 
-            float temperatureModifier = celestialBodyLevelData.value().atmosphereInfo().getTemperatureModifier();
+            float temperatureModifier = celestialBodyInfo.atmosphereInfo().getTemperatureModifier();
             if (temperatureModifier != 1.0) {
                 if (!isThermalPaddingEffective(temperatureModifier)) {
                     gearOwner.hurtServer(serverLevel, serverLevel.damageSources().source(GalacticraftDamageTypes.SUN_RADIATION), 0.2F);
                 }
             }
 
-            if (celestialBodyLevelData.value().atmosphereInfo().isCorrosive()) {
+            if (celestialBodyInfo.atmosphereInfo().isCorrosive()) {
                 boolean isProtected = false;
 
                 ItemStack shieldItem = spaceGearEquipment.get(GearEquipmentSlot.SHIELD);

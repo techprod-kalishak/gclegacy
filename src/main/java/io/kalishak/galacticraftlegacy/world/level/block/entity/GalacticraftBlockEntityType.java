@@ -153,6 +153,7 @@ public final class GalacticraftBlockEntityType {
         AbstractElectricFurnaceBlockEntity.registerCapabilities(event, ELECTRIC_FURNACE.get());
         AbstractElectricFurnaceBlockEntity.registerCapabilities(event, ELECTRIC_ARC_FURNACE.get());
         FlammableCauldronBlockEntity.registerCapability(event);
+        FluidTankBlockEntity.registerCapability(event);
         MagneticCraftingBlockEntity.registerCapabilities(event);
         ParachestBlockEntity.registerCapabilities(event);
         OxygenCollectorBlockEntity.registerCapabilities(event);

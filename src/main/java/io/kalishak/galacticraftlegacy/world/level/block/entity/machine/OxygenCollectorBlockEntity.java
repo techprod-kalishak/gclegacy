@@ -8,6 +8,7 @@
 package io.kalishak.galacticraftlegacy.world.level.block.entity.machine;
 
 import io.kalishak.galacticraftlegacy.world.inventory.machine.OxygenCollectorMenu;
+import io.kalishak.galacticraftlegacy.world.level.OxygenHelper;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityType;
 import io.kalishak.galacticraftlegacy.world.level.material.fluid.GalacticraftFluids;
 import net.minecraft.core.BlockPos;
@@ -52,7 +53,7 @@ public class OxygenCollectorBlockEntity extends AbstractOxygenBlockEntity {
                 float nearbyLeaves = 0;
 
                 if (!blockEntity.isInitialised) {
-                    blockEntity.noAtmosphericOxygen = !level.dimension().equals(ServerLevel.OVERWORLD);
+                    blockEntity.noAtmosphericOxygen = OxygenHelper.hasAtmosphericOxygen(level);
                     blockEntity.isInitialised = true;
                 }
 

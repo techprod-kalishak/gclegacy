@@ -19,7 +19,6 @@ import io.kalishak.galacticraftlegacy.data.tag.*;
 import io.kalishak.galacticraftlegacy.data.worldgen.GalacticraftCarvers;
 import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.references.GalacticraftComponents;
-import io.kalishak.galacticraftlegacy.registry.CelestialBodyLevelDataEntries;
 import io.kalishak.galacticraftlegacy.registry.Checklist;
 import io.kalishak.galacticraftlegacy.registry.GalacticraftRegistries;
 import io.kalishak.galacticraftlegacy.registry.SchematicVariants;
@@ -81,7 +80,6 @@ public class GalacticraftData {
             .add(GalacticraftRegistries.Keys.VEHICLE_CRAFTING_PAGE, VehicleCraftingPages::bootstrap)
             .add(GalacticraftRegistries.Keys.VEIN_TYPE, DenseOreVeins::bootstrap)
             .add(GalacticraftRegistries.Keys.SCHEMATIC, SchematicVariants::bootstrap)
-            .add(GalacticraftRegistries.Keys.CELESTIAL_BODY_LEVEL_DATA, CelestialBodyLevelDataEntries::bootstrap)
             .add(GalacticraftRegistries.Keys.SPACE_STATION_RECIPE, SpaceStationRecipe::bootstrap);
 
     public static void gatherData(GatherDataEvent.Client event) {

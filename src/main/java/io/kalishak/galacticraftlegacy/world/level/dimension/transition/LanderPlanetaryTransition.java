@@ -26,12 +26,12 @@ import net.neoforged.fml.event.config.ModConfigEvent;
 import org.jspecify.annotations.Nullable;
 
 public class LanderPlanetaryTransition extends PlanetaryTransition {
-    public static final MapCodec<LanderPlanetaryTransition> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+    public static final MapCodec<LanderPlanetaryTransition> MAP_CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             BuiltInRegistries.ENTITY_TYPE.holderByNameCodec().fieldOf("lander_type").forGetter(transition -> transition.landerType)
     ).apply(instance, LanderPlanetaryTransition::new));
 
     protected final Holder<EntityType<?>> landerType;
-    private static boolean landerDisabled = true;
+    private static boolean landerDisabled = false;
 
     public LanderPlanetaryTransition(Holder<EntityType<?>> landerType) {
         this.landerType = landerType;
@@ -77,7 +77,7 @@ public class LanderPlanetaryTransition extends PlanetaryTransition {
     @Override
     public void onDimensionChange(Level newLevel, ServerPlayer player, boolean isRidingAutoRocket) {
         if (!isRidingAutoRocket && !LanderPlanetaryTransition.landerDisabled) {
-            Entity landerEntity = this.landerType.value().create(newLevel, EntitySpawnReason.SPAWN_ITEM_USE);
+            Entity landerEntity = this.landerType.value().create(newLevel, EntitySpawnReason.EVENT);
 
             if (!(landerEntity instanceof LandingEntity)) return;
 
@@ -92,6 +92,6 @@ public class LanderPlanetaryTransition extends PlanetaryTransition {
 
     @Override
     public MapCodec<LanderPlanetaryTransition> codec() {
-        return CODEC;
+        return MAP_CODEC;
     }
 }

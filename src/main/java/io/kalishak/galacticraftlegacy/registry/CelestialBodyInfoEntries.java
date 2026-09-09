@@ -8,58 +8,46 @@
 package io.kalishak.galacticraftlegacy.registry;
 
 import io.kalishak.galacticraftlegacy.references.Constants;
-import io.kalishak.galacticraftlegacy.attachment.level.CelestialBodyLevelData;
+import io.kalishak.galacticraftlegacy.galaxies.environment.CelestialBodyInfo;
 import io.kalishak.galacticraftlegacy.galaxies.GalacticraftGalaxies;
 import io.kalishak.galacticraftlegacy.galaxies.environment.AtmosphereInfo;
 import io.kalishak.galacticraftlegacy.world.entity.GalacticraftEntityType;
+import io.kalishak.galacticraftlegacy.world.level.dimension.GalacticraftDimensionTypes;
 import io.kalishak.galacticraftlegacy.world.level.dimension.transition.EarthPlanetaryTranstion;
 import io.kalishak.galacticraftlegacy.world.level.dimension.transition.FixedPlanetaryTransition;
+import io.kalishak.galacticraftlegacy.world.level.dimension.transition.InaccessiblePlanetaryTransition;
 import io.kalishak.galacticraftlegacy.world.level.dimension.transition.LanderPlanetaryTransition;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.level.dimension.BuiltinDimensionTypes;
+import net.minecraft.world.level.dimension.DimensionType;
 
 import java.util.Optional;
-import java.util.function.Supplier;
+import java.util.function.BiConsumer;
 
-public class CelestialBodyLevelDataEntries {
-    public static final ResourceKey<CelestialBodyLevelData> OVERWORLD = Constants.key(GalacticraftRegistries.Keys.CELESTIAL_BODY_LEVEL_DATA, "overworld");
-    public static final ResourceKey<CelestialBodyLevelData> OVERWORLD_CAVES = Constants.key(GalacticraftRegistries.Keys.CELESTIAL_BODY_LEVEL_DATA, "overworld_caves");
-    public static final ResourceKey<CelestialBodyLevelData> THE_NETHER = Constants.key(GalacticraftRegistries.Keys.CELESTIAL_BODY_LEVEL_DATA, "the_nether");
-    public static final ResourceKey<CelestialBodyLevelData> THE_END = Constants.key(GalacticraftRegistries.Keys.CELESTIAL_BODY_LEVEL_DATA, "the_end");
-    public static final ResourceKey<CelestialBodyLevelData> EARTH_ORBIT = Constants.key(GalacticraftRegistries.Keys.CELESTIAL_BODY_LEVEL_DATA, "earth_orbit");
-    public static final ResourceKey<CelestialBodyLevelData> MOON = Constants.key(GalacticraftRegistries.Keys.CELESTIAL_BODY_LEVEL_DATA, "moon");
-    public static final ResourceKey<CelestialBodyLevelData> MARS = Constants.key(GalacticraftRegistries.Keys.CELESTIAL_BODY_LEVEL_DATA, "mars");
-    public static final ResourceKey<CelestialBodyLevelData> ASTEROIDS = Constants.key(GalacticraftRegistries.Keys.CELESTIAL_BODY_LEVEL_DATA, "asteroids");
-    public static final ResourceKey<CelestialBodyLevelData> VENUS = Constants.key(GalacticraftRegistries.Keys.CELESTIAL_BODY_LEVEL_DATA, "venus");
-    public static final Supplier<CelestialBodyLevelData> PLACEHOLDER = () -> new CelestialBodyLevelData(
-            GalacticraftGalaxies.OVERWORLD,
-            AtmosphereInfo.EARTH,
-            1.0F,
-            new EarthPlanetaryTranstion(),
-            Optional.empty()
-    );
+public class CelestialBodyInfoEntries {
+    public static void register(BiConsumer<ResourceKey<DimensionType>, CelestialBodyInfo> consumer) {
+        CelestialBodyInfo inaccessible = new CelestialBodyInfo(
+                GalacticraftGalaxies.SOL,
+                AtmosphereInfo.builder().build(),
+                1.0F,
+                InaccessiblePlanetaryTransition.INSTANCE,
+                Optional.empty()
+        );
 
-    public static void bootstrap(BootstrapContext<CelestialBodyLevelData> cxt) {
-        cxt.register(
-                OVERWORLD,
-                PLACEHOLDER.get()
-        );
-        cxt.register(
-                OVERWORLD_CAVES,
-                PLACEHOLDER.get()
-        );
-        cxt.register(
-                THE_NETHER,
-                PLACEHOLDER.get()
-        );
-        cxt.register(
-                THE_END,
-                PLACEHOLDER.get()
-        );
-        cxt.register(
-                EARTH_ORBIT,
-                new CelestialBodyLevelData(
+        consumer.accept(BuiltinDimensionTypes.OVERWORLD, new CelestialBodyInfo(
+                GalacticraftGalaxies.OVERWORLD,
+                AtmosphereInfo.EARTH,
+                1.0F,
+                EarthPlanetaryTranstion.INSTANCE,
+                Optional.empty()
+        ));
+        consumer.accept(BuiltinDimensionTypes.OVERWORLD_CAVES, inaccessible);
+        consumer.accept(BuiltinDimensionTypes.END, inaccessible);
+        consumer.accept(BuiltinDimensionTypes.NETHER, inaccessible);
+        consumer.accept(
+                GalacticraftDimensionTypes.OVERWORLD_ORBIT,
+                new CelestialBodyInfo(
                         GalacticraftGalaxies.SATELLITE,
                         AtmosphereInfo.builder()
                                 .temperatureModifier(-0.9F)
@@ -69,9 +57,9 @@ public class CelestialBodyLevelDataEntries {
                         Optional.of(0.2F)
                 )
         );
-        cxt.register(
-                MOON,
-                new CelestialBodyLevelData(
+        consumer.accept(
+                GalacticraftDimensionTypes.MOON,
+                new CelestialBodyInfo(
                         GalacticraftGalaxies.MOON,
                         AtmosphereInfo.builder()
                                 .temperatureModifier(-0.9F)
@@ -81,9 +69,9 @@ public class CelestialBodyLevelDataEntries {
                         Optional.of(0.2F)
                 )
         );
-        cxt.register(
-                MARS,
-                new CelestialBodyLevelData(
+        consumer.accept(
+                GalacticraftDimensionTypes.MARS,
+                new CelestialBodyInfo(
                         GalacticraftGalaxies.MARS,
                         AtmosphereInfo.builder()
                                 .gas(Constants.key(Registries.FLUID, "carbon_dioxide"), 0.95)
@@ -96,9 +84,9 @@ public class CelestialBodyLevelDataEntries {
                         Optional.of(0.4F)
                 )
         );
-        cxt.register(
-                ASTEROIDS,
-                new CelestialBodyLevelData(
+        consumer.accept(
+                GalacticraftDimensionTypes.ASTEROIDS,
+                new CelestialBodyInfo(
                         GalacticraftGalaxies.ASTEROIDS,
                         AtmosphereInfo.builder()
                                 .temperatureModifier(-0.9F)
@@ -108,9 +96,9 @@ public class CelestialBodyLevelDataEntries {
                         Optional.of(0.1F)
                 )
         );
-        cxt.register(
-                VENUS,
-                new CelestialBodyLevelData(
+        consumer.accept(
+                GalacticraftDimensionTypes.VENUS,
+                new CelestialBodyInfo(
                         GalacticraftGalaxies.VENUS,
                         AtmosphereInfo.builder()
                                 .gas(Constants.key(Registries.FLUID, "carbon_dioxide"), 0.965)

@@ -7,7 +7,6 @@
 
 package io.kalishak.galacticraftlegacy.world.level.block.entity.machine;
 
-import io.kalishak.galacticraftlegacy.attachment.GalacticraftAttachments;
 import io.kalishak.galacticraftlegacy.data.GalacticraftTags;
 import io.kalishak.galacticraftlegacy.world.level.OxygenHelper;
 import io.kalishak.galacticraftlegacy.world.level.block.OxygenDetectorBlock;
@@ -41,7 +40,7 @@ public class OxygenDetectorBlockEntity extends BlockEntity {
             blockEntity.searchDelay = 0;
             boolean foundOxygen = false;
 
-            if (!serverLevel.getData(GalacticraftAttachments.CELESTIAL_BODY).value().atmosphereInfo().isBreathable()) {
+            if (!OxygenHelper.hasAtmosphericOxygen(serverLevel)) {
                 if (OxygenHelper.hasOxygen(serverLevel, blockEntity.searchBounds, false)) {
                     blockState.setValue(OxygenDetectorBlock.ACTIVE, true);
                     foundOxygen = true;

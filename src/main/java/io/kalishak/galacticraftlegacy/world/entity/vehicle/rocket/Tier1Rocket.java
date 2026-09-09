@@ -10,8 +10,9 @@ package io.kalishak.galacticraftlegacy.world.entity.vehicle.rocket;
 import io.kalishak.galacticraftlegacy.attachment.GalacticraftAttachments;
 import io.kalishak.galacticraftlegacy.attachment.entity.PlayerSpaceData;
 import io.kalishak.galacticraftlegacy.attachment.entity.TransitionalRocketInfo;
-import io.kalishak.galacticraftlegacy.attachment.level.CelestialBodyLevelData;
+import io.kalishak.galacticraftlegacy.galaxies.environment.CelestialBodyInfo;
 import io.kalishak.galacticraftlegacy.config.CommonConfig;
+import io.kalishak.galacticraftlegacy.data.datamap.GalacticraftDataMaps;
 import io.kalishak.galacticraftlegacy.world.item.FeatureTier;
 import io.kalishak.galacticraftlegacy.world.item.GalacticraftItems;
 import io.kalishak.galacticraftlegacy.world.item.component.GalacticraftDataComponents;
@@ -65,30 +66,34 @@ public class Tier1Rocket extends TieredRocket {
         }
 
         if (isLaunched()) {
-            CelestialBodyLevelData celestialBodyLevelData = level().getData(GalacticraftAttachments.CELESTIAL_BODY).value();
+            CelestialBodyInfo celestialBodyInfo = level().dimensionTypeRegistration().getData(GalacticraftDataMaps.CELESTIAL_BODY_DATA);
 
-            if (getLaunchPhase() == LaunchPhase.LAUNCHED) {
-                double d = getTimeSinceLaunch() / 150.0D;
+            if (celestialBodyInfo != null) {
+                if (getLaunchPhase() == LaunchPhase.LAUNCHED) {
+                    double d = getTimeSinceLaunch() / 150.0D;
 
-                if (celestialBodyLevelData.atmosphereInfo().getGasComposition().isEmpty()) {
-                    d = Math.min(d * 1.2D, 1.6D);
-                } else {
-                    d = Math.min(d, 1);
+                    if (celestialBodyInfo.atmosphereInfo().getGasComposition().isEmpty()) {
+                        d = Math.min(d * 1.2D, 1.6D);
+                    } else {
+                        d = Math.min(d, 1);
+                    }
+
+                    if (d != 0.0) {
+                        move(MoverType.SELF, new Vec3(0.0D, -d * Math.cos(Math.toDegrees(getYRot() - 180.0D)), 0.0D));
+                    }
+                } else if (getLaunchPhase() == LaunchPhase.LANDING) {
+                    move(MoverType.SELF, new Vec3(0.0D, getDeltaMovement().y - 0.008D, 0.0D));
                 }
 
-                if (d != 0.0) {
-                    move(MoverType.SELF, new Vec3(0.0D, -d * Math.cos(Math.toDegrees(getYRot() - 180.0D)), 0.0D));
-                }
-            } else if (getLaunchPhase() == LaunchPhase.LANDING) {
-                move(MoverType.SELF, new Vec3(0.0D, getDeltaMovement().y - 0.008D, 0.0D));
-            }
+                double speedMultiplier = celestialBodyInfo.fuelUsageMultiplier().orElse(1.0F);
 
-            double speedMultiplier = celestialBodyLevelData.fuelUsageMultiplier().orElse(1.0F);
-
-            if (getTimeSinceLaunch() % Mth.floor(3 * speedMultiplier) == 0) {
-                if (!AbstractAutoRocket.consumeFuel(this, 1)) {
-                    stopRocketSound();
+                if (getTimeSinceLaunch() % Mth.floor(3 * speedMultiplier) == 0) {
+                    if (!AbstractAutoRocket.consumeFuel(this, 1)) {
+                        stopRocketSound();
+                    }
                 }
+            } else {
+                setLaunchPhase(LaunchPhase.UNIGNITED);
             }
         }
 

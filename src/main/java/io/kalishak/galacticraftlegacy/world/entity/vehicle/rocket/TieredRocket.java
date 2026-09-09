@@ -7,8 +7,9 @@
 
 package io.kalishak.galacticraftlegacy.world.entity.vehicle.rocket;
 
+import io.kalishak.galacticraftlegacy.galaxies.environment.CelestialBodyInfo;
 import io.kalishak.galacticraftlegacy.config.CommonConfig;
-import io.kalishak.galacticraftlegacy.attachment.GalacticraftAttachments;
+import io.kalishak.galacticraftlegacy.data.datamap.GalacticraftDataMaps;
 import io.kalishak.galacticraftlegacy.galaxies.CelestialBody;
 import io.kalishak.galacticraftlegacy.galaxies.CelestialObject;
 import io.kalishak.galacticraftlegacy.network.payload.ChangeCameraModePayload;
@@ -141,7 +142,7 @@ public abstract class TieredRocket extends AbstractAutoRocket implements RocketT
                         Level otherLevel = serverLevel.getServer().getLevel(targetLevel);
 
                         if (otherLevel != null) {
-                            boolean canReachTo = !CommonConfig.DIMENSIONS_WITH_DISABLED_ROCKETS.get().contains(targetLevel.identifier().toString()) && canAccess(otherLevel.getData(GalacticraftAttachments.CELESTIAL_BODY).value().celestialObject());
+                            boolean canReachTo = !CommonConfig.DIMENSIONS_WITH_DISABLED_ROCKETS.get().contains(targetLevel.identifier().toString()) && canAccess(otherLevel.dimensionTypeRegistration().getData(GalacticraftDataMaps.CELESTIAL_BODY_DATA));
 
                             if (canReachTo) {
                                 if (!getPassengers().isEmpty()) {
@@ -284,8 +285,11 @@ public abstract class TieredRocket extends AbstractAutoRocket implements RocketT
         return true;
     }
 
-    public boolean canAccess(Holder<CelestialObject> celestial) {
-        if (celestial.isBound() && celestial.value() instanceof CelestialBody celestialBody) {
+    public boolean canAccess(@Nullable CelestialBodyInfo celestialBodyData) {
+        if (celestialBodyData == null) return false;
+
+        Holder<CelestialObject> celestialHolder = celestialBodyData.celestialObject();
+        if (celestialHolder.isBound() && celestialHolder.value() instanceof CelestialBody celestialBody) {
             return celestialBody.isReachable() && celestialBody.getTierRequired().getLevel() <= this.tier.getLevel();
         }
 

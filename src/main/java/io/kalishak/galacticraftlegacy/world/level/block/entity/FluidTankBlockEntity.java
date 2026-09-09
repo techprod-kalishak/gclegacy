@@ -1,8 +1,16 @@
+/*
+ * Copyright (c) 2026 Kalishak
+ *
+ * Licensed under the MIT license
+ * See LICENSE file for more details
+ */
+
 package io.kalishak.galacticraftlegacy.world.level.block.entity;
 
 import com.google.common.base.Predicates;
 import io.kalishak.galacticraftlegacy.transfer.capability.fluid.SingleTankResourceHandler;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
@@ -13,6 +21,9 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.capabilities.ICapabilityProvider;
+import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.common.SoundActions;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.transfer.ResourceHandler;
@@ -42,6 +53,14 @@ public class FluidTankBlockEntity extends BlockEntity {
                 }
             }
         }
+    }
+
+    public static void registerCapability(RegisterCapabilitiesEvent event) {
+        event.registerBlockEntity(
+                Capabilities.Fluid.BLOCK,
+                GalacticraftBlockEntityType.FLUID_TANK.get(),
+                (entity, side) -> entity.tank
+        );
     }
 
     public InteractionResult interactWithItem(ResourceHandler<FluidResource> fluidHandler, Level level, BlockPos pos, Player player) {

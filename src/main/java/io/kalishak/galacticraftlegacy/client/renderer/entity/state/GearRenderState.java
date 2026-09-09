@@ -7,9 +7,10 @@
 
 package io.kalishak.galacticraftlegacy.client.renderer.entity.state;
 
+import io.kalishak.galacticraftlegacy.galaxies.environment.CelestialBodyInfo;
+import io.kalishak.galacticraftlegacy.data.datamap.GalacticraftDataMaps;
 import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.attachment.AttachmentHelper;
-import io.kalishak.galacticraftlegacy.attachment.GalacticraftAttachments;
 import io.kalishak.galacticraftlegacy.attachment.entity.GearInventoryProvider;
 import io.kalishak.galacticraftlegacy.transfer.entity.SpaceGearEquipment;
 import io.kalishak.galacticraftlegacy.world.entity.GearEquipmentSlot;
@@ -47,6 +48,12 @@ public interface GearRenderState {
     static <E extends LivingEntity, S extends LivingEntityRenderState> void appendPlayerRenderStates(E entity, S reusedState) {
         GearInventoryProvider gear = AttachmentHelper.getGearInventory(entity);
         SpaceGearEquipment spaceGearEquipment = gear.getGearEquipment();
+        CelestialBodyInfo celestialBodyData = entity.level().dimensionTypeRegistration().getData(GalacticraftDataMaps.CELESTIAL_BODY_DATA);
+        float temperatureModifier = 1.0F;
+
+        if (celestialBodyData != null) {
+            temperatureModifier = celestialBodyData.atmosphereInfo().getTemperatureModifier();
+        }
 
         reusedState.setRenderData(GearRenderState.THERMAL_CAP, spaceGearEquipment.get(GearEquipmentSlot.THERMAL_CAP));
         reusedState.setRenderData(GearRenderState.THERMAL_SHIRT, spaceGearEquipment.get(GearEquipmentSlot.THERMAL_SHIRT));
@@ -57,9 +64,7 @@ public interface GearRenderState {
         reusedState.setRenderData(GearRenderState.IS_PARACHUTE_OPEN, gear.usesParachute());
         reusedState.setRenderData(GearRenderState.TELEMETRY_MODULE, spaceGearEquipment.get(GearEquipmentSlot.FREQUENCY_MODULE));
         reusedState.setRenderData(GearRenderState.SHIELD_CONTROLLER, spaceGearEquipment.get(GearEquipmentSlot.SHIELD));
-
-        AttachmentHelper.getMap(entity.level(), GalacticraftAttachments.CELESTIAL_BODY, levelData -> levelData.value().atmosphereInfo().getTemperatureModifier())
-                .ifPresent(temperatureModifier -> reusedState.setRenderData(GearRenderState.TEMPERATURE_MODIFIER, temperatureModifier));
+        reusedState.setRenderData(GearRenderState.TEMPERATURE_MODIFIER, temperatureModifier);
     }
 
     ItemStack oxygenMask();

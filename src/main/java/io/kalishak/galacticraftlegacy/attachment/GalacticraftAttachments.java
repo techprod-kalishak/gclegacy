@@ -13,7 +13,6 @@ import io.kalishak.galacticraftlegacy.attachment.block.SyncedFluidResource;
 import io.kalishak.galacticraftlegacy.attachment.entity.AdvancedMovement;
 import io.kalishak.galacticraftlegacy.attachment.entity.EntityGearInventory;
 import io.kalishak.galacticraftlegacy.attachment.entity.PlayerSpaceData;
-import io.kalishak.galacticraftlegacy.attachment.level.CelestialBodyLevelData;
 import io.kalishak.galacticraftlegacy.registry.SchematicVariant;
 import io.kalishak.galacticraftlegacy.registry.SchematicVariants;
 import io.kalishak.galacticraftlegacy.world.entity.FlagData;
@@ -112,11 +111,6 @@ public final class GalacticraftAttachments {
                     .serialize(EntityGearInventory.MAP_CODEC, EntityGearInventory::shouldSave)
                     .sync(EntityGearInventory.STREAM_CODEC)
                     .build()
-    );
-
-    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Holder<CelestialBodyLevelData>>> CELESTIAL_BODY = REGISTRY.register(
-            "celestial_body_data",
-            () -> AttachmentType.builder(CelestialBodyLevelData::fromLevel).build()
     );
 
     public static void init(IEventBus eventBus) {

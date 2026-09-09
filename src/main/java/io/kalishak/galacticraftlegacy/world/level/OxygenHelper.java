@@ -7,7 +7,9 @@
 
 package io.kalishak.galacticraftlegacy.world.level;
 
+import io.kalishak.galacticraftlegacy.galaxies.environment.CelestialBodyInfo;
 import io.kalishak.galacticraftlegacy.data.GalacticraftTags;
+import io.kalishak.galacticraftlegacy.data.datamap.GalacticraftDataMaps;
 import io.kalishak.galacticraftlegacy.world.level.block.SealableBlock;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.OxygenDistributorBlockEntity;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.wire.ColoredPipeBlockEntity;
@@ -62,6 +64,12 @@ public class OxygenHelper {
         }
 
         return connections;
+    }
+
+    public static boolean hasAtmosphericOxygen(Level level) {
+        CelestialBodyInfo levelData = level.dimensionTypeRegistration().getData(GalacticraftDataMaps.CELESTIAL_BODY_DATA);
+
+        return levelData == null || levelData.atmosphereInfo().isBreathable();
     }
 
     @SuppressWarnings("deprecation")

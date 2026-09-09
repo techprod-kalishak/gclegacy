@@ -22,7 +22,7 @@ import org.jspecify.annotations.Nullable;
 import java.util.Optional;
 
 public class FixedPlanetaryTransition extends PlanetaryTransition {
-    public static final MapCodec<FixedPlanetaryTransition> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+    public static final MapCodec<FixedPlanetaryTransition> MAP_CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             BlockPos.CODEC.fieldOf("pos").forGetter(transition -> transition.pos),
             BlockPos.CODEC.optionalFieldOf("parachest_pos").forGetter(transition -> transition.parachestPos),
             Codec.BOOL.optionalFieldOf("is_space_station", false).forGetter(transition -> transition.isSpaceStation)
@@ -76,6 +76,6 @@ public class FixedPlanetaryTransition extends PlanetaryTransition {
 
     @Override
     public MapCodec<FixedPlanetaryTransition> codec() {
-        return CODEC;
+        return MAP_CODEC;
     }
 }

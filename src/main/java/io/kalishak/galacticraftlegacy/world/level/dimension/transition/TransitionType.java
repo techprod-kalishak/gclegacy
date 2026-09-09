@@ -11,7 +11,6 @@ import com.mojang.datafixers.util.Either;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import io.kalishak.galacticraftlegacy.Galacticraft;
-import io.kalishak.galacticraftlegacy.codec.SerializableEnum;
 import io.kalishak.galacticraftlegacy.registry.GalacticraftRegistries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
@@ -24,7 +23,7 @@ import java.util.function.Function;
 
 public final class TransitionType {
     private static final Codec<Either<EarthPlanetaryTranstion, PlanetaryTransition>> DEFAULT_OR_DISPATCH_CODEC = Codec.either(
-            EarthPlanetaryTranstion.CODEC.codec(),
+            EarthPlanetaryTranstion.MAP_CODEC.codec(),
             Codec.lazyInitialized(GalacticraftRegistries.PLANETARY_TRANSITION_TYPE::byNameCodec).dispatch(PlanetaryTransition::codec, Function.identity())
     );
     public static final Codec<PlanetaryTransition> CODEC = DEFAULT_OR_DISPATCH_CODEC.xmap(
@@ -37,15 +36,19 @@ public final class TransitionType {
 
     public static final DeferredHolder<MapCodec<? extends PlanetaryTransition>, MapCodec<FixedPlanetaryTransition>> FIXED_POSITION = REGISTRY.register(
             "fixed",
-            () -> FixedPlanetaryTransition.CODEC
+            () -> FixedPlanetaryTransition.MAP_CODEC
     );
     public static final DeferredHolder<MapCodec<? extends PlanetaryTransition>, MapCodec<LanderPlanetaryTransition>> LANDER = REGISTRY.register(
             "with_lander",
-            () -> LanderPlanetaryTransition.CODEC
+            () -> LanderPlanetaryTransition.MAP_CODEC
     );
     public static final DeferredHolder<MapCodec<? extends PlanetaryTransition>, MapCodec<EarthPlanetaryTranstion>> PARACHUTE = REGISTRY.register(
             "with_parachute",
-            () -> EarthPlanetaryTranstion.CODEC
+            () -> EarthPlanetaryTranstion.MAP_CODEC
+    );
+    public static final DeferredHolder<MapCodec<? extends PlanetaryTransition>, MapCodec<InaccessiblePlanetaryTransition>> INACCESSIBLE = REGISTRY.register(
+            "inaccessible",
+            () -> InaccessiblePlanetaryTransition.MAP_CODEC
     );
 
     public static void init(IEventBus bus) {

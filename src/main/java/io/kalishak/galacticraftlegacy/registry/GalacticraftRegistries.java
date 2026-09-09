@@ -9,7 +9,6 @@ package io.kalishak.galacticraftlegacy.registry;
 
 import com.mojang.serialization.MapCodec;
 import io.kalishak.galacticraftlegacy.references.Constants;
-import io.kalishak.galacticraftlegacy.attachment.level.CelestialBodyLevelData;
 import io.kalishak.galacticraftlegacy.galaxies.CelestialBodyType;
 import io.kalishak.galacticraftlegacy.galaxies.CelestialObject;
 import io.kalishak.galacticraftlegacy.transfer.node.NodeNetwork;
@@ -46,7 +45,6 @@ public class GalacticraftRegistries {
     public static void newDatapackRegistries(DataPackRegistryEvent.NewRegistry event) {
         event.dataPackRegistry(Keys.CHECKLIST, ChecklistEntry.DIRECT_CODEC, ChecklistEntry.DIRECT_CODEC, builder -> builder.sync(true).defaultKey(Checklist.EQUIP_OXYGEN_SUIT));
         event.dataPackRegistry(Keys.SCHEMATIC, SchematicVariant.DIRECT_CODEC, SchematicVariant.DIRECT_CODEC, builder -> builder.sync(true).defaultKey(SchematicVariants.TIER_2_ROCKET));
-        event.dataPackRegistry(Keys.CELESTIAL_BODY_LEVEL_DATA, CelestialBodyLevelData.DIRECT_CODEC, CelestialBodyLevelData.DIRECT_CODEC, builder -> builder.sync(true).defaultKey(CelestialBodyLevelDataEntries.OVERWORLD));
         event.dataPackRegistry(Keys.SPACE_STATION_RECIPE, SpaceStationRecipe.DIRECT_CODEC, SpaceStationRecipe.DIRECT_CODEC, builder -> builder.sync(true));
         event.dataPackRegistry(Keys.VEHICLE_CRAFTING_RECIPE_DATA, VehicleCraftingDataRecipe.DIRECT_CODEC, VehicleCraftingDataRecipe.DIRECT_CODEC, builder -> builder.sync(true));
         event.dataPackRegistry(Keys.VEHICLE_CRAFTING_PAGE, VehicleCraftingPage.DIRECT_CODEC, VehicleCraftingPage.DIRECT_CODEC, builder -> builder.sync(true));
@@ -59,7 +57,6 @@ public class GalacticraftRegistries {
         public static final ResourceKey<? extends Registry<CelestialBodyType>> CELESTIAL_BODY_TYPE = ResourceKey.createRegistryKey(Constants.id("celestial_body_type"));
         public static final ResourceKey<Registry<MapCodec<? extends PlanetaryTransition>>> PLANETARY_TRANSITION_TYPE = ResourceKey.createRegistryKey(Constants.id("planetary_transition_type"));
         public static final ResourceKey<Registry<ChecklistEntry>> CHECKLIST = ResourceKey.createRegistryKey(Constants.id("checklist"));
-        public static final ResourceKey<Registry<CelestialBodyLevelData>> CELESTIAL_BODY_LEVEL_DATA = ResourceKey.createRegistryKey(Constants.id("celestial_body_level_data"));
         public static final ResourceKey<Registry<MapCodec<? extends NodeNetwork.PackedNode>>> PACKED_NODE_TYPE = ResourceKey.createRegistryKey(Constants.id("packed_node_type"));
         public static final ResourceKey<Registry<SchematicVariant>> SCHEMATIC = ResourceKey.createRegistryKey(Constants.id("schematic"));
         public static final ResourceKey<Registry<SpaceStationRecipe>> SPACE_STATION_RECIPE = ResourceKey.createRegistryKey(Constants.id("space_station_recipe"));
