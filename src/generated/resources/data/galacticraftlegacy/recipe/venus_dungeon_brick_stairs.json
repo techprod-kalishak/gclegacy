@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "venus_bricks_stairs",
+  "key": {
+    "#": "galacticraftlegacy:venus_dungeon_bricks"
+  },
+  "pattern": [
+    "#  ",
+    "## ",
+    "###"
+  ],
+  "result": {
+    "count": 4,
+    "id": "galacticraftlegacy:venus_dungeon_brick_stairs"
+  }
+}

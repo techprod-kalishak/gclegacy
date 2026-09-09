@@ -77,8 +77,32 @@ public class GalacticraftBlockFamilies {
             .recipeUnlockedBy("has_mars_bricks")
             .recipeGroupPrefix("mars_bricks")
             .getFamily();
+    public static final BlockFamily VENUS_SOFT_ROCK = new BlockFamily.Builder(GalacticraftBlocks.VENUS_SOFT_ROCK.get())
+            .stairs(GalacticraftBlocks.VENUS_SOFT_ROCK_STAIRS.get())
+            .slab(GalacticraftBlocks.VENUS_SOFT_ROCK_SLAB.get())
+            .wall(GalacticraftBlocks.VENUS_SOFT_ROCK_WALL.get())
+            .generateStonecutterRecipe()
+            .recipeUnlockedBy("has_venus_soft_rock")
+            .recipeGroupPrefix("venus_soft_rock")
+            .getFamily();
+    public static final BlockFamily VENUS_BRICKS = new BlockFamily.Builder(GalacticraftBlocks.VENUS_DUNGEON_BRICKS.get())
+            .stairs(GalacticraftBlocks.VENUS_DUNGEON_BRICK_STAIRS.get())
+            .slab(GalacticraftBlocks.VENUS_DUNGEON_BRICK_SLAB.get())
+            .wall(GalacticraftBlocks.VENUS_DUNGEON_BRICK_WALL.get())
+            .generateStonecutterRecipe()
+            .recipeUnlockedBy("has_venus_bricks")
+            .recipeGroupPrefix("venus_bricks")
+            .getFamily();
+    public static final BlockFamily DEEP_VENUS_BRICKS = new BlockFamily.Builder(GalacticraftBlocks.DEEP_VENUS_DUNGEON_BRICKS.get())
+            .stairs(GalacticraftBlocks.DEEP_VENUS_DUNGEON_BRICK_STAIRS.get())
+            .slab(GalacticraftBlocks.DEEP_VENUS_DUNGEON_BRICK_SLAB.get())
+            .wall(GalacticraftBlocks.DEEP_VENUS_DUNGEON_BRICK_WALL.get())
+            .generateStonecutterRecipe()
+            .recipeUnlockedBy("has_deep_venus_bricks")
+            .recipeGroupPrefix("deep_venus_bricks")
+            .getFamily();
 
     public static Stream<BlockFamily> getFamilies() {
-        return Stream.of(MOON_ROCK, MOON_BRICKS, MARS_STONE, MARS_COBBLESTONE, MARS_BRICKS, ASTEROID_ROCKS, TIN_DECORATION, TIN_WALL_DECORATION);
+        return Stream.of(MOON_ROCK, MOON_BRICKS, MARS_STONE, MARS_COBBLESTONE, MARS_BRICKS, ASTEROID_ROCKS, VENUS_SOFT_ROCK, VENUS_BRICKS, DEEP_VENUS_BRICKS, TIN_DECORATION, TIN_WALL_DECORATION);
     }
 }

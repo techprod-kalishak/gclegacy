@@ -173,7 +173,7 @@ public class GalacticraftLanguageProvider extends ExtendedLanguageProvider {
         addBlock(GalacticraftBlocks.MARS_STONE_SLAB, "Mars Stone Slab");
         addBlock(GalacticraftBlocks.MARS_STONE_STAIRS, "Mars Stone Stairs");
         addBlock(GalacticraftBlocks.MARS_STONE_PRESSURE_PLATE, "Mars Stone Pressure Plate");
-        addBlock(GalacticraftBlocks.MARS_STONE_BUTTON, "Mars Stone Pressure Plate");
+        addBlock(GalacticraftBlocks.MARS_STONE_BUTTON, "Mars Stone Button");
         addBlock(GalacticraftBlocks.MARS_COBBLESTONE, "Mars Cobblestone");
         addBlock(GalacticraftBlocks.MARS_COBBLESTONE_SLAB, "Mars Cobblestone Slab");
         addBlock(GalacticraftBlocks.MARS_COBBLESTONE_STAIRS, "Mars Cobblestone Stairs");
@@ -196,6 +196,28 @@ public class GalacticraftLanguageProvider extends ExtendedLanguageProvider {
         addWithDescription(GalacticraftBlocks.FALLEN_METEOR, "Fallen Meteor", "Fallen Meteors can be found in many planets/moons which have little or no atmosphere. Will drop Meteoric Iron when broken.");
         addBlock(GalacticraftBlocks.LANDING_PAD, "Landing Pad");
         addBlock(GalacticraftBlocks.FUELING_PAD, "Fueling Pad");
+        addBlock(GalacticraftBlocks.VENUS_SOFT_ROCK, "Venus Soft Rock");
+        addBlock(GalacticraftBlocks.VENUS_SOFT_ROCK_SLAB, "Venus Soft Rock Slab");
+        addBlock(GalacticraftBlocks.VENUS_SOFT_ROCK_STAIRS, "Venus Soft Rock Stairs");
+        addBlock(GalacticraftBlocks.VENUS_SOFT_ROCK_WALL, "Venus Soft Rock Wall");
+        addBlock(GalacticraftBlocks.VENUS_HARD_ROCK, "Venus Hard Rock");
+        addBlock(GalacticraftBlocks.VENUS_VOLCANIC_ROCK, "Venus Volcanic Rock");
+        addBlock(GalacticraftBlocks.SCORCHED_VENUS_ROCK, "Scorched Venus Rock");
+        addBlock(GalacticraftBlocks.VENUS_DUNGEON_BRICKS, "Venus Dungeon Bricks");
+        addBlock(GalacticraftBlocks.VENUS_DUNGEON_BRICK_SLAB, "Venus Dungeon Brick Slab");
+        addBlock(GalacticraftBlocks.VENUS_DUNGEON_BRICK_STAIRS, "Venus Dungeon Brick Stairs");
+        addBlock(GalacticraftBlocks.VENUS_DUNGEON_BRICK_WALL, "Venus Dungeon Brick Wall");
+        addBlock(GalacticraftBlocks.DEEP_VENUS_DUNGEON_BRICKS, "Deep Venus Dungeon Bricks");
+        addBlock(GalacticraftBlocks.DEEP_VENUS_DUNGEON_BRICK_SLAB, "Deep Venus Dungeon Brick Slab");
+        addBlock(GalacticraftBlocks.DEEP_VENUS_DUNGEON_BRICK_STAIRS, "Deep Venus Dungeon Brick Stairs");
+        addBlock(GalacticraftBlocks.DEEP_VENUS_DUNGEON_BRICK_WALL, "Deep Venus Dungeon Brick Wall");
+        addBlock(GalacticraftBlocks.VENUS_ALUMINUM_ORE, "Venus Aluminum Ore");
+        addBlock(GalacticraftBlocks.VENUS_COPPER_ORE, "Venus Copper Ore");
+        addBlock(GalacticraftBlocks.VENUS_LEAD_ORE, "Venus Galena Ore");
+        addBlock(GalacticraftBlocks.VENUS_QUARTZ_ORE, "Venus Quartz Ore");
+        addBlock(GalacticraftBlocks.VENUS_SILICON_ORE, "Venus Silicon Ore");
+        addBlock(GalacticraftBlocks.VENUS_TIN_ORE, "Venus Tin Ore");
+        addBlock(GalacticraftBlocks.VENUS_SOLAR_ORE, "Venus Solar Ore");
 
         addEntityType(GalacticraftEntityType.FLAG, "Flag");
         addEntityType(GalacticraftEntityType.FALLING_PARACHEST, "Parachest");
@@ -330,6 +352,9 @@ public class GalacticraftLanguageProvider extends ExtendedLanguageProvider {
         addItem(GalacticraftItems.BUGGY_WHEEL, "Buggy Wheel");
         addItem(GalacticraftItems.BUGGY_STORAGE_BOX, "Buggy Storage Box");
         addItem(GalacticraftItems.ORION_DRIVE, "Orion Drive");
+        addItem(GalacticraftItems.SOLAR_DUST, "Solar Dust");
+        addItem(GalacticraftItems.SOLAR_ARRAY_WAFER, "Solar Array Wafer");
+        addItem(GalacticraftItems.SOLAR_ARRAY_PANEL, "Solar Array Panel");
 
         addItem(GalacticraftItems.EVOLVED_SKELETON_SPAWN_EGG, "Evolved Skeleton Spawn Egg");
         addItem(GalacticraftItems.EVOLVED_ZOMBIE_SPAWN_EGG, "Evolved Zombie Spawn Egg");

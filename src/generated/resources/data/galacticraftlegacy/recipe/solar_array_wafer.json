@@ -1,0 +1,9 @@
+{
+  "type": "galacticraftlegacy:fabricating",
+  "category": "solar",
+  "ingredients": "galacticraftlegacy:solar_dust",
+  "result": {
+    "count": 4,
+    "id": "galacticraftlegacy:solar_array_wafer"
+  }
+}

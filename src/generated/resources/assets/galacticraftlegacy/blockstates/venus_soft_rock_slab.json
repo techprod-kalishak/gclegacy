@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "galacticraftlegacy:block/venus_soft_rock_slab"
+    },
+    "type=double": {
+      "model": "galacticraftlegacy:block/venus_soft_rock"
+    },
+    "type=top": {
+      "model": "galacticraftlegacy:block/venus_soft_rock_slab_top"
+    }
+  }
+}

@@ -17,6 +17,7 @@ import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeUnlockAdvancementBuilder;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStackTemplate;
@@ -59,7 +60,7 @@ public class FabricatingRecipeBuilder implements RecipeBuilder {
 
     @Override
     public ResourceKey<Recipe<?>> defaultId() {
-        return Constants.key(Registries.RECIPE, this.result.typeHolder().getRegisteredName());
+        return ResourceKey.create(Registries.RECIPE, Identifier.parse(this.result.typeHolder().getRegisteredName()));
     }
 
     @Override

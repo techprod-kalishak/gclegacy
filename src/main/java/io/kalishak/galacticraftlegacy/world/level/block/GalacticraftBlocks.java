@@ -207,7 +207,7 @@ public final class GalacticraftBlocks {
                     .isValidSpawn(Blocks::never)
     );
 
-    //MOON BLOCKS
+    /** Moon */
     public static final DeferredBlock<TerraformableBlock> MOON_DIRT = REGISTRY.registerBlock(
             GalacticraftBlockItemIds.MOON_DIRT,
             TerraformableBlock::new,
@@ -443,16 +443,18 @@ public final class GalacticraftBlocks {
                     .requiresCorrectToolForDrops()
     );
 
-    public static final DeferredBlock<Block> MARS_REGOLITH = REGISTRY.registerSimpleBlock(
+    public static final DeferredBlock<TerraformableBlock> MARS_REGOLITH = REGISTRY.registerBlock(
             GalacticraftBlockItemIds.MARS_REGOLITH,
+            TerraformableBlock::new,
             () -> BlockBehaviour.Properties.of()
                     .mapColor(MapColor.TERRACOTTA_RED)
                     .instrument(NoteBlockInstrument.BASEDRUM)
                     .requiresCorrectToolForDrops()
                     .strength(1.5F, 6.0F)
     );
-    public static final DeferredBlock<Block> MARS_FINE_REGOLITH = REGISTRY.registerSimpleBlock(
+    public static final DeferredBlock<TerraformableBlock> MARS_FINE_REGOLITH = REGISTRY.registerBlock(
             GalacticraftBlockItemIds.MARS_FINE_REGOLITH,
+            TerraformableBlock::new,
             () -> BlockBehaviour.Properties.of()
                     .mapColor(MapColor.TERRACOTTA_RED)
                     .instrument(NoteBlockInstrument.BASEDRUM)
@@ -591,6 +593,207 @@ public final class GalacticraftBlocks {
                     .mapColor(MapColor.COLOR_GRAY)
                     .strength(4.5F, 6.0F)
                     .instrument(NoteBlockInstrument.BASEDRUM)
+                    .requiresCorrectToolForDrops()
+    );
+
+    /** Venus */
+    public static final DeferredBlock<TerraformableBlock> VENUS_SOFT_ROCK = REGISTRY.registerBlock(
+            GalacticraftBlockItemIds.VENUS_SOFT_ROCK,
+            TerraformableBlock::new,
+            () -> BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.DIRT)
+                    .strength(0.9F, 2.5F)
+                    .instrument(NoteBlockInstrument.BASEDRUM)
+                    .requiresCorrectToolForDrops()
+    );
+    public static final DeferredBlock<StairBlock> VENUS_SOFT_ROCK_STAIRS = REGISTRY.registerBlock(
+            GalacticraftBlockItemIds.VENUS_SOFT_ROCK_STAIRS,
+            properties -> new StairBlock(VENUS_SOFT_ROCK.get().defaultBlockState(), properties),
+            () -> BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.DIRT)
+                    .strength(0.9F, 2.5F)
+                    .instrument(NoteBlockInstrument.BASEDRUM)
+                    .requiresCorrectToolForDrops()
+    );
+    public static final DeferredBlock<SlabBlock> VENUS_SOFT_ROCK_SLAB = REGISTRY.registerBlock(
+            GalacticraftBlockItemIds.VENUS_SOFT_ROCK_SLAB,
+            SlabBlock::new,
+            () -> BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.DIRT)
+                    .strength(0.9F, 2.5F)
+                    .instrument(NoteBlockInstrument.BASEDRUM)
+                    .requiresCorrectToolForDrops()
+    );
+    public static final DeferredBlock<WallBlock> VENUS_SOFT_ROCK_WALL = REGISTRY.registerBlock(
+            GalacticraftBlockItemIds.VENUS_SOFT_ROCK_WALL,
+            WallBlock::new,
+            () -> BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.DIRT)
+                    .strength(0.9F, 2.5F)
+                    .instrument(NoteBlockInstrument.BASEDRUM)
+                    .requiresCorrectToolForDrops()
+    );
+    public static final DeferredBlock<TerraformableBlock> VENUS_HARD_ROCK = REGISTRY.registerBlock(
+            GalacticraftBlockItemIds.VENUS_HARD_ROCK,
+            TerraformableBlock::new,
+            () -> BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.TERRACOTTA_BROWN)
+                    .strength(1.5F, 6.0F)
+                    .instrument(NoteBlockInstrument.BASEDRUM)
+                    .requiresCorrectToolForDrops()
+    );
+    public static final DeferredBlock<LavaTurnableBlock> VENUS_VOLCANIC_ROCK = REGISTRY.registerBlock(
+            GalacticraftBlockItemIds.VENUS_VOLCANIC_ROCK,
+            LavaTurnableBlock::new,
+            () -> BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.DIRT)
+                    .strength(2.5F)
+                    .instrument(NoteBlockInstrument.BASEDRUM)
+                    .requiresCorrectToolForDrops()
+                    .lightLevel(_ -> 2)
+                    .emissiveRendering(_ -> true)
+    );
+    public static final DeferredBlock<Block> SCORCHED_VENUS_ROCK = REGISTRY.registerSimpleBlock(
+            GalacticraftBlockItemIds.SCORCHED_VENUS_ROCK,
+            () -> BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.TERRACOTTA_BLACK)
+                    .strength(2.5F)
+                    .instrument(NoteBlockInstrument.BASEDRUM)
+                    .requiresCorrectToolForDrops()
+    );
+    public static final DeferredBlock<Block> VENUS_DUNGEON_BRICKS = REGISTRY.registerSimpleBlock(
+            GalacticraftBlockItemIds.VENUS_DUNGEON_BRICKS,
+            () -> BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.TERRACOTTA_ORANGE)
+                    .strength(4.0F, 40.0F)
+                    .instrument(NoteBlockInstrument.BASEDRUM)
+                    .requiresCorrectToolForDrops()
+    );
+    public static final DeferredBlock<StairBlock> VENUS_DUNGEON_BRICK_STAIRS = REGISTRY.registerBlock(
+            GalacticraftBlockItemIds.VENUS_DUNGEON_BRICK_STAIRS,
+            properties -> new StairBlock(VENUS_DUNGEON_BRICKS.get().defaultBlockState(), properties),
+            () -> BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.TERRACOTTA_ORANGE)
+                    .strength(4.0F, 40.0F)
+                    .instrument(NoteBlockInstrument.BASEDRUM)
+                    .requiresCorrectToolForDrops()
+    );
+    public static final DeferredBlock<SlabBlock> VENUS_DUNGEON_BRICK_SLAB = REGISTRY.registerBlock(
+            GalacticraftBlockItemIds.VENUS_DUNGEON_BRICK_SLAB,
+            SlabBlock::new,
+            () -> BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.TERRACOTTA_ORANGE)
+                    .strength(4.0F, 40.0F)
+                    .instrument(NoteBlockInstrument.BASEDRUM)
+                    .requiresCorrectToolForDrops()
+    );
+    public static final DeferredBlock<WallBlock> VENUS_DUNGEON_BRICK_WALL = REGISTRY.registerBlock(
+            GalacticraftBlockItemIds.VENUS_DUNGEON_BRICK_WALL,
+            WallBlock::new,
+            () -> BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.TERRACOTTA_ORANGE)
+                    .strength(4.0F, 40.0F)
+                    .instrument(NoteBlockInstrument.BASEDRUM)
+                    .requiresCorrectToolForDrops()
+    );
+    public static final DeferredBlock<Block> DEEP_VENUS_DUNGEON_BRICKS = REGISTRY.registerSimpleBlock(
+            GalacticraftBlockItemIds.DEEP_VENUS_DUNGEON_BRICKS,
+            () -> BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.TERRACOTTA_RED)
+                    .strength(4.0F, 40.0F)
+                    .instrument(NoteBlockInstrument.BASEDRUM)
+                    .requiresCorrectToolForDrops()
+    );
+
+    public static final DeferredBlock<StairBlock> DEEP_VENUS_DUNGEON_BRICK_STAIRS = REGISTRY.registerBlock(
+            GalacticraftBlockItemIds.DEEP_VENUS_DUNGEON_BRICK_STAIRS,
+            properties -> new StairBlock(DEEP_VENUS_DUNGEON_BRICKS.get().defaultBlockState(), properties),
+            () -> BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.TERRACOTTA_RED)
+                    .strength(4.0F, 40.0F)
+                    .instrument(NoteBlockInstrument.BASEDRUM)
+                    .requiresCorrectToolForDrops()
+    );
+    public static final DeferredBlock<SlabBlock> DEEP_VENUS_DUNGEON_BRICK_SLAB = REGISTRY.registerBlock(
+            GalacticraftBlockItemIds.DEEP_VENUS_DUNGEON_BRICK_SLAB,
+            SlabBlock::new,
+            () -> BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.TERRACOTTA_RED)
+                    .strength(4.0F, 40.0F)
+                    .instrument(NoteBlockInstrument.BASEDRUM)
+                    .requiresCorrectToolForDrops()
+    );
+    public static final DeferredBlock<WallBlock> DEEP_VENUS_DUNGEON_BRICK_WALL = REGISTRY.registerBlock(
+            GalacticraftBlockItemIds.DEEP_VENUS_DUNGEON_BRICK_WALL,
+            WallBlock::new,
+            () -> BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.TERRACOTTA_RED)
+                    .strength(4.0F, 40.0F)
+                    .instrument(NoteBlockInstrument.BASEDRUM)
+                    .requiresCorrectToolForDrops()
+    );
+
+    public static final DeferredBlock<DropExperienceBlock> VENUS_ALUMINUM_ORE = REGISTRY.registerBlock(
+            GalacticraftBlockItemIds.VENUS_ALUMINUM_ORE,
+            properties -> new DropExperienceBlock(ConstantInt.ZERO, properties),
+            () -> BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.TERRACOTTA_BROWN)
+                    .strength(5.0F, 3.0F)
+                    .instrument(NoteBlockInstrument.IRON_XYLOPHONE)
+                    .requiresCorrectToolForDrops()
+    );
+    public static final DeferredBlock<DropExperienceBlock> VENUS_COPPER_ORE = REGISTRY.registerBlock(
+            GalacticraftBlockItemIds.VENUS_COPPER_ORE,
+            properties -> new DropExperienceBlock(ConstantInt.ZERO, properties),
+            () -> BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.TERRACOTTA_BROWN)
+                    .strength(5.0F, 3.0F)
+                    .instrument(NoteBlockInstrument.IRON_XYLOPHONE)
+                    .requiresCorrectToolForDrops()
+    );
+    public static final DeferredBlock<DropExperienceBlock> VENUS_QUARTZ_ORE = REGISTRY.registerBlock(
+            GalacticraftBlockItemIds.VENUS_QUARTZ_ORE,
+            properties -> new DropExperienceBlock(UniformInt.of(2, 5), properties),
+            () -> BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.TERRACOTTA_BROWN)
+                    .strength(5.0F, 3.0F)
+                    .instrument(NoteBlockInstrument.IRON_XYLOPHONE)
+                    .requiresCorrectToolForDrops()
+    );
+    public static final DeferredBlock<DropExperienceBlock> VENUS_SILICON_ORE = REGISTRY.registerBlock(
+            GalacticraftBlockItemIds.VENUS_SILICON_ORE,
+            properties -> new DropExperienceBlock(UniformInt.of(2, 5), properties),
+            () -> BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.TERRACOTTA_BROWN)
+                    .strength(5.0F, 3.0F)
+                    .instrument(NoteBlockInstrument.IRON_XYLOPHONE)
+                    .requiresCorrectToolForDrops()
+    );
+    public static final DeferredBlock<DropExperienceBlock> VENUS_SOLAR_ORE = REGISTRY.registerBlock(
+            GalacticraftBlockItemIds.VENUS_SOLAR_ORE,
+            properties -> new DropExperienceBlock(UniformInt.of(3, 7), properties),
+            () -> BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.TERRACOTTA_BROWN)
+                    .strength(5.0F, 3.0F)
+                    .instrument(NoteBlockInstrument.IRON_XYLOPHONE)
+                    .requiresCorrectToolForDrops()
+    );
+    public static final DeferredBlock<DropExperienceBlock> VENUS_TIN_ORE = REGISTRY.registerBlock(
+            GalacticraftBlockItemIds.VENUS_TIN_ORE,
+            properties -> new DropExperienceBlock(ConstantInt.ZERO, properties),
+            () -> BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.TERRACOTTA_BROWN)
+                    .strength(5.0F, 3.0F)
+                    .instrument(NoteBlockInstrument.IRON_XYLOPHONE)
+                    .requiresCorrectToolForDrops()
+    );
+    public static final DeferredBlock<DropExperienceBlock> VENUS_LEAD_ORE = REGISTRY.registerBlock(
+            GalacticraftBlockItemIds.VENUS_LEAD_ORE,
+            properties -> new DropExperienceBlock(ConstantInt.ZERO, properties),
+            () -> BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.TERRACOTTA_BROWN)
+                    .strength(5.0F, 3.0F)
+                    .instrument(NoteBlockInstrument.IRON_XYLOPHONE)
                     .requiresCorrectToolForDrops()
     );
 

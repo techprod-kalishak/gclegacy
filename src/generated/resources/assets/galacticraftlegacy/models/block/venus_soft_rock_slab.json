@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab",
+  "textures": {
+    "bottom": "galacticraftlegacy:block/venus_soft_rock",
+    "side": "galacticraftlegacy:block/venus_soft_rock",
+    "top": "galacticraftlegacy:block/venus_soft_rock"
+  }
+}

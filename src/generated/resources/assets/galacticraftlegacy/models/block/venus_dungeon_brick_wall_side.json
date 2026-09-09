@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/template_wall_side",
+  "textures": {
+    "wall": "galacticraftlegacy:block/venus_dungeon_bricks"
+  }
+}

@@ -112,6 +112,16 @@ public class GalacticraftModelProvider extends ExtendedModelProvider<Galacticraf
         blockModels.createTrivialCube(GalacticraftBlocks.MARS_IRON_ORE.get());
         blockModels.createTrivialCube(GalacticraftBlocks.RAW_DESH_BLOCK.get());
         blockModels.createTrivialCube(GalacticraftBlocks.DESH_BLOCK.get());
+        blockModels.createTrivialCube(GalacticraftBlocks.VENUS_HARD_ROCK.get());
+        blockModels.createTrivialCube(GalacticraftBlocks.VENUS_VOLCANIC_ROCK.get());
+        blockModels.createTrivialCube(GalacticraftBlocks.SCORCHED_VENUS_ROCK.get());
+        blockModels.createTrivialCube(GalacticraftBlocks.VENUS_ALUMINUM_ORE.get());
+        blockModels.createTrivialCube(GalacticraftBlocks.VENUS_COPPER_ORE.get());
+        blockModels.createTrivialCube(GalacticraftBlocks.VENUS_QUARTZ_ORE.get());
+        blockModels.createTrivialCube(GalacticraftBlocks.VENUS_LEAD_ORE.get());
+        blockModels.createTrivialCube(GalacticraftBlocks.VENUS_SILICON_ORE.get());
+        blockModels.createTrivialCube(GalacticraftBlocks.VENUS_TIN_ORE.get());
+        blockModels.createTrivialCube(GalacticraftBlocks.VENUS_SOLAR_ORE.get());
 
         blockModels.registerSimpleFlatItemModel(GalacticraftBlocks.GRATING.asItem());
         itemModels.generateFlatItem(GalacticraftItems.THROWABLE_METEOR_CHUNK.get(), ModelTemplates.FLAT_ITEM);
@@ -244,6 +254,9 @@ public class GalacticraftModelProvider extends ExtendedModelProvider<Galacticraf
         itemModels.generateFlatItem(GalacticraftItems.BUGGY_WHEEL.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(GalacticraftItems.BUGGY_STORAGE_BOX.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(GalacticraftItems.ORION_DRIVE.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.SOLAR_DUST.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.SOLAR_ARRAY_WAFER.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.SOLAR_ARRAY_PANEL.get(), ModelTemplates.FLAT_ITEM);
         itemModels.createVehicleLike(GalacticraftItems.TIER_1_ROCKET.get(), new Tier1RocketSpecialRenderer.Unbaked());
         itemModels.createVehicleLike(GalacticraftItems.BUGGY.get(), new BuggySpecialRenderer.Unbaked());
         itemModels.createVehicleLike(GalacticraftItems.TIER_2_ROCKET.get(), new Tier2RocketSpecialRenderer.Unbaked());

@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "galacticraftlegacy:block/venus_lead_ore"
+  }
+}

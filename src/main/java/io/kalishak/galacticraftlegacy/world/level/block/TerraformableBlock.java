@@ -35,7 +35,7 @@ public class TerraformableBlock extends Block implements EarthTurnableBlock {
     }
 
     @Override
-    protected MapCodec<? extends Block> codec() {
+    protected MapCodec<? extends TerraformableBlock> codec() {
         return CODEC;
     }
 

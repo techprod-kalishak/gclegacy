@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "venus_soft_rock_stairs",
+  "key": {
+    "#": "galacticraftlegacy:venus_soft_rock"
+  },
+  "pattern": [
+    "#  ",
+    "## ",
+    "###"
+  ],
+  "result": {
+    "count": 4,
+    "id": "galacticraftlegacy:venus_soft_rock_stairs"
+  }
+}

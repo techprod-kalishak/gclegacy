@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:blasting",
+  "experience": 0.1,
+  "group": "tin_ingot",
+  "ingredient": "galacticraftlegacy:venus_tin_ore",
+  "result": {
+    "id": "galacticraftlegacy:tin_ingot"
+  }
+}

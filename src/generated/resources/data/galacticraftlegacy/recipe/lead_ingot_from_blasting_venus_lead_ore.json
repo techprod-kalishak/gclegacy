@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:blasting",
+  "experience": 0.2,
+  "group": "lead_ingot",
+  "ingredient": "galacticraftlegacy:venus_lead_ore",
+  "result": {
+    "id": "galacticraftlegacy:lead_ingot"
+  }
+}

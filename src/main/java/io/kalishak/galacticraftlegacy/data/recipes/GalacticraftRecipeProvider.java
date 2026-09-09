@@ -59,32 +59,35 @@ public class GalacticraftRecipeProvider extends RecipeProvider {
     private static final List<ItemLike> ALUMINUM_SMELTABLE = List.of(
             GalacticraftItems.RAW_ALUMINUM,
             GalacticraftItems.ALUMINUM_ORE,
-            GalacticraftItems.DEEPSLATE_ALUMINUM_ORE
+            GalacticraftItems.DEEPSLATE_ALUMINUM_ORE,
+            GalacticraftItems.VENUS_ALUMINUM_ORE
     );
     private static final List<ItemLike> COPPER_SMELTABLE = List.of(
-            GalacticraftItems.MOON_COPPER_ORE
+            GalacticraftItems.MOON_COPPER_ORE,
+            GalacticraftItems.MARS_COPPER_ORE,
+            GalacticraftItems.VENUS_COPPER_ORE
     );
     private static final List<ItemLike> DESH_SMELTABLE = List.of(
             GalacticraftItems.RAW_DESH
     );
     private static final List<ItemLike> LEAD_SMELTABLE = List.of(
-            GalacticraftItems.RAW_LEAD
+            GalacticraftItems.RAW_LEAD,
+            GalacticraftItems.VENUS_LEAD_ORE
     );
     private static final List<ItemLike> METEORIC_IRON_SMELTABLE = List.of(
             GalacticraftItems.RAW_METEORIC_IRON
     );
     private static final List<ItemLike> SILICON_SMELTABLE = List.of(
             GalacticraftItems.SILICON_ORE,
-            GalacticraftItems.DEEPSLATE_SILICON_ORE
-    );
-    private static final List<ItemLike> STEEL_SMELTABLE = List.of(
-            GalacticraftItems.RAW_STEEL
+            GalacticraftItems.DEEPSLATE_SILICON_ORE,
+            GalacticraftItems.VENUS_SILICON_ORE
     );
     private static final List<ItemLike> TIN_SMELTABLE = List.of(
+            GalacticraftItems.RAW_TIN,
             GalacticraftItems.TIN_ORE,
             GalacticraftItems.DEEPSLATE_TIN_ORE,
             GalacticraftItems.MOON_TIN_ORE,
-            GalacticraftItems.RAW_TIN
+            GalacticraftItems.VENUS_TIN_ORE
     );
     private static final List<ItemLike> TITANIUM_SMELTABLE = List.of(
             GalacticraftItems.RAW_TITANIUM
@@ -622,18 +625,27 @@ public class GalacticraftRecipeProvider extends RecipeProvider {
                 .save(this.output, Constants.key(Registries.RECIPE, getBlastingRecipeName(GalacticraftItems.SAPPHIRE)));
         oreSmelting(COPPER_SMELTABLE, RecipeCategory.MISC, CookingBookCategory.MISC, Items.COPPER_INGOT, 0.2F, 200, "copper_ingot");
         oreBlasting(COPPER_SMELTABLE, RecipeCategory.MISC, CookingBookCategory.MISC, Items.COPPER_INGOT, 0.2F, 100, "copper_ingot");
+        SimpleCookingRecipeBuilder.smelting(Ingredient.of(GalacticraftItems.VENUS_QUARTZ_ORE), RecipeCategory.MISC, CookingBookCategory.MISC, Items.QUARTZ, 0.2F, 200)
+                .unlockedBy(getHasName(GalacticraftItems.VENUS_QUARTZ_ORE), has(GalacticraftItems.VENUS_QUARTZ_ORE))
+                .save(this.output, Constants.key(Registries.RECIPE, getSmeltingRecipeName(Items.QUARTZ)));
+        SimpleCookingRecipeBuilder.blasting(Ingredient.of(GalacticraftItems.VENUS_QUARTZ_ORE), RecipeCategory.MISC, CookingBookCategory.MISC, Items.QUARTZ, 0.2F, 100)
+                .unlockedBy(getHasName(GalacticraftItems.VENUS_QUARTZ_ORE), has(GalacticraftItems.VENUS_QUARTZ_ORE))
+                .save(this.output, Constants.key(Registries.RECIPE, getBlastingRecipeName(Items.QUARTZ)));
     }
 
     private void buildFabricatorRecipes() {
-        FabricatingRecipeBuilder.classic(GalacticraftItems.BASIC_WAFER, 1, Ingredient.of(Items.REDSTONE_TORCH), FabricatingBookCategory.BASIC)
+        FabricatingRecipeBuilder.classic(GalacticraftItems.BASIC_WAFER, 3, Ingredient.of(Items.REDSTONE_TORCH), FabricatingBookCategory.BASIC)
                 .unlockedBy(getHasName(GalacticraftItems.RAW_SILICON), has(GalacticraftTags.Items.RAW_MATERIALS_SILICON))
-                .save(output, Constants.key(Registries.RECIPE, "basic_wafer"));
+                .save(this.output);
         FabricatingRecipeBuilder.classic(GalacticraftItems.ADVANCED_WAFER, 1, Ingredient.of(Items.REPEATER), FabricatingBookCategory.ADVANCED)
                 .unlockedBy(getHasName(GalacticraftItems.RAW_SILICON), has(GalacticraftTags.Items.RAW_MATERIALS_SILICON))
-                .save(output, Constants.key(Registries.RECIPE, "advanced_wafer"));
+                .save(this.output);
         FabricatingRecipeBuilder.classic(GalacticraftItems.SOLAR_WAFER, 9, Ingredient.of(Items.LAPIS_LAZULI), FabricatingBookCategory.BASIC)
                 .unlockedBy(getHasName(GalacticraftItems.RAW_SILICON), has(GalacticraftTags.Items.RAW_MATERIALS_SILICON))
-                .save(output, Constants.key(Registries.RECIPE, "solar_panel"));
+                .save(this.output);
+        FabricatingRecipeBuilder.classic(GalacticraftItems.SOLAR_ARRAY_WAFER, 4, Ingredient.of(GalacticraftItems.SOLAR_DUST), FabricatingBookCategory.SOLAR)
+                .unlockedBy(getHasName(GalacticraftItems.SOLAR_DUST), has(GalacticraftItems.SOLAR_DUST))
+                .save(this.output);
     }
 
     private void buildCompressorRecipes() {

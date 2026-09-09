@@ -75,8 +75,10 @@ public final class GalacticraftTags {
         public static final TagKey<Block> ORES_ALUMINUM = BlockItems.ORES_ALUMINUM.block();
         public static final TagKey<Block> ORES_CHEESE = BlockItems.ORES_CHEESE.block();
         public static final TagKey<Block> ORES_DESH = BlockItems.ORES_DESH.block();
+        public static final TagKey<Block> ORES_LEAD = BlockItems.ORES_LEAD.block();
         public static final TagKey<Block> ORES_SAPPHIRE = BlockItems.ORES_SAPPHIRE.block();
         public static final TagKey<Block> ORES_SILICON = BlockItems.ORES_SILICON.block();
+        public static final TagKey<Block> ORES_SOLAR = BlockItems.ORES_SOLAR.block();
         public static final TagKey<Block> ORES_TIN = BlockItems.ORES_TIN.block();
         public static final TagKey<Block> SEALABLE = tagKey(Registries.BLOCK, "sealable");
         public static final TagKey<Block> SEALABLE_FROM_BOTTOM = tagKey(Registries.BLOCK, "sealable/from_bottom");
@@ -113,8 +115,10 @@ public final class GalacticraftTags {
         public static final BlockItemTagId ORES_ALUMINUM = combinedTagKey("ores/aluminum");
         public static final BlockItemTagId ORES_CHEESE = combinedTagKey("ores/cheese");
         public static final BlockItemTagId ORES_DESH = combinedTagKey("ores/desh");
+        public static final BlockItemTagId ORES_LEAD = combinedTagKey("ores/lead");
         public static final BlockItemTagId ORES_SAPPHIRE = combinedTagKey("ores/sapphire");
         public static final BlockItemTagId ORES_SILICON = combinedTagKey("ores/silicon");
+        public static final BlockItemTagId ORES_SOLAR = combinedTagKey("ores/solar");
         public static final BlockItemTagId ORES_TIN = combinedTagKey("ores/tin");
         public static final BlockItemTagId SEALABLE = combinedTagKey("sealable");
         public static final BlockItemTagId SEALABLE_FROM_BOTTOM = combinedTagKey("sealable/from_bottom");

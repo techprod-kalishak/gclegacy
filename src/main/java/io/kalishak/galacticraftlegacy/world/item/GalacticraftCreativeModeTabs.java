@@ -115,11 +115,14 @@ public final class GalacticraftCreativeModeTabs {
         output.accept(GalacticraftItems.DUNGEON_LOCATOR);
         output.accept(GalacticraftItems.RAW_DESH);
         output.accept(GalacticraftItems.DESH_STICK);
+        output.accept(GalacticraftItems.SOLAR_DUST);
+        output.accept(GalacticraftItems.SOLAR_ARRAY_WAFER);
+        output.accept(GalacticraftItems.SOLAR_ARRAY_PANEL);
         output.accept(GalacticraftItems.OIL_BUCKET);
         output.accept(GalacticraftItems.FUEL_BUCKET);
-        itemDisplayParameters.holders().lookup(GalacticraftRegistries.Keys.SCHEMATIC).ifPresent(registry -> {
-            generateSchematics(output, registry);
-        });
+        itemDisplayParameters.holders()
+                .lookup(GalacticraftRegistries.Keys.SCHEMATIC)
+                .ifPresent(registry -> generateSchematics(output, registry));
         output.accept(GalacticraftItems.STEEL_HELMET);
         output.accept(GalacticraftItems.STEEL_CHESTPLATE);
         output.accept(GalacticraftItems.STEEL_LEGGINGS);
@@ -280,6 +283,28 @@ public final class GalacticraftCreativeModeTabs {
         output.accept(GalacticraftItems.ASTEROID_ROCK_STAIRS);
         output.accept(GalacticraftItems.ASTEROID_ROCK_WALL);
         output.accept(GalacticraftItems.ASTEROID_ALUMINUM_ORE);
+        output.accept(GalacticraftItems.VENUS_SOFT_ROCK);
+        output.accept(GalacticraftItems.VENUS_SOFT_ROCK_SLAB);
+        output.accept(GalacticraftItems.VENUS_SOFT_ROCK_STAIRS);
+        output.accept(GalacticraftItems.VENUS_SOFT_ROCK_WALL);
+        output.accept(GalacticraftItems.VENUS_HARD_ROCK);
+        output.accept(GalacticraftItems.VENUS_VOLCANIC_ROCK);
+        output.accept(GalacticraftItems.SCORCHED_VENUS_ROCK);
+        output.accept(GalacticraftItems.VENUS_DUNGEON_BRICKS);
+        output.accept(GalacticraftItems.VENUS_DUNGEON_BRICK_SLAB);
+        output.accept(GalacticraftItems.VENUS_DUNGEON_BRICK_STAIRS);
+        output.accept(GalacticraftItems.VENUS_DUNGEON_BRICK_WALL);
+        output.accept(GalacticraftItems.DEEP_VENUS_DUNGEON_BRICKS);
+        output.accept(GalacticraftItems.DEEP_VENUS_DUNGEON_BRICK_SLAB);
+        output.accept(GalacticraftItems.DEEP_VENUS_DUNGEON_BRICK_STAIRS);
+        output.accept(GalacticraftItems.DEEP_VENUS_DUNGEON_BRICK_WALL);
+        output.accept(GalacticraftItems.VENUS_ALUMINUM_ORE);
+        output.accept(GalacticraftItems.VENUS_COPPER_ORE);
+        output.accept(GalacticraftItems.VENUS_LEAD_ORE);
+        output.accept(GalacticraftItems.VENUS_QUARTZ_ORE);
+        output.accept(GalacticraftItems.VENUS_SILICON_ORE);
+        output.accept(GalacticraftItems.VENUS_TIN_ORE);
+        output.accept(GalacticraftItems.VENUS_SOLAR_ORE);
         output.accept(GalacticraftItems.UNLIT_TORCH, CreativeModeTab.TabVisibility.SEARCH_TAB_ONLY);
         output.accept(GalacticraftItems.UNLIT_COPPER_TORCH, CreativeModeTab.TabVisibility.SEARCH_TAB_ONLY);
         output.accept(GalacticraftItems.UNLIT_LANTERN, CreativeModeTab.TabVisibility.SEARCH_TAB_ONLY);

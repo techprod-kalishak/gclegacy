@@ -121,20 +121,19 @@ Please note that the following list is a preliminary outline of planned features
 - [ ] Short Range Telepad ❌
 - [ ] Dense Ice ❌
 - [ ] Astro Miner Base ❌
-- [ ] Venus Soft Rock & Variants ❌
-- [ ] Venus Hard Rock & Variants ❌
-- [ ] Venus Volcanic Rock & Variants ❌
-- [ ] Pumice & Variants ❌
-- [ ] Venus Dungeon Block & Variants ❌
-- [ ] Alt Venus Dungeon Block & Variants ❌
-- [ ] Venus Aluminum Ore & Generation ❌
-- [ ] Venus Copper Ore & Generation ❌
-- [ ] Venus Lead Ore & Generation ❌
-- [ ] Venus Quartz Ore & Generation ❌
-- [ ] Venus Silicon Ore & Generation ❌
-- [ ] Venus Tin Ore & Generation ❌
-- [ ] Venus Solar Ore & Generation ❌
-- [ ] Venus Sulfur Ore & Generation ❌
+- [ ] Venus Soft Rock & Variants ✅
+- [ ] Venus Hard Rock ✅
+- [ ] Venus Volcanic Rock ✅
+- [ ] Pumice & Variants ?
+- [ ] Venus Dungeon Block & Variants ✅
+- [ ] Deep Venus Dungeon Block & Variants ✅
+- [ ] Venus Aluminum Ore & Generation ✅
+- [ ] Venus Copper Ore & Generation ✅
+- [ ] Venus Lead Ore & Generation ✅
+- [ ] Venus Quartz Ore & Generation ✅
+- [ ] Venus Silicon Ore & Generation ✅
+- [ ] Venus Tin Ore & Generation ✅
+- [ ] Venus Solar Ore & Generation ✅
 - [ ] Vapor Spout ❌
 - [ ] Web String & Web Glowstone String ❌
 - [ ] Geothermal Generator ❌
@@ -194,7 +193,7 @@ Please note that the following list is a preliminary outline of planned features
 - [ ] Battery ✅
 - [ ] Throwable Meteor Chunk ❌
 - [ ] Cheese Curd ✅
-- [ ] Raw Meteoric Iron ❌
+- [ ] Raw Meteoric Iron ✅
 - [ ] Lunar Sapphire ✅
 - [ ] Flag Item ✅
 - [ ] Pre-Launch Checklist ❌
@@ -206,8 +205,8 @@ Please note that the following list is a preliminary outline of planned features
 - [ ] Fluid manipulator ❌
 - [ ] Grapple Gun ❌
 - [ ] Astro Miner ❌
-- [ ] Heavy Rocket Engine ❌
-- [ ] Heavy Rocket Fins ❌
+- [ ] Heavy Rocket Engine ✅
+- [ ] Heavy Rocket Fins ✅
 - [ ] Iron Shard ❌
 - [ ] Titanium Shard ❌
 - [ ] Thermal Cloth ❌
@@ -219,9 +218,9 @@ Please note that the following list is a preliminary outline of planned features
 - [ ] Strange Seeds ❌
 - [ ] Radioisotope Core ❌
 - [ ] Isothermal Fabric ❌
-- [ ] Solar Dust ❌
-- [ ] Solar Array Panel ❌
-- [ ] Solar Array Wafer ❌
+- [ ] Solar Dust ✅
+- [ ] Solar Array Panel ✅
+- [ ] Solar Array Wafer ✅
 - [ ] Atomic Battery ❌
 - [ ] Dungeon Keys ❌
 - [ ] Oil Bucket ✅

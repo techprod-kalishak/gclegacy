@@ -11,6 +11,9 @@
     "galacticraftlegacy:meteoric_iron_block",
     "galacticraftlegacy:mars_desh_ore",
     "galacticraftlegacy:raw_desh_block",
-    "galacticraftlegacy:desh_block"
+    "galacticraftlegacy:desh_block",
+    "galacticraftlegacy:venus_aluminum_ore",
+    "galacticraftlegacy:venus_silicon_ore",
+    "galacticraftlegacy:venus_solar_ore"
   ]
 }

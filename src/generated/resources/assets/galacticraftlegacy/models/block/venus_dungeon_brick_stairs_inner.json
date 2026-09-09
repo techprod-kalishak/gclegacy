@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/inner_stairs",
+  "textures": {
+    "bottom": "galacticraftlegacy:block/venus_dungeon_bricks",
+    "side": "galacticraftlegacy:block/venus_dungeon_bricks",
+    "top": "galacticraftlegacy:block/venus_dungeon_bricks"
+  }
+}

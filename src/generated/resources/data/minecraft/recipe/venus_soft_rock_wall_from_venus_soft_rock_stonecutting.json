@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": "galacticraftlegacy:venus_soft_rock",
+  "result": {
+    "id": "galacticraftlegacy:venus_soft_rock_wall"
+  }
+}

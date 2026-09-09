@@ -538,6 +538,9 @@ public final class GalacticraftItems {
     public static final DeferredItem<Item> BUGGY_WHEEL = REGISTRY.registerSimpleItem(GalacticraftItemIds.BUGGY_WHEEL, properties -> properties.stacksTo(1));
     public static final DeferredItem<Item> BUGGY_STORAGE_BOX = REGISTRY.registerSimpleItem(GalacticraftItemIds.BUGGY_STORAGE_BOX, properties -> properties.stacksTo(1));
     public static final DeferredItem<Item> ORION_DRIVE = REGISTRY.registerSimpleItem(GalacticraftItemIds.ORION_DRIVE);
+    public static final DeferredItem<Item> SOLAR_DUST = REGISTRY.registerSimpleItem(GalacticraftItemIds.SOLAR_DUST);
+    public static final DeferredItem<Item> SOLAR_ARRAY_PANEL = REGISTRY.registerSimpleItem(GalacticraftItemIds.SOLAR_ARRAY_PANEL);
+    public static final DeferredItem<Item> SOLAR_ARRAY_WAFER = REGISTRY.registerSimpleItem(GalacticraftItemIds.SOLAR_ARRAY_WAFER);
 
     public static final DeferredItem<VehicleItem> TIER_1_ROCKET = REGISTRY.registerItem(
             GalacticraftItemIds.TIER_1_ROCKET,
@@ -646,6 +649,28 @@ public final class GalacticraftItems {
             FallenMeteorItem::new,
             () -> new Item.Properties().stacksTo(1)
     );
+    public static final DeferredItem<BlockItem> VENUS_SOFT_ROCK = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.VENUS_SOFT_ROCK);
+    public static final DeferredItem<BlockItem> VENUS_SOFT_ROCK_STAIRS = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.VENUS_SOFT_ROCK_STAIRS);
+    public static final DeferredItem<BlockItem> VENUS_SOFT_ROCK_SLAB = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.VENUS_SOFT_ROCK_SLAB);
+    public static final DeferredItem<BlockItem> VENUS_SOFT_ROCK_WALL = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.VENUS_SOFT_ROCK_WALL);
+    public static final DeferredItem<BlockItem> VENUS_HARD_ROCK = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.VENUS_HARD_ROCK);
+    public static final DeferredItem<BlockItem> VENUS_VOLCANIC_ROCK = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.VENUS_VOLCANIC_ROCK);
+    public static final DeferredItem<BlockItem> SCORCHED_VENUS_ROCK = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.SCORCHED_VENUS_ROCK);
+    public static final DeferredItem<BlockItem> VENUS_DUNGEON_BRICKS = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.VENUS_DUNGEON_BRICKS);
+    public static final DeferredItem<BlockItem> VENUS_DUNGEON_BRICK_STAIRS = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.VENUS_DUNGEON_BRICK_STAIRS);
+    public static final DeferredItem<BlockItem> VENUS_DUNGEON_BRICK_SLAB = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.VENUS_DUNGEON_BRICK_SLAB);
+    public static final DeferredItem<BlockItem> VENUS_DUNGEON_BRICK_WALL = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.VENUS_DUNGEON_BRICK_WALL);
+    public static final DeferredItem<BlockItem> DEEP_VENUS_DUNGEON_BRICKS = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.DEEP_VENUS_DUNGEON_BRICKS);
+    public static final DeferredItem<BlockItem> DEEP_VENUS_DUNGEON_BRICK_STAIRS = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.DEEP_VENUS_DUNGEON_BRICK_STAIRS);
+    public static final DeferredItem<BlockItem> DEEP_VENUS_DUNGEON_BRICK_SLAB = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.DEEP_VENUS_DUNGEON_BRICK_SLAB);
+    public static final DeferredItem<BlockItem> DEEP_VENUS_DUNGEON_BRICK_WALL = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.DEEP_VENUS_DUNGEON_BRICK_WALL);
+    public static final DeferredItem<BlockItem> VENUS_ALUMINUM_ORE = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.VENUS_ALUMINUM_ORE);
+    public static final DeferredItem<BlockItem> VENUS_COPPER_ORE = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.VENUS_COPPER_ORE);
+    public static final DeferredItem<BlockItem> VENUS_QUARTZ_ORE = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.VENUS_QUARTZ_ORE);
+    public static final DeferredItem<BlockItem> VENUS_SILICON_ORE = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.VENUS_SILICON_ORE);
+    public static final DeferredItem<BlockItem> VENUS_SOLAR_ORE = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.VENUS_SOLAR_ORE);
+    public static final DeferredItem<BlockItem> VENUS_TIN_ORE = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.VENUS_TIN_ORE);
+    public static final DeferredItem<BlockItem> VENUS_LEAD_ORE = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.VENUS_LEAD_ORE);
     public static final DeferredItem<BlockItem> TIN_DECORATION_BLOCK = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.TIN_DECORATION_BLOCK);
     public static final DeferredItem<BlockItem> TIN_DECORATION_SLAB = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.TIN_DECORATION_SLAB);
     public static final DeferredItem<BlockItem> TIN_DECORATION_STAIRS = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.TIN_DECORATION_STAIRS);

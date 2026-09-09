@@ -12,18 +12,27 @@ import io.kalishak.galacticraftlegacy.world.item.GalacticraftItems;
 import io.kalishak.galacticraftlegacy.world.item.component.GalacticraftDataComponents;
 import io.kalishak.galacticraftlegacy.world.level.block.GalacticraftBlocks;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.BlockFamily;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.entries.LootPoolEntryContainer;
+import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
 import net.minecraft.world.level.storage.loot.functions.CopyComponentsFunction;
+import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
+import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
+import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredItem;
 
 import java.util.List;
@@ -53,7 +62,10 @@ public class GalacticraftBlockLootSubProvider extends BlockLootSubProvider {
                 GalacticraftBlockFamilies.MARS_COBBLESTONE,
                 GalacticraftBlockFamilies.TIN_DECORATION,
                 GalacticraftBlockFamilies.TIN_WALL_DECORATION,
-                GalacticraftBlockFamilies.MARS_BRICKS
+                GalacticraftBlockFamilies.MARS_BRICKS,
+                GalacticraftBlockFamilies.VENUS_SOFT_ROCK,
+                GalacticraftBlockFamilies.VENUS_BRICKS,
+                GalacticraftBlockFamilies.DEEP_VENUS_BRICKS
         );
         families.forEach(this::generateForBlockFamily);
         generateForBlockFamily(GalacticraftBlockFamilies.MARS_STONE, _ -> createSilkTouchOnlyTable(GalacticraftBlocks.MARS_COBBLESTONE));
@@ -76,7 +88,7 @@ public class GalacticraftBlockLootSubProvider extends BlockLootSubProvider {
         add(GalacticraftBlocks.TIN_ORE.get(), block -> createOreDrop(block, GalacticraftItems.RAW_TIN.get()));
         add(GalacticraftBlocks.DEEPSLATE_TIN_ORE.get(), block -> createOreDrop(block, GalacticraftItems.RAW_TIN.get()));
         add(GalacticraftBlocks.SILICON_ORE.get(), block -> createOreDrop(block, GalacticraftItems.RAW_SILICON.get()));
-        add(GalacticraftBlocks.DEEPSLATE_SILICON_ORE.get(), block -> createOreDrop(block, GalacticraftItems.RAW_SILICON.get()));
+        add(GalacticraftBlocks.DEEPSLATE_SILICON_ORE.get(), block -> createLargeOreDrop(block, GalacticraftItems.RAW_SILICON, 2, 4));
         dropSelf(GalacticraftBlocks.RAW_ALUMINUM_BLOCK.get());
         dropSelf(GalacticraftBlocks.ALUMINUM_BLOCK.get());
         dropSelf(GalacticraftBlocks.RAW_TIN_BLOCK.get());
@@ -102,7 +114,7 @@ public class GalacticraftBlockLootSubProvider extends BlockLootSubProvider {
         dropSelf(GalacticraftBlocks.UNLIT_TORCH.get());
         dropSelf(GalacticraftBlocks.UNLIT_COPPER_TORCH.get());
         dropSelf(GalacticraftBlocks.UNLIT_LANTERN.get());
-        GalacticraftBlocks.UNLIT_COPPER_LANTERN.forEach(blockSupplier -> dropSelf(blockSupplier.get()));
+        GalacticraftBlocks.UNLIT_COPPER_LANTERN.map(DeferredHolder::get).forEach(this::dropSelf);
         add(GalacticraftBlocks.MAGNETIC_CRAFTING_TABLE.get(), block -> createComponentsBlockEntityTable(block, builder -> builder.include(GalacticraftDataComponents.CRAFTING_MEMORY.get())));
         add(GalacticraftBlocks.ASTEROID_ALUMINUM_ORE.get(), block -> createOreDrop(block, GalacticraftItems.RAW_ALUMINUM.get()));
         add(GalacticraftBlocks.FALLEN_METEOR.get(), block -> createOreDrop(block, GalacticraftItems.RAW_METEORIC_IRON.get()));
@@ -110,14 +122,24 @@ public class GalacticraftBlockLootSubProvider extends BlockLootSubProvider {
         dropSelf(GalacticraftBlocks.NASA_WORKBENCH.get());
         dropSelf(GalacticraftBlocks.LANDING_PAD.get());
         dropSelf(GalacticraftBlocks.FUELING_PAD.get());
-        GalacticraftBlocks.COLORED_TINTED_GLASS_PANE.forEach(block -> add(block.get(), this::createSilkTouchOnlyTable));
-        add(GalacticraftBlocks.TINTED_GLASS_PANE.get(), this::createSilkTouchOnlyTable);
+        GalacticraftBlocks.COLORED_TINTED_GLASS_PANE.map(DeferredHolder::get).forEach(this::dropWhenSilkTouch);
+        dropWhenSilkTouch(GalacticraftBlocks.TINTED_GLASS_PANE.get());
         add(GalacticraftBlocks.MARS_COPPER_ORE.get(), this::createCopperOreDrops);
         add(GalacticraftBlocks.MARS_TIN_ORE.get(), block -> createOreDrop(block, GalacticraftItems.RAW_TIN.get()));
         add(GalacticraftBlocks.MARS_DESH_ORE.get(), block -> createOreDrop(block, GalacticraftItems.RAW_DESH.get()));
         add(GalacticraftBlocks.MARS_IRON_ORE.get(), block -> createOreDrop(block, Items.RAW_IRON));
         dropSelf(GalacticraftBlocks.RAW_DESH_BLOCK.get());
         dropSelf(GalacticraftBlocks.DESH_BLOCK.get());
+        dropSelf(GalacticraftBlocks.VENUS_HARD_ROCK.get());
+        dropWhenSilkTouch(GalacticraftBlocks.VENUS_VOLCANIC_ROCK.get());
+        dropSelf(GalacticraftBlocks.SCORCHED_VENUS_ROCK.get());
+        add(GalacticraftBlocks.VENUS_ALUMINUM_ORE.get(), block -> createOreDrop(block, GalacticraftItems.RAW_ALUMINUM.get()));
+        add(GalacticraftBlocks.VENUS_COPPER_ORE.get(), this::createCopperOreDrops);
+        add(GalacticraftBlocks.VENUS_QUARTZ_ORE.get(), block -> createOreDrop(block, Items.QUARTZ));
+        add(GalacticraftBlocks.VENUS_SILICON_ORE.get(), block -> createLargeOreDrop(block, GalacticraftItems.RAW_SILICON, 2, 4));
+        add(GalacticraftBlocks.VENUS_SOLAR_ORE.get(), block -> createLargeOreDrop(block, GalacticraftItems.SOLAR_DUST.get(), 4, 7));
+        add(GalacticraftBlocks.VENUS_TIN_ORE.get(), block -> createOreDrop(block, GalacticraftItems.RAW_TIN.get()));
+        add(GalacticraftBlocks.VENUS_LEAD_ORE.get(), block -> createOreDrop(block, GalacticraftItems.RAW_LEAD.get()));
     }
 
     @Override
@@ -138,6 +160,13 @@ public class GalacticraftBlockLootSubProvider extends BlockLootSubProvider {
                                         )
                         )
                 );
+    }
+
+    protected LootTable.Builder createLargeOreDrop(Block block, ItemLike drop, int min, int max) {
+        HolderLookup.RegistryLookup<Enchantment> enchantments = this.registries.lookupOrThrow(Registries.ENCHANTMENT);
+        return createSilkTouchDispatchTable(block, applyExplosionDecay(block, LootItem.lootTableItem(drop)
+                .apply(SetItemCountFunction.setCount(UniformGenerator.between((float) min, (float) max)))
+                .apply(ApplyBonusCount.addUniformBonusCount(enchantments.getOrThrow(Enchantments.FORTUNE)))));
     }
 
     protected void generateForBlockFamily(BlockFamily family, Function<Block, LootTable.Builder> baseBlockBuilder) {

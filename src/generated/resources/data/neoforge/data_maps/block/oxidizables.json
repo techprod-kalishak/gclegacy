@@ -1,0 +1,16 @@
+{
+  "values": {
+    "galacticraftlegacy:exposed_unlit_copper_lantern": {
+      "next_oxidation_stage": "galacticraftlegacy:waxed_exposed_unlit_copper_lantern"
+    },
+    "galacticraftlegacy:oxidized_unlit_copper_lantern": {
+      "next_oxidation_stage": "galacticraftlegacy:waxed_oxidized_unlit_copper_lantern"
+    },
+    "galacticraftlegacy:unlit_copper_lantern": {
+      "next_oxidation_stage": "galacticraftlegacy:waxed_unlit_copper_lantern"
+    },
+    "galacticraftlegacy:weathered_unlit_copper_lantern": {
+      "next_oxidation_stage": "galacticraftlegacy:waxed_weathered_unlit_copper_lantern"
+    }
+  }
+}

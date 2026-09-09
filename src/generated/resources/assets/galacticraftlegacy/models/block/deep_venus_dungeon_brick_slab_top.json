@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab_top",
+  "textures": {
+    "bottom": "galacticraftlegacy:block/deep_venus_dungeon_bricks",
+    "side": "galacticraftlegacy:block/deep_venus_dungeon_bricks",
+    "top": "galacticraftlegacy:block/deep_venus_dungeon_bricks"
+  }
+}

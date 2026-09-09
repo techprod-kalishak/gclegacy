@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": "galacticraftlegacy:deep_venus_dungeon_bricks",
+  "result": {
+    "id": "galacticraftlegacy:deep_venus_dungeon_brick_stairs"
+  }
+}

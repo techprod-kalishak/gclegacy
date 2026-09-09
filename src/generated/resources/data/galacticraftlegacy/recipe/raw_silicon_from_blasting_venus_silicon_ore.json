@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:blasting",
+  "experience": 0.1,
+  "group": "raw_silicon",
+  "ingredient": "galacticraftlegacy:venus_silicon_ore",
+  "result": {
+    "id": "galacticraftlegacy:raw_silicon"
+  }
+}

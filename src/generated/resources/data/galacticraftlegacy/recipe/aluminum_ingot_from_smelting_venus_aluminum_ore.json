@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "experience": 0.1,
+  "group": "aluminum_ingot",
+  "ingredient": "galacticraftlegacy:venus_aluminum_ore",
+  "result": {
+    "id": "galacticraftlegacy:aluminum_ingot"
+  }
+}

@@ -1,8 +1,5 @@
 {
   "values": [
-    {
-      "id": "galacticraftlegacy:venus_soft_rock",
-      "required": false
-    }
+    "galacticraftlegacy:venus_soft_rock"
   ]
 }
