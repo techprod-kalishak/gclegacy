@@ -42,7 +42,7 @@ public class CircuitFabricatorBlock extends AbstractMachineBlock {
             return createTickerHelper(
                     blockEntityType,
                     GalacticraftBlockEntityType.CIRCUIT_FABRICATOR.get(),
-                    (tickerLevel, tickerPos, tickerState, ticker) -> CircuitFabricatorBlockEntity.serverTick(serverLevel, tickerPos, tickerState, ticker)
+                    (_, tickerPos, tickerState, ticker) -> CircuitFabricatorBlockEntity.serverTick(serverLevel, tickerPos, tickerState, ticker)
             );
         }
 

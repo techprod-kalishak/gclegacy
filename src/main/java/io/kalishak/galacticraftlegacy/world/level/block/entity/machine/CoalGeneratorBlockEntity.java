@@ -37,6 +37,12 @@ public class CoalGeneratorBlockEntity extends AbstractMachineBlockEntity {
     public static final int MIN_ENERGY_PER_HEAT = 30;
     public static final int MAX_ENERGY_PER_HEAT = 150;
     public static final float HEAT_UP_SPEED = 0.3F;
+    private static final MachineInstance.Properties PROPERTIES = MachineInstance.Properties.of()
+            .inventorySize(1)
+            .batterySlotIndex(-1)
+            .energyExtractionRate(150)
+            .energyInsertionRate(0)
+            .inputSlot(0);
     int litTimeRemaining;
     int litTotalTime;
     float heatLevel;
@@ -150,16 +156,6 @@ public class CoalGeneratorBlockEntity extends AbstractMachineBlockEntity {
     }
 
     @Override
-    public int getSize() {
-        return 1;
-    }
-
-    @Override
-    protected int getBatterySlotIndex() {
-        return -1;
-    }
-
-    @Override
     protected void saveAdditional(ValueOutput output) {
         super.saveAdditional(output);
         output.putInt("LitTimeRemaining", this.litTimeRemaining);
@@ -173,5 +169,10 @@ public class CoalGeneratorBlockEntity extends AbstractMachineBlockEntity {
         this.litTimeRemaining = input.getIntOr("LitTimeRemaining", 0);
         this.litTotalTime = input.getIntOr("LitTotalTime", 0);
         this.heatLevel = input.getFloatOr("HeatLevel", 0.0F);
+    }
+
+    @Override
+    public Properties getProperties() {
+        return PROPERTIES;
     }
 }

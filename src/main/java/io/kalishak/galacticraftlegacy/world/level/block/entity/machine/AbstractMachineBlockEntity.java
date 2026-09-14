@@ -51,13 +51,13 @@ import org.jspecify.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.SequencedCollection;
 
-public abstract class AbstractMachineBlockEntity extends BaseItemStorageBlockEntity implements TransmitterBlockEntity {
+public abstract class AbstractMachineBlockEntity extends BaseItemStorageBlockEntity implements TransmitterBlockEntity, MachineInstance {
     public static final int BASIC_MACHINE_ENERGY_CAPACITY = 25000;
     public static final int BASIC_MACHINE_MAX_TRANSFER_RATE = 500;
     public static final int ADVANCED_MACHINE_ENERGY_CAPACITY = 50000;
     public static final int ADVANCED_MACHINE_MAX_TRANSFER_RATE = 750;
     public static final int MACHINE_ENERGY_LEAK = 5;
-    protected final SimpleEnergyHandler capacitor = new SimpleEnergyHandler(getMaxEnergy(), getMaxEnergyTransferRate()) {
+    protected final SimpleEnergyHandler capacitor = new SimpleEnergyHandler(getProperties().getEnergyCapacity(), getProperties().getEnergyInsertionRate(), getProperties().getEnergyExtractionRate()) {
         @Override
         protected void onEnergyChanged(int previousAmount) {
             if (!AbstractMachineBlockEntity.this.isRemoved()) {
@@ -121,14 +121,14 @@ public abstract class AbstractMachineBlockEntity extends BaseItemStorageBlockEnt
     }
 
     protected static <M extends AbstractMachineBlockEntity> boolean extractBattery(M machine, boolean enableLeak, int energyBasePerOperation, @Nullable Transaction tx) {
-        ItemStack battery = machine.getItem(machine.getBatterySlotIndex());
+        ItemStack battery = machine.getItem(machine.getProperties().getBatterySlotIndex());
         boolean doCommit = false;
 
         if (!battery.isEmpty()) {
             EnergyHandler itemCapacitor = battery.getCapability(Capabilities.Energy.ITEM, ItemAccess.forStack(battery));
 
             if (itemCapacitor != null && itemCapacitor.getAmountAsInt() > 0) {
-                int toMove = Math.min(itemCapacitor.getAmountAsInt(), machine.getMaxEnergyTransferRate());
+                int toMove = Math.min(itemCapacitor.getAmountAsInt(), machine.getProperties().getEnergyInsertionRate());
 
                 try (Transaction childTx = Transaction.open(tx)) {
                     if (EnergyHandlerUtil.move(itemCapacitor, machine.capacitor, toMove, childTx) > 0) {
@@ -192,25 +192,16 @@ public abstract class AbstractMachineBlockEntity extends BaseItemStorageBlockEnt
         return this.machineStatus;
     }
 
-    protected abstract int getBatterySlotIndex();
-
-    protected int[] getBatterySlots() {
-        return new int[] { getBatterySlotIndex() };
-    }
-
-    protected int getMaxEnergy() {
-        return BASIC_MACHINE_ENERGY_CAPACITY;
-    }
-
-    protected int getMaxEnergyTransferRate() {
-        return BASIC_MACHINE_MAX_TRANSFER_RATE;
-    }
-
     protected boolean hasEnergyToOperate() {
-        return this.capacitor.getAmountAsInt() > getMaxEnergyTransferRate();
+        return this.capacitor.getAmountAsInt() > getProperties().getEnergyExtractionRate();
     }
 
     protected void onItemChange(int slot, ItemStack previousStack) {
+    }
+
+    @Override
+    protected int getSize() {
+        return getProperties().getInventorySize();
     }
 
     @Override

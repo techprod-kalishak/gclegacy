@@ -14,11 +14,9 @@ import io.kalishak.galacticraftlegacy.world.level.block.GalacticraftBlocks;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
-import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
@@ -48,9 +46,16 @@ public class CircuitFabricatorBlockEntity extends RecipeMachineBlockEntity<Craft
     public static final int SLOT_INGREDIENT = 5;
     public static final int SLOT_OUTPUT = 6;
     public static final int SLOT_COUNT = 7;
+    public static final int INPUT_SLOT_COUNT = 6;
     public static final int[] BATTERY_SLOTS = new int[] { 0 };
     public static final int[] INPUT_SLOTS = new int[] { 1, 2, 3, 4, 5 };
     public static final int[] OUTPUT_SLOTS = new int[] { 6 };
+    private static final MachineInstance.Properties PROPERTIES = MachineInstance.Properties.of()
+            .inventorySize(SLOT_COUNT)
+            .batterySlotIndex(SLOT_BATTERY)
+            .resultSlotCount(SLOT_OUTPUT)
+            .inputSlot(SLOT_DIAMOND)
+            .inputSlotCount(INPUT_SLOT_COUNT);
     private int processProgress;
     private int processTimeTotal;
     private final ContainerData containerData = new ContainerData() {
@@ -98,13 +103,13 @@ public class CircuitFabricatorBlockEntity extends RecipeMachineBlockEntity<Craft
                 ItemStack result = recipe.value().assemble(input);
                 int maxStackSize = entity.items.getCapacityAsInt(SLOT_OUTPUT, ItemResource.of(result));
 
-                if (!result.isEmpty() && RecipeMachineBlockEntity.canProcess(entity, maxStackSize, result, entity.capacitor, entity.getMaxEnergyTransferRate(), SLOT_OUTPUT)) {
+                if (!result.isEmpty() && RecipeMachineBlockEntity.canProcess(entity, maxStackSize, result, entity.capacitor, entity.getProperties().getEnergyExtractionRate(), SLOT_OUTPUT)) {
                     entity.processProgress++;
 
                     if (entity.processProgress == entity.processTimeTotal) {
                         entity.processProgress = 0;
                         entity.processTimeTotal = 400;
-                        process(entity, result, entity.capacitor, entity.getMaxEnergyTransferRate());
+                        process(entity, result, entity.capacitor, entity.getProperties().getEnergyExtractionRate());
                         changed = true;
                     }
                 }
@@ -209,16 +214,6 @@ public class CircuitFabricatorBlockEntity extends RecipeMachineBlockEntity<Craft
     }
 
     @Override
-    public int getSize() {
-        return SLOT_COUNT;
-    }
-
-    @Override
-    protected int getBatterySlotIndex() {
-        return SLOT_BATTERY;
-    }
-
-    @Override
     protected Component getDefaultName() {
         return GalacticraftBlocks.CIRCUIT_FABRICATOR.get().getName();
     }
@@ -226,5 +221,10 @@ public class CircuitFabricatorBlockEntity extends RecipeMachineBlockEntity<Craft
     @Override
     public AbstractContainerMenu createMenu(int containerId, Inventory playerInventory) {
         return new CircuitFabricatorMenu(containerId, playerInventory, this, this.containerData);
+    }
+
+    @Override
+    public Properties getProperties() {
+        return PROPERTIES;
     }
 }

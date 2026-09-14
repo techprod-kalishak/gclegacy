@@ -21,19 +21,23 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
-import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.transfer.fluid.FluidResource;
 import net.neoforged.neoforge.transfer.transaction.Transaction;
 
 public class OxygenCollectorBlockEntity extends AbstractOxygenBlockEntity {
     public static float OXYGEN_PER_PLANT = 0.75F;
+    private static final MachineInstance.Properties PROPERTIES =  MachineInstance.Properties.of()
+            .inventorySize(1)
+            .batterySlotIndex(0)
+            .tankCapacity(16000)
+            .fluidTransferRate(100);
     public int lastOxygenCollected;
     private boolean noAtmosphericOxygen;
     private boolean isInitialised;
     private boolean producedLastTick;
 
     public OxygenCollectorBlockEntity(BlockPos pos, BlockState blockState) {
-        super(GalacticraftBlockEntityType.OXYGEN_COLLECTOR.get(), pos, blockState, 100, FluidType.BUCKET_VOLUME * 6);
+        super(GalacticraftBlockEntityType.OXYGEN_COLLECTOR.get(), pos, blockState);
     }
 
     public static void registerCapabilities(RegisterCapabilitiesEvent event) {
@@ -126,17 +130,7 @@ public class OxygenCollectorBlockEntity extends AbstractOxygenBlockEntity {
     }
 
     @Override
-    public int getSize() {
-        return 1;
-    }
-
-    @Override
-    protected int getBatterySlotIndex() {
-        return 0;
-    }
-
-    @Override
-    public int getTanks() {
-        return 1;
+    public Properties getProperties() {
+        return PROPERTIES;
     }
 }

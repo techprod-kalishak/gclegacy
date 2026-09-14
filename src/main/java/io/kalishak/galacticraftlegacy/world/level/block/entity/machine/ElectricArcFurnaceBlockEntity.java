@@ -18,13 +18,17 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class ElectricArcFurnaceBlockEntity extends AbstractElectricFurnaceBlockEntity<ArcHeatingRecipe> {
+    private static final MachineInstance.Properties PROPERTIES = MachineInstance.Properties.of()
+            .energyCapacity(50000)
+            .energyExtractionRate(25)
+            .energyInsertionRate(250)
+            .inventorySize(4)
+            .batterySlotIndex(SLOT_BATTERY)
+            .inputSlot(SLOT_INPUT)
+            .resultSlot(SLOT_RESULT)
+            .resultSlotCount(2);
     public ElectricArcFurnaceBlockEntity(BlockPos pos, BlockState state) {
         super(GalacticraftBlockEntityType.ELECTRIC_ARC_FURNACE.get(), pos, state, GalacticraftRecipeType.ARC_HEATING.get());
-    }
-
-    @Override
-    public int getSize() {
-        return 4;
     }
 
     @Override
@@ -39,5 +43,10 @@ public class ElectricArcFurnaceBlockEntity extends AbstractElectricFurnaceBlockE
     @Override
     protected AbstractContainerMenu createMenu(int containerId, Inventory playerInventory) {
         return new ElectricArcFurnaceMenu(containerId, playerInventory, this, this.dataAccess);
+    }
+
+    @Override
+    public Properties getProperties() {
+        return PROPERTIES;
     }
 }

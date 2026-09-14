@@ -77,11 +77,6 @@ public abstract class AbstractElectricFurnaceBlockEntity<R extends ElectricCooki
     }
 
     @Override
-    protected int getBatterySlotIndex() {
-        return SLOT_BATTERY;
-    }
-
-    @Override
     protected void loadAdditional(ValueInput input) {
         super.loadAdditional(input);
         this.cookingTimer = input.getIntOr("cooking_time_spent", (short) 0);

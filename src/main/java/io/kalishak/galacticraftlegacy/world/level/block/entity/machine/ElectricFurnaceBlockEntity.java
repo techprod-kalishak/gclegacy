@@ -18,13 +18,13 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class ElectricFurnaceBlockEntity extends AbstractElectricFurnaceBlockEntity<HeatingRecipe> {
+    private static final MachineInstance.Properties PROPERTIES = MachineInstance.Properties.of()
+            .inventorySize(3)
+            .batterySlotIndex(AbstractElectricFurnaceBlockEntity.SLOT_BATTERY)
+            .inputSlot(AbstractElectricFurnaceBlockEntity.SLOT_INPUT)
+            .resultSlot(AbstractElectricFurnaceBlockEntity.SLOT_RESULT);
     public ElectricFurnaceBlockEntity(BlockPos pos, BlockState blockState) {
         super(GalacticraftBlockEntityType.ELECTRIC_FURNACE.get(), pos, blockState, GalacticraftRecipeType.HEATING.get());
-    }
-
-    @Override
-    public int getSize() {
-        return 3;
     }
 
     @Override
@@ -39,5 +39,10 @@ public class ElectricFurnaceBlockEntity extends AbstractElectricFurnaceBlockEnti
     @Override
     public AbstractContainerMenu createMenu(int containerId, Inventory playerInventory) {
         return new ElectricFurnaceMenu(containerId, playerInventory, this, this.dataAccess);
+    }
+
+    @Override
+    public Properties getProperties() {
+        return PROPERTIES;
     }
 }

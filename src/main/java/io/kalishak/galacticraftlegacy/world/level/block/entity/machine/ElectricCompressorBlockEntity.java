@@ -31,6 +31,13 @@ import org.jspecify.annotations.Nullable;
 import java.util.List;
 
 public class ElectricCompressorBlockEntity extends RecipeMachineBlockEntity<CraftingInput, ElectricCompressingRecipe> implements AlloyCompressor {
+    private static final MachineInstance.Properties PROPERTIES = MachineInstance.Properties.of()
+            .inventorySize(AlloyCompressor.INVENTORY_SIZE_ADVANCED)
+            .batterySlotIndex(AlloyCompressor.FUEL_SLOT)
+            .resultSlot(AlloyCompressor.RESULT_SLOT_START)
+            .resultSlotCount(2)
+            .inputSlot(AlloyCompressor.CRAFTING_SLOT_START)
+            .inputSlotCount(9);
     private int compressingTimer;
     private int compressingTotalTime;
     private final ContainerData dataAccess = new ContainerData() {
@@ -127,22 +134,17 @@ public class ElectricCompressorBlockEntity extends RecipeMachineBlockEntity<Craf
     }
 
     @Override
-    public int getSize() {
-        return AlloyCompressor.INVENTORY_SIZE_ADVANCED;
-    }
-
-    @Override
-    protected int getBatterySlotIndex() {
-        return AlloyCompressor.FUEL_SLOT;
-    }
-
-    @Override
     public int[] getSlotsForOutput() {
-        return new int[] { AlloyCompressor.RESULT_SLOT_START, AlloyCompressor.RESULT_SLOT_END };
+        return getProperties().getResultSlots();
     }
 
     @Override
     public @Nullable AbstractContainerMenu createMenu(int containerId, Inventory inventory) {
         return new ElectricCompressorMenu(containerId, inventory, this, this.dataAccess);
+    }
+
+    @Override
+    public Properties getProperties() {
+        return PROPERTIES;
     }
 }

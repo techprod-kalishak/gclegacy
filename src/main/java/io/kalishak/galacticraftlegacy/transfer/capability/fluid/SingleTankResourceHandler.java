@@ -20,11 +20,11 @@ import org.jspecify.annotations.NonNull;
 
 public class SingleTankResourceHandler extends SnapshotJournal<FluidStack> implements ResourceHandler<FluidResource>, ValueIOSerializable {
     public static final String VALUE_IO_KEY = "FluidStack";
-    private final int capacity;
-    private @NonNull FluidStack stack;
+    protected final int capacity;
+    protected @NonNull FluidStack stack;
 
     public SingleTankResourceHandler(@NonNull FluidStack stack, int capacity) {
-        this.stack = stack;
+        this.stack = stack.copy();
         this.capacity = capacity;
     }
 
@@ -33,7 +33,7 @@ public class SingleTankResourceHandler extends SnapshotJournal<FluidStack> imple
     }
 
     public @NonNull FluidStack getFluidStack() {
-        return this.stack.copy();
+        return this.stack;
     }
 
     public void setFluidStack(@NonNull FluidStack stack) {

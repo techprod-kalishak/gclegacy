@@ -45,7 +45,7 @@ public class ColoredPipeBlockEntity extends AbstractConnectableBlockEntity imple
     private ConnectionState connectionState = ConnectionState.DEFAULT;
     private FluidStack stack = FluidStack.EMPTY;
     private DyeColor color = DyeColor.WHITE;
-    private final SingleTankResourceHandler fluidHandler = new LimitedFluidResourceHandler(50, 2500) {
+    private final SingleTankResourceHandler fluidHandler = new LimitedFluidResourceHandler(250, 250) {
         @Override
         protected void notifyChange() {
             ColoredPipeBlockEntity.this.setData(GalacticraftAttachments.SYNC_FLUID_STACK, getFluidStack());

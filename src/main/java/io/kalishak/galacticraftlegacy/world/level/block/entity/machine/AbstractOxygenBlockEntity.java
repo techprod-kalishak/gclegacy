@@ -38,22 +38,20 @@ import net.neoforged.neoforge.transfer.transaction.Transaction;
 import org.jspecify.annotations.Nullable;
 
 public abstract class AbstractOxygenBlockEntity extends AbstractMachineBlockEntity implements Tank {
-    protected final int oxygenPerTick;
+    protected final int oxygenPerTick = getProperties().getFluidExtractionRate();
     protected FluidStack oxygenTank = FluidStack.EMPTY;
-    protected final SingleTankResourceHandler oxygenHandler;
+    protected final SingleTankResourceHandler oxygenHandler = new SingleTankResourceHandler(getProperties().getTankCapacity()) {
+        @Override
+        protected void notifyChange() {
+            if (!AbstractOxygenBlockEntity.this.isRemoved()) {
+                AbstractOxygenBlockEntity.this.setData(GalacticraftAttachments.SYNC_FLUID_STACK, AbstractOxygenBlockEntity.this.oxygenHandler.getFluidStack());
+            }
+        }
+    };
     protected int lastOxygenAmount;
 
-    protected AbstractOxygenBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState blockState, int oxygenPerTick, int capacity) {
+    protected AbstractOxygenBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState blockState) {
         super(type, pos, blockState);
-        this.oxygenPerTick = oxygenPerTick;
-        this.oxygenHandler = new SingleTankResourceHandler(capacity) {
-            @Override
-            protected void notifyChange() {
-                if (!AbstractOxygenBlockEntity.this.isRemoved()) {
-                    AbstractOxygenBlockEntity.this.setData(GalacticraftAttachments.SYNC_FLUID_STACK, AbstractOxygenBlockEntity.this.oxygenHandler.getFluidStack());
-                }
-            }
-        };
     }
 
     public static <M extends AbstractOxygenBlockEntity> void registerEnergyFluidItemCapability(BlockEntityType<M> blockEntity, RegisterCapabilitiesEvent event) {
@@ -142,6 +140,11 @@ public abstract class AbstractOxygenBlockEntity extends AbstractMachineBlockEnti
 
     public int getClampedOxygenLevel(int scale) {
         return Math.clamp((int) Math.floor((double) this.oxygenHandler.getAmount() / this.oxygenHandler.getCapacity() * scale), 0, scale);
+    }
+
+    @Override
+    public int getTanks() {
+        return getProperties().getTankCount();
     }
 
     @Override

@@ -7,34 +7,21 @@
 
 package io.kalishak.galacticraftlegacy.transfer.capability.fluid;
 
-import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.transfer.fluid.FluidResource;
 import net.neoforged.neoforge.transfer.transaction.TransactionContext;
-import org.jspecify.annotations.NonNull;
 
 public class LimitedFluidResourceHandler extends SingleTankResourceHandler {
-    private final int maxExtractRate;
-    private final int maxInsertRate;
-    protected @NonNull FluidStack fluidStack = FluidStack.EMPTY;
+    protected final int maxExtractRate;
+    protected final int maxInsertRate;
 
-    public LimitedFluidResourceHandler(int maxExtractRate, int maxInsertRate, int capacity) {
+    public LimitedFluidResourceHandler(int capacity, int maxExtractRate, int maxInsertRate) {
         super(capacity);
         this.maxExtractRate = maxExtractRate;
         this.maxInsertRate = maxInsertRate;
     }
 
-    public LimitedFluidResourceHandler(int maxTransfer, int capacity) {
-        this(maxTransfer, maxTransfer, capacity);
-    }
-
-    @Override
-    public @NonNull FluidStack getFluidStack() {
-        return this.fluidStack;
-    }
-
-    @Override
-    public void setFluidStack(@NonNull FluidStack stack) {
-        this.fluidStack = stack;
+    public LimitedFluidResourceHandler(int capacity, int maxTransfer) {
+        this(capacity, maxTransfer, maxTransfer);
     }
 
     @Override
