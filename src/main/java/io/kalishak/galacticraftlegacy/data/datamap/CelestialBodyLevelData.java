@@ -3,10 +3,12 @@ package io.kalishak.galacticraftlegacy.data.datamap;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.kalishak.galacticraftlegacy.galaxies.environment.CelestialBodyInfo;
+import io.kalishak.galacticraftlegacy.registry.CelestialBodyInfoEntries;
 import io.kalishak.galacticraftlegacy.registry.GalacticraftRegistries;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.resources.ResourceKey;
+import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
 public record CelestialBodyLevelData(ResourceKey<CelestialBodyInfo> bodyInfo) {
@@ -18,5 +20,9 @@ public record CelestialBodyLevelData(ResourceKey<CelestialBodyInfo> bodyInfo) {
         Holder<CelestialBodyInfo> orNull = holderGetter.getOrThrow(this.bodyInfo);
 
         return orNull.isBound() ? orNull.value() : null;
+    }
+
+    public @NonNull CelestialBodyInfo getOrDefault(HolderGetter<CelestialBodyInfo> holderGetter) {
+        return get(holderGetter) instanceof CelestialBodyInfo celestialBodyInfo ? celestialBodyInfo : CelestialBodyInfoEntries.INACCESSIBLE;
     }
 }

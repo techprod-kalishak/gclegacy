@@ -28,16 +28,23 @@ import net.neoforged.neoforge.common.data.DataMapProvider;
 import java.util.Optional;
 
 public class CelestialBodyInfoEntries {
-    public static final ResourceKey<CelestialBodyInfo> INACCESSIBLE = Constants.key(GalacticraftRegistries.Keys.CELESTIAL_BODY_INFO, "inaccessible");
-    public static final ResourceKey<CelestialBodyInfo> OVERWORLD = Constants.key(GalacticraftRegistries.Keys.CELESTIAL_BODY_INFO, "overworld");
-    public static final ResourceKey<CelestialBodyInfo> MOON = Constants.key(GalacticraftRegistries.Keys.CELESTIAL_BODY_INFO, "moon");
-    public static final ResourceKey<CelestialBodyInfo> ORBIT = Constants.key(GalacticraftRegistries.Keys.CELESTIAL_BODY_INFO, "orbit");
-    public static final ResourceKey<CelestialBodyInfo> MARS = Constants.key(GalacticraftRegistries.Keys.CELESTIAL_BODY_INFO, "mars");
-    public static final ResourceKey<CelestialBodyInfo> ASTEROIDS = Constants.key(GalacticraftRegistries.Keys.CELESTIAL_BODY_INFO, "asteroids");
-    public static final ResourceKey<CelestialBodyInfo> VENUS = Constants.key(GalacticraftRegistries.Keys.CELESTIAL_BODY_INFO, "venus");
+    private static final ResourceKey<CelestialBodyInfo> INACCESSIBLE_KEY = Constants.key(GalacticraftRegistries.Keys.CELESTIAL_BODY_INFO, "inaccessible");
+    private static final ResourceKey<CelestialBodyInfo> OVERWORLD = Constants.key(GalacticraftRegistries.Keys.CELESTIAL_BODY_INFO, "overworld");
+    private static final ResourceKey<CelestialBodyInfo> MOON = Constants.key(GalacticraftRegistries.Keys.CELESTIAL_BODY_INFO, "moon");
+    private static final ResourceKey<CelestialBodyInfo> ORBIT = Constants.key(GalacticraftRegistries.Keys.CELESTIAL_BODY_INFO, "orbit");
+    private static final ResourceKey<CelestialBodyInfo> MARS = Constants.key(GalacticraftRegistries.Keys.CELESTIAL_BODY_INFO, "mars");
+    private static final ResourceKey<CelestialBodyInfo> ASTEROIDS = Constants.key(GalacticraftRegistries.Keys.CELESTIAL_BODY_INFO, "asteroids");
+    private static final ResourceKey<CelestialBodyInfo> VENUS = Constants.key(GalacticraftRegistries.Keys.CELESTIAL_BODY_INFO, "venus");
+    public static final CelestialBodyInfo INACCESSIBLE = new CelestialBodyInfo(
+            GalacticraftGalaxies.SOL,
+            AtmosphereInfo.builder().build(),
+            1.0F,
+            InaccessiblePlanetaryTransition.INSTANCE,
+            Optional.empty()
+    );
 
     public static void buildDataMaps(DataMapProvider.Builder<CelestialBodyLevelData, DimensionType> dataMapBuilder) {
-        CelestialBodyLevelData inaccessible = new CelestialBodyLevelData(INACCESSIBLE);
+        CelestialBodyLevelData inaccessible = new CelestialBodyLevelData(INACCESSIBLE_KEY);
         dataMapBuilder.add(BuiltinDimensionTypes.OVERWORLD, new CelestialBodyLevelData(OVERWORLD), false)
                 .add(BuiltinDimensionTypes.OVERWORLD_CAVES, inaccessible, false)
                 .add(BuiltinDimensionTypes.NETHER, inaccessible, false)
@@ -49,13 +56,7 @@ public class CelestialBodyInfoEntries {
                 .add(GalacticraftDimensionTypes.VENUS, new CelestialBodyLevelData(VENUS), false);
     }
     public static void bootstrap(BootstrapContext<CelestialBodyInfo> cxt) {
-        cxt.register(INACCESSIBLE, new CelestialBodyInfo(
-                GalacticraftGalaxies.SOL,
-                AtmosphereInfo.builder().build(),
-                1.0F,
-                InaccessiblePlanetaryTransition.INSTANCE,
-                Optional.empty()
-        ));
+        cxt.register(INACCESSIBLE_KEY, INACCESSIBLE);
 
         cxt.register(OVERWORLD, new CelestialBodyInfo(
                 GalacticraftGalaxies.OVERWORLD,

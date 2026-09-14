@@ -58,6 +58,6 @@ public record CelestialBodyInfo(Holder<CelestialObject> celestialObject, Atmosph
             return null;
         }
 
-        return levelData.get(level.registryAccess().lookupOrThrow(GalacticraftRegistries.Keys.CELESTIAL_BODY_INFO));
+        return levelData.getOrDefault(level.registryAccess().lookupOrThrow(GalacticraftRegistries.Keys.CELESTIAL_BODY_INFO));
     }
 }

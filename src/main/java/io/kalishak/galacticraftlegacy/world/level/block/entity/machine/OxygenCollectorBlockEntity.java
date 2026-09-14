@@ -53,7 +53,7 @@ public class OxygenCollectorBlockEntity extends AbstractOxygenBlockEntity {
                 float nearbyLeaves = 0;
 
                 if (!blockEntity.isInitialised) {
-                    blockEntity.noAtmosphericOxygen = CelestialBodyInfo.canLivingBreath(level);
+                    blockEntity.noAtmosphericOxygen = !CelestialBodyInfo.canLivingBreath(level);
                     blockEntity.isInitialised = true;
                 }
 

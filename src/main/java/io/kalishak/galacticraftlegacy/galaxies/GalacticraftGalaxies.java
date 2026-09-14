@@ -213,8 +213,4 @@ public class GalacticraftGalaxies {
     public static void init(IEventBus bus) {
         REGISTRY.register(bus);
     }
-
-    public static List<CelestialObject> getRenderables() {
-        return REGISTRY.getEntries().stream().filter(DeferredHolder::isBound).map(DeferredHolder::get).collect(Collectors.toUnmodifiableList());
-    }
 }

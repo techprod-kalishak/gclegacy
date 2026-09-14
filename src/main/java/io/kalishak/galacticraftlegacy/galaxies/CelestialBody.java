@@ -196,7 +196,7 @@ public class CelestialBody extends CelestialObject implements Comparable<Celesti
         private ScalableDistance relativeDistanceFromCenter = new ScalableDistance(1.0F);
         private float relativeOrbitTime = 1.0F;
         private float phaseShift = 0.0F;
-        private ResourceKey<Level> levelId = Level.OVERWORLD;
+        private final ResourceKey<Level> levelId = Level.OVERWORLD;
         private boolean autoRegisterDimension = false;
         private boolean isReachable = true;
         private boolean forceLoad = true;
