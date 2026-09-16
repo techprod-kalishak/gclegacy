@@ -7,9 +7,14 @@
 
 package io.kalishak.galacticraftlegacy.client.model.geom;
 
+import io.kalishak.galacticraftlegacy.client.model.block.EmergencyPostModel;
 import io.kalishak.galacticraftlegacy.references.Constants;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.entity.ArmorModelSet;
+import net.minecraft.util.Util;
+
+import java.util.EnumMap;
+import java.util.Map;
 
 public class GalacticraftModelLayers {
     public static final ModelLayerLocation FLAG = createLocation("flag");
@@ -19,6 +24,10 @@ public class GalacticraftModelLayers {
     public static final ModelLayerLocation HEAVY_OXYGEN_TANK = createLocation("heavy_oxygen_tank");
     public static final ModelLayerLocation MEDIUM_OXYGEN_TANK = createLocation("medium_oxygen_tank");
     public static final ModelLayerLocation LIGHT_OXYGEN_TANK = createLocation("light_oxygen_tank");
+    public static final Map<EmergencyPostModel.ModelType, ModelLayerLocation> EMERGENCY_POST = Util.makeEnumMap(
+            EmergencyPostModel.ModelType.class,
+            modelType -> createLocation("emergency_post" + "_" + modelType)
+    );
     public static final ModelLayerLocation NASA_WORKBENCH = createLocation("nasa_workbench/workbench_arms");
     public static final ModelLayerLocation PARACHUTE = createLocation("parachute");
     public static final ArmorModelSet<ModelLayerLocation> THERMAL_PADDING = new ArmorModelSet<>(

@@ -10,10 +10,7 @@ package io.kalishak.galacticraftlegacy.client.data.models.model;
 import io.kalishak.galacticraftlegacy.aunified.data.model.ExtendedBlockModelGenerator;
 import io.kalishak.galacticraftlegacy.client.renderer.special.NasaWorkbenchSpecialRenderer;
 import io.kalishak.galacticraftlegacy.references.Constants;
-import io.kalishak.galacticraftlegacy.world.level.block.AbstractPadBlock;
-import io.kalishak.galacticraftlegacy.world.level.block.FluidTankBlock;
-import io.kalishak.galacticraftlegacy.world.level.block.MagneticCraftingBlock;
-import io.kalishak.galacticraftlegacy.world.level.block.PadState;
+import io.kalishak.galacticraftlegacy.world.level.block.*;
 import io.kalishak.galacticraftlegacy.world.level.block.wire.HeavyWireBlock;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.MultiVariant;
@@ -247,6 +244,21 @@ public class GalacticraftBlockModelGenerators extends ExtendedBlockModelGenerato
                                         .select(true, false, connectedUp)
                                         .select(false, true, connectedDown)
                                         .select(false, false, plainVariant(fallBack))
+                        )
+        );
+        registerSimpleItemModel(block.asItem(), fallBack);
+    }
+
+    public void createEmergencyPost(EmergencyPostBlock block) {
+        Identifier fallBack = ModelLocationUtils.getModelLocation(block, "_with_kit");
+        MultiVariant withoutKit = plainVariant(ModelLocationUtils.getModelLocation(block));
+
+        this.blockStateOutput.accept(
+                MultiVariantGenerator.dispatch(block)
+                        .with(
+                                PropertyDispatch.initial(EmergencyPostBlock.WITH_KIT)
+                                        .select(true, plainVariant(fallBack))
+                                        .select(false, withoutKit)
                         )
         );
         registerSimpleItemModel(block.asItem(), fallBack);

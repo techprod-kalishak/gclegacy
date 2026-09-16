@@ -49,6 +49,7 @@ import net.neoforged.neoforge.transfer.energy.InfiniteEnergyHandler;
 import net.neoforged.neoforge.transfer.energy.ItemAccessEnergyHandler;
 import net.neoforged.neoforge.transfer.fluid.FluidResource;
 import net.neoforged.neoforge.transfer.fluid.ItemAccessFluidHandler;
+import net.neoforged.neoforge.transfer.item.ItemAccessItemHandler;
 
 import java.util.List;
 import java.util.Optional;
@@ -513,6 +514,12 @@ public final class GalacticraftItems {
                             )
                     )
     );
+    public static final DeferredItem<SpaceEmergencyKitItem> SPACE_EMERGENCY_KIT = REGISTRY.registerItemWithDescription(
+            GalacticraftItemIds.EMERGENCY_KIT,
+            SpaceEmergencyKitItem::new,
+            () -> new Item.Properties()
+                    .stacksTo(1)
+    );
     public static final DeferredItem<SpawnEggItem> EVOLVED_SKELETON_SPAWN_EGG = REGISTRY.registerItem(
             GalacticraftItemIds.EVOLVED_SKELETON_SPAWN_EGG,
             SpawnEggItem::new,
@@ -684,6 +691,7 @@ public final class GalacticraftItems {
     public static final DeferredItem<BlockItem> FUELING_PAD = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.FUELING_PAD);
     public static final ColorCollection<DeferredItem<BlockItem>> COLORED_TINTED_GLASS_PANE = REGISTRY.registerBlockItemColorCollection(GalacticraftBlocks.COLORED_TINTED_GLASS_PANE, BlockItem::new, _ -> new Item.Properties());
     public static final DeferredItem<BlockItem> TINTED_GLASS_PANE = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.TINTED_GLASS_PANE);
+    public static final DeferredItem<BlockItem> EMERGENCY_POST = REGISTRY.registerSimpleBlockItemWithDescription(GalacticraftBlocks.EMERGENCY_POST);
     public static final DeferredItem<BlockItem> MARS_STONE = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.MARS_STONE);
     public static final DeferredItem<BlockItem> MARS_REGOLITH = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.MARS_REGOLITH);
     public static final DeferredItem<BlockItem> MARS_FINE_REGOLITH = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.MARS_FINE_REGOLITH);
@@ -746,6 +754,11 @@ public final class GalacticraftItems {
                 Capabilities.Fluid.ITEM,
                 (_, cxt) -> new ItemAccessFluidHandler(cxt, GalacticraftDataComponents.FLUID_TANK.get(), 8000),
                 FLUID_CANISTER
+        );
+        event.registerItem(
+                Capabilities.Item.ITEM,
+                (_, cxt) -> new ItemAccessItemHandler(cxt, DataComponents.CONTAINER, 9),
+                GalacticraftItems.SPACE_EMERGENCY_KIT
         );
     }
 }

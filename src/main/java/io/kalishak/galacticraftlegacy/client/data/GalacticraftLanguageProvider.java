@@ -135,6 +135,7 @@ public class GalacticraftLanguageProvider extends ExtendedLanguageProvider {
         addWithDescription(GalacticraftBlocks.HEAVY_ALUMINUM_WIRE, "Heavy Aluminum Wire", "Heavy Aluminum Wire is used to connect energy sources to energy consuming machines. Its higher capacity boosts efficiency for Tier 2 machines.");
         addColorCollection(GalacticraftBlockItemIds.FLUID_PIPE, id -> id.block().identifier(), "block");
         addColorCollection(GalacticraftBlockItemIds.COLORED_TINTED_GLASS_PANE, id -> id.block().identifier(), "block");
+        addWithDescription(GalacticraftBlocks.EMERGENCY_POST, "Emergency Post", "Place an Emergency Post close by your first landing place on a planet. Open to find Emergency Kit inside. Also repels mobs!");
         addBlock(GalacticraftBlocks.TINTED_GLASS_PANE, "Tinted Glass Pane");
         addBlock(GalacticraftBlocks.MOON_DIRT, "Moon Dirt");
         addBlock(GalacticraftBlocks.MOON_TURF, "Moon Turf");
@@ -341,6 +342,7 @@ public class GalacticraftLanguageProvider extends ExtendedLanguageProvider {
         addItem(GalacticraftItems.HEAVY_DUTY_PLATE, "Heavy Duty Plate");
         addItem(GalacticraftItems.HEAVY_DUTY_PLATE_TIER_2, "Heavy Duty Plate Tier 2");
         addItem(GalacticraftItems.HEAVY_DUTY_PLATE_TIER_3, "Heavy Duty Plate Tier 3");
+        addWithDescription(GalacticraftItems.SPACE_EMERGENCY_KIT, "Space Emergency Kit", "Right click to equip Oxygen Gear and other essential items. Warning: One time use!");
         addItem(GalacticraftItems.ROCKET_NOSE_CONE, "Rocket Nose Cone");
         addItem(GalacticraftItems.ROCKET_FIN, "Rocket Fins");
         addItem(GalacticraftItems.ROCKET_ENGINE, "Rocket Engine");

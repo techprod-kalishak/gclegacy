@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "with_kit=false": {
+      "model": "galacticraftlegacy:block/emergency_post"
+    },
+    "with_kit=true": {
+      "model": "galacticraftlegacy:block/emergency_post_with_kit"
+    }
+  }
+}

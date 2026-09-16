@@ -12,6 +12,7 @@ import io.kalishak.galacticraftlegacy.world.item.GalacticraftItems;
 import io.kalishak.galacticraftlegacy.world.item.component.GalacticraftDataComponents;
 import io.kalishak.galacticraftlegacy.world.level.block.GalacticraftBlocks;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.BlockFamily;
 import net.minecraft.data.loot.BlockLootSubProvider;
@@ -124,6 +125,7 @@ public class GalacticraftBlockLootSubProvider extends BlockLootSubProvider {
         dropSelf(GalacticraftBlocks.FUELING_PAD.get());
         GalacticraftBlocks.COLORED_TINTED_GLASS_PANE.map(DeferredHolder::get).forEach(this::dropWhenSilkTouch);
         dropWhenSilkTouch(GalacticraftBlocks.TINTED_GLASS_PANE.get());
+        add(GalacticraftBlocks.EMERGENCY_POST.get(), block -> createComponentsBlockEntityTable(block, builder -> builder.include(DataComponents.CONTAINER)));
         add(GalacticraftBlocks.MARS_COPPER_ORE.get(), this::createCopperOreDrops);
         add(GalacticraftBlocks.MARS_TIN_ORE.get(), block -> createOreDrop(block, GalacticraftItems.RAW_TIN.get()));
         add(GalacticraftBlocks.MARS_DESH_ORE.get(), block -> createOreDrop(block, GalacticraftItems.RAW_DESH.get()));

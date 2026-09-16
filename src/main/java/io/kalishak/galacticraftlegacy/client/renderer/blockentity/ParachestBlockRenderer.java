@@ -10,7 +10,7 @@ package io.kalishak.galacticraftlegacy.client.renderer.blockentity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import io.kalishak.galacticraftlegacy.client.renderer.GalacticraftSheets;
-import io.kalishak.galacticraftlegacy.client.renderer.blockentity.state.ParachestBlockRenderState;
+import io.kalishak.galacticraftlegacy.client.renderer.blockentity.state.OpenableBlockRenderState;
 import io.kalishak.galacticraftlegacy.world.level.block.GalacticraftBlocks;
 import io.kalishak.galacticraftlegacy.world.level.block.ParachestBlock;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.ParachestBlockEntity;
@@ -31,7 +31,7 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import org.jspecify.annotations.Nullable;
 
-public class ParachestBlockRenderer implements BlockEntityRenderer<ParachestBlockEntity, ParachestBlockRenderState> {
+public class ParachestBlockRenderer implements BlockEntityRenderer<ParachestBlockEntity, OpenableBlockRenderState> {
     private final SpriteGetter sprites;
     private final ChestModel model;
 
@@ -41,12 +41,12 @@ public class ParachestBlockRenderer implements BlockEntityRenderer<ParachestBloc
     }
 
     @Override
-    public ParachestBlockRenderState createRenderState() {
-        return new ParachestBlockRenderState();
+    public OpenableBlockRenderState createRenderState() {
+        return new OpenableBlockRenderState();
     }
 
     @Override
-    public void extractRenderState(ParachestBlockEntity blockEntity, ParachestBlockRenderState renderState, float partialTick, Vec3 cameraPosition, ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
+    public void extractRenderState(ParachestBlockEntity blockEntity, OpenableBlockRenderState renderState, float partialTick, Vec3 cameraPosition, ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
         BlockEntityRenderer.super.extractRenderState(blockEntity, renderState, partialTick, cameraPosition, breakProgress);
         BlockState state = blockEntity.hasLevel() ? blockEntity.getBlockState() : GalacticraftBlocks.PARACHEST.get().defaultBlockState().setValue(ParachestBlock.FACING, Direction.SOUTH);
 
@@ -55,7 +55,7 @@ public class ParachestBlockRenderer implements BlockEntityRenderer<ParachestBloc
     }
 
     @Override
-    public void submit(ParachestBlockRenderState renderState, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, CameraRenderState camera) {
+    public void submit(OpenableBlockRenderState renderState, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, CameraRenderState camera) {
         poseStack.pushPose();
         poseStack.translate(0.5F, 0.5F, 0.5F);
         poseStack.mulPose(Axis.YP.rotationDegrees(-renderState.angle));

@@ -74,6 +74,7 @@ public final class GalacticraftCreativeModeTabs {
         output.accept(GalacticraftItems.SENSOR_GLASSES);
         output.accept(GalacticraftItems.FREQUENCY_MODULE);
         GalacticraftItems.PARACHUTE.forEach(output::accept);
+        output.accept(GalacticraftItems.SPACE_EMERGENCY_KIT);
         output.accept(GalacticraftItems.PROTO_SHIELD_CONTROLLER);
         output.accept(GalacticraftItems.SHIELD_CONTROLLER);
         output.accept(GalacticraftItems.TIN_CANISTER);
@@ -257,6 +258,7 @@ public final class GalacticraftCreativeModeTabs {
         output.accept(GalacticraftItems.SEALED_REPEATER);
         output.accept(GalacticraftItems.SEALED_COMPARATOR);
         output.accept(GalacticraftItems.GRATING);
+        output.accept(GalacticraftItems.EMERGENCY_POST);
         output.accept(GalacticraftItems.MARS_COPPER_ORE);
         output.accept(GalacticraftItems.MARS_TIN_ORE);
         output.accept(GalacticraftItems.MARS_DESH_ORE);

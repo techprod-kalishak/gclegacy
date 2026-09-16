@@ -96,6 +96,7 @@ public class GalacticraftModelProvider extends ExtendedModelProvider<Galacticraf
         blockModels.noBlockGen(GalacticraftBlocks.COMPACT_NASA_WORKBENCH.get());
         blockModels.createNasaWorkbench(GalacticraftBlocks.NASA_WORKBENCH.get());
         blockModels.createNonTemplateModelBlock(GalacticraftBlocks.GRATING.get());
+        blockModels.registerSimpleItemModel(GalacticraftBlocks.GRATING.asItem(), ModelLocationUtils.getModelLocation(GalacticraftBlocks.GRATING.get()));
         blockModels.createMeteor(GalacticraftBlocks.FALLEN_METEOR.get());
         blockModels.createTrivialCube(GalacticraftBlocks.RAW_METEORIC_IRON_BLOCK.get());
         blockModels.createTrivialCube(GalacticraftBlocks.METEORIC_IRON_BLOCK.get());
@@ -106,6 +107,7 @@ public class GalacticraftModelProvider extends ExtendedModelProvider<Galacticraf
         blockModels.createNonTemplateModelBlock(GalacticraftBlocks.ASTRO_MINER_BASE.get());
         GalacticraftBlocks.COLORED_TINTED_GLASS_PANE.forEach(block -> blockModels.createBarsAndItem(block.get()));
         blockModels.createBarsAndItem(GalacticraftBlocks.TINTED_GLASS_PANE.get(), TextureMapping.bars(Blocks.TINTED_GLASS));
+        blockModels.createEmergencyPost(GalacticraftBlocks.EMERGENCY_POST.get());
         blockModels.createTrivialCube(GalacticraftBlocks.MARS_COPPER_ORE.get());
         blockModels.createTrivialCube(GalacticraftBlocks.MARS_TIN_ORE.get());
         blockModels.createTrivialCube(GalacticraftBlocks.MARS_DESH_ORE.get());
@@ -122,8 +124,6 @@ public class GalacticraftModelProvider extends ExtendedModelProvider<Galacticraf
         blockModels.createTrivialCube(GalacticraftBlocks.VENUS_SILICON_ORE.get());
         blockModels.createTrivialCube(GalacticraftBlocks.VENUS_TIN_ORE.get());
         blockModels.createTrivialCube(GalacticraftBlocks.VENUS_SOLAR_ORE.get());
-
-        blockModels.registerSimpleFlatItemModel(GalacticraftBlocks.GRATING.asItem());
         itemModels.generateFlatItem(GalacticraftItems.THROWABLE_METEOR_CHUNK.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(GalacticraftItems.BATTERY.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(GalacticraftItems.INFINITE_BATTERY.get(), GalacticraftItems.BATTERY.get(), ModelTemplates.FLAT_ITEM);
@@ -243,6 +243,7 @@ public class GalacticraftModelProvider extends ExtendedModelProvider<Galacticraf
         itemModels.generateFlatItem(GalacticraftItems.HEAVY_DUTY_PLATE.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(GalacticraftItems.HEAVY_DUTY_PLATE_TIER_2.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(GalacticraftItems.HEAVY_DUTY_PLATE_TIER_3.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.SPACE_EMERGENCY_KIT.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(GalacticraftItems.ROCKET_NOSE_CONE.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(GalacticraftItems.ROCKET_FIN.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(GalacticraftItems.ROCKET_ENGINE.get(), ModelTemplates.FLAT_ITEM);

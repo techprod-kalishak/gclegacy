@@ -5,7 +5,7 @@
  * See LICENSE file for more details
  */
 
-package io.kalishak.galacticraftlegacy.client.model.object;
+package io.kalishak.galacticraftlegacy.client.model.block;
 
 import net.minecraft.client.model.Model;
 import net.minecraft.client.model.geom.ModelPart;

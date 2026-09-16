@@ -8,10 +8,9 @@
 package io.kalishak.galacticraftlegacy.client.renderer.special;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Axis;
 import com.mojang.serialization.MapCodec;
 import io.kalishak.galacticraftlegacy.client.model.geom.GalacticraftModelLayers;
-import io.kalishak.galacticraftlegacy.client.model.object.NasaWorkbenchModel;
+import io.kalishak.galacticraftlegacy.client.model.block.NasaWorkbenchModel;
 import io.kalishak.galacticraftlegacy.client.renderer.blockentity.NasaWorkbenchBlockRenderer;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.special.NoDataSpecialModelRenderer;

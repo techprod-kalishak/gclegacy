@@ -67,11 +67,6 @@ public abstract class BaseItemStorageBlockEntity extends BlockEntity implements 
         };
     }
 
-    protected BaseItemStorageBlockEntity(BlockEntityType<?> type, BlockPos worldPosition, BlockState blockState, Function<Integer, ItemStacksResourceHandler> itemsSource) {
-        super(type, worldPosition, blockState);
-        this.items = itemsSource.apply(getSize());
-    }
-
     public static <BE extends BaseItemStorageBlockEntity> void registerDirectionalSlots(RegisterCapabilitiesEvent event, BlockEntityType<@NonNull BE> blockEntityType, Direction faceForInput, int inputSlotStart, int inputSlotEnd, Direction faceForOutput, int outputSlotStart, int outputSlotEnd) {
         event.registerBlockEntity(
                 Capabilities.Item.BLOCK,

@@ -8,9 +8,8 @@
 package io.kalishak.galacticraftlegacy.client.renderer.blockentity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Axis;
 import io.kalishak.galacticraftlegacy.client.model.geom.GalacticraftModelLayers;
-import io.kalishak.galacticraftlegacy.client.model.object.NasaWorkbenchModel;
+import io.kalishak.galacticraftlegacy.client.model.block.NasaWorkbenchModel;
 import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.NasaWorkbenchBlockEntity;
 import net.minecraft.client.renderer.Sheets;

@@ -59,6 +59,11 @@ public final class GalacticraftBlockEntityType {
             ElectricFurnaceBlockEntity::new,
             GalacticraftBlocks.ELECTRIC_FURNACE
     );
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<EmergencyPostBlockEntity>> EMERGENCY_POST = REGISTRY.registerBlockEntity(
+            GalacticraftBlockEntityIds.EMERGENCY_POST,
+            EmergencyPostBlockEntity::new,
+            GalacticraftBlocks.EMERGENCY_POST
+    );
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<FallenMeteorBlockEntity>> FALLEN_METEOR = REGISTRY.registerBlockEntity(
             GalacticraftBlockEntityIds.FALLEN_METEOR,
             FallenMeteorBlockEntity::new,
@@ -150,6 +155,7 @@ public final class GalacticraftBlockEntityType {
         CompressorBlockEntity.registerItemCapabilities(event);
         DungeonChestBlockEntity.registerCapabilities(event);
         ElectricCompressorBlockEntity.registerCapabilities(event);
+        EmergencyPostBlockEntity.registerCapability(event);
         AbstractElectricFurnaceBlockEntity.registerCapabilities(event, ELECTRIC_FURNACE.get());
         AbstractElectricFurnaceBlockEntity.registerCapabilities(event, ELECTRIC_ARC_FURNACE.get());
         FlammableCauldronBlockEntity.registerCapability(event);

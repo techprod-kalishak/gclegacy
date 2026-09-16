@@ -14,6 +14,7 @@ public class GalacticraftBlockEntityIds {
     public static final String DUNGEON_CHEST = "dungeon_chest";
     public static final String ELECTRIC_COMPRESSOR = GalacticraftBlockItemIds.ELECTRIC_COMPRESSOR.block().identifier().getPath();
     public static final String ELECTRIC_FURNACE = GalacticraftBlockItemIds.ELECTRIC_FURNACE.block().identifier().getPath();
+    public static final String EMERGENCY_POST = GalacticraftBlockItemIds.EMERGENCY_POST.block().identifier().getPath();
     public static final String FALLEN_METEOR = GalacticraftBlockItemIds.FALLEN_METEOR.block().identifier().getPath();
     public static final String FLAMMABLE_CAULDRON = "flammable_cauldron";
     public static final String FLUID_TANK = GalacticraftBlockItemIds.FLUID_TANK.block().identifier().getPath();

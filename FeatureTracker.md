@@ -83,7 +83,7 @@ Please note that the following list is a preliminary outline of planned features
 - [ ] Sealed Redstone Comparator ✅
 - [ ] Sealed Player Detector ❌
 - [ ] Hydraulic Platform ❌
-- [ ] Emergency Post (Empty and with kit) ❌
+- [ ] Emergency Post (Empty and with kit) ✅
 - [ ] Grating ✅
 - [ ] Mars Copper Ore & Generation ✅
 - [ ] Mars Tin Ore & Generation ✅
@@ -148,9 +148,9 @@ Please note that the following list is a preliminary outline of planned features
 - [ ] Oxygen Gear ✅
 - [ ] Oxygen Tanks ✅
 - [ ] Sensor Glasses ⏳ (Missing UI)
-- [ ] Frequency Module ⏳ (Missing render)
+- [ ] Frequency Module ⏳ (Missing textures)
 - [ ] Parachute ⏳ (Missing render and functionality)
-- [ ] Space Emergency Kit ❌
+- [ ] Space Emergency Kit ✅
 - [ ] Shield Controller (Missing render)
 - [ ] Rocket items ❌
 - [ ] Tin Canister ✅
@@ -209,7 +209,7 @@ Please note that the following list is a preliminary outline of planned features
 - [ ] Heavy Rocket Fins ✅
 - [ ] Iron Shard ❌
 - [ ] Titanium Shard ❌
-- [ ] Thermal Cloth ❌
+- [ ] Thermal Cloth ✅
 - [ ] Beam Core ❌
 - [ ] Titanium Dust ❌
 - [ ] Atmospheric Valve ❌
@@ -217,7 +217,7 @@ Please note that the following list is a preliminary outline of planned features
 - [ ] Orion Drive ❌
 - [ ] Strange Seeds ❌
 - [ ] Radioisotope Core ❌
-- [ ] Isothermal Fabric ❌
+- [ ] Isothermal Fabric ✅
 - [ ] Solar Dust ✅
 - [ ] Solar Array Panel ✅
 - [ ] Solar Array Wafer ✅

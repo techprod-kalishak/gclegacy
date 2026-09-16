@@ -1104,6 +1104,16 @@ public final class GalacticraftBlocks {
                     .isViewBlocking(GalacticraftBlocks::never)
                     .noOcclusion()
     );
+    public static final DeferredBlock<EmergencyPostBlock> EMERGENCY_POST = REGISTRY.registerBlock(
+            GalacticraftBlockItemIds.EMERGENCY_POST,
+            EmergencyPostBlock::new,
+            () -> BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.METAL)
+                    .strength(4.0F, 70.0F)
+                    .sound(SoundType.METAL)
+                    .instrument(NoteBlockInstrument.IRON_XYLOPHONE)
+                    .isSuffocating((state, _, _) -> state.getValue(EmergencyPostBlock.WITH_KIT))
+    );
 
     /** Machines */
     public static final DeferredBlock<OxygenDetectorBlock> OXYGEN_DETECTOR = REGISTRY.registerBlock(
