@@ -7,9 +7,9 @@
 
 package io.kalishak.galacticraftlegacy.data;
 
+import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.registry.ChecklistEntry;
 import io.kalishak.galacticraftlegacy.registry.GalacticraftRegistries;
-import io.kalishak.galacticraftlegacy.references.Constants;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
@@ -44,7 +44,7 @@ public final class GalacticraftTags {
 
     public static class Biomes {
         public static final TagKey<Biome> IS_MOON = tagKey(Registries.BIOME, "is_moon");
-        public static final TagKey<Biome> IS_ORBIT = tagKey(Registries.BIOME, "is_orbit");
+        public static final TagKey<Biome> IS_OPEN_SPACE = tagKey(Registries.BIOME, "is_orbit");
         public static final TagKey<Biome> IS_MARS = tagKey(Registries.BIOME, "is_mars");
         public static final TagKey<Biome> IS_ASTEROIDS = tagKey(Registries.BIOME, "is_asteroids");
         public static final TagKey<Biome> IS_VENUS = tagKey(Registries.BIOME, "is_venus");

@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "galacticraftlegacy:titanium_axe"
+        "recipes": "galacticraftlegacy:titanium_axe"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

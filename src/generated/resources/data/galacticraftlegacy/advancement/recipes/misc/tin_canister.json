@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "galacticraftlegacy:tin_canister"
+        "recipes": "galacticraftlegacy:tin_canister"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

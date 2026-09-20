@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:ore_vein",
+  "density": "galacticraftlegacy:overworld/ore_vein/tin_density",
+  "filler_block": "minecraft:andesite",
+  "filler_gap": "minecraft:overworld/ore_vein/gap",
+  "ore_block": "galacticraftlegacy:tin_ore",
+  "raw_ore_block": "galacticraftlegacy:raw_tin_block",
+  "raw_ore_chance": 0.02,
+  "richness": "minecraft:overworld/ore_vein/richness"
+}

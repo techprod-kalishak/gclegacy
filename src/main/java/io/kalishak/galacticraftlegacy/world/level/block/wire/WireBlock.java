@@ -7,9 +7,6 @@
 
 package io.kalishak.galacticraftlegacy.world.level.block.wire;
 
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.MapCodec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityType;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.wire.WireBlockEntity;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.wire.network.NetworkType;
@@ -23,18 +20,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.jspecify.annotations.Nullable;
 
 public class WireBlock extends AbstractWireBlock {
-    public static final MapCodec<WireBlock> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
-            Codec.DOUBLE.fieldOf("size").forGetter(WireBlock::getSize),
-            propertiesCodec()
-    ).apply(instance, WireBlock::new));
-
     public WireBlock(double size, Properties properties) {
         super(NetworkType.POWER, size, properties);
-    }
-
-    @Override
-    protected MapCodec<WireBlock> codec() {
-        return CODEC;
     }
 
     @Override

@@ -23,6 +23,7 @@ import net.minecraft.world.level.storage.loot.functions.LootItemConditionalFunct
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 
 import java.util.List;
+import java.util.Optional;
 
 public class SetRandomSchematicVariantFunction extends LootItemConditionalFunction {
     public static final MapCodec<SetRandomSchematicVariantFunction> MAP_CODEC = RecordCodecBuilder.mapCodec(
@@ -31,8 +32,8 @@ public class SetRandomSchematicVariantFunction extends LootItemConditionalFuncti
     ).apply(instance, SetRandomSchematicVariantFunction::new));
     private final FeatureTier featureTier;
 
-    private SetRandomSchematicVariantFunction(List<LootItemCondition> predicates, FeatureTier featureTier) {
-        super(predicates);
+    private SetRandomSchematicVariantFunction(Optional<Holder<LootItemCondition>> condition, FeatureTier featureTier) {
+        super(condition);
         this.featureTier = featureTier;
     }
 

@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "galacticraftlegacy:dehydrated_melon"
+        "recipes": "galacticraftlegacy:dehydrated_melon"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

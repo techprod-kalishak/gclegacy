@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:sequence",
+  "sequence": [
+    {
+      "type": "minecraft:condition",
+      "if_true": {
+        "type": "minecraft:vertical_gradient",
+        "false_at_and_above": {
+          "below_top": 5
+        },
+        "random_name": "minecraft:moon_rock",
+        "true_at_and_below": {
+          "below_top": 3
+        }
+      },
+      "then_run": {
+        "type": "minecraft:block",
+        "result_state": "galacticraftlegacy:moon_rock"
+      }
+    }
+  ]
+}

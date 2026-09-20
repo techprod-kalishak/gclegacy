@@ -121,8 +121,8 @@ public class EmergencyPostModel {
         @Override
         public void setupAnim(EmergencyPostRenderState state) {
             super.setupAnim(state);
-            this.down.rotateBy(Axis.XN.rotationDegrees(state.getAngle(this.side)));
-            this.up.rotateBy(Axis.XP.rotationDegrees(state.getAngle(this.side)));
+            this.down.rotateBy(Axis.XN.rotationDegrees(state.getOpenness(this.side)));
+            this.up.rotateBy(Axis.XP.rotationDegrees(state.getOpenness(this.side)));
         }
     }
 

@@ -7,7 +7,6 @@
 
 package io.kalishak.galacticraftlegacy.client.data.models.model;
 
-import com.google.common.collect.Lists;
 import io.kalishak.galacticraftlegacy.aunified.data.model.ExtendedItemModelGenerator;
 import io.kalishak.galacticraftlegacy.client.item.ColorByFluid;
 import io.kalishak.galacticraftlegacy.client.renderer.item.properties.numeric.DungeonLocatorAngle;
@@ -19,7 +18,6 @@ import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.world.item.FeatureTier;
 import io.kalishak.galacticraftlegacy.world.item.VehicleItem;
 import io.kalishak.galacticraftlegacy.world.item.component.GalacticraftDataComponents;
-import io.kalishak.galacticraftlegacy.world.item.equipment.trim.GalacticraftMaterialAssetGroup;
 import io.kalishak.galacticraftlegacy.world.item.equipment.trim.GalacticraftTrimMaterials;
 import io.kalishak.galacticraftlegacy.world.level.block.GalacticraftBlocks;
 import net.minecraft.client.data.models.ItemModelGenerators;
@@ -36,11 +34,11 @@ import java.util.List;
 
 public class GalacticraftItemModelGenerators extends ExtendedItemModelGenerator {
     public static final List<TrimMaterialData> MODDED_TRIMS = List.of(
-            new TrimMaterialData(GalacticraftMaterialAssetGroup.STEEL, GalacticraftTrimMaterials.STEEL),
-            new TrimMaterialData(GalacticraftMaterialAssetGroup.CHEESE, GalacticraftTrimMaterials.CHEESE),
-            new TrimMaterialData(GalacticraftMaterialAssetGroup.DESH, GalacticraftTrimMaterials.DESH),
-            new TrimMaterialData(GalacticraftMaterialAssetGroup.TITANIUM, GalacticraftTrimMaterials.TITANIUM),
-            new TrimMaterialData(GalacticraftMaterialAssetGroup.LEAD, GalacticraftTrimMaterials.LEAD)
+            new TrimMaterialData(GalacticraftTrimMaterials.Palette.STEEL, GalacticraftTrimMaterials.STEEL),
+            new TrimMaterialData(GalacticraftTrimMaterials.Palette.CHEESE, GalacticraftTrimMaterials.CHEESE),
+            new TrimMaterialData(GalacticraftTrimMaterials.Palette.DESH, GalacticraftTrimMaterials.DESH),
+            new TrimMaterialData(GalacticraftTrimMaterials.Palette.TITANIUM, GalacticraftTrimMaterials.TITANIUM),
+            new TrimMaterialData(GalacticraftTrimMaterials.Palette.LEAD, GalacticraftTrimMaterials.LEAD)
     );
     
     public GalacticraftItemModelGenerators(ItemModelGenerators gen) {

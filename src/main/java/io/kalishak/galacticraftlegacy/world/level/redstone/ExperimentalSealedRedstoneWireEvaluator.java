@@ -16,7 +16,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.debug.DebugSubscriptions;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.RedStoneWireBlock;
+import net.minecraft.world.level.block.RedstoneWireBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.block.state.properties.RedstoneSide;
@@ -49,14 +49,14 @@ public class ExperimentalSealedRedstoneWireEvaluator extends SealedRedstoneEvalu
             int newLevel = unpackPower(packed);
             BlockState state = level.getBlockState(pos);
 
-            if (state.is(this.sealedWireBlock) && !state.getValue(RedStoneWireBlock.POWER).equals(newLevel)) {
+            if (state.is(this.sealedWireBlock) && !state.getValue(RedstoneWireBlock.POWER).equals(newLevel)) {
                 int updateFlags = 2;
 
                 if (!initialWire) {
                     updateFlags |= 128;
                 }
 
-                level.setBlock(pos, state.setValue(RedStoneWireBlock.POWER, newLevel), updateFlags);
+                level.setBlock(pos, state.setValue(RedstoneWireBlock.POWER, newLevel), updateFlags);
             } else {
                 iterator.remove();
             }
@@ -96,9 +96,9 @@ public class ExperimentalSealedRedstoneWireEvaluator extends SealedRedstoneEvalu
     }
 
     private static boolean isConnected(BlockState state, Direction direction) {
-        if (!(state.getBlock() instanceof RedStoneWireBlock)) return false;
+        if (!(state.getBlock() instanceof RedstoneWireBlock)) return false;
 
-        EnumProperty<RedstoneSide> property = RedStoneWireBlock.PROPERTY_BY_DIRECTION.get(direction);
+        EnumProperty<RedstoneSide> property = RedstoneWireBlock.PROPERTY_BY_DIRECTION.get(direction);
         return property == null ? direction == Direction.DOWN : state.getValue(property).isConnected();
     }
 
@@ -112,7 +112,7 @@ public class ExperimentalSealedRedstoneWireEvaluator extends SealedRedstoneEvalu
         BlockState initialState = level.getBlockState(initialPosition);
 
         if (initialState.is(this.sealedWireBlock)) {
-            setPower(initialPosition, initialState.getValue(RedStoneWireBlock.POWER), initialOrientation);
+            setPower(initialPosition, initialState.getValue(RedstoneWireBlock.POWER), initialOrientation);
             this.wiresToTurnOff.add(initialPosition);
         } else {
             propagateChangeToNeighbors(level, initialPosition, 0, initialOrientation, true);

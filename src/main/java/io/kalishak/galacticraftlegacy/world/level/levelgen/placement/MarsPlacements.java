@@ -13,10 +13,12 @@ import net.minecraft.core.HolderGetter;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
-import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
-import net.minecraft.world.level.levelgen.placement.*;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.placement.BiomeFilter;
+import net.minecraft.world.level.levelgen.placement.HeightRangePlacement;
+import net.minecraft.world.level.levelgen.placement.PlacedFeature;
+import net.minecraft.world.level.levelgen.placement.RarityFilter;
 
 import java.util.List;
 
@@ -28,13 +30,13 @@ public class MarsPlacements {
     public static final ResourceKey<PlacedFeature> PACKED_ICE_PATCH = GalacticraftPlacements.key("mars_packed_ice_patch");
     public static final ResourceKey<PlacedFeature> DIRT_PATCH = GalacticraftPlacements.key("mars_dirt_patch");
 
-    static void bootstrap(BootstrapContext<PlacedFeature> cxt, HolderGetter<ConfiguredFeature<?, ?>> featureGetter) {
-        Holder<ConfiguredFeature<?, ?>> copperOre = featureGetter.getOrThrow(MarsFeatures.COPPER_ORE);
-        Holder<ConfiguredFeature<?, ?>> tinOre = featureGetter.getOrThrow(MarsFeatures.TIN_ORE);
-        Holder<ConfiguredFeature<?, ?>> deshOre = featureGetter.getOrThrow(MarsFeatures.DESH_ORE);
-        Holder<ConfiguredFeature<?, ?>> ironOre = featureGetter.getOrThrow(MarsFeatures.IRON_ORE);
-        Holder<ConfiguredFeature<?, ?>> packedIce = featureGetter.getOrThrow(MarsFeatures.PACKED_ICE_PATCH);
-        Holder<ConfiguredFeature<?, ?>> dirt = featureGetter.getOrThrow(MarsFeatures.DIRT_PATCH);
+    static void bootstrap(BootstrapContext<PlacedFeature> cxt, HolderGetter<Feature> featureGetter) {
+        Holder<Feature> copperOre = featureGetter.getOrThrow(MarsFeatures.COPPER_ORE);
+        Holder<Feature> tinOre = featureGetter.getOrThrow(MarsFeatures.TIN_ORE);
+        Holder<Feature> deshOre = featureGetter.getOrThrow(MarsFeatures.DESH_ORE);
+        Holder<Feature> ironOre = featureGetter.getOrThrow(MarsFeatures.IRON_ORE);
+        Holder<Feature> packedIce = featureGetter.getOrThrow(MarsFeatures.PACKED_ICE_PATCH);
+        Holder<Feature> dirt = featureGetter.getOrThrow(MarsFeatures.DIRT_PATCH);
 
         PlacementUtils.register(
                 cxt,

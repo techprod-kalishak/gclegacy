@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "galacticraftlegacy:meteoric_iron_ingot_from_blasting_raw_meteoric_iron"
+        "recipes": "galacticraftlegacy:meteoric_iron_ingot_from_blasting_raw_meteoric_iron"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

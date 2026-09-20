@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "galacticraftlegacy:compressed_copper"
+        "recipes": "galacticraftlegacy:compressed_copper"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

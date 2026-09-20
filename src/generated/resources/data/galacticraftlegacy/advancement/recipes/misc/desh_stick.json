@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "galacticraftlegacy:desh_stick"
+        "recipes": "galacticraftlegacy:desh_stick"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

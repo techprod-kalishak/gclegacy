@@ -11,12 +11,12 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.kalishak.galacticraftlegacy.advancements.predicates.SchematicPredicate;
 import io.kalishak.galacticraftlegacy.registry.SchematicVariant;
-import net.minecraft.advancements.predicates.ContextAwarePredicate;
-import net.minecraft.advancements.predicates.entity.EntityPredicate;
 import net.minecraft.advancements.triggers.Criterion;
 import net.minecraft.advancements.triggers.SimpleCriterionTrigger;
+import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.Optional;
@@ -35,9 +35,9 @@ public class SchematicUnlockedTrigger extends SimpleCriterionTrigger<SchematicUn
         trigger(player, instance -> instance.awardPlayer(player));
     }
 
-    public record TriggerInstance(Optional<ContextAwarePredicate> player, SchematicPredicate schematicPredicate) implements SimpleCriterionTrigger.SimpleInstance {
+    public record TriggerInstance(Optional<Holder<LootItemCondition>> player, SchematicPredicate schematicPredicate) implements SimpleCriterionTrigger.SimpleInstance {
         public static final Codec<TriggerInstance> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-                EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("playerName").forGetter(TriggerInstance::player),
+                LootItemCondition.CODEC.optionalFieldOf("player").forGetter(TriggerInstance::player),
                 SchematicPredicate.CODEC.fieldOf("schematics").forGetter(TriggerInstance::schematicPredicate)
         ).apply(instance, TriggerInstance::new));
 

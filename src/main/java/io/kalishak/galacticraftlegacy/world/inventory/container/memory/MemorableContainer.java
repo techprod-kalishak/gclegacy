@@ -32,7 +32,7 @@ import java.util.Optional;
 public interface MemorableContainer extends RecipeCraftingHolder {
     Codec<RecipeHolder<?>> RECIPE_HOLDER_CODEC = RecordCodecBuilder.create(instance -> instance.group(
             ResourceKey.codec(Registries.RECIPE).fieldOf("id").forGetter(RecipeHolder::id),
-            Recipe.CODEC.fieldOf("value").forGetter(RecipeHolder::value)
+            Recipe.DIRECT_CODEC.fieldOf("value").forGetter(RecipeHolder::value)
     ).apply(instance, RecipeHolder::new));
 
     int getMemorySize();

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "galacticraftlegacy:steel_ingot_from_blasting"
+        "recipes": "galacticraftlegacy:steel_ingot_from_blasting"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

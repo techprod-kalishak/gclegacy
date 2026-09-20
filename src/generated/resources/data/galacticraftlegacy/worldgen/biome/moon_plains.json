@@ -6,6 +6,26 @@
         "min_delay": 12000,
         "sound": "galacticraftlegacy:spacerace"
       }
+    },
+    "minecraft:gameplay/natural_mob_spawns": {
+      "argument": {
+        "spawn_costs": {},
+        "spawns_by_category": {
+          "monster": [
+            {
+              "type": "galacticraftlegacy:evolved_zombie",
+              "count": 4,
+              "weight": 20
+            },
+            {
+              "type": "galacticraftlegacy:evolved_skeleton",
+              "count": 4,
+              "weight": 15
+            }
+          ]
+        }
+      },
+      "modifier": "overlay"
     }
   },
   "carvers": "galacticraftlegacy:moon_cave",
@@ -36,29 +56,5 @@
     ]
   ],
   "has_precipitation": false,
-  "spawn_costs": {},
-  "spawners": {
-    "ambient": [],
-    "axolotls": [],
-    "creature": [],
-    "misc": [],
-    "monster": [
-      {
-        "type": "galacticraftlegacy:evolved_zombie",
-        "maxCount": 4,
-        "minCount": 4,
-        "weight": 20
-      },
-      {
-        "type": "galacticraftlegacy:evolved_skeleton",
-        "maxCount": 4,
-        "minCount": 4,
-        "weight": 15
-      }
-    ],
-    "underground_water_creature": [],
-    "water_ambient": [],
-    "water_creature": []
-  },
   "temperature": -2.0
 }

@@ -8,8 +8,6 @@
 package io.kalishak.galacticraftlegacy.world.level.block;
 
 import com.mojang.serialization.Codec;
-import com.mojang.serialization.MapCodec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.kalishak.galacticraftlegacy.codec.SerializableEnum;
 import io.kalishak.galacticraftlegacy.transfer.ResourcefulHelper;
 import io.kalishak.galacticraftlegacy.world.entity.FallingParachest;
@@ -51,10 +49,6 @@ import org.jspecify.annotations.Nullable;
 
 @SuppressWarnings("deprecation")
 public class ParachestBlock extends AbstractChestBlock<ParachestBlockEntity> implements SimpleWaterloggedBlock, Fallable {
-    public static final MapCodec<ParachestBlock> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
-            Type.CODEC.fieldOf("type").forGetter(block -> block.type),
-            propertiesCodec()
-    ).apply(instance, ParachestBlock::new));
     public static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     private static final VoxelShape SHAPE = Block.column(14.0, 0.0, 14.0);
@@ -65,11 +59,6 @@ public class ParachestBlock extends AbstractChestBlock<ParachestBlockEntity> imp
         this.type = type;
 
         registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(WATERLOGGED, false));
-    }
-
-    @Override
-    protected MapCodec<ParachestBlock> codec() {
-        return CODEC;
     }
 
     @Override

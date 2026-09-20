@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "galacticraftlegacy:thermal_socks"
+        "recipes": "galacticraftlegacy:thermal_socks"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

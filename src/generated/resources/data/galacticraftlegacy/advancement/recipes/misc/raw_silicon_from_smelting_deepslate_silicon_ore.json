@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "galacticraftlegacy:raw_silicon_from_smelting_deepslate_silicon_ore"
+        "recipes": "galacticraftlegacy:raw_silicon_from_smelting_deepslate_silicon_ore"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -7,8 +7,6 @@
 
 package io.kalishak.galacticraftlegacy.world.level.block;
 
-import com.mojang.serialization.MapCodec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
@@ -29,21 +27,12 @@ import org.jspecify.annotations.Nullable;
 import java.util.Map;
 
 public class WallUnlitTorchBlock extends UnlitTorchBlock {
-    public static final MapCodec<WallUnlitTorchBlock> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
-            BlockState.CODEC.fieldOf("lit_state").forGetter(block -> block.litState),
-            propertiesCodec()
-    ).apply(instance, WallUnlitTorchBlock::new));
     public static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;
     private static final Map<Direction, VoxelShape> SHAPES = Shapes.rotateHorizontal(Block.boxZ(5.0F, 3.0F, 13.0F, 11.0F, 16.0F));
 
     public WallUnlitTorchBlock(BlockState litState, Properties properties) {
         super(litState, properties);
         registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH));
-    }
-
-    @Override
-    protected MapCodec<WallUnlitTorchBlock> codec() {
-        return CODEC;
     }
 
     @Override

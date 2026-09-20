@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "galacticraftlegacy:venus_dungeon_brick_slab"
+        "recipes": "galacticraftlegacy:venus_dungeon_brick_slab"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

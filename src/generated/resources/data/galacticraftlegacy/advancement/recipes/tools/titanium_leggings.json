@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "galacticraftlegacy:titanium_leggings"
+        "recipes": "galacticraftlegacy:titanium_leggings"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

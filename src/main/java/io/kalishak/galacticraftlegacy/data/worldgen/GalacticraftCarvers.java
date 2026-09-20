@@ -13,15 +13,15 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.levelgen.carver.ConfiguredWorldCarver;
+import net.minecraft.world.level.levelgen.carver.WorldCarver;
 
 public interface GalacticraftCarvers {
-    static void bootstrap(BootstrapContext<ConfiguredWorldCarver<?>> cxt) {
+    static void bootstrap(BootstrapContext<WorldCarver> cxt) {
         HolderGetter<Block> blocks = cxt.lookup(Registries.BLOCK);
         MoonCarvers.bootstrap(cxt, blocks);
     }
 
-    static ResourceKey<ConfiguredWorldCarver<?>> key(String name) {
-        return Constants.key(Registries.CONFIGURED_CARVER, name);
+    static ResourceKey<WorldCarver> key(String name) {
+        return Constants.key(Registries.CARVER, name);
     }
 }

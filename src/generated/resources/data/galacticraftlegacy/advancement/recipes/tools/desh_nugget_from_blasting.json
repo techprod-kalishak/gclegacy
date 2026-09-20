@@ -93,7 +93,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "galacticraftlegacy:desh_nugget_from_blasting"
+        "recipes": "galacticraftlegacy:desh_nugget_from_blasting"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

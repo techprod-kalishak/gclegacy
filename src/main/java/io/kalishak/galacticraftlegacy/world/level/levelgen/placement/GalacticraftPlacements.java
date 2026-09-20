@@ -8,13 +8,13 @@
 package io.kalishak.galacticraftlegacy.world.level.levelgen.placement;
 
 import io.kalishak.galacticraftlegacy.references.Constants;
-import io.kalishak.galacticraftlegacy.world.level.levelgen.features.*;
+import io.kalishak.galacticraftlegacy.world.level.levelgen.features.GalacticraftFeatures;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
+import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.placement.*;
 
 import java.util.List;
@@ -23,7 +23,7 @@ public interface GalacticraftPlacements {
     ResourceKey<PlacedFeature> SPACE_STATION = key("space_station");
 
     static void bootstrap(BootstrapContext<PlacedFeature> cxt) {
-        HolderGetter<ConfiguredFeature<?, ?>> featureGetter = cxt.lookup(Registries.CONFIGURED_FEATURE);
+        HolderGetter<Feature> featureGetter = cxt.lookup(Registries.FEATURE);
 
         AsteroidsPlacements.bootstrap(cxt, featureGetter);
         MarsPlacements.bootstrap(cxt, featureGetter);

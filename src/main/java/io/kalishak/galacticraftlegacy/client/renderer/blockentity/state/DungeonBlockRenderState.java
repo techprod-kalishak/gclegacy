@@ -8,11 +8,11 @@
 package io.kalishak.galacticraftlegacy.client.renderer.blockentity.state;
 
 import io.kalishak.galacticraftlegacy.world.item.FeatureTier;
-import net.minecraft.client.renderer.blockentity.state.BlockEntityRenderState;
+import net.minecraft.core.Direction;
 
-public class DungeonBlockRenderState extends BlockEntityRenderState {
+public class DungeonBlockRenderState extends OpenableBlockRenderState {
     public float open;
-    public float angle;
+    public Direction facing;
     public boolean unlocked;
     public FeatureTier featureTier;
 }

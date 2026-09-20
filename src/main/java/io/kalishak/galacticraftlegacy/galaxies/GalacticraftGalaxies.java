@@ -7,9 +7,9 @@
 
 package io.kalishak.galacticraftlegacy.galaxies;
 
-import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.Galacticraft;
 import io.kalishak.galacticraftlegacy.data.GalacticraftTags;
+import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.registry.GalacticraftRegistries;
 import io.kalishak.galacticraftlegacy.world.item.FeatureTier;
 import net.minecraft.core.registries.Registries;
@@ -19,9 +19,6 @@ import net.minecraft.world.phys.Vec3;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class GalacticraftGalaxies {
     private static final DeferredRegister<CelestialObject> REGISTRY = DeferredRegister.create(GalacticraftRegistries.Keys.CELESTIAL_OBJECT, Galacticraft.MODID);
@@ -191,7 +188,7 @@ public class GalacticraftGalaxies {
                             .relativeOrbitTime(1.0F / 0.05F)
                             .parent(OVERWORLD::value)
                             .icon(Constants.texture("gui/celestialbodies/space_station.png"))
-                            .biome(GalacticraftTags.Biomes.IS_ORBIT)
+                            .biome(GalacticraftTags.Biomes.IS_OPEN_SPACE)
                             .checklist(GalacticraftTags.Checklist.SATELLITE_CHECKLIST)
             )
     );

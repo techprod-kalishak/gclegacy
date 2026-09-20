@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "galacticraftlegacy:dehydrated_pumpkin"
+        "recipes": "galacticraftlegacy:dehydrated_pumpkin"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

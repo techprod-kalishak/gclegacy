@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "galacticraftlegacy:full_solar_panel"
+        "recipes": "galacticraftlegacy:full_solar_panel"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

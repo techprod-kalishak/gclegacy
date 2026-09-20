@@ -7,13 +7,13 @@
 
 package io.kalishak.galacticraftlegacy.client.renderer.environment.sky;
 
-import com.mojang.blaze3d.PrimitiveTopology;
-import com.mojang.blaze3d.buffers.GpuBuffer;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.BufferBuilder;
 import com.mojang.blaze3d.vertex.ByteBufferBuilder;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.MeshData;
+import com.mojang.renderpearl.api.buffers.GpuBuffer;
+import com.mojang.renderpearl.api.pipeline.PrimitiveTopology;
 import io.kalishak.galacticraftlegacy.references.Constants;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
@@ -64,7 +64,7 @@ public class MoonSkyRenderer implements CustomSkyboxRenderer {
 
             try (MeshData mesh = bufferBuilder.buildOrThrow()) {
                 MoonSkyRenderer.starIndexCount = mesh.drawState().indexCount();
-                var19 = RenderSystem.getDevice().createBuffer(() -> "Stars vertex buffer", 40, mesh.vertexBuffer());
+                var19 = RenderSystem.getDevice().createBuffer(() -> "Stars vertex buffer", GpuBuffer.USAGE_COPY_DST | GpuBuffer.USAGE_VERTEX, mesh.vertexBuffer());
             }
         }
 

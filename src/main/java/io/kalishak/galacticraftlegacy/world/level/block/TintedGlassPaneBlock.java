@@ -7,19 +7,15 @@
 
 package io.kalishak.galacticraftlegacy.world.level.block;
 
-import com.mojang.serialization.MapCodec;
 import io.kalishak.galacticraftlegacy.data.GalacticraftTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.ScheduledTickAccess;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.CrossCollisionBlock;
-import net.minecraft.world.level.block.IronBarsBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -28,8 +24,6 @@ import net.minecraft.world.level.material.Fluids;
 import net.neoforged.neoforge.common.Tags;
 
 public class TintedGlassPaneBlock extends CrossCollisionTransparentBlock {
-    public static final MapCodec<TintedGlassPaneBlock> MAP_CODEC = simpleCodec(TintedGlassPaneBlock::new);
-
     public TintedGlassPaneBlock(BlockBehaviour.Properties properties) {
         super(2.0F, 16.0F, 2.0F, 16.0F, 16.0F, properties);
         registerDefaultState(
@@ -40,11 +34,6 @@ public class TintedGlassPaneBlock extends CrossCollisionTransparentBlock {
                         .setValue(WEST, false)
                         .setValue(WATERLOGGED, false)
         );
-    }
-
-    @Override
-    protected MapCodec<TintedGlassPaneBlock> codec() {
-        return MAP_CODEC;
     }
 
     @Override

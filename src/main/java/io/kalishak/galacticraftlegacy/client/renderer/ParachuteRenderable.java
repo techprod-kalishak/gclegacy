@@ -37,8 +37,7 @@ public interface ParachuteRenderable<S extends EntityRenderState> {
                 OverlayTexture.NO_OVERLAY,
                 packedLight,
                 sprite,
-                renderState.outlineColor,
-                null
+                renderState.outlineColor
         );
     }
 }

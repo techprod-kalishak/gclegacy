@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "galacticraftlegacy:compressed_desh"
+        "recipes": "galacticraftlegacy:compressed_desh"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

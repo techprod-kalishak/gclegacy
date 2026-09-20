@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "galacticraftlegacy:steel_sword"
+        "recipes": "galacticraftlegacy:steel_sword"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

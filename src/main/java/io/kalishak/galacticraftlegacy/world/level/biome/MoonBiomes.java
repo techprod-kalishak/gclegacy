@@ -20,17 +20,17 @@ import net.minecraft.world.level.biome.BiomeGenerationSettings;
 import net.minecraft.world.level.biome.BiomeSpecialEffects;
 import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.minecraft.world.level.levelgen.GenerationStep;
-import net.minecraft.world.level.levelgen.carver.ConfiguredWorldCarver;
+import net.minecraft.world.level.levelgen.carver.WorldCarver;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 
 public class MoonBiomes {
     public static final ResourceKey<Biome> MOON_PLAINS = GalacticraftBiomes.key("moon_plains");
 
-    static void bootstrap(BootstrapContext<Biome> cxt, HolderGetter<PlacedFeature> placedFeatures, HolderGetter<ConfiguredWorldCarver<?>> worldCarvers) {
+    static void bootstrap(BootstrapContext<Biome> cxt, HolderGetter<PlacedFeature> placedFeatures, HolderGetter<WorldCarver> worldCarvers) {
         cxt.register(MOON_PLAINS, moonPlains(placedFeatures, worldCarvers));
     }
 
-    static Biome moonPlains(HolderGetter<PlacedFeature> placedFeatures, HolderGetter<ConfiguredWorldCarver<?>> worldCarvers) {
+    static Biome moonPlains(HolderGetter<PlacedFeature> placedFeatures, HolderGetter<WorldCarver> worldCarvers) {
         MobSpawnSettings.Builder mobSpawnSettings = new MobSpawnSettings.Builder();
         GalacticraftBiomes.evolvedMonsters(mobSpawnSettings, 20, 15);
         BiomeGenerationSettings.Builder biomeGenerationSettings = new BiomeGenerationSettings.Builder(placedFeatures, worldCarvers);

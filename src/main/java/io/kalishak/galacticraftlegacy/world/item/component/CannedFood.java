@@ -15,6 +15,7 @@ import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.util.Prediction;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -28,7 +29,6 @@ import net.minecraft.world.level.Level;
 import org.jspecify.annotations.Nullable;
 
 import java.util.Optional;
-import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
 
 public record CannedFood(Component title, FoodProperties foodProperties, Consumable consumable, Optional<ItemStackTemplate> additionalRemainder) {
@@ -50,7 +50,7 @@ public record CannedFood(Component title, FoodProperties foodProperties, Consuma
                     ItemStack remainder = this.additionalRemainder.get().create();
 
                     if (!player.getInventory().add(remainder)) {
-                        player.drop(remainder, false);
+                        player.drop(remainder, false, Prediction.PREDICTED);
                     }
                 }
             }

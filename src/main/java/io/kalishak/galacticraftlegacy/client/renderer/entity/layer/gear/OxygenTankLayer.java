@@ -51,7 +51,7 @@ public class OxygenTankLayer<S extends LivingEntityRenderState, M extends Entity
 
             poseStack.pushPose();
             poseStack.translate(0.12F, 0.2F, 0.2F);
-            nodeCollector.submitModel(leftTank, renderState, poseStack, leftTank.renderType(textures), packedLight, OverlayTexture.NO_OVERLAY, renderState.outlineColor, null);
+            nodeCollector.submitModel(leftTank, renderState, poseStack, leftTank.renderType(textures), packedLight, OverlayTexture.NO_OVERLAY, renderState.outlineColor);
             poseStack.popPose();
         });
 
@@ -61,7 +61,7 @@ public class OxygenTankLayer<S extends LivingEntityRenderState, M extends Entity
 
             poseStack.pushPose();
             poseStack.translate(-0.175F, 0.2F, 0.2F);
-            nodeCollector.submitModel(rightTank, renderState, poseStack, rightTank.renderType(textures), packedLight, OverlayTexture.NO_OVERLAY, renderState.outlineColor, null);
+            nodeCollector.submitModel(rightTank, renderState, poseStack, rightTank.renderType(textures), packedLight, OverlayTexture.NO_OVERLAY, renderState.outlineColor);
             poseStack.popPose();
         });
     }

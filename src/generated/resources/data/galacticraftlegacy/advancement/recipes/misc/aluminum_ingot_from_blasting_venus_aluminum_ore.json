@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "galacticraftlegacy:aluminum_ingot_from_blasting_venus_aluminum_ore"
+        "recipes": "galacticraftlegacy:aluminum_ingot_from_blasting_venus_aluminum_ore"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

@@ -1,0 +1,13 @@
+{
+  "values": [
+    "#galacticraftlegacy:is_moon",
+    {
+      "id": "#galacticraftlegacy:is_mars",
+      "required": false
+    },
+    {
+      "id": "#galacticraftlegacy:is_asteroids",
+      "required": false
+    }
+  ]
+}

@@ -11,7 +11,7 @@ import io.kalishak.galacticraftlegacy.world.level.block.SealedRedstoneWireBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.RedStoneWireBlock;
+import net.minecraft.world.level.block.RedstoneWireBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.redstone.Orientation;
 import org.jspecify.annotations.Nullable;
@@ -30,7 +30,7 @@ public abstract class SealedRedstoneEvaluator {
     }
 
     protected int getWireSignal(BlockPos pos, BlockState state) {
-        return state.is(this.sealedWireBlock) ? state.getValue(RedStoneWireBlock.POWER) : 0;
+        return state.is(this.sealedWireBlock) ? state.getValue(RedstoneWireBlock.POWER) : 0;
     }
 
     protected int getIncomingWireSignal(Level level, BlockPos pos, boolean includeVerticalSides) {

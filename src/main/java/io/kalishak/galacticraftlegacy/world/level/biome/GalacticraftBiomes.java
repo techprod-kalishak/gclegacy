@@ -14,10 +14,13 @@ import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.world.entity.MobCategory;
-import net.minecraft.world.level.biome.*;
+import net.minecraft.util.valueproviders.ConstantInt;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.BiomeGenerationSettings;
+import net.minecraft.world.level.biome.BiomeSpecialEffects;
+import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.minecraft.world.level.levelgen.GenerationStep;
-import net.minecraft.world.level.levelgen.carver.ConfiguredWorldCarver;
+import net.minecraft.world.level.levelgen.carver.WorldCarver;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 
 public interface GalacticraftBiomes {
@@ -25,7 +28,7 @@ public interface GalacticraftBiomes {
 
     static void bootstrap(BootstrapContext<Biome> cxt) {
         HolderGetter<PlacedFeature> placedFeatures = cxt.lookup(Registries.PLACED_FEATURE);
-        HolderGetter<ConfiguredWorldCarver<?>> worldCarvers = cxt.lookup(Registries.CONFIGURED_CARVER);
+        HolderGetter<WorldCarver> worldCarvers = cxt.lookup(Registries.CARVER);
 
         cxt.register(
                 SPACE,
@@ -52,10 +55,10 @@ public interface GalacticraftBiomes {
     }
 
     static void evolvedMonsters(MobSpawnSettings.Builder builder, int zombieWeight, int skeletonWeight) {
-        //builder.addSpawn(MobCategory.MONSTER, 100, new MobSpawnSettings.SpawnerData(EntityType.SPIDER, 4, 4));
-        builder.addSpawn(MobCategory.MONSTER, zombieWeight, new MobSpawnSettings.SpawnerData(GalacticraftEntityType.EVOLVED_ZOMBIE.get(), 4, 4));
-        builder.addSpawn(MobCategory.MONSTER, skeletonWeight, new MobSpawnSettings.SpawnerData(GalacticraftEntityType.EVOLVED_SKELETON.get(), 4, 4));
-        //builder.addSpawn(MobCategory.MONSTER, 10, new MobSpawnSettings.SpawnerData(EntityType.ENDERMAN, 1, 4));
-        //builder.addSpawn(MobCategory.MONSTER, 5, new MobSpawnSettings.SpawnerData(EntityType.WITCH, 1, 1));
+        //builder.addSpawn(GalacticraftEntityType.EVOLVED_SPIDER.get(), 100, ConstantInt.of(4));
+        builder.addSpawn(GalacticraftEntityType.EVOLVED_ZOMBIE.get(), zombieWeight, ConstantInt.of(4));
+        builder.addSpawn(GalacticraftEntityType.EVOLVED_SKELETON.get(), skeletonWeight, ConstantInt.of(4));
+        //builder.addSpawn(GalacticraftEntityType.EVOLVED_ENDERMAN.get(), 10, UniformInt.of(1, 4));
+        //builder.addSpawn(GalacticraftEntityType.EVOLVED_WITCH.get(), 5, ConstantInt.of(1));
     }
 }

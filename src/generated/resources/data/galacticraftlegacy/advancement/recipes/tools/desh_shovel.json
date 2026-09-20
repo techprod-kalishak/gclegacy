@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "galacticraftlegacy:desh_shovel"
+        "recipes": "galacticraftlegacy:desh_shovel"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

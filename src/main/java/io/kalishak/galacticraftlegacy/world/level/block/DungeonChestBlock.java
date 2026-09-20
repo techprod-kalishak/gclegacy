@@ -7,8 +7,6 @@
 
 package io.kalishak.galacticraftlegacy.world.level.block;
 
-import com.mojang.serialization.MapCodec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.kalishak.galacticraftlegacy.world.item.FeatureTier;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.DungeonChestBlockEntity;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityType;
@@ -37,10 +35,6 @@ import org.jspecify.annotations.Nullable;
 
 @SuppressWarnings("deprecation")
 public class DungeonChestBlock extends KeyLockedBlock implements SimpleWaterloggedBlock {
-    public static final MapCodec<DungeonChestBlock> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
-            FeatureTier.CODEC.fieldOf("tier").forGetter(dungeonChestBlock -> dungeonChestBlock.featureTier),
-            propertiesCodec()
-    ).apply(instance, DungeonChestBlock::new));
     public static final VoxelShape SHAPE = Block.column(14.0F, 0.0F, 14.0F);
     public static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
@@ -50,11 +44,6 @@ public class DungeonChestBlock extends KeyLockedBlock implements SimpleWaterlogg
         super(properties);
         this.featureTier = featureTier;
         registerDefaultState(this.stateDefinition.any().setValue(UNLOCKED, false).setValue(FACING, Direction.NORTH).setValue(WATERLOGGED, false));
-    }
-
-    @Override
-    protected MapCodec<DungeonChestBlock> codec() {
-        return CODEC;
     }
 
     @Override

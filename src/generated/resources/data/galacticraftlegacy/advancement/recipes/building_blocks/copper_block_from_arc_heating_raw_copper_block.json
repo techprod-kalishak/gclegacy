@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "galacticraftlegacy:copper_block_from_arc_heating_raw_copper_block"
+        "recipes": "galacticraftlegacy:copper_block_from_arc_heating_raw_copper_block"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

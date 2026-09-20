@@ -12,11 +12,11 @@ import io.kalishak.galacticraftlegacy.registry.GalacticraftRegistries;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.core.registries.codec.HolderSetCodec;
+import net.minecraft.core.registries.codec.RegistryFixedCodec;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.resources.HolderSetCodec;
-import net.minecraft.resources.RegistryFixedCodec;
 import net.minecraft.world.item.Item;
 
 public record VehicleCraftingSlotType(HolderSet<Item> acceptedItems) {

@@ -1,7 +1,0 @@
-{
-  "type": "minecraft:stonecutting",
-  "ingredient": "galacticraftlegacy:venus_dungeon_bricks",
-  "result": {
-    "id": "galacticraftlegacy:venus_dungeon_brick_wall"
-  }
-}

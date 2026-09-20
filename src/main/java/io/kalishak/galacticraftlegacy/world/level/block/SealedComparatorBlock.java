@@ -7,7 +7,6 @@
 
 package io.kalishak.galacticraftlegacy.world.level.block;
 
-import com.mojang.serialization.MapCodec;
 import io.kalishak.galacticraftlegacy.data.GalacticraftTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -40,17 +39,11 @@ import org.jspecify.annotations.Nullable;
 import java.util.List;
 
 public class SealedComparatorBlock extends FullDiodeBlock implements EntityBlock {
-    public static final MapCodec<SealedComparatorBlock> CODEC = simpleCodec(SealedComparatorBlock::new);
     public static final EnumProperty<ComparatorMode> MODE = BlockStateProperties.MODE_COMPARATOR;
 
     public SealedComparatorBlock(Properties properties) {
         super(properties);
         registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(POWERED, false).setValue(MODE, ComparatorMode.COMPARE));
-    }
-
-    @Override
-    protected MapCodec<SealedComparatorBlock> codec() {
-        return CODEC;
     }
 
     @Override

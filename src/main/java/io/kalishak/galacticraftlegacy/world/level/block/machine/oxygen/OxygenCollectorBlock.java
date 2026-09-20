@@ -7,7 +7,6 @@
 
 package io.kalishak.galacticraftlegacy.world.level.block.machine.oxygen;
 
-import com.mojang.serialization.MapCodec;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityType;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.OxygenCollectorBlockEntity;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.wire.network.NetworkType;
@@ -26,15 +25,8 @@ import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
 public class OxygenCollectorBlock extends AbstractMachineBlock {
-    public static final MapCodec<OxygenCollectorBlock> CODEC = simpleCodec(OxygenCollectorBlock::new);
-
     public OxygenCollectorBlock(Properties properties) {
         super(properties);
-    }
-
-    @Override
-    protected MapCodec<OxygenCollectorBlock> codec() {
-        return CODEC;
     }
 
     @Override

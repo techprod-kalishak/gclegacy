@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "galacticraftlegacy:titanium_ingot_from_smelting_raw_titanium"
+        "recipes": "galacticraftlegacy:titanium_ingot_from_smelting_raw_titanium"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

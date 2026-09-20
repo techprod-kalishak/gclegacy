@@ -7,9 +7,8 @@
 
 package io.kalishak.galacticraftlegacy.world.level.block.machine;
 
-import com.mojang.serialization.MapCodec;
-import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.CircuitFabricatorBlockEntity;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityType;
+import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.CircuitFabricatorBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
@@ -20,15 +19,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.jspecify.annotations.Nullable;
 
 public class CircuitFabricatorBlock extends AbstractMachineBlock {
-    public static final MapCodec<CircuitFabricatorBlock> CODEC = simpleCodec(CircuitFabricatorBlock::new);
-
     public CircuitFabricatorBlock(Properties properties) {
         super(properties);
-    }
-
-    @Override
-    protected MapCodec<CircuitFabricatorBlock> codec() {
-        return CODEC;
     }
 
     @Override

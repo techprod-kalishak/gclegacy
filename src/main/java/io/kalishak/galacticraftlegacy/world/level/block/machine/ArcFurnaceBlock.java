@@ -7,7 +7,6 @@
 
 package io.kalishak.galacticraftlegacy.world.level.block.machine;
 
-import com.mojang.serialization.MapCodec;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityType;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.AbstractElectricFurnaceBlockEntity;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.ElectricArcFurnaceBlockEntity;
@@ -21,15 +20,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.jspecify.annotations.Nullable;
 
 public class ArcFurnaceBlock extends AbstractMachineBlock {
-    public static final MapCodec<ArcFurnaceBlock> CODEC = simpleCodec(ArcFurnaceBlock::new);
-
     public ArcFurnaceBlock(Properties properties) {
         super(properties);
-    }
-
-    @Override
-    protected MapCodec<ArcFurnaceBlock> codec() {
-        return CODEC;
     }
 
     @Override

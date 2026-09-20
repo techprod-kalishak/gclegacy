@@ -9,13 +9,13 @@ package io.kalishak.galacticraftlegacy.data.recipes;
 
 import io.kalishak.galacticraftlegacy.advancements.MissingGearTrigger;
 import io.kalishak.galacticraftlegacy.advancements.SchematicUnlockedTrigger;
+import io.kalishak.galacticraftlegacy.client.data.GalacticraftBlockFamilies;
 import io.kalishak.galacticraftlegacy.data.GalacticraftTags;
+import io.kalishak.galacticraftlegacy.data.recipes.builder.CompressingRecipeBuilder;
 import io.kalishak.galacticraftlegacy.data.recipes.builder.ElectricCookingRecipeBuilder;
+import io.kalishak.galacticraftlegacy.data.recipes.builder.FabricatingRecipeBuilder;
 import io.kalishak.galacticraftlegacy.data.recipes.builder.VehicleCraftingRecipeBuilder;
 import io.kalishak.galacticraftlegacy.references.Constants;
-import io.kalishak.galacticraftlegacy.client.data.GalacticraftBlockFamilies;
-import io.kalishak.galacticraftlegacy.data.recipes.builder.CompressingRecipeBuilder;
-import io.kalishak.galacticraftlegacy.data.recipes.builder.FabricatingRecipeBuilder;
 import io.kalishak.galacticraftlegacy.registry.GalacticraftRegistries;
 import io.kalishak.galacticraftlegacy.registry.SchematicVariant;
 import io.kalishak.galacticraftlegacy.registry.SchematicVariants;
@@ -23,6 +23,7 @@ import io.kalishak.galacticraftlegacy.world.item.GalacticraftItems;
 import io.kalishak.galacticraftlegacy.world.item.crafting.FabricatingBookCategory;
 import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.rocket.VehicleCraftingDataRecipe;
 import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.rocket.VehicleCraftingDataRecipes;
+import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.predicates.DistancePredicate;
 import net.minecraft.advancements.predicates.GameTypePredicate;
 import net.minecraft.advancements.predicates.LocationPredicate;
@@ -32,19 +33,21 @@ import net.minecraft.advancements.predicates.entity.PlayerPredicate;
 import net.minecraft.advancements.triggers.Criterion;
 import net.minecraft.advancements.triggers.DistanceTrigger;
 import net.minecraft.core.HolderGetter;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.crafting.*;
+import net.minecraft.world.item.crafting.AbstractCookingRecipe;
+import net.minecraft.world.item.crafting.CookingBookCategory;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.common.Tags;
@@ -52,7 +55,6 @@ import net.neoforged.neoforge.registries.DeferredItem;
 import org.jspecify.annotations.Nullable;
 
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 import java.util.function.UnaryOperator;
 
 public class GalacticraftRecipeProvider extends RecipeProvider {
@@ -93,8 +95,8 @@ public class GalacticraftRecipeProvider extends RecipeProvider {
             GalacticraftItems.RAW_TITANIUM
     );
 
-    GalacticraftRecipeProvider(HolderLookup.Provider registries, RecipeOutput output) {
-        super(registries, output);
+    public GalacticraftRecipeProvider(BootstrapContext<Recipe<?>> recipeOutput, BootstrapContext<Advancement> advancementOutput) {
+        super(recipeOutput, advancementOutput);
     }
 
     @Override
@@ -108,7 +110,7 @@ public class GalacticraftRecipeProvider extends RecipeProvider {
     }
 
     private void buildVehicleCrafting() {
-        HolderGetter<VehicleCraftingDataRecipe> vehicleData = this.registries.lookupOrThrow(GalacticraftRegistries.Keys.VEHICLE_CRAFTING_RECIPE_DATA);
+        HolderGetter<VehicleCraftingDataRecipe> vehicleData = this.output.lookup(GalacticraftRegistries.Keys.VEHICLE_CRAFTING_RECIPE_DATA);
         HolderSet<Item> heavyDutyPlates = this.items.getOrThrow(GalacticraftTags.Items.PLATE_HEAVY_DUTY);
 
         VehicleCraftingRecipeBuilder.rocket(vehicleData, VehicleCraftingDataRecipes.TIER_1_ROCKET, GalacticraftItems.TIER_1_ROCKET)
@@ -237,7 +239,7 @@ public class GalacticraftRecipeProvider extends RecipeProvider {
                 .pattern(" A ")
                 .pattern("IPI")
                 .pattern("RWR")
-                .unlockedBy("was_in_space", MissingGearTrigger.TriggerInstance.cannotHear(this.registries.lookupOrThrow(Registries.BIOME)))
+                .unlockedBy("was_in_space", MissingGearTrigger.TriggerInstance.cannotHear(this.output.lookup(Registries.BIOME)))
                 .save(this.output);
         ShapedRecipeBuilder.shaped(this.items, RecipeCategory.MISC, GalacticraftItems.THERMAL_CONTROLLER)
                 .define('V', GalacticraftItems.OXYGEN_VENT)
@@ -654,11 +656,11 @@ public class GalacticraftRecipeProvider extends RecipeProvider {
                 .pattern("##")
                 .unlockedBy(getHasName(GalacticraftItems.ALUMINUM_INGOT), has(GalacticraftTags.Items.INGOTS_ALUMINUM))
         );
-        compressing(GalacticraftItems.COMPRESSED_BRONZE, 0.1F, builder -> builder
-                .define('#', GalacticraftTags.Items.INGOTS_BRONZE)
-                .pattern("##")
-                .unlockedBy("has_bronze_ingot", has(GalacticraftTags.Items.INGOTS_BRONZE))
-        );
+//        compressing(GalacticraftItems.COMPRESSED_BRONZE, 0.1F, builder -> builder
+//                .define('#', GalacticraftTags.Items.INGOTS_BRONZE)
+//                .pattern("##")
+//                .unlockedBy("has_bronze_ingot", has(GalacticraftTags.Items.INGOTS_BRONZE))
+//        );
         compressing(GalacticraftItems.COMPRESSED_BRONZE, 2, 0.1F, builder -> builder
                         .define('#', GalacticraftTags.Items.PLATE_COPPER)
                         .define('X', GalacticraftTags.Items.PLATE_TIN)
@@ -964,21 +966,5 @@ public class GalacticraftRecipeProvider extends RecipeProvider {
 
     private static String getItemId(ItemLike item) {
         return BuiltInRegistries.ITEM.getKey(item.asItem()).toString();
-    }
-
-    public static class Runner extends RecipeProvider.Runner {
-        public Runner(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> registries) {
-            super(packOutput, registries);
-        }
-
-        @Override
-        protected RecipeProvider createRecipeProvider(HolderLookup.Provider registries, RecipeOutput output) {
-            return new GalacticraftRecipeProvider(registries, output);
-        }
-
-        @Override
-        public String getName() {
-            return "Recipe Provider for Galacticraft Legacy";
-        }
     }
 }

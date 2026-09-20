@@ -8,14 +8,17 @@
 package io.kalishak.galacticraftlegacy.client.renderer.entity.layer.gear;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.client.model.gear.GearEquipmentModel;
 import io.kalishak.galacticraftlegacy.client.model.geom.GalacticraftModelLayers;
 import io.kalishak.galacticraftlegacy.client.renderer.entity.state.GearRenderState;
+import io.kalishak.galacticraftlegacy.references.Constants;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.model.geom.PartPose;
-import net.minecraft.client.model.geom.builders.*;
+import net.minecraft.client.model.geom.builders.CubeListBuilder;
+import net.minecraft.client.model.geom.builders.LayerDefinition;
+import net.minecraft.client.model.geom.builders.MeshDefinition;
+import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.EquipmentLayerRenderer;
@@ -52,7 +55,7 @@ public class OxygenMaskLayer<S extends LivingEntityRenderState, M extends Entity
             poseStack.pushPose();
             poseStack.translate(0.0F, renderState.entityType.equals(EntityTypes.CREEPER) ? 0.39F : 0.02F, 0.0F);
             poseStack.scale(0.57F, 0.57F, 0.57F);
-            nodeCollector.order(1).submitModel(this.model, renderState, poseStack, this.model.renderType(TEXTURES), packedLight, OverlayTexture.NO_OVERLAY, renderState.outlineColor, null);
+            nodeCollector.order(1).submitModel(this.model, renderState, poseStack, this.model.renderType(TEXTURES), packedLight, OverlayTexture.NO_OVERLAY, renderState.outlineColor);
             poseStack.scale(1.0F, 1.0F, 1.0F);
             poseStack.popPose();
         }

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "galacticraftlegacy:steel_pickaxe"
+        "recipes": "galacticraftlegacy:steel_pickaxe"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

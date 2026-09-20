@@ -7,8 +7,6 @@
 
 package io.kalishak.galacticraftlegacy.world.level.block.machine;
 
-import com.mojang.serialization.MapCodec;
-import io.kalishak.galacticraftlegacy.transfer.ResourcefulHelper;
 import io.kalishak.galacticraftlegacy.world.item.component.FluidTankContents;
 import io.kalishak.galacticraftlegacy.world.item.component.GalacticraftDataComponents;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.wire.network.NetworkType;
@@ -16,7 +14,10 @@ import io.kalishak.galacticraftlegacy.world.level.block.wire.ConnectingBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.*;
+import net.minecraft.world.Containers;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
@@ -47,9 +48,6 @@ public abstract class AbstractMachineBlock extends BaseEntityBlock implements Co
         super(properties);
         registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(LIT, false));
     }
-
-    @Override
-    protected abstract MapCodec<? extends AbstractMachineBlock> codec();
 
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {

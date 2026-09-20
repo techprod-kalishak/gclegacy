@@ -17,9 +17,9 @@ import io.kalishak.galacticraftlegacy.world.item.GearEquipmentAssets;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderSet;
-import net.minecraft.core.RegistryCodecs;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.core.registries.codec.RegistryCodecs;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -27,6 +27,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.stats.Stats;
+import net.minecraft.util.Prediction;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EntityTypes;
@@ -51,7 +52,7 @@ public record GearEquippable(GearEquipmentSlot gearSlot, Holder<SoundEvent> equi
             SoundEvent.CODEC.optionalFieldOf("equip_sound", SoundEvents.ARMOR_EQUIP_GENERIC).forGetter(GearEquippable::equipSound),
             GearEquipmentSlot.CODEC.optionalFieldOf("additional_gear_slot").forGetter(GearEquippable::additionalGearSlot),
             ResourceKey.codec(EquipmentAssets.ROOT_ID).optionalFieldOf("asset_id").forGetter(GearEquippable::assetId),
-            RegistryCodecs.homogeneousList(Registries.ENTITY_TYPE).optionalFieldOf("allowed_entities").forGetter(GearEquippable::allowedEntities),
+            RegistryCodecs.holderSet(Registries.ENTITY_TYPE).optionalFieldOf("allowed_entities").forGetter(GearEquippable::allowedEntities),
             Codec.BOOL.fieldOf("dispensable").forGetter(GearEquippable::dispensable),
             Codec.BOOL.fieldOf("swappable").forGetter(GearEquippable::swappable)
     ).apply(instance, GearEquippable::new));
@@ -141,7 +142,7 @@ public record GearEquippable(GearEquipmentSlot gearSlot, Holder<SoundEvent> equi
                 gearResourceHandler.set(this.gearSlot, placedToGear);
 
                 if (!player.getInventory().add(returnedFromGear)) {
-                    player.drop(returnedFromGear, false);
+                    player.drop(returnedFromGear, false, Prediction.PREDICTED);
                 }
 
                 return InteractionResult.SUCCESS.heldItemTransformedTo(equippedFromHand);

@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "galacticraftlegacy:copper_ingot_from_smelting_venus_copper_ore"
+        "recipes": "galacticraftlegacy:copper_ingot_from_smelting_venus_copper_ore"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

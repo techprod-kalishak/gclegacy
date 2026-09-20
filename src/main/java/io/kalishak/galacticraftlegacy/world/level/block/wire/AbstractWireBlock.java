@@ -7,7 +7,6 @@
 
 package io.kalishak.galacticraftlegacy.world.level.block.wire;
 
-import com.mojang.serialization.MapCodec;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.wire.network.NetworkType;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.wire.network.TransmitterBlockEntity;
 import net.minecraft.core.BlockPos;
@@ -37,7 +36,6 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -79,9 +77,6 @@ public abstract class AbstractWireBlock extends BaseEntityBlock implements Conne
 
         this.stateDefinition.getPossibleStates().forEach(state -> shapes.put(state, createShapeForState(state, this.size)));
     }
-
-    @Override
-    protected abstract MapCodec<? extends AbstractWireBlock> codec();
 
     @Override
     public @NonNull NetworkType getNetworkType(@NonNull Direction direction) {

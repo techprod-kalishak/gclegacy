@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "galacticraftlegacy:moon_dungeon_brick_stairs"
+        "recipes": "galacticraftlegacy:moon_dungeon_brick_stairs"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

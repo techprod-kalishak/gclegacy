@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "galacticraftlegacy:titanium_nugget_from_blasting"
+        "recipes": "galacticraftlegacy:titanium_nugget_from_blasting"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

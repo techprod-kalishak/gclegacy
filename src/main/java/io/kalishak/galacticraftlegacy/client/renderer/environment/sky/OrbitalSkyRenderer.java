@@ -7,8 +7,10 @@
 
 package io.kalishak.galacticraftlegacy.client.renderer.environment.sky;
 
-import com.mojang.blaze3d.vertex.*;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
+import com.mojang.renderpearl.api.buffers.GpuBufferSlice;
+import com.mojang.renderpearl.api.commands.RenderPass;
 import io.kalishak.galacticraftlegacy.client.renderer.environment.state.SpaceSkyRenderState;
 import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.world.attribute.GalacticraftEnvironmentAttributes;
@@ -17,9 +19,7 @@ import net.minecraft.client.Camera;
 import net.minecraft.client.renderer.state.level.LevelRenderState;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.attribute.EnvironmentAttributeProbe;
-import org.joml.*;
-
-import java.lang.Math;
+import org.joml.Matrix4fc;
 
 public class OrbitalSkyRenderer extends SpaceSkyRenderer {
     public static final Identifier ID = Constants.id("orbit");
@@ -28,8 +28,8 @@ public class OrbitalSkyRenderer extends SpaceSkyRenderer {
     }
 
     @Override
-    protected void renderSkybox(PoseStack poseStack, Camera camera, LevelRenderState levelRenderState, Matrix4fc modelViewMatrix, Runnable setupFog) {
-        renderSunMoonEarthAndStars(poseStack, levelRenderState.skyRenderState.starAngle, levelRenderState.skyRenderState.starBrightness);
+    protected void renderSkybox(RenderPass renderPass, PoseStack poseStack, Camera camera, LevelRenderState levelRenderState, Matrix4fc modelViewMatrix, GpuBufferSlice skyFog) {
+        renderSunMoonEarthAndStars(renderPass, poseStack, levelRenderState.skyRenderState.starAngle, levelRenderState.skyRenderState.starBrightness);
     }
 
     @Override
@@ -37,13 +37,13 @@ public class OrbitalSkyRenderer extends SpaceSkyRenderer {
         levelRenderState.setRenderData(SpaceSkyRenderState.EARTH_ANGLE_ID, attributeProbe.getValue(GalacticraftEnvironmentAttributes.EARTH_ANGLE.get(), partialTicks) * ((float) Math.PI / 180.0F));
     }
 
-    public void renderSunMoonEarthAndStars(PoseStack poseStack, float starAngle, float starBrightness) {
+    public void renderSunMoonEarthAndStars(RenderPass renderPass, PoseStack poseStack, float starAngle, float starBrightness) {
         poseStack.pushPose();
-        renderSunStars(poseStack, 45.0F, starAngle, starBrightness, true);
+        renderSunStars(renderPass, poseStack, 45.0F, starAngle, starBrightness, true);
 
         poseStack.pushPose();
-        poseStack.mulPose(Axis.YP.rotation(90));
-        renderEarth(this.earthBuffer, EarthPhase.FULL_EARTH, poseStack);
+        poseStack.rotate(Axis.YP, 90);
+        renderEarth(renderPass, this.earthBuffer, EarthPhase.FULL_EARTH, poseStack);
         poseStack.popPose();
 
         poseStack.popPose();

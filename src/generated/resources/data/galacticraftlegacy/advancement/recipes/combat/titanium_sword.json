@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "galacticraftlegacy:titanium_sword"
+        "recipes": "galacticraftlegacy:titanium_sword"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

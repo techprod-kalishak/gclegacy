@@ -1,7 +1,0 @@
-{
-  "type": "minecraft:stonecutting",
-  "ingredient": "galacticraftlegacy:mars_stone",
-  "result": {
-    "id": "galacticraftlegacy:mars_stone_stairs"
-  }
-}

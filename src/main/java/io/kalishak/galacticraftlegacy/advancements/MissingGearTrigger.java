@@ -13,15 +13,15 @@ import io.kalishak.galacticraftlegacy.attachment.AttachmentHelper;
 import io.kalishak.galacticraftlegacy.data.GalacticraftTags;
 import io.kalishak.galacticraftlegacy.transfer.entity.SpaceGearEquipment;
 import io.kalishak.galacticraftlegacy.world.entity.GearEquipmentSlot;
-import net.minecraft.advancements.predicates.ContextAwarePredicate;
 import net.minecraft.advancements.predicates.LocationPredicate;
 import net.minecraft.advancements.predicates.MinMaxBounds;
-import net.minecraft.advancements.predicates.entity.EntityPredicate;
 import net.minecraft.advancements.triggers.Criterion;
 import net.minecraft.advancements.triggers.SimpleCriterionTrigger;
-import net.minecraft.core.HolderLookup;
+import net.minecraft.core.Holder;
+import net.minecraft.core.HolderGetter;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 
 import java.util.List;
 import java.util.Optional;
@@ -36,19 +36,19 @@ public class MissingGearTrigger extends SimpleCriterionTrigger<MissingGearTrigge
         trigger(player, i -> i.matches(player));
     }
 
-    public record TriggerInstance(Optional<ContextAwarePredicate> player, List<GearEquipmentSlot> slots, LocationPredicate location) implements SimpleCriterionTrigger.SimpleInstance {
+    public record TriggerInstance(Optional<Holder<LootItemCondition>> player, List<GearEquipmentSlot> slots, LocationPredicate location) implements SimpleCriterionTrigger.SimpleInstance {
         public static final Codec<TriggerInstance> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-                EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("player").forGetter(TriggerInstance::player),
+                LootItemCondition.CODEC.optionalFieldOf("player").forGetter(TriggerInstance::player),
                 GearEquipmentSlot.CODEC.listOf().optionalFieldOf("slots", List.of()).forGetter(TriggerInstance::slots),
                 LocationPredicate.CODEC.fieldOf("location").forGetter(TriggerInstance::location)
         ).apply(instance, TriggerInstance::new));
 
-        public static Criterion<TriggerInstance> cannotHear(HolderLookup<Biome> biomes) {
+        public static Criterion<TriggerInstance> cannotHear(HolderGetter<Biome> biomes) {
             return GalacticraftCriteriaTriggers.MISSING_GEAR.get().createCriterion(new TriggerInstance(
                     Optional.empty(),
                     List.of(GearEquipmentSlot.FREQUENCY_MODULE),
                     LocationPredicate.Builder.location()
-                            .setBiomes(biomes.getOrThrow(GalacticraftTags.Biomes.IS_ORBIT))
+                            .setBiomes(biomes.getOrThrow(GalacticraftTags.Biomes.IS_OPEN_SPACE))
                             .build()
                     )
             );

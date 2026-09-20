@@ -7,22 +7,20 @@
 
 package io.kalishak.galacticraftlegacy.world.level.block.cauldron;
 
-import com.mojang.serialization.MapCodec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.kalishak.galacticraftlegacy.data.GalacticraftTags;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.FlammableCauldronBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.cauldron.CauldronInteraction;
-import net.minecraft.core.cauldron.CauldronInteractions;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.InsideBlockEffectApplier;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.AbstractCauldronBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -40,11 +38,6 @@ import net.neoforged.neoforge.transfer.fluid.FluidUtil;
 import org.jspecify.annotations.Nullable;
 
 public class FlammableCauldronBlock extends AbstractCauldronBlock implements EntityBlock {
-    public static final MapCodec<FlammableCauldronBlock> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
-            CauldronInteractions.CODEC.fieldOf("interactions").forGetter(flammableCauldronBlock -> flammableCauldronBlock.interactions),
-            BuiltInRegistries.FLUID.holderByNameCodec().fieldOf("fuel_in").forGetter(flammableCauldronBlock -> flammableCauldronBlock.fuelIn),
-            propertiesCodec()
-    ).apply(instance, FlammableCauldronBlock::new));
     public static final BooleanProperty FULL = BooleanProperty.create("full");
     private final Holder<Fluid> fuelIn;
 
@@ -52,11 +45,6 @@ public class FlammableCauldronBlock extends AbstractCauldronBlock implements Ent
         super(properties, interactions);
         this.fuelIn = fuelIn;
         registerDefaultState(this.stateDefinition.any().setValue(FULL, true));
-    }
-
-    @Override
-    protected MapCodec<? extends FlammableCauldronBlock> codec() {
-        return CODEC;
     }
 
     @Override

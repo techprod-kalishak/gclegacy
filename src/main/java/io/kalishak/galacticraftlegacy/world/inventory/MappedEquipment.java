@@ -14,6 +14,7 @@ import io.netty.buffer.ByteBuf;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.util.Prediction;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.util.Util;
 import net.minecraft.world.entity.Entity;
@@ -86,7 +87,7 @@ public class MappedEquipment<E extends Enum<E> & StringRepresentable> {
 
     public void dropAll(LivingEntity dropper) {
         for (ItemStack stack : this.items.values()) {
-            dropper.drop(stack, true, false);
+            dropper.drop(stack, true, Prediction.PREDICTED);
         }
 
         clear();

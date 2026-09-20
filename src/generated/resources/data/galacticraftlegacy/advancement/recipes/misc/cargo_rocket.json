@@ -11,7 +11,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "galacticraftlegacy:cargo_rocket"
+        "recipes": "galacticraftlegacy:cargo_rocket"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

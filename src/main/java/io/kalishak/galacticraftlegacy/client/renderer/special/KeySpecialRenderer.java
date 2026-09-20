@@ -19,7 +19,6 @@ import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.special.SpecialModelRenderer;
 import net.minecraft.world.item.ItemStack;
 import org.joml.Vector3fc;
-import org.jspecify.annotations.Nullable;
 
 import java.util.function.Consumer;
 
@@ -38,7 +37,7 @@ public class KeySpecialRenderer implements SpecialModelRenderer<FeatureTier> {
     }
 
     @Override
-    public void submit(@Nullable FeatureTier argument, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, int lightCoords, int overlayCoords, boolean hasFoil, int outlineColor) {
+    public void submit(FeatureTier argument, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, int lightCoords, int overlayCoords, boolean hasFoil, int outlineColor) {
         poseStack.pushPose();
         poseStack.translate(1.0D, -1.0D, -1.0D);
         submitNodeCollector.submitModelPart(
@@ -49,7 +48,6 @@ public class KeySpecialRenderer implements SpecialModelRenderer<FeatureTier> {
                 overlayCoords,
                 null,
                 -1,
-                null,
                 outlineColor
         );
 

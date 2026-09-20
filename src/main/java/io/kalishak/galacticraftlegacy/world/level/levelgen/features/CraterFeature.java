@@ -7,32 +7,35 @@
 
 package io.kalishak.galacticraftlegacy.world.level.levelgen.features;
 
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.kalishak.galacticraftlegacy.world.level.levelgen.CraterSize;
-import io.kalishak.galacticraftlegacy.world.level.levelgen.features.configurations.CraterConfiguration;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
+import net.minecraft.util.valueproviders.IntProvider;
+import net.minecraft.util.valueproviders.IntProviders;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 
-public class CraterFeature extends Feature<CraterConfiguration> {
-    public CraterFeature() {
-        super(CraterConfiguration.CODEC);
+public record CraterFeature(CraterSize craterSize, IntProvider spacing) implements Feature {
+    public static final MapCodec<CraterFeature> MAP_CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+            CraterSize.CODEC.fieldOf("crater_size").forGetter(CraterFeature::craterSize),
+            IntProviders.codec(0, 32).fieldOf("spacing").forGetter(CraterFeature::spacing)
+    ).apply(instance, CraterFeature::new));
+
+    @Override
+    public boolean place(WorldGenLevel level, ChunkGenerator chunkGenerator, RandomSource random, BlockPos origin) {
+        int size = random.nextInt(craterSize().getMaxSize() - craterSize().getMinSize()) + craterSize().getMinSize();
+        makeCrater(origin.getX(), origin.getZ(), size, level);
+
+        return true;
     }
 
     @Override
-    public boolean place(FeaturePlaceContext<CraterConfiguration> featurePlaceContext) {
-        WorldGenLevel levelGen = featurePlaceContext.level();
-        BlockPos startingPos = featurePlaceContext.origin();
-        CraterConfiguration config = featurePlaceContext.config();
-        RandomSource random = featurePlaceContext.random();
-
-        CraterSize craterSize = config.craterSize();
-        int size = random.nextInt(craterSize.getMaxSize() - craterSize.getMinSize()) + craterSize.getMinSize();
-        makeCrater(startingPos.getX(), startingPos.getZ(), size, levelGen);
-
-        return true;
+    public MapCodec<CraterFeature> codec() {
+        return MAP_CODEC;
     }
 
     public static void makeCrater(int craterX, int craterZ, int size, WorldGenLevel level) {

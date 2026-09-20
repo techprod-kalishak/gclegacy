@@ -8,7 +8,6 @@
 package io.kalishak.galacticraftlegacy.mixin;
 
 import io.kalishak.galacticraftlegacy.attachment.GalacticraftAttachments;
-import io.kalishak.galacticraftlegacy.transfer.ResourcefulHelper;
 import io.kalishak.galacticraftlegacy.transfer.entity.SpaceGearEquipment;
 import io.kalishak.galacticraftlegacy.world.entity.GearEquipmentSlot;
 import net.minecraft.world.Container;
@@ -16,7 +15,6 @@ import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.transfer.item.ItemUtil;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -33,7 +31,7 @@ public class InventoryMixin {
     public Player player;
 
     @Inject(method = "clearOrCountMatchingItems", at = @At("TAIL"), cancellable = true)
-    private void galacticraftlegacy$clearOrCountMatchingItems(Predicate<ItemStack> predicate, int amountToRemove, Container craftSlots, CallbackInfoReturnable<Integer> cir) {
+    private void galacticraftlegacy$clearOrCountMatchingItems(Predicate<ItemStack> predicate, boolean countingOnly, int amountToRemove, Container craftSlots, CallbackInfoReturnable<Integer> cir) {
         int value = cir.getReturnValue();
         SpaceGearEquipment equipment = player.getData(GalacticraftAttachments.PLAYER_SPACE_DATA).getGearEquipment();
 

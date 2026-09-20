@@ -23,7 +23,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "galacticraftlegacy:electric_compressing_compressed_bronze_from_alloying"
+        "recipes": "galacticraftlegacy:electric_compressing_compressed_bronze_from_alloying"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

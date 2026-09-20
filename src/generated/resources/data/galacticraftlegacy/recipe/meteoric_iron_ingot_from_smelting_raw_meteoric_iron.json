@@ -1,5 +1,6 @@
 {
   "type": "minecraft:smelting",
+  "cookingtime": 200,
   "experience": 0.2,
   "group": "meteoric_iron_ingot",
   "ingredient": "galacticraftlegacy:raw_meteoric_iron",

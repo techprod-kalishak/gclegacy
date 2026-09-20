@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "galacticraftlegacy:lead_ingot_from_blasting_venus_lead_ore"
+        "recipes": "galacticraftlegacy:lead_ingot_from_blasting_venus_lead_ore"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

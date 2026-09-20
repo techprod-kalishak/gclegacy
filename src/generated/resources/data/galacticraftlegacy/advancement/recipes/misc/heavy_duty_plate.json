@@ -33,7 +33,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "galacticraftlegacy:heavy_duty_plate"
+        "recipes": "galacticraftlegacy:heavy_duty_plate"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

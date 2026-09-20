@@ -10,6 +10,7 @@ package io.kalishak.galacticraftlegacy.world.level.storage.loot.functions;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.kalishak.galacticraftlegacy.world.item.component.GalacticraftDataComponents;
+import net.minecraft.core.Holder;
 import net.minecraft.util.valueproviders.IntProvider;
 import net.minecraft.util.valueproviders.IntProviders;
 import net.minecraft.world.item.ItemStack;
@@ -17,7 +18,7 @@ import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.functions.LootItemConditionalFunction;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 
-import java.util.List;
+import java.util.Optional;
 
 public class SetItemCapacitorFunction extends LootItemConditionalFunction {
     public static final MapCodec<SetItemCapacitorFunction> MAP_CODEC = RecordCodecBuilder.mapCodec(
@@ -27,8 +28,8 @@ public class SetItemCapacitorFunction extends LootItemConditionalFunction {
     );
     private final IntProvider value;
 
-    private SetItemCapacitorFunction(List<LootItemCondition> predicates, IntProvider value) {
-        super(predicates);
+    private SetItemCapacitorFunction(Optional<Holder<LootItemCondition>> condition, IntProvider value) {
+        super(condition);
         this.value = value;
     }
 

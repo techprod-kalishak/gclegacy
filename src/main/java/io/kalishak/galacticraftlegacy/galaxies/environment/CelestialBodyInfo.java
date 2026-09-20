@@ -16,10 +16,10 @@ import io.kalishak.galacticraftlegacy.registry.GalacticraftRegistries;
 import io.kalishak.galacticraftlegacy.world.level.dimension.transition.PlanetaryTransition;
 import io.kalishak.galacticraftlegacy.world.level.dimension.transition.TransitionType;
 import net.minecraft.core.Holder;
+import net.minecraft.core.registries.codec.RegistryFileCodec;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.resources.RegistryFileCodec;
 import net.minecraft.world.level.Level;
 import org.jspecify.annotations.Nullable;
 
@@ -40,7 +40,7 @@ public record CelestialBodyInfo(Holder<CelestialObject> celestialObject, Atmosph
             TransitionType.CODEC.fieldOf("transition").forGetter(CelestialBodyInfo::transition),
             Codec.FLOAT.optionalFieldOf("fuel_usage_multiplier").forGetter(CelestialBodyInfo::fuelUsageMultiplier)
     ).apply(instance, CelestialBodyInfo::new));
-    public static final Codec<Holder<CelestialBodyInfo>> CODEC = RegistryFileCodec.create(GalacticraftRegistries.Keys.CELESTIAL_BODY_INFO, DIRECT_CODEC);
+    public static final Codec<Holder<CelestialBodyInfo>> CODEC = RegistryFileCodec.create(GalacticraftRegistries.Keys.CELESTIAL_BODY_INFO, DIRECT_CODEC, true);
     public static final StreamCodec<RegistryFriendlyByteBuf, Holder<CelestialBodyInfo>> STREAM_CODEC = ByteBufCodecs.holderRegistry(GalacticraftRegistries.Keys.CELESTIAL_BODY_INFO);
 
     public static boolean canLivingBreath(@Nullable CelestialBodyInfo celestialBodyData) {

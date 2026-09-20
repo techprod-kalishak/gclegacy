@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "galacticraftlegacy:thermal_shirt"
+        "recipes": "galacticraftlegacy:thermal_shirt"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

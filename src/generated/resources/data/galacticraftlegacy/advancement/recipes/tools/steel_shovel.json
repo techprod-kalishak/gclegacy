@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "galacticraftlegacy:steel_shovel"
+        "recipes": "galacticraftlegacy:steel_shovel"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

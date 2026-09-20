@@ -7,7 +7,6 @@
 
 package io.kalishak.galacticraftlegacy.world.level.block;
 
-import com.mojang.serialization.MapCodec;
 import io.kalishak.galacticraftlegacy.attachment.GalacticraftAttachments;
 import io.kalishak.galacticraftlegacy.world.item.HotItem;
 import io.kalishak.galacticraftlegacy.world.item.component.GalacticraftDataComponents;
@@ -28,7 +27,10 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.*;
-import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.FallingBlock;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -45,7 +47,6 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jspecify.annotations.Nullable;
 
 public class FallenMeteorBlock extends FallingBlock implements EntityBlock, SimpleWaterloggedBlock {
-    public static final MapCodec<FallenMeteorBlock> CODEC = simpleCodec(FallenMeteorBlock::new);
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     private static final VoxelShape SHAPE = Shapes.box(0.15, 0.05, 0.15, 0.85, 0.75, 0.85);
     private static final IntProvider EXPERIENCE = UniformInt.of(3, 7);
@@ -71,11 +72,6 @@ public class FallenMeteorBlock extends FallingBlock implements EntityBlock, Simp
 
     public static int to32BitColor(int a, int r, int g, int b) {
         return a << 24 | r << 16 | g << 8 | b;
-    }
-
-    @Override
-    protected MapCodec<FallenMeteorBlock> codec() {
-        return CODEC;
     }
 
     @Override
@@ -115,7 +111,7 @@ public class FallenMeteorBlock extends FallingBlock implements EntityBlock, Simp
         entity.getExistingData(GalacticraftAttachments.HOT_CONTENT)
                         .ifPresent(hotContent -> {
                             if (hotContent.getScaledHeatLevel() > 0.5F && entity.getStartPos().getY() - 150 > pos.getY()) {
-                                entity.setInvulnerable(true);
+                                entity.setPermanentlyInvulnerable(true);
                                 level.explode(entity, pos.getX(), pos.getY(), pos.getZ(), 1.0F, Level.ExplosionInteraction.BLOCK);
                             }
                         });

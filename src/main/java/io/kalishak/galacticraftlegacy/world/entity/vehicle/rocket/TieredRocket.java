@@ -7,10 +7,10 @@
 
 package io.kalishak.galacticraftlegacy.world.entity.vehicle.rocket;
 
-import io.kalishak.galacticraftlegacy.galaxies.environment.CelestialBodyInfo;
 import io.kalishak.galacticraftlegacy.config.CommonConfig;
 import io.kalishak.galacticraftlegacy.galaxies.CelestialBody;
 import io.kalishak.galacticraftlegacy.galaxies.CelestialObject;
+import io.kalishak.galacticraftlegacy.galaxies.environment.CelestialBodyInfo;
 import io.kalishak.galacticraftlegacy.network.payload.ChangeCameraModePayload;
 import io.kalishak.galacticraftlegacy.network.payload.EntityPlanetaryTransitionPayload;
 import io.kalishak.galacticraftlegacy.network.payload.OpenGalaxySelectionScreenPayload;
@@ -197,11 +197,6 @@ public abstract class TieredRocket extends AbstractAutoRocket implements RocketT
     protected void onRocketLand(BlockPos pos) {
         super.onRocketLand(pos);
         this.launchCooldown = 40;
-    }
-
-    @Override
-    public boolean canSimulateMovement() {
-        return true;
     }
 
     @Override

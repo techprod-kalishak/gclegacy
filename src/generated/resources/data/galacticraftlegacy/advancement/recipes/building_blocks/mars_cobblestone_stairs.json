@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "galacticraftlegacy:mars_cobblestone_stairs"
+        "recipes": "galacticraftlegacy:mars_cobblestone_stairs"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

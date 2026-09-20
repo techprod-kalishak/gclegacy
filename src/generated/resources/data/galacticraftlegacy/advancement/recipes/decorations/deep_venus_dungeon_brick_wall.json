@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "galacticraftlegacy:deep_venus_dungeon_brick_wall"
+        "recipes": "galacticraftlegacy:deep_venus_dungeon_brick_wall"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -23,7 +23,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "galacticraftlegacy:canvas"
+        "recipes": "galacticraftlegacy:canvas"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

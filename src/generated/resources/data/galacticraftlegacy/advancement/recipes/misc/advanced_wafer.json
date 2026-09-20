@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "galacticraftlegacy:advanced_wafer"
+        "recipes": "galacticraftlegacy:advanced_wafer"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

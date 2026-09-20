@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "galacticraftlegacy:single_solar_module"
+        "recipes": "galacticraftlegacy:single_solar_module"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

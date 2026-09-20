@@ -7,7 +7,6 @@
 
 package io.kalishak.galacticraftlegacy.world.level.block;
 
-import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -25,7 +24,6 @@ import net.neoforged.neoforge.common.Tags;
 import org.jspecify.annotations.Nullable;
 
 public class TerraformableRotatedBlock extends TerraformableBlock {
-    public static final MapCodec<TerraformableRotatedBlock> CODEC = simpleCodec(TerraformableRotatedBlock::new);
     public static final EnumProperty<Direction.Axis> AXIS = BlockStateProperties.AXIS;
 
     public TerraformableRotatedBlock(Properties properties) {

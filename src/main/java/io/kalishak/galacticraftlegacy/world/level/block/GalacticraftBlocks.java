@@ -17,9 +17,9 @@ import io.kalishak.galacticraftlegacy.world.level.block.cauldron.GalacticraftCau
 import io.kalishak.galacticraftlegacy.world.level.block.machine.*;
 import io.kalishak.galacticraftlegacy.world.level.block.machine.oxygen.OxygenCollectorBlock;
 import io.kalishak.galacticraftlegacy.world.level.block.state.GalacticraftBlockSetType;
-import io.kalishak.galacticraftlegacy.world.level.block.wire.WireBlock;
 import io.kalishak.galacticraftlegacy.world.level.block.wire.ColoredPipeBlock;
 import io.kalishak.galacticraftlegacy.world.level.block.wire.HeavyWireBlock;
+import io.kalishak.galacticraftlegacy.world.level.block.wire.WireBlock;
 import io.kalishak.galacticraftlegacy.world.level.material.fluid.GalacticraftFluids;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.valueproviders.ConstantInt;
@@ -34,6 +34,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
+import net.minecraft.world.phys.AABB;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredHolder;
@@ -397,7 +398,7 @@ public final class GalacticraftBlocks {
                     .instrument(NoteBlockInstrument.BASEDRUM)
                     .noCollision()
                     .strength(0.5F)
-                    .pushReaction(PushReaction.DESTROY)
+                    .pushReaction(PushReaction.POPPED)
     );
     public static final DeferredBlock<ButtonBlock> MARS_STONE_BUTTON = REGISTRY.registerBlock(
             GalacticraftBlockItemIds.MARS_STONE_BUTTON,
@@ -405,7 +406,7 @@ public final class GalacticraftBlocks {
             () -> BlockBehaviour.Properties.of()
                     .noCollision()
                     .strength(0.5F)
-                    .pushReaction(PushReaction.DESTROY)
+                    .pushReaction(PushReaction.POPPED)
     );
     public static final DeferredBlock<Block> MARS_COBBLESTONE = REGISTRY.registerSimpleBlock(
             GalacticraftBlockItemIds.MARS_COBBLESTONE,
@@ -806,7 +807,7 @@ public final class GalacticraftBlocks {
                     .replaceable()
                     .noCollision()
                     .strength(100.0F)
-                    .pushReaction(PushReaction.DESTROY)
+                    .pushReaction(PushReaction.POPPED)
                     .noLootTable()
                     .liquid()
                     .sound(SoundType.EMPTY)
@@ -819,7 +820,7 @@ public final class GalacticraftBlocks {
                     .replaceable()
                     .noCollision()
                     .strength(100.0F)
-                    .pushReaction(PushReaction.DESTROY)
+                    .pushReaction(PushReaction.POPPED)
                     .noLootTable()
                     .liquid()
                     .sound(SoundType.EMPTY)
@@ -840,6 +841,7 @@ public final class GalacticraftBlocks {
                     .isSuffocating(GalacticraftBlocks::never)
                     .isViewBlocking(GalacticraftBlocks::never)
     );
+
     public static final DeferredBlock<WireBlock> ALUMINUM_WIRE = REGISTRY.registerBlock(
             GalacticraftBlockItemIds.ALUMINUM_WIRE,
             properties -> new WireBlock(0.4D, properties),
@@ -913,7 +915,7 @@ public final class GalacticraftBlocks {
                     .sound(SoundType.GLASS)
                     .strength(3.0F, 8.0F)
                     .isRedstoneConductor(GalacticraftBlocks::never)
-                    .pushReaction(PushReaction.IGNORE)
+                    .pushReaction(PushReaction.IMMOVEABLE)
     );
 
     public static final DeferredBlock<GratingBlock> GRATING = REGISTRY.registerBlock(
@@ -935,7 +937,7 @@ public final class GalacticraftBlocks {
                     .forceSolidOn()
                     .strength(0.5F)
                     .sound(SoundType.WOOL)
-                    .pushReaction(PushReaction.DESTROY)
+                    .pushReaction(PushReaction.POPPED)
     );
 
     //Deco
@@ -946,7 +948,7 @@ public final class GalacticraftBlocks {
                     .noCollision()
                     .instabreak()
                     .sound(SoundType.WOOD)
-                    .pushReaction(PushReaction.DESTROY)
+                    .pushReaction(PushReaction.POPPED)
     );
     public static final DeferredBlock<UnlitTorchBlock> UNLIT_COPPER_TORCH = REGISTRY.registerBlock(
             GalacticraftBlockItemIds.UNLIT_COPPER_TORCH,
@@ -955,7 +957,7 @@ public final class GalacticraftBlocks {
                     .noCollision()
                     .instabreak()
                     .sound(SoundType.WOOD)
-                    .pushReaction(PushReaction.DESTROY)
+                    .pushReaction(PushReaction.POPPED)
     );
     public static final DeferredBlock<WallUnlitTorchBlock> UNLIT_WALL_TORCH = REGISTRY.registerBlock(
             GalacticraftBlockItemIds.UNLIT_WALL_TORCH,
@@ -964,7 +966,7 @@ public final class GalacticraftBlocks {
                     .noCollision()
                     .instabreak()
                     .sound(SoundType.WOOD)
-                    .pushReaction(PushReaction.DESTROY)
+                    .pushReaction(PushReaction.POPPED)
             )
     );
     public static final DeferredBlock<WallUnlitTorchBlock> UNLIT_COPPER_WALL_TORCH = REGISTRY.registerBlock(
@@ -974,7 +976,7 @@ public final class GalacticraftBlocks {
                     .noCollision()
                     .instabreak()
                     .sound(SoundType.WOOD)
-                    .pushReaction(PushReaction.DESTROY)
+                    .pushReaction(PushReaction.POPPED)
             )
     );
     public static final DeferredBlock<UnlitLanternBlock> UNLIT_LANTERN = REGISTRY.registerBlock(
@@ -986,7 +988,7 @@ public final class GalacticraftBlocks {
                     .strength(3.5F)
                     .sound(SoundType.LANTERN)
                     .noOcclusion()
-                    .pushReaction(PushReaction.DESTROY)
+                    .pushReaction(PushReaction.POPPED)
     );
     public static final WeatheringCopperCollection<DeferredBlock<Block>> UNLIT_COPPER_LANTERN = REGISTRY.registerBlocks(
             GalacticraftBlockItemIds.UNLIT_COPPER_LANTERN,
@@ -998,7 +1000,7 @@ public final class GalacticraftBlocks {
                     .strength(3.5F)
                     .sound(SoundType.LANTERN)
                     .noOcclusion()
-                    .pushReaction(PushReaction.DESTROY)
+                    .pushReaction(PushReaction.POPPED)
     );
     public static final DeferredBlock<Block> TIN_DECORATION_BLOCK = REGISTRY.registerSimpleBlock(
             GalacticraftBlockItemIds.TIN_DECORATION_BLOCK,
@@ -1234,6 +1236,10 @@ public final class GalacticraftBlocks {
     }
 
     private static boolean never(BlockState blockState, BlockGetter blockGetter, BlockPos blockPos) {
+        return false;
+    }
+
+    private static boolean never(BlockState blockState, BlockGetter blockGetter, BlockPos blockPos, AABB aabb) {
         return false;
     }
 

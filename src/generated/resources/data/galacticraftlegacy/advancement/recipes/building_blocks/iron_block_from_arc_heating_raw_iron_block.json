@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "galacticraftlegacy:iron_block_from_arc_heating_raw_iron_block"
+        "recipes": "galacticraftlegacy:iron_block_from_arc_heating_raw_iron_block"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

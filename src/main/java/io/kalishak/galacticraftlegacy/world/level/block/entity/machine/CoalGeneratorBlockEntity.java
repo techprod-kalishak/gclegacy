@@ -9,10 +9,9 @@ package io.kalishak.galacticraftlegacy.world.level.block.entity.machine;
 
 import io.kalishak.galacticraftlegacy.world.inventory.machine.CoalGeneratorMenu;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityType;
+import io.kalishak.galacticraftlegacy.world.level.block.entity.LootContextProvider;
 import io.kalishak.galacticraftlegacy.world.level.block.machine.AbstractMachineBlock;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.RegistryAccess;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
@@ -25,13 +24,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
-import net.neoforged.neoforge.registries.datamaps.builtin.FurnaceFuel;
-import net.neoforged.neoforge.registries.datamaps.builtin.NeoForgeDataMaps;
 import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.neoforged.neoforge.transfer.item.ItemUtil;
 import net.neoforged.neoforge.transfer.transaction.Transaction;
-
-import java.util.Objects;
 
 public class CoalGeneratorBlockEntity extends AbstractMachineBlockEntity {
     public static final int MIN_ENERGY_PER_HEAT = 30;
@@ -68,12 +63,6 @@ public class CoalGeneratorBlockEntity extends AbstractMachineBlockEntity {
         registerItemCapability(GalacticraftBlockEntityType.COAL_GENERATOR.get(), event);
     }
 
-    private static int getFuelTime(RegistryAccess access, ItemStack stack) {
-        FurnaceFuel fuel = access.lookupOrThrow(Registries.ITEM).getData(NeoForgeDataMaps.FURNACE_FUELS, stack.typeHolder().unwrapKey().orElseThrow());
-
-        return fuel != null ? fuel.burnTime() : 0;
-    }
-
     public static void serverTick(ServerLevel level, BlockPos pos, BlockState state, CoalGeneratorBlockEntity entity) {
         boolean isLit = entity.isLit();
         boolean hadChanged = false;
@@ -92,7 +81,7 @@ public class CoalGeneratorBlockEntity extends AbstractMachineBlockEntity {
         }
 
         ItemStack fuel = ItemUtil.getStack(entity.items, 0);
-        int fuelTime = getFuelTime(level.registryAccess(), fuel);
+        int fuelTime = LootContextProvider.getFuelTime(level, entity, fuel);
 
         if (entity.litTimeRemaining == 0 && fuelTime > 0) {
             try (Transaction tx = Transaction.open(null)) {
@@ -138,20 +127,20 @@ public class CoalGeneratorBlockEntity extends AbstractMachineBlockEntity {
 
     @Override
     protected void onItemChange(int slot, ItemStack previousStack) {
-        assert this.level != null;
+        if (this.level instanceof ServerLevel serverLevel) {
+            ItemStack setStack = getItem(slot);
+            int cookingTime = LootContextProvider.getFuelTime(serverLevel, this, setStack);
 
-        ItemStack setStack = getItem(slot);
-        FurnaceFuel fuel = this.level.registryAccess().lookupOrThrow(Registries.ITEM).getData(NeoForgeDataMaps.FURNACE_FUELS, Objects.requireNonNull(setStack.typeHolder().getKey()));
+            if (cookingTime > 0) {
+                this.litTotalTime = cookingTime;
+                this.litTimeRemaining = cookingTime;
+            }
 
-        if (fuel != null && fuel.burnTime() > 0) {
-            this.litTotalTime = fuel.burnTime();
-            this.litTimeRemaining = fuel.burnTime();
-        }
+            ItemStackTemplate remainder = setStack.getCraftingRemainder();
 
-        ItemStackTemplate remainder = setStack.getCraftingRemainder();
-
-        if (remainder != null && setStack.getCount() == 1) {
-            setItem(slot, ItemResource.of(remainder), remainder.count());
+            if (remainder != null && setStack.getCount() == 1) {
+                setItem(slot, ItemResource.of(remainder), remainder.count());
+            }
         }
     }
 

@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "galacticraftlegacy:dehydrated_carrot"
+        "recipes": "galacticraftlegacy:dehydrated_carrot"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

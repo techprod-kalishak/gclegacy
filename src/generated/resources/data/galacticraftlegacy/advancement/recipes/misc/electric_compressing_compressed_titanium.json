@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "galacticraftlegacy:electric_compressing_compressed_titanium"
+        "recipes": "galacticraftlegacy:electric_compressing_compressed_titanium"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

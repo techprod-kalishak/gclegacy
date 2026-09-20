@@ -7,37 +7,65 @@
 
 package io.kalishak.galacticraftlegacy.world.level.levelgen;
 
-import com.mojang.serialization.MapCodec;
 import io.kalishak.galacticraftlegacy.references.Constants;
-import io.kalishak.galacticraftlegacy.Galacticraft;
-import io.kalishak.galacticraftlegacy.world.level.levelgen.synth.GradientNoise;
+import net.minecraft.core.Direction;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.world.level.levelgen.*;
+import net.minecraft.world.level.levelgen.NoiseRouter;
+import net.minecraft.world.level.levelgen.Noises;
+import net.minecraft.world.level.levelgen.densityfunction.DensityFunction;
+import net.minecraft.world.level.levelgen.densityfunction.DensityFunctions;
+import net.minecraft.world.level.levelgen.densityfunction.TilingMode;
+import net.minecraft.world.level.levelgen.synth.BlendedNoise;
 import net.minecraft.world.level.levelgen.synth.NormalNoise;
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.registries.DeferredHolder;
-import net.neoforged.neoforge.registries.DeferredRegister;
+
+import static net.minecraft.world.level.levelgen.NoiseRouterData.getFunction;
 
 public class GalacticraftNoiseRouterData {
-    private static final DeferredRegister<MapCodec<? extends DensityFunction>> REGISTRY = DeferredRegister.create(Registries.DENSITY_FUNCTION_TYPE, Galacticraft.MODID);
-
-    public static final ResourceKey<DensityFunction> GRADIENT = Constants.key(Registries.DENSITY_FUNCTION, "gradient");
-
-    private static final DeferredHolder<MapCodec<? extends DensityFunction>, MapCodec<GradientNoise>> GRADIENT_HOLDER = REGISTRY.register(
-            "gradient",
-            () -> GradientNoise.DATA_CODEC
-    );
+    private static final ResourceKey<DensityFunction> BASE_3D_NOISE_MOON = key("moon/base_3d_noise");
+    private static final ResourceKey<DensityFunction> BASE_3D_NOISE_MARS = key("mars/base_3d_noise");
+    private static final ResourceKey<DensityFunction> BASE_3D_NOISE_ASTEROIDS = key("asteroids/base_3d_noise");
+    private static final ResourceKey<DensityFunction> BASE_3D_NOISE_VENUS = key("venus/base_3d_noise");
+    public static final ResourceKey<DensityFunction> OVERWORLD_ORE_VEIN_ALUMINUM_DENSITY = key("overworld/ore_vein/aluminum_density");
+    public static final ResourceKey<DensityFunction> OVERWORLD_ORE_VEIN_TIN_DENSITY = key("overworld/ore_vein/tin_density");
 
     public static void bootstrap(BootstrapContext<DensityFunction> context) {
-        context.register(GRADIENT, GradientNoise.createUnseeded(0.25D, 0.25D, 0.25D, 4, 0.25D));
-    }
+        HolderGetter<DensityFunction> functions = context.lookup(Registries.DENSITY_FUNCTION);
 
-    public static void init(IEventBus bus) {
-        REGISTRY.register(bus);
+        context.register(
+                BASE_3D_NOISE_MOON,
+                new BlendedNoise(0.25D, 0.25F, 80.0D, 60.0D, 4.0D)
+        );
+
+        DensityFunction y = getFunction(functions, vanillaKey("y"));
+        DensityFunction veinToggle = getFunction(functions, vanillaKey("overworld/ore_vein/toggle"));
+        DensityFunction veinMask = getFunction(functions, vanillaKey("overworld/ore_vein/mask"));
+
+        context.register(
+                OVERWORLD_ORE_VEIN_ALUMINUM_DENSITY,
+                createOreVeinDensity(
+                        -20,
+                        35,
+                        y,
+                        veinToggle,
+                        veinMask,
+                        true
+                )
+        );
+        context.register(
+                OVERWORLD_ORE_VEIN_TIN_DENSITY,
+                createOreVeinDensity(
+                        -9,
+                        20,
+                        y,
+                        veinToggle,
+                        veinMask,
+                        true
+                )
+        );
     }
 
     public static NoiseRouter empty() {
@@ -49,18 +77,20 @@ public class GalacticraftNoiseRouterData {
                 DensityFunctions.zero(),
                 DensityFunctions.zero(),
                 DensityFunctions.zero(),
-                DensityFunctions.zero(),
-                DensityFunctions.zero(),
-                DensityFunctions.zero(),
-                DensityFunctions.zero(),
-                DensityFunctions.zero(),
-                DensityFunctions.zero(),
-                DensityFunctions.zero(),
                 DensityFunctions.zero()
         );
     }
 
-    public static NoiseRouter moon(HolderGetter<DensityFunction> densityFunctions, HolderGetter<NormalNoise.NoiseParameters> noises) {
+    public static NoiseRouter moon(HolderGetter<DensityFunction> densityFunctions, HolderGetter<NormalNoise> noises) {
+        DensityFunction gradient = DensityFunctions.gradient(
+                Direction.Axis.X,
+                TilingMode.CLAMP_TO_EDGE,
+                0,
+                128,
+                0.0F,
+                1.0F
+        );
+
         DensityFunction shiftX = getFunction(densityFunctions, vanillaKey("shift_x"));
         DensityFunction shiftZ = getFunction(densityFunctions, vanillaKey("shift_z"));
         DensityFunction temperature = DensityFunctions.shiftedNoise2d(
@@ -69,44 +99,70 @@ public class GalacticraftNoiseRouterData {
         DensityFunction vegetation = DensityFunctions.shiftedNoise2d(
                 shiftX, shiftZ, 0.25, noises.getOrThrow(Noises.VEGETATION)
         );
-        DensityFunction depth = getFunction(densityFunctions, vanillaKey("overworld/depth"));
 
         return new NoiseRouter(
-                DensityFunctions.zero(),
-                DensityFunctions.zero(),
-                DensityFunctions.zero(),
-                DensityFunctions.zero(),
                 temperature,
                 vegetation,
                 DensityFunctions.zero(),
                 DensityFunctions.zero(),
-                depth,
+                gradient,
                 DensityFunctions.zero(),
                 DensityFunctions.zero(),
-                postProcess(slide(getFunction(densityFunctions, vanillaKey("overworld/sloped_cheese")), 8, 128, 80, 64, -0.03, 0, 12, 0.1)),
-                DensityFunctions.zero(),
-                DensityFunctions.zero(),
-                DensityFunctions.zero()
+                postSlide(densityFunctions, gradient)
         );
     }
 
-    private static DensityFunction getFunction(HolderGetter<DensityFunction> functions, ResourceKey<DensityFunction> name) {
-        return new DensityFunctions.HolderHolder(functions.getOrThrow(name));
+    private static DensityFunction postProcess(DensityFunction slide, int cellSizeXz, int cellSizeY) {
+        DensityFunction blended = DensityFunctions.blendDensity(slide);
+
+        return DensityFunctions.interpolated(DensityFunctions.mul(blended, DensityFunctions.constant(0.64F)), cellSizeXz, cellSizeY).squeeze();
+    }
+
+    protected static DensityFunction postSlide(HolderGetter<DensityFunction> functions, DensityFunction post) {
+        DensityFunction slide = slideMoon(functions, -64, 192);
+
+        return DensityFunctions.add(postProcess(slide, 4, 8), post);
+    }
+
+    private static DensityFunction slideMoon(HolderGetter<DensityFunction> functions, int minY, int height) {
+        return slide(getFunction(functions, BASE_3D_NOISE_MOON), minY, height, 24, 0, 0.9375F, -8, 24, 2.5F);
+    }
+
+    private static DensityFunction slide(DensityFunction caves, int minY, int height, int topStartY, int topEndY, float topTarget, int bottomStartY, int bottomEndY, float bottomTarget) {
+        DensityFunction noiseValue = caves;
+        DensityFunction topFactor = DensityFunctions.yClampedGradient(minY + height - topStartY, minY + height - topEndY, 1.0F, 0.0F);
+        noiseValue = DensityFunctions.lerp(topFactor, topTarget, noiseValue);
+        DensityFunction bottomFactor = DensityFunctions.yClampedGradient(minY + bottomStartY, minY + bottomEndY, 0.0F, 1.0F);
+        return DensityFunctions.lerp(bottomFactor, bottomTarget, noiseValue);
+    }
+
+    private static DensityFunction createOreVeinDensity(
+            int minY, int maxY, DensityFunction y, DensityFunction toggle, DensityFunction baseVeinMask, boolean whenTogglePositive
+    ) {
+        DensityFunction noVein = DensityFunctions.constant(-1.0F);
+        DensityFunction distanceFromEdge = DensityFunctions.min(DensityFunctions.constant(maxY).sub(y), y.sub(minY));
+        DensityFunction edgeRoundoff = DensityFunctions.clampedMap(distanceFromEdge, 0.0F, 20.0F, -0.2F, 0.0F);
+        DensityFunction veininess = whenTogglePositive ? toggle : toggle.negate();
+        return DensityFunctions.rangeChoice(
+                y,
+                minY,
+                maxY,
+                DensityFunctions.rangeChoice(
+                        baseVeinMask,
+                        0.0F,
+                        1000000.0F,
+                        DensityFunctions.rangeChoice(veininess.sub(0.4F).add(edgeRoundoff), 0.0F, 1000000.0F, DensityFunctions.constant(0.7F), noVein),
+                        noVein
+                ),
+                noVein
+        );
     }
 
     private static ResourceKey<DensityFunction> vanillaKey(String key) {
         return ResourceKey.create(Registries.DENSITY_FUNCTION, Identifier.withDefaultNamespace(key));
     }
 
-    private static DensityFunction postProcess(DensityFunction slide) {
-        DensityFunction blended = DensityFunctions.blendDensity(slide);
-        return DensityFunctions.mul(DensityFunctions.interpolated(blended), DensityFunctions.constant(0.64)).squeeze();
-    }
-
-    private static DensityFunction slide(DensityFunction caves, int minY, int height, int topStartY, int topEndY, double topTarget, int bottomStartY, int bottomEndY, double bottomTarget) {
-        DensityFunction topFactor = DensityFunctions.yClampedGradient(minY + height - topStartY, minY + height - topEndY, 1.0, 0.0);
-        DensityFunction noiseValue = DensityFunctions.lerp(topFactor, topTarget, caves);
-        DensityFunction bottomFactor = DensityFunctions.yClampedGradient(minY + bottomStartY, minY + bottomEndY, 0.0, 1.0);
-        return DensityFunctions.lerp(bottomFactor, bottomTarget, noiseValue);
+    private static ResourceKey<DensityFunction> key(String key) {
+        return Constants.key(Registries.DENSITY_FUNCTION, key);
     }
 }

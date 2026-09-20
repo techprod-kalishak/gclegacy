@@ -7,7 +7,6 @@
 
 package io.kalishak.galacticraftlegacy.world.level.block;
 
-import com.mojang.serialization.MapCodec;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityType;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.OxygenDetectorBlockEntity;
 import net.minecraft.core.BlockPos;
@@ -26,17 +25,11 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import org.jspecify.annotations.Nullable;
 
 public class OxygenDetectorBlock extends BaseEntityBlock {
-    public static final MapCodec<OxygenDetectorBlock> CODEC = simpleCodec(OxygenDetectorBlock::new);
     public static final BooleanProperty ACTIVE = BooleanProperty.create("active");
 
     public OxygenDetectorBlock(Properties properties) {
         super(properties);
         registerDefaultState(this.stateDefinition.any().setValue(ACTIVE, false));
-    }
-
-    @Override
-    protected MapCodec<OxygenDetectorBlock> codec() {
-        return CODEC;
     }
 
     @Override

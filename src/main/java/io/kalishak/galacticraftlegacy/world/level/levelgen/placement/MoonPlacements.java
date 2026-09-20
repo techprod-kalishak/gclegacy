@@ -12,12 +12,10 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
-import net.minecraft.data.worldgen.placement.VegetationPlacements;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.valueproviders.UniformInt;
-import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
-import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
+import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.placement.*;
 
 import java.util.List;
@@ -32,14 +30,14 @@ public class MoonPlacements {
     public static final ResourceKey<PlacedFeature> ORE_SAPPHIRE = GalacticraftPlacements.key("moon_sapphire_ore");
     public static final ResourceKey<PlacedFeature> DIRT_PATCH = GalacticraftPlacements.key("moon_dirt_patch");
 
-    static void bootstrap(BootstrapContext<PlacedFeature> cxt, HolderGetter<ConfiguredFeature<?, ?>> featureGetter) {
-        Holder<ConfiguredFeature<?, ?>> fallenMeteor = featureGetter.getOrThrow(MoonFeatures.FALLEN_METEOR);
-        Holder<ConfiguredFeature<?, ?>> crater = featureGetter.getOrThrow(MoonFeatures.MOON_CRATER);
-        Holder<ConfiguredFeature<?, ?>> craterLarge = featureGetter.getOrThrow(MoonFeatures.MOON_CRATER_LARGE);
-        Holder<ConfiguredFeature<?, ?>> copperOre = featureGetter.getOrThrow(MoonFeatures.ORE_MOON_COPPER);
-        Holder<ConfiguredFeature<?, ?>> tinOre = featureGetter.getOrThrow(MoonFeatures.ORE_MOON_TIN);
-        Holder<ConfiguredFeature<?, ?>> cheeseOre = featureGetter.getOrThrow(MoonFeatures.ORE_MOON_CHEESE);
-        Holder<ConfiguredFeature<?, ?>> sapphireOre = featureGetter.getOrThrow(MoonFeatures.ORE_MOON_SAPPHIRE);
+    static void bootstrap(BootstrapContext<PlacedFeature> cxt, HolderGetter<Feature> featureGetter) {
+        Holder<Feature> fallenMeteor = featureGetter.getOrThrow(MoonFeatures.FALLEN_METEOR);
+        Holder<Feature> crater = featureGetter.getOrThrow(MoonFeatures.MOON_CRATER);
+        Holder<Feature> craterLarge = featureGetter.getOrThrow(MoonFeatures.MOON_CRATER_LARGE);
+        Holder<Feature> copperOre = featureGetter.getOrThrow(MoonFeatures.ORE_MOON_COPPER);
+        Holder<Feature> tinOre = featureGetter.getOrThrow(MoonFeatures.ORE_MOON_TIN);
+        Holder<Feature> cheeseOre = featureGetter.getOrThrow(MoonFeatures.ORE_MOON_CHEESE);
+        Holder<Feature> sapphireOre = featureGetter.getOrThrow(MoonFeatures.ORE_MOON_SAPPHIRE);
 
         PlacementUtils.register(
                 cxt,
@@ -48,7 +46,7 @@ public class MoonPlacements {
                 List.of(
                         RarityFilter.onAverageOnceEvery(8),
                         BiomeFilter.biome(),
-                        RandomOffsetPlacement.horizontal(UniformInt.of(4, 16))
+                        CountPlacement.of(UniformInt.of(4, 16))
                 )
         );
 

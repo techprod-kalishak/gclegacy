@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "galacticraftlegacy:desh_pickaxe"
+        "recipes": "galacticraftlegacy:desh_pickaxe"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

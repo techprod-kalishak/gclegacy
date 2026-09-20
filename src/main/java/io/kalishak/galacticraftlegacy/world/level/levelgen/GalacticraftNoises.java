@@ -14,11 +14,25 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.levelgen.synth.NormalNoise;
 
 public class GalacticraftNoises {
-    public static final ResourceKey<NormalNoise.NoiseParameters> OPENSPACE = Constants.key(Registries.NOISE, "moon/temperature");
-    public static final ResourceKey<NormalNoise.NoiseParameters> OPENSPACE_VEG = Constants.key(Registries.NOISE, "moon/vegetation");
+    public static final ResourceKey<NormalNoise> OPENSPACE = Constants.key(Registries.NOISE, "moon/temperature");
+    public static final ResourceKey<NormalNoise> OPENSPACE_VEG = Constants.key(Registries.NOISE, "moon/vegetation");
 
-    public static void bootstrap(BootstrapContext<NormalNoise.NoiseParameters> context) {
-        context.register(OPENSPACE, new NormalNoise.NoiseParameters(4, 0.0D, 1.0D));
-        context.register(OPENSPACE_VEG, new NormalNoise.NoiseParameters(1, 0.0D, 1.0D));
+    public static void bootstrap(BootstrapContext<NormalNoise> context) {
+//        context.register(
+//                OPENSPACE,
+//                NormalNoise.builder()
+//                        .setBaseAmplitude(0.0D)
+//                        .setOctaveCount(1)
+//                        .setAmplitudeModifier(0, 1.0D)
+//                        .build()
+//        );
+//        context.register(
+//                OPENSPACE_VEG,
+//                NormalNoise.builder()
+//                        .setBaseAmplitude(0.0D)
+//                        .setOctaveCount(1)
+//                        .setAmplitudeModifier(0, 1.0D)
+//                        .build()
+//        );
     }
 }

@@ -8,7 +8,7 @@
 package io.kalishak.galacticraftlegacy.client.renderer.entity.layer.gear;
 
 import io.kalishak.galacticraftlegacy.EnumExtensions;
-import io.kalishak.galacticraftlegacy.client.model.gear.*;
+import io.kalishak.galacticraftlegacy.client.model.gear.GearEquipmentModel;
 import io.kalishak.galacticraftlegacy.client.model.geom.GalacticraftModelLayers;
 import io.kalishak.galacticraftlegacy.client.renderer.entity.state.GearRenderState;
 import io.kalishak.galacticraftlegacy.world.entity.GearEquipmentSlot;
@@ -27,7 +27,6 @@ import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.resources.model.EquipmentAssetManager;
 import net.minecraft.client.resources.model.EquipmentClientInfo;
-import net.minecraft.client.resources.model.ModelManager;
 import net.minecraft.client.resources.model.sprite.SpriteGetter;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
@@ -141,7 +140,7 @@ public abstract class GearEquipmentLayer<S extends LivingEntityRenderState, M ex
 
     protected RenderType getRenderType(Model<S> model, GearEquippable gearEquippable) {
         if (gearEquippable.assetId().isEmpty()) {
-            return RenderTypes.glint();
+            return RenderTypes.debugFilledBox();
         }
 
         return getRenderType(model, gearEquippable.assetId().get(), gearEquippable.gearSlot());

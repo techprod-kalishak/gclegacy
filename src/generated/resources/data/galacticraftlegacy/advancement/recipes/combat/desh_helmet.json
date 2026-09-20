@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "galacticraftlegacy:desh_helmet"
+        "recipes": "galacticraftlegacy:desh_helmet"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -29,7 +29,6 @@ import net.neoforged.neoforge.client.event.*;
 import net.neoforged.neoforge.client.event.sound.PlaySoundEvent;
 import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 import org.jspecify.annotations.Nullable;
-import org.lwjgl.glfw.GLFW;
 
 import java.util.function.Consumer;
 
@@ -41,11 +40,11 @@ public class NeoForgeClientEventHandler {
         if (Minecraft.getInstance().gui.screen() == null) {
             InputConstants.Key key = InputConstants.getKey(event.getKeyEvent());
 
-            if (GalacticraftKeys.OPEN_GEAR_KEY.isActiveAndMatches(key) && event.getAction() == GLFW.GLFW_RELEASE) {
+            if (GalacticraftKeys.OPEN_GEAR_KEY.isActiveAndMatches(key) && event.getAction() == InputConstants.RELEASE) {
                 ClientPacketDistributor.sendToServer(new ToggleGearInventoryPayload(!Minecraft.getInstance().player.hasContainerOpen()));
             }
 
-            if (GalacticraftKeys.ACTIVATE_SENSOR_GLASSES.isActiveAndMatches(key) && event.getAction() == GLFW.GLFW_RELEASE) {
+            if (GalacticraftKeys.ACTIVATE_SENSOR_GLASSES.isActiveAndMatches(key) && event.getAction() == InputConstants.RELEASE) {
                 ClientPacketDistributor.sendToServer(new ToggleSensorGlassesPayload());
             }
         }

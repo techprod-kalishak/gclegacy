@@ -45,7 +45,7 @@ public class FallingParachestRenderer extends EntityRenderer<FallingParachest, P
     public void submit(ParachestRenderState renderState, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, CameraRenderState camera) {
         poseStack.pushPose();
         poseStack.translate(0.5F, 0.5F, 0.5F);
-        poseStack.mulPose(Axis.YP.rotationDegrees(-renderState.angle));
+        poseStack.rotateDegrees(Axis.YP, -renderState.angle);
         //poseStack.translate(-1F, -1F, -1F);
         submitNodeCollector.submitModel(
                 this.chestModel,
@@ -56,13 +56,12 @@ public class FallingParachestRenderer extends EntityRenderer<FallingParachest, P
                 OverlayTexture.NO_OVERLAY,
                 -1,
                 this.spriteGetter.get(GalacticraftSheets.PARACHEST),
-                0,
-                null
+                0
         );
 
         poseStack.pushPose();
         poseStack.translate(0.5D, 2.2D, 0.5D);
-        poseStack.mulPose(Axis.ZP.rotationDegrees(180.0F));
+        poseStack.rotateDegrees(Axis.ZP, 180.0F);
         renderParachute(poseStack, submitNodeCollector, -1, renderState);
         poseStack.popPose();
 

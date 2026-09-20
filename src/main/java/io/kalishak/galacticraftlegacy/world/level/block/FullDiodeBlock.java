@@ -7,7 +7,6 @@
 
 package io.kalishak.galacticraftlegacy.world.level.block;
 
-import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -39,9 +38,6 @@ public abstract class FullDiodeBlock extends HorizontalDirectionalBlock {
     public FullDiodeBlock(Properties properties) {
         super(properties);
     }
-
-    @Override
-    protected abstract MapCodec<? extends FullDiodeBlock> codec();
 
     @Override
     protected void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
@@ -118,7 +114,7 @@ public abstract class FullDiodeBlock extends HorizontalDirectionalBlock {
         BlockState targetBlockState = level.getBlockState(targetPos);
         boolean isTargetWire = targetBlockState.is(Blocks.REDSTONE_WIRE) || targetBlockState.is(GalacticraftBlocks.SEALED_REDSTONE_WIRE);
 
-        return Math.max(input, isTargetWire ? targetBlockState.getValue(RedStoneWireBlock.POWER) : 0);
+        return Math.max(input, isTargetWire ? targetBlockState.getValue(RedstoneWireBlock.POWER) : 0);
     }
 
     protected int getAlternateSignal(SignalGetter level, BlockPos pos, BlockState state) {

@@ -8,20 +8,18 @@
             "min": 10.0
           }
         },
-        "player": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "minecraft:type_specific/player": {
-                "gamemode": [
-                  "survival",
-                  "adventure"
-                ]
-              }
+        "player": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "minecraft:type_specific/player": {
+              "gamemode": [
+                "survival",
+                "adventure"
+              ]
             }
           }
-        ],
+        },
         "start_position": {
           "dimension": "minecraft:overworld"
         }
@@ -40,7 +38,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "galacticraftlegacy:white_parachute"
+        "recipes": "galacticraftlegacy:white_parachute"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

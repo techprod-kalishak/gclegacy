@@ -7,8 +7,6 @@
 
 package io.kalishak.galacticraftlegacy.world.level.block;
 
-import com.mojang.serialization.MapCodec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.kalishak.galacticraftlegacy.world.level.OxygenHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -17,21 +15,11 @@ import net.minecraft.world.level.block.WeatheringCopper;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class UnlitWeatheringLanternBlock extends UnlitLanternBlock implements WeatheringCopper {
-    public static final MapCodec<UnlitWeatheringLanternBlock> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
-            WeatherState.CODEC.fieldOf("weathering_state").forGetter(block -> block.weatherState),
-            BlockState.CODEC.fieldOf("lit_state").forGetter(block -> block.litState),
-            propertiesCodec()
-    ).apply(instance, UnlitWeatheringLanternBlock::new));
     private final WeatheringCopper.WeatherState weatherState;
 
     public UnlitWeatheringLanternBlock(WeatheringCopper.WeatherState weatherState, BlockState litState, Properties properties) {
         super(litState, properties);
         this.weatherState = weatherState;
-    }
-
-    @Override
-    public MapCodec<UnlitWeatheringLanternBlock> codec() {
-        return CODEC;
     }
 
     @Override

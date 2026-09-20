@@ -14,12 +14,12 @@ import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
-import net.minecraft.client.renderer.blockentity.state.BlockEntityRenderState;
 import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.util.Mth;
+import net.minecraft.util.Unit;
 
 @SuppressWarnings({"unused", "FieldCanBeLocal"})
-public class NasaWorkbenchModel extends Model<BlockEntityRenderState> {
+public class NasaWorkbenchModel extends Model<Unit> {
     private final ModelPart fRoot;
     private final ModelPart base1a;
     private final ModelPart baseAux1;

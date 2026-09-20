@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "galacticraftlegacy:compact_nasa_workbench"
+        "recipes": "galacticraftlegacy:compact_nasa_workbench"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

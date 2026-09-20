@@ -23,7 +23,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "galacticraftlegacy:electric_compressing_heavy_duty_plate_t2"
+        "recipes": "galacticraftlegacy:electric_compressing_heavy_duty_plate_t2"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

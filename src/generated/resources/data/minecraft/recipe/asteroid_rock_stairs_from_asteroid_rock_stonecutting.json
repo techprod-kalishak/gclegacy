@@ -1,7 +1,0 @@
-{
-  "type": "minecraft:stonecutting",
-  "ingredient": "galacticraftlegacy:asteroid_rock",
-  "result": {
-    "id": "galacticraftlegacy:asteroid_rock_stairs"
-  }
-}

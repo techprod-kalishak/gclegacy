@@ -25,6 +25,10 @@ public class GalacticraftBiomeTagsProvider extends TagsProvider<Biome> {
 
     @Override
     protected void addTags(HolderLookup.Provider provider) {
+        tag(GalacticraftTags.Biomes.IS_OPEN_SPACE)
+                .addTag(GalacticraftTags.Biomes.IS_MOON)
+                .addOptionalTag(GalacticraftTags.Biomes.IS_MARS)
+                .addOptionalTag(GalacticraftTags.Biomes.IS_ASTEROIDS);
         tag(GalacticraftTags.Biomes.HAS_BASIC_FEATURES)
                 .addTag(GalacticraftTags.Biomes.IS_MOON);
         tag(GalacticraftTags.Biomes.HAS_ADVANCED_FEATURES)

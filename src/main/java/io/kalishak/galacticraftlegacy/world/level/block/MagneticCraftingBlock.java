@@ -7,7 +7,6 @@
 
 package io.kalishak.galacticraftlegacy.world.level.block;
 
-import com.mojang.serialization.MapCodec;
 import io.kalishak.galacticraftlegacy.world.item.component.GalacticraftDataComponents;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.MagneticCraftingBlockEntity;
 import io.kalishak.galacticraftlegacy.world.level.block.machine.RotatedByToolBlock;
@@ -31,17 +30,11 @@ import net.minecraft.world.phys.BlockHitResult;
 import org.jspecify.annotations.Nullable;
 
 public class MagneticCraftingBlock extends BaseEntityBlock implements RotatedByToolBlock {
-    public static final MapCodec<MagneticCraftingBlock> CODEC = simpleCodec(MagneticCraftingBlock::new);
     public static final EnumProperty<Direction> FACING = DirectionalBlock.FACING;
 
     public MagneticCraftingBlock(BlockBehaviour.Properties properties) {
         super(properties);
         registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH));
-    }
-
-    @Override
-    protected MapCodec<? extends MagneticCraftingBlock> codec() {
-        return CODEC;
     }
 
     @Override

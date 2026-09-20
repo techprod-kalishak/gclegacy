@@ -12,28 +12,26 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.advancements.predicates.LocationPredicate;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
-import net.minecraft.core.HolderSet;
-import net.minecraft.core.RegistryCodecs;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.core.registries.codec.RegistryFixedCodec;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 
-import java.util.Arrays;
 import java.util.Optional;
 import java.util.function.BiPredicate;
 import java.util.function.UnaryOperator;
 
-public record SoundPredicate(Optional<HolderSet<SoundEvent>> soundEvents, LocationPredicate location) implements BiPredicate<Holder<SoundEvent>, ServerPlayer> {
+public record SoundPredicate(Optional<Holder<SoundEvent>> soundEvents, LocationPredicate location) implements BiPredicate<Holder<SoundEvent>, ServerPlayer> {
     public static final Codec<SoundPredicate> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-            RegistryCodecs.homogeneousList(Registries.SOUND_EVENT).optionalFieldOf("sound_events").forGetter(SoundPredicate::soundEvents),
+            RegistryFixedCodec.create(Registries.SOUND_EVENT).optionalFieldOf("sound_events").forGetter(SoundPredicate::soundEvents),
             LocationPredicate.CODEC.fieldOf("location").forGetter(SoundPredicate::location)
     ).apply(instance, SoundPredicate::new));
 
     @Override
     public boolean test(Holder<SoundEvent> soundEvent, ServerPlayer entity) {
         if (this.location.matches(entity.level(), entity.getX(), entity.getY(), entity.getZ())) {
-            return this.soundEvents.isPresent() && this.soundEvents.get().contains(soundEvent);
+            return this.soundEvents.isPresent() && this.soundEvents.get() == soundEvent;
         }
 
         return false;
@@ -41,7 +39,7 @@ public record SoundPredicate(Optional<HolderSet<SoundEvent>> soundEvents, Locati
 
     @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
     public static class Builder {
-        private Optional<HolderSet<SoundEvent>> soundEvents = Optional.empty();
+        private Optional<Holder<SoundEvent>> soundEvent = Optional.empty();
         private LocationPredicate location = LocationPredicate.Builder.location().build();
 
         private Builder() {
@@ -52,14 +50,8 @@ public record SoundPredicate(Optional<HolderSet<SoundEvent>> soundEvents, Locati
             return new Builder();
         }
 
-        @SafeVarargs
-        public final Builder of(HolderGetter<SoundEvent> lookup, ResourceKey<SoundEvent>... sounds) {
-            this.soundEvents = Optional.of(HolderSet.direct(Arrays.stream(sounds).map(lookup::getOrThrow).toList()));
-            return this;
-        }
-
-        public final Builder ofSingle(HolderGetter<SoundEvent> lookup, ResourceKey<SoundEvent> sound) {
-            this.soundEvents = Optional.of(HolderSet.direct(lookup.getOrThrow(sound)));
+        public final Builder of(HolderGetter<SoundEvent> lookup, ResourceKey<SoundEvent> sound) {
+            this.soundEvent = Optional.of(lookup.getOrThrow(sound));
             return this;
         }
 
@@ -73,7 +65,7 @@ public record SoundPredicate(Optional<HolderSet<SoundEvent>> soundEvents, Locati
         }
 
         public SoundPredicate build() {
-            return new SoundPredicate(this.soundEvents, this.location);
+            return new SoundPredicate(this.soundEvent, this.location);
         }
     }
 }

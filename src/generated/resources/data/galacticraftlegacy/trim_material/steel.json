@@ -1,10 +1,7 @@
 {
-  "asset_name": "steel",
   "description": {
     "color": "#505050",
     "translate": "trim_material.galacticraftlegacy.steel"
   },
-  "override_armor_assets": {
-    "galacticraftlegacy:steel": "steel_darker"
-  }
+  "palette_id": "galacticraftlegacy:trim/steel"
 }

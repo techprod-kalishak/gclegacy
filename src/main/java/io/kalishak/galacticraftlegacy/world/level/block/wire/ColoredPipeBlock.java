@@ -7,8 +7,6 @@
 
 package io.kalishak.galacticraftlegacy.world.level.block.wire;
 
-import com.mojang.serialization.MapCodec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityType;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.wire.ColoredPipeBlockEntity;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.wire.network.NetworkType;
@@ -21,7 +19,6 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DyeColor;
-import net.minecraft.world.item.DyeItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -37,10 +34,6 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 public class ColoredPipeBlock extends AbstractWireBlock {
-    public static final MapCodec<ColoredPipeBlock> CODEC =  RecordCodecBuilder.mapCodec(instance -> instance.group(
-            DyeColor.CODEC.fieldOf("color").forGetter(coloredPipeBlock -> coloredPipeBlock.color),
-            propertiesCodec()
-    ).apply(instance, ColoredPipeBlock::new));
     private static final Map<DyeColor, Supplier<ColoredPipeBlock>> COLORED_PIPES_BY_DYE = new HashMap<>();
     private final DyeColor color;
 
@@ -48,11 +41,6 @@ public class ColoredPipeBlock extends AbstractWireBlock {
         super(NetworkType.FLUID, 0.4D, properties);
         this.color = color;
         COLORED_PIPES_BY_DYE.put(color, () -> this);
-    }
-
-    @Override
-    protected MapCodec<ColoredPipeBlock> codec() {
-        return CODEC;
     }
 
     @Override

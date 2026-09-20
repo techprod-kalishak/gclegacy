@@ -7,17 +7,12 @@
 
 package io.kalishak.galacticraftlegacy.world.level.block;
 
-import com.mojang.serialization.MapCodec;
 import io.kalishak.galacticraftlegacy.data.GalacticraftTags;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -26,17 +21,11 @@ import net.neoforged.neoforge.common.Tags;
 import org.jspecify.annotations.Nullable;
 
 public class TerraformableBlock extends Block implements EarthTurnableBlock {
-    public static final MapCodec<TerraformableBlock> CODEC = simpleCodec(TerraformableBlock::new);
     public static final BooleanProperty PERSISTENT = BlockStateProperties.PERSISTENT;
 
     public TerraformableBlock(Properties properties) {
         super(properties);
         registerDefaultState(this.stateDefinition.any().setValue(PERSISTENT, false));
-    }
-
-    @Override
-    protected MapCodec<? extends TerraformableBlock> codec() {
-        return CODEC;
     }
 
     @Override

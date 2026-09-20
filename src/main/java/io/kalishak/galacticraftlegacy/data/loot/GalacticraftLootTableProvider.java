@@ -7,8 +7,6 @@
 
 package io.kalishak.galacticraftlegacy.data.loot;
 
-import net.minecraft.core.HolderLookup;
-import net.minecraft.data.PackOutput;
 import net.minecraft.data.loot.LootTableProvider;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.storage.loot.LootTable;
@@ -16,25 +14,20 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.CompletableFuture;
 
 public class GalacticraftLootTableProvider extends LootTableProvider {
-    private static final List<SubProviderEntry> ENTRIES = List.of(
-            new SubProviderEntry(GalacticraftBlockLootSubProvider::new, LootContextParamSets.BLOCK),
-            new SubProviderEntry(GalacticraftChestLootSubProvider::new, LootContextParamSets.CHEST),
-            new SubProviderEntry(GalacticraftEntityLootSubProvider::new, LootContextParamSets.ENTITY)
-    );
-
-    GalacticraftLootTableProvider(PackOutput output, Set<ResourceKey<LootTable>> requiredTables, List<SubProviderEntry> subProviders, CompletableFuture<HolderLookup.Provider> registries) {
-        super(output, requiredTables, subProviders, registries);
+    GalacticraftLootTableProvider(Set<ResourceKey<LootTable>> requiredTables, List<SubProviderEntry> subProviders) {
+        super(requiredTables, subProviders);
     }
 
-    public static GalacticraftLootTableProvider create(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
+    public static GalacticraftLootTableProvider create() {
         return new GalacticraftLootTableProvider(
-                output,
                 Set.of(),
-                ENTRIES,
-                registries
+                List.of(
+                        new SubProviderEntry(GalacticraftBlockLootSubProvider::new, LootContextParamSets.BLOCK),
+                        new SubProviderEntry(GalacticraftChestLootSubProvider::new, LootContextParamSets.CHEST),
+                        new SubProviderEntry(GalacticraftEntityLootSubProvider::new, LootContextParamSets.ENTITY)
+                )
         );
     }
 }

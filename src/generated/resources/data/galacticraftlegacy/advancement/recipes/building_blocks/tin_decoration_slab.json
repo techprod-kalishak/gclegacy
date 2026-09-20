@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "galacticraftlegacy:tin_decoration_slab"
+        "recipes": "galacticraftlegacy:tin_decoration_slab"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

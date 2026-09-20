@@ -55,8 +55,8 @@ public class Tier1RocketRenderer extends EntityRenderer<Tier1Rocket, RocketRende
 
         if (state.roll > 0.0F) {
             float i = state.launched ? (5 - Mth.floor(state.timeUntilLaunch / 85.0F)) / 10.0F : 0.3F;
-            poseStack.mulPose(Axis.XP.rotationDegrees(Mth.sin(state.roll) * state.roll * i));
-            poseStack.mulPose(Axis.ZP.rotationDegrees(Mth.sin(state.roll) * state.roll * i));
+            poseStack.rotateDegrees(Axis.XP, Mth.sin(state.roll) * state.roll * i);
+            poseStack.rotateDegrees(Axis.ZP, Mth.sin(state.roll) * state.roll * i);
         }
 
         poseStack.scale(-1.0F, -1.0F, -1.0F);
@@ -69,23 +69,22 @@ public class Tier1RocketRenderer extends EntityRenderer<Tier1Rocket, RocketRende
                 -1,
                 -1,
                 null,
-                state.outlineColor,
-                null
+                state.outlineColor
         );
         poseStack.popPose();
     }
 
     @Override
-    public boolean shouldRender(Tier1Rocket entity, Frustum culler, double camX, double camY, double camZ) {
+    public boolean shouldRender(Tier1Rocket entity, Frustum culler, double camX, double camY, double camZ, float partialTicks) {
         if (!entity.shouldRender(camX, camY, camZ)) {
             return false;
         }
 
-        if (!affectedByCulling(entity)) {
+        if (!this.affectedByCulling(entity)) {
             return true;
         }
 
-        AABB boundingBox = getBoundingBoxForCulling(entity).inflate(0.6, 2, 0.6);
+        AABB boundingBox = getBoundingBoxForCulling(entity, partialTicks).inflate(0.6, 2, 0.6);
         if (boundingBox.hasNaN() || boundingBox.getSize() == 0.0) {
             boundingBox = new AABB(entity.getX() - 2.0, entity.getY() - 2.0, entity.getZ() - 2.0, entity.getX() + 2.0, entity.getY() + 2.0, entity.getZ() + 2.0);
         }

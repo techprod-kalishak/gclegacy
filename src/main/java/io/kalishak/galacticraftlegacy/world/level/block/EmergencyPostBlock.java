@@ -1,6 +1,5 @@
 package io.kalishak.galacticraftlegacy.world.level.block;
 
-import com.mojang.serialization.MapCodec;
 import io.kalishak.galacticraftlegacy.world.item.SpaceEmergencyKitItem;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.EmergencyPostBlockEntity;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityType;
@@ -26,17 +25,11 @@ import net.minecraft.world.phys.BlockHitResult;
 import org.jspecify.annotations.Nullable;
 
 public class EmergencyPostBlock extends BaseEntityBlock {
-    public static final MapCodec<EmergencyPostBlock> CODEC = simpleCodec(EmergencyPostBlock::new);
     public static final BooleanProperty WITH_KIT = BooleanProperty.create("with_kit");
 
     public EmergencyPostBlock(Properties properties) {
         super(properties);
         registerDefaultState(this.stateDefinition.any().setValue(WITH_KIT, true));
-    }
-
-    @Override
-    protected MapCodec<EmergencyPostBlock> codec() {
-        return CODEC;
     }
 
     @Override

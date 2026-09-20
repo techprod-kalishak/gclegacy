@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "galacticraftlegacy:venus_soft_rock_wall"
+        "recipes": "galacticraftlegacy:venus_soft_rock_wall"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

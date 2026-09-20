@@ -1,12 +1,12 @@
 {
   "required": true,
   "package": "io.kalishak.galacticraftlegacy.mixin",
-  "compatibilityLevel": "JAVA_21",
+  "compatibilityLevel": "JAVA_25",
   "mixins": [
     "BedBlockMixin",
+    "InventoryMixin",
     "ItemEntityMixin",
-    "LivingEntityMixin",
-    "InventoryMixin"
+    "LivingEntityMixin"
   ],
   "client": [
   ],

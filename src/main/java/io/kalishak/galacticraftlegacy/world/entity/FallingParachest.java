@@ -30,7 +30,9 @@ import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.DirectionalPlaceContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Fallable;
+import net.minecraft.world.level.block.FallingBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -63,7 +65,7 @@ public class FallingParachest extends FallingBlockEntity implements ParachuteFal
         this.inventory = NonNullList.withSize(3, ItemStack.EMPTY);
         this.itemResources = new ItemStacksResourceHandler(this.inventory);
 
-        setInvulnerable(true);
+        setPermanentlyInvulnerable(true);
     }
 
     private FallingParachest(Level level, double x, double y, double z, BlockState state, @Nullable BlockEntity blockEntity) {
@@ -89,7 +91,7 @@ public class FallingParachest extends FallingBlockEntity implements ParachuteFal
         setPos(x, y, z);
         setDeltaMovement(Vec3.ZERO);
         setStartPos(blockPosition());
-        setInvulnerable(true);
+        setPermanentlyInvulnerable(true);
         disableDrop();
     }
 

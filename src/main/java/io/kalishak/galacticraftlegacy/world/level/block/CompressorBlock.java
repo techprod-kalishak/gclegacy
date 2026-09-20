@@ -7,7 +7,6 @@
 
 package io.kalishak.galacticraftlegacy.world.level.block;
 
-import com.mojang.serialization.MapCodec;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityType;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.AlloyCompressor;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.CompressorBlockEntity;
@@ -36,18 +35,12 @@ import org.jspecify.annotations.Nullable;
 
 @SuppressWarnings("deprecation")
 public class CompressorBlock extends BaseEntityBlock implements RotatedByToolBlock {
-    public static final MapCodec<CompressorBlock> CODEC = simpleCodec(CompressorBlock::new);
     public static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
 
     public CompressorBlock(Properties properties) {
         super(properties);
         registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(LIT, false));
-    }
-
-    @Override
-    protected MapCodec<? extends CompressorBlock> codec() {
-        return CODEC;
     }
 
     @Override

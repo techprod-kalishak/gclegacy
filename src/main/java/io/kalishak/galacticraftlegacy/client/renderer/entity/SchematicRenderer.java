@@ -11,10 +11,10 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import io.kalishak.galacticraftlegacy.Galacticraft;
-import io.kalishak.galacticraftlegacy.client.renderer.entity.state.SchematicRenderState;
 import io.kalishak.galacticraftlegacy.client.data.GalacticraftSpritesProvider;
-import io.kalishak.galacticraftlegacy.world.entity.SchematicEntity;
+import io.kalishak.galacticraftlegacy.client.renderer.entity.state.SchematicRenderState;
 import io.kalishak.galacticraftlegacy.registry.SchematicVariant;
+import io.kalishak.galacticraftlegacy.world.entity.SchematicEntity;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -46,7 +46,7 @@ public class SchematicRenderer extends EntityRenderer<SchematicEntity, Schematic
         
         if (schematicVariant != null) {
             poseStack.pushPose();
-            poseStack.mulPose(Axis.YP.rotationDegrees(180.0F - renderState.direction.get2DDataValue() * 90));
+            poseStack.rotateDegrees(Axis.YP, 180.0F - renderState.direction.get2DDataValue() * 90);
             TextureAtlasSprite schematicSprite = this.schematicAtlas.getSprite(schematicVariant.assetId());
             TextureAtlasSprite backSprite = this.schematicAtlas.getSprite(BACK_SPRITE_LOCATION);
             render(poseStack, submitNodeCollector, RenderTypes.entitySolidZOffsetForward(backSprite.atlasLocation()), renderState.lightCoordsPerBlock, schematicSprite, backSprite);

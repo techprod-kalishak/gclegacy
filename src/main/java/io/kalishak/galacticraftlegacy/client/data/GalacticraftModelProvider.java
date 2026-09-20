@@ -7,21 +7,27 @@
 
 package io.kalishak.galacticraftlegacy.client.data;
 
+import io.kalishak.galacticraftlegacy.Galacticraft;
 import io.kalishak.galacticraftlegacy.aunified.data.model.ExtendedModelProvider;
-import io.kalishak.galacticraftlegacy.client.data.models.model.*;
+import io.kalishak.galacticraftlegacy.client.data.models.model.GalacticraftBlockModelGenerators;
+import io.kalishak.galacticraftlegacy.client.data.models.model.GalacticraftItemModelGenerators;
+import io.kalishak.galacticraftlegacy.client.data.models.model.GalacticraftTexturedModel;
 import io.kalishak.galacticraftlegacy.client.renderer.special.*;
 import io.kalishak.galacticraftlegacy.references.Constants;
-import io.kalishak.galacticraftlegacy.Galacticraft;
 import io.kalishak.galacticraftlegacy.world.item.FeatureTier;
 import io.kalishak.galacticraftlegacy.world.item.GalacticraftItems;
-import io.kalishak.galacticraftlegacy.world.item.GearEquipmentAssets;
+import io.kalishak.galacticraftlegacy.world.item.equipment.trim.GalacticraftTrimMaterials;
 import io.kalishak.galacticraftlegacy.world.level.block.GalacticraftBlocks;
-import net.minecraft.client.data.models.ItemModelGenerators;
-import net.minecraft.client.data.models.model.*;
+import net.minecraft.client.data.models.model.ModelLocationUtils;
+import net.minecraft.client.data.models.model.ModelTemplates;
+import net.minecraft.client.data.models.model.TextureMapping;
+import net.minecraft.client.data.models.model.TexturedModel;
 import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.data.BlockFamily;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.level.block.Blocks;
+
+import java.util.Map;
 
 public class GalacticraftModelProvider extends ExtendedModelProvider<GalacticraftBlockModelGenerators, GalacticraftItemModelGenerators> {
     public GalacticraftModelProvider(PackOutput output) {
@@ -89,7 +95,7 @@ public class GalacticraftModelProvider extends ExtendedModelProvider<Galacticraf
         blockModels.createMagneticCraftingTable(GalacticraftBlocks.MAGNETIC_CRAFTING_TABLE.get());
         blockModels.createRotationalMachine(GalacticraftTexturedModel.OXYGEN_COLLECTOR, GalacticraftBlocks.OXYGEN_COLLECTOR.get());
         blockModels.createTrivialCube(GalacticraftBlocks.ASTEROID_ALUMINUM_ORE.get());
-        blockModels.createTrivialBlock(GalacticraftBlocks.TIN_WALL_DECORATION_BLOCK.get(), TexturedModel.CUBE_TOP_BOTTOM);
+        blockModels.createTrivialBlock(GalacticraftBlocks.TIN_WALL_DECORATION_BLOCK.get(), TexturedModel.CUBE_BOTTOM_TOP);
         blockModels.createSlab(GalacticraftBlocks.TIN_WALL_DECORATION_SLAB.get(), GalacticraftBlocks.TIN_WALL_DECORATION_BLOCK.get(), TextureMapping::cubeBottomTop);
         blockModels.createStairs(GalacticraftBlocks.TIN_WALL_DECORATION_STAIRS.get(), GalacticraftBlocks.TIN_WALL_DECORATION_BLOCK.get(), TextureMapping::cubeBottomTop);
         blockModels.createTrivialCube(GalacticraftBlocks.SPACE_STATION.get());
@@ -178,10 +184,14 @@ public class GalacticraftModelProvider extends ExtendedModelProvider<Galacticraf
         itemModels.generateFlatItem(GalacticraftItems.STEEL_PICKAXE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
         itemModels.generateFlatItem(GalacticraftItems.STEEL_AXE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
         itemModels.generateFlatItem(GalacticraftItems.STEEL_HOE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
-        itemModels.generateTrimmableItem(GalacticraftItems.STEEL_HELMET.get(), GearEquipmentAssets.STEEL, ItemModelGenerators.TRIM_PREFIX_HELMET, false);
-        itemModels.generateTrimmableItem(GalacticraftItems.STEEL_CHESTPLATE.get(), GearEquipmentAssets.STEEL, ItemModelGenerators.TRIM_PREFIX_CHESTPLATE, false);
-        itemModels.generateTrimmableItem(GalacticraftItems.STEEL_LEGGINGS.get(), GearEquipmentAssets.STEEL, ItemModelGenerators.TRIM_PREFIX_LEGGINGS, false);
-        itemModels.generateTrimmableItem(GalacticraftItems.STEEL_BOOTS.get(), GearEquipmentAssets.STEEL, ItemModelGenerators.TRIM_PREFIX_BOOTS, false);
+        itemModels.generateCustomTrimmableArmorSet(
+                GalacticraftItems.STEEL_HELMET.get(),
+                GalacticraftItems.STEEL_CHESTPLATE.get(),
+                GalacticraftItems.STEEL_LEGGINGS.get(),
+                GalacticraftItems.STEEL_BOOTS.get(),
+                false,
+                Map.of(GalacticraftTrimMaterials.Palette.STEEL, GalacticraftTrimMaterials.Palette.STEEL_DARKER)
+        );
         itemModels.generateFlatItem(GalacticraftItems.STEEL_HORSE_ARMOR.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(GalacticraftItems.STEEL_NAUTILUS_ARMOR.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(GalacticraftItems.RAW_DESH.get(), ModelTemplates.FLAT_ITEM);
@@ -193,11 +203,15 @@ public class GalacticraftModelProvider extends ExtendedModelProvider<Galacticraf
         itemModels.generateFlatItem(GalacticraftItems.DESH_PICKAXE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
         itemModels.generateFlatItem(GalacticraftItems.DESH_AXE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
         itemModels.generateFlatItem(GalacticraftItems.DESH_HOE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
+        itemModels.generateCustomTrimmableArmorSet(
+                GalacticraftItems.DESH_HELMET.get(),
+                GalacticraftItems.DESH_CHESTPLATE.get(),
+                GalacticraftItems.DESH_LEGGINGS.get(),
+                GalacticraftItems.DESH_BOOTS.get(),
+                false,
+                Map.of(GalacticraftTrimMaterials.Palette.DESH, GalacticraftTrimMaterials.Palette.DESH_DARKER)
+        );
         itemModels.generateFlatItem(GalacticraftItems.DESH_STICK.get(), ModelTemplates.FLAT_ITEM);
-        itemModels.generateTrimmableItem(GalacticraftItems.DESH_HELMET.get(), GearEquipmentAssets.DESH, ItemModelGenerators.TRIM_PREFIX_HELMET, false);
-        itemModels.generateTrimmableItem(GalacticraftItems.DESH_CHESTPLATE.get(), GearEquipmentAssets.DESH, ItemModelGenerators.TRIM_PREFIX_CHESTPLATE, false);
-        itemModels.generateTrimmableItem(GalacticraftItems.DESH_LEGGINGS.get(), GearEquipmentAssets.DESH, ItemModelGenerators.TRIM_PREFIX_LEGGINGS, false);
-        itemModels.generateTrimmableItem(GalacticraftItems.DESH_BOOTS.get(), GearEquipmentAssets.DESH, ItemModelGenerators.TRIM_PREFIX_BOOTS, false);
         itemModels.generateFlatItem(GalacticraftItems.RAW_TITANIUM.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(GalacticraftItems.TITANIUM_INGOT.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(GalacticraftItems.TITANIUM_NUGGET.get(), ModelTemplates.FLAT_ITEM);
@@ -207,10 +221,14 @@ public class GalacticraftModelProvider extends ExtendedModelProvider<Galacticraf
         itemModels.generateFlatItem(GalacticraftItems.TITANIUM_PICKAXE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
         itemModels.generateFlatItem(GalacticraftItems.TITANIUM_AXE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
         itemModels.generateFlatItem(GalacticraftItems.TITANIUM_HOE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
-        itemModels.generateTrimmableItem(GalacticraftItems.TITANIUM_HELMET.get(), GearEquipmentAssets.TITANIUM, ItemModelGenerators.TRIM_PREFIX_HELMET, false);
-        itemModels.generateTrimmableItem(GalacticraftItems.TITANIUM_CHESTPLATE.get(), GearEquipmentAssets.TITANIUM, ItemModelGenerators.TRIM_PREFIX_CHESTPLATE, false);
-        itemModels.generateTrimmableItem(GalacticraftItems.TITANIUM_LEGGINGS.get(), GearEquipmentAssets.TITANIUM, ItemModelGenerators.TRIM_PREFIX_LEGGINGS, false);
-        itemModels.generateTrimmableItem(GalacticraftItems.TITANIUM_BOOTS.get(), GearEquipmentAssets.TITANIUM, ItemModelGenerators.TRIM_PREFIX_BOOTS, false);
+        itemModels.generateCustomTrimmableArmorSet(
+                GalacticraftItems.TITANIUM_HELMET.get(),
+                GalacticraftItems.TITANIUM_CHESTPLATE.get(),
+                GalacticraftItems.TITANIUM_LEGGINGS.get(),
+                GalacticraftItems.TITANIUM_BOOTS.get(),
+                false,
+                Map.of(GalacticraftTrimMaterials.Palette.TITANIUM, GalacticraftTrimMaterials.Palette.TITANIUM_DARKER)
+        );
         itemModels.generateFlatItem(GalacticraftItems.RAW_LEAD.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(GalacticraftItems.LEAD_INGOT.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(GalacticraftItems.CHEESE_CHUNK.get(), ModelTemplates.FLAT_ITEM);

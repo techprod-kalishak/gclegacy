@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "galacticraftlegacy:basic_wafer"
+        "recipes": "galacticraftlegacy:basic_wafer"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

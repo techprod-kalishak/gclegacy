@@ -7,7 +7,6 @@
 
 package io.kalishak.galacticraftlegacy.world.level.block;
 
-import com.mojang.serialization.MapCodec;
 import io.kalishak.galacticraftlegacy.client.gui.screens.inventory.workbench.NasaWorkbenchScreenPage;
 import io.kalishak.galacticraftlegacy.registry.SchematicVariants;
 import io.kalishak.galacticraftlegacy.world.inventory.workbench.NasaWorkbenchMenu;
@@ -25,15 +24,8 @@ import net.minecraft.world.phys.BlockHitResult;
 import org.jspecify.annotations.Nullable;
 
 public class NasaWorkbenchBlock extends BaseEntityBlock {
-    public static final MapCodec<NasaWorkbenchBlock> CODEC = simpleCodec(NasaWorkbenchBlock::new);
-
     public NasaWorkbenchBlock(Properties properties) {
         super(properties);
-    }
-
-    @Override
-    protected MapCodec<NasaWorkbenchBlock> codec() {
-        return CODEC;
     }
 
     @Override

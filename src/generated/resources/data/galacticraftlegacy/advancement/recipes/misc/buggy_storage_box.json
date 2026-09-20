@@ -11,7 +11,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "galacticraftlegacy:buggy_storage_box"
+        "recipes": "galacticraftlegacy:buggy_storage_box"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

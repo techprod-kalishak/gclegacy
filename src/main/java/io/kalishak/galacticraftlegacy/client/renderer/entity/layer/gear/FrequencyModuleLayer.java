@@ -11,8 +11,8 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import io.kalishak.galacticraftlegacy.client.model.gear.FrequencyModuleModel;
 import io.kalishak.galacticraftlegacy.client.renderer.entity.ObjModelHelper;
-import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.client.renderer.entity.state.GearRenderState;
+import io.kalishak.galacticraftlegacy.references.Constants;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.renderer.SubmitNodeCollector;
@@ -46,8 +46,8 @@ public class FrequencyModuleLayer<S extends LivingEntityRenderState, M extends E
         if (!stack.isEmpty() && baseQuads != null) {
             poseStack.pushPose();
 
-            poseStack.mulPose(Axis.YP.rotationDegrees(renderState.yRot));
-            poseStack.mulPose(Axis.XP.rotationDegrees(renderState.xRot + 180.0F));
+            poseStack.rotateDegrees(Axis.YP, renderState.yRot);
+            poseStack.rotateDegrees(Axis.XP, renderState.xRot + 180.0F);
             poseStack.scale(0.3F, 0.3F, 0.3F);
 
             if (hasHelmet) {
@@ -59,8 +59,8 @@ public class FrequencyModuleLayer<S extends LivingEntityRenderState, M extends E
             RenderType renderType = RenderTypes.entitySolid(TEXTURES);
             ObjModelHelper.renderQuads(baseQuads, poseStack, nodeCollector, renderType, quadInstance -> quadInstance.setLightCoords(renderState.lightCoords));
             poseStack.translate(0.0F, 1.3F, 0.0F);
-            poseStack.mulPose(Axis.XP.rotationDegrees(Mth.sin(renderState.ageInTicks * 0.05F) * 50.0F));
-            poseStack.mulPose(Axis.XP.rotationDegrees(Mth.cos(renderState.ageInTicks * 0.1F) * 50.0F));
+            poseStack.rotateDegrees(Axis.XP, Mth.sin(renderState.ageInTicks * 0.05F) * 50.0F);
+            poseStack.rotateDegrees(Axis.XP, Mth.cos(renderState.ageInTicks * 0.1F) * 50.0F);
             ObjModelHelper.renderQuads(radarQuads, poseStack, nodeCollector, renderType, quadInstance -> quadInstance.setLightCoords(renderState.lightCoords));
 
             poseStack.popPose();

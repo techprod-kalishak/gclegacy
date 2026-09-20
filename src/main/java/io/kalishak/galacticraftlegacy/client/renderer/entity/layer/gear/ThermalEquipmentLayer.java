@@ -8,15 +8,14 @@
 package io.kalishak.galacticraftlegacy.client.renderer.entity.layer.gear;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.EnumExtensions;
 import io.kalishak.galacticraftlegacy.client.renderer.entity.state.GearRenderState;
+import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.world.entity.GearEquipmentSlot;
 import io.kalishak.galacticraftlegacy.world.item.component.GalacticraftDataComponents;
 import io.kalishak.galacticraftlegacy.world.item.component.GearEquippable;
 import net.minecraft.client.model.Model;
 import net.minecraft.client.renderer.SubmitNodeCollector;
-import net.minecraft.client.renderer.entity.layers.EquipmentLayerRenderer;
 import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.texture.OverlayTexture;
@@ -28,7 +27,6 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.List;
-import java.util.function.Supplier;
 
 public interface ThermalEquipmentLayer<S extends LivingEntityRenderState, M extends Model<S>> {
     Identifier PADDING_LAYER = Constants.texture("entity/equipment/galacticraftlegacy/thermal_padding/colored_layer.png");
@@ -57,22 +55,20 @@ public interface ThermalEquipmentLayer<S extends LivingEntityRenderState, M exte
                                 RenderTypes.armorCutoutNoCull(layer.getTextureLocation(layerType)),
                                 packedLight,
                                 OverlayTexture.NO_OVERLAY,
-                                renderState.outlineColor,
-                                null
+                                renderState.outlineColor
                         );
                 nodeCollector
-                        .order(layerOrder++)
+                        .order(layerOrder)
                         .submitModel(
                                 model,
                                 renderState,
                                 poseStack,
-                                RenderTypes.armorTranslucent(paddingLayer),
+                                RenderTypes.entityTranslucent(paddingLayer),
                                 packedLight,
                                 OverlayTexture.NO_OVERLAY,
                                 color,
                                 null,
-                                renderState.outlineColor,
-                                null
+                                renderState.outlineColor
                         );
             }
         }

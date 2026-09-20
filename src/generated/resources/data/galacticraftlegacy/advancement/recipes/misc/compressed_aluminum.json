@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "galacticraftlegacy:compressed_aluminum"
+        "recipes": "galacticraftlegacy:compressed_aluminum"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "galacticraftlegacy:rocket_fins"
+        "recipes": "galacticraftlegacy:rocket_fins"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

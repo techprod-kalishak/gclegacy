@@ -7,8 +7,8 @@
 
 package io.kalishak.galacticraftlegacy.client.data;
 
-import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.Galacticraft;
+import io.kalishak.galacticraftlegacy.references.Constants;
 import net.minecraft.client.renderer.texture.atlas.sources.DirectoryLister;
 import net.minecraft.client.renderer.texture.atlas.sources.PalettedPermutations;
 import net.minecraft.client.renderer.texture.atlas.sources.SingleFile;
@@ -33,7 +33,7 @@ public class GalacticraftSpritesProvider extends SpriteSourceProvider {
 
     @Override
     protected void gather() {
-        atlas(AtlasIds.ARMOR_TRIMS).addSource(new PalettedPermutations(
+        atlas(AtlasIds.ITEMS).addSource(new PalettedPermutations(
                 List.of(),
                 Identifier.withDefaultNamespace("trims/color_palettes/trim_palette"),
                 Map.of(

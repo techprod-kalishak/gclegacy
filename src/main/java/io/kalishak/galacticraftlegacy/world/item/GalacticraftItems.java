@@ -7,8 +7,8 @@
 
 package io.kalishak.galacticraftlegacy.world.item;
 
-import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.Galacticraft;
+import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.references.GalacticraftComponents;
 import io.kalishak.galacticraftlegacy.references.GalacticraftItemIds;
 import io.kalishak.galacticraftlegacy.registry.SchematicVariants;
@@ -299,21 +299,21 @@ public final class GalacticraftItems {
             GalacticraftItemIds.STEEL_SPEAR,
             properties -> properties.spear(GalacticraftToolMaterials.STEEL, 0.85F, 1.05F, 0.8F, 2.0F, 6.5F, 4.5F, 4.4F, 9.5F, 3.9F)
     );
-    public static final DeferredItem<ShovelItem> STEEL_SHOVEL = REGISTRY.registerItem(
+    public static final DeferredItem<Item> STEEL_SHOVEL = REGISTRY.registerSimpleItem(
             GalacticraftItemIds.STEEL_SHOVEL,
-            properties -> new ShovelItem(GalacticraftToolMaterials.STEEL, 3.0F, -2.4F, properties)
+            properties -> properties.shovel(GalacticraftToolMaterials.STEEL, 3.0F, -2.4F)
     );
     public static final DeferredItem<Item> STEEL_PICKAXE = REGISTRY.registerSimpleItem(
             GalacticraftItemIds.STEEL_PICKAXE,
             properties -> properties.pickaxe(GalacticraftToolMaterials.STEEL, 1.0F, -2.8F)
     );
-    public static final DeferredItem<AxeItem> STEEL_AXE = REGISTRY.registerItem(
+    public static final DeferredItem<Item> STEEL_AXE = REGISTRY.registerSimpleItem(
             GalacticraftItemIds.STEEL_AXE,
-            properties -> new AxeItem(GalacticraftToolMaterials.STEEL, 3.0F, -3.0F, properties)
+            properties -> properties.axe(GalacticraftToolMaterials.STEEL, 3.0F, -3.0F)
     );
-    public static final DeferredItem<HoeItem> STEEL_HOE = REGISTRY.registerItem(
+    public static final DeferredItem<Item> STEEL_HOE = REGISTRY.registerSimpleItem(
             GalacticraftItemIds.STEEL_HOE,
-            properties -> new HoeItem(GalacticraftToolMaterials.STEEL, -4.0F, 0.0F, properties)
+            properties -> properties.hoe(GalacticraftToolMaterials.STEEL, -4.0F, 0.0F)
     );
 
     public static final DeferredItem<Item> RAW_DESH = REGISTRY.registerSimpleItem(GalacticraftItemIds.RAW_DESH);
@@ -347,21 +347,21 @@ public final class GalacticraftItems {
             GalacticraftItemIds.DESH_SPEAR,
             properties -> properties.spear(GalacticraftToolMaterials.DESH, 1.15F, 0.95F, 0.7F, 2.7F, 8.5F, 4.6F, 5.5F, 10.0F, 4.8F)
     );
-    public static final DeferredItem<ShovelItem> DESH_SHOVEL = REGISTRY.registerItem(
+    public static final DeferredItem<Item> DESH_SHOVEL = REGISTRY.registerSimpleItem(
             GalacticraftItemIds.DESH_SHOVEL,
-            properties -> new ShovelItem(GalacticraftToolMaterials.DESH, 3.0F, -2.4F, properties)
+            properties -> properties.shovel(GalacticraftToolMaterials.DESH, 3.0F, -2.4F)
     );
     public static final DeferredItem<Item> DESH_PICKAXE = REGISTRY.registerSimpleItem(
             GalacticraftItemIds.DESH_PICKAXE,
             properties -> properties.pickaxe(GalacticraftToolMaterials.DESH, 1.0F, -2.8F)
     );
-    public static final DeferredItem<AxeItem> DESH_AXE = REGISTRY.registerItem(
+    public static final DeferredItem<Item> DESH_AXE = REGISTRY.registerSimpleItem(
             GalacticraftItemIds.DESH_AXE,
-            properties -> new AxeItem(GalacticraftToolMaterials.DESH, 3.0F, -3.0F, properties)
+            properties -> properties.axe(GalacticraftToolMaterials.DESH, 3.0F, -3.0F)
     );
-    public static final DeferredItem<HoeItem> DESH_HOE = REGISTRY.registerItem(
+    public static final DeferredItem<Item> DESH_HOE = REGISTRY.registerSimpleItem(
             GalacticraftItemIds.DESH_HOE,
-            properties -> new HoeItem(GalacticraftToolMaterials.DESH, -4.0F, 0.0F, properties)
+            properties -> properties.hoe(GalacticraftToolMaterials.DESH, -4.0F, 0.0F)
     );
     public static final DeferredItem<Item> DESH_STICK = REGISTRY.registerSimpleItem(GalacticraftItemIds.DESH_STICK);
 
@@ -397,21 +397,21 @@ public final class GalacticraftItems {
             GalacticraftItemIds.TITANIUM_SPEAR,
             properties -> properties.spear(GalacticraftToolMaterials.TITANIUM, 0.85F, 1.25F, 0.4F, 3.5F, 8.7F, 8.5F, 5.2F, 14.0F, 5.0F)
     );
-    public static final DeferredItem<ShovelItem> TITANIUM_SHOVEL = REGISTRY.registerItem(
+    public static final DeferredItem<Item> TITANIUM_SHOVEL = REGISTRY.registerSimpleItem(
             GalacticraftItemIds.TITANIUM_SHOVEL,
-            properties -> new ShovelItem(GalacticraftToolMaterials.TITANIUM, 3.0F, -2.4F, properties)
+            properties -> properties.shovel(GalacticraftToolMaterials.TITANIUM, 3.0F, -2.4F)
     );
     public static final DeferredItem<Item> TITANIUM_PICKAXE = REGISTRY.registerSimpleItem(
             GalacticraftItemIds.TITANIUM_PICKAXE,
             properties -> properties.pickaxe(GalacticraftToolMaterials.TITANIUM, 1.0F, -2.8F)
     );
-    public static final DeferredItem<AxeItem> TITANIUM_AXE = REGISTRY.registerItem(
+    public static final DeferredItem<Item> TITANIUM_AXE = REGISTRY.registerSimpleItem(
             GalacticraftItemIds.TITANIUM_AXE,
-            properties -> new AxeItem(GalacticraftToolMaterials.TITANIUM, 3.0F, -3.0F, properties)
+            properties -> properties.axe(GalacticraftToolMaterials.TITANIUM, 3.0F, -3.0F)
     );
-    public static final DeferredItem<HoeItem> TITANIUM_HOE = REGISTRY.registerItem(
+    public static final DeferredItem<Item> TITANIUM_HOE = REGISTRY.registerSimpleItem(
             GalacticraftItemIds.TITANIUM_HOE,
-            properties -> new HoeItem(GalacticraftToolMaterials.TITANIUM, -4.0F, 0.0F, properties)
+            properties -> properties.hoe(GalacticraftToolMaterials.TITANIUM, -4.0F, 0.0F)
     );
     public static final DeferredItem<Item> RAW_LEAD = REGISTRY.registerSimpleItem(GalacticraftItemIds.RAW_LEAD);
     public static final DeferredItem<Item> LEAD_INGOT = REGISTRY.registerSimpleItem(

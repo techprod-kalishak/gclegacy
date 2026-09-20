@@ -39,10 +39,9 @@ public interface SpecialVehicleRenderer<S extends RocketRenderState, T extends M
                 model().renderType(textures),
                 lightCoords,
                 overlayCoords,
-                0,
+                -1,
                 null,
-                outlineColor,
-                null
+                outlineColor
         );
     }
 }

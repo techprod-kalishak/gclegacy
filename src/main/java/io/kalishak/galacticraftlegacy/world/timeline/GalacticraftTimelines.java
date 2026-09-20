@@ -15,6 +15,7 @@ import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.util.ARGB;
 import net.minecraft.util.EasingType;
 import net.minecraft.world.attribute.EnvironmentAttributes;
 import net.minecraft.world.attribute.modifier.BooleanModifier;
@@ -63,16 +64,17 @@ public class GalacticraftTimelines {
                         ).addModifierTrack(
                                 EnvironmentAttributes.SKY_COLOR,
                                 ColorModifier.MULTIPLY_RGB,
-                                (track) -> track.addKeyframe(133, -1)
-                                        .addKeyframe(11867, -1)
-                                        .addKeyframe(13670, -16777216)
-                                        .addKeyframe(22330, -16777216)
+                                (track) -> track.addKeyframe(133, ARGB.vector3fFromRGB24(-1))
+                                        .addKeyframe(11867, ARGB.vector3fFromRGB24(-1))
+                                        .addKeyframe(13670, ARGB.vector3fFromRGB24(-16777216))
+                                        .addKeyframe(22330, ARGB.vector3fFromRGB24(-16777216))
                         ).addModifierTrack(
                                 EnvironmentAttributes.SKY_LIGHT_COLOR,
                                 ColorModifier.MULTIPLY_RGB,
-                                (track) -> track.addKeyframe(730, -1)
-                                        .addKeyframe(11270, -1).addKeyframe(13140, NIGHT_SKY_LIGHT_COLOR)
-                                        .addKeyframe(22860, NIGHT_SKY_LIGHT_COLOR)
+                                (track) -> track.addKeyframe(730, ARGB.vector3fFromRGB24(-1))
+                                        .addKeyframe(11270, ARGB.vector3fFromRGB24(-1))
+                                        .addKeyframe(13140, ARGB.vector3fFromRGB24(NIGHT_SKY_LIGHT_COLOR))
+                                        .addKeyframe(22860, ARGB.vector3fFromRGB24(NIGHT_SKY_LIGHT_COLOR))
                         ).addModifierTrack(
                                 EnvironmentAttributes.SKY_LIGHT_FACTOR,
                                 FloatModifier.MULTIPLY,
@@ -89,38 +91,38 @@ public class GalacticraftTimelines {
                                         .addKeyframe(22330, 0.26666668F)
                         ).addTrack(
                                 EnvironmentAttributes.SUNRISE_SUNSET_COLOR,
-                                (track) -> track.addKeyframe(71, 1609540403)
-                                        .addKeyframe(310, 703969843)
-                                        .addKeyframe(565, 117167155)
-                                        .addKeyframe(730, 16770355)
-                                        .addKeyframe(11270, 16770355)
-                                        .addKeyframe(11397, 83679283)
-                                        .addKeyframe(11522, 268028723)
-                                        .addKeyframe(11690, 703969843)
-                                        .addKeyframe(11929, 1609540403)
-                                        .addKeyframe(12243, -1310226637)
-                                        .addKeyframe(12358, -857440717)
-                                        .addKeyframe(12512, -371166669)
-                                        .addKeyframe(12613, -153261261)
-                                        .addKeyframe(12732, -19242189)
-                                        .addKeyframe(12841, -19440589)
-                                        .addKeyframe(13035, -321760973)
-                                        .addKeyframe(13252, -1043577037)
-                                        .addKeyframe(13775, 918435635)
-                                        .addKeyframe(13888, 532362547)
-                                        .addKeyframe(14039, 163001139)
-                                        .addKeyframe(14192, 11744051)
-                                        .addKeyframe(21807, 11678515)
-                                        .addKeyframe(21961, 163001139)
-                                        .addKeyframe(22112, 532362547)
-                                        .addKeyframe(22225, 918435635)
-                                        .addKeyframe(22748, -1043577037)
-                                        .addKeyframe(22965, -321760973)
-                                        .addKeyframe(23159, -19440589)
-                                        .addKeyframe(23272, -19242189)
-                                        .addKeyframe(23488, -371166669)
-                                        .addKeyframe(23642, -857440717)
-                                        .addKeyframe(23757, -1310226637)
+                                (track) -> track.addKeyframe(71, ARGB.vector4fFromARGB32(1609540403))
+                                        .addKeyframe(310, ARGB.vector4fFromARGB32(703969843))
+                                        .addKeyframe(565, ARGB.vector4fFromARGB32(117167155))
+                                        .addKeyframe(730, ARGB.vector4fFromARGB32(16770355))
+                                        .addKeyframe(11270, ARGB.vector4fFromARGB32(16770355))
+                                        .addKeyframe(11397, ARGB.vector4fFromARGB32(83679283))
+                                        .addKeyframe(11522, ARGB.vector4fFromARGB32(268028723))
+                                        .addKeyframe(11690, ARGB.vector4fFromARGB32(703969843))
+                                        .addKeyframe(11929, ARGB.vector4fFromARGB32(1609540403))
+                                        .addKeyframe(12243, ARGB.vector4fFromARGB32(-1310226637))
+                                        .addKeyframe(12358, ARGB.vector4fFromARGB32(-857440717))
+                                        .addKeyframe(12512, ARGB.vector4fFromARGB32(-371166669))
+                                        .addKeyframe(12613, ARGB.vector4fFromARGB32(-153261261))
+                                        .addKeyframe(12732, ARGB.vector4fFromARGB32(-19242189))
+                                        .addKeyframe(12841, ARGB.vector4fFromARGB32(-19440589))
+                                        .addKeyframe(13035, ARGB.vector4fFromARGB32(-321760973))
+                                        .addKeyframe(13252, ARGB.vector4fFromARGB32(-1043577037))
+                                        .addKeyframe(13775, ARGB.vector4fFromARGB32(918435635))
+                                        .addKeyframe(13888, ARGB.vector4fFromARGB32(532362547))
+                                        .addKeyframe(14039, ARGB.vector4fFromARGB32(163001139))
+                                        .addKeyframe(14192, ARGB.vector4fFromARGB32(11744051))
+                                        .addKeyframe(21807, ARGB.vector4fFromARGB32(11678515))
+                                        .addKeyframe(21961, ARGB.vector4fFromARGB32(163001139))
+                                        .addKeyframe(22112, ARGB.vector4fFromARGB32(532362547))
+                                        .addKeyframe(22225, ARGB.vector4fFromARGB32(918435635))
+                                        .addKeyframe(22748, ARGB.vector4fFromARGB32(-1043577037))
+                                        .addKeyframe(22965, ARGB.vector4fFromARGB32(-321760973))
+                                        .addKeyframe(23159, ARGB.vector4fFromARGB32(-19440589))
+                                        .addKeyframe(23272, ARGB.vector4fFromARGB32(-19242189))
+                                        .addKeyframe(23488, ARGB.vector4fFromARGB32(-371166669))
+                                        .addKeyframe(23642, ARGB.vector4fFromARGB32(-857440717))
+                                        .addKeyframe(23757, ARGB.vector4fFromARGB32(-1310226637))
                         ).addModifierTrack(
                                 EnvironmentAttributes.STAR_BRIGHTNESS,
                                 FloatModifier.MAXIMUM,
@@ -136,13 +138,6 @@ public class GalacticraftTimelines {
                                         .addKeyframe(23032, 0.364F)
                                         .addKeyframe(23356, 0.225F)
                                         .addKeyframe(23758, 0.101F)
-                        ).addModifierTrack(
-                                EnvironmentAttributes.CLOUD_COLOR,
-                                ColorModifier.MULTIPLY_ARGB,
-                                (track) -> track.addKeyframe(133, -1)
-                                        .addKeyframe(11867, -1)
-                                        .addKeyframe(13670, NIGHT_CLOUD_COLOR_MULTIPLIER)
-                                        .addKeyframe(22330, NIGHT_CLOUD_COLOR_MULTIPLIER)
                         ).addModifierTrack(
                                 EnvironmentAttributes.MONSTERS_BURN,
                                 BooleanModifier.OR,
@@ -177,23 +172,24 @@ public class GalacticraftTimelines {
                         ).addModifierTrack(
                                 EnvironmentAttributes.FOG_COLOR,
                                 ColorModifier.MULTIPLY_RGB,
-                                (track) -> track.addKeyframe(133, -1)
-                                        .addKeyframe(11867, -1)
-                                        .addKeyframe(13670, NIGHT_FOG_COLOR_MULTIPLIER_START)
-                                        .addKeyframe(22330, NIGHT_FOG_COLOR_MULTIPLIER_END)
+                                (track) -> track.addKeyframe(133, ARGB.vector3fFromRGB24(-1))
+                                        .addKeyframe(11867, ARGB.vector3fFromRGB24(-1))
+                                        .addKeyframe(13670, ARGB.vector3fFromRGB24(NIGHT_SKY_COLOR_MULTIPLIER))
+                                        .addKeyframe(22330, ARGB.vector3fFromRGB24(NIGHT_FOG_COLOR_MULTIPLIER))
                         ).addModifierTrack(
                                 EnvironmentAttributes.SKY_COLOR,
                                 ColorModifier.MULTIPLY_RGB,
-                                (track) -> track.addKeyframe(133, -1)
-                                        .addKeyframe(11867, -1)
-                                        .addKeyframe(13670, -16777216)
-                                        .addKeyframe(22330, -16777216)
+                                (track) -> track.addKeyframe(133, ARGB.vector3fFromRGB24(-1))
+                                        .addKeyframe(11867, ARGB.vector3fFromRGB24(-1))
+                                        .addKeyframe(13670, ARGB.vector3fFromRGB24(-16777216))
+                                        .addKeyframe(22330, ARGB.vector3fFromRGB24(-16777216))
                         ).addModifierTrack(
                                 EnvironmentAttributes.SKY_LIGHT_COLOR,
                                 ColorModifier.MULTIPLY_RGB,
-                                (track) -> track.addKeyframe(730, -1)
-                                        .addKeyframe(11270, -1).addKeyframe(13140, NIGHT_SKY_LIGHT_COLOR)
-                                        .addKeyframe(22860, NIGHT_SKY_LIGHT_COLOR)
+                                (track) -> track.addKeyframe(730, ARGB.vector3fFromRGB24(-1))
+                                        .addKeyframe(11270, ARGB.vector3fFromRGB24(-1))
+                                        .addKeyframe(13140, ARGB.vector3fFromRGB24(NIGHT_SKY_LIGHT_COLOR))
+                                        .addKeyframe(22860, ARGB.vector3fFromRGB24(NIGHT_SKY_LIGHT_COLOR))
                         ).addModifierTrack(
                                 EnvironmentAttributes.SKY_LIGHT_FACTOR,
                                 FloatModifier.MULTIPLY,
@@ -210,38 +206,38 @@ public class GalacticraftTimelines {
                                         .addKeyframe(22330, 0.26666668F)
                         ).addTrack(
                                 EnvironmentAttributes.SUNRISE_SUNSET_COLOR,
-                                (track) -> track.addKeyframe(71, 1609540403)
-                                        .addKeyframe(310, 703969843)
-                                        .addKeyframe(565, 117167155)
-                                        .addKeyframe(730, 16770355)
-                                        .addKeyframe(11270, 16770355)
-                                        .addKeyframe(11397, 83679283)
-                                        .addKeyframe(11522, 268028723)
-                                        .addKeyframe(11690, 703969843)
-                                        .addKeyframe(11929, 1609540403)
-                                        .addKeyframe(12243, -1310226637)
-                                        .addKeyframe(12358, -857440717)
-                                        .addKeyframe(12512, -371166669)
-                                        .addKeyframe(12613, -153261261)
-                                        .addKeyframe(12732, -19242189)
-                                        .addKeyframe(12841, -19440589)
-                                        .addKeyframe(13035, -321760973)
-                                        .addKeyframe(13252, -1043577037)
-                                        .addKeyframe(13775, 918435635)
-                                        .addKeyframe(13888, 532362547)
-                                        .addKeyframe(14039, 163001139)
-                                        .addKeyframe(14192, 11744051)
-                                        .addKeyframe(21807, 11678515)
-                                        .addKeyframe(21961, 163001139)
-                                        .addKeyframe(22112, 532362547)
-                                        .addKeyframe(22225, 918435635)
-                                        .addKeyframe(22748, -1043577037)
-                                        .addKeyframe(22965, -321760973)
-                                        .addKeyframe(23159, -19440589)
-                                        .addKeyframe(23272, -19242189)
-                                        .addKeyframe(23488, -371166669)
-                                        .addKeyframe(23642, -857440717)
-                                        .addKeyframe(23757, -1310226637)
+                                (track) -> track.addKeyframe(71, ARGB.vector4fFromARGB32(1609540403))
+                                        .addKeyframe(310, ARGB.vector4fFromARGB32(703969843))
+                                        .addKeyframe(565, ARGB.vector4fFromARGB32(117167155))
+                                        .addKeyframe(730, ARGB.vector4fFromARGB32(16770355))
+                                        .addKeyframe(11270, ARGB.vector4fFromARGB32(16770355))
+                                        .addKeyframe(11397, ARGB.vector4fFromARGB32(83679283))
+                                        .addKeyframe(11522, ARGB.vector4fFromARGB32(268028723))
+                                        .addKeyframe(11690, ARGB.vector4fFromARGB32(703969843))
+                                        .addKeyframe(11929, ARGB.vector4fFromARGB32(1609540403))
+                                        .addKeyframe(12243, ARGB.vector4fFromARGB32(-1310226637))
+                                        .addKeyframe(12358, ARGB.vector4fFromARGB32(-857440717))
+                                        .addKeyframe(12512, ARGB.vector4fFromARGB32(-371166669))
+                                        .addKeyframe(12613, ARGB.vector4fFromARGB32(-153261261))
+                                        .addKeyframe(12732, ARGB.vector4fFromARGB32(-19242189))
+                                        .addKeyframe(12841, ARGB.vector4fFromARGB32(-19440589))
+                                        .addKeyframe(13035, ARGB.vector4fFromARGB32(-321760973))
+                                        .addKeyframe(13252, ARGB.vector4fFromARGB32(-1043577037))
+                                        .addKeyframe(13775, ARGB.vector4fFromARGB32(918435635))
+                                        .addKeyframe(13888, ARGB.vector4fFromARGB32(532362547))
+                                        .addKeyframe(14039, ARGB.vector4fFromARGB32(163001139))
+                                        .addKeyframe(14192, ARGB.vector4fFromARGB32(11744051))
+                                        .addKeyframe(21807, ARGB.vector4fFromARGB32(11678515))
+                                        .addKeyframe(21961, ARGB.vector4fFromARGB32(163001139))
+                                        .addKeyframe(22112, ARGB.vector4fFromARGB32(532362547))
+                                        .addKeyframe(22225, ARGB.vector4fFromARGB32(918435635))
+                                        .addKeyframe(22748, ARGB.vector4fFromARGB32(-1043577037))
+                                        .addKeyframe(22965, ARGB.vector4fFromARGB32(-321760973))
+                                        .addKeyframe(23159, ARGB.vector4fFromARGB32(-19440589))
+                                        .addKeyframe(23272, ARGB.vector4fFromARGB32(-19242189))
+                                        .addKeyframe(23488, ARGB.vector4fFromARGB32(-371166669))
+                                        .addKeyframe(23642, ARGB.vector4fFromARGB32(-857440717))
+                                        .addKeyframe(23757, ARGB.vector4fFromARGB32(-1310226637))
                         ).addModifierTrack(
                                 EnvironmentAttributes.STAR_BRIGHTNESS,
                                 FloatModifier.MAXIMUM,
@@ -260,10 +256,10 @@ public class GalacticraftTimelines {
                         ).addModifierTrack(
                                 EnvironmentAttributes.CLOUD_COLOR,
                                 ColorModifier.MULTIPLY_ARGB,
-                                (track) -> track.addKeyframe(133, -1)
-                                        .addKeyframe(11867, -1)
-                                        .addKeyframe(13670, NIGHT_CLOUD_COLOR_MULTIPLIER)
-                                        .addKeyframe(22330, NIGHT_CLOUD_COLOR_MULTIPLIER)
+                                (track) -> track.addKeyframe(133, ARGB.vector4fFromARGB32(-1))
+                                        .addKeyframe(11867, ARGB.vector4fFromARGB32(-1))
+                                        .addKeyframe(13670, ARGB.vector4fFromARGB32(NIGHT_CLOUD_COLOR_MULTIPLIER))
+                                        .addKeyframe(22330, ARGB.vector4fFromARGB32(NIGHT_CLOUD_COLOR_MULTIPLIER))
                         ).addModifierTrack(
                                 EnvironmentAttributes.MONSTERS_BURN,
                                 BooleanModifier.OR,

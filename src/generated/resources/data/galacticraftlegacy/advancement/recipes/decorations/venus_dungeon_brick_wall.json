@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "galacticraftlegacy:venus_dungeon_brick_wall"
+        "recipes": "galacticraftlegacy:venus_dungeon_brick_wall"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

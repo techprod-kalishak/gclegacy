@@ -12,18 +12,12 @@ import io.kalishak.galacticraftlegacy.world.inventory.GalacticraftMenuType;
 import io.kalishak.galacticraftlegacy.world.inventory.slot.FuelHandlerSlot;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.CoalGeneratorBlockEntity;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityType;
-import net.minecraft.core.Holder;
-import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.capabilities.Capabilities;
-import net.neoforged.neoforge.registries.datamaps.builtin.FurnaceFuel;
-import net.neoforged.neoforge.registries.datamaps.builtin.NeoForgeDataMaps;
-import net.neoforged.neoforge.transfer.item.ItemResource;
 
 public class CoalGeneratorMenu extends AbstractContainerMenu {
     private static final int INV_SLOT_START = 1;
@@ -51,10 +45,8 @@ public class CoalGeneratorMenu extends AbstractContainerMenu {
         this(containerId, playerInventory, ResourcefulHelper.readBlockEntity(GalacticraftBlockEntityType.COAL_GENERATOR.get(), playerInventory.player.level(), data), DataSlot.standalone());
     }
 
-    public static boolean isFuel(Holder<Item> itemHolder) {
-        FurnaceFuel fuelValues = BuiltInRegistries.ITEM.getData(NeoForgeDataMaps.FURNACE_FUELS, itemHolder.unwrapKey().orElseThrow());
-
-        return fuelValues != null && fuelValues.burnTime() > 0;
+    public static boolean isFuel(ItemStack itemStack) {
+        return itemStack.has(DataComponents.COOKING_FUEL);
     }
 
     @Override
@@ -67,7 +59,7 @@ public class CoalGeneratorMenu extends AbstractContainerMenu {
             swappedStack = newStack.copy();
 
             if (index != 0) {
-                if (isFuel(newStack.typeHolder())) {
+                if (isFuel(newStack)) {
                     if (!this.moveItemStackTo(newStack, 0, 1, false)) {
                         return ItemStack.EMPTY;
                     }

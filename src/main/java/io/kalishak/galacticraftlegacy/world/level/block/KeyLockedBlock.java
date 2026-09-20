@@ -7,7 +7,6 @@
 
 package io.kalishak.galacticraftlegacy.world.level.block;
 
-import com.mojang.serialization.MapCodec;
 import io.kalishak.galacticraftlegacy.world.item.KeyLock;
 import io.kalishak.galacticraftlegacy.world.item.component.GalacticraftDataComponents;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.KeyLockedBlockEntity;
@@ -38,9 +37,6 @@ public abstract class KeyLockedBlock extends BaseEntityBlock {
         super(properties);
         registerDefaultState(this.stateDefinition.any().setValue(UNLOCKED, false));
     }
-
-    @Override
-    protected abstract MapCodec<? extends KeyLockedBlock> codec();
 
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {

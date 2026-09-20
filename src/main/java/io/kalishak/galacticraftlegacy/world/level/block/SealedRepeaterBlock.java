@@ -7,7 +7,6 @@
 
 package io.kalishak.galacticraftlegacy.world.level.block;
 
-import com.mojang.serialization.MapCodec;
 import io.kalishak.galacticraftlegacy.data.GalacticraftTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -28,7 +27,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import org.jspecify.annotations.NonNull;
 
 public class SealedRepeaterBlock extends FullDiodeBlock {
-    public static final MapCodec<SealedRepeaterBlock> CODEC = simpleCodec(SealedRepeaterBlock::new);
     public static final BooleanProperty LOCKED = BlockStateProperties.LOCKED;
     public static final IntegerProperty DELAY = BlockStateProperties.DELAY;
 
@@ -40,11 +38,6 @@ public class SealedRepeaterBlock extends FullDiodeBlock {
     @Override
     protected int getDelay(BlockState state) {
         return state.getValue(DELAY) * 2;
-    }
-
-    @Override
-    protected MapCodec<SealedRepeaterBlock> codec() {
-        return CODEC;
     }
 
     @Override

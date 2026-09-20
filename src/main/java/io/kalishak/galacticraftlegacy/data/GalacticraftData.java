@@ -9,15 +9,15 @@ package io.kalishak.galacticraftlegacy.data;
 
 import io.kalishak.galacticraftlegacy.Galacticraft;
 import io.kalishak.galacticraftlegacy.client.data.*;
-import io.kalishak.galacticraftlegacy.client.data.models.GalacticraftEquipmentAssetProvider;
-import io.kalishak.galacticraftlegacy.client.data.GalacticraftModelProvider;
 import io.kalishak.galacticraftlegacy.client.data.models.GalacticraftCustomModelProvider;
+import io.kalishak.galacticraftlegacy.client.data.models.GalacticraftEquipmentAssetProvider;
 import io.kalishak.galacticraftlegacy.data.advancement.GalacticraftAdvancementProvider;
 import io.kalishak.galacticraftlegacy.data.datamap.GalacticraftDataMaps;
 import io.kalishak.galacticraftlegacy.data.loot.GalacticraftLootTableProvider;
 import io.kalishak.galacticraftlegacy.data.recipes.GalacticraftRecipeProvider;
 import io.kalishak.galacticraftlegacy.data.tag.*;
 import io.kalishak.galacticraftlegacy.data.worldgen.GalacticraftCarvers;
+import io.kalishak.galacticraftlegacy.data.worldgen.GalacticraftMaterialRules;
 import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.references.GalacticraftComponents;
 import io.kalishak.galacticraftlegacy.registry.CelestialBodyInfoEntries;
@@ -38,7 +38,6 @@ import io.kalishak.galacticraftlegacy.world.level.levelgen.GalacticraftNoiseGene
 import io.kalishak.galacticraftlegacy.world.level.levelgen.GalacticraftNoiseRouterData;
 import io.kalishak.galacticraftlegacy.world.level.levelgen.GalacticraftNoises;
 import io.kalishak.galacticraftlegacy.world.level.levelgen.features.GalacticraftFeatures;
-import io.kalishak.galacticraftlegacy.world.level.levelgen.features.ores.DenseOreVeins;
 import io.kalishak.galacticraftlegacy.world.level.levelgen.placement.GalacticraftPlacements;
 import io.kalishak.galacticraftlegacy.world.timeline.GalacticraftTimelines;
 import io.kalishak.galacticraftlegacy.world.timeline.GalacticraftWorldClocks;
@@ -47,6 +46,7 @@ import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.metadata.PackMetadataGenerator;
+import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.metadata.pack.PackMetadataSection;
 import net.minecraft.server.packs.repository.Pack;
@@ -60,14 +60,15 @@ import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import java.util.Set;
 
 public class GalacticraftData {
-    private static final RegistrySetBuilder SET_BUILDER = new RegistrySetBuilder()
+    private static final RegistrySetBuilder WORLD = new RegistrySetBuilder()
             .add(Registries.BIOME, GalacticraftBiomes::bootstrap)
-            .add(Registries.CONFIGURED_CARVER, GalacticraftCarvers::bootstrap)
-            .add(Registries.CONFIGURED_FEATURE, GalacticraftFeatures::bootstrap)
+            .add(Registries.CARVER, GalacticraftCarvers::bootstrap)
+            .add(Registries.FEATURE, GalacticraftFeatures::bootstrap)
             .add(Registries.DAMAGE_TYPE, GalacticraftDamageTypes::bootstrap)
             .add(Registries.DENSITY_FUNCTION, GalacticraftNoiseRouterData::bootstrap)
             .add(Registries.DIMENSION_TYPE, GalacticraftDimensionTypes::bootstrap)
             .add(Registries.LEVEL_STEM, GalacticraftLevelStem::bootstrap)
+            .add(Registries.MATERIAL_RULE, GalacticraftMaterialRules::bootstrap)
             .add(Registries.NOISE, GalacticraftNoises::bootstrap)
             .add(Registries.NOISE_SETTINGS, GalacticraftNoiseGeneratorSettings::bootstrap)
             .add(Registries.PLACED_FEATURE, GalacticraftPlacements::bootstrap)
@@ -81,9 +82,12 @@ public class GalacticraftData {
             .add(GalacticraftRegistries.Keys.VEHICLE_CRAFTING_SLOT_TYPE, VehicleCraftingSlotTypes::bootstrap)
             .add(GalacticraftRegistries.Keys.VEHICLE_CRAFTING_RECIPE_DATA, VehicleCraftingDataRecipes::bootstrap)
             .add(GalacticraftRegistries.Keys.VEHICLE_CRAFTING_PAGE, VehicleCraftingPages::bootstrap)
-            .add(GalacticraftRegistries.Keys.VEIN_TYPE, DenseOreVeins::bootstrap)
             .add(GalacticraftRegistries.Keys.SCHEMATIC, SchematicVariants::bootstrap)
             .add(GalacticraftRegistries.Keys.SPACE_STATION_RECIPE, SpaceStationRecipe::bootstrap);
+    public static final RegistrySetBuilder RELOADABLE = new RegistrySetBuilder()
+            .add(Registries.ADVANCEMENT, GalacticraftAdvancementProvider.create())
+            .add(Registries.LOOT_TABLE, GalacticraftLootTableProvider.create())
+            .add(RecipeProvider.asBootstrap(GalacticraftRecipeProvider::new));
 
     public static void gatherData(GatherDataEvent.Client event) {
         event.createProvider(PackMetadataGenerator::new)
@@ -97,11 +101,9 @@ public class GalacticraftData {
         event.createProvider(GalacticraftEquipmentAssetProvider::new);
         event.createProvider(GalacticraftSoundProvider::new);
         event.createProvider(GalacticraftParticleProvider::new);
-        event.createDatapackRegistryObjects(SET_BUILDER, Set.of(Galacticraft.MODID));
+        event.createWorldRegistryObjects(WORLD, Set.of(Galacticraft.MODID));
+        event.createReloadableRegistryObjects(RELOADABLE, Set.of(Galacticraft.MODID));
         event.createProvider(GalacticraftDataMaps.Provider::new);
-        event.createProvider(GalacticraftLootTableProvider::create);
-        event.createProvider(GalacticraftAdvancementProvider::create);
-        event.createProvider(GalacticraftRecipeProvider.Runner::new);
         event.createProvider(GalacticraftBiomeTagsProvider::new);
         event.createProvider(GalacticraftChecklistTagsProvider::new);
         event.createProvider(GalacticraftDamageTypeTags::new);

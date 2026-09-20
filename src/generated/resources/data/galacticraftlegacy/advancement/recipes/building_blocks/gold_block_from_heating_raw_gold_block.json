@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "galacticraftlegacy:gold_block_from_heating_raw_gold_block"
+        "recipes": "galacticraftlegacy:gold_block_from_heating_raw_gold_block"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

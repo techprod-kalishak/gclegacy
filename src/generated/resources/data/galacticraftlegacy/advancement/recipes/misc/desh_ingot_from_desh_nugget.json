@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "galacticraftlegacy:desh_ingot_from_desh_nugget"
+        "recipes": "galacticraftlegacy:desh_ingot_from_desh_nugget"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

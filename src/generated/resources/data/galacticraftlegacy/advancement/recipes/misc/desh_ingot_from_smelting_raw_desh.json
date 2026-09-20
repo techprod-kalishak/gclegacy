@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "galacticraftlegacy:desh_ingot_from_smelting_raw_desh"
+        "recipes": "galacticraftlegacy:desh_ingot_from_smelting_raw_desh"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

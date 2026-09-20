@@ -23,7 +23,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "galacticraftlegacy:thermal_controller"
+        "recipes": "galacticraftlegacy:thermal_controller"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

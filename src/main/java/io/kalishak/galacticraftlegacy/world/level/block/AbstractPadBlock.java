@@ -7,7 +7,6 @@
 
 package io.kalishak.galacticraftlegacy.world.level.block;
 
-import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockGetter;
@@ -33,9 +32,6 @@ public abstract class AbstractPadBlock extends BaseEntityBlock implements Simple
         super(properties);
         registerDefaultState(this.stateDefinition.any().setValue(PAD_STATE, PadState.NONE).setValue(WATERLOGGED, false));
     }
-
-    @Override
-    protected abstract MapCodec<? extends AbstractPadBlock> codec();
 
     @Override
     protected boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {

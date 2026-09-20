@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "galacticraftlegacy:dehydrated_beetroot"
+        "recipes": "galacticraftlegacy:dehydrated_beetroot"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

@@ -15,7 +15,7 @@ import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
-import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
+import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.placement.*;
 
 import java.util.List;
@@ -34,18 +34,18 @@ public class OverworldPlacements {
     public static final ResourceKey<PlacedFeature> ORE_CRUDE_OIL = GalacticraftPlacements.key("ore_crude_oil");
     public static final ResourceKey<PlacedFeature> ORE_CRUDE_OIL_MAJOR = GalacticraftPlacements.key("ore_crude_oil_major");
 
-    static void bootstrap(BootstrapContext<PlacedFeature> cxt, HolderGetter<ConfiguredFeature<?, ?>> featureGetter) {
-        Holder<ConfiguredFeature<?, ?>> aluminumOre = featureGetter.getOrThrow(OverworldFeatures.ORE_ALUMINUM);
-        Holder<ConfiguredFeature<?, ?>> aluminumOreSmall = featureGetter.getOrThrow(OverworldFeatures.ORE_ALUMINUM_SMALL);
-        Holder<ConfiguredFeature<?, ?>> tinOre = featureGetter.getOrThrow(OverworldFeatures.ORE_TIN);
-        Holder<ConfiguredFeature<?, ?>> tinOreSmall = featureGetter.getOrThrow(OverworldFeatures.ORE_TIN_SMALL);
-        Holder<ConfiguredFeature<?, ?>> siliconOre = featureGetter.getOrThrow(OverworldFeatures.ORE_SILICON);
-        Holder<ConfiguredFeature<?, ?>> siliconOreBuried = featureGetter.getOrThrow(OverworldFeatures.ORE_SILICON_BURIED);
+    static void bootstrap(BootstrapContext<PlacedFeature> cxt, HolderGetter<Feature> featureGetter) {
+        Holder<Feature> aluminumOre = featureGetter.getOrThrow(OverworldFeatures.ORE_ALUMINUM);
+        Holder<Feature> aluminumOreSmall = featureGetter.getOrThrow(OverworldFeatures.ORE_ALUMINUM_SMALL);
+        Holder<Feature> tinOre = featureGetter.getOrThrow(OverworldFeatures.ORE_TIN);
+        Holder<Feature> tinOreSmall = featureGetter.getOrThrow(OverworldFeatures.ORE_TIN_SMALL);
+        Holder<Feature> siliconOre = featureGetter.getOrThrow(OverworldFeatures.ORE_SILICON);
+        Holder<Feature> siliconOreBuried = featureGetter.getOrThrow(OverworldFeatures.ORE_SILICON_BURIED);
 
-        Holder<ConfiguredFeature<?, ?>> crudeOilFountain = featureGetter.getOrThrow(OverworldFeatures.CRUDE_OIL_FOUNTAIN);
-        Holder<ConfiguredFeature<?, ?>> crudeOilFountainSmall = featureGetter.getOrThrow(OverworldFeatures.CRUDE_OIL_FOUNTAIN_SMALL);
-        Holder<ConfiguredFeature<?, ?>> crudeOil = featureGetter.getOrThrow(OverworldFeatures.ORE_CRUDE_OIL);
-        Holder<ConfiguredFeature<?, ?>> crudeOilMajor = featureGetter.getOrThrow(OverworldFeatures.ORE_CRUDE_OIL_MAJOR);
+        Holder<Feature> crudeOilFountain = featureGetter.getOrThrow(OverworldFeatures.CRUDE_OIL_FOUNTAIN);
+        Holder<Feature> crudeOilFountainSmall = featureGetter.getOrThrow(OverworldFeatures.CRUDE_OIL_FOUNTAIN_SMALL);
+        Holder<Feature> crudeOil = featureGetter.getOrThrow(OverworldFeatures.ORE_CRUDE_OIL);
+        Holder<Feature> crudeOilMajor = featureGetter.getOrThrow(OverworldFeatures.ORE_CRUDE_OIL_MAJOR);
 
         PlacementUtils.register(
                 cxt,

@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:ore_vein",
+  "density": "galacticraftlegacy:overworld/ore_vein/aluminum_density",
+  "filler_block": "minecraft:diorite",
+  "filler_gap": "minecraft:overworld/ore_vein/gap",
+  "ore_block": "galacticraftlegacy:aluminum_ore",
+  "raw_ore_block": "galacticraftlegacy:raw_aluminum_block",
+  "raw_ore_chance": 0.02,
+  "richness": "minecraft:overworld/ore_vein/richness"
+}

@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "galacticraftlegacy:frequency_module"
+        "recipes": "galacticraftlegacy:frequency_module"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

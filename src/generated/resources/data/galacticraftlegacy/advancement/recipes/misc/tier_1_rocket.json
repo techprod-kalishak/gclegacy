@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "galacticraftlegacy:tier_1_rocket"
+        "recipes": "galacticraftlegacy:tier_1_rocket"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

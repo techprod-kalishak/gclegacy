@@ -1,122 +1,49 @@
 {
   "values": {
     "minecraft:copper_lantern": {
-      "unlit_state": {
-        "Name": "galacticraftlegacy:unlit_copper_lantern",
-        "Properties": {
-          "hanging": "false",
-          "waterlogged": "false"
-        }
-      }
+      "unlit_state": "galacticraftlegacy:unlit_copper_lantern"
     },
     "minecraft:copper_torch": {
-      "unlit_state": {
-        "Name": "galacticraftlegacy:unlit_copper_torch"
-      }
+      "unlit_state": "galacticraftlegacy:unlit_copper_torch"
     },
     "minecraft:copper_wall_torch": {
       "has_facing_property": true,
-      "unlit_state": {
-        "Name": "galacticraftlegacy:unlit_copper_wall_torch",
-        "Properties": {
-          "facing": "north"
-        }
-      }
+      "unlit_state": "galacticraftlegacy:unlit_copper_wall_torch"
     },
     "minecraft:exposed_copper_lantern": {
-      "unlit_state": {
-        "Name": "galacticraftlegacy:exposed_unlit_copper_lantern",
-        "Properties": {
-          "hanging": "false",
-          "waterlogged": "false"
-        }
-      }
+      "unlit_state": "galacticraftlegacy:exposed_unlit_copper_lantern"
     },
     "minecraft:jack_o_lantern": {
       "has_facing_property": true,
-      "unlit_state": {
-        "Name": "minecraft:carved_pumpkin",
-        "Properties": {
-          "facing": "north"
-        }
-      }
+      "unlit_state": "minecraft:carved_pumpkin"
     },
     "minecraft:lantern": {
-      "unlit_state": {
-        "Name": "galacticraftlegacy:unlit_lantern",
-        "Properties": {
-          "hanging": "false",
-          "waterlogged": "false"
-        }
-      }
+      "unlit_state": "galacticraftlegacy:unlit_lantern"
     },
     "minecraft:oxidized_copper_lantern": {
-      "unlit_state": {
-        "Name": "galacticraftlegacy:oxidized_unlit_copper_lantern",
-        "Properties": {
-          "hanging": "false",
-          "waterlogged": "false"
-        }
-      }
+      "unlit_state": "galacticraftlegacy:oxidized_unlit_copper_lantern"
     },
     "minecraft:torch": {
-      "unlit_state": {
-        "Name": "galacticraftlegacy:unlit_torch"
-      }
+      "unlit_state": "galacticraftlegacy:unlit_torch"
     },
     "minecraft:wall_torch": {
       "has_facing_property": true,
-      "unlit_state": {
-        "Name": "galacticraftlegacy:unlit_wall_torch",
-        "Properties": {
-          "facing": "north"
-        }
-      }
+      "unlit_state": "galacticraftlegacy:unlit_wall_torch"
     },
     "minecraft:waxed_copper_lantern": {
-      "unlit_state": {
-        "Name": "galacticraftlegacy:waxed_unlit_copper_lantern",
-        "Properties": {
-          "hanging": "false",
-          "waterlogged": "false"
-        }
-      }
+      "unlit_state": "galacticraftlegacy:waxed_unlit_copper_lantern"
     },
     "minecraft:waxed_exposed_copper_lantern": {
-      "unlit_state": {
-        "Name": "galacticraftlegacy:waxed_exposed_unlit_copper_lantern",
-        "Properties": {
-          "hanging": "false",
-          "waterlogged": "false"
-        }
-      }
+      "unlit_state": "galacticraftlegacy:waxed_exposed_unlit_copper_lantern"
     },
     "minecraft:waxed_oxidized_copper_lantern": {
-      "unlit_state": {
-        "Name": "galacticraftlegacy:waxed_oxidized_unlit_copper_lantern",
-        "Properties": {
-          "hanging": "false",
-          "waterlogged": "false"
-        }
-      }
+      "unlit_state": "galacticraftlegacy:waxed_oxidized_unlit_copper_lantern"
     },
     "minecraft:waxed_weathered_copper_lantern": {
-      "unlit_state": {
-        "Name": "galacticraftlegacy:waxed_weathered_unlit_copper_lantern",
-        "Properties": {
-          "hanging": "false",
-          "waterlogged": "false"
-        }
-      }
+      "unlit_state": "galacticraftlegacy:waxed_weathered_unlit_copper_lantern"
     },
     "minecraft:weathered_copper_lantern": {
-      "unlit_state": {
-        "Name": "galacticraftlegacy:weathered_unlit_copper_lantern",
-        "Properties": {
-          "hanging": "false",
-          "waterlogged": "false"
-        }
-      }
+      "unlit_state": "galacticraftlegacy:weathered_unlit_copper_lantern"
     }
   }
 }

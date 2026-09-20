@@ -10,11 +10,7 @@ package io.kalishak.galacticraftlegacy.advancements;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.kalishak.galacticraftlegacy.data.GalacticraftTags;
-import net.minecraft.advancements.predicates.ContextAwarePredicate;
-import net.minecraft.advancements.predicates.entity.EntityPredicate;
-import net.minecraft.advancements.triggers.AnyBlockInteractionTrigger;
 import net.minecraft.advancements.triggers.Criterion;
-import net.minecraft.advancements.triggers.DefaultBlockInteractionTrigger;
 import net.minecraft.advancements.triggers.SimpleCriterionTrigger;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
@@ -24,6 +20,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.dimension.DimensionType;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 
 import java.util.Optional;
 
@@ -37,9 +34,9 @@ public class BedUsedInSpaceTrigger extends SimpleCriterionTrigger<BedUsedInSpace
         trigger(serverPlayer, triggerInstance -> triggerInstance.awardPlayer(serverPlayer));
     }
 
-    public record TriggerInstance(Optional<ContextAwarePredicate> player, Holder<DimensionType> level, BlockPos bedPosition) implements SimpleCriterionTrigger.SimpleInstance {
+    public record TriggerInstance(Optional<Holder<LootItemCondition>> player, Holder<DimensionType> level, BlockPos bedPosition) implements SimpleCriterionTrigger.SimpleInstance {
         public static final Codec<TriggerInstance> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-                EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("playerName").forGetter(TriggerInstance::player),
+                LootItemCondition.CODEC.optionalFieldOf("playerName").forGetter(TriggerInstance::player),
                 DimensionType.CODEC.fieldOf("level").forGetter(TriggerInstance::level),
                 BlockPos.CODEC.fieldOf("bedPosition").forGetter(TriggerInstance::bedPosition)
         ).apply(instance, TriggerInstance::new));

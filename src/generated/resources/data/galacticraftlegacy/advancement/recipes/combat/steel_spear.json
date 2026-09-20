@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "galacticraftlegacy:steel_spear"
+        "recipes": "galacticraftlegacy:steel_spear"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

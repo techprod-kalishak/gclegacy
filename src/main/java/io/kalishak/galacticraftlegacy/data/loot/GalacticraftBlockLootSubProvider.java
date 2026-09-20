@@ -11,11 +11,12 @@ import io.kalishak.galacticraftlegacy.client.data.GalacticraftBlockFamilies;
 import io.kalishak.galacticraftlegacy.world.item.GalacticraftItems;
 import io.kalishak.galacticraftlegacy.world.item.component.GalacticraftDataComponents;
 import io.kalishak.galacticraftlegacy.world.level.block.GalacticraftBlocks;
-import net.minecraft.core.HolderLookup;
+import net.minecraft.core.HolderGetter;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.BlockFamily;
 import net.minecraft.data.loot.BlockLootSubProvider;
+import net.minecraft.data.loot.LootTableSubProvider;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -26,13 +27,11 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
-import net.minecraft.world.level.storage.loot.entries.LootPoolEntryContainer;
 import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
 import net.minecraft.world.level.storage.loot.functions.CopyComponentsFunction;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
-import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
-import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
+import net.minecraft.world.level.storage.loot.providers.number.ints.ContextIntProviders;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredItem;
 
@@ -43,8 +42,8 @@ import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 
 public class GalacticraftBlockLootSubProvider extends BlockLootSubProvider {
-    protected GalacticraftBlockLootSubProvider(HolderLookup.Provider registries) {
-        super(getExplosionResistant(), FeatureFlags.DEFAULT_FLAGS, registries);
+    protected GalacticraftBlockLootSubProvider(LootTableSubProvider.Context output) {
+        super(getExplosionResistant(), FeatureFlags.DEFAULT_FLAGS, output);
     }
 
     private static Set<Item> getExplosionResistant() {
@@ -155,7 +154,7 @@ public class GalacticraftBlockLootSubProvider extends BlockLootSubProvider {
                         applyExplosionCondition(
                                 drop,
                                 LootPool.lootPool()
-                                        .setRolls(ConstantValue.exactly(1.0F))
+                                        .setRolls(ContextIntProviders.exactly(1))
                                         .add(
                                                 LootItem.lootTableItem(drop)
                                                         .apply(builder.apply(CopyComponentsFunction.copyComponentsFromBlockEntity(LootContextParams.BLOCK_ENTITY)))
@@ -165,9 +164,9 @@ public class GalacticraftBlockLootSubProvider extends BlockLootSubProvider {
     }
 
     protected LootTable.Builder createLargeOreDrop(Block block, ItemLike drop, int min, int max) {
-        HolderLookup.RegistryLookup<Enchantment> enchantments = this.registries.lookupOrThrow(Registries.ENCHANTMENT);
+        HolderGetter<Enchantment> enchantments = this.output.lookup(Registries.ENCHANTMENT);
         return createSilkTouchDispatchTable(block, applyExplosionDecay(block, LootItem.lootTableItem(drop)
-                .apply(SetItemCountFunction.setCount(UniformGenerator.between((float) min, (float) max)))
+                .apply(SetItemCountFunction.setCount(ContextIntProviders.between(min, max)))
                 .apply(ApplyBonusCount.addUniformBonusCount(enchantments.getOrThrow(Enchantments.FORTUNE)))));
     }
 

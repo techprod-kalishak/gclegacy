@@ -11,7 +11,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "galacticraftlegacy:buggy_wheel"
+        "recipes": "galacticraftlegacy:buggy_wheel"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

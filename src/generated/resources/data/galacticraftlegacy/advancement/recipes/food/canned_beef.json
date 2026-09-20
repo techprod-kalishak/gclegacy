@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "galacticraftlegacy:canned_beef"
+        "recipes": "galacticraftlegacy:canned_beef"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

@@ -7,11 +7,12 @@
 
 package io.kalishak.galacticraftlegacy.world.level.dimension;
 
-import io.kalishak.galacticraftlegacy.client.renderer.environment.*;
+import io.kalishak.galacticraftlegacy.client.renderer.environment.DummyCloudsRenderer;
+import io.kalishak.galacticraftlegacy.client.renderer.environment.DummyWeatherRenderer;
 import io.kalishak.galacticraftlegacy.client.renderer.environment.sky.MoonSkyRenderer;
 import io.kalishak.galacticraftlegacy.client.renderer.environment.sky.OrbitalSkyRenderer;
-import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.data.GalacticraftTags;
+import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.world.attribute.GalacticraftEnvironmentAttributes;
 import io.kalishak.galacticraftlegacy.world.attribute.GalacticraftWorldAttributes;
 import io.kalishak.galacticraftlegacy.world.timeline.GalacticraftWorldClocks;
@@ -94,7 +95,6 @@ public class GalacticraftDimensionTypes {
                                 .set(NeoForgeEnvironmentAttributes.CUSTOM_SKYBOX, MoonSkyRenderer.ID)
                                 .set(NeoForgeEnvironmentAttributes.CUSTOM_CLOUDS, DummyCloudsRenderer.ID)
                                 .set(NeoForgeEnvironmentAttributes.CUSTOM_WEATHER_EFFECTS, DummyWeatherRenderer.ID)
-                                .set(EnvironmentAttributes.SKY_COLOR, 0)
                                 .set(EnvironmentAttributes.BACKGROUND_MUSIC, GalacticraftWorldAttributes.MUSIC_SPACE)
                                 .set(EnvironmentAttributes.BED_RULE, GalacticraftWorldAttributes.BED_RULE_CRYO_CHAMBER)
                                 .set(EnvironmentAttributes.AMBIENT_SOUNDS, GalacticraftWorldAttributes.AMBIENT_SOUNDS_SPACE)

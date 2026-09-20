@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "galacticraftlegacy:electric_compressing_compressed_meteoric_iron"
+        "recipes": "galacticraftlegacy:electric_compressing_compressed_meteoric_iron"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

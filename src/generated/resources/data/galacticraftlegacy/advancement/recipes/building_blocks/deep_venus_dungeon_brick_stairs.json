@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "galacticraftlegacy:deep_venus_dungeon_brick_stairs"
+        "recipes": "galacticraftlegacy:deep_venus_dungeon_brick_stairs"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

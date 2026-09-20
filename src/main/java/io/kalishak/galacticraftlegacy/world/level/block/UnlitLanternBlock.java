@@ -7,8 +7,6 @@
 
 package io.kalishak.galacticraftlegacy.world.level.block;
 
-import com.mojang.serialization.MapCodec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -20,20 +18,11 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 
 public class UnlitLanternBlock extends LanternBlock implements UnlitVariant {
-    public static final MapCodec<UnlitLanternBlock> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
-            BlockState.CODEC.fieldOf("lit_state").forGetter(block -> block.litState),
-            propertiesCodec()
-    ).apply(instance, UnlitLanternBlock::new));
     protected final BlockState litState;
 
     public UnlitLanternBlock(BlockState litState, Properties properties) {
         super(properties);
         this.litState = litState;
-    }
-
-    @Override
-    public MapCodec<? extends UnlitLanternBlock> codec() {
-        return CODEC;
     }
 
     @Override

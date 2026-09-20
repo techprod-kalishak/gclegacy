@@ -7,9 +7,8 @@
 
 package io.kalishak.galacticraftlegacy.world.level.block.machine;
 
-import com.mojang.serialization.MapCodec;
-import io.kalishak.galacticraftlegacy.world.level.telemetry.TelemetryTracker;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.LaunchControllerBlockEntity;
+import io.kalishak.galacticraftlegacy.world.level.telemetry.TelemetryTracker;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -25,17 +24,11 @@ import net.minecraft.world.level.block.state.properties.EnumProperty;
 import org.jspecify.annotations.Nullable;
 
 public class LaunchControllerBlock extends BaseEntityBlock {
-    public static final MapCodec<LaunchControllerBlock> CODEC = simpleCodec(LaunchControllerBlock::new);
     public static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;
 
     public LaunchControllerBlock(Properties properties) {
         super(properties);
         registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH));
-    }
-
-    @Override
-    protected MapCodec<LaunchControllerBlock> codec() {
-        return CODEC;
     }
 
     @Override

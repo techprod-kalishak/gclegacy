@@ -19,7 +19,7 @@ import net.minecraft.world.level.biome.BiomeGenerationSettings;
 import net.minecraft.world.level.biome.BiomeSpecialEffects;
 import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.minecraft.world.level.levelgen.GenerationStep;
-import net.minecraft.world.level.levelgen.carver.ConfiguredWorldCarver;
+import net.minecraft.world.level.levelgen.carver.WorldCarver;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 
 import static io.kalishak.galacticraftlegacy.world.level.biome.GalacticraftBiomes.key;
@@ -27,11 +27,11 @@ import static io.kalishak.galacticraftlegacy.world.level.biome.GalacticraftBiome
 public class MarsBiomes {
     public static final ResourceKey<Biome> MARS_PLAINS = key("mars_plains");
 
-    static void bootstrap(BootstrapContext<Biome> context, HolderGetter<PlacedFeature> placedFeatures, HolderGetter<ConfiguredWorldCarver<?>> worldCarvers) {
+    static void bootstrap(BootstrapContext<Biome> context, HolderGetter<PlacedFeature> placedFeatures, HolderGetter<WorldCarver> worldCarvers) {
         context.register(MARS_PLAINS, marsPlains(placedFeatures, worldCarvers));
     }
 
-    static Biome marsPlains(HolderGetter<PlacedFeature> placedFeatures, HolderGetter<ConfiguredWorldCarver<?>> worldCarvers) {
+    static Biome marsPlains(HolderGetter<PlacedFeature> placedFeatures, HolderGetter<WorldCarver> worldCarvers) {
         MobSpawnSettings.Builder mobSpawnSettings = new MobSpawnSettings.Builder();
         BiomeGenerationSettings.Builder biomeGenerationSettings = new BiomeGenerationSettings.Builder(placedFeatures, worldCarvers);
         GalacticraftBiomes.evolvedMonsters(mobSpawnSettings, 20, 15);

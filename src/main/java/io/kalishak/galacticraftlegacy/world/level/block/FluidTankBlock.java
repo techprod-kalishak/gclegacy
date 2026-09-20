@@ -7,7 +7,6 @@
 
 package io.kalishak.galacticraftlegacy.world.level.block;
 
-import com.mojang.serialization.MapCodec;
 import io.kalishak.galacticraftlegacy.world.item.component.GalacticraftDataComponents;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.FluidTankBlockEntity;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityType;
@@ -41,7 +40,6 @@ import net.neoforged.neoforge.transfer.fluid.FluidResource;
 import org.jspecify.annotations.Nullable;
 
 public class FluidTankBlock extends BaseEntityBlock {
-    public static final MapCodec<FluidTankBlock> CODEC = simpleCodec(FluidTankBlock::new);
     public static final BooleanProperty DOWN_CONNECTION = BooleanProperty.create("down_connection");
     public static final BooleanProperty UP_CONNECTION = BooleanProperty.create("up_connection");
     private static final VoxelShape SHAPE = Shapes.box(0.05F, 0.0F, 0.05F, 0.95F, 1.0F, 0.95F);
@@ -49,11 +47,6 @@ public class FluidTankBlock extends BaseEntityBlock {
     public FluidTankBlock(Properties properties) {
         super(properties);
         registerDefaultState(this.stateDefinition.any().setValue(DOWN_CONNECTION, false).setValue(UP_CONNECTION, false));
-    }
-
-    @Override
-    protected MapCodec<FluidTankBlock> codec() {
-        return CODEC;
     }
 
     @Override

@@ -1,0 +1,48 @@
+{
+  "type": "minecraft:cave",
+  "count": {
+    "type": "minecraft:uniform",
+    "max_inclusive": 5,
+    "min_inclusive": 1
+  },
+  "floor_level": {
+    "type": "minecraft:uniform",
+    "max_exclusive": 0.4,
+    "min_inclusive": 0.2
+  },
+  "horizontal_radius_multiplier": {
+    "type": "minecraft:uniform",
+    "max_exclusive": 0.5,
+    "min_inclusive": 0.2
+  },
+  "probability": 0.05,
+  "room_vertical_radius_multiplier": {
+    "type": "minecraft:uniform",
+    "max_exclusive": 0.6,
+    "min_inclusive": 0.2
+  },
+  "start_vertical_radius_multiplier": {
+    "type": "minecraft:uniform",
+    "max_exclusive": -0.1,
+    "min_inclusive": -0.9
+  },
+  "thickness": {
+    "type": "minecraft:uniform",
+    "max_exclusive": 0.3,
+    "min_inclusive": 0.1
+  },
+  "vertical_radius_multiplier": {
+    "type": "minecraft:uniform",
+    "max_exclusive": -0.1,
+    "min_inclusive": -0.9
+  },
+  "y": {
+    "type": "minecraft:uniform",
+    "max_inclusive": {
+      "absolute": 56
+    },
+    "min_inclusive": {
+      "above_bottom": 8
+    }
+  }
+}

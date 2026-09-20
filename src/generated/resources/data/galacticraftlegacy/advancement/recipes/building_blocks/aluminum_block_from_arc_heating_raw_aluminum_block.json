@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "galacticraftlegacy:aluminum_block_from_arc_heating_raw_aluminum_block"
+        "recipes": "galacticraftlegacy:aluminum_block_from_arc_heating_raw_aluminum_block"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
