@@ -13,11 +13,11 @@ import io.kalishak.galacticraftlegacy.advancements.criterion.PredicateByteBufs;
 import io.kalishak.galacticraftlegacy.world.entity.GearEquipmentSlot;
 import net.minecraft.advancements.predicates.ItemPredicate;
 import net.minecraft.core.Holder;
+import net.minecraft.core.registries.codec.RegistryFixedCodec;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.Identifier;
-import net.minecraft.resources.RegistryFixedCodec;
 
 import java.util.HashMap;
 import java.util.Map;

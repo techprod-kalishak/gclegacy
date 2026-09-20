@@ -13,11 +13,11 @@ import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.AnvilCompressin
 import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.GalacticraftRecipeType;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.BaseItemStorageBlockEntity;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityType;
+import io.kalishak.galacticraftlegacy.world.level.block.entity.LootContextProvider;
 import it.unimi.dsi.fastutil.objects.Reference2IntMap;
 import it.unimi.dsi.fastutil.objects.Reference2IntOpenHashMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
@@ -39,15 +39,12 @@ import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
-import net.neoforged.neoforge.registries.datamaps.builtin.FurnaceFuel;
-import net.neoforged.neoforge.registries.datamaps.builtin.NeoForgeDataMaps;
 import net.neoforged.neoforge.transfer.RangedResourceHandler;
 import net.neoforged.neoforge.transfer.ResourceHandler;
 import net.neoforged.neoforge.transfer.item.ItemResource;
@@ -144,7 +141,7 @@ public class CompressorBlockEntity extends BaseItemStorageBlockEntity implements
 
                 if (!recipeResult.isEmpty() && AlloyCompressor.canCompress(compressor.items, maxStackSize, recipeResult)) {
                     if (!isLit) {
-                        int newLitTime = fuelDuration(level, fuel);
+                        int newLitTime = LootContextProvider.getFuelTime(level, compressor, fuel);
                         compressor.fuelTimeRemaining = newLitTime;
                         compressor.fuelTotalTime = newLitTime;
 
@@ -195,13 +192,6 @@ public class CompressorBlockEntity extends BaseItemStorageBlockEntity implements
         return compressor.compressingTimer == compressor.compressingTotalTime ? 13 : 0;
     }
 
-    protected static int fuelDuration(Level level, ItemStack stack) {
-        FurnaceFuel fuel = level.registryAccess()
-                .lookupOrThrow(Registries.ITEM)
-                .getData(NeoForgeDataMaps.FURNACE_FUELS, stack.typeHolder().unwrapKey().orElseThrow());
-        return fuel == null ? 0 : fuel.burnTime();
-    }
-
     protected static void consumeFuel(ResourceHandler<ItemResource> items, ItemStack fuel) {
         ItemStackTemplate remainder = fuel.getCraftingRemainder();
 
@@ -235,7 +225,7 @@ public class CompressorBlockEntity extends BaseItemStorageBlockEntity implements
         super.setItem(slot, itemStack);
 
         if (slot == AlloyCompressor.FUEL_SLOT && !same && this.level instanceof ServerLevel serverLevel) {
-            this.fuelTotalTime = fuelDuration(serverLevel, itemStack);
+            this.fuelTotalTime = LootContextProvider.getFuelTime(serverLevel, this, itemStack);
             this.fuelTimeRemaining = 0;
             this.setChanged();
         }

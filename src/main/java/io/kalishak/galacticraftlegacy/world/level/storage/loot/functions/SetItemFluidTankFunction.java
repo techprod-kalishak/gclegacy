@@ -19,24 +19,27 @@ import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.functions.LootItemConditionalFunction;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import net.minecraft.world.level.storage.loot.providers.number.ints.ContextIntProvider;
+import net.minecraft.world.level.storage.loot.providers.number.ints.ContextIntProviders;
 import net.neoforged.neoforge.fluids.FluidInstance;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.SimpleFluidContent;
 
 import java.util.List;
+import java.util.Optional;
 
 public class SetItemFluidTankFunction extends LootItemConditionalFunction {
     public static final MapCodec<SetItemFluidTankFunction> MAP_CODEC = RecordCodecBuilder.mapCodec(
             i -> commonFields(i)
                     .and(FluidInstance.FLUID_HOLDER_CODEC.fieldOf("fluid").forGetter(f -> f.fluid))
-                    .and(IntProviders.CODEC.fieldOf("value").forGetter(f -> f.value)
+                    .and(ContextIntProviders.CODEC.fieldOf("value").forGetter(f -> f.value)
             ).apply(i, SetItemFluidTankFunction::new)
     );
     private final Holder<Fluid> fluid;
-    private final IntProvider value;
+    private final Holder<ContextIntProvider> value;
 
-    private SetItemFluidTankFunction(List<LootItemCondition> predicates, Holder<Fluid> fluid, IntProvider value) {
-        super(predicates);
+    private SetItemFluidTankFunction(Optional<Holder<LootItemCondition>> condition, Holder<Fluid> fluid, Holder<ContextIntProvider> value) {
+        super(condition);
         this.fluid = fluid;
         this.value = value;
     }
@@ -48,13 +51,13 @@ public class SetItemFluidTankFunction extends LootItemConditionalFunction {
 
     @Override
     public ItemStack run(ItemStack itemStack, LootContext context) {
-        FluidStack fluidStack = new FluidStack(this.fluid, this.value.sample(context.getRandom()));
+        FluidStack fluidStack = new FluidStack(this.fluid, this.value.value().getInt(context));
 
         itemStack.set(GalacticraftDataComponents.FLUID_TANK, SimpleFluidContent.copyOf(fluidStack));
         return itemStack;
     }
 
-    public static LootItemConditionalFunction.Builder<?> setFluid(Holder<Fluid> fluid, IntProvider value) {
+    public static LootItemConditionalFunction.Builder<?> setFluid(Holder<Fluid> fluid, Holder<ContextIntProvider> value) {
         return simpleBuilder(conditions -> new SetItemFluidTankFunction(conditions, fluid, value));
     }
 }

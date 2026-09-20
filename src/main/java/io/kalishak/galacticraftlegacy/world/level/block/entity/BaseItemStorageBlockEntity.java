@@ -15,17 +15,26 @@ import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.ComponentSerialization;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.*;
+import net.minecraft.world.entity.SlotAccess;
+import net.minecraft.world.entity.SlotProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.AbstractFurnaceBlock;
+import net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootParams;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
@@ -39,10 +48,11 @@ import net.neoforged.neoforge.transfer.transaction.Transaction;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
+import java.util.Optional;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
-public abstract class BaseItemStorageBlockEntity extends BlockEntity implements MenuProvider, Nameable {
+public abstract class BaseItemStorageBlockEntity extends BlockEntity implements MenuProvider, Nameable, LootContextProvider {
     private LockCode lockKey = LockCode.NO_LOCK;
     private @Nullable Component name;
     protected final ItemStacksResourceHandler items;
@@ -224,6 +234,22 @@ public abstract class BaseItemStorageBlockEntity extends BlockEntity implements 
         return Container.stillValidBlockEntity(this, player);
     }
 
+    @Override
+    public @Nullable SlotAccess getSlot(int slot) {
+        return slot >= 0 && slot < getSize() ? new SlotAccess() {
+            @Override
+            public ItemStack get() {
+                return BaseItemStorageBlockEntity.this.getItem(slot);
+            }
+
+            @Override
+            public boolean set(ItemStack itemStack) {
+                BaseItemStorageBlockEntity.this.setItem(slot, itemStack);
+                return true;
+            }
+        } : null;
+    }
+
     public void clearContent() {
         for (int i = 0; i < getSize(); i++) {
             setItem(i, ItemStack.EMPTY);
@@ -275,5 +301,18 @@ public abstract class BaseItemStorageBlockEntity extends BlockEntity implements 
             Containers.dropContents(this.level, pos, this.items.copyToList());
             clearContent();
         }
+    }
+
+    public LootContext getLootContext(ServerLevel level, ItemStack queriedStack) {
+        return new LootContext.Builder(
+                new LootParams.Builder(level)
+                        .withParameter(LootContextParams.BLOCK_STATE, getBlockState())
+                        .withParameter(LootContextParams.BLOCK_ENTITY, this)
+                        .withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(getBlockPos()))
+                        .withParameter(LootContextParams.CONTAINER, this)
+                        .withOptionalParameter(net.neoforged.neoforge.common.loot.NeoForgeLootContextParams.QUERIED_STACK, queriedStack.isEmpty() ? null : queriedStack)
+                        .create(LootContextParamSets.CONTAINER_PROCESS)
+        )
+                .create(Optional.empty());
     }
 }

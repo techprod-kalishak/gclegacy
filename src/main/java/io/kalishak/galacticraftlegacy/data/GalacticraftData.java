@@ -62,8 +62,8 @@ import java.util.Set;
 public class GalacticraftData {
     private static final RegistrySetBuilder SET_BUILDER = new RegistrySetBuilder()
             .add(Registries.BIOME, GalacticraftBiomes::bootstrap)
-            .add(Registries.CONFIGURED_CARVER, GalacticraftCarvers::bootstrap)
-            .add(Registries.CONFIGURED_FEATURE, GalacticraftFeatures::bootstrap)
+            .add(Registries.CARVER, GalacticraftCarvers::bootstrap)
+            .add(Registries.FEATURE, GalacticraftFeatures::bootstrap)
             .add(Registries.DAMAGE_TYPE, GalacticraftDamageTypes::bootstrap)
             .add(Registries.DENSITY_FUNCTION, GalacticraftNoiseRouterData::bootstrap)
             .add(Registries.DIMENSION_TYPE, GalacticraftDimensionTypes::bootstrap)
@@ -97,11 +97,11 @@ public class GalacticraftData {
         event.createProvider(GalacticraftEquipmentAssetProvider::new);
         event.createProvider(GalacticraftSoundProvider::new);
         event.createProvider(GalacticraftParticleProvider::new);
-        event.createDatapackRegistryObjects(SET_BUILDER, Set.of(Galacticraft.MODID));
+        event.createWorldRegistryObjects(SET_BUILDER, Set.of(Galacticraft.MODID));
         event.createProvider(GalacticraftDataMaps.Provider::new);
         event.createProvider(GalacticraftLootTableProvider::create);
         event.createProvider(GalacticraftAdvancementProvider::create);
-        event.createProvider(GalacticraftRecipeProvider.Runner::new);
+        event.createProvider(GalacticraftRecipeProvider::new);
         event.createProvider(GalacticraftBiomeTagsProvider::new);
         event.createProvider(GalacticraftChecklistTagsProvider::new);
         event.createProvider(GalacticraftDamageTypeTags::new);

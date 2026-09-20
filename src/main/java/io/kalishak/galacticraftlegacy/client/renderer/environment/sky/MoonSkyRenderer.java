@@ -7,13 +7,13 @@
 
 package io.kalishak.galacticraftlegacy.client.renderer.environment.sky;
 
-import com.mojang.blaze3d.PrimitiveTopology;
-import com.mojang.blaze3d.buffers.GpuBuffer;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.BufferBuilder;
 import com.mojang.blaze3d.vertex.ByteBufferBuilder;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.MeshData;
+import com.mojang.renderpearl.api.buffers.GpuBuffer;
+import com.mojang.renderpearl.api.pipeline.PrimitiveTopology;
 import io.kalishak.galacticraftlegacy.references.Constants;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;

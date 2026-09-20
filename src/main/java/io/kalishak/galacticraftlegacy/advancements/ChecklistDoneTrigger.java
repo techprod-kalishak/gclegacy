@@ -14,15 +14,14 @@ import io.kalishak.galacticraftlegacy.registry.ChecklistEntry;
 import io.kalishak.galacticraftlegacy.registry.GalacticraftRegistries;
 import io.kalishak.galacticraftlegacy.transfer.entity.SpaceGearEquipment;
 import io.kalishak.galacticraftlegacy.world.entity.GearEquipmentSlot;
-import net.minecraft.advancements.predicates.ContextAwarePredicate;
 import net.minecraft.advancements.predicates.ItemPredicate;
-import net.minecraft.advancements.predicates.entity.EntityPredicate;
 import net.minecraft.advancements.triggers.Criterion;
 import net.minecraft.advancements.triggers.SimpleCriterionTrigger;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 
 import java.util.Map;
 import java.util.Optional;
@@ -45,9 +44,9 @@ public class ChecklistDoneTrigger extends SimpleCriterionTrigger<ChecklistDoneTr
         }
     }
 
-    public record TriggerInstance(Optional<ContextAwarePredicate> player, ResourceKey<ChecklistEntry> entry) implements SimpleCriterionTrigger.SimpleInstance {
+    public record TriggerInstance(Optional<Holder<LootItemCondition>> player, ResourceKey<ChecklistEntry> entry) implements SimpleCriterionTrigger.SimpleInstance {
         public static final Codec<TriggerInstance> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-                EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("playerName").forGetter(TriggerInstance::player),
+                LootItemCondition.CODEC.optionalFieldOf("playerName").forGetter(TriggerInstance::player),
                 ResourceKey.codec(GalacticraftRegistries.Keys.CHECKLIST).fieldOf("entry").forGetter(TriggerInstance::entry)
         ).apply(instance, ChecklistDoneTrigger.TriggerInstance::new));
 

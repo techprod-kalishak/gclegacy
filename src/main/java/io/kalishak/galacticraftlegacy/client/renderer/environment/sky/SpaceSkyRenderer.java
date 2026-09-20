@@ -7,20 +7,20 @@
 
 package io.kalishak.galacticraftlegacy.client.renderer.environment.sky;
 
-import com.mojang.blaze3d.PrimitiveTopology;
-import com.mojang.blaze3d.buffers.GpuBuffer;
-import com.mojang.blaze3d.buffers.GpuBufferSlice;
-import com.mojang.blaze3d.pipeline.RenderPipeline;
 import com.mojang.blaze3d.pipeline.RenderTarget;
-import com.mojang.blaze3d.systems.RenderPass;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.textures.GpuTextureView;
 import com.mojang.blaze3d.vertex.*;
 import com.mojang.math.Axis;
+import com.mojang.renderpearl.api.buffers.GpuBuffer;
+import com.mojang.renderpearl.api.buffers.GpuBufferSlice;
+import com.mojang.renderpearl.api.commands.RenderPass;
+import com.mojang.renderpearl.api.pipeline.PrimitiveTopology;
+import com.mojang.renderpearl.api.pipeline.RenderPipeline;
+import com.mojang.renderpearl.api.textures.GpuTextureView;
+import com.mojang.renderpearl.api.vertex.VertexFormat;
 import io.kalishak.galacticraftlegacy.client.data.GalacticraftSpritesProvider;
 import io.kalishak.galacticraftlegacy.client.renderer.environment.CelestialSpritesLocations;
 import io.kalishak.galacticraftlegacy.config.ClientConfig;
-import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.world.level.EarthPhase;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
@@ -69,7 +69,7 @@ public class SpaceSkyRenderer implements CustomSkyboxRenderer, AutoCloseable {
     }
 
     @Override
-    public final boolean renderSky(LevelRenderState levelRenderState, SkyRenderState skyRenderState, Matrix4fc modelViewMatrix, Runnable setupFog) {
+    public boolean renderSky(LevelRenderState levelRenderState, SkyRenderState skyRenderState, Matrix4fc modelViewMatrix, GpuBufferSlice skyFog) {
         if (!this.seenAtlas) {
             createBuffers(Minecraft.getInstance().getAtlasManager());
         }
@@ -77,12 +77,12 @@ public class SpaceSkyRenderer implements CustomSkyboxRenderer, AutoCloseable {
         PoseStack poseStack = new PoseStack();
         Camera camera = Minecraft.getInstance().gameRenderer.mainCamera();
 
-        renderSkybox(poseStack, camera, levelRenderState, modelViewMatrix, setupFog);
+        renderSkybox(poseStack, camera, levelRenderState, modelViewMatrix, skyFog);
 
         return true;
     }
 
-    protected void renderSkybox(PoseStack poseStack, Camera camera, LevelRenderState levelRenderState, Matrix4fc modelViewMatrix, Runnable setupFog) {
+    protected void renderSkybox(PoseStack poseStack, Camera camera, LevelRenderState levelRenderState, Matrix4fc modelViewMatrix, GpuBufferSlice skyFog) {
 
     }
 
@@ -124,16 +124,16 @@ public class SpaceSkyRenderer implements CustomSkyboxRenderer, AutoCloseable {
      */
     public void renderSunStars(PoseStack poseStack, float sunAngle, float starAngle, float starBrightness, boolean renderStars) {
         poseStack.pushPose();
-        poseStack.mulPose(Axis.YP.rotationDegrees(-90.0F));
+        poseStack.mulPose(Axis.YP.rotateDegrees(-90.0F));
         poseStack.pushPose();
 
-        poseStack.mulPose(Axis.XP.rotation(sunAngle));
+        poseStack.mulPose(Axis.XP.rotate(sunAngle));
         renderSun(-1, poseStack);
         poseStack.popPose();
 
         if (renderStars) {
             poseStack.pushPose();
-            poseStack.mulPose(Axis.XP.rotation(starAngle));
+            poseStack.mulPose(Axis.XP.rotate(starAngle));
             renderStars(starBrightness, poseStack);
             poseStack.popPose();
         }
@@ -143,7 +143,7 @@ public class SpaceSkyRenderer implements CustomSkyboxRenderer, AutoCloseable {
 
     protected void transformEarth(PoseStack poseStack, float earthAngle, EarthPhase earthPhase) {
         poseStack.pushPose();
-        poseStack.mulPose(Axis.XP.rotation(earthAngle));
+        poseStack.mulPose(Axis.XP.rotate(earthAngle));
         renderEarth(this.earthBuffer, earthPhase, poseStack);
         poseStack.popPose();
     }
@@ -171,7 +171,7 @@ public class SpaceSkyRenderer implements CustomSkyboxRenderer, AutoCloseable {
             renderPass.setPipeline(RenderPipelines.CELESTIAL);
             RenderSystem.bindDefaultUniforms(renderPass);
             renderPass.setUniform("DynamicTransforms", dynamicTransforms);
-            renderPass.bindTexture("Sampler0", this.celestialsAtlas.getTextureView(), this.celestialsAtlas.getSampler());
+            renderPass.setUniform("Sampler0", this.celestialsAtlas.getTextureView(), this.celestialsAtlas.getSampler());
             renderPass.setVertexBuffer(0, this.moonBuffer.slice());
             renderPass.setIndexBuffer(indexBuffer, this.quadIndices.type());
             renderPass.drawIndexed(6, 1, 0, baseVertex, 0);
@@ -199,7 +199,7 @@ public class SpaceSkyRenderer implements CustomSkyboxRenderer, AutoCloseable {
             renderPass.setPipeline(RenderPipelines.CELESTIAL);
             RenderSystem.bindDefaultUniforms(renderPass);
             renderPass.setUniform("DynamicTransforms", dynamicTransforms);
-            renderPass.bindTexture("Sampler0", this.celestialsAtlas.getTextureView(), this.celestialsAtlas.getSampler());
+            renderPass.setUniform("Sampler0", this.celestialsAtlas.getTextureView(), this.celestialsAtlas.getSampler());
             renderPass.setVertexBuffer(0, earthBuffer.slice());
             renderPass.setIndexBuffer(indexBuffer, this.quadIndices.type());
             renderPass.drawIndexed(baseVertex, 0, 6, baseVertex, 1);
@@ -226,7 +226,7 @@ public class SpaceSkyRenderer implements CustomSkyboxRenderer, AutoCloseable {
             renderPass.setPipeline(RenderPipelines.CELESTIAL);
             RenderSystem.bindDefaultUniforms(renderPass);
             renderPass.setUniform("DynamicTransforms", dynamicTransforms);
-            renderPass.bindTexture("Sampler0", this.celestialsAtlas.getTextureView(), this.celestialsAtlas.getSampler());
+            renderPass.setUniform("Sampler0", this.celestialsAtlas.getTextureView(), this.celestialsAtlas.getSampler());
             renderPass.setVertexBuffer(0, this.sunBuffer.slice());
             renderPass.setIndexBuffer(indexBuffer, this.quadIndices.type());
             renderPass.drawIndexed(6, 1, 0, 0, 0);

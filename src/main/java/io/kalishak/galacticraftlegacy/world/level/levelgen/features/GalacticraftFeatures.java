@@ -7,6 +7,7 @@
 
 package io.kalishak.galacticraftlegacy.world.level.levelgen.features;
 
+import com.mojang.serialization.MapCodec;
 import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.Galacticraft;
 import io.kalishak.galacticraftlegacy.world.level.levelgen.CraterSize;
@@ -22,6 +23,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.Column;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.FeatureTypes;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
@@ -31,45 +33,45 @@ import java.util.Optional;
 import java.util.function.Predicate;
 
 public class GalacticraftFeatures {
-    private static final DeferredRegister<Feature<?>> REGISTRY = DeferredRegister.create(Registries.FEATURE, Galacticraft.MODID);
-    public static final ResourceKey<ConfiguredFeature<?, ?>> SPACE_STATION_KEY = key("space_station");
+    private static final DeferredRegister<MapCodec<? extends Feature>> REGISTRY = DeferredRegister.create(Registries.FEATURE_TYPE, Galacticraft.MODID);
+    public static final ResourceKey<Feature> SPACE_STATION_KEY = key("space_station");
 
-    public static final DeferredHolder<Feature<?>, CrudeOilPoolFeature> CRUDE_OIL_POOL = REGISTRY.register(
+    public static final DeferredHolder<MapCodec<? extends Feature>, MapCodec<CrudeOilPoolFeature>> CRUDE_OIL_POOL = REGISTRY.register(
             "crude_oil_pool",
-            CrudeOilPoolFeature::new
+            () -> CrudeOilPoolFeature.MAP_CODEC
     );
-    public static final DeferredHolder<Feature<?>, CraterFeature> CRATER = REGISTRY.register(
+    public static final DeferredHolder<MapCodec<? extends Feature>, MapCodec<CraterFeature>> CRATER = REGISTRY.register(
             "crater",
-            CraterFeature::new
+            () -> CraterFeature.MAP_CODEC
     );
-    public static final DeferredHolder<Feature<?>, FallenMeteorFeature> FALLEN_METEOR = REGISTRY.register(
+    public static final DeferredHolder<MapCodec<? extends Feature>, MapCodec<FallenMeteorFeature>> FALLEN_METEOR = REGISTRY.register(
             "fallen_meteor",
-            FallenMeteorFeature::new
+            () -> FallenMeteorFeature.MAP_CODEC
     );
-    public static final DeferredHolder<Feature<?>, SpaceStationFeature> SPACE_STATION = REGISTRY.register(
+    public static final DeferredHolder<MapCodec<? extends Feature>, MapCodec<SpaceStationFeature>> SPACE_STATION = REGISTRY.register(
             "space_station",
-            SpaceStationFeature::new
+            () -> SpaceStationFeature.MAP_CODEC
     );
 
     public static void init(IEventBus bus) {
         REGISTRY.register(bus);
     }
 
-    public static void bootstrap(BootstrapContext<ConfiguredFeature<?, ?>> cxt) {
+    public static void bootstrap(BootstrapContext<Feature> cxt) {
         AsteroidsFeatures.bootstrap(cxt);
         MarsFeatures.bootstrap(cxt);
         MoonFeatures.bootstrap(cxt);
         OverworldFeatures.bootstrap(cxt);
         VenusFeatures.bootstrap(cxt);
 
-        cxt.register(SPACE_STATION_KEY, new ConfiguredFeature<>(SPACE_STATION.get(), new NoneFeatureConfiguration()));
+        cxt.register(SPACE_STATION_KEY, new FeatureTypes(SPACE_STATION.get(), new NoneFeatureConfiguration()));
     }
 
-    static ResourceKey<ConfiguredFeature<?, ?>> key(String name) {
-        return Constants.key(Registries.CONFIGURED_FEATURE, name);
+    static ResourceKey<MapCodec<? extends Feature>> key(String name) {
+        return Constants.key(Registries.FEATURE_TYPE, name);
     }
 
-    static void craterSimple(BootstrapContext<ConfiguredFeature<?, ?>> cxt, ResourceKey<ConfiguredFeature<?, ?>> key, CraterSize size, int uniformCount) {
+    static void craterSimple(BootstrapContext<Feature> cxt, ResourceKey<Feature> key, CraterSize size, int uniformCount) {
         cxt.register(
                 key,
                 new ConfiguredFeature<>(

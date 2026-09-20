@@ -16,7 +16,7 @@ import net.neoforged.neoforge.transfer.item.ItemResource;
 
 public class FuelHandlerSlot extends ConditionalHandlerSlot {
     public FuelHandlerSlot(ResourceHandler<ItemResource> handler, IndexModifier<ItemResource> slotModifier, int index, int xPosition, int yPosition) {
-        super(handler, slotModifier, stack -> CoalGeneratorMenu.isFuel(stack.typeHolder()), index, xPosition, yPosition);
+        super(handler, slotModifier, stack -> CoalGeneratorMenu.isFuel(stack), index, xPosition, yPosition);
     }
 
     @Override

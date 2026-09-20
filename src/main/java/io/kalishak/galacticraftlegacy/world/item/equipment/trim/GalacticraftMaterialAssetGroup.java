@@ -8,7 +8,6 @@
 package io.kalishak.galacticraftlegacy.world.item.equipment.trim;
 
 import io.kalishak.galacticraftlegacy.world.item.GearEquipmentAssets;
-import net.minecraft.world.item.equipment.trim.MaterialAssetGroup;
 
 import java.util.Map;
 

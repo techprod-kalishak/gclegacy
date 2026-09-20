@@ -23,6 +23,7 @@ import io.kalishak.galacticraftlegacy.world.item.GalacticraftItems;
 import io.kalishak.galacticraftlegacy.world.item.crafting.FabricatingBookCategory;
 import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.rocket.VehicleCraftingDataRecipe;
 import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.rocket.VehicleCraftingDataRecipes;
+import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.predicates.DistancePredicate;
 import net.minecraft.advancements.predicates.GameTypePredicate;
 import net.minecraft.advancements.predicates.LocationPredicate;
@@ -38,6 +39,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
@@ -93,8 +95,8 @@ public class GalacticraftRecipeProvider extends RecipeProvider {
             GalacticraftItems.RAW_TITANIUM
     );
 
-    GalacticraftRecipeProvider(HolderLookup.Provider registries, RecipeOutput output) {
-        super(registries, output);
+    GalacticraftRecipeProvider(BootstrapContext<Recipe<?>> recipeOutput, BootstrapContext<Advancement> advancementOutput) {
+        super(recipeOutput, advancementOutput);
     }
 
     @Override
@@ -108,7 +110,7 @@ public class GalacticraftRecipeProvider extends RecipeProvider {
     }
 
     private void buildVehicleCrafting() {
-        HolderGetter<VehicleCraftingDataRecipe> vehicleData = this.registries.lookupOrThrow(GalacticraftRegistries.Keys.VEHICLE_CRAFTING_RECIPE_DATA);
+        HolderGetter<VehicleCraftingDataRecipe> vehicleData = this.output.lookup(GalacticraftRegistries.Keys.VEHICLE_CRAFTING_RECIPE_DATA);
         HolderSet<Item> heavyDutyPlates = this.items.getOrThrow(GalacticraftTags.Items.PLATE_HEAVY_DUTY);
 
         VehicleCraftingRecipeBuilder.rocket(vehicleData, VehicleCraftingDataRecipes.TIER_1_ROCKET, GalacticraftItems.TIER_1_ROCKET)
@@ -237,7 +239,7 @@ public class GalacticraftRecipeProvider extends RecipeProvider {
                 .pattern(" A ")
                 .pattern("IPI")
                 .pattern("RWR")
-                .unlockedBy("was_in_space", MissingGearTrigger.TriggerInstance.cannotHear(this.registries.lookupOrThrow(Registries.BIOME)))
+                .unlockedBy("was_in_space", MissingGearTrigger.TriggerInstance.cannotHear(this.output.lookup(Registries.BIOME)))
                 .save(this.output);
         ShapedRecipeBuilder.shaped(this.items, RecipeCategory.MISC, GalacticraftItems.THERMAL_CONTROLLER)
                 .define('V', GalacticraftItems.OXYGEN_VENT)
@@ -964,21 +966,5 @@ public class GalacticraftRecipeProvider extends RecipeProvider {
 
     private static String getItemId(ItemLike item) {
         return BuiltInRegistries.ITEM.getKey(item.asItem()).toString();
-    }
-
-    public static class Runner extends RecipeProvider.Runner {
-        public Runner(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> registries) {
-            super(packOutput, registries);
-        }
-
-        @Override
-        protected RecipeProvider createRecipeProvider(HolderLookup.Provider registries, RecipeOutput output) {
-            return new GalacticraftRecipeProvider(registries, output);
-        }
-
-        @Override
-        public String getName() {
-            return "Recipe Provider for Galacticraft Legacy";
-        }
     }
 }
