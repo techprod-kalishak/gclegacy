@@ -1,8 +1,8 @@
 package io.kalishak.galacticraftlegacy.world.item;
 
 import io.kalishak.galacticraftlegacy.attachment.AttachmentHelper;
+import io.kalishak.galacticraftlegacy.components.GalacticraftDataComponents;
 import io.kalishak.galacticraftlegacy.transfer.entity.SpaceGearEquipment;
-import io.kalishak.galacticraftlegacy.world.item.component.GalacticraftDataComponents;
 import io.kalishak.galacticraftlegacy.world.item.component.GearEquippable;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;

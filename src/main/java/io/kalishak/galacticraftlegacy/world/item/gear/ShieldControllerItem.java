@@ -7,7 +7,7 @@
 
 package io.kalishak.galacticraftlegacy.world.item.gear;
 
-import io.kalishak.galacticraftlegacy.world.item.component.GalacticraftDataComponents;
+import io.kalishak.galacticraftlegacy.components.GalacticraftDataComponents;
 import io.kalishak.galacticraftlegacy.world.item.component.ShieldController;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;

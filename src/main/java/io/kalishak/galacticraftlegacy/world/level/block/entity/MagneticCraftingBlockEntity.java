@@ -7,12 +7,12 @@
 
 package io.kalishak.galacticraftlegacy.world.level.block.entity;
 
+import io.kalishak.galacticraftlegacy.components.GalacticraftDataComponents;
 import io.kalishak.galacticraftlegacy.data.TriStateBoolean;
 import io.kalishak.galacticraftlegacy.transfer.capability.item.MemorableResourceHandler;
+import io.kalishak.galacticraftlegacy.world.inventory.container.CraftingStorage;
 import io.kalishak.galacticraftlegacy.world.inventory.container.memory.MemorableContainer;
 import io.kalishak.galacticraftlegacy.world.inventory.magnetic_crafting.MagneticCraftingMenu;
-import io.kalishak.galacticraftlegacy.world.inventory.container.CraftingStorage;
-import io.kalishak.galacticraftlegacy.world.item.component.GalacticraftDataComponents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
@@ -26,7 +26,10 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.StackedItemContents;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.*;
+import net.minecraft.world.item.crafting.CraftingInput;
+import net.minecraft.world.item.crafting.CraftingRecipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;

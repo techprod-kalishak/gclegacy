@@ -11,7 +11,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.kalishak.galacticraftlegacy.data.datamap.CelestialBodyLevelData;
 import io.kalishak.galacticraftlegacy.data.datamap.GalacticraftDataMaps;
-import io.kalishak.galacticraftlegacy.galaxies.CelestialObject;
+import io.kalishak.galacticraftlegacy.galaxies.celestial.CelestialBody;
 import io.kalishak.galacticraftlegacy.registry.GalacticraftRegistries;
 import io.kalishak.galacticraftlegacy.world.level.dimension.transition.PlanetaryTransition;
 import io.kalishak.galacticraftlegacy.world.level.dimension.transition.TransitionType;
@@ -32,9 +32,9 @@ import java.util.Optional;
  * @param gravityScale Modifier used to modify entity's gravity attribute
  * @param transition Information about transitions to this celestial body
  */
-public record CelestialBodyInfo(Holder<CelestialObject> celestialObject, AtmosphereInfo atmosphereInfo, float gravityScale, PlanetaryTransition transition, Optional<Float> fuelUsageMultiplier) {
+public record CelestialBodyInfo(Holder<CelestialBody> celestialObject, AtmosphereInfo atmosphereInfo, float gravityScale, PlanetaryTransition transition, Optional<Float> fuelUsageMultiplier) {
     public static final Codec<CelestialBodyInfo> DIRECT_CODEC = RecordCodecBuilder.create(instance -> instance.group(
-            CelestialObject.CODEC.fieldOf("celestial_object_reference").forGetter(CelestialBodyInfo::celestialObject),
+            CelestialBody.CODEC.fieldOf("celestial_object_reference").forGetter(CelestialBodyInfo::celestialObject),
             AtmosphereInfo.CODEC.fieldOf("atmosphere_info").forGetter(CelestialBodyInfo::atmosphereInfo),
             Codec.FLOAT.fieldOf("gravity_scale").forGetter(CelestialBodyInfo::gravityScale),
             TransitionType.CODEC.fieldOf("transition").forGetter(CelestialBodyInfo::transition),

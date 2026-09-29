@@ -7,12 +7,12 @@
 
 package io.kalishak.galacticraftlegacy.attachment.entity;
 
-import io.kalishak.galacticraftlegacy.galaxies.environment.CelestialBodyInfo;
+import io.kalishak.galacticraftlegacy.components.GalacticraftDataComponents;
 import io.kalishak.galacticraftlegacy.data.GalacticraftTags;
+import io.kalishak.galacticraftlegacy.galaxies.environment.CelestialBodyInfo;
 import io.kalishak.galacticraftlegacy.transfer.entity.SpaceGearEquipment;
 import io.kalishak.galacticraftlegacy.world.damagesource.GalacticraftDamageTypes;
 import io.kalishak.galacticraftlegacy.world.entity.GearEquipmentSlot;
-import io.kalishak.galacticraftlegacy.world.item.component.GalacticraftDataComponents;
 import io.kalishak.galacticraftlegacy.world.item.component.GearEquippable;
 import io.kalishak.galacticraftlegacy.world.item.component.ShieldController;
 import io.kalishak.galacticraftlegacy.world.level.material.fluid.GalacticraftFluids;

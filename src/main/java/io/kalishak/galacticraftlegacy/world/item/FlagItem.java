@@ -7,11 +7,11 @@
 
 package io.kalishak.galacticraftlegacy.world.item;
 
-import io.kalishak.galacticraftlegacy.world.entity.FlagData;
-import io.kalishak.galacticraftlegacy.world.score.race.SpaceRaceHooks;
+import io.kalishak.galacticraftlegacy.components.GalacticraftDataComponents;
 import io.kalishak.galacticraftlegacy.world.entity.Flag;
+import io.kalishak.galacticraftlegacy.world.entity.FlagData;
 import io.kalishak.galacticraftlegacy.world.item.component.FlagItemData;
-import io.kalishak.galacticraftlegacy.world.item.component.GalacticraftDataComponents;
+import io.kalishak.galacticraftlegacy.world.score.race.SpaceRaceHooks;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;

@@ -7,8 +7,8 @@
 
 package io.kalishak.galacticraftlegacy.world.level.block.machine;
 
+import io.kalishak.galacticraftlegacy.components.GalacticraftDataComponents;
 import io.kalishak.galacticraftlegacy.world.item.component.FluidTankContents;
-import io.kalishak.galacticraftlegacy.world.item.component.GalacticraftDataComponents;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.wire.network.NetworkType;
 import io.kalishak.galacticraftlegacy.world.level.block.wire.ConnectingBlock;
 import net.minecraft.core.BlockPos;

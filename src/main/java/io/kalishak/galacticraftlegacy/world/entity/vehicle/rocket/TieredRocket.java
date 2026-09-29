@@ -8,8 +8,7 @@
 package io.kalishak.galacticraftlegacy.world.entity.vehicle.rocket;
 
 import io.kalishak.galacticraftlegacy.config.CommonConfig;
-import io.kalishak.galacticraftlegacy.galaxies.CelestialBody;
-import io.kalishak.galacticraftlegacy.galaxies.CelestialObject;
+import io.kalishak.galacticraftlegacy.galaxies.celestial.CelestialBody;
 import io.kalishak.galacticraftlegacy.galaxies.environment.CelestialBodyInfo;
 import io.kalishak.galacticraftlegacy.network.payload.ChangeCameraModePayload;
 import io.kalishak.galacticraftlegacy.network.payload.EntityPlanetaryTransitionPayload;
@@ -282,9 +281,9 @@ public abstract class TieredRocket extends AbstractAutoRocket implements RocketT
     public boolean canAccess(@Nullable CelestialBodyInfo celestialBodyData) {
         if (celestialBodyData == null) return false;
 
-        Holder<CelestialObject> celestialHolder = celestialBodyData.celestialObject();
-        if (celestialHolder.isBound() && celestialHolder.value() instanceof CelestialBody celestialBody) {
-            return celestialBody.isReachable() && celestialBody.getTierRequired().getLevel() <= this.tier.getLevel();
+        Holder<CelestialBody> celestialHolder = celestialBodyData.celestialObject();
+        if (celestialHolder.isBound()) {
+            return celestialHolder.value().isReachable() && celestialHolder.value().getTierRequired().getLevel() <= this.tier.getLevel();
         }
 
         return false;

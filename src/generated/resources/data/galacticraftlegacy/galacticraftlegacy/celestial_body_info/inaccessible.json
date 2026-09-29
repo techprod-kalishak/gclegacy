@@ -5,7 +5,7 @@
     "is_corrosive": false,
     "temperature_modifier": 1.0
   },
-  "celestial_object_reference": "galacticraftlegacy:sol",
+  "celestial_object_reference": "galacticraftlegacy:sun",
   "gravity_scale": 1.0,
   "transition": {
     "type": "galacticraftlegacy:inaccessible"

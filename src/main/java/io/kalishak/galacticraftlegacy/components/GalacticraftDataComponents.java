@@ -5,16 +5,17 @@
  * See LICENSE file for more details
  */
 
-package io.kalishak.galacticraftlegacy.world.item.component;
+package io.kalishak.galacticraftlegacy.components;
 
 import com.mojang.serialization.Codec;
 import io.kalishak.galacticraftlegacy.Galacticraft;
 import io.kalishak.galacticraftlegacy.registry.SchematicVariant;
-import io.kalishak.galacticraftlegacy.world.inventory.container.memory.MemorableContainer;
 import io.kalishak.galacticraftlegacy.world.inventory.container.memory.CraftingMemory;
+import io.kalishak.galacticraftlegacy.world.inventory.container.memory.MemorableContainer;
 import io.kalishak.galacticraftlegacy.world.item.FeatureTier;
 import io.kalishak.galacticraftlegacy.world.item.KeyLock;
 import io.kalishak.galacticraftlegacy.world.item.VehicleComponentType;
+import io.kalishak.galacticraftlegacy.world.item.component.*;
 import net.minecraft.core.GlobalPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponentType;

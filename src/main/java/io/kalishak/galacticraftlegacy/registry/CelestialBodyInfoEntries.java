@@ -8,10 +8,10 @@
 package io.kalishak.galacticraftlegacy.registry;
 
 import io.kalishak.galacticraftlegacy.data.datamap.CelestialBodyLevelData;
-import io.kalishak.galacticraftlegacy.references.Constants;
-import io.kalishak.galacticraftlegacy.galaxies.environment.CelestialBodyInfo;
 import io.kalishak.galacticraftlegacy.galaxies.GalacticraftGalaxies;
 import io.kalishak.galacticraftlegacy.galaxies.environment.AtmosphereInfo;
+import io.kalishak.galacticraftlegacy.galaxies.environment.CelestialBodyInfo;
+import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.world.entity.GalacticraftEntityType;
 import io.kalishak.galacticraftlegacy.world.level.dimension.GalacticraftDimensionTypes;
 import io.kalishak.galacticraftlegacy.world.level.dimension.transition.EarthPlanetaryTranstion;
@@ -36,7 +36,7 @@ public class CelestialBodyInfoEntries {
     private static final ResourceKey<CelestialBodyInfo> ASTEROIDS = Constants.key(GalacticraftRegistries.Keys.CELESTIAL_BODY_INFO, "asteroids");
     private static final ResourceKey<CelestialBodyInfo> VENUS = Constants.key(GalacticraftRegistries.Keys.CELESTIAL_BODY_INFO, "venus");
     public static final CelestialBodyInfo INACCESSIBLE = new CelestialBodyInfo(
-            GalacticraftGalaxies.SOL,
+            GalacticraftGalaxies.SUN,
             AtmosphereInfo.builder().build(),
             1.0F,
             InaccessiblePlanetaryTransition.INSTANCE,

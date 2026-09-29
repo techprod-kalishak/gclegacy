@@ -8,7 +8,7 @@
 package io.kalishak.galacticraftlegacy.client.renderer.item.properties.numeric;
 
 import com.mojang.serialization.MapCodec;
-import io.kalishak.galacticraftlegacy.world.item.component.GalacticraftDataComponents;
+import io.kalishak.galacticraftlegacy.components.GalacticraftDataComponents;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.item.properties.numeric.NeedleDirectionHelper;
 import net.minecraft.core.BlockPos;

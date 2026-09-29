@@ -10,6 +10,7 @@ package io.kalishak.galacticraftlegacy.world.item.component;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import io.kalishak.galacticraftlegacy.components.GalacticraftDataComponents;
 import io.kalishak.galacticraftlegacy.references.GalacticraftComponents;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.core.component.DataComponentGetter;

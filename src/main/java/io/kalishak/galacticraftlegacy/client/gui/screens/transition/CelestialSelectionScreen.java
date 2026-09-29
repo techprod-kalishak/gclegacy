@@ -9,9 +9,9 @@ package io.kalishak.galacticraftlegacy.client.gui.screens.transition;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import io.kalishak.galacticraftlegacy.references.Constants;
-import io.kalishak.galacticraftlegacy.galaxies.CelestialObject;
 import io.kalishak.galacticraftlegacy.galaxies.GalacticraftGalaxies;
+import io.kalishak.galacticraftlegacy.galaxies.celestial.CelestialBody;
+import io.kalishak.galacticraftlegacy.references.Constants;
 import net.minecraft.client.GameNarrator;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.Screen;
@@ -37,18 +37,18 @@ public class CelestialSelectionScreen extends Screen {
     protected float ticksTotalF = 0;
     protected int animateGrandchildren = 0;
     protected Vec2 position = Vec2.ZERO;
-    protected Map<CelestialObject, Vec3> planetPosMap = Maps.newHashMap();
-    protected CelestialObject selectedBody;
-    protected CelestialObject lastSelectedBody;
+    protected Map<CelestialBody, Vec3> planetPosMap = Maps.newHashMap();
+    protected CelestialBody selectedBody;
+    protected CelestialBody lastSelectedBody;
     protected static int BORDER_SIZE = 0;
     protected static int BORDER_EDGE_SIZE = 0;
     protected int canCreateOffset = 24;
     protected ViewType viewState = ViewType.PREVIEW;
     protected SelectionType selectionState = SelectionType.DEFAULT;
     protected int zoomTooltipPos = 0;
-    protected CelestialObject selectedParent = GalacticraftGalaxies.SOL.get();
+    protected CelestialBody selectedParent = GalacticraftGalaxies.SUN.get();
     protected final boolean mapMode;
-    public List<CelestialObject> possibleBodies;
+    public List<CelestialBody> possibleBodies;
     //public Map<Integer, Map<String, StationDataGUI>> spaceStationMap = Maps.newHashMap();
 
     protected String selectedStationOwner = "";
@@ -61,9 +61,9 @@ public class CelestialSelectionScreen extends Screen {
     protected int lastMovePosY = -1;
     protected boolean errorLogged = false;
     public boolean canCreateStations = false;
-    protected List<CelestialObject> bodiesToRender = Lists.newArrayList();
+    protected List<CelestialBody> bodiesToRender = Lists.newArrayList();
 
-    public CelestialSelectionScreen(boolean mapMode, List<CelestialObject> possibleBodies, boolean canCreateStations) {
+    public CelestialSelectionScreen(boolean mapMode, List<CelestialBody> possibleBodies, boolean canCreateStations) {
         super(GameNarrator.NO_TITLE);
         this.mapMode = mapMode;
         this.possibleBodies = possibleBodies;

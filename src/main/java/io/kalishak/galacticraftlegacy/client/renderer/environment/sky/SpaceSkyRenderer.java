@@ -239,7 +239,7 @@ public class SpaceSkyRenderer implements CustomSkyboxRenderer, AutoCloseable {
 
             try (MeshData mesh = bufferBuilder.buildOrThrow()) {
                 this.starIndexCount = mesh.drawState().indexCount();
-                buffer = RenderSystem.getDevice().createBuffer(() -> "Stars vertex buffer", 40, mesh.vertexBuffer());
+                buffer = RenderSystem.getDevice().createBuffer(() -> "Stars vertex buffer", GpuBuffer.USAGE_COPY_DST | GpuBuffer.USAGE_VERTEX, mesh.vertexBuffer());
             }
         }
 
@@ -258,7 +258,7 @@ public class SpaceSkyRenderer implements CustomSkyboxRenderer, AutoCloseable {
             bufferBuilder.addVertex(-1.0F, 0.0F, 1.0F).setUv(sprite.getU0(), sprite.getV1());
 
             try (MeshData mesh = bufferBuilder.buildOrThrow()) {
-                buffer = RenderSystem.getDevice().createBuffer(() -> name, 32, mesh.vertexBuffer());
+                buffer = RenderSystem.getDevice().createBuffer(() -> name, GpuBuffer.USAGE_VERTEX, mesh.vertexBuffer());
             }
         }
 

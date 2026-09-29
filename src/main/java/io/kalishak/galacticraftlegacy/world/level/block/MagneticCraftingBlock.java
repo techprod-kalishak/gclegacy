@@ -7,7 +7,7 @@
 
 package io.kalishak.galacticraftlegacy.world.level.block;
 
-import io.kalishak.galacticraftlegacy.world.item.component.GalacticraftDataComponents;
+import io.kalishak.galacticraftlegacy.components.GalacticraftDataComponents;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.MagneticCraftingBlockEntity;
 import io.kalishak.galacticraftlegacy.world.level.block.machine.RotatedByToolBlock;
 import net.minecraft.core.BlockPos;
