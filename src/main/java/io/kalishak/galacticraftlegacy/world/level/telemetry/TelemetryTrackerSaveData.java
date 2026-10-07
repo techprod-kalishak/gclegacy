@@ -14,7 +14,6 @@ import net.minecraft.core.GlobalPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.entity.UniquelyIdentifyable;
 import net.minecraft.world.level.saveddata.SavedData;
@@ -22,20 +21,23 @@ import net.minecraft.world.level.saveddata.SavedDataType;
 import org.apache.commons.compress.utils.Lists;
 import org.apache.commons.compress.utils.Sets;
 
-import java.util.*;
+import java.util.List;
+import java.util.Set;
 
 public class TelemetryTrackerSaveData extends SavedData {
+    public static final Codec<TelemetryTrackerSaveData> CODEC = TelemetryTrackerSaveData.Packed.CODEC
+            .xmap(TelemetryTrackerSaveData::new, telemetryTrackerSaveData -> telemetryTrackerSaveData.packedTracker);
     public static final SavedDataType<TelemetryTrackerSaveData> SAVE_DATA_ID = new SavedDataType<>(
             Constants.id("telemetry_trackers"),
             TelemetryTrackerSaveData::new,
-            TelemetryTrackerSaveData::codec
+            CODEC
     );
     private Packed packedTracker = Packed.EMPTY;
 
-    TelemetryTrackerSaveData(ServerLevel serverLevel) {
+    TelemetryTrackerSaveData() {
     }
 
-    TelemetryTrackerSaveData(ServerLevel serverLevel, Packed packedTracker) {
+    TelemetryTrackerSaveData(Packed packedTracker) {
         this.packedTracker = packedTracker;
     }
 
@@ -46,11 +48,6 @@ public class TelemetryTrackerSaveData extends SavedData {
 
     static TelemetryTrackerSaveData.Packed get(MinecraftServer server) {
         return server.getDataStorage().computeIfAbsent(TelemetryTrackerSaveData.SAVE_DATA_ID).packedTracker;
-    }
-
-    static Codec<TelemetryTrackerSaveData> codec(ServerLevel serverLevel) {
-        return TelemetryTrackerSaveData.Packed.CODEC
-                .xmap(packed -> new TelemetryTrackerSaveData(serverLevel, packed), telemetryTrackerSaveData -> telemetryTrackerSaveData.packedTracker);
     }
 
     public record Packed(ResourceKey<Level> dimension, List<GlobalPos> trackers, Set<GloballyReferencedEntity<UniquelyIdentifyable>> trackables, List<GlobalPos> launchControllers) {

@@ -9,45 +9,48 @@ package io.kalishak.galacticraftlegacy.client;
 
 import com.google.common.reflect.TypeToken;
 import io.kalishak.galacticraftlegacy.Galacticraft;
-import io.kalishak.galacticraftlegacy.client.gui.screens.inventory.workbench.NasaWorkbenchEmptyPageScreen;
-import io.kalishak.galacticraftlegacy.client.gui.screens.inventory.workbench.NasaWorkbenchScreen;
-import io.kalishak.galacticraftlegacy.client.gui.screens.inventory.workbench.NasaWorkbenchPageScreen;
-import io.kalishak.galacticraftlegacy.client.model.block.EmergencyPostModel;
-import io.kalishak.galacticraftlegacy.client.model.entity.Tier1RocketModel;
-import io.kalishak.galacticraftlegacy.client.model.gear.FrequencyModuleModel;
-import io.kalishak.galacticraftlegacy.client.model.item.ThrownMeteorChunkModel;
-import io.kalishak.galacticraftlegacy.client.model.block.NasaWorkbenchModel;
-import io.kalishak.galacticraftlegacy.client.renderer.blockentity.*;
-import io.kalishak.galacticraftlegacy.client.renderer.environment.sky.MoonSkyRenderer;
-import io.kalishak.galacticraftlegacy.client.renderer.environment.sky.OrbitalSkyRenderer;
-import io.kalishak.galacticraftlegacy.client.renderer.environment.sky.SpaceSkyRenderer;
-import io.kalishak.galacticraftlegacy.client.renderer.special.*;
-import io.kalishak.galacticraftlegacy.references.Constants;
+import io.kalishak.galacticraftlegacy.client.data.GalacticraftSpritesProvider;
 import io.kalishak.galacticraftlegacy.client.gui.SensorGlassesOverlay;
 import io.kalishak.galacticraftlegacy.client.gui.TanksLayer;
 import io.kalishak.galacticraftlegacy.client.gui.screens.inventory.*;
+import io.kalishak.galacticraftlegacy.client.gui.screens.inventory.workbench.NasaWorkbenchEmptyPageScreen;
+import io.kalishak.galacticraftlegacy.client.gui.screens.inventory.workbench.NasaWorkbenchPageScreen;
+import io.kalishak.galacticraftlegacy.client.gui.screens.inventory.workbench.NasaWorkbenchScreen;
 import io.kalishak.galacticraftlegacy.client.gui.screens.recipebook.GalacticraftClientRecipeBookCategories;
+import io.kalishak.galacticraftlegacy.client.gui.screens.transition.SpaceTravelLoadingScreen;
 import io.kalishak.galacticraftlegacy.client.item.ColorByFluid;
 import io.kalishak.galacticraftlegacy.client.model.FlagModel;
+import io.kalishak.galacticraftlegacy.client.model.block.EmergencyPostModel;
+import io.kalishak.galacticraftlegacy.client.model.block.NasaWorkbenchModel;
+import io.kalishak.galacticraftlegacy.client.model.entity.Tier1RocketModel;
+import io.kalishak.galacticraftlegacy.client.model.gear.FrequencyModuleModel;
 import io.kalishak.galacticraftlegacy.client.model.gear.OxygenGearModel;
-import io.kalishak.galacticraftlegacy.client.model.gear.ParachuteModel;
-import io.kalishak.galacticraftlegacy.client.renderer.entity.*;
-import io.kalishak.galacticraftlegacy.client.renderer.entity.layer.gear.OxygenMaskLayer;
 import io.kalishak.galacticraftlegacy.client.model.gear.OxygenTankModel;
+import io.kalishak.galacticraftlegacy.client.model.gear.ParachuteModel;
 import io.kalishak.galacticraftlegacy.client.model.geom.GalacticraftModelLayers;
-import io.kalishak.galacticraftlegacy.client.renderer.GalacticraftSheets;
-import io.kalishak.galacticraftlegacy.client.renderer.entity.layer.gear.GearEquipmentLayer;
-import io.kalishak.galacticraftlegacy.client.renderer.entity.state.GearRenderState;
-import io.kalishak.galacticraftlegacy.client.renderer.environment.*;
 import io.kalishak.galacticraftlegacy.client.model.item.KeyModel;
+import io.kalishak.galacticraftlegacy.client.model.item.ThrownMeteorChunkModel;
+import io.kalishak.galacticraftlegacy.client.renderer.GalacticraftSheets;
+import io.kalishak.galacticraftlegacy.client.renderer.blockentity.*;
+import io.kalishak.galacticraftlegacy.client.renderer.entity.*;
+import io.kalishak.galacticraftlegacy.client.renderer.entity.layer.gear.GearEquipmentLayer;
+import io.kalishak.galacticraftlegacy.client.renderer.entity.layer.gear.OxygenMaskLayer;
+import io.kalishak.galacticraftlegacy.client.renderer.entity.state.GearRenderState;
+import io.kalishak.galacticraftlegacy.client.renderer.environment.DummyCloudsRenderer;
+import io.kalishak.galacticraftlegacy.client.renderer.environment.DummyWeatherRenderer;
+import io.kalishak.galacticraftlegacy.client.renderer.environment.sky.MoonSkyRenderer;
+import io.kalishak.galacticraftlegacy.client.renderer.environment.sky.OrbitalSkyRenderer;
+import io.kalishak.galacticraftlegacy.client.renderer.environment.sky.SpaceSkyRenderer;
 import io.kalishak.galacticraftlegacy.client.renderer.item.properties.numeric.DungeonLocatorAngle;
 import io.kalishak.galacticraftlegacy.client.renderer.item.properties.range.FluidAmountProperty;
 import io.kalishak.galacticraftlegacy.client.renderer.item.properties.select.SchematicTierProperty;
-import io.kalishak.galacticraftlegacy.client.data.GalacticraftSpritesProvider;
+import io.kalishak.galacticraftlegacy.client.renderer.special.*;
+import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.world.entity.GalacticraftEntityType;
 import io.kalishak.galacticraftlegacy.world.inventory.GalacticraftMenuType;
 import io.kalishak.galacticraftlegacy.world.level.block.GalacticraftBlocks;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityType;
+import io.kalishak.galacticraftlegacy.world.level.dimension.GalacticraftDimensions;
 import io.kalishak.galacticraftlegacy.world.level.material.fluid.GalacticraftFluidType;
 import io.kalishak.galacticraftlegacy.world.level.material.fluid.GalacticraftFluids;
 import net.minecraft.client.Minecraft;
@@ -245,7 +248,7 @@ public class GalacticraftClient {
     }
 
     private void registerDimensionTransitionScreen(RegisterDimensionTransitionScreenEvent event) {
-        //event.registerIncomingEffect(GalacticraftDimensions.MOON, SpaceTravelLoadingScreen::new);
+        event.registerIncomingEffect(GalacticraftDimensions.MOON, SpaceTravelLoadingScreen::new);
     }
 
     private void registerTintSources(RegisterColorHandlersEvent.ItemTintSources event) {

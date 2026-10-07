@@ -17,6 +17,8 @@ import io.kalishak.galacticraftlegacy.world.entity.vehicle.rocket.TieredRocket;
 import io.kalishak.galacticraftlegacy.world.item.FeatureTier;
 import io.kalishak.galacticraftlegacy.world.level.dimension.SpaceStationRecipe;
 import net.minecraft.core.Holder;
+import net.minecraft.core.Registry;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -36,17 +38,17 @@ import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
 import java.util.Collection;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
-import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 
-public class CelestialBody implements FeatureElement {
+public class CelestialBody implements FeatureElement, Comparable<CelestialBody> {
     public static final Codec<Holder<CelestialBody>> CODEC = Codec.lazyInitialized(GalacticraftRegistries.CELESTIAL_OBJECT::holderByNameCodec);
     public static final StreamCodec<RegistryFriendlyByteBuf, CelestialBody> STREAM_CODEC = ByteBufCodecs.registry(GalacticraftRegistries.Keys.CELESTIAL_BODY);
-    private final Supplier<CelestialObjectType> celestialBodyType;
-    private final @Nullable Supplier<CelestialBody> parent;
+    private final Holder<CelestialObjectType> celestialBodyType;
+    private final @Nullable ResourceKey<CelestialBody> parent;
     private final FeatureFlagSet requiredFeatures;
     private final Vec3 initialPosition;
     private final String descriptionId;
@@ -61,36 +63,40 @@ public class CelestialBody implements FeatureElement {
     private final Vec3 ringColors;
     private final TagKey<ChecklistEntry> checklist;
     private final CelestialBodyIcon icon;
-    private final Optional<ResourceKey<SpaceStationRecipe>> recipe;
+    private final @Nullable ResourceKey<SpaceStationRecipe> recipe;
 
-    protected CelestialBody(Supplier<CelestialObjectType> celestialBodyType, Supplier<CelestialBody> parent, FeatureFlagSet requiredFeatures, Vec3 initialPosition, String descriptionId, float relativeSize,
-                            float relativeOrbitTime, float phaseShift, ScalableDistance relativeDistanceFromCenter, boolean forceLoad, @Nullable ResourceKey<DimensionType> targetDimension,
-                            @Nullable FeatureTier requiredTier, AtmosphereInfo atmosphereInfo, Vec3 ringColors, TagKey<ChecklistEntry> checklist, CelestialBodyIcon icon, Optional<ResourceKey<SpaceStationRecipe>> recipe) {
-        this.celestialBodyType = celestialBodyType;
-        this.parent = parent;
-        this.requiredFeatures = requiredFeatures;
-        this.initialPosition = initialPosition;
-        this.descriptionId = descriptionId;
-        this.relativeSize = relativeSize;
-        this.relativeOrbitTime = relativeOrbitTime;
-        this.phaseShift = phaseShift;
-        this.relativeDistanceFromCenter = relativeDistanceFromCenter;
-        this.forceLoad = forceLoad;
-        this.targetDimension = targetDimension;
-        this.requiredTier = requiredTier;
-        this.atmosphereInfo = atmosphereInfo;
-        this.ringColors = ringColors;
-        this.checklist = checklist;
-        this.icon = icon;
-        this.recipe = recipe;
+    protected CelestialBody(Builder builder, ResourceKey<CelestialBody> key) {
+        this.celestialBodyType = builder.celestialObjectType;
+        this.parent = builder.parent;
+        this.requiredFeatures = builder.requiredFeatures;
+        this.initialPosition = builder.initialPosition;
+        this.descriptionId = builder.descriptionId.get(key);
+        this.relativeSize = builder.relativeSize;
+        this.relativeOrbitTime = builder.relativeOrbitTime;
+        this.phaseShift = builder.phaseShift;
+        this.relativeDistanceFromCenter = builder.relativeDistanceFromCenter;
+        this.forceLoad = builder.forceLoad;
+        this.targetDimension = builder.targetDimension;
+        this.requiredTier = builder.requiredTier;
+        this.atmosphereInfo = builder.atmosphereInfo;
+        this.ringColors = builder.ringColors;
+        this.checklist = builder.checklist;
+        this.icon = builder.model.get(key);
+        this.recipe = builder.spaceStationRecipe.get(key).orElse(null);
     }
 
-    public Supplier<CelestialObjectType> getCelestialBodyType() {
-        return this.celestialBodyType;
+    public CelestialObjectType getCelestialBodyType() {
+        return this.celestialBodyType.value();
     }
 
-    public @Nullable Supplier<CelestialBody> getParent() {
+    public @Nullable ResourceKey<CelestialBody> getParent() {
         return this.parent;
+    }
+
+    public @Nullable CelestialBody getParent(RegistryAccess registryAccess) {
+        if (getParent() == null) return null;
+
+        return registryAccess.getOrThrow(getParent()).value();
     }
 
     @Override
@@ -185,8 +191,47 @@ public class CelestialBody implements FeatureElement {
         return this.checklist;
     }
 
-    public Optional<ResourceKey<SpaceStationRecipe>> getRecipe() {
+    public @Nullable ResourceKey<SpaceStationRecipe> getRecipe() {
         return this.recipe;
+    }
+
+    public boolean isLesserBody() {
+        return isSatellite() || getCelestialBodyType() == CelestialObjectType.MOON.value();
+    }
+
+    public boolean isSatellite() {
+        return hasParent() && this.recipe != null;
+    }
+
+    public boolean hasParent() {
+        return isSatellite() || this.parent != null;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof CelestialBody other) {
+            if (other == this) {
+                return true;
+            } else if (Objects.nonNull(this.targetDimension) && Objects.nonNull(other.targetDimension)) {
+                return this.targetDimension.equals(other.targetDimension);
+            }
+        }
+
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return 31 * this.getCelestialBodyType().hashCode() + getDescriptionId().hashCode();
+    }
+
+    @Override
+    public int compareTo(@NonNull CelestialBody o) {
+        return Float.compare(this.relativeDistanceFromCenter.unscaled(), o.relativeDistanceFromCenter.unscaled());
+    }
+
+    public static boolean areSameType(CelestialBody first, CelestialBody other) {
+        return first.getCelestialBodyType().equals(other.getCelestialBodyType());
     }
 
     public static boolean isOwnedByPlayer(CelestialBodyInstance celestialBody, Player player) {
@@ -195,6 +240,60 @@ public class CelestialBody implements FeatureElement {
 
     public static Set<CelestialBody> showReachable(Collection<CelestialBody> registry, TieredRocket rocket, Player player) {
         return registry.stream().filter(celestialObject -> celestialObject.isReachable(rocket.getFeatureTier())).collect(Collectors.toSet());
+    }
+
+    public static Collection<CelestialBody> getChildren(RegistryAccess access, CelestialBody celestialBody) {
+        if (!celestialBody.getCelestialBodyType().allowChildren()) {
+            return Set.of();
+        }
+
+        Registry<CelestialBody> celestialBodies = access.lookupOrThrow(GalacticraftRegistries.Keys.CELESTIAL_BODY);
+
+        return celestialBodies.stream()
+                .filter(body -> Objects.nonNull(body.getParent()))
+                .filter(child -> celestialBodies.getResourceKey(celestialBody).filter(bodyId -> bodyId.equals(child.getParent())).isPresent())
+                .toList();
+    }
+
+    public static Collection<CelestialBody> getSiblings(RegistryAccess access, CelestialBody celestialBody) {
+        Registry<CelestialBody> celestialBodies = access.lookupOrThrow(GalacticraftRegistries.Keys.CELESTIAL_BODY);
+
+        return celestialBodies.stream()
+                .filter(body -> Objects.nonNull(body.getParent()))
+                .filter(body -> haveSameParent(celestialBody, body))
+                .toList();
+    }
+
+    public static CelestialBody getLastParent(RegistryAccess access, CelestialBody child) {
+        if (child.getParent() == null) {
+            return child;
+        }
+
+        Holder<CelestialBody> parent = access.getOrThrow(child.getParent());
+
+        if (parent.value().getParent() != null) {
+            return getLastParent(access, parent.value());
+        }
+
+        return parent.value();
+    }
+
+    public static @Nullable CelestialBody getStar(RegistryAccess access, CelestialBody body) {
+        CelestialBody solarSystem = getLastParent(access, body);
+
+        if (solarSystem instanceof SolarSystem system) {
+            return system.getStar(access.lookupOrThrow(GalacticraftRegistries.Keys.CELESTIAL_BODY));
+        }
+
+        return null;
+    }
+
+    private static boolean haveSameParent(CelestialBody first, CelestialBody second) {
+        if (first.getParent() == null || second.getParent() == null) {
+            return false;
+        }
+
+        return first.getParent().equals(second.getParent());
     }
 
     public static class Builder {
@@ -208,8 +307,8 @@ public class CelestialBody implements FeatureElement {
         private DependantName<CelestialBody, String> descriptionId = DESCRIPTION_ID;
         private DependantName<CelestialBody, CelestialBodyIcon> model = MODEL_ID;
         private DependantName<CelestialBody, Optional<ResourceKey<SpaceStationRecipe>>> spaceStationRecipe = _ -> Optional.empty();
-        private final Supplier<CelestialObjectType> celestialObjectType;
-        private @Nullable Supplier<CelestialBody> parent;
+        private final Holder<CelestialObjectType> celestialObjectType;
+        private @Nullable ResourceKey<CelestialBody> parent;
         private Vec3 initialPosition = Vec3.ZERO;
         private float relativeSize = 1.0F;
         private float relativeOrbitTime = 1.0F;
@@ -222,15 +321,15 @@ public class CelestialBody implements FeatureElement {
         private Vec3 ringColors = new Vec3(0.1F, 0.9F, 0.6F);
         private TagKey<ChecklistEntry> checklist;
 
-        private Builder(Supplier<CelestialObjectType> celestialObjectType) {
+        private Builder(Holder<CelestialObjectType> celestialObjectType) {
             this.celestialObjectType = celestialObjectType;
         }
 
-        public static Builder of(Supplier<CelestialObjectType> celestialObjectType) {
+        public static Builder of(Holder<CelestialObjectType> celestialObjectType) {
             return new Builder(celestialObjectType);
         }
 
-        public Builder parent(Supplier<CelestialBody> parent) {
+        public Builder parent(ResourceKey<CelestialBody> parent) {
             this.parent = parent;
             return this;
         }
@@ -334,25 +433,7 @@ public class CelestialBody implements FeatureElement {
         }
 
         public CelestialBody create(ResourceKey<CelestialBody> id) {
-            return new CelestialBody(
-                    this.celestialObjectType,
-                    this.parent,
-                    this.requiredFeatures,
-                    this.initialPosition,
-                    this.descriptionId.get(id),
-                    this.relativeSize,
-                    this.relativeOrbitTime,
-                    this.phaseShift,
-                    this.relativeDistanceFromCenter,
-                    this.forceLoad,
-                    this.targetDimension,
-                    this.requiredTier,
-                    this.atmosphereInfo,
-                    this.ringColors,
-                    this.checklist,
-                    this.model.get(id),
-                    this.spaceStationRecipe.get(id)
-            );
+            return new CelestialBody(this, id);
         }
     }
 }

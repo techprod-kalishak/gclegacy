@@ -26,6 +26,7 @@ import net.minecraft.world.entity.EntityReference;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.phys.Vec3;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent;
@@ -110,6 +111,15 @@ public final class GalacticraftDataComponents {
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<Integer>> VEHICLE_STORAGE = REGISTRY.registerComponentType(
             "vehicle_storage",
             builder -> builder.persistent(ExtraCodecs.intRange(0, 4)).networkSynchronized(ByteBufCodecs.INT)
+    );
+
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<Vec3>> BODY_POSITION = REGISTRY.registerComponentType(
+            "body_position",
+            builder -> builder.persistent(Vec3.CODEC).networkSynchronized(Vec3.STREAM_CODEC)
+    );
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<EntityReference<Player>>> BODY_OWNER = REGISTRY.registerComponentType(
+            "body_owner",
+            builder -> builder.persistent(EntityReference.codec()).networkSynchronized(EntityReference.streamCodec())
     );
 
     public static void init(IEventBus bus) {

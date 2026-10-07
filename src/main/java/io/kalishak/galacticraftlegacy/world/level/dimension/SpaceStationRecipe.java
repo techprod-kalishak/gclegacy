@@ -21,8 +21,8 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
@@ -43,9 +43,7 @@ public record SpaceStationRecipe(List<SizedIngredient> ingredients) {
             .listOf()
             .xmap(SpaceStationRecipe::new, SpaceStationRecipe::ingredients);
     public static final Codec<Holder<SpaceStationRecipe>> CODEC = RegistryFixedCodec.create(GalacticraftRegistries.Keys.SPACE_STATION_RECIPE);
-    public static final StreamCodec<RegistryFriendlyByteBuf, SpaceStationRecipe> STREAM_CODEC = SizedIngredient.STREAM_CODEC
-            .apply(ByteBufCodecs.list())
-            .map(SpaceStationRecipe::new, SpaceStationRecipe::ingredients);
+    public static final StreamCodec<RegistryFriendlyByteBuf, Holder<SpaceStationRecipe>> STREAM_CODEC = ByteBufCodecs.holderRegistry(GalacticraftRegistries.Keys.SPACE_STATION_RECIPE);
     public static final ResourceKey<SpaceStationRecipe> EARTH_SPACE_STATION_RECIPE = Constants.key(GalacticraftRegistries.Keys.SPACE_STATION_RECIPE, "earth");
 
     public static void bootstrap(BootstrapContext<SpaceStationRecipe> context) {
@@ -62,7 +60,7 @@ public record SpaceStationRecipe(List<SizedIngredient> ingredients) {
         );
     }
 
-    public boolean matches(@NonNull ServerPlayer player, boolean doRemove) {
+    public boolean matches(@NonNull Player player, boolean doRemove) {
         ResourceHandler<ItemResource> playerInventory = PlayerInventoryWrapper.of(player);
 
         try (Transaction transaction = Transaction.open(null)) {
