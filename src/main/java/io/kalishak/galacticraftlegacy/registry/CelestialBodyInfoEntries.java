@@ -8,8 +8,8 @@
 package io.kalishak.galacticraftlegacy.registry;
 
 import io.kalishak.galacticraftlegacy.data.datamap.CelestialBodyLevelData;
-import io.kalishak.galacticraftlegacy.galaxies.GalacticraftGalaxies;
-import io.kalishak.galacticraftlegacy.galaxies.environment.AtmosphereInfo;
+import io.kalishak.galacticraftlegacy.galaxies.BuiltinGalaxies;
+import io.kalishak.galacticraftlegacy.galaxies.celestial.Celestial;
 import io.kalishak.galacticraftlegacy.galaxies.environment.CelestialBodyInfo;
 import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.world.entity.GalacticraftEntityType;
@@ -18,7 +18,7 @@ import io.kalishak.galacticraftlegacy.world.level.dimension.transition.EarthPlan
 import io.kalishak.galacticraftlegacy.world.level.dimension.transition.FixedPlanetaryTransition;
 import io.kalishak.galacticraftlegacy.world.level.dimension.transition.InaccessiblePlanetaryTransition;
 import io.kalishak.galacticraftlegacy.world.level.dimension.transition.LanderPlanetaryTransition;
-import net.minecraft.core.registries.Registries;
+import net.minecraft.core.HolderGetter;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.dimension.BuiltinDimensionTypes;
@@ -28,23 +28,16 @@ import net.neoforged.neoforge.common.data.DataMapProvider;
 import java.util.Optional;
 
 public class CelestialBodyInfoEntries {
-    private static final ResourceKey<CelestialBodyInfo> INACCESSIBLE_KEY = Constants.key(GalacticraftRegistries.Keys.CELESTIAL_BODY_INFO, "inaccessible");
+    public static final ResourceKey<CelestialBodyInfo> INACCESSIBLE = Constants.key(GalacticraftRegistries.Keys.CELESTIAL_BODY_INFO, "inaccessible");
     private static final ResourceKey<CelestialBodyInfo> OVERWORLD = Constants.key(GalacticraftRegistries.Keys.CELESTIAL_BODY_INFO, "overworld");
     private static final ResourceKey<CelestialBodyInfo> MOON = Constants.key(GalacticraftRegistries.Keys.CELESTIAL_BODY_INFO, "moon");
     private static final ResourceKey<CelestialBodyInfo> ORBIT = Constants.key(GalacticraftRegistries.Keys.CELESTIAL_BODY_INFO, "orbit");
     private static final ResourceKey<CelestialBodyInfo> MARS = Constants.key(GalacticraftRegistries.Keys.CELESTIAL_BODY_INFO, "mars");
     private static final ResourceKey<CelestialBodyInfo> ASTEROIDS = Constants.key(GalacticraftRegistries.Keys.CELESTIAL_BODY_INFO, "asteroids");
     private static final ResourceKey<CelestialBodyInfo> VENUS = Constants.key(GalacticraftRegistries.Keys.CELESTIAL_BODY_INFO, "venus");
-    public static final CelestialBodyInfo INACCESSIBLE = new CelestialBodyInfo(
-            GalacticraftGalaxies.SUN,
-            AtmosphereInfo.builder().build(),
-            1.0F,
-            InaccessiblePlanetaryTransition.INSTANCE,
-            Optional.empty()
-    );
 
     public static void buildDataMaps(DataMapProvider.Builder<CelestialBodyLevelData, DimensionType> dataMapBuilder) {
-        CelestialBodyLevelData inaccessible = new CelestialBodyLevelData(INACCESSIBLE_KEY);
+        CelestialBodyLevelData inaccessible = new CelestialBodyLevelData(INACCESSIBLE);
         dataMapBuilder.add(BuiltinDimensionTypes.OVERWORLD, new CelestialBodyLevelData(OVERWORLD), false)
                 .add(BuiltinDimensionTypes.OVERWORLD_CAVES, inaccessible, false)
                 .add(BuiltinDimensionTypes.NETHER, inaccessible, false)
@@ -56,11 +49,17 @@ public class CelestialBodyInfoEntries {
                 .add(GalacticraftDimensionTypes.VENUS, new CelestialBodyLevelData(VENUS), false);
     }
     public static void bootstrap(BootstrapContext<CelestialBodyInfo> cxt) {
-        cxt.register(INACCESSIBLE_KEY, INACCESSIBLE);
+        HolderGetter<Celestial> celestials = cxt.lookup(GalacticraftRegistries.Keys.CELESTIAL);
+
+        cxt.register(INACCESSIBLE, new CelestialBodyInfo(
+                celestials.getOrThrow(BuiltinGalaxies.SOL),
+                0.0F,
+                InaccessiblePlanetaryTransition.INSTANCE,
+                Optional.empty()
+        ));
 
         cxt.register(OVERWORLD, new CelestialBodyInfo(
-                GalacticraftGalaxies.OVERWORLD,
-                AtmosphereInfo.EARTH,
+                celestials.getOrThrow(BuiltinGalaxies.EARTH),
                 1.0F,
                 EarthPlanetaryTranstion.INSTANCE,
                 Optional.empty()
@@ -68,10 +67,7 @@ public class CelestialBodyInfoEntries {
         cxt.register(
                 ORBIT,
                 new CelestialBodyInfo(
-                        GalacticraftGalaxies.SATELLITE,
-                        AtmosphereInfo.builder()
-                                .temperatureModifier(-0.9F)
-                                .build(),
+                        celestials.getOrThrow(BuiltinGalaxies.SATELLITE),
                         0.165F,
                         FixedPlanetaryTransition.spaceStation(),
                         Optional.of(0.2F)
@@ -80,10 +76,7 @@ public class CelestialBodyInfoEntries {
         cxt.register(
                 MOON,
                 new CelestialBodyInfo(
-                        GalacticraftGalaxies.MOON,
-                        AtmosphereInfo.builder()
-                                .temperatureModifier(-0.9F)
-                                .build(),
+                        celestials.getOrThrow(BuiltinGalaxies.MOON),
                         0.165F,
                         new LanderPlanetaryTransition(GalacticraftEntityType.LANDER),
                         Optional.of(0.2F)
@@ -92,13 +85,7 @@ public class CelestialBodyInfoEntries {
         cxt.register(
                 MARS,
                 new CelestialBodyInfo(
-                        GalacticraftGalaxies.MARS,
-                        AtmosphereInfo.builder()
-                                .gas(Constants.key(Registries.FLUID, "carbon_dioxide"), 0.95)
-                                .gas(Constants.key(Registries.FLUID, "nitrogen"), 0.03)
-                                .gas(Constants.key(Registries.FLUID, "argon"), 0.02)
-                                .temperatureModifier(-0.5F)
-                                .build(),
+                        celestials.getOrThrow(BuiltinGalaxies.MARS),
                         0.38F,
                         new LanderPlanetaryTransition(GalacticraftEntityType.LANDING_BALLOONS),
                         Optional.of(0.4F)
@@ -107,10 +94,7 @@ public class CelestialBodyInfoEntries {
         cxt.register(
                 ASTEROIDS,
                 new CelestialBodyInfo(
-                        GalacticraftGalaxies.ASTEROIDS,
-                        AtmosphereInfo.builder()
-                                .temperatureModifier(-0.9F)
-                                .build(),
+                        celestials.getOrThrow(BuiltinGalaxies.ASTEROIDS),
                         0.01F,
                         new LanderPlanetaryTransition(GalacticraftEntityType.ENTRY_POD),
                         Optional.of(0.1F)
@@ -119,12 +103,7 @@ public class CelestialBodyInfoEntries {
         cxt.register(
                 VENUS,
                 new CelestialBodyInfo(
-                        GalacticraftGalaxies.VENUS,
-                        AtmosphereInfo.builder()
-                                .gas(Constants.key(Registries.FLUID, "carbon_dioxide"), 0.965)
-                                .gas(Constants.key(Registries.FLUID, "nitrogen"), 0.035)
-                                .temperatureModifier(2.0F)
-                                .build(),
+                        celestials.getOrThrow(BuiltinGalaxies.VENUS),
                         0.904F,
                         new LanderPlanetaryTransition(GalacticraftEntityType.ENTRY_POD),
                         Optional.of(0.9F)

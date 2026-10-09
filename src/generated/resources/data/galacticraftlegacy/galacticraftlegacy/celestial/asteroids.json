@@ -1,0 +1,35 @@
+{
+  "parent": "galacticraftlegacy:sun",
+  "atmosphere_info": {
+    "gas_composition": {
+      "galacticraftlegacy:argon": 0.93,
+      "galacticraftlegacy:carbon_dioxide": 0.04,
+      "galacticraftlegacy:nitrogen": 78.08,
+      "galacticraftlegacy:oxygen": 20.95
+    },
+    "has_precipitation": true,
+    "is_corrosive": false,
+    "temperature_modifier": 1.0
+  },
+  "checklist": "#galacticraftlegacy:asteroids",
+  "description": {
+    "translate": "celestial_body.galacticraftlegacy.asteroids"
+  },
+  "icon": {
+    "icon": "galacticraftlegacy:textures/celestial_body/asteroids"
+  },
+  "phase_shift": 0.79030716,
+  "relative_distance": {
+    "scaled": 1.375,
+    "unscaled": 1.375
+  },
+  "relative_orbit_size": 45.0,
+  "relative_size": 1.0,
+  "required_tier": "ultimate",
+  "ring_colors": [
+    0.10000000149011612,
+    0.8999999761581421,
+    0.6000000238418579
+  ],
+  "target_dimension": "galacticraftlegacy:asteroids"
+}

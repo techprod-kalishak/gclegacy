@@ -23,6 +23,6 @@ public record CelestialBodyLevelData(ResourceKey<CelestialBodyInfo> bodyInfo) {
     }
 
     public @NonNull CelestialBodyInfo getOrDefault(HolderGetter<CelestialBodyInfo> holderGetter) {
-        return get(holderGetter) instanceof CelestialBodyInfo celestialBodyInfo ? celestialBodyInfo : CelestialBodyInfoEntries.INACCESSIBLE;
+        return get(holderGetter) instanceof CelestialBodyInfo celestialBodyInfo ? celestialBodyInfo : holderGetter.getOrThrow(CelestialBodyInfoEntries.INACCESSIBLE).value();
     }
 }

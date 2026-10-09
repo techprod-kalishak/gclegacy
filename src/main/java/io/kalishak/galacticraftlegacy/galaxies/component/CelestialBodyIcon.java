@@ -24,4 +24,8 @@ public record CelestialBodyIcon(Identifier icon, Optional<Identifier> ringsIcon)
             Identifier.fromNamespaceAndPath(Galacticraft.MODID, "textures/celestial_body/dummy"),
             Optional.empty()
     );
+    public static final CelestialBodyIcon SATELLITE = new CelestialBodyIcon(
+            Identifier.fromNamespaceAndPath(Galacticraft.MODID, "textures/celestial_body/satellite"),
+            Optional.empty()
+    );
 }

@@ -1,0 +1,22 @@
+{
+  "type": "galacticraftlegacy:satellite",
+  "parent": "galacticraftlegacy:earth",
+  "checklist": "#galacticraftlegacy:satellite",
+  "description": {
+    "translate": "celestial_body.galacticraftlegacy.satellite"
+  },
+  "phase_shift": 0.0,
+  "recipe": "galacticraftlegacy:earth",
+  "relative_distance": {
+    "scaled": 9.0,
+    "unscaled": 9.0
+  },
+  "relative_orbit_size": 20.0,
+  "relative_size": 0.2667,
+  "ring_colors": [
+    0.10000000149011612,
+    0.8999999761581421,
+    0.6000000238418579
+  ],
+  "target_dimension": "galacticraftlegacy:satellite"
+}

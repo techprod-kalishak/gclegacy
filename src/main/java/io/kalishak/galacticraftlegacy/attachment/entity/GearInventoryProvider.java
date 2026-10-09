@@ -73,7 +73,7 @@ public abstract class GearInventoryProvider implements ParachuteFalling {
         SpaceGearEquipment spaceGearEquipment = getGearEquipment();
 
         if (!gearOwner.is(EntityTypeTags.UNDEAD)) {
-            if (!celestialBodyInfo.atmosphereInfo().isBreathable()) {
+            if (!celestialBodyInfo.celestialObject().value().atmosphereInfo().isBreathable()) {
                 if (!mayBreath(gearOwner) || !depleteOxygen()) {
                     if (this.lastSuffocationDamageTick++ > 120) {
                         gearOwner.hurtServer(serverLevel, serverLevel.damageSources().source(GalacticraftDamageTypes.SUFFOCATION), 0.2F);
@@ -86,14 +86,14 @@ public abstract class GearInventoryProvider implements ParachuteFalling {
                 }
             }
 
-            float temperatureModifier = celestialBodyInfo.atmosphereInfo().getTemperatureModifier();
+            float temperatureModifier = celestialBodyInfo.celestialObject().value().atmosphereInfo().getTemperatureModifier();
             if (temperatureModifier != 1.0) {
                 if (!isThermalPaddingEffective(temperatureModifier)) {
                     gearOwner.hurtServer(serverLevel, serverLevel.damageSources().source(GalacticraftDamageTypes.SUN_RADIATION), 0.2F);
                 }
             }
 
-            if (celestialBodyInfo.atmosphereInfo().isCorrosive()) {
+            if (celestialBodyInfo.celestialObject().value().atmosphereInfo().isCorrosive()) {
                 boolean isProtected = false;
 
                 ItemStack shieldItem = spaceGearEquipment.get(GearEquipmentSlot.SHIELD);

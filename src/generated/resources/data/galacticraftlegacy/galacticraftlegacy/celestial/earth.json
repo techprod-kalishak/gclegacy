@@ -1,0 +1,33 @@
+{
+  "parent": "galacticraftlegacy:sun",
+  "atmosphere_info": {
+    "gas_composition": {
+      "galacticraftlegacy:argon": 0.9300000071525574,
+      "galacticraftlegacy:carbon_dioxide": 0.03999999910593033,
+      "galacticraftlegacy:nitrogen": 78.08000183105469,
+      "galacticraftlegacy:oxygen": 20.950000762939453
+    },
+    "has_precipitation": true,
+    "is_corrosive": false,
+    "temperature_modifier": 1.0
+  },
+  "checklist": "#galacticraftlegacy:overworld",
+  "description": {
+    "translate": "celestial_body.galacticraftlegacy.earth"
+  },
+  "icon": {
+    "icon": "galacticraftlegacy:textures/celestial_body/earth"
+  },
+  "phase_shift": 0.0,
+  "relative_distance": {
+    "scaled": 1.0,
+    "unscaled": 1.0
+  },
+  "relative_orbit_size": 1.0,
+  "relative_size": 1.0,
+  "ring_colors": [
+    0.10000000149011612,
+    0.8999999761581421,
+    0.6000000238418579
+  ]
+}

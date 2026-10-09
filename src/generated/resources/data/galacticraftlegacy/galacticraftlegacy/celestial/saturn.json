@@ -1,0 +1,34 @@
+{
+  "parent": "galacticraftlegacy:sun",
+  "atmosphere_info": {
+    "gas_composition": {
+      "galacticraftlegacy:argon": 0.93,
+      "galacticraftlegacy:carbon_dioxide": 0.04,
+      "galacticraftlegacy:nitrogen": 78.08,
+      "galacticraftlegacy:oxygen": 20.95
+    },
+    "has_precipitation": true,
+    "is_corrosive": false,
+    "temperature_modifier": 1.0
+  },
+  "checklist": [],
+  "description": {
+    "translate": "celestial_body.galacticraftlegacy.saturn"
+  },
+  "icon": {
+    "icon": "galacticraftlegacy:textures/celestial_body/saturn",
+    "rings_icon": "galacticraftlegacy:textures/gui/celestial_body/saturn_rings"
+  },
+  "phase_shift": 5.45,
+  "relative_distance": {
+    "scaled": 1.75,
+    "unscaled": 1.75
+  },
+  "relative_orbit_size": 29.463308,
+  "relative_size": 1.0,
+  "ring_colors": [
+    0.10000000149011612,
+    0.8999999761581421,
+    0.6000000238418579
+  ]
+}

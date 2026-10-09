@@ -7,6 +7,7 @@
 
 package io.kalishak.galacticraftlegacy.data;
 
+import io.kalishak.galacticraftlegacy.galaxies.celestial.Celestial;
 import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.registry.ChecklistEntry;
 import io.kalishak.galacticraftlegacy.registry.GalacticraftRegistries;
@@ -134,6 +135,13 @@ public final class GalacticraftTags {
         public static final BlockItemTagId STORAGE_BLOCKS_RAW_SILICON = combinedTagKey("storage_blocks/raw_silicon");
         public static final BlockItemTagId LIT_TORCHES = combinedTagKey("lit_torches");
         public static final BlockItemTagId LIT_TORCHES_STANDING = combinedTagKey("lit_torches/standing");
+    }
+
+    public static class Celestials {
+        public static final TagKey<Celestial> MOONS = tagKey(GalacticraftRegistries.Keys.CELESTIAL, "moons");
+        public static final TagKey<Celestial> PLANETS = tagKey(GalacticraftRegistries.Keys.CELESTIAL, "planets");
+        public static final TagKey<Celestial> SOLAR_SYSTEMS = tagKey(GalacticraftRegistries.Keys.CELESTIAL, "solar_systems");
+        public static final TagKey<Celestial> STARS = tagKey(GalacticraftRegistries.Keys.CELESTIAL, "stars");
     }
 
     public static class Checklist {

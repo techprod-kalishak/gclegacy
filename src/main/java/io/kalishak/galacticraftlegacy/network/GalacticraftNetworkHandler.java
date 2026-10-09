@@ -7,6 +7,7 @@
 
 package io.kalishak.galacticraftlegacy.network;
 
+import io.kalishak.galacticraftlegacy.network.handler.client.OpenGalaxySelectionScreenClientHandler;
 import io.kalishak.galacticraftlegacy.network.handler.client.ToggleGearInventoryClientHandler;
 import io.kalishak.galacticraftlegacy.network.handler.client.UpdateEnergyNodeNetworkClientHandler;
 import io.kalishak.galacticraftlegacy.network.handler.client.UpdateFluidNodeNetworkClientHandler;
@@ -54,6 +55,11 @@ public final class GalacticraftNetworkHandler {
                 UpdateEnergyNodeNetworkPayload.TYPE,
                 UpdateEnergyNodeNetworkPayload.STREAM_CODEC,
                 UpdateEnergyNodeNetworkClientHandler::handleClient
+        );
+        registrar.playToClient(
+                OpenGalaxySelectionScreenPayload.TYPE,
+                OpenGalaxySelectionScreenPayload.STREAM_CODEC,
+                OpenGalaxySelectionScreenClientHandler::handle
         );
     }
 }

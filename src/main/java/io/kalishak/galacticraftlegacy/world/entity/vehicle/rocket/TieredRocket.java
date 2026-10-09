@@ -8,7 +8,8 @@
 package io.kalishak.galacticraftlegacy.world.entity.vehicle.rocket;
 
 import io.kalishak.galacticraftlegacy.config.CommonConfig;
-import io.kalishak.galacticraftlegacy.galaxies.celestial.CelestialBody;
+import io.kalishak.galacticraftlegacy.galaxies.celestial.CelestialBodyInstance;
+import io.kalishak.galacticraftlegacy.galaxies.celestial.WorldCelestials;
 import io.kalishak.galacticraftlegacy.galaxies.environment.CelestialBodyInfo;
 import io.kalishak.galacticraftlegacy.network.payload.ChangeCameraModePayload;
 import io.kalishak.galacticraftlegacy.network.payload.EntityPlanetaryTransitionPayload;
@@ -18,7 +19,6 @@ import io.kalishak.galacticraftlegacy.world.item.FeatureTier;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.FuelableDock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.GlobalPos;
-import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -279,11 +279,12 @@ public abstract class TieredRocket extends AbstractAutoRocket implements RocketT
     }
 
     public boolean canAccess(@Nullable CelestialBodyInfo celestialBodyData) {
-        if (celestialBodyData == null) return false;
+        if (celestialBodyData == null || !(level() instanceof ServerLevel)) return false;
 
-        Holder<CelestialBody> celestialHolder = celestialBodyData.celestialObject();
-        if (celestialHolder.isBound()) {
-            return celestialHolder.value().isReachable() && celestialHolder.value().getTierRequired().getLevel() <= this.tier.getLevel();
+        CelestialBodyInstance celestial = ((ServerLevel) level()).getServer().getDataStorage().computeIfAbsent(WorldCelestials.ID).get(celestialBodyData.celestialObject());
+
+        if (!celestial.isEmpty()) {
+            return celestial.isReachable(this.tier);
         }
 
         return false;

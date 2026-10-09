@@ -1,0 +1,35 @@
+{
+  "parent": "galacticraftlegacy:earth",
+  "atmosphere_info": {
+    "gas_composition": {
+      "galacticraftlegacy:argon": 0.93,
+      "galacticraftlegacy:carbon_dioxide": 0.04,
+      "galacticraftlegacy:nitrogen": 78.08,
+      "galacticraftlegacy:oxygen": 20.95
+    },
+    "has_precipitation": true,
+    "is_corrosive": false,
+    "temperature_modifier": 1.0
+  },
+  "checklist": "#galacticraftlegacy:moon",
+  "description": {
+    "translate": "celestial_body.galacticraftlegacy.moon"
+  },
+  "icon": {
+    "icon": "galacticraftlegacy:textures/celestial_body/moon"
+  },
+  "phase_shift": 0.0,
+  "relative_distance": {
+    "scaled": 13.0,
+    "unscaled": 13.0
+  },
+  "relative_orbit_size": 10.0,
+  "relative_size": 0.2667,
+  "required_tier": "basic",
+  "ring_colors": [
+    0.10000000149011612,
+    0.8999999761581421,
+    0.6000000238418579
+  ],
+  "target_dimension": "galacticraftlegacy:moon"
+}

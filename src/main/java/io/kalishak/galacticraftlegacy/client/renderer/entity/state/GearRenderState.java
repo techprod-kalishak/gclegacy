@@ -7,10 +7,10 @@
 
 package io.kalishak.galacticraftlegacy.client.renderer.entity.state;
 
-import io.kalishak.galacticraftlegacy.galaxies.environment.CelestialBodyInfo;
-import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.attachment.AttachmentHelper;
 import io.kalishak.galacticraftlegacy.attachment.entity.GearInventoryProvider;
+import io.kalishak.galacticraftlegacy.galaxies.environment.CelestialBodyInfo;
+import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.transfer.entity.SpaceGearEquipment;
 import io.kalishak.galacticraftlegacy.world.entity.GearEquipmentSlot;
 import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
@@ -51,7 +51,7 @@ public interface GearRenderState {
         float temperatureModifier = 1.0F;
 
         if (celestialBodyData != null) {
-            temperatureModifier = celestialBodyData.atmosphereInfo().getTemperatureModifier();
+            temperatureModifier = celestialBodyData.celestialObject().value().atmosphereInfo().getTemperatureModifier();
         }
 
         reusedState.setRenderData(GearRenderState.THERMAL_CAP, spaceGearEquipment.get(GearEquipmentSlot.THERMAL_CAP));

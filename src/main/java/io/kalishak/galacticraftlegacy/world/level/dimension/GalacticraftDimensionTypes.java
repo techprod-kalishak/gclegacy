@@ -40,6 +40,7 @@ public class GalacticraftDimensionTypes {
     public static final ResourceKey<DimensionType> MARS = Constants.key(Registries.DIMENSION_TYPE, "mars");
     public static final ResourceKey<DimensionType> ASTEROIDS = Constants.key(Registries.DIMENSION_TYPE, "asteroids");
     public static final ResourceKey<DimensionType> VENUS = Constants.key(Registries.DIMENSION_TYPE, "venus");
+    public static final ResourceKey<DimensionType> SATELLITE = Constants.key(Registries.DIMENSION_TYPE, "satellite");
 
     public static void bootstrap(BootstrapContext<DimensionType> cxt) {
         HolderGetter<Timeline> timelineHolderGetter = cxt.lookup(Registries.TIMELINE);
@@ -160,6 +161,32 @@ public class GalacticraftDimensionTypes {
         );
         cxt.register(
                 VENUS,
+                new DimensionType(
+                        false,
+                        true,
+                        false,
+                        false,
+                        1.0,
+                        0,
+                        256,
+                        128,
+                        blocks.getOrThrow(GalacticraftTags.Blocks.INFINIBURN_VENUS),
+                        0.0F,
+                        new DimensionType.MonsterSettings(ConstantInt.of(6), 15),
+                        DimensionType.Skybox.NONE,
+                        CardinalLighting.Type.DEFAULT,
+                        EnvironmentAttributeMap.builder()
+                                .set(EnvironmentAttributes.BED_RULE, GalacticraftWorldAttributes.BED_RULE_CRYO_CHAMBER)
+                                .set(EnvironmentAttributes.WATER_EVAPORATES, true)
+                                .set(GalacticraftEnvironmentAttributes.GRAVITY.get(), 0.065F)
+                                .set(GalacticraftEnvironmentAttributes.FALL_DAMAGE_MODIFIER.get(), 0.81F)
+                                .build(),
+                        timelineHolderGetter.getOrThrow(GalacticraftTags.Timelines.IN_VENUS),
+                        worldClocks.get(GalacticraftWorldClocks.VENUS).map(IHolderExtension::getDelegate)
+                )
+        );
+        cxt.register(
+                SATELLITE,
                 new DimensionType(
                         false,
                         true,

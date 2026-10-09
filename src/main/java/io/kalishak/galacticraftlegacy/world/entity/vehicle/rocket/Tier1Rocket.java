@@ -71,7 +71,7 @@ public class Tier1Rocket extends TieredRocket {
                 if (getLaunchPhase() == LaunchPhase.LAUNCHED) {
                     double d = getTimeSinceLaunch() / 150.0D;
 
-                    if (celestialBodyInfo.atmosphereInfo().getGasComposition().isEmpty()) {
+                    if (celestialBodyInfo.celestialObject().value().atmosphereInfo().getGasComposition().isEmpty()) {
                         d = Math.min(d * 1.2D, 1.6D);
                     } else {
                         d = Math.min(d, 1);

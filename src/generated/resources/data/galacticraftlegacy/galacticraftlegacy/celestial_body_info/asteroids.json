@@ -1,10 +1,4 @@
 {
-  "atmosphere_info": {
-    "gas_composition": {},
-    "has_precipitation": false,
-    "is_corrosive": false,
-    "temperature_modifier": -0.9
-  },
   "celestial_object_reference": "galacticraftlegacy:asteroids",
   "fuel_usage_multiplier": 0.1,
   "gravity_scale": 0.01,

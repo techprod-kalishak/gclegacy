@@ -16,8 +16,7 @@ import io.kalishak.galacticraftlegacy.config.ServerConfig;
 import io.kalishak.galacticraftlegacy.config.condition.GalacticraftConditions;
 import io.kalishak.galacticraftlegacy.data.GalacticraftData;
 import io.kalishak.galacticraftlegacy.data.datamap.GalacticraftDataMaps;
-import io.kalishak.galacticraftlegacy.galaxies.GalacticraftGalaxies;
-import io.kalishak.galacticraftlegacy.galaxies.celestial.CelestialObjectType;
+import io.kalishak.galacticraftlegacy.galaxies.GalacticraftCelestialTypes;
 import io.kalishak.galacticraftlegacy.network.GalacticraftNetworkHandler;
 import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.registry.GalacticraftRegistries;
@@ -68,7 +67,6 @@ public class Galacticraft {
         GalacticraftAttachments.init(modEventBus);
         GalacticraftBlocks.init(modEventBus);
         GalacticraftBlockEntityType.init(modEventBus);
-        CelestialObjectType.init(modEventBus);
         GalacticraftConditions.init(modEventBus);
         GalacticraftCreativeModeTabs.init(modEventBus);
         GalacticraftCriteriaTriggers.init(modEventBus);
@@ -78,7 +76,7 @@ public class Galacticraft {
         GalacticraftFeatures.init(modEventBus);
         GalacticraftFluidType.init(modEventBus);
         GalacticraftFluids.init(modEventBus);
-        GalacticraftGalaxies.init(modEventBus);
+        GalacticraftCelestialTypes.init(modEventBus);
         GalacticraftItems.init(modEventBus);
         GalacticraftLootItemConditions.init(modEventBus);
         GalacticraftLootFunctions.init(modEventBus);

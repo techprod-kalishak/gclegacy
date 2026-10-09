@@ -14,16 +14,17 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import io.kalishak.galacticraftlegacy.client.event.CelestialBodyRenderEvent;
 import io.kalishak.galacticraftlegacy.config.ClientConfig;
 import io.kalishak.galacticraftlegacy.config.ServerConfig;
-import io.kalishak.galacticraftlegacy.galaxies.GalacticraftGalaxies;
-import io.kalishak.galacticraftlegacy.galaxies.celestial.CelestialBody;
-import io.kalishak.galacticraftlegacy.galaxies.celestial.CelestialObjectType;
+import io.kalishak.galacticraftlegacy.data.GalacticraftTags;
+import io.kalishak.galacticraftlegacy.galaxies.BuiltinGalaxies;
+import io.kalishak.galacticraftlegacy.galaxies.celestial.CelestialBodyInstance;
 import io.kalishak.galacticraftlegacy.galaxies.celestial.Star;
+import io.kalishak.galacticraftlegacy.galaxies.celestial.WorldCelestials;
 import io.kalishak.galacticraftlegacy.network.payload.CreateSpaceStationPayload;
 import io.kalishak.galacticraftlegacy.network.payload.PlayerTransitionPayload;
 import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.registry.GalacticraftRegistries;
-import io.kalishak.galacticraftlegacy.world.level.dimension.SpaceStationRecipe;
 import net.minecraft.client.GameNarrator;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.input.KeyEvent;
@@ -34,18 +35,21 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
-import net.minecraft.resources.ResourceKey;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.dimension.DimensionType;
+import net.minecraft.world.level.storage.SavedDataStorage;
 import net.minecraft.world.phys.Vec2;
-import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 import net.neoforged.neoforge.common.NeoForge;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 import org.jspecify.annotations.Nullable;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 public class CelestialSelectionScreen extends Screen {
     protected static final int MAX_SPACE_STATION_NAME_LENGTH = 32;
@@ -62,19 +66,19 @@ public class CelestialSelectionScreen extends Screen {
     protected float ticksTotal = 0;
     protected int animateGrandchildren = 0;
     protected Vec2 position = Vec2.ZERO;
-    protected Map<CelestialBody, Vec3> planetPosMap = Maps.newHashMap();
-    protected CelestialBody selectedBody;
-    protected CelestialBody lastSelectedBody;
+    protected Map<CelestialBodyInstance, Vector3f> planetPosMap = Maps.newHashMap();
+    protected CelestialBodyInstance selectedBody;
+    protected CelestialBodyInstance lastSelectedBody;
     protected static float BORDER_SIZE = 0;
     protected static float BORDER_EDGE_SIZE = 0;
     protected int canCreateOffset = 24;
     protected ViewType viewState = ViewType.PREVIEW;
     protected SelectionType selectionState = SelectionType.DEFAULT;
     protected int zoomTooltipPos = 0;
-    protected CelestialBody selectedParent = GalacticraftGalaxies.SUN.get();
+    protected CelestialBodyInstance selectedParent;
     protected final boolean canPlayerLeave;
-    public List<CelestialBody> possibleBodies;
-    public Map<ResourceKey<CelestialBody>, Map<String, ResourceKey<DimensionType>>> spaceStationMap = Maps.newHashMap();
+    public List<CelestialBodyInstance> possibleBodies;
+    public Map<CelestialBodyInstance, Map<String, Holder<DimensionType>>> spaceStationMap = Maps.newHashMap();
 
     protected String selectedStationOwner = "";
     protected int spaceStationListOffset = 0;
@@ -86,15 +90,24 @@ public class CelestialSelectionScreen extends Screen {
     protected int lastMovePosY = -1;
     protected boolean errorLogged = false;
     public boolean canCreateStations;
-    protected List<CelestialBody> bodiesToRender = Lists.newArrayList();
+    protected List<CelestialBodyInstance> bodiesToRender = Lists.newArrayList();
+    private final WorldCelestials worldCelestials;
     private final RegistryAccess registryAccess;
 
-    public CelestialSelectionScreen(RegistryAccess registryAccess, boolean canPlayerLeave, List<CelestialBody> possibleBodies, boolean canCreateStations) {
+    public CelestialSelectionScreen(WorldCelestials worldCelestials, RegistryAccess registryAccess, boolean canPlayerLeave, List<CelestialBodyInstance> possibleBodies, boolean canCreateStations) {
         super(GameNarrator.NO_TITLE);
-        this.canPlayerLeave = canPlayerLeave;
+        this.worldCelestials = worldCelestials;
         this.registryAccess = registryAccess;
+        this.canPlayerLeave = canPlayerLeave;
         this.possibleBodies = possibleBodies;
         this.canCreateStations = canCreateStations;
+        this.selectedParent = worldCelestials.get(this.registryAccess.getOrThrow(BuiltinGalaxies.SOL));
+    }
+
+    public static CelestialSelectionScreen create(RegistryAccess registryAccess, SavedDataStorage savedDataStorage, boolean canPlayerLeave, boolean canCreateStations) {
+        WorldCelestials worldCelestials = savedDataStorage.computeIfAbsent(WorldCelestials.ID);
+        List<CelestialBodyInstance> celestialBodies = registryAccess.lookupOrThrow(GalacticraftRegistries.Keys.CELESTIAL).registryKeySet().stream().map(registryAccess::getOrThrow).map(worldCelestials::get).toList();
+        return new CelestialSelectionScreen(worldCelestials, registryAccess, canPlayerLeave, celestialBodies, canCreateStations);
     }
 
     @Override
@@ -104,7 +117,16 @@ public class CelestialSelectionScreen extends Screen {
         CelestialSelectionScreen.BORDER_SIZE = this.width / 65.0F;
         CelestialSelectionScreen.BORDER_EDGE_SIZE = CelestialSelectionScreen.BORDER_SIZE / 4.0F;
 
-        GalacticraftRegistries.CELESTIAL_OBJECT.stream().forEach(this.bodiesToRender::add);
+        MinecraftServer server = Minecraft.getInstance().getSingleplayerServer();
+
+        if (server != null) {
+            WorldCelestials worldCelestials = server.getDataStorage().computeIfAbsent(WorldCelestials.ID);
+            this.registryAccess.lookupOrThrow(GalacticraftRegistries.Keys.CELESTIAL)
+                    .registryKeySet()
+                    .stream()
+                    .map(this.registryAccess::getOrThrow)
+                    .forEach(body -> this.bodiesToRender.add(worldCelestials.get(body)));
+        }
     }
 
     @Override
@@ -112,32 +134,36 @@ public class CelestialSelectionScreen extends Screen {
         super.extractRenderState(graphics, mouseX, mouseY, a);
     }
 
-    protected @Nullable ResourceKey<DimensionType> getSatelliteParentDimensionKey(CelestialBody satellite) {
-        return satellite.isSatellite() ? satellite.getParent(this.registryAccess).getTargetDimension() : null;
+    protected @Nullable Holder<DimensionType> getSatelliteParentDimensionKey(CelestialBodyInstance celestial) {
+        if (celestial.isSatellite()) {
+            CelestialBodyInstance parent = celestial.parent(this.worldCelestials);
+
+            if (!parent.isEmpty()) {
+                return parent.typeHolder().value().targetDimension().orElse(null);
+            }
+        }
+
+        return null;
     }
 
     protected Component getGrandParentName() {
-        return Component.translatable(getRecursiveNameAsString(this.registryAccess, this.selectedBody));
+        return getRecursiveNameAsString(this.selectedBody);
     }
 
     protected Component getDirectParentName() {
-        if (this.selectedBody.getParent() != null) {
-            Holder<CelestialBody> other = this.registryAccess.getOrThrow(this.selectedBody.getParent());
+        CelestialBodyInstance parent = this.selectedBody.parent(this.worldCelestials);
 
-            return Component.translatable(other.value().getDescriptionId());
+        if (!parent.isEmpty()) {
+            return parent.getDisplayName();
         }
 
         return Component.empty();
     }
 
-    protected Component getBodyName() {
-        return Component.translatable(this.selectedBody.getDescriptionId());
-    }
+    protected float getScale(CelestialBodyInstance celestialBody) {
+        float typeScale = celestialBody.is(GalacticraftTags.Celestials.PLANETS) ? 25.0F : 1.0F / 5.0F;
 
-    protected float getScale(CelestialBody celestialBody) {
-        float typeScale = celestialBody.getCelestialBodyType() == CelestialObjectType.PLANET.value() ? 25.0F : 1.0F / 5.0F;
-
-        return 3.0F * celestialBody.getRelativeDistanceFromCenter().unscaled() * typeScale;
+        return 3.0F * celestialBody.typeHolder().value().relativeDistanceFromCenter().unscaled() * typeScale;
     }
 
     protected Vec2 lerpVec(Vec2 first, Vec2 second, float value) {
@@ -196,8 +222,10 @@ public class CelestialSelectionScreen extends Screen {
         }
 
         if (!isZoomed()) {
-            if (this.selectedBody.getParent() != null) {
-                Vector3f posVec = getCelestialBodyPosition(access.getOrThrow(this.selectedBody.getParent()).value());
+            CelestialBodyInstance parent = this.selectedBody.parent(this.worldCelestials);
+
+            if (!parent.isEmpty()) {
+                Vector3f posVec = getCelestialBodyPosition(parent);
 
                 return new Vec2(posVec.x, posVec.y);
             }
@@ -209,7 +237,7 @@ public class CelestialSelectionScreen extends Screen {
 
         if (this.lastSelectedBody != null) {
             Vector3f pos3 = getCelestialBodyPosition(this.lastSelectedBody);
-            pos = new Vec2((float) pos3.x, (float) pos3.y);
+            pos = new Vec2(pos3.x, pos3.y);
         }
 
         Vector3f posVec = getCelestialBodyPosition(this.selectedBody);
@@ -296,7 +324,7 @@ public class CelestialSelectionScreen extends Screen {
         return false;
     }
 
-    protected boolean canCreateSpaceStation(CelestialBody atBody) {
+    protected boolean canCreateSpaceStation(CelestialBodyInstance atBody) {
         if (!this.canPlayerLeave || ServerConfig.DISABLE_SPACE_STATIONS.get() || !this.canCreateStations) {
             return false;
         }
@@ -305,7 +333,7 @@ public class CelestialSelectionScreen extends Screen {
             return false;
         }
 
-        boolean foundRecipe = Objects.nonNull(atBody.getRecipe());
+        boolean foundRecipe = atBody.typeHolder().value().recipe().isPresent();
 
         if (!foundRecipe) {
             return false;
@@ -384,7 +412,7 @@ public class CelestialSelectionScreen extends Screen {
         assert getMinecraft().player != null;
 
         boolean clickHandled = false;
-        boolean isSatelliteSelected = this.selectedBody != null && this.selectedBody.getCelestialBodyType().equals(CelestialObjectType.SATELLITE.value());
+        boolean isSatelliteSelected = this.selectedBody.isSatellite();
 
         final float LHS = BORDER_SIZE + BORDER_EDGE_SIZE;
         final float RHS = this.width - LHS;
@@ -398,10 +426,9 @@ public class CelestialSelectionScreen extends Screen {
         if (!this.canPlayerLeave) {
             if (event.x() >= RHS - 95 && event.x()< RHS && event.y() > TOP + 181 + this.canCreateOffset && event.y() < TOP + 182 + 12 + this.canCreateOffset) {
                 if (this.selectedBody != null) {
-                    var recipeKey = this.selectedBody.getRecipe();
+                    var recipe = this.selectedBody.typeHolder().value().recipe().orElse(null);
 
-                    if (recipeKey != null && canCreateSpaceStation(this.selectedBody)) {
-                        Holder<SpaceStationRecipe> recipe = this.registryAccess.getOrThrow(recipeKey);
+                    if (recipe != null && canCreateSpaceStation(this.selectedBody)) {
 
                         if (recipe.value().matches(getMinecraft().player, false) || getMinecraft().player.isCreative()) {
                             ClientPacketDistributor.sendToServer(new CreateSpaceStationPayload(recipe));
@@ -449,7 +476,7 @@ public class CelestialSelectionScreen extends Screen {
                     if (event.x() >= width / 2.0F - 90 + 17 && event.x() <= width / 2.0F - 90 + 17 + 72 && event.y() >= this.height / 2.0F - 38 + 59 && event.y() <= this.height / 2.0F - 38 + 59 + 12) {
                         String playerName = getMinecraft().player.getScoreboardName();
 
-//                        ResourceKey<CelestialBody> spacestationID = this.spaceStationMap.get(getSatelliteParentID(selectedSatellite)).get(playerName).getStationDimensionID();
+//                        ResourceKey<Celestial> spacestationID = this.spaceStationMap.get(getSatelliteParentID(selectedSatellite)).get(playerName).getStationDimensionID();
 //                        if (spacestationID == null) {
 //                            spacestationID = this.spaceStationMap.get(getSatelliteParentID(selectedSatellite)).get(playerName.toLowerCase()).getStationDimensionID();
 //                        }
@@ -510,12 +537,12 @@ public class CelestialSelectionScreen extends Screen {
                     clickHandled = true;
                 }
 
-                Iterator<Map.Entry<String, ResourceKey<DimensionType>>> it = this.spaceStationMap.get(getSatelliteParentDimensionKey(this.selectedBody)).entrySet().iterator();
+                Iterator<Map.Entry<String, Holder<DimensionType>>> it = this.spaceStationMap.get(getSatelliteParentDimensionKey(this.selectedBody)).entrySet().iterator();
                 int i = 0;
                 int j = 0;
 
                 while (it.hasNext() && i < max) {
-                    Map.Entry<String, ResourceKey<DimensionType>> e = it.next();
+                    Map.Entry<String, Holder<DimensionType>> e = it.next();
 
                     if (j >= this.spaceStationListOffset) {
                         int xOffset = 0;
@@ -541,7 +568,7 @@ public class CelestialSelectionScreen extends Screen {
         float xPos = LHS + 2;
         float yPos = TOP + 10;
 
-        boolean planetZoomedMoon = isZoomed() && this.selectedParent.getCelestialBodyType() == CelestialObjectType.PLANET.value();
+        boolean planetZoomedMoon = isZoomed() && this.selectedParent.is(GalacticraftTags.Celestials.PLANETS);
 
         // Top yellow button e.g. Sol
         if (event.x() >= xPos && event.x() <= xPos + 93 && event.x() >= yPos && event.x() <= yPos + 12) {
@@ -602,19 +629,19 @@ public class CelestialSelectionScreen extends Screen {
         }
 
         if (!clickHandled) {
-            Collection<CelestialBody> children = CelestialBody.getChildren(this.registryAccess, isZoomed() && !(this.selectedParent.getCelestialBodyType() == CelestialObjectType.PLANET.value()) ? this.selectedBody : this.selectedParent);
+            Collection<CelestialBodyInstance> children = CelestialBodyInstance.getChildren(this.registryAccess, isZoomed() && !(this.selectedParent.is(GalacticraftTags.Celestials.PLANETS)) ? this.selectedBody : this.selectedParent, this.worldCelestials);
 
             yPos = TOP + 50;
 
-            for (CelestialBody child : children) {
-                clickHandled = testClicked(child, child.equals(this.selectedBody) ? 5 : 0, yPos, event.x(), event.y(), false);
+            for (CelestialBodyInstance child : children) {
+                clickHandled = testClicked(child, child.is(this.selectedBody.typeHolder()) ? 5 : 0, yPos, event.x(), event.y(), false);
                 yPos += 14;
 
-                if (!clickHandled && !isZoomed() && child.equals(this.selectedBody)) {
-                    Collection<CelestialBody> grandchildren = CelestialBody.getChildren(this.registryAccess, child);
+                if (!clickHandled && !isZoomed() && child.is(this.selectedBody.typeHolder())) {
+                    Collection<CelestialBodyInstance> grandchildren = CelestialBodyInstance.getChildren(this.registryAccess, child, this.worldCelestials);
                     int gOffset = 0;
 
-                    for (CelestialBody grandchild : grandchildren) {
+                    for (CelestialBodyInstance grandchild : grandchildren) {
                         if (gOffset + 14 > this.animateGrandchildren) {
                             break;
                         }
@@ -634,10 +661,11 @@ public class CelestialSelectionScreen extends Screen {
         }
 
         if (!clickHandled) {
-            for (Map.Entry<CelestialBody, Vec3> e : this.planetPosMap.entrySet()) {
-                CelestialBody bodyClicked = e.getKey();
+            for (Map.Entry<CelestialBodyInstance, Vector3f> e : this.planetPosMap.entrySet()) {
+                CelestialBodyInstance bodyClicked = e.getKey();
+                CelestialBodyInstance parent = bodyClicked.parent(this.worldCelestials);
 
-                if (this.selectedBody == null && bodyClicked.getParent() != null) {
+                if (this.selectedBody == null && !parent.isEmpty()) {
                     continue;
                 }
 
@@ -647,7 +675,7 @@ public class CelestialSelectionScreen extends Screen {
                     if (this.selectedBody != bodyClicked || !isZoomed()) {
                         if (isSelected() && this.selectedBody != bodyClicked) {
 
-                            if (this.selectedBody.getParent() == null || (this.registryAccess.getOrThrow(this.selectedBody.getParent()).value() != bodyClicked)) {
+                            if (parent.isEmpty() || (!parent.is(bodyClicked.typeHolder()))) {
                                 this.unselectCelestialBody();
                             } else if (isZoomed()) {
                                 this.selectionState = SelectionType.SELECTED;
@@ -658,7 +686,7 @@ public class CelestialSelectionScreen extends Screen {
                             this.lastSelectedBody = this.selectedBody;
                             this.animateGrandchildren = 0;
 
-                            if (this.selectedBody.getParent() == null || (this.registryAccess.getOrThrow(this.selectedBody.getParent()).value() != bodyClicked)) {
+                            if (parent.isEmpty() || (!parent.is(bodyClicked.typeHolder()))) {
                                 // Only unzoom if the new selected body is not
                                 // the child of the previously selected body
                                 this.selectionState = SelectionType.DEFAULT;
@@ -672,7 +700,7 @@ public class CelestialSelectionScreen extends Screen {
                         this.ticksSinceSelection = 0;
                         this.selectionState = SelectionType.values()[this.selectionState.ordinal() + 1];
 
-                        if (bodyClicked.getParent() != null) {
+                        if (!parent.isEmpty()) {
                             this.selectionState = SelectionType.ZOOMED;
                         }
 
@@ -682,7 +710,7 @@ public class CelestialSelectionScreen extends Screen {
 
 
                         if (this.selectedBody.isSatellite() && this.spaceStationMap.get(getSatelliteParentDimensionKey(this.selectedBody)).size() == 1) {
-                            Iterator<Map.Entry<String, ResourceKey<DimensionType>>> it = this.spaceStationMap.get(this.getSatelliteParentDimensionKey(this.selectedBody)).entrySet().iterator();
+                            Iterator<Map.Entry<String, Holder<DimensionType>>> it = this.spaceStationMap.get(this.getSatelliteParentDimensionKey(this.selectedBody)).entrySet().iterator();
                             this.selectedStationOwner = it.next().getKey();
                         }
 
@@ -702,13 +730,14 @@ public class CelestialSelectionScreen extends Screen {
             this.mouseDragging = true;
         }
 
-        CelestialBody selectedParent = this.selectedParent;
+        CelestialBodyInstance selectedParent = this.selectedParent;
         if (this.selectedBody != null) {
-            if (this.selectedBody.hasParent()) {
-                selectedParent = this.registryAccess.getOrThrow(this.selectedParent.getParent()).value();
+            CelestialBodyInstance nextParent = this.selectedParent.parent(this.worldCelestials);
+            if (!nextParent.isEmpty()) {
+                selectedParent = nextParent;
             }
         } else {
-            selectedParent = GalacticraftGalaxies.SOL.get();
+            selectedParent = this.worldCelestials.get(this.registryAccess.getOrThrow(BuiltinGalaxies.SOL));
         }
 
         if (this.selectedParent != selectedParent) {
@@ -718,10 +747,10 @@ public class CelestialSelectionScreen extends Screen {
         return true;
     }
 
-    protected boolean testClicked(CelestialBody body, int xOffset, float yPos, double x, double y, boolean grandchild) {
+    protected boolean testClicked(CelestialBodyInstance body, int xOffset, float yPos, double x, double y, boolean grandchild) {
         float xPos = BORDER_SIZE + BORDER_EDGE_SIZE + 2 + xOffset;
         if (x >= xPos && x <= xPos + 93 && y >= yPos && y <= yPos + 12) {
-            if (this.selectedBody != body || !this.isZoomed()) {
+            if (!this.selectedBody.is(body) || !this.isZoomed()) {
                 if (this.selectedBody == null) {
                     this.preSelectZoom = this.zoom;
                     this.preSelectPosition = this.position;
@@ -760,33 +789,29 @@ public class CelestialSelectionScreen extends Screen {
         return false;
     }
 
-    protected Vector3f getCelestialBodyPosition(CelestialBody celestialBody) {
-        if (celestialBody == null)
+    protected Vector3f getCelestialBodyPosition(@Nullable CelestialBodyInstance celestialBody) {
+        if (celestialBody == null || celestialBody.isEmpty())
             return new Vector3f(0.0F, 0.0F, 0.0F);
-        if (celestialBody instanceof Star star) {
-            return star.getInitialPosition().toVector3f();
+        if (celestialBody.typeHolder().value() instanceof Star star) {
+            return star.position().toVector3f();
         }
 
-        boolean isPlanet = celestialBody.getCelestialBodyType() == CelestialObjectType.PLANET.value();
+        boolean isPlanet = celestialBody.is(GalacticraftTags.Celestials.PLANETS);
         float timeScale = isPlanet ? 200.0F : 2.0F;
         float distanceFromCenter = getScale(celestialBody);
-        Vector3f cBodyPos = new Vector3f((float) Math.sin(ticksTotal / (timeScale * celestialBody.getRelativeOrbitTime()) + celestialBody.getPhaseShift()) * distanceFromCenter, (float) Math.cos(ticksTotal / (timeScale * celestialBody.getRelativeOrbitTime()) + celestialBody.getPhaseShift()) * distanceFromCenter, 0);
+        Vector3f cBodyPos = new Vector3f((float) Math.sin(ticksTotal / (timeScale * celestialBody.typeHolder().value().relativeOrbitTime()) + celestialBody.typeHolder().value().phaseShift()) * distanceFromCenter, (float) Math.cos(ticksTotal / (timeScale * celestialBody.typeHolder().value().relativeOrbitTime()) + celestialBody.typeHolder().value().phaseShift()) * distanceFromCenter, 0);
 
         if (isPlanet) {
-            Vector3f parentVec = getCelestialBodyPosition(CelestialBody.getStar(this.registryAccess, celestialBody));
+            Vector3f parentVec = this.planetPosMap.get(CelestialBodyInstance.getStar(celestialBody, this.worldCelestials));
             return cBodyPos.add(parentVec);
         }
 
-        if (celestialBody.isLesserBody()) {
-            Vector3f parentVec = getCelestialBodyPosition(celestialBody.getParent());
+        if (CelestialBodyInstance.isLesserBody(this.registryAccess, celestialBody, this.worldCelestials)) {
+            Vector3f parentVec = this.planetPosMap.get(celestialBody.parent(this.worldCelestials));
             return cBodyPos.add(parentVec);
         }
 
         return cBodyPos;
-    }
-
-    protected Vector3f getCelestialBodyPosition(ResourceKey<CelestialBody> celestialBodyKey) {
-        return getCelestialBodyPosition(this.registryAccess.getOrThrow(celestialBodyKey).value());
     }
 
     public void drawTexturedModalRect(PoseStack poseStack, GuiGraphicsExtractor guiGraphics, SubmitNodeCollector submitNodeCollector, float x, float y, float width, float height, float u, float v, float uWidth, float vHeight, boolean invertX, boolean invertY, float texSizeX, float texSizeY) {
@@ -813,12 +838,12 @@ public class CelestialSelectionScreen extends Screen {
         final float sin = (float) Math.sin(theta);
 
         guiGraphics.pose().pushMatrix();
-        for (CelestialBody body : this.bodiesToRender) {
-            Vector3f systemOffset = new Vector3f(0.0F, 0.0F, 0.0F);
-            if (body.isLesserBody()) {
-                systemOffset = getCelestialBodyPosition(body.getParent(this.registryAccess));
+        for (CelestialBodyInstance body : this.bodiesToRender) {
+            Vector3f systemOffset;
+            if (CelestialBodyInstance.isLesserBody(this.registryAccess, body, this.worldCelestials)) {
+                systemOffset = getCelestialBodyPosition(body.parent(this.worldCelestials));
             } else {
-                systemOffset = getCelestialBodyPosition(CelestialBody.getStar(this.registryAccess, body));
+                systemOffset = getCelestialBodyPosition(CelestialBodyInstance.getStar(body, this.worldCelestials));
             }
 
             float x = getScale(body);
@@ -860,14 +885,14 @@ public class CelestialSelectionScreen extends Screen {
         guiGraphics.pose().popMatrix();
     }
 
-    public float getAlpha(CelestialBody body) {
+    public float getAlpha(CelestialBodyInstance body) {
         float alpha = 1.0F;
 
-        if (body.isLesserBody()) {
-            boolean selected = body == this.selectedBody || (body.getParent(this.registryAccess) == this.selectedBody && this.selectionState != SelectionType.SELECTED);
+        if (CelestialBodyInstance.isLesserBody(this.registryAccess, body, this.worldCelestials)) {
+            boolean selected = body == this.selectedBody || (isParentSelected(body) && this.selectionState != SelectionType.SELECTED);
             boolean ready = this.lastSelectedBody != null || this.ticksSinceSelection > 35;
-            boolean isSibling = CelestialBody.getSiblings(this.registryAccess, this.selectedBody).contains(body);
-            boolean isPossible = !(body.isSatellite()) || (this.possibleBodies != null && this.possibleBodies.contains(body));
+            boolean isSibling = CelestialBodyInstance.getSiblings(this.registryAccess, this.selectedBody, this.worldCelestials).contains(body);
+            boolean isPossible = !body.isSatellite() || (this.possibleBodies != null && this.possibleBodies.contains(body));
 
             if ((!selected && !isSibling) || !isPossible) {
                 alpha = 0.0F;
@@ -876,11 +901,11 @@ public class CelestialSelectionScreen extends Screen {
             }
         } else {
             boolean isSelected = this.selectedBody == body;
-            boolean isChildSelected = this.selectedBody.isLesserBody();
-            boolean isOwnChildSelected = isChildSelected && (this.selectedBody).getParent(this.registryAccess) == body;
+            boolean isChildSelected = CelestialBodyInstance.isLesserBody(this.registryAccess, this.selectedBody, this.worldCelestials);
+            boolean isOwnChildSelected = isChildSelected && isParentSelected(body);
 
             if (!isSelected && !isOwnChildSelected && (this.isZoomed() || isChildSelected)) {
-                if (this.lastSelectedBody != null || this.selectedBody.isLesserBody()) {
+                if (this.lastSelectedBody != null || CelestialBodyInstance.isLesserBody(this.registryAccess, this.selectedBody, this.worldCelestials)) {
                     alpha = 0.0F;
                 } else {
                     alpha = 1.0F - Math.min(this.ticksSinceSelection / 25.0F, 1.0F);
@@ -899,14 +924,22 @@ public class CelestialSelectionScreen extends Screen {
         return this.selectionState != SelectionType.DEFAULT;
     }
 
-    private String getRecursiveNameAsString(RegistryAccess access, CelestialBody celestialBody) {
-        if (celestialBody.getParent() == null) {
-            return celestialBody.getDescriptionId();
+    private Component getRecursiveNameAsString(CelestialBodyInstance celestialBody) {
+        CelestialBodyInstance parent = celestialBody.parent(this.worldCelestials);
+
+        if (parent.isEmpty()) {
+            return celestialBody.getDisplayName();
         }
 
-        Holder<CelestialBody> other = access.getOrThrow(celestialBody.getParent());
+        return getRecursiveNameAsString(parent);
+    }
 
-        return getRecursiveNameAsString(access, other.value());
+    public boolean isParentSelected(CelestialBodyInstance celestial) {
+        CelestialBodyInstance parent = celestial.parent(this.worldCelestials);
+
+        if (parent.isEmpty()) return false;
+
+        return parent.is(this.selectedBody);
     }
 
     protected enum ViewType {

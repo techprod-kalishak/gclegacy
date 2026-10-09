@@ -1,0 +1,33 @@
+{
+  "parent": "galacticraftlegacy:sun",
+  "atmosphere_info": {
+    "gas_composition": {
+      "galacticraftlegacy:carbon_dioxide": 96.5,
+      "galacticraftlegacy:nitrogen": 3.5
+    },
+    "has_precipitation": true,
+    "is_corrosive": true,
+    "temperature_modifier": 1.0
+  },
+  "checklist": "#galacticraftlegacy:venus",
+  "description": {
+    "translate": "celestial_body.galacticraftlegacy.venus"
+  },
+  "icon": {
+    "icon": "galacticraftlegacy:textures/celestial_body/venus"
+  },
+  "phase_shift": 2.0,
+  "relative_distance": {
+    "scaled": 0.75,
+    "unscaled": 0.75
+  },
+  "relative_orbit_size": 0.6152793,
+  "relative_size": 1.0,
+  "required_tier": "ultimate",
+  "ring_colors": [
+    0.10000000149011612,
+    0.8999999761581421,
+    0.6000000238418579
+  ],
+  "target_dimension": "galacticraftlegacy:venus"
+}

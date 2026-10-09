@@ -11,7 +11,7 @@ import com.google.common.collect.Sets;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.kalishak.galacticraftlegacy.attachment.entity.Schematics;
-import io.kalishak.galacticraftlegacy.galaxies.celestial.CelestialBody;
+import io.kalishak.galacticraftlegacy.galaxies.celestial.Celestial;
 import io.kalishak.galacticraftlegacy.registry.GalacticraftRegistries;
 import io.kalishak.galacticraftlegacy.registry.SchematicVariant;
 import io.kalishak.galacticraftlegacy.world.entity.FlagData;
@@ -44,7 +44,7 @@ public class SpaceRaceTeam extends Team {
     private Optional<TeamColor> color = Optional.empty();
     private Team.CollisionRule collisionRule = Team.CollisionRule.ALWAYS;
     private final Style displayNameStyle;
-    private final Object2LongMap<ResourceKey<CelestialBody>> reachedCelestialBodies = new Object2LongOpenHashMap<>();
+    private final Object2LongMap<ResourceKey<Celestial>> reachedCelestialBodies = new Object2LongOpenHashMap<>();
     private final Schematics unlockedSchematics = Schematics.empty();
     private FlagData flagData = FlagData.DEFAULT;
 
@@ -186,7 +186,7 @@ public class SpaceRaceTeam extends Team {
         this.spaceRaceScoreboard.onTeamChanged(this);
     }
 
-    public void setReachedCelestialBodies(Map<ResourceKey<CelestialBody>, Long> discoveredCelestialBodies) {
+    public void setReachedCelestialBodies(Map<ResourceKey<Celestial>, Long> discoveredCelestialBodies) {
         this.reachedCelestialBodies.putAll(discoveredCelestialBodies);
         this.spaceRaceScoreboard.onTeamChanged(this);
     }
@@ -233,7 +233,7 @@ public class SpaceRaceTeam extends Team {
         this.spaceRaceScoreboard.onTeamChanged(this);
     }
 
-    public Object2LongMap<ResourceKey<CelestialBody>> getVisitedCelestialBodies() {
+    public Object2LongMap<ResourceKey<Celestial>> getVisitedCelestialBodies() {
         return Object2LongMaps.unmodifiable(this.reachedCelestialBodies);
     }
 
@@ -241,7 +241,7 @@ public class SpaceRaceTeam extends Team {
         return this.unlockedSchematics;
     }
 
-    public void setReachedCelestialBody(ResourceKey<CelestialBody> body, Level level) {
+    public void setReachedCelestialBody(ResourceKey<Celestial> body, Level level) {
         this.reachedCelestialBodies.put(body, level.getGameTime());
         this.spaceRaceScoreboard.onTeamChanged(this);
     }
@@ -263,7 +263,7 @@ public class SpaceRaceTeam extends Team {
             Team.Visibility deathMessageVisibility,
             Team.CollisionRule collisionRule,
             List<String> players,
-            Map<ResourceKey<CelestialBody>, Long> reachedCelestialBodies,
+            Map<ResourceKey<Celestial>, Long> reachedCelestialBodies,
             Schematics unlockedSchematics,
             Optional<FlagData> flag
     ) {
@@ -279,7 +279,7 @@ public class SpaceRaceTeam extends Team {
                 Team.Visibility.CODEC.optionalFieldOf("DeathMessageVisibility", Team.Visibility.ALWAYS).forGetter(Packed::deathMessageVisibility),
                 Team.CollisionRule.CODEC.optionalFieldOf("CollisionRule", Team.CollisionRule.ALWAYS).forGetter(Packed::collisionRule),
                 Codec.STRING.listOf().optionalFieldOf("Players", List.of()).forGetter(Packed::players),
-                Codec.unboundedMap(ResourceKey.codec(GalacticraftRegistries.Keys.CELESTIAL_BODY), Codec.LONG).optionalFieldOf("ReachedCelestialBodies", Map.of()).forGetter(Packed::reachedCelestialBodies),
+                Codec.unboundedMap(ResourceKey.codec(GalacticraftRegistries.Keys.CELESTIAL), Codec.LONG).optionalFieldOf("ReachedCelestialBodies", Map.of()).forGetter(Packed::reachedCelestialBodies),
                 Schematics.CODEC.optionalFieldOf("UnlockedSchematics", Schematics.empty()).forGetter(Packed::unlockedSchematics),
                 FlagData.CODEC.optionalFieldOf("Flag").forGetter(Packed::flag)
         ).apply(instance, Packed::new));

@@ -1,0 +1,10 @@
+{
+  "type": "galacticraftlegacy:solar_system",
+  "description": {
+    "translate": "celestial_body.galacticraftlegacy.sol"
+  },
+  "icon": {
+    "icon": "galacticraftlegacy:textures/celestial_body/sol"
+  },
+  "star": "galacticraftlegacy:sun"
+}

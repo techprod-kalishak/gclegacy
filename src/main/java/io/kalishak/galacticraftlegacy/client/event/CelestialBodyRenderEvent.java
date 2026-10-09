@@ -1,18 +1,18 @@
 package io.kalishak.galacticraftlegacy.client.event;
 
-import io.kalishak.galacticraftlegacy.galaxies.celestial.CelestialBody;
+import io.kalishak.galacticraftlegacy.galaxies.celestial.CelestialBodyInstance;
 import net.minecraft.resources.Identifier;
 import net.neoforged.bus.api.Event;
 import org.joml.Vector3f;
 
 public abstract class CelestialBodyRenderEvent extends Event {
-    private final CelestialBody celestialBody;
+    private final CelestialBodyInstance celestialBody;
 
-    public CelestialBodyRenderEvent(CelestialBody celestialBody) {
+    public CelestialBodyRenderEvent(CelestialBodyInstance celestialBody) {
         this.celestialBody = celestialBody;
     }
 
-    public CelestialBody getCelestialBody() {
+    public CelestialBodyInstance getCelestialBody() {
         return this.celestialBody;
     }
 
@@ -21,14 +21,14 @@ public abstract class CelestialBodyRenderEvent extends Event {
     }
 
     public static abstract class RenderRing extends CelestialBodyRenderEvent {
-        public RenderRing(CelestialBody celestialBody) {
+        public RenderRing(CelestialBodyInstance celestialBody) {
             super(celestialBody);
         }
 
         public static class Pre extends RenderRing {
             public final Vector3f parentOffset;
 
-            public Pre(CelestialBody celestialBody, Vector3f parentOffset) {
+            public Pre(CelestialBodyInstance celestialBody, Vector3f parentOffset) {
                 super(celestialBody);
                 this.parentOffset = parentOffset;
             }
@@ -39,7 +39,7 @@ public abstract class CelestialBodyRenderEvent extends Event {
         }
 
         public static class Post extends RenderRing {
-            public Post(CelestialBody celestialBody) {
+            public Post(CelestialBodyInstance celestialBody) {
                 super(celestialBody);
             }
         }
@@ -49,7 +49,7 @@ public abstract class CelestialBodyRenderEvent extends Event {
         private Identifier celestialBodyTexture;
         private int spriteSize;
 
-        public Pre(CelestialBody celestialBody, Identifier celestialBodyTexture, int spriteSize) {
+        public Pre(CelestialBodyInstance celestialBody, Identifier celestialBodyTexture, int spriteSize) {
             super(celestialBody);
             this.celestialBodyTexture = celestialBodyTexture;
             this.spriteSize = spriteSize;
@@ -73,7 +73,7 @@ public abstract class CelestialBodyRenderEvent extends Event {
     }
 
     public static class Post extends CelestialBodyRenderEvent {
-        public Post(CelestialBody celestialBody) {
+        public Post(CelestialBodyInstance celestialBody) {
             super(celestialBody);
         }
     }
