@@ -138,8 +138,8 @@ public class CelestialSelectionScreen extends Screen {
         if (celestial.isSatellite()) {
             CelestialBodyInstance parent = celestial.parent(this.worldCelestials);
 
-            if (!parent.isEmpty()) {
-                return parent.typeHolder().value().targetDimension().orElse(null);
+            if (!parent.isEmpty() && parent.hasTargetDimension()) {
+                return parent.getTargetDimension();
             }
         }
 

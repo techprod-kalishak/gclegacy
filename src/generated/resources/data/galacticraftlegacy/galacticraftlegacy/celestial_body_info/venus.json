@@ -1,9 +1,0 @@
-{
-  "celestial_object_reference": "galacticraftlegacy:venus",
-  "fuel_usage_multiplier": 0.9,
-  "gravity_scale": 0.904,
-  "transition": {
-    "type": "galacticraftlegacy:with_lander",
-    "lander_type": "galacticraftlegacy:entry_pod"
-  }
-}

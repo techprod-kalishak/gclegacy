@@ -6,7 +6,6 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.kalishak.galacticraftlegacy.galaxies.ScalableDistance;
 import io.kalishak.galacticraftlegacy.galaxies.component.CelestialBodyIcon;
 import io.kalishak.galacticraftlegacy.galaxies.environment.AtmosphereInfo;
-import io.kalishak.galacticraftlegacy.world.item.FeatureTier;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
 import net.minecraft.network.chat.Component;
@@ -22,7 +21,7 @@ public class SolarSystem extends AbstractCelestialBody {
     private final Holder<Celestial> star;
 
     public SolarSystem(Holder<Celestial> star, Component description, CelestialBodyIcon icon) {
-        super(null, Vec3.ZERO, description, 0.0F, 0.0F, 0.0F, new ScalableDistance(0.0F), null, FeatureTier.UNREACHABLE, AtmosphereInfo.builder().build(), Vec3.ZERO, HolderSet.empty(), icon, null);
+        super(null, Vec3.ZERO, description, 0.0F, 0.0F, 0.0F, new ScalableDistance(0.0F), null, AtmosphereInfo.builder().build(), Vec3.ZERO, HolderSet.empty(), icon, null);
         this.star = star;
     }
 

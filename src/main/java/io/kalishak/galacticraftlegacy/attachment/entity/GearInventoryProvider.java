@@ -9,7 +9,7 @@ package io.kalishak.galacticraftlegacy.attachment.entity;
 
 import io.kalishak.galacticraftlegacy.components.GalacticraftDataComponents;
 import io.kalishak.galacticraftlegacy.data.GalacticraftTags;
-import io.kalishak.galacticraftlegacy.galaxies.environment.CelestialBodyInfo;
+import io.kalishak.galacticraftlegacy.galaxies.celestial.CelestialBodyInstance;
 import io.kalishak.galacticraftlegacy.transfer.entity.SpaceGearEquipment;
 import io.kalishak.galacticraftlegacy.world.damagesource.GalacticraftDamageTypes;
 import io.kalishak.galacticraftlegacy.world.entity.GearEquipmentSlot;
@@ -59,9 +59,9 @@ public abstract class GearInventoryProvider implements ParachuteFalling {
 
     public void serverGearTick(ServerLevel serverLevel, LivingEntity gearOwner) {
         //Oxygen
-        CelestialBodyInfo celestialBodyInfo = CelestialBodyInfo.getFromLevel(serverLevel);
+        CelestialBodyInstance celestialBodyInstance = CelestialBodyInstance.getFromLevel(serverLevel);
 
-        if (celestialBodyInfo == null) {
+        if (celestialBodyInstance.isEmpty()) {
             if (!warnedEmptyBodyData) {
                 LOGGER.warn("The following DimensionType of : {} does not have CelestialBodyData defined, gear inventory will cautiously stop ticking.", serverLevel.dimension());
                 warnedEmptyBodyData = true;
@@ -73,7 +73,7 @@ public abstract class GearInventoryProvider implements ParachuteFalling {
         SpaceGearEquipment spaceGearEquipment = getGearEquipment();
 
         if (!gearOwner.is(EntityTypeTags.UNDEAD)) {
-            if (!celestialBodyInfo.celestialObject().value().atmosphereInfo().isBreathable()) {
+            if (!celestialBodyInstance.isBreathable()) {
                 if (!mayBreath(gearOwner) || !depleteOxygen()) {
                     if (this.lastSuffocationDamageTick++ > 120) {
                         gearOwner.hurtServer(serverLevel, serverLevel.damageSources().source(GalacticraftDamageTypes.SUFFOCATION), 0.2F);
@@ -86,14 +86,14 @@ public abstract class GearInventoryProvider implements ParachuteFalling {
                 }
             }
 
-            float temperatureModifier = celestialBodyInfo.celestialObject().value().atmosphereInfo().getTemperatureModifier();
+            float temperatureModifier = celestialBodyInstance.typeHolder().value().atmosphereInfo().getTemperatureModifier();
             if (temperatureModifier != 1.0) {
                 if (!isThermalPaddingEffective(temperatureModifier)) {
                     gearOwner.hurtServer(serverLevel, serverLevel.damageSources().source(GalacticraftDamageTypes.SUN_RADIATION), 0.2F);
                 }
             }
 
-            if (celestialBodyInfo.celestialObject().value().atmosphereInfo().isCorrosive()) {
+            if (celestialBodyInstance.typeHolder().value().atmosphereInfo().isCorrosive()) {
                 boolean isProtected = false;
 
                 ItemStack shieldItem = spaceGearEquipment.get(GearEquipmentSlot.SHIELD);

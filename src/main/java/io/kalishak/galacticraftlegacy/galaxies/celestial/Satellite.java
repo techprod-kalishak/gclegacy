@@ -5,15 +5,14 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.kalishak.galacticraftlegacy.galaxies.ScalableDistance;
 import io.kalishak.galacticraftlegacy.galaxies.component.CelestialBodyIcon;
+import io.kalishak.galacticraftlegacy.galaxies.component.TransferableDimension;
 import io.kalishak.galacticraftlegacy.galaxies.environment.AtmosphereInfo;
 import io.kalishak.galacticraftlegacy.registry.ChecklistEntry;
-import io.kalishak.galacticraftlegacy.world.item.FeatureTier;
 import io.kalishak.galacticraftlegacy.world.level.dimension.SpaceStationRecipe;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.ComponentSerialization;
-import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.phys.Vec3;
 
 public class Satellite extends AbstractCelestialBody {
@@ -24,14 +23,14 @@ public class Satellite extends AbstractCelestialBody {
             Codec.FLOAT.fieldOf("relative_orbit_size").forGetter(Satellite::relativeOrbitTime),
             Codec.FLOAT.fieldOf("phase_shift").forGetter(Satellite::phaseShift),
             ScalableDistance.CODEC.fieldOf("relative_distance").forGetter(Satellite::relativeDistanceFromCenter),
-            DimensionType.CODEC.fieldOf("target_dimension").forGetter(Satellite::getTargetDimension),
+            TransferableDimension.CODEC.fieldOf("target_dimension").forGetter(Satellite::getTargetDimension),
             Vec3.CODEC.fieldOf("ring_colors").forGetter(Satellite::ringColors),
             ChecklistEntry.HOLDER_SET_CODEC.fieldOf("checklist").forGetter(Satellite::checklist),
             SpaceStationRecipe.CODEC.fieldOf("recipe").forGetter(Satellite::getRecipe)
     ).apply(instance, Satellite::new));
     
-    public Satellite(Holder<Celestial> parent, Component description, float relativeSize, float relativeOrbitTime, float phaseShift, ScalableDistance relativeDistanceFromCenter, Holder<DimensionType> targetDimension, Vec3 ringColors, HolderSet<ChecklistEntry> checklist, Holder<SpaceStationRecipe> recipe) {
-        super(parent, Vec3.ZERO, description, relativeSize, relativeOrbitTime, phaseShift, relativeDistanceFromCenter, targetDimension, FeatureTier.UNREACHABLE, AtmosphereInfo.builder().build(), ringColors, checklist, CelestialBodyIcon.SATELLITE, recipe);
+    public Satellite(Holder<Celestial> parent, Component description, float relativeSize, float relativeOrbitTime, float phaseShift, ScalableDistance relativeDistanceFromCenter, TransferableDimension targetDimension, Vec3 ringColors, HolderSet<ChecklistEntry> checklist, Holder<SpaceStationRecipe> recipe) {
+        super(parent, Vec3.ZERO, description, relativeSize, relativeOrbitTime, phaseShift, relativeDistanceFromCenter, targetDimension, AtmosphereInfo.builder().build(), ringColors, checklist, CelestialBodyIcon.SATELLITE, recipe);
     }
     
     private Holder<Celestial> getParent() {
@@ -42,7 +41,7 @@ public class Satellite extends AbstractCelestialBody {
         return this.parent;
     }
 
-    private Holder<DimensionType> getTargetDimension() {
+    private TransferableDimension getTargetDimension() {
         if (this.targetDimension == null) {
             throw new IllegalStateException("Satellite must have a target dimension");
         }
@@ -56,15 +55,6 @@ public class Satellite extends AbstractCelestialBody {
         }
 
         return this.recipe;
-    }
-
-    @Override
-    public FeatureTier requiredTier() {
-        if (this.parent == null) {
-            throw new IllegalStateException("Satellite must have a parent body");
-        }
-
-        return this.parent.value().requiredTier();
     }
 
     @Override

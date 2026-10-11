@@ -9,8 +9,6 @@ package io.kalishak.galacticraftlegacy.world.entity.vehicle.rocket;
 
 import io.kalishak.galacticraftlegacy.config.CommonConfig;
 import io.kalishak.galacticraftlegacy.galaxies.celestial.CelestialBodyInstance;
-import io.kalishak.galacticraftlegacy.galaxies.celestial.WorldCelestials;
-import io.kalishak.galacticraftlegacy.galaxies.environment.CelestialBodyInfo;
 import io.kalishak.galacticraftlegacy.network.payload.ChangeCameraModePayload;
 import io.kalishak.galacticraftlegacy.network.payload.EntityPlanetaryTransitionPayload;
 import io.kalishak.galacticraftlegacy.network.payload.OpenGalaxySelectionScreenPayload;
@@ -140,7 +138,7 @@ public abstract class TieredRocket extends AbstractAutoRocket implements RocketT
                         Level otherLevel = serverLevel.getServer().getLevel(targetLevel);
 
                         if (otherLevel != null) {
-                            boolean canReachTo = !CommonConfig.DIMENSIONS_WITH_DISABLED_ROCKETS.get().contains(targetLevel.identifier().toString()) && canAccess(CelestialBodyInfo.getFromLevel(level()));
+                            boolean canReachTo = !CommonConfig.DIMENSIONS_WITH_DISABLED_ROCKETS.get().contains(targetLevel.identifier().toString()) && canAccess(CelestialBodyInstance.getFromLevel(serverLevel));
 
                             if (canReachTo) {
                                 if (!getPassengers().isEmpty()) {
@@ -278,15 +276,9 @@ public abstract class TieredRocket extends AbstractAutoRocket implements RocketT
         return true;
     }
 
-    public boolean canAccess(@Nullable CelestialBodyInfo celestialBodyData) {
-        if (celestialBodyData == null || !(level() instanceof ServerLevel)) return false;
+    public boolean canAccess(CelestialBodyInstance celestialBodyInstance) {
+        if (celestialBodyInstance.isEmpty()) return false;
 
-        CelestialBodyInstance celestial = ((ServerLevel) level()).getServer().getDataStorage().computeIfAbsent(WorldCelestials.ID).get(celestialBodyData.celestialObject());
-
-        if (!celestial.isEmpty()) {
-            return celestial.isReachable(this.tier);
-        }
-
-        return false;
+        return celestialBodyInstance.isReachable(this.tier);
     }
 }

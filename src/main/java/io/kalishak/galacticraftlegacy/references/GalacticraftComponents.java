@@ -111,6 +111,10 @@ public class GalacticraftComponents {
     public static final Dynamic2CommandExceptionType.Function COMMAND_ERROR_NOT_EQUIPABLE = (entity, equipment) -> Component.translatableEscape("galacticraftlegacy.commands.equipment.not_equippable", entity, equipment);
     public static final Function<Object, Message> COMMAND_ERROR_INVALID_GEAR_OWNER = entity -> Component.translatableEscape("galacticraftlegacy.commands.invalid_gear_owner", entity);
     public static final Function<Object, Message> COMMAND_ERROR_SPACE_RACE_DONT_EXIST = name -> Component.translatableEscape("galacticraftlegacy.commands.space_race.notFound", name);
+    public static final Key KEY_ERROR_EMPTY_CELESTIAL = key("galacticraftlegacy.commands.data.celestial.empty");
+    public static final Function<Object, Message> COMMAND_ERROR_CELESTIAL_INVALID = name -> Component.translatableEscape("galacticraftlegacy.commands.celestial.invalid", name);
+    public static final Function<Object, Message> COMMAND_ERROR_CELESTIAL_MALFORMED = name -> Component.translatableEscape("galacticraftlegacy.commands.celestial.malformed", name);
+    public static final Function<Object, Message> COMMAND_ERROR_CELESTIAL_BLANK = name -> Component.translatableEscape("galacticraftlegacy.commands.celestial.blank", name);
 
     public static final MutableComponent COMMAND_SUCCESS_SPACE_RACE_LEAVE_SINGLE = Component.translatable("galacticraftlegacy.commands.space_race.leave.success.single");
     public static final MutableComponent COMMAND_SUCCESS_SPACE_RACE_LEAVE_MULTIPLE = Component.translatable("galacticraftlegacy.commands.space_race.leave.success.multiple");

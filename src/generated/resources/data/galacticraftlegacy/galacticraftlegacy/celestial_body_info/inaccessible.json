@@ -1,7 +1,0 @@
-{
-  "celestial_object_reference": "galacticraftlegacy:sol",
-  "gravity_scale": 0.0,
-  "transition": {
-    "type": "galacticraftlegacy:inaccessible"
-  }
-}

@@ -2,14 +2,13 @@ package io.kalishak.galacticraftlegacy.galaxies.celestial;
 
 import io.kalishak.galacticraftlegacy.galaxies.ScalableDistance;
 import io.kalishak.galacticraftlegacy.galaxies.component.CelestialBodyIcon;
+import io.kalishak.galacticraftlegacy.galaxies.component.TransferableDimension;
 import io.kalishak.galacticraftlegacy.galaxies.environment.AtmosphereInfo;
 import io.kalishak.galacticraftlegacy.registry.ChecklistEntry;
-import io.kalishak.galacticraftlegacy.world.item.FeatureTier;
 import io.kalishak.galacticraftlegacy.world.level.dimension.SpaceStationRecipe;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.phys.Vec3;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
@@ -24,8 +23,7 @@ public abstract class AbstractCelestialBody implements Celestial, Comparable<Cel
     protected final float relativeOrbitTime;
     protected final float phaseShift;
     protected final ScalableDistance relativeDistanceFromCenter;
-    protected final @Nullable Holder<DimensionType> targetDimension;
-    protected final FeatureTier requiredTier;
+    protected final @Nullable TransferableDimension targetDimension;
     protected final AtmosphereInfo atmosphereInfo;
     protected final Vec3 ringColors;
     protected final HolderSet<ChecklistEntry> checklist;
@@ -33,7 +31,7 @@ public abstract class AbstractCelestialBody implements Celestial, Comparable<Cel
     protected final @Nullable Holder<SpaceStationRecipe> recipe;
 
     protected AbstractCelestialBody(@Nullable Holder<Celestial> parent, Vec3 position, Component description, float relativeSize, float relativeOrbitTime, float phaseShift, ScalableDistance relativeDistanceFromCenter,
-                                    @Nullable Holder<DimensionType> targetDimension, FeatureTier requiredTier, AtmosphereInfo atmosphereInfo, Vec3 ringColors, HolderSet<ChecklistEntry> checklist, CelestialBodyIcon icon,
+                                    @Nullable TransferableDimension targetDimension, AtmosphereInfo atmosphereInfo, Vec3 ringColors, HolderSet<ChecklistEntry> checklist, CelestialBodyIcon icon,
                                     @Nullable Holder<SpaceStationRecipe> recipe) {
         this.parent = parent;
         this.position = position;
@@ -43,7 +41,6 @@ public abstract class AbstractCelestialBody implements Celestial, Comparable<Cel
         this.phaseShift = phaseShift;
         this.relativeDistanceFromCenter = relativeDistanceFromCenter;
         this.targetDimension = targetDimension;
-        this.requiredTier = requiredTier;
         this.atmosphereInfo = atmosphereInfo;
         this.ringColors = ringColors;
         this.checklist = checklist;
@@ -87,13 +84,8 @@ public abstract class AbstractCelestialBody implements Celestial, Comparable<Cel
     }
 
     @Override
-    public Optional<Holder<DimensionType>> targetDimension() {
+    public Optional<TransferableDimension> targetDimension() {
         return Optional.ofNullable(this.targetDimension);
-    }
-
-    @Override
-    public FeatureTier requiredTier() {
-        return this.requiredTier;
     }
 
     @Override

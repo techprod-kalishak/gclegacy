@@ -18,18 +18,24 @@
   "icon": {
     "icon": "galacticraftlegacy:textures/celestial_body/asteroids"
   },
-  "phase_shift": 0.79030716,
+  "phase_shift": 3.4292078,
   "relative_distance": {
     "scaled": 1.375,
     "unscaled": 1.375
   },
   "relative_orbit_size": 45.0,
   "relative_size": 1.0,
-  "required_tier": "ultimate",
   "ring_colors": [
     0.10000000149011612,
     0.8999999761581421,
     0.6000000238418579
   ],
-  "target_dimension": "galacticraftlegacy:asteroids"
+  "target_dimension": {
+    "dimension_type": "galacticraftlegacy:asteroids",
+    "required_tier": "ultimate",
+    "transition": {
+      "type": "galacticraftlegacy:with_lander",
+      "lander_type": "galacticraftlegacy:entry_pod"
+    }
+  }
 }

@@ -6,11 +6,15 @@ import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.registry.GalacticraftRegistries;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.level.saveddata.SavedData;
 import net.minecraft.world.level.saveddata.SavedDataType;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
+import java.util.function.Consumer;
 
 public class WorldCelestials extends SavedData {
     public static final Codec<WorldCelestials> CODEC = RecordCodecBuilder.create(instance -> instance.group(
@@ -31,14 +35,25 @@ public class WorldCelestials extends SavedData {
     }
 
     public CelestialBodyInstance get(Holder<Celestial> body) {
-        return this.instances.computeIfAbsent(body.getKey(), _ -> new CelestialBodyInstance(body));
+        return this.instances.get(body.getKey());
     }
 
-    public void set(ResourceKey<Celestial> body, CelestialBodyInstance instance) {
-        this.instances.put(body, instance);
+    public CelestialBodyInstance getFromLevel(Level level) {
+        Holder<DimensionType> type = level.dimensionTypeRegistration();
+
+        Optional<CelestialBodyInstance> celestial = this.instances.values().stream()
+                .filter(CelestialBodyInstance::hasTargetDimension)
+                .filter(instance -> instance.getTargetDimension().is(type))
+                .findFirst();
+
+        return celestial.orElse(CelestialBodyInstance.EMPTY);
     }
 
-    public void set(Holder<Celestial> body, CelestialBodyInstance instance) {
-        set(body.getKey(), instance);
+    public void modify(Holder<Celestial> body, Consumer<CelestialBodyInstance> instance) {
+        if (!this.instances.containsKey(body.getKey())) {
+            this.instances.put(body.getKey(), new CelestialBodyInstance(body));
+        }
+
+        instance.accept(this.instances.get(body.getKey()));
     }
 }

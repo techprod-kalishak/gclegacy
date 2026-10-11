@@ -5,13 +5,18 @@ import io.kalishak.galacticraftlegacy.galaxies.celestial.Celestial;
 import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.registry.ChecklistEntry;
 import io.kalishak.galacticraftlegacy.registry.GalacticraftRegistries;
+import io.kalishak.galacticraftlegacy.world.entity.GalacticraftEntityType;
 import io.kalishak.galacticraftlegacy.world.item.FeatureTier;
 import io.kalishak.galacticraftlegacy.world.level.dimension.GalacticraftDimensionTypes;
 import io.kalishak.galacticraftlegacy.world.level.dimension.SpaceStationRecipe;
+import io.kalishak.galacticraftlegacy.world.level.dimension.transition.EarthPlanetaryTranstion;
+import io.kalishak.galacticraftlegacy.world.level.dimension.transition.FixedPlanetaryTransition;
+import io.kalishak.galacticraftlegacy.world.level.dimension.transition.LanderPlanetaryTransition;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.level.dimension.BuiltinDimensionTypes;
 import net.minecraft.world.level.dimension.DimensionType;
 
 import java.util.function.UnaryOperator;
@@ -61,6 +66,7 @@ public class BuiltinGalaxies {
                         .relativeOrbitTime(0.24096385542168674698795180722892F)
                         .parent(self.getOrThrow(SUN))
         );
+        //gravity scale 0.904F
         registerCelestial(
                 context,
                 VENUS,
@@ -75,7 +81,7 @@ public class BuiltinGalaxies {
                                 .gas(ResourceKey.create(Registries.FLUID, Constants.id("nitrogen")), 3.5)
 
                         )
-                        .transferableTo(dimensions.getOrThrow(GalacticraftDimensionTypes.VENUS), FeatureTier.TIER_3)
+                        .transferableTo(dimensions.getOrThrow(GalacticraftDimensionTypes.VENUS), new LanderPlanetaryTransition(GalacticraftEntityType.ENTRY_POD), FeatureTier.TIER_3)
                         .parent(self.getOrThrow(SUN))
                         .ringColors(0.1F, 0.9F, 0.6F)
                         //.biome(GalacticraftTags.Biomes.IS_VENUS)
@@ -92,10 +98,12 @@ public class BuiltinGalaxies {
                                 .gas(ResourceKey.create(Registries.FLUID, Constants.id("argon")), 0.93F)
                                 .gas(ResourceKey.create(Registries.FLUID, Constants.id("carbon_dioxide")), 0.04F)
                         )
+                        .transferableTo(dimensions.getOrThrow(BuiltinDimensionTypes.OVERWORLD), EarthPlanetaryTranstion.INSTANCE, FeatureTier.TIER_1)
                         .parent(self.getOrThrow(SUN))
                         //.biome(BiomeTags.IS_OVERWORLD)
                         .checklist(checklists.getOrThrow(GalacticraftTags.Checklist.OVERWORLD_CHECKLIST))
         );
+        //gravity scale 0.38F
         registerCelestial(
                 context,
                 MARS,
@@ -109,7 +117,7 @@ public class BuiltinGalaxies {
                                 .gas(ResourceKey.create(Registries.FLUID, Constants.id("argon")), 2.7F)
                                 .gas(ResourceKey.create(Registries.FLUID, Constants.id("nitrogen")), 2.0F)
                         )
-                        .transferableTo(dimensions.getOrThrow(GalacticraftDimensionTypes.MARS), FeatureTier.TIER_2)
+                        .transferableTo(dimensions.getOrThrow(GalacticraftDimensionTypes.MARS), new LanderPlanetaryTransition(GalacticraftEntityType.LANDING_BALLOONS), FeatureTier.TIER_2)
                         .parent(self.getOrThrow(SUN))
                         .ringColors(0.67F, 0.1F, 0.1F)
                         //.biome(GalacticraftTags.Biomes.IS_MARS)
@@ -154,6 +162,7 @@ public class BuiltinGalaxies {
                         .parent(self.getOrThrow(SUN))
                         .withRings(Constants.texture("gui/celestial_body/neptune_rings"))
         );
+        //gravity scale 0.165
         registerCelestial(
                 context,
                 MOON,
@@ -162,10 +171,11 @@ public class BuiltinGalaxies {
                         .relativeDistanceFromCenter(13.0F)
                         .relativeOrbitTime(1.0F / 0.1F)
                         .parent(self.getOrThrow(EARTH))
-                        .transferableTo(dimensions.getOrThrow(GalacticraftDimensionTypes.MOON), FeatureTier.TIER_1)
+                        .transferableTo(dimensions.getOrThrow(GalacticraftDimensionTypes.MOON), new LanderPlanetaryTransition(GalacticraftEntityType.LANDER), FeatureTier.TIER_1)
                         //.biome(GalacticraftTags.Biomes.IS_MOON)
                         .checklist(checklists.getOrThrow(GalacticraftTags.Checklist.MOON_CHECKLIST))
         );
+        //gravity scale 0.01
         registerCelestial(
                 context,
                 ASTEROIDS,
@@ -175,7 +185,7 @@ public class BuiltinGalaxies {
                         .relativeOrbitTime(45.0F)
                         .parent(self.getOrThrow(SUN))
                         //.biome(GalacticraftTags.Biomes.IS_ASTEROIDS)
-                        .transferableTo(dimensions.getOrThrow(GalacticraftDimensionTypes.ASTEROIDS), FeatureTier.TIER_3)
+                        .transferableTo(dimensions.getOrThrow(GalacticraftDimensionTypes.ASTEROIDS), new LanderPlanetaryTransition(GalacticraftEntityType.ENTRY_POD), FeatureTier.TIER_3)
                         .checklist(checklists.getOrThrow(GalacticraftTags.Checklist.ASTEROIDS_CHECKLIST))
         );
 
@@ -187,7 +197,7 @@ public class BuiltinGalaxies {
                         .relativeOrbitTime(1.0F / 0.05F)
                         .parent(self.getOrThrow(EARTH))
                         //.biome(GalacticraftTags.Biomes.IS_OPEN_SPACE)
-                        .transferableTo(dimensions.getOrThrow(GalacticraftDimensionTypes.SATELLITE), FeatureTier.TIER_1)
+                        .transferableTo(dimensions.getOrThrow(GalacticraftDimensionTypes.SATELLITE), FixedPlanetaryTransition.spaceStation(), FeatureTier.TIER_1)
                         .checklist(checklists.getOrThrow(GalacticraftTags.Checklist.SATELLITE_CHECKLIST))
                         .withRecipe(context.lookup(GalacticraftRegistries.Keys.SPACE_STATION_RECIPE).getOrThrow(SpaceStationRecipe.EARTH_SPACE_STATION_RECIPE))
                         .createSatellite(SATELLITE)

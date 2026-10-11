@@ -7,7 +7,7 @@
 
 package io.kalishak.galacticraftlegacy.world.level.block.entity.machine;
 
-import io.kalishak.galacticraftlegacy.galaxies.environment.CelestialBodyInfo;
+import io.kalishak.galacticraftlegacy.galaxies.celestial.CelestialBodyInstance;
 import io.kalishak.galacticraftlegacy.world.inventory.machine.OxygenCollectorMenu;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityType;
 import io.kalishak.galacticraftlegacy.world.level.material.fluid.GalacticraftFluids;
@@ -57,7 +57,7 @@ public class OxygenCollectorBlockEntity extends AbstractOxygenBlockEntity {
                 float nearbyLeaves = 0;
 
                 if (!blockEntity.isInitialised) {
-                    blockEntity.noAtmosphericOxygen = !CelestialBodyInfo.canLivingBreath(level);
+                    blockEntity.noAtmosphericOxygen = !CelestialBodyInstance.getFromLevel(level).isBreathable();
                     blockEntity.isInitialised = true;
                 }
 

@@ -1,9 +1,0 @@
-{
-  "celestial_object_reference": "galacticraftlegacy:asteroids",
-  "fuel_usage_multiplier": 0.1,
-  "gravity_scale": 0.01,
-  "transition": {
-    "type": "galacticraftlegacy:with_lander",
-    "lander_type": "galacticraftlegacy:entry_pod"
-  }
-}

@@ -12,13 +12,14 @@ import io.kalishak.galacticraftlegacy.attachment.entity.PlayerSpaceData;
 import io.kalishak.galacticraftlegacy.attachment.entity.TransitionalRocketInfo;
 import io.kalishak.galacticraftlegacy.components.GalacticraftDataComponents;
 import io.kalishak.galacticraftlegacy.config.CommonConfig;
-import io.kalishak.galacticraftlegacy.galaxies.environment.CelestialBodyInfo;
+import io.kalishak.galacticraftlegacy.galaxies.celestial.CelestialBodyInstance;
 import io.kalishak.galacticraftlegacy.world.item.FeatureTier;
 import io.kalishak.galacticraftlegacy.world.item.GalacticraftItems;
 import io.kalishak.galacticraftlegacy.world.level.GalacticraftParticleTypes;
 import io.kalishak.galacticraftlegacy.world.level.telemetry.GloballyReferencedEntity;
 import net.minecraft.core.component.DataComponentPatch;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EntityReference;
@@ -64,14 +65,14 @@ public class Tier1Rocket extends TieredRocket {
             spawnLaunchParticles(isLaunched());
         }
 
-        if (isLaunched()) {
-            CelestialBodyInfo celestialBodyInfo = CelestialBodyInfo.getFromLevel(level());
+        if (isLaunched() && level() instanceof ServerLevel serverLevel) {
+            CelestialBodyInstance celestialBodyInstance = CelestialBodyInstance.getFromLevel(serverLevel);
 
-            if (celestialBodyInfo != null) {
+            if (!celestialBodyInstance.isEmpty()) {
                 if (getLaunchPhase() == LaunchPhase.LAUNCHED) {
                     double d = getTimeSinceLaunch() / 150.0D;
 
-                    if (celestialBodyInfo.celestialObject().value().atmosphereInfo().getGasComposition().isEmpty()) {
+                    if (celestialBodyInstance.typeHolder().value().atmosphereInfo().getGasComposition().isEmpty()) {
                         d = Math.min(d * 1.2D, 1.6D);
                     } else {
                         d = Math.min(d, 1);
@@ -84,7 +85,7 @@ public class Tier1Rocket extends TieredRocket {
                     move(MoverType.SELF, new Vec3(0.0D, getDeltaMovement().y - 0.008D, 0.0D));
                 }
 
-                double speedMultiplier = celestialBodyInfo.fuelUsageMultiplier().orElse(1.0F);
+                double speedMultiplier = celestialBodyInstance.getOrDefault(GalacticraftDataComponents.FUEL_MULTIPLIER, 1.0F);
 
                 if (getTimeSinceLaunch() % Mth.floor(3 * speedMultiplier) == 0) {
                     if (!AbstractAutoRocket.consumeFuel(this, 1)) {

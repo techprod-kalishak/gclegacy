@@ -5,11 +5,13 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import io.kalishak.galacticraftlegacy.galaxies.ScalableDistance;
 import io.kalishak.galacticraftlegacy.galaxies.component.CelestialBodyIcon;
+import io.kalishak.galacticraftlegacy.galaxies.component.TransferableDimension;
 import io.kalishak.galacticraftlegacy.galaxies.environment.AtmosphereInfo;
 import io.kalishak.galacticraftlegacy.registry.ChecklistEntry;
 import io.kalishak.galacticraftlegacy.registry.GalacticraftRegistries;
 import io.kalishak.galacticraftlegacy.world.item.FeatureTier;
 import io.kalishak.galacticraftlegacy.world.level.dimension.SpaceStationRecipe;
+import io.kalishak.galacticraftlegacy.world.level.dimension.transition.PlanetaryTransition;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.codec.RegistryFixedCodec;
@@ -69,8 +71,7 @@ public interface Celestial {
      * @return Distance from the center of the map relative to earth.
      */
     ScalableDistance relativeDistanceFromCenter();
-    Optional<Holder<DimensionType>> targetDimension();
-    FeatureTier requiredTier();
+    Optional<TransferableDimension> targetDimension();
     /**
      * Use this to list the atmospheric gases on the celestial body, starting with the most abundant Do not include trace gases (anything less than 0.25%) (Do not use for stars!)
      */
@@ -95,8 +96,7 @@ public interface Celestial {
         private float relativeOrbitTime = 1.0F;
         private float phaseShift = 0.0F;
         private ScalableDistance relativeDistanceFromCenter = new ScalableDistance(1.0F);
-        private @Nullable Holder<DimensionType> targetDimension;
-        private FeatureTier requiredTier = FeatureTier.UNREACHABLE;
+        private @Nullable TransferableDimension targetDimension;
         private AtmosphereInfo atmosphereInfo = AtmosphereInfo.EARTH;
         private Vec3 ringColors = new Vec3(0.1F, 0.9F, 0.6F);
         private HolderSet<ChecklistEntry> checklist = HolderSet.empty();
@@ -142,9 +142,8 @@ public interface Celestial {
             return this;
         }
 
-        public Builder transferableTo(@Nullable Holder<DimensionType> targetDimension, FeatureTier requiredTier) {
-            this.targetDimension = targetDimension;
-            this.requiredTier = requiredTier;
+        public Builder transferableTo(@Nullable Holder<DimensionType> targetDimension, PlanetaryTransition transition, FeatureTier requiredTier) {
+            this.targetDimension = new TransferableDimension(targetDimension, transition, requiredTier);
 
             return this;
         }
@@ -202,7 +201,6 @@ public interface Celestial {
                     this.phaseShift,
                     this.relativeDistanceFromCenter,
                     Optional.ofNullable(this.targetDimension),
-                    this.requiredTier,
                     this.atmosphereInfo,
                     this.ringColors,
                     this.checklist,
@@ -221,7 +219,6 @@ public interface Celestial {
                     this.phaseShift,
                     this.relativeDistanceFromCenter,
                     Optional.ofNullable(this.targetDimension),
-                    this.requiredTier,
                     this.atmosphereInfo,
                     this.ringColors,
                     this.checklist,
@@ -265,9 +262,10 @@ public interface Celestial {
     }
 
     @FunctionalInterface
+    @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
     interface CelestialFactory<T extends Celestial> {
         T create(Optional<Holder<Celestial>> parent, Vec3 position, Component description, float relativeSize, float relativeOrbitTime, float phaseShift, ScalableDistance relativeDistanceFromCenter,
-                 Optional<Holder<DimensionType>> targetDimension, FeatureTier requiredTier, AtmosphereInfo atmosphereInfo, Vec3 ringColors, HolderSet<ChecklistEntry> checklist, CelestialBodyIcon icon,
+                 Optional<TransferableDimension> targetDimension, AtmosphereInfo atmosphereInfo, Vec3 ringColors, HolderSet<ChecklistEntry> checklist, CelestialBodyIcon icon,
                  Optional<Holder<SpaceStationRecipe>> recipe);
     }
 }

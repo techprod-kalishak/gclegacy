@@ -10,7 +10,6 @@ package io.kalishak.galacticraftlegacy.client.gui;
 import io.kalishak.galacticraftlegacy.attachment.GalacticraftAttachments;
 import io.kalishak.galacticraftlegacy.config.ClientConfig;
 import io.kalishak.galacticraftlegacy.config.values.OxygenTankPosition;
-import io.kalishak.galacticraftlegacy.galaxies.environment.CelestialBodyInfo;
 import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.world.entity.GearEquipmentSlot;
 import net.minecraft.client.DeltaTracker;
@@ -76,10 +75,6 @@ public class TanksLayer extends GearLayer {
             return false;
         }
 
-        if (player.hasData(GalacticraftAttachments.PLAYER_SPACE_DATA)) {
-            return !CelestialBodyInfo.canLivingBreath(level);
-        }
-
-        return false;
+        return player.hasData(GalacticraftAttachments.PLAYER_SPACE_DATA);
     }
 }

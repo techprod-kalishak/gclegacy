@@ -7,12 +7,8 @@
 
 package io.kalishak.galacticraftlegacy.data.datamap;
 
-import io.kalishak.galacticraftlegacy.galaxies.environment.CelestialBodyInfo;
 import io.kalishak.galacticraftlegacy.references.Constants;
-import io.kalishak.galacticraftlegacy.registry.CelestialBodyInfoEntries;
-import io.kalishak.galacticraftlegacy.registry.GalacticraftRegistries;
 import io.kalishak.galacticraftlegacy.world.level.block.GalacticraftBlocks;
-import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -22,7 +18,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.WeatheringCopperCollection;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.dimension.DimensionType;
 import net.neoforged.neoforge.common.data.DataMapProvider;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.datamaps.DataMapType;
@@ -38,15 +33,9 @@ public class GalacticraftDataMaps {
             Registries.BLOCK,
             Extinguishable.CODEC
     ).build();
-    public static final DataMapType<DimensionType, CelestialBodyLevelData> CELESTIAL_BODY_DATA = DataMapType.builder(
-            Constants.id("celestial_body_data"),
-            Registries.DIMENSION_TYPE,
-            CelestialBodyLevelData.CODEC
-    ).synced(CelestialBodyLevelData.CODEC, true).build();
 
     public static void registerDataMaps(RegisterDataMapTypesEvent event) {
         event.register(EXTINGUISHED_WITHOUT_OXYGEN);
-        event.register(CELESTIAL_BODY_DATA);
     }
 
     public static class Provider extends DataMapProvider {
@@ -73,8 +62,6 @@ public class GalacticraftDataMaps {
             buildExtinguishable(extinguishableBuilder, Blocks.COPPER_LANTERN.waxed().exposed(), GalacticraftBlocks.UNLIT_COPPER_LANTERN.waxed().exposed().get());
             buildExtinguishable(extinguishableBuilder, Blocks.COPPER_LANTERN.waxed().weathered(), GalacticraftBlocks.UNLIT_COPPER_LANTERN.waxed().weathered().get());
             buildExtinguishable(extinguishableBuilder, Blocks.COPPER_LANTERN.waxed().oxidized(), GalacticraftBlocks.UNLIT_COPPER_LANTERN.waxed().oxidized().get());
-
-            CelestialBodyInfoEntries.buildDataMaps(builder(CELESTIAL_BODY_DATA));
         }
 
         private static void buildOxidizables(Builder<Oxidizable, Block> dataMapBuilder, WeatheringCopperCollection<DeferredBlock<Block>> blocks) {

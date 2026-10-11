@@ -21,7 +21,6 @@ import io.kalishak.galacticraftlegacy.data.worldgen.GalacticraftMaterialRules;
 import io.kalishak.galacticraftlegacy.galaxies.BuiltinGalaxies;
 import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.references.GalacticraftComponents;
-import io.kalishak.galacticraftlegacy.registry.CelestialBodyInfoEntries;
 import io.kalishak.galacticraftlegacy.registry.Checklist;
 import io.kalishak.galacticraftlegacy.registry.GalacticraftRegistries;
 import io.kalishak.galacticraftlegacy.registry.SchematicVariants;
@@ -79,7 +78,6 @@ public class GalacticraftData {
             .add(Registries.WORLD_CLOCK, GalacticraftWorldClocks::bootstrap)
             .add(NeoForgeRegistries.Keys.BIOME_MODIFIERS, GalacticraftBiomeModifiers::bootstrap)
             .add(GalacticraftRegistries.Keys.CELESTIAL, BuiltinGalaxies::bootstrap)
-            .add(GalacticraftRegistries.Keys.CELESTIAL_BODY_INFO, CelestialBodyInfoEntries::bootstrap)
             .add(GalacticraftRegistries.Keys.CHECKLIST, Checklist::bootstrap)
             .add(GalacticraftRegistries.Keys.VEHICLE_CRAFTING_SLOT_TYPE, VehicleCraftingSlotTypes::bootstrap)
             .add(GalacticraftRegistries.Keys.VEHICLE_CRAFTING_RECIPE_DATA, VehicleCraftingDataRecipes::bootstrap)

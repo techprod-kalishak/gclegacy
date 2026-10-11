@@ -25,11 +25,17 @@
   },
   "relative_orbit_size": 10.0,
   "relative_size": 0.2667,
-  "required_tier": "basic",
   "ring_colors": [
     0.10000000149011612,
     0.8999999761581421,
     0.6000000238418579
   ],
-  "target_dimension": "galacticraftlegacy:moon"
+  "target_dimension": {
+    "dimension_type": "galacticraftlegacy:moon",
+    "required_tier": "basic",
+    "transition": {
+      "type": "galacticraftlegacy:with_lander",
+      "lander_type": "galacticraftlegacy:moon_lander"
+    }
+  }
 }

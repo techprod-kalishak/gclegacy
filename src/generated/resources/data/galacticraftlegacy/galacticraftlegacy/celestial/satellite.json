@@ -18,5 +18,21 @@
     0.8999999761581421,
     0.6000000238418579
   ],
-  "target_dimension": "galacticraftlegacy:satellite"
+  "target_dimension": {
+    "dimension_type": "galacticraftlegacy:satellite",
+    "required_tier": "basic",
+    "transition": {
+      "type": "galacticraftlegacy:fixed",
+      "parachest_pos": [
+        -8,
+        90,
+        -1
+      ],
+      "pos": [
+        0,
+        65,
+        0
+      ]
+    }
+  }
 }

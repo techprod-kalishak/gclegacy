@@ -6,7 +6,6 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.kalishak.galacticraftlegacy.galaxies.ScalableDistance;
 import io.kalishak.galacticraftlegacy.galaxies.component.CelestialBodyIcon;
 import io.kalishak.galacticraftlegacy.galaxies.environment.AtmosphereInfo;
-import io.kalishak.galacticraftlegacy.world.item.FeatureTier;
 import net.minecraft.core.HolderSet;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.ComponentSerialization;
@@ -22,7 +21,7 @@ public class Star extends AbstractCelestialBody {
     ).apply(instance, Star::new));
 
     public Star(Vec3 position, Component description, float relativeSize, AtmosphereInfo atmosphereInfo, CelestialBodyIcon icon) {
-        super(null, position, description, relativeSize, 0.0F, 0.0F, new ScalableDistance(0.0F), null, FeatureTier.UNREACHABLE, atmosphereInfo, Vec3.ZERO, HolderSet.empty(), icon, null);
+        super(null, position, description, relativeSize, 0.0F, 0.0F, new ScalableDistance(0.0F), null, atmosphereInfo, Vec3.ZERO, HolderSet.empty(), icon, null);
     }
 
     @Override
