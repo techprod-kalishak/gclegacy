@@ -27,7 +27,7 @@ public record SimpleCelestialBody(Optional<Holder<Celestial>> parent, Vec3 posit
             Codec.FLOAT.fieldOf("relative_size").forGetter(SimpleCelestialBody::relativeSize),
             Codec.FLOAT.fieldOf("relative_orbit_size").forGetter(SimpleCelestialBody::relativeOrbitTime),
             Codec.FLOAT.fieldOf("phase_shift").forGetter(SimpleCelestialBody::phaseShift),
-            ScalableDistance.CODEC.fieldOf("relative_distance").forGetter(SimpleCelestialBody::relativeDistanceFromCenter),
+            ScalableDistance.DISTANCE_CODEC.fieldOf("relative_distance").forGetter(SimpleCelestialBody::relativeDistanceFromCenter),
             TransferableDimension.CODEC.optionalFieldOf("target_dimension").forGetter(SimpleCelestialBody::targetDimension),
             AtmosphereInfo.CODEC.fieldOf("atmosphere_info").forGetter(SimpleCelestialBody::atmosphereInfo),
             Vec3.CODEC.fieldOf("ring_colors").forGetter(SimpleCelestialBody::ringColors),

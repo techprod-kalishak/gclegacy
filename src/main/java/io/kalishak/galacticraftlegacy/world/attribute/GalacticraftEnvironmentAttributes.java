@@ -52,6 +52,15 @@ public final class GalacticraftEnvironmentAttributes {
                     .notPositional()
                     ::build
     );
+    public static final DeferredHolder<EnvironmentAttribute<?>, EnvironmentAttribute<Float>> FUEL_MULTIPLIER = REGISTRY.register(
+            "gameplay/fuel_usage_multiplier",
+            EnvironmentAttribute.builder(AttributeTypes.FLOAT)
+                    .defaultValue(1.0F)
+                    .valueRange(AttributeRange.ofFloat(0.1F, 2.0F))
+                    .syncable()
+                    .notPositional()
+                    ::build
+    );
 
     public static void init(IEventBus bus) {
         REGISTRY.register(bus);

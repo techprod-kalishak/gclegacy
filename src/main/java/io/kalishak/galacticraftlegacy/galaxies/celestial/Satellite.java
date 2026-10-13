@@ -22,7 +22,7 @@ public class Satellite extends AbstractCelestialBody {
             Codec.FLOAT.fieldOf("relative_size").forGetter(Satellite::relativeSize),
             Codec.FLOAT.fieldOf("relative_orbit_size").forGetter(Satellite::relativeOrbitTime),
             Codec.FLOAT.fieldOf("phase_shift").forGetter(Satellite::phaseShift),
-            ScalableDistance.CODEC.fieldOf("relative_distance").forGetter(Satellite::relativeDistanceFromCenter),
+            ScalableDistance.DISTANCE_CODEC.fieldOf("relative_distance").forGetter(Satellite::relativeDistanceFromCenter),
             TransferableDimension.CODEC.fieldOf("target_dimension").forGetter(Satellite::getTargetDimension),
             Vec3.CODEC.fieldOf("ring_colors").forGetter(Satellite::ringColors),
             ChecklistEntry.HOLDER_SET_CODEC.fieldOf("checklist").forGetter(Satellite::checklist),

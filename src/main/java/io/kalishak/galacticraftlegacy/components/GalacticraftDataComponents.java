@@ -121,10 +121,6 @@ public final class GalacticraftDataComponents {
             "body_owner",
             builder -> builder.persistent(EntityReference.codec()).networkSynchronized(EntityReference.streamCodec())
     );
-    public static final DeferredHolder<DataComponentType<?>, DataComponentType<Float>> FUEL_MULTIPLIER = REGISTRY.registerComponentType(
-            "fuel_multiplier",
-            builder -> builder.persistent(ExtraCodecs.floatRange(0.1F, 10.0F)).networkSynchronized(ByteBufCodecs.FLOAT)
-    );
 
     public static void init(IEventBus bus) {
         REGISTRY.register(bus);

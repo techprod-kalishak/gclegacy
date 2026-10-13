@@ -13,6 +13,7 @@ import io.kalishak.galacticraftlegacy.attachment.entity.TransitionalRocketInfo;
 import io.kalishak.galacticraftlegacy.components.GalacticraftDataComponents;
 import io.kalishak.galacticraftlegacy.config.CommonConfig;
 import io.kalishak.galacticraftlegacy.galaxies.celestial.CelestialBodyInstance;
+import io.kalishak.galacticraftlegacy.world.attribute.GalacticraftEnvironmentAttributes;
 import io.kalishak.galacticraftlegacy.world.item.FeatureTier;
 import io.kalishak.galacticraftlegacy.world.item.GalacticraftItems;
 import io.kalishak.galacticraftlegacy.world.level.GalacticraftParticleTypes;
@@ -22,6 +23,7 @@ import net.minecraft.core.component.DataComponents;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
+import net.minecraft.world.attribute.EnvironmentAttributeMap;
 import net.minecraft.world.entity.EntityReference;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -85,7 +87,12 @@ public class Tier1Rocket extends TieredRocket {
                     move(MoverType.SELF, new Vec3(0.0D, getDeltaMovement().y - 0.008D, 0.0D));
                 }
 
-                double speedMultiplier = celestialBodyInstance.getOrDefault(GalacticraftDataComponents.FUEL_MULTIPLIER, 1.0F);
+                double speedMultiplier = 1.0F;
+                EnvironmentAttributeMap map = level().dimensionType().attributes();
+
+                if (map.contains(GalacticraftEnvironmentAttributes.FUEL_MULTIPLIER.get())) {
+                    speedMultiplier = map.get(GalacticraftEnvironmentAttributes.FUEL_MULTIPLIER.get()).applyModifier((float) speedMultiplier);
+                }
 
                 if (getTimeSinceLaunch() % Mth.floor(3 * speedMultiplier) == 0) {
                     if (!AbstractAutoRocket.consumeFuel(this, 1)) {

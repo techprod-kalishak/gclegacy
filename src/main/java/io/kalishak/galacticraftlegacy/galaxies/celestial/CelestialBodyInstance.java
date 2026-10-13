@@ -48,7 +48,7 @@ public final class CelestialBodyInstance implements Nameable, DataComponentHolde
     }
 
     public CelestialBodyInstance(Holder<Celestial> typeHolder) {
-        this(typeHolder, DataComponentMap.builder().build());
+        this(typeHolder, typeHolder.components());
     }
 
     private static StreamCodec<RegistryFriendlyByteBuf, CelestialBodyInstance> createOptionalStreamCodec() {

@@ -20,7 +20,7 @@ public class WorldCelestials extends SavedData {
     public static final Codec<WorldCelestials> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             Codec.unboundedMap(
                     ResourceKey.codec(GalacticraftRegistries.Keys.CELESTIAL),
-                    CelestialBodyInstance.CODEC
+                    CelestialBodyInstance.OPTIONAL_CODEC
             ).fieldOf("instances").forGetter(worldCelestials -> worldCelestials.instances)
     ).apply(instance, WorldCelestials::new));
     public static final SavedDataType<WorldCelestials> ID = new SavedDataType<>(Constants.id("world_celestials"), WorldCelestials::new, CODEC);
