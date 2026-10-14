@@ -9,6 +9,7 @@ package io.kalishak.galacticraftlegacy.components;
 
 import com.mojang.serialization.Codec;
 import io.kalishak.galacticraftlegacy.Galacticraft;
+import io.kalishak.galacticraftlegacy.components.flag.FlagData;
 import io.kalishak.galacticraftlegacy.registry.SchematicVariant;
 import io.kalishak.galacticraftlegacy.world.inventory.container.memory.CraftingMemory;
 import io.kalishak.galacticraftlegacy.world.inventory.container.memory.MemorableContainer;
@@ -52,9 +53,9 @@ public final class GalacticraftDataComponents {
             "entity_reference",
             builder -> builder.persistent(EntityReference.codec()).networkSynchronized(EntityReference.streamCodec()).cacheEncoding()
     );
-    public static final DeferredHolder<DataComponentType<?>, DataComponentType<FlagItemData>> FLAG = REGISTRY.registerComponentType(
-            "flag",
-            builder -> builder.persistent(FlagItemData.CODEC).networkSynchronized(FlagItemData.STREAM_CODEC).cacheEncoding()
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<FlagData>> FLAG_DATA = REGISTRY.registerComponentType(
+            "flag_data",
+            builder -> builder.persistent(FlagData.CODEC).networkSynchronized(FlagData.DATA_STREAM_CODEC)
     );
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<SimpleFluidContent>> FLUID_TANK = REGISTRY.registerComponentType(
             "fluid_tank",

@@ -9,6 +9,9 @@ package io.kalishak.galacticraftlegacy.world.item;
 
 import io.kalishak.galacticraftlegacy.Galacticraft;
 import io.kalishak.galacticraftlegacy.components.GalacticraftDataComponents;
+import io.kalishak.galacticraftlegacy.components.flag.BuiltinFlagMaterials;
+import io.kalishak.galacticraftlegacy.components.flag.FixedFlagData;
+import io.kalishak.galacticraftlegacy.components.flag.FlagMaterial;
 import io.kalishak.galacticraftlegacy.references.GalacticraftComponents;
 import io.kalishak.galacticraftlegacy.registry.GalacticraftRegistries;
 import io.kalishak.galacticraftlegacy.registry.SchematicVariant;
@@ -112,7 +115,7 @@ public final class GalacticraftCreativeModeTabs {
         output.accept(GalacticraftItems.CHEESE_CHUNK);
         output.accept(GalacticraftItems.RAW_METEORIC_IRON);
         output.accept(GalacticraftItems.SAPPHIRE);
-        output.accept(GalacticraftItems.FLAG);
+        flag(itemDisplayParameters.holders().lookupOrThrow(GalacticraftRegistries.Keys.FLAG_MATERIAL));
         output.accept(GalacticraftItems.DUNGEON_LOCATOR);
         output.accept(GalacticraftItems.RAW_DESH);
         output.accept(GalacticraftItems.DESH_STICK);
@@ -121,9 +124,7 @@ public final class GalacticraftCreativeModeTabs {
         output.accept(GalacticraftItems.SOLAR_ARRAY_PANEL);
         output.accept(GalacticraftItems.OIL_BUCKET);
         output.accept(GalacticraftItems.FUEL_BUCKET);
-        itemDisplayParameters.holders()
-                .lookup(GalacticraftRegistries.Keys.SCHEMATIC)
-                .ifPresent(registry -> generateSchematics(output, registry));
+        generateSchematics(output, itemDisplayParameters.holders().lookupOrThrow(GalacticraftRegistries.Keys.SCHEMATIC));
         output.accept(GalacticraftItems.STEEL_HELMET);
         output.accept(GalacticraftItems.STEEL_CHESTPLATE);
         output.accept(GalacticraftItems.STEEL_LEGGINGS);
@@ -348,5 +349,10 @@ public final class GalacticraftCreativeModeTabs {
             itemstack.set(GalacticraftDataComponents.SCHEMATIC, holder);
             output.accept(itemstack);
         });
+    }
+
+    private static void flag(HolderLookup.RegistryLookup<FlagMaterial> flagMaterials) {
+        ItemStack flag = GalacticraftItems.FLAG.toStack();
+        flag.set(GalacticraftDataComponents.FLAG_DATA, new FixedFlagData(flagMaterials.getOrThrow(BuiltinFlagMaterials.CLASSIC)));
     }
 }

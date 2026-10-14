@@ -10,6 +10,7 @@ package io.kalishak.galacticraftlegacy;
 import io.kalishak.galacticraftlegacy.advancements.GalacticraftCriteriaTriggers;
 import io.kalishak.galacticraftlegacy.attachment.GalacticraftAttachments;
 import io.kalishak.galacticraftlegacy.components.GalacticraftDataComponents;
+import io.kalishak.galacticraftlegacy.components.flag.FlagTypeProviders;
 import io.kalishak.galacticraftlegacy.config.ClientConfig;
 import io.kalishak.galacticraftlegacy.config.CommonConfig;
 import io.kalishak.galacticraftlegacy.config.ServerConfig;
@@ -73,6 +74,7 @@ public class Galacticraft {
         GalacticraftDataComponents.init(modEventBus);
         GalacticraftEntityType.init(modEventBus);
         GalacticraftEnvironmentAttributes.init(modEventBus);
+        FlagTypeProviders.init(modEventBus);
         GalacticraftFeatures.init(modEventBus);
         GalacticraftFluidType.init(modEventBus);
         GalacticraftFluids.init(modEventBus);

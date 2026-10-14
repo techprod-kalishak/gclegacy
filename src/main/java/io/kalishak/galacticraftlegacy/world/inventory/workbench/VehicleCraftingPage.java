@@ -18,7 +18,7 @@ import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.rocket.VehicleC
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.NonNullList;
-import net.minecraft.core.registries.codec.RegistryFixedCodec;
+import net.minecraft.core.registries.codec.RegistryCodecs;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -42,7 +42,7 @@ public record VehicleCraftingPage(Holder<SchematicVariant> schematic, Holder<Veh
             ExtraCodecs.NON_NEGATIVE_INT.optionalFieldOf("image_height", 166).forGetter(VehicleCraftingPage::imageHeight),
             Identifier.CODEC.fieldOf("background").forGetter(VehicleCraftingPage::background)
     ).apply(instance, VehicleCraftingPage::new));
-    public static final Codec<Holder<VehicleCraftingPage>> CODEC = RegistryFixedCodec.create(GalacticraftRegistries.Keys.VEHICLE_CRAFTING_PAGE);
+    public static final Codec<Holder<VehicleCraftingPage>> CODEC = RegistryCodecs.holder(GalacticraftRegistries.Keys.VEHICLE_CRAFTING_PAGE);
     public static final StreamCodec<RegistryFriendlyByteBuf, Holder<VehicleCraftingPage>> STREAM_CODEC = ByteBufCodecs.holderRegistry(GalacticraftRegistries.Keys.VEHICLE_CRAFTING_PAGE);
 
     public int getInputSlotSize() {

@@ -1,0 +1,11 @@
+{
+  "flag_provider": {
+    "color": 127,
+    "height": 32,
+    "width": 48
+  },
+  "team_name": {
+    "color": "dark_aqua",
+    "text": "Galacticraft"
+  }
+}

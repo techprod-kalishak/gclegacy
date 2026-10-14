@@ -9,18 +9,14 @@ package io.kalishak.galacticraftlegacy.world.entity;
 
 import io.kalishak.galacticraftlegacy.attachment.GalacticraftAttachments;
 import io.kalishak.galacticraftlegacy.components.GalacticraftDataComponents;
+import io.kalishak.galacticraftlegacy.components.flag.FlagData;
 import io.kalishak.galacticraftlegacy.world.item.GalacticraftItems;
-import io.kalishak.galacticraftlegacy.world.item.component.FlagItemData;
-import io.kalishak.galacticraftlegacy.world.score.race.SpaceRaceHooks;
-import io.kalishak.galacticraftlegacy.world.score.race.SpaceRaceTeam;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
@@ -58,18 +54,8 @@ public class Flag extends Entity {
     @Override
     public @NonNull ItemStack getPickResult() {
         ItemStack stack = GalacticraftItems.FLAG.toStack();
-        FlagData flagData = getFlagData();
-        Component teamName = Component.empty();
+        stack.set(GalacticraftDataComponents.FLAG_DATA, getFlagData());
 
-        if (getOwner() instanceof ServerPlayer player) {
-            Optional<SpaceRaceTeam> team = SpaceRaceHooks.getSpaceRaceTeam(player);
-
-            if (team.isPresent()) {
-                teamName = team.get().getDisplayName();
-            }
-        }
-
-        stack.set(GalacticraftDataComponents.FLAG, new FlagItemData(flagData, teamName));
         return stack;
     }
 
@@ -168,7 +154,7 @@ public class Flag extends Entity {
 
     @Override
     protected void readAdditionalSaveData(ValueInput input) {
-        setFlagData(input.read("FlagData", FlagData.CODEC).orElse(FlagData.DEFAULT));
+        setFlagData(input.read("FlagData", FlagData.CODEC).orElse(FlagData.classic(registryAccess())));
         setOwnerReference(EntityReference.read(input, "Owner"));
     }
 
@@ -182,12 +168,12 @@ public class Flag extends Entity {
     public void tick() {
         super.tick();
 
-        if (!level().isClientSide() && (this.tickCount - 1) % 20 == 0) {
-            if (getOwner() instanceof ServerPlayer player && distanceToSqr(player) < 50.0D) {
-                FlagData flagData = SpaceRaceHooks.getPlayerFlag(player);
-                setFlagData(flagData);
-            }
-        }
+//        if (!level().isClientSide() && (this.tickCount - 1) % 20 == 0) {
+//            if (getOwner() instanceof ServerPlayer player && distanceToSqr(player) < 50.0D) {
+//                FlagData flagData = SpaceRaceHooks.getPlayerFlag(player);
+//                setFlagData(flagData);
+//            }
+//        }
 
         if (getBlockStateOn().isAir()) {
             setDeltaMovement(0.0F, -1.0F, 0.0F);
@@ -195,7 +181,7 @@ public class Flag extends Entity {
     }
 
     public void setFlagData(FlagData flagData) {
-        setData(GalacticraftAttachments.DATA_FLAG, flagData);
+        setData(GalacticraftAttachments.FLAG_DATA, flagData);
     }
 
     public @Nullable LivingEntity getOwner() {
@@ -216,6 +202,10 @@ public class Flag extends Entity {
     }
 
     public FlagData getFlagData() {
-        return getData(GalacticraftAttachments.DATA_FLAG);
+        return getData(GalacticraftAttachments.FLAG_DATA);
+    }
+
+    public float getWindLevel() {
+        return 1.0F;
     }
 }

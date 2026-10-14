@@ -14,7 +14,7 @@ import io.kalishak.galacticraftlegacy.world.level.dimension.SpaceStationRecipe;
 import io.kalishak.galacticraftlegacy.world.level.dimension.transition.PlanetaryTransition;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
-import net.minecraft.core.registries.codec.RegistryFixedCodec;
+import net.minecraft.core.registries.codec.RegistryCodecs;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.ByteBufCodecs;
@@ -41,7 +41,7 @@ public interface Celestial {
             either -> either.map(Function.identity(), Function.identity()),
             celestial -> celestial instanceof SimpleCelestialBody simple ? Either.left(simple) : Either.right(celestial)
     );
-    Codec<Holder<Celestial>> CODEC = RegistryFixedCodec.create(GalacticraftRegistries.Keys.CELESTIAL);
+    Codec<Holder<Celestial>> CODEC = RegistryCodecs.holder(GalacticraftRegistries.Keys.CELESTIAL);
     StreamCodec<RegistryFriendlyByteBuf, Holder<Celestial>> STREAM_CODEC = ByteBufCodecs.holderRegistry(GalacticraftRegistries.Keys.CELESTIAL);
     
     Optional<Holder<Celestial>> parent();
@@ -56,7 +56,7 @@ public interface Celestial {
     /**
      * Multiplier for length of time relative to earth that this planet takes to orbit fully. <p> Value of 2.0F would result in the planet rotating twice as slow (and therefore take twice as long) as the earth takes to revolve around the sun.
      *
-     * @return Multiple value for planet's revolution around the sun.
+     * @return Multiple color for planet's revolution around the sun.
      */
     float relativeOrbitTime();
     /**

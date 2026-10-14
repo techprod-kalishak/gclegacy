@@ -15,7 +15,7 @@ import net.minecraft.advancements.predicates.ItemPredicate;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.codec.HolderSetCodec;
-import net.minecraft.core.registries.codec.RegistryFixedCodec;
+import net.minecraft.core.registries.codec.RegistryCodecs;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -29,7 +29,7 @@ public record ChecklistEntry(String id, Map<GearEquipmentSlot, ItemPredicate> re
             Codec.STRING.fieldOf("id").forGetter(ChecklistEntry::id),
             Codec.unboundedMap(GearEquipmentSlot.CODEC, ItemPredicate.CODEC).fieldOf("required_items").forGetter(ChecklistEntry::requiredItems)
     ).apply(instance, ChecklistEntry::new));
-    public static final Codec<Holder<ChecklistEntry>> CODEC = RegistryFixedCodec.create(GalacticraftRegistries.Keys.CHECKLIST);
+    public static final Codec<Holder<ChecklistEntry>> CODEC = RegistryCodecs.holder(GalacticraftRegistries.Keys.CHECKLIST);
     public static final Codec<HolderSet<ChecklistEntry>> HOLDER_SET_CODEC = HolderSetCodec.create(GalacticraftRegistries.Keys.CHECKLIST, CODEC, true);
     public static final StreamCodec<RegistryFriendlyByteBuf, ChecklistEntry> DIRECT_STREAM_CODEC = StreamCodec.composite(
             ByteBufCodecs.STRING_UTF8, ChecklistEntry::id,

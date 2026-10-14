@@ -15,7 +15,7 @@ import io.kalishak.galacticraftlegacy.world.item.GalacticraftItems;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.core.registries.codec.RegistryFixedCodec;
+import net.minecraft.core.registries.codec.RegistryCodecs;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
@@ -42,7 +42,7 @@ public record SpaceStationRecipe(List<SizedIngredient> ingredients) {
     public static final Codec<SpaceStationRecipe> DIRECT_CODEC = SizedIngredient.NESTED_CODEC
             .listOf()
             .xmap(SpaceStationRecipe::new, SpaceStationRecipe::ingredients);
-    public static final Codec<Holder<SpaceStationRecipe>> CODEC = RegistryFixedCodec.create(GalacticraftRegistries.Keys.SPACE_STATION_RECIPE);
+    public static final Codec<Holder<SpaceStationRecipe>> CODEC = RegistryCodecs.holder(GalacticraftRegistries.Keys.SPACE_STATION_RECIPE);
     public static final StreamCodec<RegistryFriendlyByteBuf, Holder<SpaceStationRecipe>> STREAM_CODEC = ByteBufCodecs.holderRegistry(GalacticraftRegistries.Keys.SPACE_STATION_RECIPE);
     public static final ResourceKey<SpaceStationRecipe> EARTH_SPACE_STATION_RECIPE = Constants.key(GalacticraftRegistries.Keys.SPACE_STATION_RECIPE, "earth");
 

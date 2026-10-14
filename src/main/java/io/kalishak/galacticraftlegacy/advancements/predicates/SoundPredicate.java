@@ -12,8 +12,6 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.advancements.predicates.LocationPredicate;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.core.registries.codec.RegistryFixedCodec;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
@@ -24,7 +22,7 @@ import java.util.function.UnaryOperator;
 
 public record SoundPredicate(Optional<Holder<SoundEvent>> soundEvents, LocationPredicate location) implements BiPredicate<Holder<SoundEvent>, ServerPlayer> {
     public static final Codec<SoundPredicate> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-            RegistryFixedCodec.create(Registries.SOUND_EVENT).optionalFieldOf("sound_events").forGetter(SoundPredicate::soundEvents),
+            SoundEvent.CODEC.optionalFieldOf("sound_events").forGetter(SoundPredicate::soundEvents),
             LocationPredicate.CODEC.fieldOf("location").forGetter(SoundPredicate::location)
     ).apply(instance, SoundPredicate::new));
 

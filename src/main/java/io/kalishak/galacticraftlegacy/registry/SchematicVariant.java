@@ -13,7 +13,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.kalishak.galacticraftlegacy.world.item.FeatureTier;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponentGetter;
-import net.minecraft.core.registries.codec.RegistryFixedCodec;
+import net.minecraft.core.registries.codec.RegistryCodecs;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.ComponentSerialization;
@@ -33,7 +33,7 @@ public record SchematicVariant(int orderIndex, FeatureTier tier, Identifier asse
             Identifier.CODEC.fieldOf("asset_id").forGetter(SchematicVariant::assetId),
             ComponentSerialization.CODEC.fieldOf("title").forGetter(SchematicVariant::title)
     ).apply(instance, SchematicVariant::new));
-    public static final Codec<Holder<SchematicVariant>> CODEC = RegistryFixedCodec.create(GalacticraftRegistries.Keys.SCHEMATIC);
+    public static final Codec<Holder<SchematicVariant>> CODEC = RegistryCodecs.holder(GalacticraftRegistries.Keys.SCHEMATIC);
     public static final MapCodec<Holder<SchematicVariant>> MAP_CODEC = CODEC.fieldOf("variant");
     public static final StreamCodec<RegistryFriendlyByteBuf, SchematicVariant> DIRECT_STREAM_CODEC = StreamCodec.composite(
             ByteBufCodecs.VAR_INT, SchematicVariant::orderIndex,

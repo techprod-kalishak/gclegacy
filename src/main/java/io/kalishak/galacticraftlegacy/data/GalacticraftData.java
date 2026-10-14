@@ -11,6 +11,7 @@ import io.kalishak.galacticraftlegacy.Galacticraft;
 import io.kalishak.galacticraftlegacy.client.data.*;
 import io.kalishak.galacticraftlegacy.client.data.models.GalacticraftCustomModelProvider;
 import io.kalishak.galacticraftlegacy.client.data.models.GalacticraftEquipmentAssetProvider;
+import io.kalishak.galacticraftlegacy.components.flag.BuiltinFlagMaterials;
 import io.kalishak.galacticraftlegacy.data.advancement.GalacticraftAdvancementProvider;
 import io.kalishak.galacticraftlegacy.data.datamap.GalacticraftDataMaps;
 import io.kalishak.galacticraftlegacy.data.loot.GalacticraftLootTableProvider;
@@ -77,6 +78,7 @@ public class GalacticraftData {
             .add(Registries.TRIM_MATERIAL, GalacticraftTrimMaterials::bootstrap)
             .add(Registries.WORLD_CLOCK, GalacticraftWorldClocks::bootstrap)
             .add(NeoForgeRegistries.Keys.BIOME_MODIFIERS, GalacticraftBiomeModifiers::bootstrap)
+            .add(GalacticraftRegistries.Keys.FLAG_MATERIAL, BuiltinFlagMaterials::bootstrap)
             .add(GalacticraftRegistries.Keys.CELESTIAL, BuiltinGalaxies::bootstrap)
             .add(GalacticraftRegistries.Keys.CHECKLIST, Checklist::bootstrap)
             .add(GalacticraftRegistries.Keys.VEHICLE_CRAFTING_SLOT_TYPE, VehicleCraftingSlotTypes::bootstrap)

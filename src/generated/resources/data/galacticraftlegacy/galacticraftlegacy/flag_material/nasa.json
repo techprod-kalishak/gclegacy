@@ -1,0 +1,12 @@
+{
+  "flag_provider": {
+    "type": "galacticraftlegacy:textured",
+    "height": 32,
+    "image": "galacticraftlegacy:textures/entity/flag/material/nasa",
+    "width": 48
+  },
+  "team_name": {
+    "color": "yellow",
+    "text": "NASA"
+  }
+}

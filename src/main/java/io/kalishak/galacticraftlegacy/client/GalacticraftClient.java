@@ -136,6 +136,14 @@ public class GalacticraftClient {
                         Set.of()
                 )
         );
+        event.register(
+                new AtlasManager.AtlasConfig(
+                        GalacticraftSheets.FLAG_SHEET,
+                        GalacticraftSpritesProvider.FLAGS,
+                        false,
+                        Set.of()
+                )
+        );
     }
 
     private void registerEnvironmentEffects(RegisterCustomEnvironmentEffectRendererEvent event) {

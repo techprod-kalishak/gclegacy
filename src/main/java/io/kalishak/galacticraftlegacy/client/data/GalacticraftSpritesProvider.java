@@ -26,6 +26,7 @@ public class GalacticraftSpritesProvider extends SpriteSourceProvider {
     public static final Identifier CELESTIAL_BODIES = Constants.id("celestial_bodies");
     public static final Identifier SCHEMATICS = Constants.id("schematics");
     public static final Identifier PARACHUTES = Constants.id("parachutes");
+    public static final Identifier FLAGS = Constants.id("flags");
 
     public GalacticraftSpritesProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider) {
         super(output, lookupProvider, Galacticraft.MODID);

@@ -14,12 +14,10 @@ import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
 import io.kalishak.galacticraftlegacy.references.GalacticraftComponents;
-import io.kalishak.galacticraftlegacy.registry.SchematicVariant;
 import io.kalishak.galacticraftlegacy.server.commands.arguments.SpaceRaceTeamArgument;
 import io.kalishak.galacticraftlegacy.world.score.race.SpaceRaceHooks;
 import io.kalishak.galacticraftlegacy.world.score.race.SpaceRaceScoreboard;
 import io.kalishak.galacticraftlegacy.world.score.race.SpaceRaceTeam;
-import net.minecraft.ChatFormatting;
 import net.minecraft.commands.CommandBuildContext;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
@@ -30,7 +28,6 @@ import net.minecraft.commands.arguments.TeamColorArgument;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.ComponentUtils;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.scores.PlayerTeam;
 import net.minecraft.world.scores.ScoreHolder;
 import net.minecraft.world.scores.Team;
@@ -38,7 +35,6 @@ import net.minecraft.world.scores.TeamColor;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Optional;
 
 public class SpaceRaceCommand {
     private static final SimpleCommandExceptionType ERROR_SPACE_RACE_ALREADY_EXISTS = new SimpleCommandExceptionType(GalacticraftComponents.COMMAND_ERROR_SPACE_RACE_DUPE);
@@ -134,8 +130,8 @@ public class SpaceRaceCommand {
                                                         .then(
                                                                 Commands.literal("color")
                                                                         .then(
-                                                                                Commands.argument("value", TeamColorArgument.teamColor())
-                                                                                        .executes(c -> setColor(c.getSource(), SpaceRaceTeamArgument.getSpaceRace(c, "spaceRace"), TeamColorArgument.getTeamColor(c, "value")))
+                                                                                Commands.argument("color", TeamColorArgument.teamColor())
+                                                                                        .executes(c -> setColor(c.getSource(), SpaceRaceTeamArgument.getSpaceRace(c, "spaceRace"), TeamColorArgument.getTeamColor(c, "color")))
                                                                         )
                                                         )
                                                         .then(
@@ -386,7 +382,7 @@ public class SpaceRaceCommand {
         if (spaceRaceTeam.getColor().isPresent() && spaceRaceTeam.getColor().get() == color) {
             throw ERROR_SPACE_RACE_ALREADY_COLOR.create();
         } else {
-            spaceRaceTeam.setColor(Optional.of(color));
+            spaceRaceTeam.setColor(color);
             source.sendSuccess(() -> GalacticraftComponents.COMMAND_SUCCESS_SPACE_RACE_COLOR_SET.apply(spaceRaceTeam.getFormattedDisplayName(), color.getSerializedName()), true);
 
             return 0;
@@ -487,7 +483,7 @@ public class SpaceRaceCommand {
         spaceRaceTeam.setPlayerSuffix(spaceRace.getPlayerSuffix());
         spaceRaceTeam.setAllowFriendlyFire(spaceRace.isAllowFriendlyFire());
         spaceRaceTeam.setDeathMessageVisibility(spaceRace.getDeathMessageVisibility());
-        spaceRaceTeam.setColor(spaceRace.getColor());
+        spaceRace.getColor().ifPresent(spaceRaceTeam::setColor);
         spaceRaceTeam.setCollisionRule(spaceRace.getCollisionRule());
 
         return 1;

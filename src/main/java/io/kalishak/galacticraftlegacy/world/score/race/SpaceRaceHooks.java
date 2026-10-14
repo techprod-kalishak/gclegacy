@@ -7,13 +7,11 @@
 
 package io.kalishak.galacticraftlegacy.world.score.race;
 
-import io.kalishak.galacticraftlegacy.world.entity.FlagData;
+import io.kalishak.galacticraftlegacy.components.flag.FlagData;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
-import net.neoforged.neoforge.event.server.ServerStoppedEvent;
 import net.neoforged.neoforge.event.server.ServerStoppingEvent;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;

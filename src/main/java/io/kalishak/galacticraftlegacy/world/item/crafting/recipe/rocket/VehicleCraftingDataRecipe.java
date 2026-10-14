@@ -13,7 +13,7 @@ import io.kalishak.galacticraftlegacy.registry.GalacticraftRegistries;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.NonNullList;
-import net.minecraft.core.registries.codec.RegistryFixedCodec;
+import net.minecraft.core.registries.codec.RegistryCodecs;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -27,7 +27,7 @@ public record VehicleCraftingDataRecipe(NonNullList<VehicleCraftingEntry> inputS
             NonNullList.codecOf(VehicleCraftingEntry.CODEC).fieldOf("input_slots").forGetter(VehicleCraftingDataRecipe::inputSlots),
             VehicleCraftingEntry.CODEC.fieldOf("output_slot").forGetter(VehicleCraftingDataRecipe::outputSlot)
     ).apply(instance, VehicleCraftingDataRecipe::new));
-    public static final Codec<Holder<VehicleCraftingDataRecipe>> CODEC = RegistryFixedCodec.create(GalacticraftRegistries.Keys.VEHICLE_CRAFTING_RECIPE_DATA);
+    public static final Codec<Holder<VehicleCraftingDataRecipe>> CODEC = RegistryCodecs.holder(GalacticraftRegistries.Keys.VEHICLE_CRAFTING_RECIPE_DATA);
     public static final StreamCodec<RegistryFriendlyByteBuf, Holder<VehicleCraftingDataRecipe>> STREAM_CODEC = ByteBufCodecs.holderRegistry(GalacticraftRegistries.Keys.VEHICLE_CRAFTING_RECIPE_DATA);
     public static final Codec<ResourceKey<VehicleCraftingDataRecipe>> KEY_CODEC = ResourceKey.codec(GalacticraftRegistries.Keys.VEHICLE_CRAFTING_RECIPE_DATA);
 

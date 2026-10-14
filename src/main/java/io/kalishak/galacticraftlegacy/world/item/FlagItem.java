@@ -8,9 +8,8 @@
 package io.kalishak.galacticraftlegacy.world.item;
 
 import io.kalishak.galacticraftlegacy.components.GalacticraftDataComponents;
+import io.kalishak.galacticraftlegacy.components.flag.FlagData;
 import io.kalishak.galacticraftlegacy.world.entity.Flag;
-import io.kalishak.galacticraftlegacy.world.entity.FlagData;
-import io.kalishak.galacticraftlegacy.world.item.component.FlagItemData;
 import io.kalishak.galacticraftlegacy.world.score.race.SpaceRaceHooks;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
@@ -60,7 +59,13 @@ public class FlagItem extends Item {
 
         if (hitresult.getType() == HitResult.Type.BLOCK) {
             Vec3 clickedPosition = hitresult.getLocation();
-            FlagData flagData = player instanceof ServerPlayer ? SpaceRaceHooks.getPlayerFlag((ServerPlayer) player) : FlagData.DEFAULT;
+            FlagData flagData = itemstack.getOrDefault(
+                    GalacticraftDataComponents.FLAG_DATA,
+                    player instanceof ServerPlayer
+                            ? SpaceRaceHooks.getPlayerFlag((ServerPlayer) player)
+                            : FlagData.classic(level.registryAccess()
+                    )
+            );
             Flag flag = new Flag(level, flagData, clickedPosition.x, clickedPosition.y, clickedPosition.z, (float) player.getY());
 
             if (!flag.isAlive()) {
@@ -78,18 +83,5 @@ public class FlagItem extends Item {
         }
 
         return InteractionResult.PASS;
-    }
-
-    @Override
-    public void onCraftedBy(ItemStack stack, Player player) {
-        super.onCraftedBy(stack, player);
-
-        if (player instanceof ServerPlayer serverPlayer) {
-            SpaceRaceHooks.getSpaceRaceTeam(serverPlayer)
-                    .ifPresent(spaceRaceTeam -> stack.set(
-                            GalacticraftDataComponents.FLAG,
-                            new FlagItemData(spaceRaceTeam.getFlagData(), spaceRaceTeam.getDisplayName()))
-                    );
-        }
     }
 }

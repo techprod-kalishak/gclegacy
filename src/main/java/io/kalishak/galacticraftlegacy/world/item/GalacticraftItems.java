@@ -237,7 +237,11 @@ public final class GalacticraftItems {
     public static final DeferredItem<Item> OXYGEN_VENT = REGISTRY.registerSimpleItem(GalacticraftItemIds.OXYGEN_VENT);
     public static final DeferredItem<Item> THERMAL_CONTROLLER = REGISTRY.registerSimpleItem(GalacticraftItemIds.THERMAL_CONTROLLER);
     public static final DeferredItem<Item> CANVAS = REGISTRY.registerSimpleItem(GalacticraftItemIds.CANVAS);
-    public static final DeferredItem<Item> FLAG = REGISTRY.registerItem(GalacticraftItemIds.FLAG, FlagItem::new, properties -> properties.stacksTo(1));
+    public static final DeferredItem<Item> FLAG = REGISTRY.registerItem(
+            GalacticraftItemIds.FLAG,
+            FlagItem::new, properties -> properties
+                    .stacksTo(1)
+    );
     public static final DeferredItem<SchematicItem> SCHEMATIC = REGISTRY.registerItem(
             GalacticraftItemIds.NASA_WORKBENCH_SCHEMATIC,
             SchematicItem::new,

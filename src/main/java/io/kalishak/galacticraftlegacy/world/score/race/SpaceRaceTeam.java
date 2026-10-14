@@ -11,10 +11,10 @@ import com.google.common.collect.Sets;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.kalishak.galacticraftlegacy.attachment.entity.Schematics;
+import io.kalishak.galacticraftlegacy.components.flag.FlagData;
 import io.kalishak.galacticraftlegacy.galaxies.celestial.Celestial;
 import io.kalishak.galacticraftlegacy.registry.GalacticraftRegistries;
 import io.kalishak.galacticraftlegacy.registry.SchematicVariant;
-import io.kalishak.galacticraftlegacy.world.entity.FlagData;
 import it.unimi.dsi.fastutil.objects.Object2LongMap;
 import it.unimi.dsi.fastutil.objects.Object2LongMaps;
 import it.unimi.dsi.fastutil.objects.Object2LongOpenHashMap;
@@ -41,12 +41,12 @@ public class SpaceRaceTeam extends Team {
     private boolean seeFriendlyInvisibles = true;
     private Team.Visibility nameTagVisibility = Team.Visibility.ALWAYS;
     private Team.Visibility deathMessageVisibility = Team.Visibility.ALWAYS;
-    private Optional<TeamColor> color = Optional.empty();
+    private @Nullable TeamColor color;
     private Team.CollisionRule collisionRule = Team.CollisionRule.ALWAYS;
     private final Style displayNameStyle;
     private final Object2LongMap<ResourceKey<Celestial>> reachedCelestialBodies = new Object2LongOpenHashMap<>();
     private final Schematics unlockedSchematics = Schematics.empty();
-    private FlagData flagData = FlagData.DEFAULT;
+    private FlagData flagData;
 
     SpaceRaceTeam(SpaceRaceScoreboard spaceRaceScoreboard, String name) {
         this.spaceRaceScoreboard = spaceRaceScoreboard;
@@ -59,7 +59,7 @@ public class SpaceRaceTeam extends Team {
         return new Packed(
                 this.name,
                 Optional.of(this.displayName),
-                this.color,
+                Optional.ofNullable(this.color),
                 this.allowFriendlyFire,
                 this.seeFriendlyInvisibles,
                 this.playerPrefix,
@@ -70,7 +70,7 @@ public class SpaceRaceTeam extends Team {
                 List.copyOf(this.players),
                 Map.copyOf(this.reachedCelestialBodies),
                 Schematics.copyOf(this.unlockedSchematics),
-                this.flagData != FlagData.DEFAULT ? Optional.of(this.flagData) : Optional.empty()
+                Optional.ofNullable(this.flagData)
         );
     }
 
@@ -214,21 +214,21 @@ public class SpaceRaceTeam extends Team {
         this.setSeeFriendlyInvisibles((options & 2) > 0);
     }
 
-    public void setColor(Optional<TeamColor> color) {
+    public void setColor(@Nullable TeamColor color) {
         this.color = color;
         this.spaceRaceScoreboard.onTeamChanged(this);
     }
 
     @Override
     public Optional<TeamColor> getColor() {
-        return this.color;
+        return Optional.ofNullable(this.color);
     }
 
-    public FlagData getFlagData() {
+    public @Nullable FlagData getFlagData() {
         return this.flagData;
     }
 
-    public void setFlagData(FlagData flagData) {
+    public void setFlagData(@Nullable FlagData flagData) {
         this.flagData = flagData;
         this.spaceRaceScoreboard.onTeamChanged(this);
     }

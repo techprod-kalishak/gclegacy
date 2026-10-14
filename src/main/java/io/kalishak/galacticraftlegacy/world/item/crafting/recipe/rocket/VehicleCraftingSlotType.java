@@ -13,7 +13,7 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.core.registries.codec.HolderSetCodec;
-import net.minecraft.core.registries.codec.RegistryFixedCodec;
+import net.minecraft.core.registries.codec.RegistryCodecs;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -21,6 +21,6 @@ import net.minecraft.world.item.Item;
 
 public record VehicleCraftingSlotType(HolderSet<Item> acceptedItems) {
     public static final Codec<VehicleCraftingSlotType> DIRECT_CODEC = HolderSetCodec.create(Registries.ITEM, Item.CODEC, true).xmap(VehicleCraftingSlotType::new, VehicleCraftingSlotType::acceptedItems);
-    public static final Codec<Holder<VehicleCraftingSlotType>> CODEC = RegistryFixedCodec.create(GalacticraftRegistries.Keys.VEHICLE_CRAFTING_SLOT_TYPE);
+    public static final Codec<Holder<VehicleCraftingSlotType>> CODEC = RegistryCodecs.holder(GalacticraftRegistries.Keys.VEHICLE_CRAFTING_SLOT_TYPE);
     public static final StreamCodec<RegistryFriendlyByteBuf, Holder<VehicleCraftingSlotType>> STREAM_CODEC = ByteBufCodecs.holderRegistry(GalacticraftRegistries.Keys.VEHICLE_CRAFTING_SLOT_TYPE);
 }

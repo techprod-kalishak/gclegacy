@@ -1,0 +1,11 @@
+{
+  "flag_provider": {
+    "type": "galacticraftlegacy:textured",
+    "height": 32,
+    "image": "galacticraftlegacy:textures/entity/flag/material/earth",
+    "width": 48
+  },
+  "team_name": {
+    "translate": "flag_material.galacticraftlegacy.earth"
+  }
+}
