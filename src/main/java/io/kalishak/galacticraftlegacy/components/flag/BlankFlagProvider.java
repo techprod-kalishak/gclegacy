@@ -3,6 +3,7 @@ package io.kalishak.galacticraftlegacy.components.flag;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.client.resources.model.sprite.SpriteGetter;
 
 import java.util.List;
 
@@ -14,8 +15,8 @@ public record BlankFlagProvider(int width, int height, int color) implements Fla
     ).apply(instance, BlankFlagProvider::new));
 
     @Override
-    public List<IndexedColor> resolvedColors() {
-        return List.of();
+    public List<IndexedColor> resolve(SpriteGetter spriteGetter) {
+        return FlagTypeProvider.populate(this.width, this.height, (_, _) -> this.color);
     }
 
     @Override

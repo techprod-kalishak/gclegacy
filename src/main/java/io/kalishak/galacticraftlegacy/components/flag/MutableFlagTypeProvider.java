@@ -11,6 +11,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.netty.buffer.ByteBuf;
+import net.minecraft.client.resources.model.sprite.SpriteGetter;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 
@@ -21,13 +22,13 @@ public class MutableFlagTypeProvider implements FlagTypeProvider {
     public static final MapCodec<MutableFlagTypeProvider> MAP_CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             Codec.INT.fieldOf("height").forGetter(MutableFlagTypeProvider::height),
             Codec.INT.fieldOf("width").forGetter(MutableFlagTypeProvider::width),
-            FlagTypeProvider.IndexedColor.CODEC.listOf().fieldOf("colors").forGetter(FlagTypeProvider::resolvedColors)
+            FlagTypeProvider.IndexedColor.CODEC.listOf().fieldOf("colors").forGetter(x -> x.colors)
     ).apply(instance, MutableFlagTypeProvider::new));
     public static final Codec<MutableFlagTypeProvider> CODEC = MAP_CODEC.codec();
     public static final StreamCodec<ByteBuf, MutableFlagTypeProvider> STREAM_CODEC = StreamCodec.composite(
             ByteBufCodecs.VAR_INT, MutableFlagTypeProvider::height,
             ByteBufCodecs.VAR_INT, MutableFlagTypeProvider::width,
-            FlagTypeProvider.IndexedColor.STREAM_CODEC.apply(ByteBufCodecs.list()), FlagTypeProvider::resolvedColors,
+            FlagTypeProvider.IndexedColor.STREAM_CODEC.apply(ByteBufCodecs.list()), x -> x.colors,
             MutableFlagTypeProvider::new
     );
 
@@ -59,7 +60,12 @@ public class MutableFlagTypeProvider implements FlagTypeProvider {
     }
 
     @Override
-    public List<IndexedColor> resolvedColors() {
+    public List<IndexedColor> resolve(SpriteGetter spriteGetter) {
+        return cachedColors();
+    }
+
+    @Override
+    public List<IndexedColor> cachedColors() {
         return this.colors;
     }
 
@@ -68,13 +74,13 @@ public class MutableFlagTypeProvider implements FlagTypeProvider {
             return 0;
         }
 
-        FlagTypeProvider.IndexedColor value = FlagTypeProvider.find(this, posX, posY);
+        FlagTypeProvider.IndexedColor value = FlagTypeProvider.find(cachedColors(), posX, posY);
 
         return value.color();
     }
 
     public void setColorAt(int posX, int posY, int color) {
-        FlagTypeProvider.IndexedColor value = FlagTypeProvider.find(this, posX, posY);
+        FlagTypeProvider.IndexedColor value = FlagTypeProvider.find(cachedColors(), posX, posY);
 
         int index = this.colors.indexOf(value);
 

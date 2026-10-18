@@ -15,7 +15,7 @@ import io.kalishak.galacticraftlegacy.client.data.GalacticraftSpritesProvider;
 import io.kalishak.galacticraftlegacy.client.model.FlagModel;
 import io.kalishak.galacticraftlegacy.client.model.geom.GalacticraftModelLayers;
 import io.kalishak.galacticraftlegacy.client.renderer.entity.state.FlagRenderState;
-import io.kalishak.galacticraftlegacy.components.flag.*;
+import io.kalishak.galacticraftlegacy.components.flag.FlagTypeProvider;
 import io.kalishak.galacticraftlegacy.world.entity.Flag;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.EntityRenderer;
@@ -24,12 +24,11 @@ import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureAtlas;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.core.Holder;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Unit;
 import net.minecraft.world.phys.AABB;
-import org.jspecify.annotations.Nullable;
+
+import java.util.List;
 
 public class FlagRenderer extends EntityRenderer<Flag, FlagRenderState> {
     public static final Identifier TEXTURES = Identifier.fromNamespaceAndPath(Galacticraft.MODID, "textures/entity/flag.png");
@@ -50,7 +49,7 @@ public class FlagRenderer extends EntityRenderer<Flag, FlagRenderState> {
     @Override
     public void extractRenderState(Flag flag, FlagRenderState reusedState, float partialTick) {
         super.extractRenderState(flag, reusedState, partialTick);
-        reusedState.flagData = flag.getFlagData();
+        reusedState.flagData = flag.getFlagData().extractProvider();
         reusedState.id = flag.getId();
         reusedState.rotation = flag.getYRot();
         reusedState.windLevel = flag.getWindLevel();
@@ -63,13 +62,6 @@ public class FlagRenderer extends EntityRenderer<Flag, FlagRenderState> {
         float seedX = (((seed >> 16 & 7L) + 0.5F) / 8.0F - 0.5F) * 0.004F;
         float seedY = (((seed >> 20 & 7L) + 0.5F) / 8.0F - 0.5F) * 0.004F;
         float seedZ = (((seed >> 24 & 7L) + 0.5F) / 8.0F - 0.5F) * 0.004F;
-        TextureAtlasSprite sprite = null;
-
-        if (renderState.flagData instanceof FixedFlagData(Holder<FlagMaterial> material)) {
-            if (material.value().flagProvider() instanceof TexturedFlagProvider texturedFlagProvider) {
-                sprite = this.flags.getSprite(texturedFlagProvider.image());
-            }
-        }
 
         poseStack.pushPose();
         poseStack.translate(seedX, seedY + 1.5F, seedZ);
@@ -77,7 +69,7 @@ public class FlagRenderer extends EntityRenderer<Flag, FlagRenderState> {
         poseStack.scale(-1.0F, -1.0F, 0.0F);
         nodeCollector.submitModel(this.model, Unit.INSTANCE, poseStack, RenderTypes.entitySolid(TEXTURES), 1, 1, 1);
 
-        submitFlag(renderState, poseStack, nodeCollector, sprite);
+        submitFlag(renderState, poseStack, nodeCollector);
         poseStack.popPose();
     }
 
@@ -86,67 +78,51 @@ public class FlagRenderer extends EntityRenderer<Flag, FlagRenderState> {
         return entity.getBoundingBox().inflate(1.0D, 2.0D, 1.0D);
     }
 
-    private void submitFlag(FlagRenderState renderState, PoseStack poseStack, SubmitNodeCollector nodeCollector, @Nullable TextureAtlasSprite sprite) {
-        poseStack.pushPose();
+    private void submitFlag(FlagRenderState renderState, PoseStack stack, SubmitNodeCollector nodeCollector) {
+        List<FlagTypeProvider.IndexedColor> colorList = renderState.flagData.resolve(id -> this.flags.getSprite(id.texture()));
+        float windLevel = renderState.windLevel;
 
-        poseStack.scale(0.5F, 0.5F, 0.5F);
-        poseStack.translate(0.0D, -1.1D, 0.0D);
-        FlagData flagData = renderState.flagData;
+        stack.pushPose();
+        
+        stack.scale(0.5F, 0.5F, 0.5F);
+        stack.translate(0.0F, -1.1F, 0.0F);
 
-        nodeCollector.submitCustomGeometry(poseStack, RenderTypes.lines(), (pose, buffer) -> {
-            float offset = 0.0F;
-            float offsetAhead = 0.0F;
+        nodeCollector.submitCustomGeometry(
+                stack,
+                RenderTypes.endPortal(),
+                (pose, buffer) -> submitVertexes(pose, buffer, renderState.flagData.width(), renderState.flagData.height(), windLevel, renderState.partialTick, colorList, renderState.lightCoords)
+        );
+        stack.popPose();
+    }
+    
+    private void submitVertexes(PoseStack.Pose pose, VertexConsumer buffer, int width, int height, float windLevel, float partialTick, List<FlagTypeProvider.IndexedColor> colorList, int lightCoords) {
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                pose.translate(0, -1.0F, 0);
+                float offset = 0.0F;
+                float offsetAhead = 0.0F;
 
-            for (int i = 0; i < flagData.width(); i++) {
-                for (int j = 0; j < flagData.height(); j++) {
-                    if (renderState.windLevel > 0.0F) {
-                        offset = (float) (Math.sin(renderState.partialTick / 2.0F + i * 50 + 3) / 25.0F) * i / 30.0F;
-                        offsetAhead = (float) (Math.sin(renderState.partialTick / 2.0F + (i + 1) * 50 + 3) / 25.0F) * (i + 1) / 30.0F;
-                        offset *= renderState.windLevel;
-                        offsetAhead *= renderState.windLevel;
-                    }
-
-                    if (flagData.material().value().flagProvider() instanceof TexturedFlagProvider textured) {
-                        sumbitSprite(pose, buffer, flagData, i, j, offset, offsetAhead, this.flags.getSprite(textured.image()));
-                    } else {
-                        sumbitFixed(pose, buffer, flagData, i, j, offset, offsetAhead);
-                    }
+                if (windLevel > 0) {
+                    offset = (float) (Math.sin(partialTick / 2.0F + i * 50 + 3) / 25.0F) * i / 30.0F;
+                    offsetAhead = (float) (Math.sin(partialTick / 2.0F + (i + 1) * 50 + 3) / 25.0F) * (i + 1) / 30.0F;
+                    offset *= windLevel;
+                    offsetAhead *= windLevel;
                 }
+
+                int color = FlagTypeProvider.find(colorList, i, j).color();
+
+                vertex(pose, buffer, i, j, i / 24.0F + 0.0F / 24.0F, j / 24.0F + 0.0F / 24.0F + offset, offset, 0, 0, 0, lightCoords, color);
+                vertex(pose, buffer, i, j, i / 24.0F + 0.0F / 24.0F, j / 24.0F + 0.0F / 24.0F + offset, offset, 0, 1, 0, lightCoords, color);
+                vertex(pose, buffer, i, j, i / 24.0F + 1.0F / 24.0F, j / 24.0F + 1.0F / 24.0F + offsetAhead, offsetAhead, 1, 1, 0, lightCoords, color);
+
+                vertex(pose, buffer, i, j, i / 24.0F + 0.0F / 24.0F, j / 24.0F + 0.0F / 24.0F + offset, offset, 0, 0, 0, lightCoords, color);
+                vertex(pose, buffer, i, j, i / 24.0F + 1.0F / 24.0F, j / 24.0F + 1.0F / 24.0F + offsetAhead, offsetAhead, 1, 1, 0, lightCoords, color);
+                vertex(pose, buffer, i, j, i / 24.0F + 1.0F / 24.0F, j / 24.0F + 0.0F / 24.0F + offsetAhead, offsetAhead, 1, 0, 0, lightCoords, color);
             }
-        });
+        }
     }
 
-    private void sumbitSprite(PoseStack.Pose pose, VertexConsumer buffer, FlagData flagData, int x, int y, float windOffset, float windOffsetAhead, TextureAtlasSprite sprite) {
-        float offsetX = -flagData.width() / 2.0F;
-        float offsetY = -flagData.height() / 2.0F;
-
-        vertex(pose, buffer, x / 24.0F + 0.0F / 24.0F, y / 24.0F + 0.0F / 24.0F + windOffset, windOffset, -1)
-                .setUv(sprite.getU(offsetX), sprite.getV(offsetY));
-        vertex(pose, buffer, x / 24.0F + 0.0F / 24.0F, y / 24.0F + 1.0F / 24.0F + windOffset, windOffset, -1)
-                .setUv(sprite.getU(offsetX), sprite.getV(offsetY));
-        vertex(pose, buffer, x / 24.0F + 1.0F / 24.0F, y / 24.0F + 1.0F / 24.0F + windOffsetAhead, windOffsetAhead, -1)
-                .setUv(sprite.getU(offsetX), sprite.getV(offsetY));
-
-        vertex(pose, buffer, x / 24.0F + 0.0F / 24.0F, y / 24.0F + 0.0F / 24.0F + windOffset, windOffset, -1)
-                .setUv(sprite.getU(offsetX), sprite.getV(offsetY));
-        vertex(pose, buffer, x / 24.0F + 1.0F / 24.0F, y / 24.0F + 1.0F / 24.0F + windOffsetAhead, windOffsetAhead, -1)
-                .setUv(sprite.getU(offsetX), sprite.getV(offsetY));
-        vertex(pose, buffer, x / 24.0F + 1.0F / 24.0F, y / 24.0F + 0.0F / 24.0F + windOffsetAhead, windOffsetAhead, -1)
-                .setUv(sprite.getU(offsetX), sprite.getV(offsetY));
-    }
-
-    private static void sumbitFixed(PoseStack.Pose pose, VertexConsumer buffer, FlagData flagData, int x, int y, float offset, float offsetAhead) {
-        FlagTypeProvider.IndexedColor color = FlagTypeProvider.find(flagData.material().value().flagProvider(), x, y);
-        vertex(pose, buffer, x / 24.0F + 0.0F / 24.0F, y / 24.0F + 0.0F / 24.0F + offset, offset, color.color());
-        vertex(pose, buffer, x / 24.0F + 0.0F / 24.0F, y / 24.0F + 1.0F / 24.0F + offset, offset, color.color());
-        vertex(pose, buffer, x / 24.0F + 1.0F / 24.0F, y / 24.0F + 1.0F / 24.0F + offsetAhead, offsetAhead, color.color());
-
-        vertex(pose, buffer, x / 24.0F + 0.0F / 24.0F, y / 24.0F + 0.0F / 24.0F + offset, offset, color.color());
-        vertex(pose, buffer, x / 24.0F + 1.0F / 24.0F, y / 24.0F + 1.0F / 24.0F + offsetAhead, offsetAhead, color.color());
-        vertex(pose, buffer, x / 24.0F + 1.0F / 24.0F, y / 24.0F + 0.0F / 24.0F + offsetAhead, offsetAhead, color.color());
-    }
-
-    private static VertexConsumer vertex(PoseStack.Pose pose, VertexConsumer buffer, float x, float y, float z, int color) {
-        return buffer.addVertex(pose, x, y, z).setColor(color).setOverlay(OverlayTexture.NO_OVERLAY);
+    private static void vertex(PoseStack.Pose pose, VertexConsumer buffer, float x, float y, float u, float v, float z, int nx, int ny, int nz, int lightCoords, int color) {
+        buffer.addVertex(pose, x, y, z).setColor(color).setUv(u, v).setOverlay(OverlayTexture.NO_OVERLAY).setLight(lightCoords).setNormal(pose, nx, ny, nz);
     }
 }

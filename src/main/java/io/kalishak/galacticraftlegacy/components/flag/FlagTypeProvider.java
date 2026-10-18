@@ -3,6 +3,7 @@ package io.kalishak.galacticraftlegacy.components.flag;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import io.netty.buffer.ByteBuf;
+import net.minecraft.client.resources.model.sprite.SpriteGetter;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.util.Util;
@@ -10,13 +11,18 @@ import net.minecraft.util.Util;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.BiFunction;
 import java.util.stream.IntStream;
 
 public interface FlagTypeProvider {
     int width();
     int height();
 
-    List<IndexedColor> resolvedColors();
+    List<IndexedColor> resolve(SpriteGetter spriteGetter);
+
+    default List<IndexedColor> cachedColors() {
+        return new ArrayList<>();
+    }
 
     MapCodec<? extends FlagTypeProvider> type();
 
@@ -25,7 +31,7 @@ public interface FlagTypeProvider {
 
         for (int i = 0; i < flagTypeProvider.width(); i++) {
             for (int j = 0; j < flagTypeProvider.height(); j++) {
-                IndexedColor color = find(flagTypeProvider, i, j);
+                IndexedColor color = find(flagTypeProvider.cachedColors(), i, j);
 
                 image.setRGB(i, j, color.color());
             }
@@ -48,17 +54,25 @@ public interface FlagTypeProvider {
         return colors;
     }
 
-    static IndexedColor find(FlagTypeProvider flagTypeProvider, int x, int y) {
-        if (flagTypeProvider instanceof BlankFlagProvider blank) {
-            return new IndexedColor(x, y, blank.color());
-        }
-
-        return flagTypeProvider.resolvedColors().stream().filter(iv -> iv.x() == x && iv.y() == y).findFirst().orElseGet(() -> {
+    static IndexedColor find(List<IndexedColor> colors, int x, int y) {
+        return colors.stream().filter(iv -> iv.x() == x && iv.y() == y).findFirst().orElseGet(() -> {
             IndexedColor newValue = new IndexedColor(x, y, 127);
-            flagTypeProvider.resolvedColors().add(newValue);
+            colors.add(newValue);
 
             return newValue;
         });
+    }
+
+    static List<IndexedColor> populate(int width, int height, BiFunction<Integer, Integer, Integer> colorGetter) {
+        List<IndexedColor> colors = new ArrayList<>();
+
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                colors.add(new IndexedColor(i, j, colorGetter.apply(i, j)));
+            }
+        }
+
+        return colors;
     }
 
     record IndexedColor(int x, int y, int color) {

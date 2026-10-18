@@ -8,6 +8,7 @@
 package io.kalishak.galacticraftlegacy.world.item;
 
 import io.kalishak.galacticraftlegacy.components.GalacticraftDataComponents;
+import io.kalishak.galacticraftlegacy.components.flag.BuiltinFlagMaterials;
 import io.kalishak.galacticraftlegacy.components.flag.FlagData;
 import io.kalishak.galacticraftlegacy.world.entity.Flag;
 import io.kalishak.galacticraftlegacy.world.score.race.SpaceRaceHooks;
@@ -63,8 +64,7 @@ public class FlagItem extends Item {
                     GalacticraftDataComponents.FLAG_DATA,
                     player instanceof ServerPlayer
                             ? SpaceRaceHooks.getPlayerFlag((ServerPlayer) player)
-                            : FlagData.classic(level.registryAccess()
-                    )
+                            : FlagData.withMaterial(level.registryAccess().getOrThrow(BuiltinFlagMaterials.CLASSIC))
             );
             Flag flag = new Flag(level, flagData, clickedPosition.x, clickedPosition.y, clickedPosition.z, (float) player.getY());
 

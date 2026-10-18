@@ -10,7 +10,7 @@ package io.kalishak.galacticraftlegacy.world.item;
 import io.kalishak.galacticraftlegacy.Galacticraft;
 import io.kalishak.galacticraftlegacy.components.GalacticraftDataComponents;
 import io.kalishak.galacticraftlegacy.components.flag.BuiltinFlagMaterials;
-import io.kalishak.galacticraftlegacy.components.flag.FixedFlagData;
+import io.kalishak.galacticraftlegacy.components.flag.FlagData;
 import io.kalishak.galacticraftlegacy.components.flag.FlagMaterial;
 import io.kalishak.galacticraftlegacy.references.GalacticraftComponents;
 import io.kalishak.galacticraftlegacy.registry.GalacticraftRegistries;
@@ -115,7 +115,7 @@ public final class GalacticraftCreativeModeTabs {
         output.accept(GalacticraftItems.CHEESE_CHUNK);
         output.accept(GalacticraftItems.RAW_METEORIC_IRON);
         output.accept(GalacticraftItems.SAPPHIRE);
-        flag(itemDisplayParameters.holders().lookupOrThrow(GalacticraftRegistries.Keys.FLAG_MATERIAL));
+        flag(output, itemDisplayParameters.holders().lookupOrThrow(GalacticraftRegistries.Keys.FLAG_MATERIAL));
         output.accept(GalacticraftItems.DUNGEON_LOCATOR);
         output.accept(GalacticraftItems.RAW_DESH);
         output.accept(GalacticraftItems.DESH_STICK);
@@ -351,8 +351,9 @@ public final class GalacticraftCreativeModeTabs {
         });
     }
 
-    private static void flag(HolderLookup.RegistryLookup<FlagMaterial> flagMaterials) {
+    private static void flag(CreativeModeTab.Output output, HolderLookup.RegistryLookup<FlagMaterial> flagMaterials) {
         ItemStack flag = GalacticraftItems.FLAG.toStack();
-        flag.set(GalacticraftDataComponents.FLAG_DATA, new FixedFlagData(flagMaterials.getOrThrow(BuiltinFlagMaterials.CLASSIC)));
+        flag.set(GalacticraftDataComponents.FLAG_DATA, FlagData.withMaterial(flagMaterials.getOrThrow(BuiltinFlagMaterials.CLASSIC)));
+        output.accept(flag);
     }
 }

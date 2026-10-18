@@ -25,4 +25,5 @@ public record FlagMaterial(FlagTypeProvider flagProvider, Component description)
     public static final StreamCodec<RegistryFriendlyByteBuf, Holder<FlagMaterial>> STREAM_CODEC = ByteBufCodecs.holder(
             GalacticraftRegistries.Keys.FLAG_MATERIAL, DIRECT_STREAM_CODEC
     );
+    public static final FlagMaterial EMPTY = new FlagMaterial(new BlankFlagProvider(1, 1, 1), Component.empty());
 }

@@ -11,6 +11,8 @@ import io.kalishak.galacticraftlegacy.attachment.GalacticraftAttachments;
 import io.kalishak.galacticraftlegacy.components.GalacticraftDataComponents;
 import io.kalishak.galacticraftlegacy.components.flag.FlagData;
 import io.kalishak.galacticraftlegacy.world.item.GalacticraftItems;
+import net.minecraft.core.component.DataComponentGetter;
+import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -106,6 +108,27 @@ public class Flag extends Entity {
     }
 
     @Override
+    public @Nullable <T> T get(DataComponentType<? extends T> type) {
+        return type == GalacticraftDataComponents.FLAG_DATA.get() ? castComponentValue((DataComponentType<T>) type, getFlagData()) : super.get(type);
+    }
+
+    @Override
+    protected void applyImplicitComponents(DataComponentGetter components) {
+        applyImplicitComponentIfPresent(components, GalacticraftDataComponents.FLAG_DATA.get());
+        super.applyImplicitComponents(components);
+    }
+
+    @Override
+    protected <T> boolean applyImplicitComponent(DataComponentType<T> type, T value) {
+        if (type == GalacticraftDataComponents.FLAG_DATA.get()) {
+            setFlagData(castComponentValue(GalacticraftDataComponents.FLAG_DATA.get(), value));
+            return true;
+        }
+
+        return super.applyImplicitComponent(type, value);
+    }
+
+    @Override
     public boolean hurtServer(ServerLevel level, DamageSource damageSource, float amount) {
         if (isRemoved()) {
             return false;
@@ -154,7 +177,7 @@ public class Flag extends Entity {
 
     @Override
     protected void readAdditionalSaveData(ValueInput input) {
-        setFlagData(input.read("FlagData", FlagData.CODEC).orElse(FlagData.classic(registryAccess())));
+        setFlagData(input.read("FlagData", FlagData.CODEC).orElse(FlagData.EMPTY));
         setOwnerReference(EntityReference.read(input, "Owner"));
     }
 

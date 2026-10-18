@@ -55,7 +55,7 @@ public final class GalacticraftDataComponents {
     );
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<FlagData>> FLAG_DATA = REGISTRY.registerComponentType(
             "flag_data",
-            builder -> builder.persistent(FlagData.CODEC).networkSynchronized(FlagData.DATA_STREAM_CODEC)
+            builder -> builder.persistent(FlagData.CODEC).networkSynchronized(FlagData.STREAM_CODEC)
     );
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<SimpleFluidContent>> FLUID_TANK = REGISTRY.registerComponentType(
             "fluid_tank",
