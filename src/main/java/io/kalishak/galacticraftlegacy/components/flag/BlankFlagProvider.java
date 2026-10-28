@@ -5,8 +5,6 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.client.resources.model.sprite.SpriteGetter;
 
-import java.util.List;
-
 public record BlankFlagProvider(int width, int height, int color) implements FlagTypeProvider {
     public static final MapCodec<BlankFlagProvider> MAP_CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             Codec.INT.fieldOf("width").forGetter(BlankFlagProvider::width),
@@ -15,8 +13,8 @@ public record BlankFlagProvider(int width, int height, int color) implements Fla
     ).apply(instance, BlankFlagProvider::new));
 
     @Override
-    public List<IndexedColor> resolve(SpriteGetter spriteGetter) {
-        return FlagTypeProvider.populate(this.width, this.height, (_, _) -> this.color);
+    public byte[][][] resolveColors(SpriteGetter spriteGetter) {
+        return FlagTypeProvider.populateColor(this.width, this.height, (_, _) -> this.color);
     }
 
     @Override

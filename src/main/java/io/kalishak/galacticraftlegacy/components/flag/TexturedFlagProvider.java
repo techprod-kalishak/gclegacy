@@ -9,8 +9,6 @@ import net.minecraft.client.resources.model.sprite.SpriteGetter;
 import net.minecraft.client.resources.model.sprite.SpriteId;
 import net.minecraft.resources.Identifier;
 
-import java.util.List;
-
 public record TexturedFlagProvider(Identifier image, int width, int height) implements FlagTypeProvider {
     public static final MapCodec<TexturedFlagProvider> MAP_CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             Identifier.CODEC.fieldOf("image").forGetter(TexturedFlagProvider::image),
@@ -19,11 +17,11 @@ public record TexturedFlagProvider(Identifier image, int width, int height) impl
     ).apply(instance, TexturedFlagProvider::new));
 
     @Override
-    public List<IndexedColor> resolve(SpriteGetter spriteGetter) {
+    public byte[][][] resolveColors(SpriteGetter spriteGetter) {
         SpriteId id = new SpriteId(GalacticraftSheets.FLAG_SHEET, this.image);
         TextureAtlasSprite sprite = spriteGetter.get(id);
 
-        return FlagTypeProvider.populate(this.width, this.height, (x, y) -> sprite.getPixelRGBA(1, x, y));
+        return FlagTypeProvider.populateColor(this.width, this.height, (x, y) -> sprite.getPixelRGBA(1, x, y));
     }
 
     @Override

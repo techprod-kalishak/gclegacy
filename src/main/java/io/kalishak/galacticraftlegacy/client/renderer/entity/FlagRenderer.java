@@ -28,8 +28,6 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.util.Unit;
 import net.minecraft.world.phys.AABB;
 
-import java.util.List;
-
 public class FlagRenderer extends EntityRenderer<Flag, FlagRenderState> {
     public static final Identifier TEXTURES = Identifier.fromNamespaceAndPath(Galacticraft.MODID, "textures/entity/flag.png");
     private final FlagModel model;
@@ -79,7 +77,7 @@ public class FlagRenderer extends EntityRenderer<Flag, FlagRenderState> {
     }
 
     private void submitFlag(FlagRenderState renderState, PoseStack stack, SubmitNodeCollector nodeCollector) {
-        List<FlagTypeProvider.IndexedColor> colorList = renderState.flagData.resolve(id -> this.flags.getSprite(id.texture()));
+        byte[][][] colors = renderState.flagData.resolveColors(id -> this.flags.getSprite(id.texture()));
         float windLevel = renderState.windLevel;
 
         stack.pushPose();
@@ -90,12 +88,12 @@ public class FlagRenderer extends EntityRenderer<Flag, FlagRenderState> {
         nodeCollector.submitCustomGeometry(
                 stack,
                 RenderTypes.endPortal(),
-                (pose, buffer) -> submitVertexes(pose, buffer, renderState.flagData.width(), renderState.flagData.height(), windLevel, renderState.partialTick, colorList, renderState.lightCoords)
+                (pose, buffer) -> submitVertexes(pose, buffer, renderState.flagData.width(), renderState.flagData.height(), windLevel, renderState.partialTick, colors, renderState.lightCoords)
         );
         stack.popPose();
     }
     
-    private void submitVertexes(PoseStack.Pose pose, VertexConsumer buffer, int width, int height, float windLevel, float partialTick, List<FlagTypeProvider.IndexedColor> colorList, int lightCoords) {
+    private void submitVertexes(PoseStack.Pose pose, VertexConsumer buffer, int width, int height, float windLevel, float partialTick, byte[][][] colors, int lightCoords) {
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
                 pose.translate(0, -1.0F, 0);
@@ -109,7 +107,7 @@ public class FlagRenderer extends EntityRenderer<Flag, FlagRenderState> {
                     offsetAhead *= windLevel;
                 }
 
-                int color = FlagTypeProvider.find(colorList, i, j).color();
+                int color = FlagTypeProvider.toColor(colors[i][j]);
 
                 vertex(pose, buffer, i, j, i / 24.0F + 0.0F / 24.0F, j / 24.0F + 0.0F / 24.0F + offset, offset, 0, 0, 0, lightCoords, color);
                 vertex(pose, buffer, i, j, i / 24.0F + 0.0F / 24.0F, j / 24.0F + 0.0F / 24.0F + offset, offset, 0, 1, 0, lightCoords, color);
