@@ -9,7 +9,7 @@ package io.kalishak.galacticraftlegacy.world.inventory.container.memory;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import io.kalishak.galacticraftlegacy.components.GalacticraftDataComponents;
+import io.kalishak.galacticraftlegacy.component.GalacticraftDataComponents;
 import io.kalishak.galacticraftlegacy.data.TriStateBoolean;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.component.DataComponentGetter;
@@ -29,6 +29,7 @@ import org.jspecify.annotations.Nullable;
 import java.util.List;
 import java.util.Optional;
 
+@SuppressWarnings("unused")
 public interface MemorableContainer extends RecipeCraftingHolder {
     Codec<RecipeHolder<?>> RECIPE_HOLDER_CODEC = RecordCodecBuilder.create(instance -> instance.group(
             ResourceKey.codec(Registries.RECIPE).fieldOf("id").forGetter(RecipeHolder::id),

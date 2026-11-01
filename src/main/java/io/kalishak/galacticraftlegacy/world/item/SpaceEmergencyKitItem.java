@@ -1,7 +1,7 @@
 package io.kalishak.galacticraftlegacy.world.item;
 
 import io.kalishak.galacticraftlegacy.attachment.AttachmentHelper;
-import io.kalishak.galacticraftlegacy.components.GalacticraftDataComponents;
+import io.kalishak.galacticraftlegacy.component.GalacticraftDataComponents;
 import io.kalishak.galacticraftlegacy.transfer.entity.SpaceGearEquipment;
 import io.kalishak.galacticraftlegacy.world.item.component.GearEquippable;
 import net.minecraft.core.Holder;
@@ -17,6 +17,7 @@ import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.level.Level;
+import org.jspecify.annotations.NonNull;
 
 import java.util.List;
 
@@ -26,7 +27,7 @@ public class SpaceEmergencyKitItem extends Item {
     }
 
     @Override
-    public InteractionResult use(Level level, Player player, InteractionHand hand) {
+    public @NonNull InteractionResult use(@NonNull Level level, Player player, @NonNull InteractionHand hand) {
         if (player.isShiftKeyDown()) {
             return InteractionResult.PASS;
         }

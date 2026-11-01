@@ -1,4 +1,4 @@
-package io.kalishak.galacticraftlegacy.components.flag;
+package io.kalishak.galacticraftlegacy.component.flag;
 
 import com.mojang.datafixers.util.Either;
 import com.mojang.serialization.Codec;
@@ -13,6 +13,7 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.TooltipProvider;
+import org.jspecify.annotations.NonNull;
 
 import java.util.function.Consumer;
 
@@ -36,7 +37,7 @@ public record FlagData(Either<Holder<FlagMaterial>, MutableFlagTypeProvider> dat
     }
 
     @Override
-    public void addToTooltip(Item.TooltipContext context, Consumer<Component> consumer, TooltipFlag flag, DataComponentGetter components) {
+    public void addToTooltip(Item.@NonNull TooltipContext context, @NonNull Consumer<Component> consumer, @NonNull TooltipFlag flag, @NonNull DataComponentGetter components) {
         this.data.ifLeft(flagMaterial -> consumer.accept(flagMaterial.value().description()));
     }
 

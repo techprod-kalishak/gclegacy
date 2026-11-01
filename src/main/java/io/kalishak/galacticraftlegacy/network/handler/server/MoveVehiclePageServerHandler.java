@@ -9,10 +9,10 @@ package io.kalishak.galacticraftlegacy.network.handler.server;
 
 import io.kalishak.galacticraftlegacy.attachment.entity.Schematics;
 import io.kalishak.galacticraftlegacy.client.gui.screens.inventory.workbench.NasaWorkbenchScreenPage;
+import io.kalishak.galacticraftlegacy.component.SchematicVariant;
 import io.kalishak.galacticraftlegacy.network.payload.MoveVehiclePagePayload;
 import io.kalishak.galacticraftlegacy.references.GalacticraftComponents;
-import io.kalishak.galacticraftlegacy.registry.SchematicVariant;
-import io.kalishak.galacticraftlegacy.registry.SchematicVariants;
+import io.kalishak.galacticraftlegacy.registry.BuiltinSchematicVariants;
 import io.kalishak.galacticraftlegacy.world.inventory.workbench.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
@@ -24,6 +24,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
+import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
 public class MoveVehiclePageServerHandler {
@@ -34,7 +35,7 @@ public class MoveVehiclePageServerHandler {
             if (targetPlayer.containerMenu.containerId == payload.containerId()) {
                 switch (targetPlayer.containerMenu) {
                     case NasaWorkbenchEmptyPageMenu _ -> openExactPage(targetPlayer, payload.blockPos(), Schematics.getLastPage(targetPlayer));
-                    case NasaWorkbenchMenu _ -> pickMenu(targetPlayer, SchematicVariants.TIER_1_ROCKET, payload.action(), payload.blockPos());
+                    case NasaWorkbenchMenu _ -> pickMenu(targetPlayer, BuiltinSchematicVariants.TIER_1_ROCKET, payload.action(), payload.blockPos());
 
                     default -> payload.currentSchematic().ifPresentOrElse(
                             key -> pickMenu(targetPlayer, key, payload.action(), payload.blockPos()),
@@ -46,7 +47,7 @@ public class MoveVehiclePageServerHandler {
     }
 
     private static void pickMenu(Player serverPlayer, ResourceKey<SchematicVariant> currentSchematic, Schematics.Picker picker, BlockPos blockPos) {
-        if (currentSchematic.equals(SchematicVariants.TIER_1_ROCKET)) {
+        if (currentSchematic.equals(BuiltinSchematicVariants.TIER_1_ROCKET)) {
             openMainPage(serverPlayer, blockPos);
         }
 
@@ -91,19 +92,19 @@ public class MoveVehiclePageServerHandler {
                 new NasaWorkbenchMenuSupplier(
                         NasaWorkbenchMenu::new,
                         blockPos,
-                        NasaWorkbenchScreenPage.createTitle(SchematicVariants.TIER_1_ROCKET)
+                        NasaWorkbenchScreenPage.createTitle(BuiltinSchematicVariants.TIER_1_ROCKET)
                 ), blockPos
         );
     }
 
     private record NasaWorkbenchMenuSupplier(MenuConstructor constructor, BlockPos blockPos, Component title) implements MenuProvider {
         @Override
-        public Component getDisplayName() {
+        public @NonNull Component getDisplayName() {
             return this.title;
         }
 
         @Override
-        public @Nullable AbstractContainerMenu createMenu(int containerId, Inventory inventory, Player player) {
+        public @Nullable AbstractContainerMenu createMenu(int containerId, @NonNull Inventory inventory, Player player) {
             return this.constructor.createMenu(containerId, inventory, player.level(), this.blockPos);
         }
     }

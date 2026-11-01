@@ -7,7 +7,7 @@
 
 package io.kalishak.galacticraftlegacy.attachment.entity;
 
-import io.kalishak.galacticraftlegacy.components.GalacticraftDataComponents;
+import io.kalishak.galacticraftlegacy.component.GalacticraftDataComponents;
 import io.kalishak.galacticraftlegacy.data.GalacticraftTags;
 import io.kalishak.galacticraftlegacy.galaxies.celestial.CelestialBodyInstance;
 import io.kalishak.galacticraftlegacy.transfer.entity.SpaceGearEquipment;
@@ -73,8 +73,8 @@ public abstract class GearInventoryProvider implements ParachuteFalling {
         SpaceGearEquipment spaceGearEquipment = getGearEquipment();
 
         if (!gearOwner.is(EntityTypeTags.UNDEAD)) {
-            if (!celestialBodyInstance.isBreathable()) {
-                if (!mayBreath(gearOwner) || !depleteOxygen()) {
+            if (celestialBodyInstance.hasNoOxygen()) {
+                if (shouldSuffocate(gearOwner) || !depleteOxygen()) {
                     if (this.lastSuffocationDamageTick++ > 120) {
                         gearOwner.hurtServer(serverLevel, serverLevel.damageSources().source(GalacticraftDamageTypes.SUFFOCATION), 0.2F);
                         this.lastSuffocationDamageTick = 0;
@@ -122,7 +122,7 @@ public abstract class GearInventoryProvider implements ParachuteFalling {
                             Equippable equippable = itemResource.get(DataComponents.EQUIPPABLE);
 
                             if (equippable != null && equippable.damageOnHurt()) {
-                                itemResource.toStack().hurtAndBreak(1, serverLevel, gearOwner, item -> {});
+                                itemResource.toStack().hurtAndBreak(1, serverLevel, gearOwner, _ -> {});
                             }
                         }
                     }
@@ -131,7 +131,7 @@ public abstract class GearInventoryProvider implements ParachuteFalling {
         }
     }
 
-    public void clientGearTick(Level level, LivingEntity gearOwner) {
+    public void clientGearTick(LivingEntity gearOwner) {
         this.gearEquipment.tick(gearOwner);
     }
 
@@ -193,9 +193,9 @@ public abstract class GearInventoryProvider implements ParachuteFalling {
         return !mask.isEmpty() && !gear.isEmpty() && xorTank;
     }
 
-    public boolean mayBreath(LivingEntity livingEntity) {
+    public boolean shouldSuffocate(LivingEntity livingEntity) {
         if (livingEntity.is(EntityTypeTags.UNDEAD)) {
-            return true;
+            return false;
         }
 
         Level level = livingEntity.level();
@@ -208,10 +208,10 @@ public abstract class GearInventoryProvider implements ParachuteFalling {
         BlockState state = level.getBlockState(blockPos);
 
         if (state.is(GalacticraftTags.Blocks.BREATHABLE_AIR)) {
-            return true;
+            return false;
         }
 
-        return hasCompleteOxygenSetup() && getRemainingOxygen() > 0;
+        return !hasCompleteOxygenSetup() || getRemainingOxygen() <= 0;
     }
 
     private boolean deplateTank(ItemStack tank, @Nullable Transaction parent) {

@@ -8,7 +8,8 @@
 package io.kalishak.galacticraftlegacy.registry;
 
 import com.google.common.collect.ImmutableMap;
-import io.kalishak.galacticraftlegacy.components.GalacticraftDataComponents;
+import io.kalishak.galacticraftlegacy.component.ChecklistEntry;
+import io.kalishak.galacticraftlegacy.component.GalacticraftDataComponents;
 import io.kalishak.galacticraftlegacy.data.GalacticraftTags;
 import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.world.entity.GearEquipmentSlot;
@@ -23,7 +24,7 @@ import net.minecraft.world.item.Item;
 
 import java.util.function.UnaryOperator;
 
-public final class Checklist {
+public final class BuiltinChecklist {
     public static final ResourceKey<ChecklistEntry> EQUIP_PARACHUTE = Constants.key(GalacticraftRegistries.Keys.CHECKLIST, "equip_parachute");
     public static final ResourceKey<ChecklistEntry> EQUIP_OXYGEN_SUIT = Constants.key(GalacticraftRegistries.Keys.CHECKLIST, "equip_oxygen_suit");
     public static final ResourceKey<ChecklistEntry> EQUIP_THERMAL_PADDING = Constants.key(GalacticraftRegistries.Keys.CHECKLIST, "equip_thermal_padding");

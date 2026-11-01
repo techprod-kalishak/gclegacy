@@ -1,4 +1,4 @@
-package io.kalishak.galacticraftlegacy.components.flag;
+package io.kalishak.galacticraftlegacy.component.flag;
 
 import net.minecraft.client.resources.model.sprite.SpriteGetter;
 

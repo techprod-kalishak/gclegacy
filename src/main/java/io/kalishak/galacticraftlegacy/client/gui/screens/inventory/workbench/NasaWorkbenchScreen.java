@@ -7,9 +7,9 @@
 
 package io.kalishak.galacticraftlegacy.client.gui.screens.inventory.workbench;
 
+import io.kalishak.galacticraftlegacy.component.SchematicVariant;
 import io.kalishak.galacticraftlegacy.references.Constants;
-import io.kalishak.galacticraftlegacy.registry.SchematicVariant;
-import io.kalishak.galacticraftlegacy.registry.SchematicVariants;
+import io.kalishak.galacticraftlegacy.registry.BuiltinSchematicVariants;
 import io.kalishak.galacticraftlegacy.world.inventory.workbench.NasaWorkbenchMenu;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
@@ -25,7 +25,7 @@ public class NasaWorkbenchScreen extends AbstractNasaWorkbenchScreen<NasaWorkben
 
     @Override
     public ResourceKey<SchematicVariant> getPage() {
-        return SchematicVariants.TIER_1_ROCKET;
+        return BuiltinSchematicVariants.TIER_1_ROCKET;
     }
 
     @Override

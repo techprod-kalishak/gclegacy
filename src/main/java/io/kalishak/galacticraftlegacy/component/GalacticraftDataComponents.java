@@ -5,17 +5,15 @@
  * See LICENSE file for more details
  */
 
-package io.kalishak.galacticraftlegacy.components;
+package io.kalishak.galacticraftlegacy.component;
 
 import com.mojang.serialization.Codec;
 import io.kalishak.galacticraftlegacy.Galacticraft;
-import io.kalishak.galacticraftlegacy.components.flag.FlagData;
+import io.kalishak.galacticraftlegacy.component.flag.FlagData;
 import io.kalishak.galacticraftlegacy.config.ClientConfig;
 import io.kalishak.galacticraftlegacy.config.values.EnergyUnit;
 import io.kalishak.galacticraftlegacy.references.Constants;
-import io.kalishak.galacticraftlegacy.registry.SchematicVariant;
 import io.kalishak.galacticraftlegacy.world.inventory.container.memory.CraftingMemory;
-import io.kalishak.galacticraftlegacy.world.inventory.container.memory.MemorableContainer;
 import io.kalishak.galacticraftlegacy.world.item.FeatureTier;
 import io.kalishak.galacticraftlegacy.world.item.KeyLock;
 import io.kalishak.galacticraftlegacy.world.item.VehicleComponentType;
@@ -31,7 +29,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.TooltipProvider;
-import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -51,7 +48,6 @@ import net.neoforged.neoforge.transfer.fluid.ItemAccessFluidHandler;
 import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.function.Supplier;
-import java.util.stream.Stream;
 
 public final class GalacticraftDataComponents {
     private static final DeferredRegister.DataComponents REGISTRY = DeferredRegister.createDataComponents(Registries.DATA_COMPONENT_TYPE, Galacticraft.MODID);
@@ -100,10 +96,6 @@ public final class GalacticraftDataComponents {
             "key_lock",
             builder -> builder.persistent(KeyLock.CODEC).networkSynchronized(KeyLock.STREAM_CODEC).cacheEncoding()
     );
-    public static final DeferredHolder<DataComponentType<?>, DataComponentType<RecipeHolder<?>>> RECIPE_HOLDER = REGISTRY.registerComponentType(
-            "recipe_holder",
-            builder -> builder.persistent(MemorableContainer.RECIPE_HOLDER_CODEC).networkSynchronized(RecipeHolder.STREAM_CODEC).cacheEncoding().ignoreSwapAnimation()
-    );
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<VehiclePart>> ROCKET_PART = REGISTRY.registerComponentType(
             "rocket_part",
             builder -> builder.persistent(VehiclePart.CODEC).networkSynchronized(VehiclePart.STREAM_CODEC).cacheEncoding()
@@ -144,10 +136,6 @@ public final class GalacticraftDataComponents {
         bus.addListener(GalacticraftDataComponents::appendComponentTooltip);
     }
 
-    public static Stream<DataComponentType<?>> getTooltipProviders() {
-        return REGISTRY.getEntries().stream().map(DeferredHolder::get);
-    }
-
     @SubscribeEvent
     public static void modifyDefaultComponents(ModifyDefaultComponentsEvent event) {
         final VehiclePart storage = new VehiclePart(VehicleComponentType.STORAGE, List.of(FeatureTier.values()));
@@ -156,26 +144,23 @@ public final class GalacticraftDataComponents {
                 Items.CHEST,
                 (components, _, _) -> components.set(GalacticraftDataComponents.ROCKET_PART, storage)
         );
-        Items.COPPER_CHEST.forEach(item -> {
-            event.modify(
-                    item,
-                    (components, _, _) -> components.set(GalacticraftDataComponents.ROCKET_PART, storage)
-            );
-        });
+        Items.COPPER_CHEST.forEach(item -> event.modify(
+                item,
+                (components, _, _) -> components.set(GalacticraftDataComponents.ROCKET_PART, storage)
+        ));
     }
 
     @SubscribeEvent
     public static void appendComponentTooltip(RegisterTooltipAppendersEvent event) {
-        appendIfPresent(event::registerAppender, TooltipLocation.HEAD, GalacticraftDataComponents.ITEM_WITH_DESCRIPTION);
+        appendIfPresent(event::registerAppender, TooltipLocation.TAIL, GalacticraftDataComponents.ITEM_WITH_DESCRIPTION);
         appendIfPresent(event::registerAppender, TooltipLocation.HEAD, GalacticraftDataComponents.CRAFTING_MEMORY);
         appendIfPresent(event::registerAppender, TooltipLocation.HEAD, GalacticraftDataComponents.FLAG_DATA);
-        appendIfPresent(event::registerAppender, TooltipLocation.PRE_ITEM_INFO, GalacticraftDataComponents.FLUID_TANK_CONTENTS);
+        appendIfPresent(event::registerAppender, TooltipLocation.HEAD, GalacticraftDataComponents.FLUID_TANK_CONTENTS);
         appendIfPresent(event::registerAppender, TooltipLocation.HEAD, GalacticraftDataComponents.HOT_CONTENT);
-        appendIfPresent(event::registerAppender, TooltipLocation.POST_CUSTOM, GalacticraftDataComponents.SCHEMATIC);
-        appendIfPresent(event::registerAppender, TooltipLocation.TAIL, GalacticraftDataComponents.SHIELD_CONTROLLER);
+        appendIfPresent(event::registerAppender, TooltipLocation.HEAD, GalacticraftDataComponents.SCHEMATIC);
+        appendIfPresent(event::registerAppender, TooltipLocation.HEAD, GalacticraftDataComponents.SHIELD_CONTROLLER);
         appendIfCapability(event::registerAppender, Capabilities.Energy.ITEM);
         appendIfCapability(event::registerAppender, Capabilities.Fluid.ITEM);
-
     }
 
     private static boolean isModdedItem(ItemStack itemStack) {

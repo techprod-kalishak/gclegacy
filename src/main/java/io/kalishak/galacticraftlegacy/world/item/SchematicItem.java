@@ -7,8 +7,8 @@
 
 package io.kalishak.galacticraftlegacy.world.item;
 
-import io.kalishak.galacticraftlegacy.components.GalacticraftDataComponents;
-import io.kalishak.galacticraftlegacy.registry.SchematicVariant;
+import io.kalishak.galacticraftlegacy.component.GalacticraftDataComponents;
+import io.kalishak.galacticraftlegacy.component.SchematicVariant;
 import io.kalishak.galacticraftlegacy.world.entity.SchematicEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -21,6 +21,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
+import org.jspecify.annotations.NonNull;
 
 public class SchematicItem extends Item {
     public SchematicItem(Properties properties) {
@@ -28,7 +29,7 @@ public class SchematicItem extends Item {
     }
 
     @Override
-    public InteractionResult useOn(UseOnContext context) {
+    public @NonNull InteractionResult useOn(UseOnContext context) {
         BlockPos clickedPos = context.getClickedPos();
         Direction clickedFace = context.getClickedFace();
         BlockPos relative = clickedPos.relative(clickedFace);

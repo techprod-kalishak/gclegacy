@@ -8,15 +8,16 @@
 package io.kalishak.galacticraftlegacy.network.payload;
 
 import io.kalishak.galacticraftlegacy.attachment.entity.Schematics;
+import io.kalishak.galacticraftlegacy.component.SchematicVariant;
 import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.registry.GalacticraftRegistries;
-import io.kalishak.galacticraftlegacy.registry.SchematicVariant;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceKey;
+import org.jspecify.annotations.NonNull;
 
 import java.util.Optional;
 
@@ -31,7 +32,7 @@ public record MoveVehiclePagePayload(int containerId, Optional<ResourceKey<Schem
     );
 
     @Override
-    public Type<MoveVehiclePagePayload> type() {
+    public @NonNull Type<MoveVehiclePagePayload> type() {
         return TYPE;
     }
 }

@@ -13,33 +13,30 @@ import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
 import io.kalishak.galacticraftlegacy.Galacticraft;
 import io.kalishak.galacticraftlegacy.attachment.GalacticraftAttachments;
 import io.kalishak.galacticraftlegacy.attachment.entity.Schematics;
+import io.kalishak.galacticraftlegacy.component.SchematicVariant;
 import io.kalishak.galacticraftlegacy.references.GalacticraftComponents;
 import io.kalishak.galacticraftlegacy.registry.GalacticraftRegistries;
-import io.kalishak.galacticraftlegacy.registry.SchematicVariant;
 import io.kalishak.galacticraftlegacy.server.commands.arguments.SchematicArgument;
-import io.kalishak.galacticraftlegacy.server.commands.arguments.SpaceRaceTeamArgument;
 import io.kalishak.galacticraftlegacy.world.score.race.SpaceRaceTeam;
-import net.minecraft.commands.CommandBuildContext;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.ComponentUtils;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.server.commands.GiveCommand;
 import net.minecraft.server.level.ServerPlayer;
 import org.jetbrains.annotations.VisibleForTesting;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Set;
 import java.util.function.BiPredicate;
 
+@SuppressWarnings("unused")
 public class UnlockSchematicCommand {
     private static final SimpleCommandExceptionType ERROR_SCHEMATIC_ALREADY_UNLOCKED = new SimpleCommandExceptionType(GalacticraftComponents.COMMAND_ERROR_SCHEMATIC_ALREADY_UNLOCKED);
     private static final SimpleCommandExceptionType ERROR_SCHEMATIC_NOT_UNLOCKED = new SimpleCommandExceptionType(GalacticraftComponents.COMMAND_ERROR_SCHEMATIC_NOT_UNLOCKED);
 
-    public static void register(CommandDispatcher<CommandSourceStack> dispatcher, CommandBuildContext context) {
+    public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
         dispatcher.register(
                 Commands.literal("schematic")
                         .requires(Commands.hasPermission(Commands.LEVEL_GAMEMASTERS))

@@ -7,7 +7,7 @@
 
 package io.kalishak.galacticraftlegacy.client.renderer.entity.state;
 
-import io.kalishak.galacticraftlegacy.registry.SchematicVariant;
+import io.kalishak.galacticraftlegacy.component.SchematicVariant;
 import net.minecraft.client.renderer.entity.state.EntityRenderState;
 import net.minecraft.core.Direction;
 import org.jspecify.annotations.Nullable;

@@ -9,7 +9,7 @@ package io.kalishak.galacticraftlegacy.world.item.component;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import io.kalishak.galacticraftlegacy.components.GalacticraftDataComponents;
+import io.kalishak.galacticraftlegacy.component.GalacticraftDataComponents;
 import io.kalishak.galacticraftlegacy.config.ClientConfig;
 import io.kalishak.galacticraftlegacy.config.values.EnergyUnit;
 import io.kalishak.galacticraftlegacy.references.Constants;
@@ -25,6 +25,7 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.TooltipProvider;
+import org.jspecify.annotations.NonNull;
 
 import java.util.Optional;
 import java.util.function.Consumer;
@@ -47,16 +48,12 @@ public record ItemWithDescription(String translationKey, int energyPerTick, Opti
         return () -> properties.get().component(GalacticraftDataComponents.ITEM_WITH_DESCRIPTION, new ItemWithDescription(id.toLanguageKey("item", "desc")));
     }
 
-    public ItemWithDescription(String translationKey, int energyPerTick) {
-        this(translationKey, energyPerTick, Optional.empty());
-    }
-
     public ItemWithDescription(String translationKey) {
         this(translationKey, 0, Optional.empty());
     }
 
     @Override
-    public void addToTooltip(Item.TooltipContext context, Consumer<Component> tooltipAdder, TooltipFlag flag, DataComponentGetter componentGetter) {
+    public void addToTooltip(Item.@NonNull TooltipContext context, @NonNull Consumer<Component> tooltipAdder, @NonNull TooltipFlag flag, @NonNull DataComponentGetter componentGetter) {
         if (this.energyPerTick > 0) {
             tooltipAdder.accept(
                     GalacticraftComponents.TOOLTIP_ENERGY_PER_TICK

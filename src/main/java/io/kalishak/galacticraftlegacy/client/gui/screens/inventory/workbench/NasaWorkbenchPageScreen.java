@@ -7,7 +7,7 @@
 
 package io.kalishak.galacticraftlegacy.client.gui.screens.inventory.workbench;
 
-import io.kalishak.galacticraftlegacy.registry.SchematicVariant;
+import io.kalishak.galacticraftlegacy.component.SchematicVariant;
 import io.kalishak.galacticraftlegacy.world.inventory.workbench.NasaWorkbenchPageMenu;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;

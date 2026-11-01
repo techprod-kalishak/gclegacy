@@ -7,7 +7,7 @@
 
 package io.kalishak.galacticraftlegacy.world.level.block.entity;
 
-import io.kalishak.galacticraftlegacy.components.GalacticraftDataComponents;
+import io.kalishak.galacticraftlegacy.component.GalacticraftDataComponents;
 import io.kalishak.galacticraftlegacy.data.GalacticraftTags;
 import io.kalishak.galacticraftlegacy.transfer.ResourcefulHelper;
 import io.kalishak.galacticraftlegacy.transfer.capability.fluid.SingleTankResourceHandler;
@@ -47,6 +47,7 @@ import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.SimpleFluidContent;
 import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.neoforged.neoforge.transfer.item.ItemUtil;
+import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
 import java.util.List;
@@ -59,22 +60,22 @@ public class ParachestBlockEntity extends BaseItemStorageBlockEntity implements 
 
     private final ContainerOpenersCounter openersCounter = new ContainerOpenersCounter() {
         @Override
-        protected void onOpen(Level level, BlockPos blockPos, BlockState blockState) {
+        protected void onOpen(@NonNull Level level, @NonNull BlockPos blockPos, BlockState blockState) {
             if (blockState.getBlock() instanceof ParachestBlock) {
                 playSound(level, blockPos, SoundEvents.CHEST_OPEN);
             }
         }
 
         @Override
-        protected void onClose(Level p_155367_, BlockPos p_155368_, BlockState p_155369_) {
-            if (p_155369_.getBlock() instanceof ParachestBlock) {
-                playSound(p_155367_, p_155368_, SoundEvents.CHEST_CLOSE);
+        protected void onClose(@NonNull Level level, @NonNull BlockPos blockPos, @NonNull BlockState blockState) {
+            if (blockState.getBlock() instanceof ParachestBlock) {
+                playSound(level, blockPos, SoundEvents.CHEST_CLOSE);
             }
         }
 
         @Override
-        protected void openerCountChanged(Level level, BlockPos blockPos, BlockState blockState, int p_155364_, int p_155365_) {
-            ParachestBlockEntity.this.signalOpenCount(level, blockPos, blockState, p_155364_, p_155365_);
+        protected void openerCountChanged(@NonNull Level level, @NonNull BlockPos blockPos, @NonNull BlockState blockState, int eventId, int eventParam) {
+            ParachestBlockEntity.this.signalOpenCount(level, blockPos, blockState, eventId, eventParam);
         }
 
         @Override
@@ -218,6 +219,7 @@ public class ParachestBlockEntity extends BaseItemStorageBlockEntity implements 
 
     public void startOpen(ContainerUser containerUser) {
         if (!this.remove && !containerUser.getLivingEntity().isSpectator()) {
+            assert getLevel() != null;
             this.openersCounter
                     .incrementOpeners(
                             containerUser.getLivingEntity(), getLevel(), getBlockPos(), getBlockState(), containerUser.getContainerInteractionRange()
@@ -227,11 +229,13 @@ public class ParachestBlockEntity extends BaseItemStorageBlockEntity implements 
 
     public void stopOpen(ContainerUser containerUser) {
         if (!this.remove && !containerUser.getLivingEntity().isSpectator()) {
+            assert getLevel() != null;
             this.openersCounter.decrementOpeners(containerUser.getLivingEntity(), getLevel(), getBlockPos(), getBlockState());
         }
     }
 
     public List<ContainerUser> getEntitiesWithContainerOpen() {
+        assert getLevel() != null;
         return this.openersCounter.getEntitiesWithContainerOpen(getLevel(), getBlockPos());
     }
 

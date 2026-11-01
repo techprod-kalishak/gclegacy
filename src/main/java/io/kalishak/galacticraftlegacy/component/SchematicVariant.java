@@ -5,11 +5,12 @@
  * See LICENSE file for more details
  */
 
-package io.kalishak.galacticraftlegacy.registry;
+package io.kalishak.galacticraftlegacy.component;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import io.kalishak.galacticraftlegacy.registry.GalacticraftRegistries;
 import io.kalishak.galacticraftlegacy.world.item.FeatureTier;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponentGetter;
@@ -23,6 +24,7 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.TooltipProvider;
+import org.jspecify.annotations.NonNull;
 
 import java.util.function.Consumer;
 
@@ -48,7 +50,7 @@ public record SchematicVariant(int orderIndex, FeatureTier tier, Identifier asse
     );
 
     @Override
-    public void addToTooltip(Item.TooltipContext context, Consumer<Component> tooltipAdder, TooltipFlag flag, DataComponentGetter componentGetter) {
+    public void addToTooltip(Item.@NonNull TooltipContext context, Consumer<Component> tooltipAdder, @NonNull TooltipFlag flag, @NonNull DataComponentGetter componentGetter) {
         tooltipAdder.accept(this.title);
     }
 }

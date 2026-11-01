@@ -7,7 +7,7 @@
 
 package io.kalishak.galacticraftlegacy.client.gui.screens.recipebook;
 
-import io.kalishak.galacticraftlegacy.components.GalacticraftDataComponents;
+import io.kalishak.galacticraftlegacy.component.GalacticraftDataComponents;
 import io.kalishak.galacticraftlegacy.world.item.GalacticraftItems;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
@@ -18,6 +18,7 @@ import net.neoforged.neoforge.transfer.access.ItemAccess;
 import net.neoforged.neoforge.transfer.energy.EnergyHandler;
 import net.neoforged.neoforge.transfer.transaction.Transaction;
 
+@SuppressWarnings("unused")
 public interface EnergyRecipeBookComponent {
     static boolean hasEnergy(Slot slot) {
         ItemStack stack = slot.getItem();

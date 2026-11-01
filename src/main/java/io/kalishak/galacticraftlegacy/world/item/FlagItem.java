@@ -7,9 +7,9 @@
 
 package io.kalishak.galacticraftlegacy.world.item;
 
-import io.kalishak.galacticraftlegacy.components.GalacticraftDataComponents;
-import io.kalishak.galacticraftlegacy.components.flag.BuiltinFlagMaterials;
-import io.kalishak.galacticraftlegacy.components.flag.FlagData;
+import io.kalishak.galacticraftlegacy.component.GalacticraftDataComponents;
+import io.kalishak.galacticraftlegacy.component.flag.BuiltinFlagMaterials;
+import io.kalishak.galacticraftlegacy.component.flag.FlagData;
 import io.kalishak.galacticraftlegacy.world.entity.Flag;
 import io.kalishak.galacticraftlegacy.world.score.race.SpaceRaceHooks;
 import net.minecraft.server.level.ServerPlayer;
@@ -27,6 +27,7 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import org.jspecify.annotations.NonNull;
 
 import java.util.List;
 
@@ -36,7 +37,7 @@ public class FlagItem extends Item {
     }
 
     @Override
-    public InteractionResult use(Level level, Player player, InteractionHand hand) {
+    public @NonNull InteractionResult use(@NonNull Level level, Player player, @NonNull InteractionHand hand) {
         ItemStack itemstack = player.getItemInHand(hand);
         HitResult hitresult = getPlayerPOVHitResult(level, player, ClipContext.Fluid.ANY);
 

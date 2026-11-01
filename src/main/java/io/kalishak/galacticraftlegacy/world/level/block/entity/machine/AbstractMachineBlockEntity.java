@@ -9,7 +9,7 @@ package io.kalishak.galacticraftlegacy.world.level.block.entity.machine;
 
 import io.kalishak.galacticraftlegacy.attachment.GalacticraftAttachments;
 import io.kalishak.galacticraftlegacy.attachment.block.SyncedEnergyHandler;
-import io.kalishak.galacticraftlegacy.components.GalacticraftDataComponents;
+import io.kalishak.galacticraftlegacy.component.GalacticraftDataComponents;
 import io.kalishak.galacticraftlegacy.transfer.capability.fluid.TankWrapper;
 import io.kalishak.galacticraftlegacy.transfer.capability.fluid.WorldlyTankWrapper;
 import io.kalishak.galacticraftlegacy.transfer.node.NodeNetwork;
@@ -48,11 +48,13 @@ import net.neoforged.neoforge.transfer.energy.EnergyHandlerUtil;
 import net.neoforged.neoforge.transfer.energy.SimpleEnergyHandler;
 import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.neoforged.neoforge.transfer.transaction.Transaction;
+import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.SequencedCollection;
 
+@SuppressWarnings("unused")
 public abstract class AbstractMachineBlockEntity extends BaseItemStorageBlockEntity implements TransmitterBlockEntity, MachineInstance {
     public static final int BASIC_MACHINE_ENERGY_CAPACITY = 25000;
     public static final int BASIC_MACHINE_MAX_TRANSFER_RATE = 500;
@@ -198,9 +200,6 @@ public abstract class AbstractMachineBlockEntity extends BaseItemStorageBlockEnt
         return this.capacitor.getAmountAsInt() > getProperties().getEnergyExtractionRate();
     }
 
-    protected void onItemChange(int slot, ItemStack previousStack) {
-    }
-
     @Override
     protected int getSize() {
         return getProperties().getInventorySize();
@@ -287,7 +286,7 @@ public abstract class AbstractMachineBlockEntity extends BaseItemStorageBlockEnt
     }
 
     @Override
-    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
+    public @NonNull CompoundTag getUpdateTag(HolderLookup.@NonNull Provider registries) {
         return saveWithoutMetadata(registries);
     }
 

@@ -9,7 +9,7 @@ package io.kalishak.galacticraftlegacy.attachment.entity;
 
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import io.kalishak.galacticraftlegacy.components.GalacticraftDataComponents;
+import io.kalishak.galacticraftlegacy.component.GalacticraftDataComponents;
 import io.kalishak.galacticraftlegacy.transfer.entity.SpaceGearEquipment;
 import io.kalishak.galacticraftlegacy.world.entity.GearDropChances;
 import io.kalishak.galacticraftlegacy.world.entity.GearEquipmentSlot;
@@ -113,8 +113,8 @@ public class EntityGearInventory extends GearInventoryProvider {
     }
 
     @Override
-    public boolean mayBreath(LivingEntity livingEntity) {
-        return livingEntity.is(EntityTypeTags.UNDEAD) || super.mayBreath(livingEntity);
+    public boolean shouldSuffocate(LivingEntity livingEntity) {
+        return !livingEntity.is(EntityTypeTags.UNDEAD) && super.shouldSuffocate(livingEntity);
     }
 
     public void markGuaranteedDrop(GearEquipmentSlot slot) {
@@ -135,7 +135,7 @@ public class EntityGearInventory extends GearInventoryProvider {
                 boolean preserve = this.gearDropChances.isPreserved(slot);
 
                 if (cause != null && cause.getEntity() instanceof LivingEntity livingCause && livingCause.level() instanceof ServerLevel) {
-                    dropChance = EnchantmentHelper.processEquipmentDropChance(level, livingCause, cause, dropChance);
+                    dropChance = EnchantmentHelper.processEquipmentDropChance(level, livingCause, cause, dropChance, null);
                 }
 
                 if (!stack.isEmpty() && !EnchantmentHelper.has(stack, EnchantmentEffectComponents.PREVENT_EQUIPMENT_DROP)

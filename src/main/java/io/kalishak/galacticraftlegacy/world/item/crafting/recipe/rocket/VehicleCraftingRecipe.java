@@ -9,7 +9,7 @@ package io.kalishak.galacticraftlegacy.world.item.crafting.recipe.rocket;
 
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import io.kalishak.galacticraftlegacy.components.GalacticraftDataComponents;
+import io.kalishak.galacticraftlegacy.component.GalacticraftDataComponents;
 import io.kalishak.galacticraftlegacy.data.GalacticraftTags;
 import io.kalishak.galacticraftlegacy.registry.GalacticraftRegistries;
 import io.kalishak.galacticraftlegacy.transfer.ResourcefulHelper;
@@ -29,6 +29,7 @@ import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.item.crafting.display.RecipeDisplay;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.transfer.item.ItemUtil;
+import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
 import java.util.List;
@@ -75,7 +76,7 @@ public class VehicleCraftingRecipe implements Recipe<ResourceHandlerInput> {
     }
 
     @Override
-    public boolean matches(ResourceHandlerInput resourceHandlerInput, Level level) {
+    public boolean matches(ResourceHandlerInput resourceHandlerInput, @NonNull Level level) {
         for (int i = 0; i < resourceHandlerInput.size(); i++) {
             VehicleCraftingEntry entry = getDataRecipe(level).inputSlots().get(i);
             ItemStack stack = resourceHandlerInput.getItem(i);
@@ -89,7 +90,7 @@ public class VehicleCraftingRecipe implements Recipe<ResourceHandlerInput> {
     }
 
     @Override
-    public ItemStack assemble(ResourceHandlerInput resourceHandlerInput) {
+    public @NonNull ItemStack assemble(ResourceHandlerInput resourceHandlerInput) {
         int storage = ResourcefulHelper.asList(resourceHandlerInput.delegate(), ItemUtil::getStack).stream()
                 .filter(stack -> stack.is(GalacticraftTags.Items.VEHICLE_INGREDIENT_STORAGE))
                 .mapToInt(_ -> 1)
@@ -109,22 +110,22 @@ public class VehicleCraftingRecipe implements Recipe<ResourceHandlerInput> {
     }
 
     @Override
-    public String group() {
+    public @NonNull String group() {
         return this.bookInfo.group;
     }
 
     @Override
-    public RecipeSerializer<VehicleCraftingRecipe> getSerializer() {
+    public @NonNull RecipeSerializer<VehicleCraftingRecipe> getSerializer() {
         return GalacticraftRecipeSerializer.VEHICLE_CRAFTING.get();
     }
 
     @Override
-    public RecipeType<VehicleCraftingRecipe> getType() {
+    public @NonNull RecipeType<VehicleCraftingRecipe> getType() {
         return GalacticraftRecipeType.VEHICLE_CRAFTING.get();
     }
 
     @Override
-    public PlacementInfo placementInfo() {
+    public @NonNull PlacementInfo placementInfo() {
         if (this.placementInfo == null) {
             this.placementInfo = PlacementInfo.create(this.ingredients);
         }
@@ -133,12 +134,12 @@ public class VehicleCraftingRecipe implements Recipe<ResourceHandlerInput> {
     }
 
     @Override
-    public List<RecipeDisplay> display() {
+    public @NonNull List<RecipeDisplay> display() {
         return Recipe.super.display();
     }
 
     @Override
-    public RecipeBookCategory recipeBookCategory() {
+    public @NonNull RecipeBookCategory recipeBookCategory() {
         return switch (this.bookInfo.category) {
             case MISC -> GalacticraftRecipeBookCategories.CRAFTING_MISC_VEHICLES.get();
             case ROCKET -> GalacticraftRecipeBookCategories.CRAFTING_ROCKET.get();

@@ -9,7 +9,7 @@ package io.kalishak.galacticraftlegacy.world.item.component;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import io.kalishak.galacticraftlegacy.components.GalacticraftDataComponents;
+import io.kalishak.galacticraftlegacy.component.GalacticraftDataComponents;
 import io.kalishak.galacticraftlegacy.world.item.GalacticraftItems;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.CommonComponents;
@@ -27,6 +27,7 @@ import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.component.Consumable;
 import net.minecraft.world.item.component.ConsumableListener;
 import net.minecraft.world.level.Level;
+import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
 import java.util.Optional;
@@ -44,7 +45,7 @@ public record CannedFood(Component title, FoodProperties foodProperties, Consuma
         public static final StreamCodec<RegistryFriendlyByteBuf, CannedComponent> STREAM_CODEC = ItemStackTemplate.STREAM_CODEC.apply(ByteBufCodecs::optional).map(CannedComponent::new, CannedComponent::additionalRemainder);
 
         @Override
-        public void onConsume(Level level, LivingEntity user, ItemStack stack, Consumable consumable) {
+        public void onConsume(@NonNull Level level, LivingEntity user, @NonNull ItemStack stack, @NonNull Consumable consumable) {
             RandomSource random = user.getRandom();
             if (user instanceof Player player && this.additionalRemainder.isPresent()) {
                 if (random.nextFloat() < 0.2621379F) {

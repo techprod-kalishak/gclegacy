@@ -8,8 +8,8 @@
 package io.kalishak.galacticraftlegacy.world.entity;
 
 import io.kalishak.galacticraftlegacy.attachment.GalacticraftAttachments;
-import io.kalishak.galacticraftlegacy.components.GalacticraftDataComponents;
-import io.kalishak.galacticraftlegacy.components.flag.FlagData;
+import io.kalishak.galacticraftlegacy.component.GalacticraftDataComponents;
+import io.kalishak.galacticraftlegacy.component.flag.FlagData;
 import io.kalishak.galacticraftlegacy.world.item.GalacticraftItems;
 import net.minecraft.core.component.DataComponentGetter;
 import net.minecraft.core.component.DataComponentType;
@@ -108,18 +108,18 @@ public class Flag extends Entity {
     }
 
     @Override
-    public @Nullable <T> T get(DataComponentType<? extends T> type) {
-        return type == GalacticraftDataComponents.FLAG_DATA.get() ? castComponentValue((DataComponentType<T>) type, getFlagData()) : super.get(type);
+    public @Nullable <T> T get(@NonNull DataComponentType<? extends T> type) {
+        return type == GalacticraftDataComponents.FLAG_DATA.get() ? castComponentValue(type, getFlagData()) : super.get(type);
     }
 
     @Override
-    protected void applyImplicitComponents(DataComponentGetter components) {
+    protected void applyImplicitComponents(@NonNull DataComponentGetter components) {
         applyImplicitComponentIfPresent(components, GalacticraftDataComponents.FLAG_DATA.get());
         super.applyImplicitComponents(components);
     }
 
     @Override
-    protected <T> boolean applyImplicitComponent(DataComponentType<T> type, T value) {
+    protected <T> boolean applyImplicitComponent(@NonNull DataComponentType<T> type, @NonNull T value) {
         if (type == GalacticraftDataComponents.FLAG_DATA.get()) {
             setFlagData(castComponentValue(GalacticraftDataComponents.FLAG_DATA.get(), value));
             return true;
@@ -129,7 +129,7 @@ public class Flag extends Entity {
     }
 
     @Override
-    public boolean hurtServer(ServerLevel level, DamageSource damageSource, float amount) {
+    public boolean hurtServer(@NonNull ServerLevel level, @NonNull DamageSource damageSource, float amount) {
         if (isRemoved()) {
             return false;
         } else if (!level.getGameRules().get(GameRules.MOB_GRIEFING) && damageSource.getEntity() instanceof Mob) {

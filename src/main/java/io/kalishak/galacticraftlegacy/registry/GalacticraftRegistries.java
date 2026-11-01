@@ -8,9 +8,11 @@
 package io.kalishak.galacticraftlegacy.registry;
 
 import com.mojang.serialization.MapCodec;
-import io.kalishak.galacticraftlegacy.components.flag.BuiltinFlagMaterials;
-import io.kalishak.galacticraftlegacy.components.flag.FlagMaterial;
-import io.kalishak.galacticraftlegacy.components.flag.FlagTypeProvider;
+import io.kalishak.galacticraftlegacy.component.ChecklistEntry;
+import io.kalishak.galacticraftlegacy.component.SchematicVariant;
+import io.kalishak.galacticraftlegacy.component.flag.BuiltinFlagMaterials;
+import io.kalishak.galacticraftlegacy.component.flag.FlagMaterial;
+import io.kalishak.galacticraftlegacy.component.flag.FlagTypeProvider;
 import io.kalishak.galacticraftlegacy.galaxies.celestial.Celestial;
 import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.transfer.node.NodeNetwork;
@@ -47,7 +49,7 @@ public class GalacticraftRegistries {
                 .key(Keys.CHECKLIST)
                 .codec(ChecklistEntry.DIRECT_CODEC)
                 .networkCodec(ChecklistEntry.DIRECT_CODEC)
-                .configurator(config -> config.sync(true).defaultKey(Checklist.EQUIP_OXYGEN_SUIT))
+                .configurator(config -> config.sync(true).defaultKey(BuiltinChecklist.EQUIP_OXYGEN_SUIT))
         );
         event.<FlagMaterial>worldRegistry(builder -> builder
                 .key(Keys.FLAG_MATERIAL)
@@ -59,7 +61,7 @@ public class GalacticraftRegistries {
                 .key(Keys.SCHEMATIC)
                 .codec(SchematicVariant.DIRECT_CODEC)
                 .networkCodec(SchematicVariant.DIRECT_CODEC)
-                .configurator(config -> config.sync(true).defaultKey(SchematicVariants.TIER_2_ROCKET))
+                .configurator(config -> config.sync(true).defaultKey(BuiltinSchematicVariants.TIER_2_ROCKET))
         );
 
         event.worldRegistry(Keys.SPACE_STATION_RECIPE, SpaceStationRecipe.DIRECT_CODEC, SpaceStationRecipe.DIRECT_CODEC);

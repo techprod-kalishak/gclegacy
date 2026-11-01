@@ -15,7 +15,7 @@ import io.kalishak.galacticraftlegacy.client.data.GalacticraftSpritesProvider;
 import io.kalishak.galacticraftlegacy.client.model.FlagModel;
 import io.kalishak.galacticraftlegacy.client.model.geom.GalacticraftModelLayers;
 import io.kalishak.galacticraftlegacy.client.renderer.entity.state.FlagRenderState;
-import io.kalishak.galacticraftlegacy.components.flag.FlagTypeProvider;
+import io.kalishak.galacticraftlegacy.component.flag.FlagTypeProvider;
 import io.kalishak.galacticraftlegacy.world.entity.Flag;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.EntityRenderer;
@@ -27,6 +27,7 @@ import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Unit;
 import net.minecraft.world.phys.AABB;
+import org.jspecify.annotations.NonNull;
 
 public class FlagRenderer extends EntityRenderer<Flag, FlagRenderState> {
     public static final Identifier TEXTURES = Identifier.fromNamespaceAndPath(Galacticraft.MODID, "textures/entity/flag.png");
@@ -40,12 +41,12 @@ public class FlagRenderer extends EntityRenderer<Flag, FlagRenderState> {
     }
 
     @Override
-    public FlagRenderState createRenderState() {
+    public @NonNull FlagRenderState createRenderState() {
         return new FlagRenderState();
     }
 
     @Override
-    public void extractRenderState(Flag flag, FlagRenderState reusedState, float partialTick) {
+    public void extractRenderState(@NonNull Flag flag, @NonNull FlagRenderState reusedState, float partialTick) {
         super.extractRenderState(flag, reusedState, partialTick);
         reusedState.flagData = flag.getFlagData().extractProvider();
         reusedState.id = flag.getId();
@@ -54,7 +55,7 @@ public class FlagRenderer extends EntityRenderer<Flag, FlagRenderState> {
     }
 
     @Override
-    public void submit(FlagRenderState renderState, PoseStack poseStack, SubmitNodeCollector nodeCollector, CameraRenderState cameraRenderState) {
+    public void submit(FlagRenderState renderState, PoseStack poseStack, SubmitNodeCollector nodeCollector, @NonNull CameraRenderState cameraRenderState) {
         long seed = (renderState.id * 493286711L);
         seed *= seed * 4392167121L + seed * 98761L;
         float seedX = (((seed >> 16 & 7L) + 0.5F) / 8.0F - 0.5F) * 0.004F;
@@ -72,7 +73,7 @@ public class FlagRenderer extends EntityRenderer<Flag, FlagRenderState> {
     }
 
     @Override
-    protected AABB getBoundingBoxForCulling(Flag entity, float partialTicks) {
+    protected @NonNull AABB getBoundingBoxForCulling(Flag entity, float partialTicks) {
         return entity.getBoundingBox().inflate(1.0D, 2.0D, 1.0D);
     }
 
@@ -109,18 +110,18 @@ public class FlagRenderer extends EntityRenderer<Flag, FlagRenderState> {
 
                 int color = FlagTypeProvider.toColor(colors[i][j]);
 
-                vertex(pose, buffer, i, j, i / 24.0F + 0.0F / 24.0F, j / 24.0F + 0.0F / 24.0F + offset, offset, 0, 0, 0, lightCoords, color);
-                vertex(pose, buffer, i, j, i / 24.0F + 0.0F / 24.0F, j / 24.0F + 0.0F / 24.0F + offset, offset, 0, 1, 0, lightCoords, color);
-                vertex(pose, buffer, i, j, i / 24.0F + 1.0F / 24.0F, j / 24.0F + 1.0F / 24.0F + offsetAhead, offsetAhead, 1, 1, 0, lightCoords, color);
+                vertex(pose, buffer, i, j, i / 24.0F + 0.0F / 24.0F, j / 24.0F + 0.0F / 24.0F + offset, offset, 0, 0, lightCoords, color);
+                vertex(pose, buffer, i, j, i / 24.0F + 0.0F / 24.0F, j / 24.0F + 0.0F / 24.0F + offset, offset, 0, 1, lightCoords, color);
+                vertex(pose, buffer, i, j, i / 24.0F + 1.0F / 24.0F, j / 24.0F + 1.0F / 24.0F + offsetAhead, offsetAhead, 1, 1, lightCoords, color);
 
-                vertex(pose, buffer, i, j, i / 24.0F + 0.0F / 24.0F, j / 24.0F + 0.0F / 24.0F + offset, offset, 0, 0, 0, lightCoords, color);
-                vertex(pose, buffer, i, j, i / 24.0F + 1.0F / 24.0F, j / 24.0F + 1.0F / 24.0F + offsetAhead, offsetAhead, 1, 1, 0, lightCoords, color);
-                vertex(pose, buffer, i, j, i / 24.0F + 1.0F / 24.0F, j / 24.0F + 0.0F / 24.0F + offsetAhead, offsetAhead, 1, 0, 0, lightCoords, color);
+                vertex(pose, buffer, i, j, i / 24.0F + 0.0F / 24.0F, j / 24.0F + 0.0F / 24.0F + offset, offset, 0, 0, lightCoords, color);
+                vertex(pose, buffer, i, j, i / 24.0F + 1.0F / 24.0F, j / 24.0F + 1.0F / 24.0F + offsetAhead, offsetAhead, 1, 1, lightCoords, color);
+                vertex(pose, buffer, i, j, i / 24.0F + 1.0F / 24.0F, j / 24.0F + 0.0F / 24.0F + offsetAhead, offsetAhead, 1, 0, lightCoords, color);
             }
         }
     }
 
-    private static void vertex(PoseStack.Pose pose, VertexConsumer buffer, float x, float y, float u, float v, float z, int nx, int ny, int nz, int lightCoords, int color) {
-        buffer.addVertex(pose, x, y, z).setColor(color).setUv(u, v).setOverlay(OverlayTexture.NO_OVERLAY).setLight(lightCoords).setNormal(pose, nx, ny, nz);
+    private static void vertex(PoseStack.Pose pose, VertexConsumer buffer, float x, float y, float u, float v, float z, int nx, int ny, int lightCoords, int color) {
+        buffer.addVertex(pose, x, y, z).setColor(color).setUv(u, v).setOverlay(OverlayTexture.NO_OVERLAY).setLight(lightCoords).setNormal(pose, nx, ny, 0);
     }
 }

@@ -7,21 +7,21 @@
 
 package io.kalishak.galacticraftlegacy.world.inventory.workbench;
 
+import io.kalishak.galacticraftlegacy.component.SchematicVariant;
 import io.kalishak.galacticraftlegacy.references.Constants;
+import io.kalishak.galacticraftlegacy.registry.BuiltinSchematicVariants;
 import io.kalishak.galacticraftlegacy.registry.GalacticraftRegistries;
-import io.kalishak.galacticraftlegacy.registry.SchematicVariant;
-import io.kalishak.galacticraftlegacy.registry.SchematicVariants;
 import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.rocket.VehicleCraftingDataRecipe;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 
 public class VehicleCraftingPages {
-    public static final ResourceKey<VehicleCraftingPage> TIER_2_ROCKET = fromSchematic(SchematicVariants.TIER_2_ROCKET);
-    public static final ResourceKey<VehicleCraftingPage> CARGO_ROCKET = fromSchematic(SchematicVariants.CARGO_ROCKET);
-    public static final ResourceKey<VehicleCraftingPage> TIER_3_ROCKET = fromSchematic(SchematicVariants.TIER_3_ROCKET);
-    public static final ResourceKey<VehicleCraftingPage> MOON_BUGGY = fromSchematic(SchematicVariants.MOON_BUGGY);
-    public static final ResourceKey<VehicleCraftingPage> ASTRO_MINER = fromSchematic(SchematicVariants.ASTRO_MINER);
+    public static final ResourceKey<VehicleCraftingPage> TIER_2_ROCKET = fromSchematic(BuiltinSchematicVariants.TIER_2_ROCKET);
+    public static final ResourceKey<VehicleCraftingPage> CARGO_ROCKET = fromSchematic(BuiltinSchematicVariants.CARGO_ROCKET);
+    public static final ResourceKey<VehicleCraftingPage> TIER_3_ROCKET = fromSchematic(BuiltinSchematicVariants.TIER_3_ROCKET);
+    public static final ResourceKey<VehicleCraftingPage> MOON_BUGGY = fromSchematic(BuiltinSchematicVariants.MOON_BUGGY);
+    public static final ResourceKey<VehicleCraftingPage> ASTRO_MINER = fromSchematic(BuiltinSchematicVariants.ASTRO_MINER);
 
     public static void bootstrap(BootstrapContext<VehicleCraftingPage> cxt) {
         HolderGetter<SchematicVariant> schematics = cxt.lookup(GalacticraftRegistries.Keys.SCHEMATIC);

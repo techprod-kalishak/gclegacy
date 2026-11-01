@@ -7,8 +7,7 @@
 
 package io.kalishak.galacticraftlegacy.world.item.gear;
 
-import io.kalishak.galacticraftlegacy.attachment.entity.GearInventoryProvider;
-import io.kalishak.galacticraftlegacy.components.GalacticraftDataComponents;
+import io.kalishak.galacticraftlegacy.component.GalacticraftDataComponents;
 import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.world.entity.GearEquipmentSlot;
 import io.kalishak.galacticraftlegacy.world.entity.GearEquipmentSlotGroup;
@@ -89,16 +88,10 @@ public  class GearItem extends Item {
 
         if (equippable != null && equippable.swappable()) {
             try (Transaction tx = Transaction.open(null)) {
-                return equippable.swapWithGearEquipmentSlot(itemstack, player, tx);
+                return equippable.swapWithGearEquipmentSlot(itemstack, player);
             }
         }
 
         return super.use(level, player, hand);
-    }
-
-    protected boolean isEquipped(ItemStack stack, GearInventoryProvider gearEquipment) {
-        GearEquippable equippable = stack.get(GalacticraftDataComponents.GEAR_EQUIPPABLE);
-
-        return equippable != null && !gearEquipment.getGearEquipment().get(equippable.gearSlot()).isEmpty();
     }
 }

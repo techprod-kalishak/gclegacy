@@ -14,9 +14,9 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.DynamicCommandExceptionType;
 import com.mojang.brigadier.suggestion.Suggestions;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
+import io.kalishak.galacticraftlegacy.component.SchematicVariant;
+import io.kalishak.galacticraftlegacy.registry.BuiltinSchematicVariants;
 import io.kalishak.galacticraftlegacy.registry.GalacticraftRegistries;
-import io.kalishak.galacticraftlegacy.registry.SchematicVariant;
-import io.kalishak.galacticraftlegacy.registry.SchematicVariants;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.SharedSuggestionProvider;
 import net.minecraft.core.Holder;
@@ -30,7 +30,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.stream.Stream;
 
 public class SchematicArgument implements ArgumentType<Identifier> {
-    private static final Collection<String> EXAMPLES = Stream.of(SchematicVariants.TIER_2_ROCKET, SchematicVariants.MOON_BUGGY)
+    private static final Collection<String> EXAMPLES = Stream.of(BuiltinSchematicVariants.TIER_2_ROCKET, BuiltinSchematicVariants.MOON_BUGGY)
             .map(key -> key.identifier().toString())
             .toList();
     private static final DynamicCommandExceptionType ERROR_INVALID_VALUE = new DynamicCommandExceptionType(

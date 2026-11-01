@@ -8,11 +8,11 @@
 package io.kalishak.galacticraftlegacy.world.item;
 
 import io.kalishak.galacticraftlegacy.Galacticraft;
-import io.kalishak.galacticraftlegacy.components.GalacticraftDataComponents;
+import io.kalishak.galacticraftlegacy.component.GalacticraftDataComponents;
 import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.references.GalacticraftComponents;
 import io.kalishak.galacticraftlegacy.references.GalacticraftItemIds;
-import io.kalishak.galacticraftlegacy.registry.SchematicVariants;
+import io.kalishak.galacticraftlegacy.registry.BuiltinSchematicVariants;
 import io.kalishak.galacticraftlegacy.registry.deferred.DeferredItemRegister;
 import io.kalishak.galacticraftlegacy.transfer.capability.fluid.ItemAccessFluidTank;
 import io.kalishak.galacticraftlegacy.world.entity.GalacticraftEntityType;
@@ -247,7 +247,7 @@ public final class GalacticraftItems {
             SchematicItem::new,
             properties -> properties
                     .stacksTo(1)
-                    .delayedHolderComponent(GalacticraftDataComponents.SCHEMATIC.get(), SchematicVariants.TIER_2_ROCKET)
+                    .delayedHolderComponent(GalacticraftDataComponents.SCHEMATIC.get(), BuiltinSchematicVariants.TIER_2_ROCKET)
     );
     public static final DeferredItem<FluidTankItem> FLUID_CANISTER = REGISTRY.registerItem(
             GalacticraftItemIds.FLUID_CANISTER,

@@ -11,6 +11,7 @@ import com.mojang.serialization.Codec;
 import io.kalishak.galacticraftlegacy.codec.SerializableEnum;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.network.codec.StreamCodec;
+import org.jspecify.annotations.NonNull;
 
 public enum FabricatingBookCategory implements SerializableEnum {
     BASIC(0, "basic"),
@@ -34,7 +35,7 @@ public enum FabricatingBookCategory implements SerializableEnum {
     }
 
     @Override
-    public String getSerializedName() {
+    public @NonNull String getSerializedName() {
         return this.name;
     }
 }

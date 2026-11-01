@@ -5,13 +5,12 @@
  * See LICENSE file for more details
  */
 
-package io.kalishak.galacticraftlegacy.components.flag;
+package io.kalishak.galacticraftlegacy.component.flag;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.netty.buffer.ByteBuf;
-import net.minecraft.client.resources.model.sprite.SpriteGetter;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.util.ARGB;
@@ -21,6 +20,7 @@ import java.awt.image.BufferedImage;
 import java.nio.ByteBuffer;
 import java.util.Arrays;
 
+@SuppressWarnings("unused")
 public class MutableFlagTypeProvider extends AbstractFlagProvider {
     public static final MapCodec<MutableFlagTypeProvider> MAP_CODEC = RecordCodecBuilder.mapCodec(
             i -> i.group(
@@ -58,21 +58,6 @@ public class MutableFlagTypeProvider extends AbstractFlagProvider {
         }
 
         return new MutableFlagTypeProvider(width, height, color);
-    }
-
-    @Override
-    public int width() {
-        return this.width;
-    }
-
-    @Override
-    public int height() {
-        return this.height;
-    }
-
-    @Override
-    public byte[][][] resolveColors(SpriteGetter spriteGetter) {
-        return this.colors;
     }
 
     public BufferedImage toBufferedImage() {

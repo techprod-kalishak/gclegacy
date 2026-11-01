@@ -46,7 +46,7 @@ public class OxygenCollectorBlockEntity extends AbstractOxygenBlockEntity {
         registerFluidCapability(GalacticraftBlockEntityType.OXYGEN_COLLECTOR.get(), event);
     }
 
-    public static void serverTick(ServerLevel level, BlockPos worldPosition, BlockState blockState, OxygenCollectorBlockEntity blockEntity) {
+    public static void serverTick(ServerLevel level, BlockPos worldPosition, BlockState ignored, OxygenCollectorBlockEntity blockEntity) {
         extractBattery(blockEntity, false, 25, null);
         produce(level, worldPosition, blockEntity, Direction.EAST, null);
 
@@ -57,7 +57,7 @@ public class OxygenCollectorBlockEntity extends AbstractOxygenBlockEntity {
                 float nearbyLeaves = 0;
 
                 if (!blockEntity.isInitialised) {
-                    blockEntity.noAtmosphericOxygen = !CelestialBodyInstance.getFromLevel(level).isBreathable();
+                    blockEntity.noAtmosphericOxygen = CelestialBodyInstance.getFromLevel(level).hasNoOxygen();
                     blockEntity.isInitialised = true;
                 }
 

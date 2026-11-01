@@ -9,6 +9,7 @@ package io.kalishak.galacticraftlegacy.config.values;
 
 import com.mojang.serialization.Codec;
 import net.minecraft.util.StringRepresentable;
+import org.jspecify.annotations.NonNull;
 
 public enum GameDifficulty implements StringRepresentable {
     NORMAL("normal"),
@@ -24,11 +25,7 @@ public enum GameDifficulty implements StringRepresentable {
     }
 
     @Override
-    public String getSerializedName() {
+    public @NonNull String getSerializedName() {
         return this.name;
-    }
-
-    public boolean requireFlags() {
-        return this == ADVENTURE;
     }
 }

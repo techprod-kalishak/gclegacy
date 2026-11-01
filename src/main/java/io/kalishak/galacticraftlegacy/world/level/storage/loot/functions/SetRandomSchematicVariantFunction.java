@@ -9,10 +9,10 @@ package io.kalishak.galacticraftlegacy.world.level.storage.loot.functions;
 
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import io.kalishak.galacticraftlegacy.components.GalacticraftDataComponents;
+import io.kalishak.galacticraftlegacy.component.GalacticraftDataComponents;
+import io.kalishak.galacticraftlegacy.component.SchematicVariant;
+import io.kalishak.galacticraftlegacy.registry.BuiltinSchematicVariants;
 import io.kalishak.galacticraftlegacy.registry.GalacticraftRegistries;
-import io.kalishak.galacticraftlegacy.registry.SchematicVariant;
-import io.kalishak.galacticraftlegacy.registry.SchematicVariants;
 import io.kalishak.galacticraftlegacy.world.item.FeatureTier;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
@@ -21,6 +21,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.functions.LootItemConditionalFunction;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import org.jspecify.annotations.NonNull;
 
 import java.util.List;
 import java.util.Optional;
@@ -32,24 +33,26 @@ public class SetRandomSchematicVariantFunction extends LootItemConditionalFuncti
     ).apply(instance, SetRandomSchematicVariantFunction::new));
     private final FeatureTier featureTier;
 
+    @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
     private SetRandomSchematicVariantFunction(Optional<Holder<LootItemCondition>> condition, FeatureTier featureTier) {
         super(condition);
         this.featureTier = featureTier;
     }
 
+    @SuppressWarnings("unused")
     public LootItemConditionalFunction.Builder<?> randomTiered(FeatureTier tier) {
         return simpleBuilder(i -> new SetRandomSchematicVariantFunction(i, tier));
     }
 
     @Override
-    public MapCodec<SetRandomSchematicVariantFunction> codec() {
+    public @NonNull MapCodec<SetRandomSchematicVariantFunction> codec() {
         return MAP_CODEC;
     }
 
     @Override
-    protected ItemStack run(ItemStack itemStack, LootContext context) {
+    protected @NonNull ItemStack run(@NonNull ItemStack itemStack, LootContext context) {
         HolderGetter<SchematicVariant> variants = context.getResolver().lookupOrThrow(GalacticraftRegistries.Keys.SCHEMATIC);
-        HolderSet<SchematicVariant> holders = HolderSet.direct(variants::getOrThrow, SchematicVariants.getVariants());
+        HolderSet<SchematicVariant> holders = HolderSet.direct(variants::getOrThrow, BuiltinSchematicVariants.getVariants());
         List<Holder<SchematicVariant>> candidates = holders
                 .stream()
                 .filter(holder -> holder.value().tier() == this.featureTier)

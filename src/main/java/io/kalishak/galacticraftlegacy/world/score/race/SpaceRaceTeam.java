@@ -11,10 +11,10 @@ import com.google.common.collect.Sets;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.kalishak.galacticraftlegacy.attachment.entity.Schematics;
-import io.kalishak.galacticraftlegacy.components.flag.FlagData;
+import io.kalishak.galacticraftlegacy.component.SchematicVariant;
+import io.kalishak.galacticraftlegacy.component.flag.FlagData;
 import io.kalishak.galacticraftlegacy.galaxies.celestial.Celestial;
 import io.kalishak.galacticraftlegacy.registry.GalacticraftRegistries;
-import io.kalishak.galacticraftlegacy.registry.SchematicVariant;
 import it.unimi.dsi.fastutil.objects.Object2LongMap;
 import it.unimi.dsi.fastutil.objects.Object2LongMaps;
 import it.unimi.dsi.fastutil.objects.Object2LongOpenHashMap;
@@ -23,6 +23,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.scores.Team;
 import net.minecraft.world.scores.TeamColor;
+import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
 import java.util.*;
@@ -80,7 +81,7 @@ public class SpaceRaceTeam extends Team {
     }
 
     @Override
-    public String getName() {
+    public @NonNull String getName() {
         return this.name;
     }
 
@@ -122,14 +123,13 @@ public class SpaceRaceTeam extends Team {
     }
 
     @Override
-    public Collection<String> getPlayers() {
+    public @NonNull Collection<String> getPlayers() {
         return this.players;
     }
 
     @Override
-    public MutableComponent getFormattedName(Component teamMemberName) {
-        MutableComponent result = Component.empty().append(this.playerPrefix).append(teamMemberName).append(this.playerSuffix);
-        return getFormattedName(result);
+    public @NonNull MutableComponent getFormattedName(@NonNull Component teamMemberName) {
+        return Component.empty().append(this.playerPrefix).append(teamMemberName).append(this.playerSuffix);
     }
 
     public static MutableComponent formatNameForTeam(@Nullable Team team, Component name) {
@@ -157,12 +157,12 @@ public class SpaceRaceTeam extends Team {
     }
 
     @Override
-    public Team.Visibility getNameTagVisibility() {
+    public Team.@NonNull Visibility getNameTagVisibility() {
         return this.nameTagVisibility;
     }
 
     @Override
-    public Team.Visibility getDeathMessageVisibility() {
+    public Team.@NonNull Visibility getDeathMessageVisibility() {
         return this.deathMessageVisibility;
     }
 
@@ -177,7 +177,7 @@ public class SpaceRaceTeam extends Team {
     }
 
     @Override
-    public Team.CollisionRule getCollisionRule() {
+    public Team.@NonNull CollisionRule getCollisionRule() {
         return this.collisionRule;
     }
 
@@ -220,7 +220,7 @@ public class SpaceRaceTeam extends Team {
     }
 
     @Override
-    public Optional<TeamColor> getColor() {
+    public @NonNull Optional<TeamColor> getColor() {
         return Optional.ofNullable(this.color);
     }
 

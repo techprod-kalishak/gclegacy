@@ -1,4 +1,4 @@
-package io.kalishak.galacticraftlegacy.components.flag;
+package io.kalishak.galacticraftlegacy.component.flag;
 
 import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.registry.GalacticraftRegistries;
@@ -10,7 +10,6 @@ import net.minecraft.util.Util;
 
 public class BuiltinFlagMaterials {
     public static final ResourceKey<FlagMaterial> CLASSIC = key("classic");
-    public static final ResourceKey<FlagMaterial> DEFAULT_MUTABLE = key("default_mutable");
     public static final ResourceKey<FlagMaterial> NASA = key("nasa");
     public static final ResourceKey<FlagMaterial> EARTH = key("earth");
 

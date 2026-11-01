@@ -7,7 +7,7 @@
 
 package io.kalishak.galacticraftlegacy.world.level.block;
 
-import io.kalishak.galacticraftlegacy.components.GalacticraftDataComponents;
+import io.kalishak.galacticraftlegacy.component.GalacticraftDataComponents;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.FluidTankBlockEntity;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityType;
 import net.minecraft.core.BlockPos;
@@ -37,6 +37,7 @@ import net.neoforged.neoforge.fluids.SimpleFluidContent;
 import net.neoforged.neoforge.transfer.ResourceHandler;
 import net.neoforged.neoforge.transfer.access.ItemAccess;
 import net.neoforged.neoforge.transfer.fluid.FluidResource;
+import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
 public class FluidTankBlock extends BaseEntityBlock {
@@ -50,12 +51,12 @@ public class FluidTankBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+    protected @NonNull VoxelShape getShape(@NonNull BlockState state, @NonNull BlockGetter level, @NonNull BlockPos pos, @NonNull CollisionContext context) {
         return SHAPE;
     }
 
     @Override
-    public boolean hidesNeighborFace(BlockGetter level, BlockPos pos, BlockState state, BlockState neighborState, Direction dir) {
+    public boolean hidesNeighborFace(@NonNull BlockGetter level, @NonNull BlockPos pos, @NonNull BlockState state, @NonNull BlockState neighborState, Direction dir) {
         if (dir.getAxis().isHorizontal()) {
             return false;
         }
@@ -70,22 +71,22 @@ public class FluidTankBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected boolean skipRendering(BlockState state, BlockState neighborState, Direction direction) {
+    protected boolean skipRendering(@NonNull BlockState state, BlockState neighborState, @NonNull Direction direction) {
         return neighborState.is(this);
     }
 
     @Override
-    protected VoxelShape getVisualShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+    protected @NonNull VoxelShape getVisualShape(@NonNull BlockState state, @NonNull BlockGetter level, @NonNull BlockPos pos, @NonNull CollisionContext context) {
         return Shapes.empty();
     }
 
     @Override
-    protected float getShadeBrightness(BlockState state, BlockGetter level, BlockPos pos) {
+    protected float getShadeBrightness(@NonNull BlockState state, @NonNull BlockGetter level, @NonNull BlockPos pos) {
         return 1.0F;
     }
 
     @Override
-    protected boolean propagatesSkylightDown(BlockState state) {
+    protected boolean propagatesSkylightDown(@NonNull BlockState state) {
         return true;
     }
 
@@ -109,7 +110,7 @@ public class FluidTankBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected BlockState updateShape(BlockState state, LevelReader level, ScheduledTickAccess ticks, BlockPos pos, Direction directionToNeighbour, BlockPos neighbourPos, BlockState neighbourState, RandomSource random) {
+    protected @NonNull BlockState updateShape(@NonNull BlockState state, LevelReader level, @NonNull ScheduledTickAccess ticks, BlockPos pos, @NonNull Direction directionToNeighbour, @NonNull BlockPos neighbourPos, @NonNull BlockState neighbourState, @NonNull RandomSource random) {
         BlockState stateAbove = level.getBlockState(pos.above());
         if (stateAbove.isAir()) {
             state = state.setValue(UP_CONNECTION, false);
@@ -128,7 +129,7 @@ public class FluidTankBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected InteractionResult useItemOn(ItemStack itemStack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+    protected @NonNull InteractionResult useItemOn(ItemStack itemStack, @NonNull BlockState state, @NonNull Level level, @NonNull BlockPos pos, @NonNull Player player, @NonNull InteractionHand hand, @NonNull BlockHitResult hitResult) {
         if (itemStack.isEmpty()) {
             return InteractionResult.PASS;
         }
@@ -147,13 +148,14 @@ public class FluidTankBlock extends BaseEntityBlock {
     }
 
     @Override
-    public ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state, boolean includeData, Player player) {
+    public @NonNull ItemStack getCloneItemStack(@NonNull LevelReader level, @NonNull BlockPos pos, @NonNull BlockState state, boolean includeData, @NonNull Player player) {
         ItemStack stack = super.getCloneItemStack(level, pos, state, includeData, player);
 
         if (includeData) {
-            level.getBlockEntity(pos, GalacticraftBlockEntityType.FLUID_TANK.get()).ifPresent(tank -> {
-                stack.set(GalacticraftDataComponents.FLUID_TANK, SimpleFluidContent.copyOf(tank.getFluidStack()));
-            });
+            level.getBlockEntity(
+                    pos,
+                    GalacticraftBlockEntityType.FLUID_TANK.get()
+            ).ifPresent(tank -> stack.set(GalacticraftDataComponents.FLUID_TANK, SimpleFluidContent.copyOf(tank.getFluidStack())));
         }
 
         return stack;
@@ -165,7 +167,7 @@ public class FluidTankBlock extends BaseEntityBlock {
     }
 
     @Override
-    public @Nullable BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
+    public BlockEntity newBlockEntity(@NonNull BlockPos blockPos, @NonNull BlockState blockState) {
         return new FluidTankBlockEntity(blockPos, blockState);
     }
 }

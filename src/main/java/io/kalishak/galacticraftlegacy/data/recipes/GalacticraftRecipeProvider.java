@@ -10,18 +10,16 @@ package io.kalishak.galacticraftlegacy.data.recipes;
 import io.kalishak.galacticraftlegacy.advancements.MissingGearTrigger;
 import io.kalishak.galacticraftlegacy.advancements.SchematicUnlockedTrigger;
 import io.kalishak.galacticraftlegacy.client.data.GalacticraftBlockFamilies;
+import io.kalishak.galacticraftlegacy.component.SchematicVariant;
 import io.kalishak.galacticraftlegacy.data.GalacticraftTags;
 import io.kalishak.galacticraftlegacy.data.recipes.builder.CompressingRecipeBuilder;
 import io.kalishak.galacticraftlegacy.data.recipes.builder.ElectricCookingRecipeBuilder;
 import io.kalishak.galacticraftlegacy.data.recipes.builder.FabricatingRecipeBuilder;
 import io.kalishak.galacticraftlegacy.data.recipes.builder.VehicleCraftingRecipeBuilder;
 import io.kalishak.galacticraftlegacy.references.Constants;
-import io.kalishak.galacticraftlegacy.registry.GalacticraftRegistries;
-import io.kalishak.galacticraftlegacy.registry.SchematicVariant;
-import io.kalishak.galacticraftlegacy.registry.SchematicVariants;
+import io.kalishak.galacticraftlegacy.registry.BuiltinSchematicVariants;
 import io.kalishak.galacticraftlegacy.world.item.GalacticraftItems;
 import io.kalishak.galacticraftlegacy.world.item.crafting.FabricatingBookCategory;
-import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.rocket.VehicleCraftingDataRecipe;
 import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.rocket.VehicleCraftingDataRecipes;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.predicates.DistancePredicate;
@@ -32,7 +30,6 @@ import net.minecraft.advancements.predicates.entity.EntityPredicate;
 import net.minecraft.advancements.predicates.entity.PlayerPredicate;
 import net.minecraft.advancements.triggers.Criterion;
 import net.minecraft.advancements.triggers.DistanceTrigger;
-import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -52,6 +49,7 @@ import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.registries.DeferredItem;
+import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
 import java.util.List;
@@ -110,10 +108,9 @@ public class GalacticraftRecipeProvider extends RecipeProvider {
     }
 
     private void buildVehicleCrafting() {
-        HolderGetter<VehicleCraftingDataRecipe> vehicleData = this.output.lookup(GalacticraftRegistries.Keys.VEHICLE_CRAFTING_RECIPE_DATA);
         HolderSet<Item> heavyDutyPlates = this.items.getOrThrow(GalacticraftTags.Items.PLATE_HEAVY_DUTY);
 
-        VehicleCraftingRecipeBuilder.rocket(vehicleData, VehicleCraftingDataRecipes.TIER_1_ROCKET, GalacticraftItems.TIER_1_ROCKET)
+        VehicleCraftingRecipeBuilder.rocket(VehicleCraftingDataRecipes.TIER_1_ROCKET, GalacticraftItems.TIER_1_ROCKET)
                 .unlockedBy(getHasName(GalacticraftItems.NASA_WORKBENCH), has(GalacticraftItems.NASA_WORKBENCH))
                 .withIngredient(GalacticraftItems.ROCKET_NOSE_CONE)
                 .withIngredients(heavyDutyPlates, 8)
@@ -121,15 +118,15 @@ public class GalacticraftRecipeProvider extends RecipeProvider {
                 .withIngredient(GalacticraftItems.ROCKET_ENGINE)
                 .withIngredients(GalacticraftItems.ROCKET_FIN, 2)
                 .save(this.output);
-        VehicleCraftingRecipeBuilder.rocket(vehicleData, VehicleCraftingDataRecipes.MOON_BUGGY, GalacticraftItems.BUGGY)
-                .hasSchematic(SchematicVariants.MOON_BUGGY)
+        VehicleCraftingRecipeBuilder.rocket(VehicleCraftingDataRecipes.MOON_BUGGY, GalacticraftItems.BUGGY)
+                .hasSchematic(BuiltinSchematicVariants.MOON_BUGGY)
                 .withIngredients(heavyDutyPlates, 5)
                 .withIngredient(GalacticraftItems.BUGGY_SEAT)
                 .withIngredients(heavyDutyPlates, 6)
                 .withIngredients(GalacticraftItems.BUGGY_WHEEL, 4)
                 .save(this.output);
-        VehicleCraftingRecipeBuilder.rocket(vehicleData, VehicleCraftingDataRecipes.TIER_2_ROCKET, GalacticraftItems.TIER_2_ROCKET)
-                .hasSchematic(SchematicVariants.TIER_2_ROCKET)
+        VehicleCraftingRecipeBuilder.rocket(VehicleCraftingDataRecipes.TIER_2_ROCKET, GalacticraftItems.TIER_2_ROCKET)
+                .hasSchematic(BuiltinSchematicVariants.TIER_2_ROCKET)
                 .withIngredient(GalacticraftItems.ROCKET_NOSE_CONE)
                 .withIngredients(this.items.getOrThrow(GalacticraftTags.Items.PLATE_HEAVY_DUTY_2), 10)
                 .withIngredient(GalacticraftItems.ROCKET_BOOSTER)
@@ -138,16 +135,16 @@ public class GalacticraftRecipeProvider extends RecipeProvider {
                 .withIngredient(GalacticraftItems.ROCKET_BOOSTER)
                 .withIngredients(GalacticraftItems.ROCKET_FIN, 2)
                 .save(this.output);
-        VehicleCraftingRecipeBuilder.rocket(vehicleData, VehicleCraftingDataRecipes.CARGO_ROCKET, GalacticraftItems.CARGO_ROCKET)
-                .hasSchematic(SchematicVariants.CARGO_ROCKET)
+        VehicleCraftingRecipeBuilder.rocket(VehicleCraftingDataRecipes.CARGO_ROCKET, GalacticraftItems.CARGO_ROCKET)
+                .hasSchematic(BuiltinSchematicVariants.CARGO_ROCKET)
                 .withIngredient(GalacticraftItems.ROCKET_NOSE_CONE)
                 .withIngredients(heavyDutyPlates, 11)
                 .withIngredients(GalacticraftItems.ROCKET_FIN, 2)
                 .withIngredient(GalacticraftItems.ROCKET_ENGINE)
                 .withIngredients(GalacticraftItems.ROCKET_FIN, 2)
                 .save(this.output);
-        VehicleCraftingRecipeBuilder.rocket(vehicleData, VehicleCraftingDataRecipes.TIER_3_ROCKET, GalacticraftItems.TIER_3_ROCKET)
-                .hasSchematic(SchematicVariants.TIER_3_ROCKET)
+        VehicleCraftingRecipeBuilder.rocket(VehicleCraftingDataRecipes.TIER_3_ROCKET, GalacticraftItems.TIER_3_ROCKET)
+                .hasSchematic(BuiltinSchematicVariants.TIER_3_ROCKET)
                 .withIngredient(GalacticraftItems.HEAVY_NOSE_CONE)
                 .withIngredients(this.items.getOrThrow(GalacticraftTags.Items.PLATE_HEAVY_DUTY_3), 10)
                 .withIngredient(GalacticraftItems.ROCKET_BOOSTER)
@@ -156,8 +153,8 @@ public class GalacticraftRecipeProvider extends RecipeProvider {
                 .withIngredient(GalacticraftItems.ROCKET_BOOSTER)
                 .withIngredients(GalacticraftItems.HEAVY_FIN, 2)
                 .save(this.output);
-        VehicleCraftingRecipeBuilder.rocket(vehicleData, VehicleCraftingDataRecipes.ASTRO_MINER, GalacticraftItems.ASTRO_MINER)
-                .hasSchematic(SchematicVariants.ASTRO_MINER)
+        VehicleCraftingRecipeBuilder.rocket(VehicleCraftingDataRecipes.ASTRO_MINER, GalacticraftItems.ASTRO_MINER)
+                .hasSchematic(BuiltinSchematicVariants.ASTRO_MINER)
                 .withIngredient(heavyDutyPlates)
                 .withIngredient(GalacticraftItems.ORION_DRIVE)
                 .withIngredient(heavyDutyPlates)
@@ -259,7 +256,7 @@ public class GalacticraftRecipeProvider extends RecipeProvider {
                 .pattern(" L ")
                 .pattern("LSL")
                 .pattern(" L ")
-                .unlockedBy("has_schematic", hasUnlockedSchematic(SchematicVariants.MOON_BUGGY))
+                .unlockedBy("has_schematic", hasUnlockedSchematic(BuiltinSchematicVariants.MOON_BUGGY))
                 .save(this.output);
         ShapedRecipeBuilder.shaped(this.items, RecipeCategory.MISC, GalacticraftItems.BUGGY_SEAT)
                 .define('I', GalacticraftTags.Items.PLATE_IRON)
@@ -267,7 +264,7 @@ public class GalacticraftRecipeProvider extends RecipeProvider {
                 .pattern("  S")
                 .pattern(" IS")
                 .pattern("SSS")
-                .unlockedBy("has_schematic", hasUnlockedSchematic(SchematicVariants.MOON_BUGGY))
+                .unlockedBy("has_schematic", hasUnlockedSchematic(BuiltinSchematicVariants.MOON_BUGGY))
                 .save(this.output);
         ShapedRecipeBuilder.shaped(this.items, RecipeCategory.MISC, GalacticraftItems.BUGGY_STORAGE_BOX)
                 .define('I', GalacticraftTags.Items.PLATE_IRON)
@@ -276,7 +273,7 @@ public class GalacticraftRecipeProvider extends RecipeProvider {
                 .pattern("SSS")
                 .pattern("ICI")
                 .pattern("SSS")
-                .unlockedBy("has_schematic", hasUnlockedSchematic(SchematicVariants.MOON_BUGGY))
+                .unlockedBy("has_schematic", hasUnlockedSchematic(BuiltinSchematicVariants.MOON_BUGGY))
                 .save(this.output);
         ShapedRecipeBuilder.shaped(this.items, RecipeCategory.MISC, GalacticraftItems.CANVAS)
                 .define('S', Items.STICK)
@@ -813,7 +810,7 @@ public class GalacticraftRecipeProvider extends RecipeProvider {
     }
 
     @Override
-    protected <T extends AbstractCookingRecipe> void oreCooking(AbstractCookingRecipe.Factory<T> recipeFactory, List<ItemLike> smeltables, RecipeCategory craftingCategory, CookingBookCategory cookingCategory, ItemLike result, float experience, int cookingTime, String group, String fromDesc) {
+    protected <T extends AbstractCookingRecipe> void oreCooking(AbstractCookingRecipe.@NonNull Factory<T> recipeFactory, List<ItemLike> smeltables, @NonNull RecipeCategory craftingCategory, @NonNull CookingBookCategory cookingCategory, @NonNull ItemLike result, float experience, int cookingTime, @NonNull String group, @NonNull String fromDesc) {
         for(ItemLike itemlike : smeltables) {
             SimpleCookingRecipeBuilder.generic(Ingredient.of(itemlike), craftingCategory, cookingCategory, result, experience, cookingTime, recipeFactory).group(group).unlockedBy(getHasName(itemlike), this.has(itemlike)).save(this.output, Constants.key(Registries.RECIPE, getItemName(result) + fromDesc + "_" + getItemName(itemlike)));
         }
@@ -955,12 +952,12 @@ public class GalacticraftRecipeProvider extends RecipeProvider {
         );
     }
 
-    private Criterion<?> hasUnlockedSchematic(ResourceKey<SchematicVariant> schematicVariant) {
+    private Criterion<?> hasUnlockedSchematic(@NonNull ResourceKey<SchematicVariant> schematicVariant) {
         return SchematicUnlockedTrigger.TriggerInstance.playerUnlockedSchematic(schematicVariant);
     }
 
     @Override
-    protected void nineBlockStorageRecipes(RecipeCategory unpackedFormCategory, ItemLike unpackedForm, RecipeCategory packedFormCategory, ItemLike packedForm) {
+    protected void nineBlockStorageRecipes(@NonNull RecipeCategory unpackedFormCategory, @NonNull ItemLike unpackedForm, @NonNull RecipeCategory packedFormCategory, @NonNull ItemLike packedForm) {
         nineBlockStorageRecipes(unpackedFormCategory, unpackedForm, packedFormCategory, packedForm, getItemName(packedForm), null, getSimpleRecipeName(unpackedForm), null);
     }
 

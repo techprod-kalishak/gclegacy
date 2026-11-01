@@ -10,7 +10,7 @@ package io.kalishak.galacticraftlegacy.world.item.component;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import io.kalishak.galacticraftlegacy.components.GalacticraftDataComponents;
+import io.kalishak.galacticraftlegacy.component.GalacticraftDataComponents;
 import io.kalishak.galacticraftlegacy.references.GalacticraftComponents;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.core.component.DataComponentGetter;
@@ -21,6 +21,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.TooltipProvider;
+import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
 import java.util.function.Consumer;
@@ -51,7 +52,7 @@ public class HotContent implements TooltipProvider {
     }
 
     @Override
-    public void addToTooltip(Item.TooltipContext context, Consumer<Component> consumer, TooltipFlag flag, DataComponentGetter components) {
+    public void addToTooltip(Item.@NonNull TooltipContext context, Consumer<Component> consumer, @NonNull TooltipFlag flag, @NonNull DataComponentGetter components) {
         float burnTime = Math.round(this.heatLevel / 10.0F) / 2.0F;
 
         consumer.accept(GalacticraftComponents.TOOLTIP_HOT_CONTENT.apply(burnTime));

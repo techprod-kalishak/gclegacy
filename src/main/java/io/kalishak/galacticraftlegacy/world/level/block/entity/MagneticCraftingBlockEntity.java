@@ -7,7 +7,7 @@
 
 package io.kalishak.galacticraftlegacy.world.level.block.entity;
 
-import io.kalishak.galacticraftlegacy.components.GalacticraftDataComponents;
+import io.kalishak.galacticraftlegacy.component.GalacticraftDataComponents;
 import io.kalishak.galacticraftlegacy.data.TriStateBoolean;
 import io.kalishak.galacticraftlegacy.transfer.capability.item.MemorableResourceHandler;
 import io.kalishak.galacticraftlegacy.world.inventory.container.CraftingStorage;
@@ -59,7 +59,7 @@ public class MagneticCraftingBlockEntity extends BlockEntity implements MenuProv
         super(GalacticraftBlockEntityType.MAGNETIC_CRAFTING_TABLE.get(), worldPosition, blockState);
         this.items = new MemorableResourceHandler(this, 10) {
             @Override
-            protected void onContentsChanged(int index, ItemStack previousContents) {
+            protected void onContentsChanged(int index, @NonNull ItemStack previousContents) {
                 super.onContentsChanged(index, previousContents);
                 refreshRecipeResult(null, result -> setItem(0, result));
             }
@@ -103,7 +103,7 @@ public class MagneticCraftingBlockEntity extends BlockEntity implements MenuProv
     }
 
     @Override
-    public Component getDisplayName() {
+    public @NonNull Component getDisplayName() {
         return Component.translatable("block.galacticraftlegacy.magnetic_crafting_table");
     }
 
@@ -293,19 +293,19 @@ public class MagneticCraftingBlockEntity extends BlockEntity implements MenuProv
     }
 
     @Override
-    protected void saveAdditional(ValueOutput output) {
+    protected void saveAdditional(@NonNull ValueOutput output) {
         super.saveAdditional(output);
         saveMemories(output);
     }
 
     @Override
-    protected void loadAdditional(ValueInput input) {
+    protected void loadAdditional(@NonNull ValueInput input) {
         super.loadAdditional(input);
         loadMemories(input);
     }
 
     @Override
-    protected void collectImplicitComponents(DataComponentMap.Builder components) {
+    protected void collectImplicitComponents(DataComponentMap.@NonNull Builder components) {
         super.collectImplicitComponents(components);
 
         if (!this.memories.isEmpty()) {
@@ -314,7 +314,7 @@ public class MagneticCraftingBlockEntity extends BlockEntity implements MenuProv
     }
 
     @Override
-    protected void applyImplicitComponents(DataComponentGetter components) {
+    protected void applyImplicitComponents(@NonNull DataComponentGetter components) {
         super.applyImplicitComponents(components);
         readFromComponent(components);
     }
@@ -325,7 +325,7 @@ public class MagneticCraftingBlockEntity extends BlockEntity implements MenuProv
     }
 
     @Override
-    public @Nullable AbstractContainerMenu createMenu(int containerId, Inventory inventory, Player player) {
+    public @Nullable AbstractContainerMenu createMenu(int containerId, @NonNull Inventory inventory, @NonNull Player player) {
         return new MagneticCraftingMenu(containerId, inventory, this);
     }
 }

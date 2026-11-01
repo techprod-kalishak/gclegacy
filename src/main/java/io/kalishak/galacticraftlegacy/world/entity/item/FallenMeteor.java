@@ -8,7 +8,7 @@
 package io.kalishak.galacticraftlegacy.world.entity.item;
 
 import io.kalishak.galacticraftlegacy.attachment.GalacticraftAttachments;
-import io.kalishak.galacticraftlegacy.components.GalacticraftDataComponents;
+import io.kalishak.galacticraftlegacy.component.GalacticraftDataComponents;
 import io.kalishak.galacticraftlegacy.data.GalacticraftTags;
 import io.kalishak.galacticraftlegacy.world.entity.GalacticraftEntityType;
 import io.kalishak.galacticraftlegacy.world.item.component.HotContent;
@@ -28,6 +28,7 @@ import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
 import java.util.List;
@@ -50,6 +51,7 @@ public class FallenMeteor extends FallingBlockEntity {
         setData(GalacticraftAttachments.HOT_CONTENT, hotContent);
     }
 
+    @SuppressWarnings("unused")
     public static void createFallingMeteor(ServerLevel level) {
         if (level.dimensionTypeRegistration().is(GalacticraftTags.DimensionTypes.HAS_METEORS)) {
             ServerPlayer player = level.getRandomPlayer();
@@ -58,7 +60,7 @@ public class FallenMeteor extends FallingBlockEntity {
                 assert player.level().dimensionTypeRegistration().is(GalacticraftTags.DimensionTypes.HAS_METEORS);
 
                 RandomSource random = level.getRandom();
-                BlockPos candidate = randomInRange(random, 16, player.blockPosition());
+                BlockPos candidate = randomInRange(random, player.blockPosition());
 
                 if (random.nextInt(230) % 20 == 0) {
                     if (level.getBlockState(candidate).isAir() && level.isLoaded(candidate)) {
@@ -69,9 +71,9 @@ public class FallenMeteor extends FallingBlockEntity {
         }
     }
 
-    private static BlockPos randomInRange(RandomSource random, int range, BlockPos originalPos) {
-        int x = random.nextInt(1, range);
-        int z = random.nextInt(1, range);
+    private static BlockPos randomInRange(RandomSource random, BlockPos originalPos) {
+        int x = random.nextInt(1, 16);
+        int z = random.nextInt(1, 16);
 
         return originalPos.offset(x, 0, z);
     }
@@ -104,18 +106,18 @@ public class FallenMeteor extends FallingBlockEntity {
 
     @Override
     @SuppressWarnings("unchecked")
-    public @Nullable <T> T get(DataComponentType<? extends T> type) {
+    public @Nullable <T> T get(@NonNull DataComponentType<? extends T> type) {
         return type == GalacticraftDataComponents.HOT_CONTENT.get() ? castComponentValue((DataComponentType<T>) type, getData(GalacticraftAttachments.HOT_CONTENT)) : super.get(type);
     }
 
     @Override
-    protected void applyImplicitComponents(DataComponentGetter components) {
+    protected void applyImplicitComponents(@NonNull DataComponentGetter components) {
         applyImplicitComponentIfPresent(components, GalacticraftDataComponents.HOT_CONTENT.get());
         super.applyImplicitComponents(components);
     }
 
     @Override
-    protected <T> boolean applyImplicitComponent(DataComponentType<T> type, T value) {
+    protected <T> boolean applyImplicitComponent(@NonNull DataComponentType<T> type, @NonNull T value) {
         if (type == GalacticraftDataComponents.HOT_CONTENT.get()) {
             setData(GalacticraftAttachments.HOT_CONTENT, castComponentValue(GalacticraftDataComponents.HOT_CONTENT.get(), value));
             return true;

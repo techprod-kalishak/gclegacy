@@ -9,8 +9,8 @@ package io.kalishak.galacticraftlegacy.world.inventory.workbench;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import io.kalishak.galacticraftlegacy.component.SchematicVariant;
 import io.kalishak.galacticraftlegacy.registry.GalacticraftRegistries;
-import io.kalishak.galacticraftlegacy.registry.SchematicVariant;
 import io.kalishak.galacticraftlegacy.transfer.ResourcefulHelper;
 import io.kalishak.galacticraftlegacy.world.inventory.slot.VehicleCraftingSlotResourceHandler;
 import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.rocket.VehicleCraftingDataRecipe;
@@ -31,6 +31,7 @@ import net.neoforged.neoforge.transfer.IndexModifier;
 import net.neoforged.neoforge.transfer.ResourceHandler;
 import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.neoforged.neoforge.transfer.item.ResourceHandlerSlot;
+import org.jspecify.annotations.NonNull;
 
 import java.util.function.Consumer;
 
@@ -59,7 +60,7 @@ public record VehicleCraftingPage(Holder<SchematicVariant> schematic, Holder<Veh
 
         slotAdder.accept(new ResourceHandlerSlot(resourceHandler, ResourcefulHelper::notPlaceable, output.slotIndex(), output.slotOffsetX(), output.slotOffsetY()) {
             @Override
-            public boolean mayPlace(ItemStack stack) {
+            public boolean mayPlace(@NonNull ItemStack stack) {
                 return false;
             }
         });

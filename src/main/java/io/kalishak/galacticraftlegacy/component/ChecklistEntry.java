@@ -5,11 +5,12 @@
  * See LICENSE file for more details
  */
 
-package io.kalishak.galacticraftlegacy.registry;
+package io.kalishak.galacticraftlegacy.component;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.kalishak.galacticraftlegacy.advancements.criterion.PredicateByteBufs;
+import io.kalishak.galacticraftlegacy.registry.GalacticraftRegistries;
 import io.kalishak.galacticraftlegacy.world.entity.GearEquipmentSlot;
 import net.minecraft.advancements.predicates.ItemPredicate;
 import net.minecraft.core.Holder;
@@ -19,7 +20,6 @@ import net.minecraft.core.registries.codec.RegistryCodecs;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.resources.Identifier;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -37,9 +37,4 @@ public record ChecklistEntry(String id, Map<GearEquipmentSlot, ItemPredicate> re
             ChecklistEntry::new
     );
     public static final StreamCodec<RegistryFriendlyByteBuf, Holder<ChecklistEntry>> STREAM_CODEC = ByteBufCodecs.holder(GalacticraftRegistries.Keys.CHECKLIST, DIRECT_STREAM_CODEC);
-    public static final StreamCodec<RegistryFriendlyByteBuf, HolderSet<ChecklistEntry>> HOLDER_SET_STREAM_CODEC = ByteBufCodecs.holderSet(GalacticraftRegistries.Keys.CHECKLIST);
-
-    public String getDescriptionId(String modId) {
-        return Identifier.fromNamespaceAndPath(modId, this.id).toLanguageKey("checklist_entry");
-    }
 }

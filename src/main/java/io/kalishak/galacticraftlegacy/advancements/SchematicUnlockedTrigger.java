@@ -10,7 +10,7 @@ package io.kalishak.galacticraftlegacy.advancements;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.kalishak.galacticraftlegacy.advancements.predicates.SchematicPredicate;
-import io.kalishak.galacticraftlegacy.registry.SchematicVariant;
+import io.kalishak.galacticraftlegacy.component.SchematicVariant;
 import net.minecraft.advancements.triggers.Criterion;
 import net.minecraft.advancements.triggers.SimpleCriterionTrigger;
 import net.minecraft.core.Holder;
@@ -18,12 +18,13 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.phys.Vec3;
+import org.jspecify.annotations.NonNull;
 
 import java.util.Optional;
 
 public class SchematicUnlockedTrigger extends SimpleCriterionTrigger<SchematicUnlockedTrigger.TriggerInstance> {
     @Override
-    public Codec<TriggerInstance> codec() {
+    public @NonNull Codec<TriggerInstance> codec() {
         return TriggerInstance.CODEC;
     }
 

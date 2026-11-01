@@ -10,7 +10,7 @@ package io.kalishak.galacticraftlegacy.world.item.crafting.recipe;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import io.kalishak.galacticraftlegacy.components.GalacticraftDataComponents;
+import io.kalishak.galacticraftlegacy.component.GalacticraftDataComponents;
 import io.kalishak.galacticraftlegacy.world.item.GalacticraftItems;
 import io.kalishak.galacticraftlegacy.world.item.crafting.GalacticraftRecipeBookCategories;
 import io.kalishak.galacticraftlegacy.world.item.crafting.display.BatterySlotDisplay;
@@ -25,6 +25,7 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.ShapedRecipePattern;
 import net.minecraft.world.item.crafting.display.SlotDisplay;
+import org.jspecify.annotations.NonNull;
 
 public class ElectricCompressingRecipe extends CompressingRecipe {
     public static final MapCodec<ElectricCompressingRecipe> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
@@ -48,17 +49,17 @@ public class ElectricCompressingRecipe extends CompressingRecipe {
     }
 
     @Override
-    public RecipeSerializer<ElectricCompressingRecipe> getSerializer() {
+    public @NonNull RecipeSerializer<ElectricCompressingRecipe> getSerializer() {
         return GalacticraftRecipeSerializer.ELECTRIC_COMPRESSING.get();
     }
 
     @Override
-    public RecipeType<ElectricCompressingRecipe> getType() {
+    public @NonNull RecipeType<ElectricCompressingRecipe> getType() {
         return GalacticraftRecipeType.ELECTRIC_COMPRESSING.get();
     }
 
     @Override
-    public RecipeBookCategory recipeBookCategory() {
+    public @NonNull RecipeBookCategory recipeBookCategory() {
         return GalacticraftRecipeBookCategories.ELECTRIC_COMPRESSING.get();
     }
 

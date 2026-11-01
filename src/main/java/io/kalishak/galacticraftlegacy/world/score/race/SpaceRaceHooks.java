@@ -7,7 +7,7 @@
 
 package io.kalishak.galacticraftlegacy.world.score.race;
 
-import io.kalishak.galacticraftlegacy.components.flag.FlagData;
+import io.kalishak.galacticraftlegacy.component.flag.FlagData;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;

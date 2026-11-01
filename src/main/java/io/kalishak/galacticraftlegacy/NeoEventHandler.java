@@ -9,11 +9,10 @@ package io.kalishak.galacticraftlegacy;
 
 import io.kalishak.galacticraftlegacy.attachment.AttachmentHelper;
 import io.kalishak.galacticraftlegacy.attachment.entity.GearInventoryProvider;
-import io.kalishak.galacticraftlegacy.components.GalacticraftDataComponents;
+import io.kalishak.galacticraftlegacy.component.GalacticraftDataComponents;
 import io.kalishak.galacticraftlegacy.data.GalacticraftTags;
 import io.kalishak.galacticraftlegacy.data.datamap.Extinguishable;
 import io.kalishak.galacticraftlegacy.data.datamap.GalacticraftDataMaps;
-import io.kalishak.galacticraftlegacy.registry.SchematicVariant;
 import io.kalishak.galacticraftlegacy.transfer.node.NodeNetwork;
 import io.kalishak.galacticraftlegacy.world.entity.GearEquipmentSlot;
 import io.kalishak.galacticraftlegacy.world.item.component.GearAttributeModifiers;
@@ -21,10 +20,11 @@ import io.kalishak.galacticraftlegacy.world.item.component.ShieldController;
 import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.GalacticraftRecipeType;
 import io.kalishak.galacticraftlegacy.world.level.OxygenHelper;
 import io.kalishak.galacticraftlegacy.world.score.race.SpaceRaceHooks;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
-import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -34,7 +34,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.component.TooltipProvider;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
@@ -44,7 +43,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.gamerules.GameRules;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.neoforge.common.util.AttributeTooltipContext;
 import net.neoforged.neoforge.event.AddAttributeTooltipsEvent;
 import net.neoforged.neoforge.event.OnDatapackSyncEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
@@ -55,9 +53,7 @@ import net.neoforged.neoforge.event.server.ServerStoppingEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
 import net.neoforged.neoforge.event.tick.LevelTickEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
-
-import java.util.function.Consumer;
-import java.util.stream.Stream;
+import org.apache.commons.lang3.mutable.MutableBoolean;
 
 public class NeoEventHandler {
     NeoEventHandler() {}
@@ -71,31 +67,25 @@ public class NeoEventHandler {
     public void appendHoverText(AddAttributeTooltipsEvent event) {
         ItemStack stack = event.getStack();
 
-//        if (stack.typeHolder().unwrapKey().filter(key -> key.identifier().getNamespace().equals(Galacticraft.MODID)).isPresent()) {
-//            if (event.shouldShow()) {
-//                addTooltipIfPresent(stack, GalacticraftDataComponents.getTooltipProviders(), event.getContext(), event::addTooltipLines);
-//
-//                ItemAccess itemAccess = ItemAccess.forStack(stack);
-//
-//                EnergyHandler energyHandler = stack.getCapability(Capabilities.Energy.ITEM, itemAccess);
-//                if (energyHandler != null) {
-//                    ItemAccessEnergyUtils.addTooltip(energyHandler, Constants.ifClient(event.getContext().level(), ClientConfig.ENERGY_UNIT, EnergyUnit.GIGA_JOULES), event::addTooltipLines);
-//                }
-//
-//                if (!(stack.getItem() instanceof BucketItem)) {
-//                    ResourceHandler<FluidResource> fluidHandler = stack.getCapability(Capabilities.Fluid.ITEM, itemAccess);
-//
-//                    if (fluidHandler != null) {
-//                        ItemAccessFluidUtils.addTooltip(fluidHandler, event::addTooltipLines);
-//                    }
-//                }
-//            }
-//        }
-
         GearAttributeModifiers attributeModifiers = stack.get(GalacticraftDataComponents.GEAR_ATTRIBUTE_MODIFIERS);
 
         if (attributeModifiers != null) {
-            //something
+            if (event.getContext().tooltipDisplay().shows(GalacticraftDataComponents.GEAR_ATTRIBUTE_MODIFIERS.get())) {
+                for (GearEquipmentSlot slot : GearEquipmentSlot.values()) {
+                    MutableBoolean first =  new MutableBoolean(true);
+
+                    attributeModifiers.forEach(slot, (attribute, modifier, tooltip) -> {
+                        if (tooltip != GearAttributeModifiers.Display.hidden()) {
+                            if (first.isTrue()) {
+                                event.addTooltipLines(CommonComponents.EMPTY, Component.translatable("item.modifiers." + slot.getSerializedName()).withStyle(ChatFormatting.GRAY));
+                                first.setFalse();
+                            }
+
+                            tooltip.apply(event::addTooltipLines, event.getContext().player(), attribute, modifier);
+                        }
+                    });
+                }
+            }
         }
     }
 
@@ -129,7 +119,7 @@ public class NeoEventHandler {
             if (entity.level() instanceof ServerLevel serverLevel) {
                 gearInventoryProvider.serverGearTick(serverLevel, livingEntity);
             } else {
-                gearInventoryProvider.clientGearTick(entity.level(), livingEntity);
+                gearInventoryProvider.clientGearTick(livingEntity);
             }
         }
     }
@@ -167,7 +157,7 @@ public class NeoEventHandler {
             if (player.level() instanceof ServerLevel serverLevel) {
                 gearInventory.serverGearTick(serverLevel, player);
             } else {
-                gearInventory.clientGearTick(player.level(), player);
+                gearInventory.clientGearTick(player);
             }
         }
     }
@@ -225,20 +215,5 @@ public class NeoEventHandler {
     public void onServerStop(ServerStoppingEvent event) {
         SpaceRaceHooks.onServerStop(event);
         NodeNetwork.onServerStop(event);
-    }
-
-    @SuppressWarnings({"ConstantConditions", "unchecked"})
-    private static void addTooltipIfPresent(ItemStack itemStack, Stream<DataComponentType<?>> components, AttributeTooltipContext cxt, Consumer<Component> consumer) {
-        components.forEach(dataComponentType -> {
-            if (itemStack.has(dataComponentType)) {
-                var component = itemStack.get(dataComponentType);
-
-                if (component instanceof TooltipProvider tooltipProvider) {
-                    tooltipProvider.addToTooltip(cxt, consumer, cxt.flag(), itemStack);
-                } else if (dataComponentType == GalacticraftDataComponents.SCHEMATIC.get()) {
-                    consumer.accept(((Holder.Reference<SchematicVariant>) component).value().title());
-                }
-            }
-        });
     }
 }

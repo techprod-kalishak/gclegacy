@@ -1,4 +1,4 @@
-package io.kalishak.galacticraftlegacy.components.flag;
+package io.kalishak.galacticraftlegacy.component.flag;
 
 import com.mojang.datafixers.util.Either;
 import com.mojang.serialization.Codec;
@@ -14,6 +14,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
+@SuppressWarnings("unused")
 public class FlagTypeProviders {
     private static final Codec<Either<BlankFlagProvider, FlagTypeProvider>> BLANK_OR_DISPATCH_CODEC = Codec.either(
             BlankFlagProvider.MAP_CODEC.codec(), Codec.lazyInitialized(GalacticraftRegistries.FLAG_TYPE::byNameCodec).dispatch(FlagTypeProvider::type, Function.identity()

@@ -8,7 +8,7 @@
 package io.kalishak.galacticraftlegacy.world.entity.projectile;
 
 import io.kalishak.galacticraftlegacy.attachment.GalacticraftAttachments;
-import io.kalishak.galacticraftlegacy.components.GalacticraftDataComponents;
+import io.kalishak.galacticraftlegacy.component.GalacticraftDataComponents;
 import io.kalishak.galacticraftlegacy.world.damagesource.GalacticraftDamageTypes;
 import io.kalishak.galacticraftlegacy.world.entity.GalacticraftEntityType;
 import io.kalishak.galacticraftlegacy.world.item.GalacticraftItems;
@@ -30,6 +30,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
+import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
 public class ThrownMeteorChunk extends ThrowableItemProjectile {
@@ -79,18 +80,18 @@ public class ThrownMeteorChunk extends ThrowableItemProjectile {
     }
 
     @Override
-    protected Item getDefaultItem() {
+    protected @NonNull Item getDefaultItem() {
         return GalacticraftItems.THROWABLE_METEOR_CHUNK.asItem();
     }
 
     @Override
-    protected void applyImplicitComponents(DataComponentGetter components) {
+    protected void applyImplicitComponents(@NonNull DataComponentGetter components) {
         super.applyImplicitComponents(components);
         applyImplicitComponentIfPresent(components, GalacticraftDataComponents.HOT_CONTENT.get());
     }
 
     @Override
-    protected <T> boolean applyImplicitComponent(DataComponentType<T> type, T value) {
+    protected <T> boolean applyImplicitComponent(@NonNull DataComponentType<T> type, @NonNull T value) {
         if (type == GalacticraftDataComponents.HOT_CONTENT.get()) {
             setData(GalacticraftAttachments.HOT_CONTENT, castComponentValue(GalacticraftDataComponents.HOT_CONTENT.get(), value));
             return true;
@@ -101,7 +102,7 @@ public class ThrownMeteorChunk extends ThrowableItemProjectile {
 
     @Override
     @SuppressWarnings("unchecked")
-    public @Nullable <T> T get(DataComponentType<? extends T> type) {
+    public @Nullable <T> T get(@NonNull DataComponentType<? extends T> type) {
         if (type == GalacticraftDataComponents.HOT_CONTENT.get()) {
             return castComponentValue((DataComponentType<T>) type, getData(GalacticraftAttachments.HOT_CONTENT));
         }
@@ -123,7 +124,7 @@ public class ThrownMeteorChunk extends ThrowableItemProjectile {
     }
 
     @Override
-    public void playerTouch(Player player) {
+    public void playerTouch(@NonNull Player player) {
         if (!level().isClientSide() && onGround()) {
             ItemStack itemStack = getItem();
             Item item = itemStack.getItem();

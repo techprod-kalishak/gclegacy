@@ -7,10 +7,11 @@
 
 package io.kalishak.galacticraftlegacy.world.item.gear;
 
-import io.kalishak.galacticraftlegacy.components.GalacticraftDataComponents;
+import io.kalishak.galacticraftlegacy.component.GalacticraftDataComponents;
 import io.kalishak.galacticraftlegacy.world.item.component.ShieldController;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
+import org.jspecify.annotations.NonNull;
 
 public class ShieldControllerItem extends GearItem {
     public ShieldControllerItem(Properties properties) {
@@ -23,7 +24,7 @@ public class ShieldControllerItem extends GearItem {
     }
 
     @Override
-    public int getBarWidth(ItemStack stack) {
+    public int getBarWidth(@NonNull ItemStack stack) {
         return Mth.clamp(Math.round(13.0F - intOrZero(stack) * 13.0F / 300), 0, 13);
     }
 

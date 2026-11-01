@@ -10,15 +10,15 @@ package io.kalishak.galacticraftlegacy.advancements.predicates;
 import com.mojang.serialization.Codec;
 import io.kalishak.galacticraftlegacy.attachment.GalacticraftAttachments;
 import io.kalishak.galacticraftlegacy.attachment.entity.Schematics;
+import io.kalishak.galacticraftlegacy.component.SchematicVariant;
 import io.kalishak.galacticraftlegacy.registry.GalacticraftRegistries;
-import io.kalishak.galacticraftlegacy.registry.SchematicVariant;
 import net.minecraft.advancements.predicates.entity.EntitySubPredicate;
-import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
+import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -30,7 +30,7 @@ public record SchematicPredicate(List<ResourceKey<SchematicVariant>> unlockedSch
             .xmap(SchematicPredicate::new, SchematicPredicate::unlockedSchematics);
 
     @Override
-    public boolean matches(Entity entity, ServerLevel serverLevel, @Nullable Vec3 vec3) {
+    public boolean matches(@NonNull Entity entity, @NonNull ServerLevel serverLevel, @Nullable Vec3 vec3) {
         if (!(entity instanceof Player)) {
             return false;
         }
@@ -61,10 +61,6 @@ public record SchematicPredicate(List<ResourceKey<SchematicVariant>> unlockedSch
             this.unlockedSchematics.add(schematic);
 
             return this;
-        }
-
-        public Builder haveSchematic(Holder<SchematicVariant> schematic) {
-            return haveSchematic(schematic.key());
         }
 
         public SchematicPredicate build() {

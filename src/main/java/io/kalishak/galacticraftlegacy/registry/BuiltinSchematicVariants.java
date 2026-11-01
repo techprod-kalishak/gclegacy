@@ -7,6 +7,7 @@
 
 package io.kalishak.galacticraftlegacy.registry;
 
+import io.kalishak.galacticraftlegacy.component.SchematicVariant;
 import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.world.item.FeatureTier;
 import net.minecraft.ChatFormatting;
@@ -17,7 +18,7 @@ import net.minecraft.resources.ResourceKey;
 import java.util.HashSet;
 import java.util.Set;
 
-public class SchematicVariants {
+public class BuiltinSchematicVariants {
     private static final Set<ResourceKey<SchematicVariant>> VARIANTS = new HashSet<>(5);
 
     public static final ResourceKey<SchematicVariant> TIER_1_ROCKET = Constants.key(GalacticraftRegistries.Keys.SCHEMATIC, "tier_1_rocket");

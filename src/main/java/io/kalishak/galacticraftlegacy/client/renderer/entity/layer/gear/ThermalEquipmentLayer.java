@@ -10,7 +10,7 @@ package io.kalishak.galacticraftlegacy.client.renderer.entity.layer.gear;
 import com.mojang.blaze3d.vertex.PoseStack;
 import io.kalishak.galacticraftlegacy.EnumExtensions;
 import io.kalishak.galacticraftlegacy.client.renderer.entity.state.GearRenderState;
-import io.kalishak.galacticraftlegacy.components.GalacticraftDataComponents;
+import io.kalishak.galacticraftlegacy.component.GalacticraftDataComponents;
 import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.world.entity.GearEquipmentSlot;
 import io.kalishak.galacticraftlegacy.world.item.component.GearEquippable;
@@ -76,11 +76,6 @@ public interface ThermalEquipmentLayer<S extends LivingEntityRenderState, M exte
 
     default void renderThermalPiece(PoseStack poseStack, SubmitNodeCollector nodeCollector, ItemStack item, GearEquipmentSlot slot, int packedLight, S renderState) {
         renderThermalPiece(poseStack, nodeCollector, item, slot, packedLight, renderState, EnumExtensions.LAYER_TYPE_THERMAL_PADDING.getValue(), PADDING_LAYER, 1);
-    }
-
-    static boolean shouldRender(ItemStack stack, GearEquipmentSlot gearSlot, boolean invisible) {
-        GearEquippable gearEquippable = stack.get(GalacticraftDataComponents.GEAR_EQUIPPABLE);
-        return gearEquippable != null && shouldRender(gearEquippable, gearSlot, invisible);
     }
 
     static boolean shouldRender(GearEquippable gearEquippable, GearEquipmentSlot gearSlot, boolean invisible) {

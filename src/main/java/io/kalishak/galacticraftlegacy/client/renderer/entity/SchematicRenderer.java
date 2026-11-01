@@ -13,7 +13,7 @@ import com.mojang.math.Axis;
 import io.kalishak.galacticraftlegacy.Galacticraft;
 import io.kalishak.galacticraftlegacy.client.data.GalacticraftSpritesProvider;
 import io.kalishak.galacticraftlegacy.client.renderer.entity.state.SchematicRenderState;
-import io.kalishak.galacticraftlegacy.registry.SchematicVariant;
+import io.kalishak.galacticraftlegacy.component.SchematicVariant;
 import io.kalishak.galacticraftlegacy.world.entity.SchematicEntity;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.EntityRenderer;
@@ -30,6 +30,7 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.util.LightCoordsUtil;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.Level;
+import org.jspecify.annotations.NonNull;
 
 public class SchematicRenderer extends EntityRenderer<SchematicEntity, SchematicRenderState> {
     private static final Identifier BACK_SPRITE_LOCATION = Identifier.fromNamespaceAndPath(Galacticraft.MODID, "back");
@@ -41,7 +42,7 @@ public class SchematicRenderer extends EntityRenderer<SchematicEntity, Schematic
     }
 
     @Override
-    public void submit(SchematicRenderState renderState, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, CameraRenderState camera) {
+    public void submit(SchematicRenderState renderState, @NonNull PoseStack poseStack, @NonNull SubmitNodeCollector submitNodeCollector, @NonNull CameraRenderState camera) {
         SchematicVariant schematicVariant = renderState.schematicVariant;
         
         if (schematicVariant != null) {
@@ -56,12 +57,12 @@ public class SchematicRenderer extends EntityRenderer<SchematicEntity, Schematic
     }
 
     @Override
-    public SchematicRenderState createRenderState() {
+    public @NonNull SchematicRenderState createRenderState() {
         return new SchematicRenderState();
     }
 
     @Override
-    public void extractRenderState(SchematicEntity schematicEntity, SchematicRenderState reusedState, float partialTick) {
+    public void extractRenderState(@NonNull SchematicEntity schematicEntity, @NonNull SchematicRenderState reusedState, float partialTick) {
         super.extractRenderState(schematicEntity, reusedState, partialTick);
         Direction direction = schematicEntity.getDirection();
         SchematicVariant schematicVariant = schematicEntity.getSchematic().value();

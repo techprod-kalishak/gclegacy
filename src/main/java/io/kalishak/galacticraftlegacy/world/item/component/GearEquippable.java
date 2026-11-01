@@ -10,7 +10,7 @@ package io.kalishak.galacticraftlegacy.world.item.component;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.kalishak.galacticraftlegacy.attachment.AttachmentHelper;
-import io.kalishak.galacticraftlegacy.components.GalacticraftDataComponents;
+import io.kalishak.galacticraftlegacy.component.GalacticraftDataComponents;
 import io.kalishak.galacticraftlegacy.data.GalacticraftTags;
 import io.kalishak.galacticraftlegacy.transfer.entity.SpaceGearEquipment;
 import io.kalishak.galacticraftlegacy.world.entity.GearEquipmentSlot;
@@ -40,7 +40,6 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.equipment.EquipmentAsset;
 import net.minecraft.world.item.equipment.EquipmentAssets;
 import net.neoforged.neoforge.transfer.item.ItemResource;
-import net.neoforged.neoforge.transfer.transaction.Transaction;
 import org.jspecify.annotations.Nullable;
 
 import java.util.Optional;
@@ -110,7 +109,7 @@ public record GearEquippable(GearEquipmentSlot gearSlot, Holder<SoundEvent> equi
         return equippable != null && equippable.gearSlot() == gearSlot;
     }
 
-    public InteractionResult swapWithGearEquipmentSlot(ItemStack equippedFromHand, Player player, @Nullable Transaction tx) {
+    public InteractionResult swapWithGearEquipmentSlot(ItemStack equippedFromHand, Player player) {
         if (!canBeEquippedBy(player.getType())) return InteractionResult.PASS;
 
         SpaceGearEquipment gearResourceHandler = AttachmentHelper.getGearInventory(player).getGearEquipment();

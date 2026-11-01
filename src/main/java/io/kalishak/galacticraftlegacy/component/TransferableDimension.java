@@ -1,4 +1,4 @@
-package io.kalishak.galacticraftlegacy.galaxies.component;
+package io.kalishak.galacticraftlegacy.component;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;

@@ -1,10 +1,9 @@
-package io.kalishak.galacticraftlegacy.galaxies;
+package io.kalishak.galacticraftlegacy.registry;
 
+import io.kalishak.galacticraftlegacy.component.ChecklistEntry;
 import io.kalishak.galacticraftlegacy.data.GalacticraftTags;
 import io.kalishak.galacticraftlegacy.galaxies.celestial.Celestial;
 import io.kalishak.galacticraftlegacy.references.Constants;
-import io.kalishak.galacticraftlegacy.registry.ChecklistEntry;
-import io.kalishak.galacticraftlegacy.registry.GalacticraftRegistries;
 import io.kalishak.galacticraftlegacy.world.entity.GalacticraftEntityType;
 import io.kalishak.galacticraftlegacy.world.item.FeatureTier;
 import io.kalishak.galacticraftlegacy.world.level.dimension.GalacticraftDimensionTypes;

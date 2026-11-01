@@ -7,14 +7,11 @@
 
 package io.kalishak.galacticraftlegacy.data.tag;
 
-import com.google.common.collect.ImmutableMap;
 import io.kalishak.galacticraftlegacy.Galacticraft;
 import io.kalishak.galacticraftlegacy.data.GalacticraftTags;
 import io.kalishak.galacticraftlegacy.references.GalacticraftBlockIds;
 import io.kalishak.galacticraftlegacy.references.GalacticraftBlockItemIds;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.data.BlockFamily;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.BlockItemTagAppender;
 import net.minecraft.data.tags.TagAppender;
@@ -25,19 +22,14 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.BlockItemTagId;
 import net.minecraft.tags.BlockItemTags;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
+import org.jspecify.annotations.NonNull;
 
 import java.util.concurrent.CompletableFuture;
 
 public class GalacticraftBlockTagsProvider extends BlockTagsProvider {
-    public static final ImmutableMap<BlockFamily.Variant, TagKey<Block>> VARIANTS_TAGS = ImmutableMap.<BlockFamily.Variant, TagKey<Block>>builder()
-            .put(BlockFamily.Variant.STAIRS, BlockTags.STAIRS)
-            .put(BlockFamily.Variant.SLAB, BlockTags.SLABS)
-            .put(BlockFamily.Variant.WALL, BlockTags.WALLS)
-            .build();
 
     public GalacticraftBlockTagsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider) {
         super(output, lookupProvider, Galacticraft.MODID);
@@ -46,14 +38,14 @@ public class GalacticraftBlockTagsProvider extends BlockTagsProvider {
     protected BlockItemTagAppender<Block> tag(BlockItemTagId tagId) {
         return new BlockItemTagAppender<>(super.tag(tagId.block())) {
             @Override
-            protected ResourceKey<Block> convertElement(BlockItemId element) {
+            protected @NonNull ResourceKey<Block> convertElement(@NonNull BlockItemId element) {
                 return element.block();
             }
         };
     }
 
     @Override
-    protected void addTags(HolderLookup.Provider provider) {
+    protected void addTags(HolderLookup.@NonNull Provider provider) {
         tag(GalacticraftTags.Blocks.INFINIBURN_OPEN_SPACE)
                 .add(GalacticraftBlockIds.EMPTY_AIR);
         tag(GalacticraftTags.Blocks.INFINIBURN_VENUS)
@@ -275,8 +267,8 @@ public class GalacticraftBlockTagsProvider extends BlockTagsProvider {
         tag(Tags.BlockItems.ORES_IRON)
                 .add(GalacticraftBlockItemIds.MARS_IRON_ORE.block());
 
-//        tag(GalacticraftTags.Blocks.SEALABLE)
-//                .addTag(Tags.Blocks.GLASS_PANES);
+        tag(GalacticraftTags.Blocks.SEALABLE)
+                .addTag(Tags.BlockItems.GLASS_PANES.block());
         tag(GalacticraftTags.BlockItems.SENSOR_GLASSES_DETECTABLE)
                 .addTag(Tags.BlockItems.ORES.block())
                 .addTag(Tags.BlockItems.STORAGE_BLOCKS_RAW_COPPER.block())
@@ -341,17 +333,8 @@ public class GalacticraftBlockTagsProvider extends BlockTagsProvider {
                 .add(BlockIds.SOUL_WALL_TORCH)
                 .add(BlockIds.COPPER_WALL_TORCH);
         tag(GalacticraftTags.BlockItems.LIT_TORCHES)
-                .addTag(GalacticraftTags.Blocks.LIT_TORCHES_STANDING)
+                .addTag(GalacticraftTags.BlockItems.LIT_TORCHES_STANDING.block())
                 .addTag(GalacticraftTags.Blocks.LIT_TORCHES_WALL);
     }
 
-    public void appendTagsForFamily(BlockFamily family) {
-        family.getVariants().forEach((variant, block) -> {
-            TagKey<Block> tag = VARIANTS_TAGS.get(variant);
-
-            if (tag != null) {
-                tag(tag).add(BuiltInRegistries.BLOCK.getResourceKey(block).orElseThrow());
-            }
-        });
-    }
 }

@@ -8,7 +8,7 @@
 package io.kalishak.galacticraftlegacy.world.level.block.entity.machine;
 
 import io.kalishak.galacticraftlegacy.attachment.GalacticraftAttachments;
-import io.kalishak.galacticraftlegacy.components.GalacticraftDataComponents;
+import io.kalishak.galacticraftlegacy.component.GalacticraftDataComponents;
 import io.kalishak.galacticraftlegacy.transfer.ResourcefulHelper;
 import io.kalishak.galacticraftlegacy.transfer.capability.fluid.SingleTankResourceHandler;
 import io.kalishak.galacticraftlegacy.transfer.capability.fluid.TankWrapper;
@@ -37,6 +37,7 @@ import net.neoforged.neoforge.transfer.fluid.FluidResource;
 import net.neoforged.neoforge.transfer.transaction.Transaction;
 import org.jspecify.annotations.Nullable;
 
+@SuppressWarnings("unused")
 public abstract class AbstractOxygenBlockEntity extends AbstractMachineBlockEntity implements Tank {
     protected final int oxygenPerTick = getProperties().getFluidExtractionRate();
     protected FluidStack oxygenTank = FluidStack.EMPTY;

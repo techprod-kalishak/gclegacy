@@ -1,10 +1,10 @@
 package io.kalishak.galacticraftlegacy.galaxies.celestial;
 
-import io.kalishak.galacticraftlegacy.galaxies.ScalableDistance;
-import io.kalishak.galacticraftlegacy.galaxies.component.CelestialBodyIcon;
-import io.kalishak.galacticraftlegacy.galaxies.component.TransferableDimension;
+import io.kalishak.galacticraftlegacy.component.CelestialBodyIcon;
+import io.kalishak.galacticraftlegacy.component.ChecklistEntry;
+import io.kalishak.galacticraftlegacy.component.ScalableDistance;
+import io.kalishak.galacticraftlegacy.component.TransferableDimension;
 import io.kalishak.galacticraftlegacy.galaxies.environment.AtmosphereInfo;
-import io.kalishak.galacticraftlegacy.registry.ChecklistEntry;
 import io.kalishak.galacticraftlegacy.world.level.dimension.SpaceStationRecipe;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;

@@ -13,7 +13,7 @@ import io.kalishak.galacticraftlegacy.data.GalacticraftTags;
 import io.kalishak.galacticraftlegacy.references.GalacticraftBlockItemIds;
 import io.kalishak.galacticraftlegacy.references.GalacticraftComponents;
 import io.kalishak.galacticraftlegacy.references.GalacticraftItemIds;
-import io.kalishak.galacticraftlegacy.registry.SchematicVariants;
+import io.kalishak.galacticraftlegacy.registry.BuiltinSchematicVariants;
 import io.kalishak.galacticraftlegacy.world.entity.GalacticraftEntityType;
 import io.kalishak.galacticraftlegacy.world.item.GalacticraftItems;
 import io.kalishak.galacticraftlegacy.world.level.block.GalacticraftBlocks;
@@ -361,11 +361,11 @@ public class GalacticraftLanguageProvider extends ExtendedLanguageProvider {
         addItem(GalacticraftItems.EVOLVED_SKELETON_SPAWN_EGG, "Evolved Skeleton Spawn Egg");
         addItem(GalacticraftItems.EVOLVED_ZOMBIE_SPAWN_EGG, "Evolved Zombie Spawn Egg");
 
-        addWithSuffix(SchematicVariants.ASTRO_MINER, "title", "Astro Miner");
-        addWithSuffix(SchematicVariants.CARGO_ROCKET, "title", "Cargo Rocket");
-        addWithSuffix(SchematicVariants.MOON_BUGGY, "title", "Moon Buggy");
-        addWithSuffix(SchematicVariants.TIER_2_ROCKET, "title", "Rocket Tier 2");
-        addWithSuffix(SchematicVariants.TIER_3_ROCKET, "title", "Rocket Tier 3");
+        addWithSuffix(BuiltinSchematicVariants.ASTRO_MINER, "title", "Astro Miner");
+        addWithSuffix(BuiltinSchematicVariants.CARGO_ROCKET, "title", "Cargo Rocket");
+        addWithSuffix(BuiltinSchematicVariants.MOON_BUGGY, "title", "Moon Buggy");
+        addWithSuffix(BuiltinSchematicVariants.TIER_2_ROCKET, "title", "Rocket Tier 2");
+        addWithSuffix(BuiltinSchematicVariants.TIER_3_ROCKET, "title", "Rocket Tier 3");
 
         add(GalacticraftTags.BlockItems.MACHINE.block(), "Machine");
         add(GalacticraftTags.BlockItems.MACHINE_BASIC.block(), "Basic machine");

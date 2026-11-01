@@ -9,7 +9,7 @@ package io.kalishak.galacticraftlegacy.world.level.storage.loot.functions;
 
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import io.kalishak.galacticraftlegacy.components.GalacticraftDataComponents;
+import io.kalishak.galacticraftlegacy.component.GalacticraftDataComponents;
 import net.minecraft.core.Holder;
 import net.minecraft.util.valueproviders.IntProvider;
 import net.minecraft.util.valueproviders.IntProviders;
@@ -17,6 +17,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.functions.LootItemConditionalFunction;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import org.jspecify.annotations.NonNull;
 
 import java.util.Optional;
 
@@ -28,23 +29,25 @@ public class SetItemCapacitorFunction extends LootItemConditionalFunction {
     );
     private final IntProvider value;
 
+    @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
     private SetItemCapacitorFunction(Optional<Holder<LootItemCondition>> condition, IntProvider value) {
         super(condition);
         this.value = value;
     }
 
     @Override
-    public MapCodec<SetItemCapacitorFunction> codec() {
+    public @NonNull MapCodec<SetItemCapacitorFunction> codec() {
         return MAP_CODEC;
     }
 
     @Override
-    public ItemStack run(ItemStack itemStack, LootContext context) {
+    public @NonNull ItemStack run(ItemStack itemStack, LootContext context) {
         itemStack.set(GalacticraftDataComponents.STORED_ENERGY, this.value.sample(context.getRandom()));
         return itemStack;
     }
 
-    public static <T> LootItemConditionalFunction.Builder<?> setEnergy(IntProvider value) {
+    @SuppressWarnings("unused")
+    public static LootItemConditionalFunction.Builder<?> setEnergy(IntProvider value) {
         return simpleBuilder(conditions -> new SetItemCapacitorFunction(conditions, value));
     }
 }

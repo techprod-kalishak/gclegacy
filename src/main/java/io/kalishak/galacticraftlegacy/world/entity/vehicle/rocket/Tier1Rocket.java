@@ -10,7 +10,7 @@ package io.kalishak.galacticraftlegacy.world.entity.vehicle.rocket;
 import io.kalishak.galacticraftlegacy.attachment.GalacticraftAttachments;
 import io.kalishak.galacticraftlegacy.attachment.entity.PlayerSpaceData;
 import io.kalishak.galacticraftlegacy.attachment.entity.TransitionalRocketInfo;
-import io.kalishak.galacticraftlegacy.components.GalacticraftDataComponents;
+import io.kalishak.galacticraftlegacy.component.GalacticraftDataComponents;
 import io.kalishak.galacticraftlegacy.config.CommonConfig;
 import io.kalishak.galacticraftlegacy.galaxies.celestial.CelestialBodyInstance;
 import io.kalishak.galacticraftlegacy.world.attribute.GalacticraftEnvironmentAttributes;
@@ -43,7 +43,9 @@ import org.jspecify.annotations.Nullable;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
+@SuppressWarnings("unused")
 public class Tier1Rocket extends TieredRocket {
     public Tier1Rocket(EntityType<?> entityType, Level level, Type type, @Nullable Player owner) {
         super(entityType, level, FeatureTier.TIER_1, type, GalacticraftItems.TIER_1_ROCKET::value, owner);
@@ -91,7 +93,7 @@ public class Tier1Rocket extends TieredRocket {
                 EnvironmentAttributeMap map = level().dimensionType().attributes();
 
                 if (map.contains(GalacticraftEnvironmentAttributes.FUEL_MULTIPLIER.get())) {
-                    speedMultiplier = map.get(GalacticraftEnvironmentAttributes.FUEL_MULTIPLIER.get()).applyModifier((float) speedMultiplier);
+                    speedMultiplier = Objects.requireNonNull(map.get(GalacticraftEnvironmentAttributes.FUEL_MULTIPLIER.get())).applyModifier((float) speedMultiplier);
                 }
 
                 if (getTimeSinceLaunch() % Mth.floor(3 * speedMultiplier) == 0) {

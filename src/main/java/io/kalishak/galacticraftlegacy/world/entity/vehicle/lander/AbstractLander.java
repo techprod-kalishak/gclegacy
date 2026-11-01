@@ -10,7 +10,7 @@ package io.kalishak.galacticraftlegacy.world.entity.vehicle.lander;
 import io.kalishak.galacticraftlegacy.attachment.GalacticraftAttachments;
 import io.kalishak.galacticraftlegacy.attachment.entity.PlayerSpaceData;
 import io.kalishak.galacticraftlegacy.attachment.entity.TransitionalRocketInfo;
-import io.kalishak.galacticraftlegacy.components.GalacticraftDataComponents;
+import io.kalishak.galacticraftlegacy.component.GalacticraftDataComponents;
 import io.kalishak.galacticraftlegacy.transfer.capability.fluid.SingleTankResourceHandler;
 import io.kalishak.galacticraftlegacy.world.entity.vehicle.MovingEntity;
 import net.minecraft.core.component.DataComponents;
@@ -27,6 +27,7 @@ import net.neoforged.neoforge.transfer.item.ItemResource;
 import java.util.Optional;
 import java.util.UUID;
 
+@SuppressWarnings("unused")
 public abstract class AbstractLander extends MovingEntity {
     private static final int FUEL_CAPACITY = 5000;
     protected final SingleTankResourceHandler fluid = new SingleTankResourceHandler(FUEL_CAPACITY);
@@ -34,7 +35,7 @@ public abstract class AbstractLander extends MovingEntity {
     private UUID persistantRiderUUID;
     private boolean shouldMoveClient;
     private boolean shouldMoveServer;
-    private boolean syncAdjustFlag = true;
+    private final boolean syncAdjustFlag = true;
 
     public AbstractLander(EntityType<?> entityType, Level level, int inventorySize) {
         super(entityType, level, inventorySize);

@@ -12,13 +12,14 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.kalishak.galacticraftlegacy.client.model.geom.GalacticraftModelLayers;
 import io.kalishak.galacticraftlegacy.client.model.item.KeyModel;
-import io.kalishak.galacticraftlegacy.components.GalacticraftDataComponents;
+import io.kalishak.galacticraftlegacy.component.GalacticraftDataComponents;
 import io.kalishak.galacticraftlegacy.world.item.FeatureTier;
 import io.kalishak.galacticraftlegacy.world.item.KeyLock;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.special.SpecialModelRenderer;
 import net.minecraft.world.item.ItemStack;
 import org.joml.Vector3fc;
+import org.jspecify.annotations.NonNull;
 
 import java.util.function.Consumer;
 
@@ -55,7 +56,7 @@ public class KeySpecialRenderer implements SpecialModelRenderer<FeatureTier> {
     }
 
     @Override
-    public void getExtents(Consumer<Vector3fc> consumer) {
+    public void getExtents(@NonNull Consumer<Vector3fc> consumer) {
         PoseStack poseStack = new PoseStack();
         poseStack.scale(1.0F, -1.0F, -1.0F);
         this.keyModel.root().getExtentsForGui(poseStack, consumer);
@@ -67,7 +68,7 @@ public class KeySpecialRenderer implements SpecialModelRenderer<FeatureTier> {
         ).apply(instance, Unbaked::new));
 
         @Override
-        public MapCodec<Unbaked> type() {
+        public @NonNull MapCodec<Unbaked> type() {
             return MAP_CODEC;
         }
 

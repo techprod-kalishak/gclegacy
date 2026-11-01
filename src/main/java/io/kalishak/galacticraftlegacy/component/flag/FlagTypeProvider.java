@@ -1,4 +1,4 @@
-package io.kalishak.galacticraftlegacy.components.flag;
+package io.kalishak.galacticraftlegacy.component.flag;
 
 import com.mojang.serialization.MapCodec;
 import io.netty.buffer.ByteBuf;

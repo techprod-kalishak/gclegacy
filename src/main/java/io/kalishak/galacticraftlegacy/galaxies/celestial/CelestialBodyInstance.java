@@ -2,7 +2,7 @@ package io.kalishak.galacticraftlegacy.galaxies.celestial;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import io.kalishak.galacticraftlegacy.components.GalacticraftDataComponents;
+import io.kalishak.galacticraftlegacy.component.GalacticraftDataComponents;
 import io.kalishak.galacticraftlegacy.registry.GalacticraftRegistries;
 import io.kalishak.galacticraftlegacy.world.entity.vehicle.rocket.TieredRocket;
 import io.kalishak.galacticraftlegacy.world.item.FeatureTier;
@@ -22,6 +22,7 @@ import net.minecraft.world.entity.EntityReference;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.phys.Vec3;
+import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
 import java.util.Collection;
@@ -29,14 +30,17 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-
+@SuppressWarnings("unused")
 public final class CelestialBodyInstance implements Nameable, DataComponentHolder, TypedInstance<Celestial> {
     public static final Codec<CelestialBodyInstance> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             Codec.lazyInitialized(() -> Celestial.CODEC).fieldOf("celestial_body").forGetter(CelestialBodyInstance::typeHolder),
             DataComponentMap.CODEC.fieldOf("components").forGetter(x -> x.components)
     ).apply(instance, CelestialBodyInstance::new));
     public static final Codec<CelestialBodyInstance> OPTIONAL_CODEC = ExtraCodecs.optionalEmptyMap(CODEC)
-            .xmap(optionalCelestial -> optionalCelestial.orElse(CelestialBodyInstance.EMPTY), celestial -> celestial.isEmpty() ? Optional.empty() : Optional.of(celestial));
+            .xmap(optionalCelestial -> optionalCelestial.orElse(CelestialBodyInstance.EMPTY), celestial -> {
+                assert celestial != null;
+                return celestial.isEmpty() ? Optional.empty() : Optional.of(celestial);
+            });
     public static final StreamCodec<RegistryFriendlyByteBuf, CelestialBodyInstance> STREAM_CODEC = createOptionalStreamCodec();
     public static final CelestialBodyInstance EMPTY = new CelestialBodyInstance(null, DataComponentMap.EMPTY);
     private final Holder<Celestial> typeHolder;
@@ -53,7 +57,7 @@ public final class CelestialBodyInstance implements Nameable, DataComponentHolde
 
     private static StreamCodec<RegistryFriendlyByteBuf, CelestialBodyInstance> createOptionalStreamCodec() {
         return new StreamCodec<>() {
-            public CelestialBodyInstance decode(RegistryFriendlyByteBuf input) {
+            public @NonNull CelestialBodyInstance decode(@NonNull RegistryFriendlyByteBuf input) {
                 int isEmpty = input.readVarInt();
 
                 if (isEmpty == 0) {
@@ -66,7 +70,7 @@ public final class CelestialBodyInstance implements Nameable, DataComponentHolde
                 return new CelestialBodyInstance(celestialHolder, PatchedDataComponentMap.fromPatch(celestialHolder.components(), patch));
             }
 
-            public void encode(RegistryFriendlyByteBuf output, CelestialBodyInstance celestial) {
+            public void encode(@NonNull RegistryFriendlyByteBuf output, @NonNull CelestialBodyInstance celestial) {
                 if (celestial.isEmpty()) {
                     output.writeVarInt(0);
                 } else {
@@ -78,18 +82,18 @@ public final class CelestialBodyInstance implements Nameable, DataComponentHolde
     }
 
     @Override
-    public Holder<Celestial> typeHolder() {
+    public @NonNull Holder<Celestial> typeHolder() {
         return this.typeHolder;
     }
 
     @Override
-    public PatchedDataComponentMap getComponents() {
+    public @NonNull PatchedDataComponentMap getComponents() {
         return this.components;
     }
 
     @Override
-    public Component getName() {
-        return getCustomName() == null ? this.typeHolder.value().description() : null;
+    public @NonNull Component getName() {
+        return getCustomName() == null ? this.typeHolder.value().description() : getCustomName();
     }
 
     @Override
@@ -165,8 +169,8 @@ public final class CelestialBodyInstance implements Nameable, DataComponentHolde
         return null;
     }
 
-    public boolean isBreathable() {
-        return this.typeHolder.value().atmosphereInfo().isBreathable();
+    public boolean hasNoOxygen() {
+        return !this.typeHolder.value().atmosphereInfo().isBreathable();
     }
 
     public boolean isReachable() {
@@ -174,7 +178,13 @@ public final class CelestialBodyInstance implements Nameable, DataComponentHolde
     }
 
     public boolean isReachable(FeatureTier featureTier) {
-        return hasTargetDimension() && getRequiredTier().getLevel() <= featureTier.getLevel();
+        FeatureTier tier = getRequiredTier();
+
+        if (tier == null) {
+            return false;
+        }
+
+        return hasTargetDimension() && tier.getLevel() <= featureTier.getLevel();
     }
 
     public boolean isSatellite() {

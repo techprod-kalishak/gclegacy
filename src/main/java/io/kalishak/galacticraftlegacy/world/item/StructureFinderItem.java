@@ -7,7 +7,7 @@
 
 package io.kalishak.galacticraftlegacy.world.item;
 
-import io.kalishak.galacticraftlegacy.components.GalacticraftDataComponents;
+import io.kalishak.galacticraftlegacy.component.GalacticraftDataComponents;
 import io.kalishak.galacticraftlegacy.data.GalacticraftTags;
 import io.kalishak.galacticraftlegacy.references.GalacticraftComponents;
 import net.minecraft.core.BlockPos;
@@ -26,6 +26,7 @@ import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
+import org.jspecify.annotations.NonNull;
 
 import java.util.function.Consumer;
 
@@ -40,7 +41,7 @@ public class StructureFinderItem extends Item {
     }
 
     @Override
-    public InteractionResult use(Level level, Player player, InteractionHand hand) {
+    public @NonNull InteractionResult use(@NonNull Level level, Player player, @NonNull InteractionHand hand) {
         ItemStack inHand = player.getItemInHand(hand);
         BlockHitResult blockHitResult = getPlayerPOVHitResult(level, player, ClipContext.Fluid.NONE);
 
@@ -61,7 +62,8 @@ public class StructureFinderItem extends Item {
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay tooltipDisplay, Consumer<Component> tooltipAdder, TooltipFlag flag) {
+    @SuppressWarnings("deprecation")
+    public void appendHoverText(@NonNull ItemStack stack, @NonNull TooltipContext context, @NonNull TooltipDisplay tooltipDisplay, Consumer<Component> tooltipAdder, @NonNull TooltipFlag flag) {
         tooltipAdder.accept(GalacticraftComponents.CREATIVE_ONLY.asComponent());
     }
 }

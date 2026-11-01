@@ -8,7 +8,7 @@
 package io.kalishak.galacticraftlegacy.world.level.block;
 
 import io.kalishak.galacticraftlegacy.client.gui.screens.inventory.workbench.NasaWorkbenchScreenPage;
-import io.kalishak.galacticraftlegacy.registry.SchematicVariants;
+import io.kalishak.galacticraftlegacy.registry.BuiltinSchematicVariants;
 import io.kalishak.galacticraftlegacy.world.inventory.workbench.NasaWorkbenchMenu;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.NasaWorkbenchBlockEntity;
 import net.minecraft.core.BlockPos;
@@ -21,6 +21,7 @@ import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
+import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
 public class NasaWorkbenchBlock extends BaseEntityBlock {
@@ -29,7 +30,7 @@ public class NasaWorkbenchBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
+    protected @NonNull InteractionResult useWithoutItem(@NonNull BlockState state, Level level, @NonNull BlockPos pos, @NonNull Player player, @NonNull BlockHitResult hitResult) {
         if (!level.isClientSide()) {
             player.openMenu(state.getMenuProvider(level, pos), pos);
         }
@@ -38,15 +39,15 @@ public class NasaWorkbenchBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected MenuProvider getMenuProvider(BlockState state, Level level, BlockPos pos) {
+    protected MenuProvider getMenuProvider(@NonNull BlockState state, @NonNull Level level, @NonNull BlockPos pos) {
         return new SimpleMenuProvider(
                 (containerId, inventory, _) -> new NasaWorkbenchMenu(containerId, inventory, level, pos),
-                NasaWorkbenchScreenPage.createTitle(SchematicVariants.TIER_1_ROCKET)
+                NasaWorkbenchScreenPage.createTitle(BuiltinSchematicVariants.TIER_1_ROCKET)
         );
     }
 
     @Override
-    public @Nullable BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
+    public @Nullable BlockEntity newBlockEntity(@NonNull BlockPos blockPos, @NonNull BlockState blockState) {
         return new NasaWorkbenchBlockEntity(blockPos, blockState);
     }
 }

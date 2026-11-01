@@ -10,7 +10,7 @@ package io.kalishak.galacticraftlegacy.advancements;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.kalishak.galacticraftlegacy.attachment.AttachmentHelper;
-import io.kalishak.galacticraftlegacy.registry.ChecklistEntry;
+import io.kalishak.galacticraftlegacy.component.ChecklistEntry;
 import io.kalishak.galacticraftlegacy.registry.GalacticraftRegistries;
 import io.kalishak.galacticraftlegacy.transfer.entity.SpaceGearEquipment;
 import io.kalishak.galacticraftlegacy.world.entity.GearEquipmentSlot;
@@ -22,13 +22,14 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import org.jspecify.annotations.NonNull;
 
 import java.util.Map;
 import java.util.Optional;
 
 public class ChecklistDoneTrigger extends SimpleCriterionTrigger<ChecklistDoneTrigger.TriggerInstance> {
     @Override
-    public Codec<TriggerInstance> codec() {
+    public @NonNull Codec<TriggerInstance> codec() {
         return TriggerInstance.CODEC;
     }
 
@@ -50,6 +51,7 @@ public class ChecklistDoneTrigger extends SimpleCriterionTrigger<ChecklistDoneTr
                 ResourceKey.codec(GalacticraftRegistries.Keys.CHECKLIST).fieldOf("entry").forGetter(TriggerInstance::entry)
         ).apply(instance, ChecklistDoneTrigger.TriggerInstance::new));
 
+        @SuppressWarnings("unused")
         public static Criterion<TriggerInstance> hasChecklistCompleted(ResourceKey<ChecklistEntry> entry) {
             return GalacticraftCriteriaTriggers.CHECKLIST_CHECK.get().createCriterion(new TriggerInstance(Optional.empty(), entry));
         }

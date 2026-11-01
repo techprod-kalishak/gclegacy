@@ -7,7 +7,7 @@
 
 package io.kalishak.galacticraftlegacy.transfer;
 
-import io.kalishak.galacticraftlegacy.components.GalacticraftDataComponents;
+import io.kalishak.galacticraftlegacy.component.GalacticraftDataComponents;
 import io.kalishak.galacticraftlegacy.world.item.component.FluidTankContents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -46,7 +46,8 @@ import org.jspecify.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.function.*;
+import java.util.function.BiFunction;
+import java.util.function.Predicate;
 
 public interface ResourcefulHelper {
     /** Items */
@@ -212,98 +213,14 @@ public interface ResourcefulHelper {
         return stacks;
     }
 
+    @SuppressWarnings("unused")
     static <R extends Resource> void notPlaceable(int index, R resource, int amount) {
-    }
-
-    static <R extends Resource, S> boolean handlerMatches(ResourceHandler<R> resourceHandler, ResourceHandler<R> otherResourceHandler, BiFunction<ResourceHandler<R>, Integer, S> toStack, BiPredicate<S, S> stackComparator) {
-        if (resourceHandler.size() != otherResourceHandler.size()) {
-            return false;
-        }
-
-        for (int i = 0; i < resourceHandler.size(); i++) {
-            S stack = toStack.apply(resourceHandler, i);
-            S otherStack = toStack.apply(otherResourceHandler, i);
-
-            if (!stackComparator.test(stack, otherStack)) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    static <R extends Resource, S> int hashResourceHandler(ResourceHandler<R> resourceHandler, BiFunction<ResourceHandler<R>, Integer, S> toStack, ToIntFunction<S> stackHashGetter) {
-        int hash = 0;
-
-        for (int i = 0; i < resourceHandler.size(); i++) {
-            hash = hash * 31 + stackHashGetter.applyAsInt(toStack.apply(resourceHandler, i));
-        }
-
-        return hash;
-    }
-
-    static <R extends Resource, S> int clearOrCountMatching(ResourceHandler<R> resourceHandler, BiFunction<ResourceHandler<R>, Integer, S> transformer, Predicate<S> stackPredicate, int maxAmount, boolean simulate) {
-        int clearedItems = 0;
-
-        for (int i = 0; i <= resourceHandler.size(); i++) {
-            int submitted = clearOrCountMatching(resourceHandler, transformer, i, stackPredicate, maxAmount - clearedItems, simulate);
-            R resource = resourceHandler.getResource(i);
-
-            if (submitted > 0 && !simulate && !resource.isEmpty()) {
-                try (Transaction tx = Transaction.open(null)) {
-                    if (resourceHandler.extract(i, resource, resourceHandler.getAmountAsInt(i), tx) > 0) {
-                        tx.commit();
-
-                        clearedItems += submitted;
-                    }
-                }
-            }
-        }
-
-        return clearedItems;
-    }
-
-    static <R extends Resource, S> int clearOrCountMatching(ResourceHandler<R> resourceHandler, BiFunction<ResourceHandler<R>, Integer, S> transformer, int index, Predicate<S> predicate, int maxAmount, boolean simulate) {
-        R resource = resourceHandler.getResource(index);
-
-        if (resource.isEmpty() || !predicate.test(transformer.apply(resourceHandler, index))) {
-            return 0;
-        } else if (simulate) {
-            return resourceHandler.getAmountAsInt(index);
-        }
-
-        int amount = resourceHandler.getAmountAsInt(index);
-        int i = maxAmount < 0 ? amount : Math.min(amount, maxAmount);
-
-        try (Transaction tx = Transaction.open(null)) {
-            if (resourceHandler.extract(resource, i, tx) > 0) {
-                tx.commit();
-
-                return i;
-            }
-        }
-
-        return 0;
     }
 
     static <R extends Resource> void clear(ResourceHandler<R> resourceHandler, IndexModifier<R> indexModifier, R emptyResource) {
         for (int i = 0; i <= resourceHandler.size(); i++) {
             indexModifier.set(i, emptyResource, 0);
         }
-    }
-
-    static <R extends Resource, S> boolean areResourcesEqual(R resource, R otherResource, int resourceCount, int otherResourceCount, BiFunction<R, Integer, S> stacker, BiPredicate<S, S> stackComparator) {
-        if (resource.isEmpty() && otherResource.isEmpty()) {
-            return true;
-        } else if (resource.isEmpty() || otherResource.isEmpty()) {
-            return false;
-        }
-
-        return stackComparator.test(stacker.apply(resource, resourceCount), stacker.apply(otherResource, otherResourceCount));
-    }
-
-    static <R extends Resource, S> boolean areResourcesEqual(R resource, R otherResource, Function<R, S> stacker, BiPredicate<S, S> stackComparator) {
-        return areResourcesEqual(resource, otherResource, 1, 1, (r, i) -> stacker.apply(r), stackComparator);
     }
 
     static <R extends Resource, S> List<S> asList(ResourceHandler<R> resourceHandler, BiFunction<ResourceHandler<R>, Integer, S> stacker) {

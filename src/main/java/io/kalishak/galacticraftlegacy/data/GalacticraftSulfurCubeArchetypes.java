@@ -18,7 +18,6 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.SulfurCubeArchetype;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.monster.cubemob.SulfurCube;
 import net.minecraft.world.item.Item;
 
 import java.util.List;
@@ -32,7 +31,7 @@ public class GalacticraftSulfurCubeArchetypes {
         register(
                 cxt,
                 SPACY,
-                GalacticraftTags.Items.SULFUR_CUBE_ARCHETYPE_SPACY,
+                GalacticraftTags.BlockItems.SULFUR_CUBE_ARCHETYPE_SPACY.item(),
                 archetype(0.7F, 0.5F, 0.15F, 0.05F, 0.055F),
                 false,
                 knockBackHitScale(0.76F, 0.15F),

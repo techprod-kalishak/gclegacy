@@ -13,9 +13,9 @@ import io.kalishak.galacticraftlegacy.attachment.block.SyncedFluidResource;
 import io.kalishak.galacticraftlegacy.attachment.entity.AdvancedMovement;
 import io.kalishak.galacticraftlegacy.attachment.entity.EntityGearInventory;
 import io.kalishak.galacticraftlegacy.attachment.entity.PlayerSpaceData;
-import io.kalishak.galacticraftlegacy.components.flag.FlagData;
-import io.kalishak.galacticraftlegacy.registry.SchematicVariant;
-import io.kalishak.galacticraftlegacy.registry.SchematicVariants;
+import io.kalishak.galacticraftlegacy.component.SchematicVariant;
+import io.kalishak.galacticraftlegacy.component.flag.FlagData;
+import io.kalishak.galacticraftlegacy.registry.BuiltinSchematicVariants;
 import io.kalishak.galacticraftlegacy.world.item.component.HotContent;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.MachineStatus;
 import net.minecraft.core.Holder;
@@ -87,7 +87,7 @@ public final class GalacticraftAttachments {
             "data_schematic",
             () -> AttachmentType.builder(attachmentHolder -> {
                 if (attachmentHolder instanceof Entity entity) {
-                    return entity.registryAccess().getOrThrow(SchematicVariants.TIER_2_ROCKET).getDelegate();
+                    return entity.registryAccess().getOrThrow(BuiltinSchematicVariants.TIER_2_ROCKET).getDelegate();
                 }
 
                 throw new IllegalArgumentException(attachmentHolder.getClass() + " should not store the schematic data!");

@@ -24,7 +24,7 @@ public class GalacticraftCommands {
 
         EmergencyEquipCommand.register(event.getDispatcher());
         SpaceRaceCommand.register(event.getDispatcher(), event.getBuildContext());
-        UnlockSchematicCommand.register(event.getDispatcher(), event.getBuildContext());
+        UnlockSchematicCommand.register(event.getDispatcher());
         CelestialCommand.register(event.getDispatcher(), event.getBuildContext());
     }
 }

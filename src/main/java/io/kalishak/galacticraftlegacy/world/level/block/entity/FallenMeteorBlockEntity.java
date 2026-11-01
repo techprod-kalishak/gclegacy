@@ -8,7 +8,7 @@
 package io.kalishak.galacticraftlegacy.world.level.block.entity;
 
 import io.kalishak.galacticraftlegacy.attachment.GalacticraftAttachments;
-import io.kalishak.galacticraftlegacy.components.GalacticraftDataComponents;
+import io.kalishak.galacticraftlegacy.component.GalacticraftDataComponents;
 import io.kalishak.galacticraftlegacy.world.item.component.HotContent;
 import io.kalishak.galacticraftlegacy.world.level.block.FallenMeteorBlock;
 import net.minecraft.core.BlockPos;
@@ -22,6 +22,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.material.FluidState;
+import org.jspecify.annotations.NonNull;
 
 public class FallenMeteorBlockEntity extends BlockEntity {
     public FallenMeteorBlockEntity(BlockPos worldPosition, BlockState blockState) {
@@ -54,7 +55,7 @@ public class FallenMeteorBlockEntity extends BlockEntity {
     }
 
     @Override
-    protected void collectImplicitComponents(DataComponentMap.Builder components) {
+    protected void collectImplicitComponents(DataComponentMap.@NonNull Builder components) {
         super.collectImplicitComponents(components);
 
         int heatLevel = getData(GalacticraftAttachments.HOT_CONTENT).getHeatLevel();
@@ -65,7 +66,7 @@ public class FallenMeteorBlockEntity extends BlockEntity {
     }
 
     @Override
-    protected void applyImplicitComponents(DataComponentGetter components) {
+    protected void applyImplicitComponents(@NonNull DataComponentGetter components) {
         super.applyImplicitComponents(components);
 
         HotContent hotContent = components.get(GalacticraftDataComponents.HOT_CONTENT);

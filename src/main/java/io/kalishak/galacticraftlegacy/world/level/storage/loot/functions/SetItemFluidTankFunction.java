@@ -9,7 +9,7 @@ package io.kalishak.galacticraftlegacy.world.level.storage.loot.functions;
 
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import io.kalishak.galacticraftlegacy.components.GalacticraftDataComponents;
+import io.kalishak.galacticraftlegacy.component.GalacticraftDataComponents;
 import net.minecraft.core.Holder;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.material.Fluid;
@@ -21,6 +21,7 @@ import net.minecraft.world.level.storage.loot.providers.number.ints.ContextIntPr
 import net.neoforged.neoforge.fluids.FluidInstance;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.SimpleFluidContent;
+import org.jspecify.annotations.NonNull;
 
 import java.util.Optional;
 
@@ -34,6 +35,7 @@ public class SetItemFluidTankFunction extends LootItemConditionalFunction {
     private final Holder<Fluid> fluid;
     private final Holder<ContextIntProvider> value;
 
+    @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
     private SetItemFluidTankFunction(Optional<Holder<LootItemCondition>> condition, Holder<Fluid> fluid, Holder<ContextIntProvider> value) {
         super(condition);
         this.fluid = fluid;
@@ -41,12 +43,12 @@ public class SetItemFluidTankFunction extends LootItemConditionalFunction {
     }
 
     @Override
-    public MapCodec<SetItemFluidTankFunction> codec() {
+    public @NonNull MapCodec<SetItemFluidTankFunction> codec() {
         return MAP_CODEC;
     }
 
     @Override
-    public ItemStack run(ItemStack itemStack, LootContext context) {
+    public @NonNull ItemStack run(ItemStack itemStack, @NonNull LootContext context) {
         FluidStack fluidStack = new FluidStack(this.fluid, this.value.value().getInt(context));
 
         itemStack.set(GalacticraftDataComponents.FLUID_TANK, SimpleFluidContent.copyOf(fluidStack));

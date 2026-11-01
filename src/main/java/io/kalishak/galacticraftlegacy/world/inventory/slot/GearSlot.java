@@ -9,7 +9,7 @@ package io.kalishak.galacticraftlegacy.world.inventory.slot;
 
 import io.kalishak.galacticraftlegacy.attachment.GalacticraftAttachments;
 import io.kalishak.galacticraftlegacy.attachment.entity.PlayerSpaceData;
-import io.kalishak.galacticraftlegacy.components.GalacticraftDataComponents;
+import io.kalishak.galacticraftlegacy.component.GalacticraftDataComponents;
 import io.kalishak.galacticraftlegacy.transfer.entity.SpaceGearEquipment;
 import io.kalishak.galacticraftlegacy.world.entity.GearEquipmentSlot;
 import io.kalishak.galacticraftlegacy.world.item.component.GearEquippable;
@@ -22,6 +22,7 @@ import net.minecraft.world.item.enchantment.EnchantmentEffectComponents;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.neoforged.neoforge.transfer.ResourceHandler;
 import net.neoforged.neoforge.transfer.item.ItemResource;
+import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
 public class GearSlot extends ConditionalHandlerSlot {
@@ -47,7 +48,7 @@ public class GearSlot extends ConditionalHandlerSlot {
     }
 
     @Override
-    public void setByPlayer(ItemStack newStack, ItemStack oldStack) {
+    public void setByPlayer(@NonNull ItemStack newStack, @NonNull ItemStack oldStack) {
         PlayerSpaceData data = this.owner.getData(GalacticraftAttachments.PLAYER_SPACE_DATA);
         data.onGearEquipped(this.owner, this.slot, newStack, oldStack);
 
@@ -60,7 +61,7 @@ public class GearSlot extends ConditionalHandlerSlot {
     }
 
     @Override
-    public boolean mayPickup(Player player) {
+    public boolean mayPickup(@NonNull Player player) {
         ItemStack stack = getStackCopy();
 
         return super.mayPickup(player) && (player.isCreative() || !EnchantmentHelper.has(stack, EnchantmentEffectComponents.PREVENT_ARMOR_CHANGE));

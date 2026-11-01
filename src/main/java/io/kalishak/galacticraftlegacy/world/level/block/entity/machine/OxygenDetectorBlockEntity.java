@@ -41,7 +41,7 @@ public class OxygenDetectorBlockEntity extends BlockEntity {
             blockEntity.searchDelay = 0;
             boolean foundOxygen = false;
 
-            if (!CelestialBodyInstance.getFromLevel(serverLevel).isBreathable()) {
+            if (CelestialBodyInstance.getFromLevel(serverLevel).hasNoOxygen()) {
                 if (OxygenHelper.hasOxygen(serverLevel, blockEntity.searchBounds, false)) {
                     blockState.setValue(OxygenDetectorBlock.ACTIVE, true);
                     foundOxygen = true;

@@ -11,7 +11,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.kalishak.galacticraftlegacy.attachment.GalacticraftAttachments;
-import io.kalishak.galacticraftlegacy.components.GalacticraftDataComponents;
+import io.kalishak.galacticraftlegacy.component.GalacticraftDataComponents;
 import io.kalishak.galacticraftlegacy.transfer.entity.SpaceGearEquipment;
 import io.kalishak.galacticraftlegacy.world.entity.GearEquipmentSlot;
 import io.kalishak.galacticraftlegacy.world.entity.ai.attributes.GalacticraftAttributes;
@@ -61,6 +61,7 @@ public class PlayerSpaceData extends GearInventoryProvider {
         super(gearEquipment);
     }
 
+    @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
     private static PlayerSpaceData sync(SpaceGearEquipment spaceGearEquipment, Schematics schematics, boolean isSensorGlassesActivated, boolean inPlanetSelection, Optional<TransitionalRocketInfo> transitionalRocketInfo) {
         PlayerSpaceData spaceData = new PlayerSpaceData(spaceGearEquipment);
         spaceData.unlockedSchematics.sync(schematics);
@@ -121,8 +122,8 @@ public class PlayerSpaceData extends GearInventoryProvider {
     }
 
     @Override
-    public boolean mayBreath(LivingEntity livingEntity) {
-        return (livingEntity instanceof Player player && player.getAbilities().invulnerable) || super.mayBreath(livingEntity);
+    public boolean shouldSuffocate(LivingEntity livingEntity) {
+        return (!(livingEntity instanceof Player player) || !player.getAbilities().invulnerable) && super.shouldSuffocate(livingEntity);
     }
 
     public @Nullable PlayerSpaceData copyOnDeath(IAttachmentHolder attachmentHolder, HolderLookup.Provider provider) {
@@ -141,11 +142,6 @@ public class PlayerSpaceData extends GearInventoryProvider {
         }
 
         return null;
-    }
-
-    @Override
-    public SpaceGearEquipment getGearEquipment() {
-        return this.gearEquipment;
     }
 
     public Schematics getSchematics() {

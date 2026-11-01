@@ -8,13 +8,13 @@
 package io.kalishak.galacticraftlegacy.world.item;
 
 import io.kalishak.galacticraftlegacy.Galacticraft;
-import io.kalishak.galacticraftlegacy.components.GalacticraftDataComponents;
-import io.kalishak.galacticraftlegacy.components.flag.BuiltinFlagMaterials;
-import io.kalishak.galacticraftlegacy.components.flag.FlagData;
-import io.kalishak.galacticraftlegacy.components.flag.FlagMaterial;
+import io.kalishak.galacticraftlegacy.component.GalacticraftDataComponents;
+import io.kalishak.galacticraftlegacy.component.SchematicVariant;
+import io.kalishak.galacticraftlegacy.component.flag.BuiltinFlagMaterials;
+import io.kalishak.galacticraftlegacy.component.flag.FlagData;
+import io.kalishak.galacticraftlegacy.component.flag.FlagMaterial;
 import io.kalishak.galacticraftlegacy.references.GalacticraftComponents;
 import io.kalishak.galacticraftlegacy.registry.GalacticraftRegistries;
-import io.kalishak.galacticraftlegacy.registry.SchematicVariant;
 import io.kalishak.galacticraftlegacy.world.level.material.fluid.GalacticraftFluids;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
@@ -38,6 +38,7 @@ import net.neoforged.neoforge.transfer.fluid.FluidResource;
 
 import java.util.Comparator;
 
+@SuppressWarnings("unused")
 public final class GalacticraftCreativeModeTabs {
     private static final DeferredRegister<CreativeModeTab> REGISTRY = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, Galacticraft.MODID);
     private static final Comparator<Holder<SchematicVariant>> SCHEMATIC_SORTER = Comparator.comparing(
@@ -110,7 +111,7 @@ public final class GalacticraftCreativeModeTabs {
         output.accept(GalacticraftItems.DEHYDRATED_BEETROOT);
         output.accept(GalacticraftItems.CANNED_BEEF);
         output.accept(GalacticraftItems.CHEESE_SLICE);
-        emptyAndCharged(output, GalacticraftItems.BATTERY);
+        emptyAndCharged(output);
         output.accept(GalacticraftItems.INFINITE_BATTERY);
         output.accept(GalacticraftItems.CHEESE_CHUNK);
         output.accept(GalacticraftItems.RAW_METEORIC_IRON);
@@ -321,9 +322,9 @@ public final class GalacticraftCreativeModeTabs {
         }
     }
 
-    private static void emptyAndCharged(CreativeModeTab.Output output, ItemLike item) {
-        output.accept(item, CreativeModeTab.TabVisibility.SEARCH_TAB_ONLY);
-        ItemStack stack = new ItemStack(item);
+    private static void emptyAndCharged(CreativeModeTab.Output output) {
+        output.accept(GalacticraftItems.BATTERY, CreativeModeTab.TabVisibility.SEARCH_TAB_ONLY);
+        ItemStack stack = new ItemStack((ItemLike) GalacticraftItems.BATTERY);
         EnergyHandler energyHandler = stack.getCapability(Capabilities.Energy.ITEM, ItemAccess.forStack(stack));
 
         if (energyHandler != null) {

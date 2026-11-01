@@ -7,7 +7,7 @@
 
 package io.kalishak.galacticraftlegacy.world.inventory.workbench;
 
-import io.kalishak.galacticraftlegacy.components.GalacticraftDataComponents;
+import io.kalishak.galacticraftlegacy.component.GalacticraftDataComponents;
 import io.kalishak.galacticraftlegacy.world.inventory.GalacticraftMenuType;
 import io.kalishak.galacticraftlegacy.world.inventory.slot.ConditionalHandlerSlot;
 import net.minecraft.core.BlockPos;
@@ -18,6 +18,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.neoforged.neoforge.transfer.transaction.Transaction;
+import org.jspecify.annotations.NonNull;
 
 public class NasaWorkbenchEmptyPageMenu extends AbstractNasaWorkbenchMenu {
     public NasaWorkbenchEmptyPageMenu(int containerId, Inventory inventory, Level level, BlockPos blockPos) {
@@ -46,7 +47,7 @@ public class NasaWorkbenchEmptyPageMenu extends AbstractNasaWorkbenchMenu {
     }
 
     @Override
-    public ItemStack quickMoveStack(Player player, int slotIndex) {
+    public @NonNull ItemStack quickMoveStack(@NonNull Player player, int slotIndex) {
         return ItemStack.EMPTY;
     }
 }

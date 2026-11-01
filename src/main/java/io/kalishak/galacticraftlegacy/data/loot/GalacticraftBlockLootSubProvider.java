@@ -8,7 +8,7 @@
 package io.kalishak.galacticraftlegacy.data.loot;
 
 import io.kalishak.galacticraftlegacy.client.data.GalacticraftBlockFamilies;
-import io.kalishak.galacticraftlegacy.components.GalacticraftDataComponents;
+import io.kalishak.galacticraftlegacy.component.GalacticraftDataComponents;
 import io.kalishak.galacticraftlegacy.world.item.GalacticraftItems;
 import io.kalishak.galacticraftlegacy.world.level.block.GalacticraftBlocks;
 import net.minecraft.core.HolderGetter;
@@ -34,6 +34,7 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.providers.number.ints.ContextIntProviders;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredItem;
+import org.jspecify.annotations.NonNull;
 
 import java.util.List;
 import java.util.Set;
@@ -144,7 +145,7 @@ public class GalacticraftBlockLootSubProvider extends BlockLootSubProvider {
     }
 
     @Override
-    protected Iterable<Block> getKnownBlocks() {
+    protected @NonNull Iterable<Block> getKnownBlocks() {
         return GalacticraftBlocks.getEntries().toList();
     }
 

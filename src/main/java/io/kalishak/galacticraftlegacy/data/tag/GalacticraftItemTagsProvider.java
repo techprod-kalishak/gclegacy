@@ -46,7 +46,7 @@ public class GalacticraftItemTagsProvider extends BlockTagCopyingItemTagProvider
         copy(GalacticraftTags.BlockItems.STORAGE_BLOCKS_RAW_TIN);
 
         tag(ItemTags.SULFUR_CUBE_SWALLOWABLE)
-                .addTag(GalacticraftTags.Items.SULFUR_CUBE_ARCHETYPE_SPACY);
+                .addTag(GalacticraftTags.BlockItems.SULFUR_CUBE_ARCHETYPE_SPACY.item());
         tag(ItemTags.SULFUR_CUBE_ARCHETYPE_SLOW_FLAT)
                 .add(GalacticraftBlockItemIds.ALUMINUM_BLOCK.item())
                 .add(GalacticraftBlockItemIds.RAW_ALUMINUM_BLOCK.item())
@@ -61,7 +61,7 @@ public class GalacticraftItemTagsProvider extends BlockTagCopyingItemTagProvider
         tag(ItemTags.SULFUR_CUBE_ARCHETYPE_SLOW_BOUNCY)
                 .add(GalacticraftBlockItemIds.MOON_DUNGEON_BRICKS.item())
                 .add(GalacticraftBlockItemIds.MARS_DUNGEON_BRICKS.item());
-        tag(GalacticraftTags.Items.SULFUR_CUBE_ARCHETYPE_SPACY)
+        tag(GalacticraftTags.BlockItems.SULFUR_CUBE_ARCHETYPE_SPACY.item())
                 .add(GalacticraftBlockItemIds.MOON_TURF.item())
                 .add(GalacticraftBlockItemIds.MOON_DIRT.item())
                 .add(GalacticraftBlockItemIds.MOON_ROCK.item())

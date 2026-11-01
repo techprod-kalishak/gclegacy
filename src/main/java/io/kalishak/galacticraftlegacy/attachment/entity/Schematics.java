@@ -9,12 +9,12 @@ package io.kalishak.galacticraftlegacy.attachment.entity;
 
 import com.mojang.serialization.Codec;
 import io.kalishak.galacticraftlegacy.attachment.GalacticraftAttachments;
+import io.kalishak.galacticraftlegacy.component.SchematicVariant;
+import io.kalishak.galacticraftlegacy.registry.BuiltinSchematicVariants;
 import io.kalishak.galacticraftlegacy.registry.GalacticraftRegistries;
-import io.kalishak.galacticraftlegacy.registry.SchematicVariants;
 import io.kalishak.galacticraftlegacy.world.inventory.workbench.VehicleCraftingPage;
 import io.kalishak.galacticraftlegacy.world.inventory.workbench.VehicleCraftingPages;
 import io.kalishak.galacticraftlegacy.world.score.race.SpaceRaceTeam;
-import io.kalishak.galacticraftlegacy.registry.SchematicVariant;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
@@ -26,7 +26,10 @@ import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.network.codec.NeoForgeStreamCodecs;
 import org.jspecify.annotations.Nullable;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Optional;
 import java.util.function.BiFunction;
 
 public class Schematics {
@@ -82,7 +85,7 @@ public class Schematics {
     }
 
     public boolean isUnlocked(ResourceKey<SchematicVariant> schematicId) {
-        return schematicId.equals(SchematicVariants.TIER_1_ROCKET) || this.unlockedSchematics.contains(schematicId);
+        return schematicId.equals(BuiltinSchematicVariants.TIER_1_ROCKET) || this.unlockedSchematics.contains(schematicId);
     }
 
     public int unlockedCount() {
@@ -113,14 +116,14 @@ public class Schematics {
         int indexOf = indexOf(current);
 
         if (indexOf < 1) {
-            return SchematicVariants.TIER_1_ROCKET;
+            return BuiltinSchematicVariants.TIER_1_ROCKET;
         }
 
         return this.unlockedSchematics.get(indexOf - 1);
     }
 
     private int indexOf(ResourceKey<SchematicVariant> key) {
-        return key.equals(SchematicVariants.TIER_1_ROCKET) ? -1 : this.unlockedSchematics.indexOf(key);
+        return key.equals(BuiltinSchematicVariants.TIER_1_ROCKET) ? -1 : this.unlockedSchematics.indexOf(key);
     }
 
     private static void sort(RegistryAccess registryAccess, Schematics schematics) {

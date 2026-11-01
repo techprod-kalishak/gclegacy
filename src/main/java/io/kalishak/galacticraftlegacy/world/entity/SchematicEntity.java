@@ -8,8 +8,8 @@
 package io.kalishak.galacticraftlegacy.world.entity;
 
 import io.kalishak.galacticraftlegacy.attachment.GalacticraftAttachments;
-import io.kalishak.galacticraftlegacy.components.GalacticraftDataComponents;
-import io.kalishak.galacticraftlegacy.registry.SchematicVariant;
+import io.kalishak.galacticraftlegacy.component.GalacticraftDataComponents;
+import io.kalishak.galacticraftlegacy.component.SchematicVariant;
 import io.kalishak.galacticraftlegacy.world.item.GalacticraftItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -34,6 +34,7 @@ import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
 public class SchematicEntity extends HangingEntity {
@@ -54,7 +55,7 @@ public class SchematicEntity extends HangingEntity {
     }
 
     @Override
-    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+    protected void defineSynchedData(SynchedEntityData.@NonNull Builder builder) {
         super.defineSynchedData(builder);
     }
 
@@ -67,18 +68,18 @@ public class SchematicEntity extends HangingEntity {
     }
 
     @Override
-    public @Nullable <T> T get(DataComponentType<? extends T> dataComponentType) {
+    public @Nullable <T> T get(@NonNull DataComponentType<? extends T> dataComponentType) {
         return dataComponentType == GalacticraftDataComponents.SCHEMATIC.get() ? castComponentValue(dataComponentType, getSchematic()) : super.get(dataComponentType);
     }
 
     @Override
-    protected void applyImplicitComponents(DataComponentGetter componentGetter) {
+    protected void applyImplicitComponents(@NonNull DataComponentGetter componentGetter) {
         applyImplicitComponentIfPresent(componentGetter, GalacticraftDataComponents.SCHEMATIC.get());
         super.applyImplicitComponents(componentGetter);
     }
 
     @Override
-    protected <T> boolean applyImplicitComponent(DataComponentType<T> component, T value) {
+    protected <T> boolean applyImplicitComponent(@NonNull DataComponentType<T> component, @NonNull T value) {
         if (component == GalacticraftDataComponents.SCHEMATIC.get()) {
             setSchematic(castComponentValue(GalacticraftDataComponents.SCHEMATIC.get(), value));
             return true;
@@ -88,14 +89,14 @@ public class SchematicEntity extends HangingEntity {
     }
 
     @Override
-    protected void addAdditionalSaveData(ValueOutput valueOutput) {
+    protected void addAdditionalSaveData(@NonNull ValueOutput valueOutput) {
         super.addAdditionalSaveData(valueOutput);
         valueOutput.store("facing", Direction.CODEC, getDirection());
         valueOutput.store("schematic", SchematicVariant.CODEC, getSchematic());
     }
 
     @Override
-    protected void readAdditionalSaveData(ValueInput valueInput) {
+    protected void readAdditionalSaveData(@NonNull ValueInput valueInput) {
         super.readAdditionalSaveData(valueInput);
         Direction direction = valueInput.read("facing", Direction.CODEC).orElse(Direction.SOUTH);
         setDirection(direction);
@@ -103,7 +104,7 @@ public class SchematicEntity extends HangingEntity {
     }
 
     @Override
-    protected AABB calculateBoundingBox(BlockPos blockPos, Direction facing) {
+    protected @NonNull AABB calculateBoundingBox(@NonNull BlockPos blockPos, @NonNull Direction facing) {
         Vec3 vec3 = Vec3.atCenterOf(blockPos).relative(facing, -0.46875);
         Direction direction = facing.getCounterClockWise();
         Vec3 vec31 = vec3.relative(direction, 0.5D).relative(Direction.UP, 0.5D);
@@ -137,17 +138,17 @@ public class SchematicEntity extends HangingEntity {
     }
 
     @Override
-    public Vec3 trackingPosition() {
+    public @NonNull Vec3 trackingPosition() {
         return Vec3.atLowerCornerOf(this.pos);
     }
 
     @Override
-    public Packet<ClientGamePacketListener> getAddEntityPacket(ServerEntity serverEntity) {
+    public @NonNull Packet<ClientGamePacketListener> getAddEntityPacket(@NonNull ServerEntity serverEntity) {
         return new ClientboundAddEntityPacket(this, getDirection().get3DDataValue(), getPos());
     }
 
     @Override
-    public void recreateFromPacket(ClientboundAddEntityPacket packet) {
+    public void recreateFromPacket(@NonNull ClientboundAddEntityPacket packet) {
         super.recreateFromPacket(packet);
         setDirection(Direction.from3DDataValue(packet.getData()));
     }

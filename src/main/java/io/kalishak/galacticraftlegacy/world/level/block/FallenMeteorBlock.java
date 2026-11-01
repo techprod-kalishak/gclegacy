@@ -8,7 +8,7 @@
 package io.kalishak.galacticraftlegacy.world.level.block;
 
 import io.kalishak.galacticraftlegacy.attachment.GalacticraftAttachments;
-import io.kalishak.galacticraftlegacy.components.GalacticraftDataComponents;
+import io.kalishak.galacticraftlegacy.component.GalacticraftDataComponents;
 import io.kalishak.galacticraftlegacy.world.item.HotItem;
 import io.kalishak.galacticraftlegacy.world.item.component.HotContent;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.FallenMeteorBlockEntity;
@@ -44,6 +44,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
 public class FallenMeteorBlock extends FallingBlock implements EntityBlock, SimpleWaterloggedBlock {
@@ -75,12 +76,12 @@ public class FallenMeteorBlock extends FallingBlock implements EntityBlock, Simp
     }
 
     @Override
-    public int getDustColor(BlockState blockState, BlockGetter level, BlockPos pos) {
+    public int getDustColor(@NonNull BlockState blockState, @NonNull BlockGetter level, @NonNull BlockPos pos) {
         return colorMultiplier(level, pos);
     }
 
     @Override
-    protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+    protected @NonNull VoxelShape getShape(@NonNull BlockState state, @NonNull BlockGetter level, @NonNull BlockPos pos, @NonNull CollisionContext context) {
         return SHAPE;
     }
 
@@ -98,7 +99,7 @@ public class FallenMeteorBlock extends FallingBlock implements EntityBlock, Simp
     }
 
     @Override
-    public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity by, ItemStack itemStack) {
+    public void setPlacedBy(@NonNull Level level, @NonNull BlockPos pos, @NonNull BlockState state, @Nullable LivingEntity by, ItemStack itemStack) {
         HotContent content = itemStack.get(GalacticraftDataComponents.HOT_CONTENT);
 
         if (content != null) {
@@ -107,7 +108,7 @@ public class FallenMeteorBlock extends FallingBlock implements EntityBlock, Simp
     }
 
     @Override
-    public void onBrokenAfterFall(Level level, BlockPos pos, FallingBlockEntity entity) {
+    public void onBrokenAfterFall(@NonNull Level level, @NonNull BlockPos pos, FallingBlockEntity entity) {
         entity.getExistingData(GalacticraftAttachments.HOT_CONTENT)
                         .ifPresent(hotContent -> {
                             if (hotContent.getScaledHeatLevel() > 0.5F && entity.getStartPos().getY() - 150 > pos.getY()) {
@@ -118,19 +119,19 @@ public class FallenMeteorBlock extends FallingBlock implements EntityBlock, Simp
     }
 
     @Override
-    protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity, InsideBlockEffectApplier effectApplier, boolean isPrecise) {
+    protected void entityInside(@NonNull BlockState state, @NonNull Level level, @NonNull BlockPos pos, @NonNull Entity entity, @NonNull InsideBlockEffectApplier effectApplier, boolean isPrecise) {
         if (level instanceof ServerLevel serverLevel) {
             HotItem.blockHurt(serverLevel, pos, entity);
         }
     }
 
     @Override
-    protected FluidState getFluidState(BlockState state) {
+    protected @NonNull FluidState getFluidState(BlockState state) {
         return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
     }
 
     @Override
-    protected BlockState updateShape(BlockState state, LevelReader level, ScheduledTickAccess ticks, BlockPos pos, Direction directionToNeighbour, BlockPos neighbourPos, BlockState neighbourState, RandomSource random) {
+    protected @NonNull BlockState updateShape(BlockState state, @NonNull LevelReader level, @NonNull ScheduledTickAccess ticks, @NonNull BlockPos pos, @NonNull Direction directionToNeighbour, @NonNull BlockPos neighbourPos, @NonNull BlockState neighbourState, @NonNull RandomSource random) {
         if (state.getValue(WATERLOGGED)) {
             ticks.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
         }
@@ -139,12 +140,12 @@ public class FallenMeteorBlock extends FallingBlock implements EntityBlock, Simp
     }
 
     @Override
-    public int getExpDrop(BlockState state, LevelAccessor level, BlockPos pos, @Nullable BlockEntity blockEntity, @Nullable Entity breaker, ItemStack tool) {
+    public int getExpDrop(@NonNull BlockState state, LevelAccessor level, @NonNull BlockPos pos, @Nullable BlockEntity blockEntity, @Nullable Entity breaker, @NonNull ItemStack tool) {
         return EXPERIENCE.sample(level.getRandom());
     }
 
     @Override
-    public ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state, boolean includeData, Player player) {
+    public @NonNull ItemStack getCloneItemStack(@NonNull LevelReader level, @NonNull BlockPos pos, @NonNull BlockState state, boolean includeData, @NonNull Player player) {
         ItemStack result = super.getCloneItemStack(level, pos, state, includeData, player);
 
         if (includeData) {
@@ -155,19 +156,19 @@ public class FallenMeteorBlock extends FallingBlock implements EntityBlock, Simp
     }
 
     @Override
-    protected boolean triggerEvent(BlockState state, Level level, BlockPos pos, int b0, int b1) {
+    protected boolean triggerEvent(@NonNull BlockState state, @NonNull Level level, @NonNull BlockPos pos, int b0, int b1) {
         super.triggerEvent(state, level, pos, b0, b1);
         BlockEntity blockEntity = level.getBlockEntity(pos);
         return blockEntity != null && blockEntity.triggerEvent(b0, b1);
     }
 
     @Override
-    public @Nullable BlockEntity newBlockEntity(BlockPos worldPosition, BlockState blockState) {
+    public @Nullable BlockEntity newBlockEntity(@NonNull BlockPos worldPosition, @NonNull BlockState blockState) {
         return new FallenMeteorBlockEntity(worldPosition, blockState);
     }
 
     @Override
-    public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState, BlockEntityType<T> type) {
+    public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(@NonNull Level level, @NonNull BlockState blockState, @NonNull BlockEntityType<T> type) {
         return level instanceof ServerLevel serverLevel
                 ? createTickerHelper(type, GalacticraftBlockEntityType.FALLEN_METEOR.get(), (_, pos, state, entity) -> FallenMeteorBlockEntity.serverTick(serverLevel, pos, state, entity))
                 : null;

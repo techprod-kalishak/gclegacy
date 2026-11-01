@@ -15,13 +15,13 @@ import io.kalishak.galacticraftlegacy.client.event.CelestialBodyRenderEvent;
 import io.kalishak.galacticraftlegacy.config.ClientConfig;
 import io.kalishak.galacticraftlegacy.config.ServerConfig;
 import io.kalishak.galacticraftlegacy.data.GalacticraftTags;
-import io.kalishak.galacticraftlegacy.galaxies.BuiltinGalaxies;
 import io.kalishak.galacticraftlegacy.galaxies.celestial.CelestialBodyInstance;
 import io.kalishak.galacticraftlegacy.galaxies.celestial.Star;
 import io.kalishak.galacticraftlegacy.galaxies.celestial.WorldCelestials;
 import io.kalishak.galacticraftlegacy.network.payload.CreateSpaceStationPayload;
 import io.kalishak.galacticraftlegacy.network.payload.PlayerTransitionPayload;
 import io.kalishak.galacticraftlegacy.references.Constants;
+import io.kalishak.galacticraftlegacy.registry.BuiltinGalaxies;
 import io.kalishak.galacticraftlegacy.registry.GalacticraftRegistries;
 import net.minecraft.client.GameNarrator;
 import net.minecraft.client.Minecraft;
@@ -44,6 +44,7 @@ import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 import net.neoforged.neoforge.common.NeoForge;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
+import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
 import java.util.Collection;
@@ -51,6 +52,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+@SuppressWarnings("unused")
 public class CelestialSelectionScreen extends Screen {
     protected static final int MAX_SPACE_STATION_NAME_LENGTH = 32;
     protected float zoom = 0.0F;
@@ -130,16 +132,16 @@ public class CelestialSelectionScreen extends Screen {
     }
 
     @Override
-    public void extractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
+    public void extractRenderState(@NonNull GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
         super.extractRenderState(graphics, mouseX, mouseY, a);
     }
 
-    protected @Nullable Holder<DimensionType> getSatelliteParentDimensionKey(CelestialBodyInstance celestial) {
+    protected @Nullable CelestialBodyInstance getSatelliteParentDimensionKey(CelestialBodyInstance celestial) {
         if (celestial.isSatellite()) {
             CelestialBodyInstance parent = celestial.parent(this.worldCelestials);
 
             if (!parent.isEmpty() && parent.hasTargetDimension()) {
-                return parent.getTargetDimension();
+                return parent;
             }
         }
 
@@ -246,7 +248,7 @@ public class CelestialSelectionScreen extends Screen {
     }
 
     @Override
-    public boolean keyPressed(KeyEvent event) {
+    public boolean keyPressed(@NonNull KeyEvent event) {
         if (this.canPlayerLeave) {
             if (event.isEscape() && this.shouldCloseOnEsc()) {
                 this.onClose();
@@ -363,7 +365,7 @@ public class CelestialSelectionScreen extends Screen {
     }
 
     @Override
-    public boolean mouseDragged(MouseButtonEvent event, double dx, double dy) {
+    public boolean mouseDragged(@NonNull MouseButtonEvent event, double dx, double dy) {
         if (this.mouseDragging && this.lastMovePosX != -1 && event.button() == InputConstants.MOUSE_BUTTON_LEFT)
         {
             double deltaX = event.x() - this.lastMovePosX;
@@ -395,7 +397,7 @@ public class CelestialSelectionScreen extends Screen {
     }
 
     @Override
-    public boolean mouseReleased(MouseButtonEvent event) {
+    public boolean mouseReleased(@NonNull MouseButtonEvent event) {
         super.mouseReleased(event);
 
         this.mouseDragging = false;
@@ -406,7 +408,7 @@ public class CelestialSelectionScreen extends Screen {
     }
 
     @Override
-    public boolean mouseClicked(MouseButtonEvent event, boolean doubleClick) {
+    public boolean mouseClicked(@NonNull MouseButtonEvent event, boolean doubleClick) {
         super.mouseClicked(event, doubleClick);
 
         assert getMinecraft().player != null;
@@ -416,15 +418,14 @@ public class CelestialSelectionScreen extends Screen {
 
         final float LHS = BORDER_SIZE + BORDER_EDGE_SIZE;
         final float RHS = this.width - LHS;
-        final float TOP = LHS;
 
-        if (this.selectedBody != null && event.x() > LHS && event.x() < LHS + 88 && event.y() > TOP && event.y() < TOP + 13) {
+        if (this.selectedBody != null && event.x() > LHS && event.x() < LHS + 88 && event.y() > LHS && event.y() < LHS + 13) {
             unselectCelestialBody();
             return false;
         }
 
         if (!this.canPlayerLeave) {
-            if (event.x() >= RHS - 95 && event.x()< RHS && event.y() > TOP + 181 + this.canCreateOffset && event.y() < TOP + 182 + 12 + this.canCreateOffset) {
+            if (event.x() >= RHS - 95 && event.x()< RHS && event.y() > LHS + 181 + this.canCreateOffset && event.y() < LHS + 182 + 12 + this.canCreateOffset) {
                 if (this.selectedBody != null) {
                     var recipe = this.selectedBody.typeHolder().value().recipe().orElse(null);
 
@@ -450,7 +451,7 @@ public class CelestialSelectionScreen extends Screen {
             }
         }
 
-        if (event.x() > RHS - 88 && event.x() < RHS && event.y() > TOP && event.y() < TOP + 13) {
+        if (event.x() > RHS - 88 && event.x() < RHS && event.y() > LHS && event.y() < LHS + 13) {
             if (this.canPlayerLeave) {
                 getMinecraft().gui.setScreen(null);
                 clickHandled = true;
@@ -467,6 +468,7 @@ public class CelestialSelectionScreen extends Screen {
 
         // Need unscaled mouse coords
         int mouseX = (int) event.x();
+        assert getMinecraft().gui.screen() != null;
         int mouseY = (int) event.y() * -1 + getMinecraft().gui.screen().height - 1;
 
         if (isSatelliteSelected) {
@@ -498,7 +500,7 @@ public class CelestialSelectionScreen extends Screen {
             } else {
                 //drawTexturedModalRect(width / 2 - 47, TOP, 94, 11, 0, 414, 188, 22, false, false);
 
-                if (event.x() >= this.width / 2.0F - 47 && event.x() <= this.width / 2.0F - 47 + 94 && event.y() >= TOP && event.y() <= TOP + 11) {
+                if (event.x() >= this.width / 2.0F - 47 && event.x() <= this.width / 2.0F - 47 + 94 && event.y() >= LHS && event.y() <= LHS + 11) {
                     if (this.selectedStationOwner.isEmpty() && this.selectedStationOwner.equalsIgnoreCase(getMinecraft().player.getScoreboardName())) {
                         this.renamingSpaceStation = true;
                         this.renamingString = null;
@@ -515,7 +517,7 @@ public class CelestialSelectionScreen extends Screen {
 
                 // Up button
                 xPos = RHS - 85;
-                yPos = TOP + 45;
+                yPos = LHS + 45;
 
                 if (event.x() >= xPos && event.x() <= xPos + 61 && event.y() >= yPos && event.y() <= yPos + 4) {
                     if (this.spaceStationListOffset > 0) {
@@ -527,7 +529,7 @@ public class CelestialSelectionScreen extends Screen {
 
                 // Down button
                 xPos = RHS - 85;
-                yPos = TOP + 49 + max * 14;
+                yPos = LHS + 49 + max * 14;
 
                 if (event.x() >= xPos && event.x() <= xPos + 61 && event.y() >= yPos && event.y() <= yPos + 4) {
                     if (max + spaceStationListOffset < stationListSize) {
@@ -552,7 +554,7 @@ public class CelestialSelectionScreen extends Screen {
                         }
 
                         xPos = RHS - 95 + xOffset;
-                        yPos = TOP + 50 + i * 14;
+                        yPos = LHS + 50 + i * 14;
 
                         if (event.x() >= xPos && event.x() <= xPos + 93 && event.y() >= yPos && event.y() <= yPos + 12) {
                             this.selectedStationOwner = e.getKey();
@@ -566,7 +568,7 @@ public class CelestialSelectionScreen extends Screen {
         }
 
         float xPos = LHS + 2;
-        float yPos = TOP + 10;
+        float yPos = LHS + 10;
 
         boolean planetZoomedMoon = isZoomed() && this.selectedParent.is(GalacticraftTags.Celestials.PLANETS);
 
@@ -631,7 +633,7 @@ public class CelestialSelectionScreen extends Screen {
         if (!clickHandled) {
             Collection<CelestialBodyInstance> children = CelestialBodyInstance.getChildren(this.registryAccess, isZoomed() && !(this.selectedParent.is(GalacticraftTags.Celestials.PLANETS)) ? this.selectedBody : this.selectedParent, this.worldCelestials);
 
-            yPos = TOP + 50;
+            yPos = LHS + 50;
 
             for (CelestialBodyInstance child : children) {
                 clickHandled = testClicked(child, child.is(this.selectedBody.typeHolder()) ? 5 : 0, yPos, event.x(), event.y(), false);

@@ -8,7 +8,7 @@
 package io.kalishak.galacticraftlegacy.client.renderer.item.properties.numeric;
 
 import com.mojang.serialization.MapCodec;
-import io.kalishak.galacticraftlegacy.components.GalacticraftDataComponents;
+import io.kalishak.galacticraftlegacy.component.GalacticraftDataComponents;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.item.properties.numeric.NeedleDirectionHelper;
 import net.minecraft.core.BlockPos;
@@ -19,6 +19,7 @@ import net.minecraft.world.entity.ItemOwner;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
+import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
 public class DungeonLocatorAngleState extends NeedleDirectionHelper {
@@ -60,7 +61,7 @@ public class DungeonLocatorAngleState extends NeedleDirectionHelper {
     }
 
     @Override
-    protected float calculate(ItemStack itemStack, ClientLevel clientLevel, int seed, ItemOwner itemOwner) {
+    protected float calculate(ItemStack itemStack, ClientLevel clientLevel, int seed, @NonNull ItemOwner itemOwner) {
         GlobalPos globalpos = itemStack.get(GalacticraftDataComponents.STRUCTURE_POS);
         long i = clientLevel.getGameTime();
         return !isValidCompassTargetPos(itemOwner, globalpos)

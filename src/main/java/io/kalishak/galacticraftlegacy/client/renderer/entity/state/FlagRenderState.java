@@ -7,7 +7,7 @@
 
 package io.kalishak.galacticraftlegacy.client.renderer.entity.state;
 
-import io.kalishak.galacticraftlegacy.components.flag.FlagTypeProvider;
+import io.kalishak.galacticraftlegacy.component.flag.FlagTypeProvider;
 import net.minecraft.client.renderer.entity.state.EntityRenderState;
 
 public class FlagRenderState extends EntityRenderState {

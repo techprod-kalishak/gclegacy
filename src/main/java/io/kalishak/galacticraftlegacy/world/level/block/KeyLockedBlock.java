@@ -7,7 +7,7 @@
 
 package io.kalishak.galacticraftlegacy.world.level.block;
 
-import io.kalishak.galacticraftlegacy.components.GalacticraftDataComponents;
+import io.kalishak.galacticraftlegacy.component.GalacticraftDataComponents;
 import io.kalishak.galacticraftlegacy.world.item.KeyLock;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.KeyLockedBlockEntity;
 import net.minecraft.core.BlockPos;
@@ -29,6 +29,7 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
+import org.jspecify.annotations.NonNull;
 
 public abstract class KeyLockedBlock extends BaseEntityBlock {
     public static final BooleanProperty UNLOCKED = BooleanProperty.create("unlocked");
@@ -39,7 +40,7 @@ public abstract class KeyLockedBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
+    protected @NonNull InteractionResult useWithoutItem(@NonNull BlockState state, Level level, @NonNull BlockPos pos, @NonNull Player player, @NonNull BlockHitResult hitResult) {
         if (!level.isClientSide()) {
             BlockEntity blockEntity = level.getBlockEntity(pos);
 
@@ -58,7 +59,7 @@ public abstract class KeyLockedBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+    protected @NonNull InteractionResult useItemOn(ItemStack stack, @NonNull BlockState state, @NonNull Level level, @NonNull BlockPos pos, @NonNull Player player, @NonNull InteractionHand hand, @NonNull BlockHitResult hitResult) {
         KeyLock keyLock = stack.get(GalacticraftDataComponents.KEY_LOCK);
 
         if (keyLock != null) {
@@ -81,7 +82,7 @@ public abstract class KeyLockedBlock extends BaseEntityBlock {
     }
 
     @Override
-    public ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state, boolean includeData, Player player) {
+    public @NonNull ItemStack getCloneItemStack(@NonNull LevelReader level, @NonNull BlockPos pos, @NonNull BlockState state, boolean includeData, @NonNull Player player) {
         ItemStack returned = super.getCloneItemStack(level, pos, state, includeData, player);
 
         BlockEntity blockEntity = level.getBlockEntity(pos);

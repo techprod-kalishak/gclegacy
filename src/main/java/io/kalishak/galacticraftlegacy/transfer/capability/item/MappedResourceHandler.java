@@ -17,11 +17,13 @@ import net.neoforged.neoforge.transfer.TransferPreconditions;
 import net.neoforged.neoforge.transfer.resource.Resource;
 import net.neoforged.neoforge.transfer.transaction.SnapshotJournal;
 import net.neoforged.neoforge.transfer.transaction.TransactionContext;
+import org.jspecify.annotations.NonNull;
 
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.Objects;
 
+@SuppressWarnings("unused")
 public abstract class MappedResourceHandler<S, R extends Resource, E extends Enum<E> & SerializableEnum> implements ResourceHandler<R>, ValueIOSerializable {
     protected final S emptyStack;
     protected final EnumMap<E, S> stacks;
@@ -29,10 +31,6 @@ public abstract class MappedResourceHandler<S, R extends Resource, E extends Enu
     private final Class<E> enumClass;
 
     private final ArrayList<ValueJournal> snapshotJournals;
-
-    protected MappedResourceHandler(Class<E> enumClass, S emptyStack, Codec<EnumMap<E, S>> codec) {
-        this(new EnumMap<>(enumClass), enumClass, emptyStack, codec);
-    }
 
     protected MappedResourceHandler(EnumMap<E, S> stacks, Class<E> enumClass, S emptyStack, Codec<EnumMap<E, S>> codec) {
         this.stacks = stacks;
@@ -109,14 +107,14 @@ public abstract class MappedResourceHandler<S, R extends Resource, E extends Enu
     }
 
     @Override
-    public boolean isValid(int index, R resource) {
+    public boolean isValid(int index, @NonNull R resource) {
         Objects.checkIndex(index, size());
         E entry = this.enumClass.getEnumConstants()[index];
         return isValid(entry, resource);
     }
 
     @Override
-    public R getResource(int index) {
+    public @NonNull R getResource(int index) {
         Objects.checkIndex(index, size());
         E entry = this.enumClass.getEnumConstants()[index];
         return getResource(getOrDefault(entry));
@@ -137,7 +135,7 @@ public abstract class MappedResourceHandler<S, R extends Resource, E extends Enu
     }
 
     @Override
-    public int insert(int index, R resource, int amount, TransactionContext transaction) {
+    public int insert(int index, @NonNull R resource, int amount, @NonNull TransactionContext transaction) {
         Objects.checkIndex(index, this.size());
         TransferPreconditions.checkNonEmptyNonNegative(resource, amount);
         E entry = this.enumClass.getEnumConstants()[index];
@@ -157,7 +155,7 @@ public abstract class MappedResourceHandler<S, R extends Resource, E extends Enu
     }
 
     @Override
-    public int extract(int index, R resource, int amount, TransactionContext transaction) {
+    public int extract(int index, @NonNull R resource, int amount, @NonNull TransactionContext transaction) {
         Objects.checkIndex(index, this.size());
         TransferPreconditions.checkNonEmptyNonNegative(resource, amount);
         E entry = this.enumClass.getEnumConstants()[index];

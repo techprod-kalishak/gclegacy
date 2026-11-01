@@ -10,7 +10,7 @@ package io.kalishak.galacticraftlegacy.world.item.crafting.display;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import io.kalishak.galacticraftlegacy.components.GalacticraftDataComponents;
+import io.kalishak.galacticraftlegacy.component.GalacticraftDataComponents;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -18,6 +18,7 @@ import net.minecraft.util.context.ContextMap;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.display.DisplayContentsFactory;
 import net.minecraft.world.item.crafting.display.SlotDisplay;
+import org.jspecify.annotations.NonNull;
 
 import java.util.List;
 import java.util.function.BinaryOperator;
@@ -38,7 +39,7 @@ public record BatterySlotDisplay(SlotDisplay battery, SlotDisplay depletedBatter
     );
 
     @Override
-    public <T> Stream<T> resolve(ContextMap context, DisplayContentsFactory<T> output) {
+    public <T> @NonNull Stream<T> resolve(@NonNull ContextMap context, @NonNull DisplayContentsFactory<T> output) {
         BinaryOperator<ItemStack> transformation = (battery, depletion) -> {
             int energy = battery.getOrDefault(GalacticraftDataComponents.STORED_ENERGY, 0);
 
@@ -51,7 +52,7 @@ public record BatterySlotDisplay(SlotDisplay battery, SlotDisplay depletedBatter
     }
 
     @Override
-    public Type<BatterySlotDisplay> type() {
+    public @NonNull Type<BatterySlotDisplay> type() {
         return GalacticraftSlotDisplays.BATTERY.get();
     }
 
