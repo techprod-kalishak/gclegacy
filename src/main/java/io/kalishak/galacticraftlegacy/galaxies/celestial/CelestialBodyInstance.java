@@ -215,7 +215,7 @@ public final class CelestialBodyInstance implements Nameable, DataComponentHolde
                 .map(Optional::get)
                 .filter(body -> body.value().parent().isPresent())
                 .filter(child -> celestialBody.typeHolder.unwrapKey()
-                        .filter(bodyId -> child.value().parent().filter(celestialHolder -> bodyId.equals(celestialHolder.getKey())).isPresent())
+                        .filter(bodyId -> child.value().parent().filter(celestialHolder -> bodyId.equals(celestialHolder.key())).isPresent())
                         .isPresent())
                 .map(worldCelestials::get)
                 .toList();

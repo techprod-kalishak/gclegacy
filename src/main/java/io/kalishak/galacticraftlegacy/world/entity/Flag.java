@@ -191,13 +191,6 @@ public class Flag extends Entity {
     public void tick() {
         super.tick();
 
-//        if (!level().isClientSide() && (this.tickCount - 1) % 20 == 0) {
-//            if (getOwner() instanceof ServerPlayer player && distanceToSqr(player) < 50.0D) {
-//                FlagData flagData = SpaceRaceHooks.getPlayerFlag(player);
-//                setFlagData(flagData);
-//            }
-//        }
-
         if (getBlockStateOn().isAir()) {
             setDeltaMovement(0.0F, -1.0F, 0.0F);
         }

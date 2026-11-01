@@ -8,15 +8,15 @@
 package io.kalishak.galacticraftlegacy.client.data;
 
 import io.kalishak.galacticraftlegacy.Galacticraft;
+import io.kalishak.galacticraftlegacy.aunified.data.ExtendedLanguageProvider;
 import io.kalishak.galacticraftlegacy.data.GalacticraftTags;
 import io.kalishak.galacticraftlegacy.references.GalacticraftBlockItemIds;
 import io.kalishak.galacticraftlegacy.references.GalacticraftComponents;
 import io.kalishak.galacticraftlegacy.references.GalacticraftItemIds;
+import io.kalishak.galacticraftlegacy.registry.SchematicVariants;
 import io.kalishak.galacticraftlegacy.world.entity.GalacticraftEntityType;
 import io.kalishak.galacticraftlegacy.world.item.GalacticraftItems;
-import io.kalishak.galacticraftlegacy.registry.SchematicVariants;
 import io.kalishak.galacticraftlegacy.world.level.block.GalacticraftBlocks;
-import io.kalishak.galacticraftlegacy.aunified.data.ExtendedLanguageProvider;
 import net.minecraft.core.Holder;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceKey;
@@ -367,11 +367,11 @@ public class GalacticraftLanguageProvider extends ExtendedLanguageProvider {
         addWithSuffix(SchematicVariants.TIER_2_ROCKET, "title", "Rocket Tier 2");
         addWithSuffix(SchematicVariants.TIER_3_ROCKET, "title", "Rocket Tier 3");
 
-        add(GalacticraftTags.Blocks.MACHINE, "Machine");
-        add(GalacticraftTags.Blocks.MACHINE_BASIC, "Basic machine");
-        add(GalacticraftTags.Blocks.MACHINE_ADVANCED, "Advanced machine");
+        add(GalacticraftTags.BlockItems.MACHINE.block(), "Machine");
+        add(GalacticraftTags.BlockItems.MACHINE_BASIC.block(), "Basic machine");
+        add(GalacticraftTags.BlockItems.MACHINE_ADVANCED.block(), "Advanced machine");
         add(GalacticraftTags.Blocks.SEALABLE, "Sealable blocks");
-        add(GalacticraftTags.Blocks.SENSOR_GLASSES_DETECTABLE, "Detectable by Sensor Glasses");
+        add(GalacticraftTags.BlockItems.SENSOR_GLASSES_DETECTABLE.block(), "Detectable by Sensor Glasses");
         add(GalacticraftTags.EntityTypes.CAN_EQUIP_PARACHUTE, "Can equip parachute");
         add(GalacticraftTags.Fluids.FLOWS_GRATING, "Flows through Grating");
         add(GalacticraftTags.Items.PARACHUTE, "Parachute");

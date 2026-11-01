@@ -33,7 +33,7 @@ public class TerraformableRotatedBlock extends TerraformableBlock {
 
     @Override
     public @Nullable BlockState getTerraformedBlock(BlockGetter level, BlockPos blockPos) {
-        return level.getBlockState(blockPos.above()).is(Tags.Blocks.GLASS_BLOCKS) ? Blocks.DIRT.defaultBlockState() : null;
+        return level.getBlockState(blockPos.above()).is(Tags.BlockItems.GLASS_BLOCKS.block()) ? Blocks.DIRT.defaultBlockState() : null;
     }
 
     @Override

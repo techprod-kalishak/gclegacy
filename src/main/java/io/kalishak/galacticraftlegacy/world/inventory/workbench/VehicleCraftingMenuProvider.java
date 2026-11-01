@@ -32,7 +32,7 @@ public interface VehicleCraftingMenuProvider {
     }
 
     static boolean stillValid(ContainerLevelAccess levelAccess, Player player) {
-        return levelAccess.evaluate((level, pos) -> level.getBlockState(pos).is(GalacticraftTags.Blocks.NASA_WORKBENCHES) && player.isWithinBlockInteractionRange(pos, 4.0F), true);
+        return levelAccess.evaluate((level, pos) -> level.getBlockState(pos).is(GalacticraftTags.BlockItems.NASA_WORKBENCHES.block()) && player.isWithinBlockInteractionRange(pos, 4.0F), true);
     }
 
     static void slotChangedCraftingGrid(AbstractContainerMenu menu, ServerLevel level, Player player, ResourceHandler<ItemResource> resourceHandler, IndexModifier<ItemResource> indexModifier, VehicleCraftingPage page) {

@@ -165,7 +165,7 @@ public class GalacticraftRecipeProvider extends RecipeProvider {
                 .withIngredient(heavyDutyPlates)
                 .withIngredient(GalacticraftItems.ORION_DRIVE)
                 .withIngredient(GalacticraftItems.ADVANCED_WAFER)
-                .withIngredients(this.items.getOrThrow(Tags.Items.CHESTS), 2)
+                .withIngredients(this.items.getOrThrow(Tags.BlockItems.CHESTS.item()), 2)
                 .withIngredient(GalacticraftItems.ORION_DRIVE)
                 .withIngredient(GalacticraftItems.ORION_DRIVE)
                 .withIngredient(heavyDutyPlates)
@@ -206,7 +206,7 @@ public class GalacticraftRecipeProvider extends RecipeProvider {
                 .save(this.output);
 
         ShapedRecipeBuilder.shaped(this.items, RecipeCategory.MISC, GalacticraftItems.SINGLE_SOLAR_MODULE, 2)
-                .define('G', Tags.Items.GLASS_BLOCKS)
+                .define('G', Tags.BlockItems.GLASS_BLOCKS.item())
                 .define('S', GalacticraftItems.SOLAR_WAFER)
                 .define('A', GalacticraftItems.ALUMINUM_WIRE)
                 .pattern("GGG")
@@ -215,7 +215,7 @@ public class GalacticraftRecipeProvider extends RecipeProvider {
                 .unlockedBy(getHasName(GalacticraftItems.SOLAR_WAFER), has(GalacticraftItems.SOLAR_WAFER))
                 .save(this.output);
         ShapedRecipeBuilder.shaped(this.items, RecipeCategory.MISC, GalacticraftItems.FULL_SOLAR_PANEL)
-                .define('G', Tags.Items.GLASS_BLOCKS)
+                .define('G', Tags.BlockItems.GLASS_BLOCKS.item())
                 .define('S', GalacticraftItems.SINGLE_SOLAR_MODULE)
                 .define('A', GalacticraftItems.ALUMINUM_WIRE)
                 .pattern("GGG")
@@ -272,7 +272,7 @@ public class GalacticraftRecipeProvider extends RecipeProvider {
         ShapedRecipeBuilder.shaped(this.items, RecipeCategory.MISC, GalacticraftItems.BUGGY_STORAGE_BOX)
                 .define('I', GalacticraftTags.Items.PLATE_IRON)
                 .define('S', GalacticraftTags.Items.PLATE_STEEL)
-                .define('C', Tags.Items.CHESTS)
+                .define('C', Tags.BlockItems.CHESTS.item())
                 .pattern("SSS")
                 .pattern("ICI")
                 .pattern("SSS")

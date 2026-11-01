@@ -94,15 +94,15 @@ public class NasaWorkbenchMenu extends AbstractNasaWorkbenchMenu {
                     return ItemStack.EMPTY;
                 }
             } else {
-                if (returnedStack.is(Tags.Items.CHESTS)) {
+                if (returnedStack.is(Tags.BlockItems.CHESTS.item())) {
                     if (!this.moveItemStackTo(stack, 15, 18, false)) {
                         return ItemStack.EMPTY;
                     }
-                } else if (index >= 18 && index < 45) {
+                } else if (index < 45) {
                     if (!this.moveItemStackTo(stack, 45, 54, false)) {
                         return ItemStack.EMPTY;
                     }
-                } else if (index >= 45 && index < 54) {
+                } else if (index < 54) {
                     if (!this.moveItemStackTo(stack, 18, 45, false)) {
                         return ItemStack.EMPTY;
                     }

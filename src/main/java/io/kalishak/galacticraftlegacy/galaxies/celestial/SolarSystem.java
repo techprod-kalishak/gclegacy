@@ -27,7 +27,7 @@ public class SolarSystem extends AbstractCelestialBody {
 
     public Holder<Celestial> getStar() {
         if (!(this.star.value() instanceof Star)) {
-            throw new IllegalStateException(this.star.getKey() + " is not a star!");
+            throw new IllegalStateException(this.star.key() + " is not a star!");
         }
 
         return this.star;

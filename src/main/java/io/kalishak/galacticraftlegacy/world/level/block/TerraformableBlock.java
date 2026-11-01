@@ -47,7 +47,7 @@ public class TerraformableBlock extends Block implements EarthTurnableBlock {
         BlockState stateAbove = level.getBlockState(blockPos.above());
 
         if (stateAbove.is(GalacticraftTags.Blocks.BREATHABLE_AIR)) {
-            if (EarthTurnableBlock.adjacentToOrNearWater(level, blockPos, Tags.Blocks.GLASS_BLOCKS)) {
+            if (EarthTurnableBlock.adjacentToOrNearWater(level, blockPos, Tags.BlockItems.GLASS_BLOCKS.block())) {
                 return Blocks.GRASS_BLOCK.defaultBlockState();
             }
 

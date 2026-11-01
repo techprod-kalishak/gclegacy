@@ -181,7 +181,7 @@ public class OxygenHelper {
                 if (state.is(Blocks.GRAVEL) || state.is(Blocks.SPONGE) || state.is(Blocks.WET_SPONGE)) {
                     permeableFlag = true;
                 } else return false;
-            } else if (state.is(Tags.Blocks.GLASS_BLOCKS)) {
+            } else if (state.is(Tags.BlockItems.GLASS_BLOCKS.block())) {
                 return false;
             } else if (!state.getFluidState().isEmpty()) {
                 return false;

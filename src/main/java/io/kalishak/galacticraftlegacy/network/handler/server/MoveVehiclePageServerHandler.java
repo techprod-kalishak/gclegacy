@@ -67,7 +67,7 @@ public class MoveVehiclePageServerHandler {
                     new NasaWorkbenchMenuSupplier(
                             (containerId, inventory, level, pos) -> new NasaWorkbenchPageMenu(containerId, inventory, level, pos, page.value()),
                             blockPos,
-                            NasaWorkbenchScreenPage.createTitle(page.value().schematic().getKey())
+                            NasaWorkbenchScreenPage.createTitle(page.value().schematic().key())
                     ), buf -> {
                         buf.writeBlockPos(blockPos);
                         VehicleCraftingPage.STREAM_CODEC.encode(buf, page);

@@ -76,7 +76,7 @@ public class TintedGlassPaneBlock extends CrossCollisionTransparentBlock {
 
     @Override
     protected boolean skipRendering(BlockState state, BlockState neighborState, Direction direction) {
-        if (neighborState.is(this) || neighborState.is(Tags.Blocks.GLASS_PANES) && state.is(Tags.Blocks.GLASS_PANES) && neighborState.hasProperty(PROPERTY_BY_DIRECTION.get(direction.getOpposite()))) {
+        if (neighborState.is(this) || neighborState.is(Tags.BlockItems.GLASS_PANES.block()) && state.is(Tags.BlockItems.GLASS_PANES.block()) && neighborState.hasProperty(PROPERTY_BY_DIRECTION.get(direction.getOpposite()))) {
             if (!direction.getAxis().isHorizontal()) {
                 return true;
             }

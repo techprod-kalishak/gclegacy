@@ -64,7 +64,7 @@ public record SchematicPredicate(List<ResourceKey<SchematicVariant>> unlockedSch
         }
 
         public Builder haveSchematic(Holder<SchematicVariant> schematic) {
-            return haveSchematic(schematic.getKey());
+            return haveSchematic(schematic.key());
         }
 
         public SchematicPredicate build() {

@@ -27,16 +27,6 @@ public class BuiltinFlagMaterials {
                 )
         );
         context.register(
-                DEFAULT_MUTABLE,
-                new FlagMaterial(
-                        new MutableFlagTypeProvider(
-                                48,
-                                32
-                        ),
-                        Component.empty()
-                )
-        );
-        context.register(
                 NASA,
                 new FlagMaterial(
                         new TexturedFlagProvider(

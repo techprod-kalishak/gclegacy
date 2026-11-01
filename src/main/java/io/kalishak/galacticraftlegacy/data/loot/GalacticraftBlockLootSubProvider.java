@@ -42,7 +42,7 @@ import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 
 public class GalacticraftBlockLootSubProvider extends BlockLootSubProvider {
-    protected GalacticraftBlockLootSubProvider(LootTableSubProvider.Context output) {
+    public GalacticraftBlockLootSubProvider(LootTableSubProvider.Context output) {
         super(getExplosionResistant(), FeatureFlags.DEFAULT_FLAGS, output);
     }
 

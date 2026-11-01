@@ -10,17 +10,13 @@ package io.kalishak.galacticraftlegacy;
 import io.kalishak.galacticraftlegacy.attachment.AttachmentHelper;
 import io.kalishak.galacticraftlegacy.attachment.entity.GearInventoryProvider;
 import io.kalishak.galacticraftlegacy.components.GalacticraftDataComponents;
-import io.kalishak.galacticraftlegacy.config.ClientConfig;
-import io.kalishak.galacticraftlegacy.config.values.EnergyUnit;
 import io.kalishak.galacticraftlegacy.data.GalacticraftTags;
 import io.kalishak.galacticraftlegacy.data.datamap.Extinguishable;
 import io.kalishak.galacticraftlegacy.data.datamap.GalacticraftDataMaps;
-import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.registry.SchematicVariant;
 import io.kalishak.galacticraftlegacy.transfer.node.NodeNetwork;
 import io.kalishak.galacticraftlegacy.world.entity.GearEquipmentSlot;
-import io.kalishak.galacticraftlegacy.world.item.component.ItemAccessEnergyUtils;
-import io.kalishak.galacticraftlegacy.world.item.component.ItemAccessFluidUtils;
+import io.kalishak.galacticraftlegacy.world.item.component.GearAttributeModifiers;
 import io.kalishak.galacticraftlegacy.world.item.component.ShieldController;
 import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.GalacticraftRecipeType;
 import io.kalishak.galacticraftlegacy.world.level.OxygenHelper;
@@ -37,7 +33,6 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.TooltipProvider;
 import net.minecraft.world.level.Level;
@@ -49,7 +44,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.gamerules.GameRules;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.common.util.AttributeTooltipContext;
 import net.neoforged.neoforge.event.AddAttributeTooltipsEvent;
 import net.neoforged.neoforge.event.OnDatapackSyncEvent;
@@ -61,10 +55,6 @@ import net.neoforged.neoforge.event.server.ServerStoppingEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
 import net.neoforged.neoforge.event.tick.LevelTickEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
-import net.neoforged.neoforge.transfer.ResourceHandler;
-import net.neoforged.neoforge.transfer.access.ItemAccess;
-import net.neoforged.neoforge.transfer.energy.EnergyHandler;
-import net.neoforged.neoforge.transfer.fluid.FluidResource;
 
 import java.util.function.Consumer;
 import java.util.stream.Stream;
@@ -81,25 +71,31 @@ public class NeoEventHandler {
     public void appendHoverText(AddAttributeTooltipsEvent event) {
         ItemStack stack = event.getStack();
 
-        if (stack.typeHolder().unwrapKey().filter(key -> key.identifier().getNamespace().equals(Galacticraft.MODID)).isPresent()) {
-            if (event.shouldShow()) {
-                addTooltipIfPresent(stack, GalacticraftDataComponents.getTooltipProviders(), event.getContext(), event::addTooltipLines);
+//        if (stack.typeHolder().unwrapKey().filter(key -> key.identifier().getNamespace().equals(Galacticraft.MODID)).isPresent()) {
+//            if (event.shouldShow()) {
+//                addTooltipIfPresent(stack, GalacticraftDataComponents.getTooltipProviders(), event.getContext(), event::addTooltipLines);
+//
+//                ItemAccess itemAccess = ItemAccess.forStack(stack);
+//
+//                EnergyHandler energyHandler = stack.getCapability(Capabilities.Energy.ITEM, itemAccess);
+//                if (energyHandler != null) {
+//                    ItemAccessEnergyUtils.addTooltip(energyHandler, Constants.ifClient(event.getContext().level(), ClientConfig.ENERGY_UNIT, EnergyUnit.GIGA_JOULES), event::addTooltipLines);
+//                }
+//
+//                if (!(stack.getItem() instanceof BucketItem)) {
+//                    ResourceHandler<FluidResource> fluidHandler = stack.getCapability(Capabilities.Fluid.ITEM, itemAccess);
+//
+//                    if (fluidHandler != null) {
+//                        ItemAccessFluidUtils.addTooltip(fluidHandler, event::addTooltipLines);
+//                    }
+//                }
+//            }
+//        }
 
-                ItemAccess itemAccess = ItemAccess.forStack(stack);
+        GearAttributeModifiers attributeModifiers = stack.get(GalacticraftDataComponents.GEAR_ATTRIBUTE_MODIFIERS);
 
-                EnergyHandler energyHandler = stack.getCapability(Capabilities.Energy.ITEM, itemAccess);
-                if (energyHandler != null) {
-                    ItemAccessEnergyUtils.addTooltip(energyHandler, Constants.ifClient(event.getContext().level(), ClientConfig.ENERGY_UNIT, EnergyUnit.GIGA_JOULES), event::addTooltipLines);
-                }
-
-                if (!(stack.getItem() instanceof BucketItem)) {
-                    ResourceHandler<FluidResource> fluidHandler = stack.getCapability(Capabilities.Fluid.ITEM, itemAccess);
-
-                    if (fluidHandler != null) {
-                        ItemAccessFluidUtils.addTooltip(fluidHandler, event::addTooltipLines);
-                    }
-                }
-            }
+        if (attributeModifiers != null) {
+            //something
         }
     }
 

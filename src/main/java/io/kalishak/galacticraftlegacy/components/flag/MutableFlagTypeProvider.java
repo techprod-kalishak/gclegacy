@@ -21,7 +21,7 @@ import java.awt.image.BufferedImage;
 import java.nio.ByteBuffer;
 import java.util.Arrays;
 
-public class MutableFlagTypeProvider implements FlagTypeProvider {
+public class MutableFlagTypeProvider extends AbstractFlagProvider {
     public static final MapCodec<MutableFlagTypeProvider> MAP_CODEC = RecordCodecBuilder.mapCodec(
             i -> i.group(
                     Codec.INT.fieldOf("height").forGetter(MutableFlagTypeProvider::height),
@@ -33,33 +33,19 @@ public class MutableFlagTypeProvider implements FlagTypeProvider {
     public static final StreamCodec<ByteBuf, MutableFlagTypeProvider> STREAM_CODEC = StreamCodec.composite(
             ByteBufCodecs.VAR_INT, MutableFlagTypeProvider::height,
             ByteBufCodecs.VAR_INT, MutableFlagTypeProvider::width,
-            FlagTypeProvider.BYTE_ARRAYS_STREAM_CODEC, x -> x.color,
+            FlagTypeProvider.BYTE_ARRAYS_STREAM_CODEC, MutableFlagTypeProvider::getColors,
             MutableFlagTypeProvider::new
     );
 
     public static final MutableFlagTypeProvider DEFAULT = new MutableFlagTypeProvider(48, 32);
-    private final int width;
-    private final int height;
-    private final byte[][][] color;
 
     private MutableFlagTypeProvider(int width, int height, byte[][][] color) {
-        this.width = width;
-        this.height = height;
-        this.color = color;
+        super(width, height);
+        this.colors = color;
     }
 
     public MutableFlagTypeProvider(int width, int height) {
-        this.width = width;
-        this.height = height;
-        this.color = new byte[width][height][3];
-
-        for (int i = 0; i < width; i++) {
-            for (int j = 0; j < height; j++) {
-                this.color[i][j][0] = 127;
-                this.color[i][j][1] = 127;
-                this.color[i][j][2] = 127;
-            }
-        }
+        super(width, height);
     }
 
     private static MutableFlagTypeProvider fromBuffer(int width, int height, ByteBuffer buf) {
@@ -86,7 +72,7 @@ public class MutableFlagTypeProvider implements FlagTypeProvider {
 
     @Override
     public byte[][][] resolveColors(SpriteGetter spriteGetter) {
-        return this.color;
+        return this.colors;
     }
 
     public BufferedImage toBufferedImage() {
@@ -94,7 +80,7 @@ public class MutableFlagTypeProvider implements FlagTypeProvider {
 
         for (int i = 0; i < this.width; i++) {
             for (int j = 0; j < this.height; j++) {
-                int col = FlagTypeProvider.toColor(this.color[i][j]);
+                int col = FlagTypeProvider.toColor(this.colors[i][j]);
                 image.setRGB(i, j, col);
             }
         }
@@ -107,7 +93,7 @@ public class MutableFlagTypeProvider implements FlagTypeProvider {
 
         for (int i = 0; i < this.width; i++) {
             for (int j = 0; j < this.height; j++) {
-                byteBuffer.put(this.color[i][j]);
+                byteBuffer.put(this.colors[i][j]);
             }
         }
 
@@ -121,7 +107,7 @@ public class MutableFlagTypeProvider implements FlagTypeProvider {
             return Vec3.ZERO;
         }
 
-        return new Vec3((this.color[posX][posY][0] + 128) / 256.0D, (this.color[posX][posY][1] + 128) / 256.0D, (this.color[posX][posY][2] + 128) / 256.0D);
+        return new Vec3((this.colors[posX][posY][0] + 128) / 256.0D, (this.colors[posX][posY][1] + 128) / 256.0D, (this.colors[posX][posY][2] + 128) / 256.0D);
     }
 
     public int getARGBAt(int posX, int posY) {
@@ -129,9 +115,9 @@ public class MutableFlagTypeProvider implements FlagTypeProvider {
     }
 
     public void setColorAt(int posX, int posY, Vec3 colorVec) {
-        this.color[posX][posY][0] = (byte) (colorVec.x() - 128);
-        this.color[posX][posY][1] = (byte) (colorVec.y() - 128);
-        this.color[posX][posY][2] = (byte) (colorVec.z() - 128);
+        this.colors[posX][posY][0] = (byte) (colorVec.x() - 128);
+        this.colors[posX][posY][1] = (byte) (colorVec.y() - 128);
+        this.colors[posX][posY][2] = (byte) (colorVec.z() - 128);
     }
 
     @Override
@@ -150,7 +136,7 @@ public class MutableFlagTypeProvider implements FlagTypeProvider {
             return false;
         }
 
-        return Arrays.deepEquals(this.color, flagData.color);
+        return Arrays.deepEquals(this.colors, flagData.colors);
     }
 
     @Override

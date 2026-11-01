@@ -22,7 +22,7 @@ import io.kalishak.galacticraftlegacy.world.level.dimension.transition.Planetary
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.neoforge.registries.DataPackRegistryEvent;
+import net.neoforged.neoforge.registries.NewDatapackRegistryEvent;
 import net.neoforged.neoforge.registries.NewRegistryEvent;
 import net.neoforged.neoforge.registries.RegistryBuilder;
 
@@ -41,15 +41,31 @@ public class GalacticraftRegistries {
     }
 
     @SubscribeEvent
-    public static void newDatapackRegistries(DataPackRegistryEvent.NewRegistry event) {
-        event.dataPackRegistry(Keys.CELESTIAL, Celestial.DIRECT_CODEC, Celestial.DIRECT_CODEC, builder -> builder.sync(true));
-        event.dataPackRegistry(Keys.CHECKLIST, ChecklistEntry.DIRECT_CODEC, ChecklistEntry.DIRECT_CODEC, builder -> builder.sync(true).defaultKey(Checklist.EQUIP_OXYGEN_SUIT));
-        event.dataPackRegistry(Keys.FLAG_MATERIAL, FlagMaterial.DIRECT_CODEC, FlagMaterial.DIRECT_CODEC, builder ->builder.sync(true).defaultKey(BuiltinFlagMaterials.CLASSIC));
-        event.dataPackRegistry(Keys.SCHEMATIC, SchematicVariant.DIRECT_CODEC, SchematicVariant.DIRECT_CODEC, builder -> builder.sync(true).defaultKey(SchematicVariants.TIER_2_ROCKET));
-        event.dataPackRegistry(Keys.SPACE_STATION_RECIPE, SpaceStationRecipe.DIRECT_CODEC, SpaceStationRecipe.DIRECT_CODEC, builder -> builder.sync(true));
-        event.dataPackRegistry(Keys.VEHICLE_CRAFTING_RECIPE_DATA, VehicleCraftingDataRecipe.DIRECT_CODEC, VehicleCraftingDataRecipe.DIRECT_CODEC, builder -> builder.sync(true));
-        event.dataPackRegistry(Keys.VEHICLE_CRAFTING_PAGE, VehicleCraftingPage.DIRECT_CODEC, VehicleCraftingPage.DIRECT_CODEC, builder -> builder.sync(true));
-        event.dataPackRegistry(Keys.VEHICLE_CRAFTING_SLOT_TYPE, VehicleCraftingSlotType.DIRECT_CODEC, VehicleCraftingSlotType.DIRECT_CODEC, builder -> builder.sync(true));
+    public static void newDatapackRegistries(NewDatapackRegistryEvent event) {
+        event.worldRegistry(Keys.CELESTIAL, Celestial.DIRECT_CODEC, Celestial.DIRECT_CODEC);
+        event.<ChecklistEntry>worldRegistry(builder -> builder
+                .key(Keys.CHECKLIST)
+                .codec(ChecklistEntry.DIRECT_CODEC)
+                .networkCodec(ChecklistEntry.DIRECT_CODEC)
+                .configurator(config -> config.sync(true).defaultKey(Checklist.EQUIP_OXYGEN_SUIT))
+        );
+        event.<FlagMaterial>worldRegistry(builder -> builder
+                .key(Keys.FLAG_MATERIAL)
+                .codec(FlagMaterial.DIRECT_CODEC)
+                .networkCodec(FlagMaterial.DIRECT_CODEC)
+                .configurator(config -> config.sync(true).defaultKey(BuiltinFlagMaterials.CLASSIC))
+        );
+        event.<SchematicVariant>worldRegistry(builder -> builder
+                .key(Keys.SCHEMATIC)
+                .codec(SchematicVariant.DIRECT_CODEC)
+                .networkCodec(SchematicVariant.DIRECT_CODEC)
+                .configurator(config -> config.sync(true).defaultKey(SchematicVariants.TIER_2_ROCKET))
+        );
+
+        event.worldRegistry(Keys.SPACE_STATION_RECIPE, SpaceStationRecipe.DIRECT_CODEC, SpaceStationRecipe.DIRECT_CODEC);
+        event.worldRegistry(Keys.VEHICLE_CRAFTING_RECIPE_DATA, VehicleCraftingDataRecipe.DIRECT_CODEC, VehicleCraftingDataRecipe.DIRECT_CODEC);
+        event.worldRegistry(Keys.VEHICLE_CRAFTING_PAGE, VehicleCraftingPage.DIRECT_CODEC, VehicleCraftingPage.DIRECT_CODEC);
+        event.worldRegistry(Keys.VEHICLE_CRAFTING_SLOT_TYPE, VehicleCraftingSlotType.DIRECT_CODEC, VehicleCraftingSlotType.DIRECT_CODEC);
     }
 
     public static class Keys {

@@ -18,7 +18,7 @@
   "icon": {
     "icon": "galacticraftlegacy:textures/celestial_body/asteroids"
   },
-  "phase_shift": 0.32703048,
+  "phase_shift": 2.5466268,
   "relative_distance": {
     "scaled": 1.375,
     "unscaled": 1.375

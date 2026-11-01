@@ -288,7 +288,7 @@ public record GearAttributeModifiers(List<GearAttributeModifiers.Entry> modifier
         }
     }
 
-    record Entry(Holder<Attribute> attribute, AttributeModifier modifier, GearEquipmentSlotGroup slot, Display display) {
+    public record Entry(Holder<Attribute> attribute, AttributeModifier modifier, GearEquipmentSlotGroup slot, Display display) {
         public static final Codec<Entry> CODEC = RecordCodecBuilder.create(instance -> instance.group(
                 Attribute.CODEC.fieldOf("type").forGetter(Entry::attribute),
                 AttributeModifier.MAP_CODEC.forGetter(Entry::modifier),

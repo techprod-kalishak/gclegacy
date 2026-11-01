@@ -98,16 +98,15 @@ public class Galacticraft {
         modEventBus.addListener(LanderPlanetaryTransition::onConfigReloaded);
 
         GalacticraftCauldronInteraction.init(modEventBus);
-        modEventBus.addListener(GalacticraftData::gatherData);
-        modEventBus.addListener(GalacticraftData::addClassicAssets);
         modEventBus.addListener(GalacticraftNetworkHandler::registerPackets);
         modEventBus.addListener(GalacticraftDataMaps::registerDataMaps);
+        modEventBus.register(GalacticraftData.class);
         modEventBus.register(GalacticraftRegistries.class);
 
         NeoForge.EVENT_BUS.register(new NeoEventHandler());
         NeoForge.EVENT_BUS.addListener(GalacticraftCommands::registerCommands);
-        modContainer.registerConfig(ModConfig.Type.SERVER, ServerConfig.SPEC);
-        modContainer.registerConfig(ModConfig.Type.COMMON, CommonConfig.SPEC);
+        modContainer.registerConfig(ModConfig.Type.SYNCED, ServerConfig.SPEC);
+        modContainer.registerConfig(ModConfig.Type.LOCAL, CommonConfig.SPEC);
         modContainer.registerConfig(ModConfig.Type.CLIENT, ClientConfig.SPEC);
     }
 

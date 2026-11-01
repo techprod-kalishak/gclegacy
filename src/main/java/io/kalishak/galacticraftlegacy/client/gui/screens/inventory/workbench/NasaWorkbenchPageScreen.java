@@ -20,6 +20,6 @@ public class NasaWorkbenchPageScreen extends AbstractNasaWorkbenchScreen<NasaWor
 
     @Override
     public ResourceKey<SchematicVariant> getPage() {
-        return this.menu.getCurrentPage().schematic().getKey();
+        return this.menu.getCurrentPage().schematic().key();
     }
 }

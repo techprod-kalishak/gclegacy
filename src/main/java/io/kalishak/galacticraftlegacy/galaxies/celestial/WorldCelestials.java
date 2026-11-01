@@ -35,7 +35,7 @@ public class WorldCelestials extends SavedData {
     }
 
     public CelestialBodyInstance get(Holder<Celestial> body) {
-        return this.instances.get(body.getKey());
+        return this.instances.get(body.key());
     }
 
     public CelestialBodyInstance getFromLevel(Level level) {
@@ -50,10 +50,10 @@ public class WorldCelestials extends SavedData {
     }
 
     public void modify(Holder<Celestial> body, Consumer<CelestialBodyInstance> instance) {
-        if (!this.instances.containsKey(body.getKey())) {
-            this.instances.put(body.getKey(), new CelestialBodyInstance(body));
+        if (!this.instances.containsKey(body.key())) {
+            this.instances.put(body.key(), new CelestialBodyInstance(body));
         }
 
-        instance.accept(this.instances.get(body.getKey()));
+        instance.accept(this.instances.get(body.key()));
     }
 }

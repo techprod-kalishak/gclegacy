@@ -14,7 +14,6 @@ import io.kalishak.galacticraftlegacy.references.GalacticraftItemIds;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.TagAppender;
-import net.minecraft.tags.BlockItemTagId;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -26,10 +25,6 @@ import java.util.concurrent.CompletableFuture;
 public class GalacticraftItemTagsProvider extends BlockTagCopyingItemTagProvider {
     public GalacticraftItemTagsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, CompletableFuture<TagLookup<Block>> blockTags) {
         super(output, lookupProvider, blockTags, Galacticraft.MODID);
-    }
-
-    private void copy(BlockItemTagId tagId) {
-        copy(tagId.block(), tagId.item());
     }
 
     @Override
@@ -264,7 +259,7 @@ public class GalacticraftItemTagsProvider extends BlockTagCopyingItemTagProvider
                 .add(GalacticraftItemIds.T3_HEAVY_DUTY_PLATE);
         tag(GalacticraftTags.Items.VEHICLE_INGREDIENT_STORAGE)
                 .add(GalacticraftItemIds.BUGGY_STORAGE_BOX)
-                .addTag(Tags.Items.CHESTS);
+                .addTag(Tags.BlockItems.CHESTS.item());
         tag(GalacticraftTags.Items.VEHICLE_INGREDIENT_MISC)
                 .add(GalacticraftItemIds.ADVANCED_WAFER)
                 .add(GalacticraftItemIds.COMPRESSED_ALUMINUM)

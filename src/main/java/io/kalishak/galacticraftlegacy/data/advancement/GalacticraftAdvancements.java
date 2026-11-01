@@ -17,7 +17,7 @@ import net.minecraft.world.item.ItemStackTemplate;
 import java.util.Optional;
 
 public class GalacticraftAdvancements extends AdvancementSubProvider {
-    GalacticraftAdvancements(BootstrapContext<Advancement> output) {
+    public GalacticraftAdvancements(BootstrapContext<Advancement> output) {
         super(output);
     }
 

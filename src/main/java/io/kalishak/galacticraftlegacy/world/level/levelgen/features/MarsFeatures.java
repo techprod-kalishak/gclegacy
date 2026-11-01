@@ -29,7 +29,7 @@ public class MarsFeatures {
     public static final ResourceKey<Feature> DIRT_PATCH = GalacticraftFeatures.key("mars_dirt_patch");
 
     static void bootstrap(BootstrapContext<Feature> cxt) {
-        RuleTest marsStone = new TagMatchTest(GalacticraftTags.Blocks.BASE_STONE_MARS);
+        RuleTest marsStone = new TagMatchTest(GalacticraftTags.BlockItems.BASE_STONE_MARS.block());
         cxt.register(
                 COPPER_ORE,
                 new OreFeature(marsStone, GalacticraftBlocks.MARS_COPPER_ORE.get().defaultBlockState(), 4)
