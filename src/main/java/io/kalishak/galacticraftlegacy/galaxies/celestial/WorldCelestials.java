@@ -6,10 +6,13 @@ import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.registry.GalacticraftRegistries;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.level.saveddata.SavedData;
 import net.minecraft.world.level.saveddata.SavedDataType;
+import net.minecraft.world.level.storage.SavedDataStorage;
+import org.jspecify.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,10 +34,40 @@ public class WorldCelestials extends SavedData {
     }
 
     public WorldCelestials(Map<ResourceKey<Celestial>, CelestialBodyInstance> instances) {
-        this.instances = instances;
+        this.instances = new HashMap<>(instances);
     }
 
-    public CelestialBodyInstance get(Holder<Celestial> body) {
+    public static WorldCelestials get(MinecraftServer server) {
+        WorldCelestials worldCelestials = server.getDataStorage().get(WorldCelestials.ID);
+
+        if (worldCelestials == null) {
+            worldCelestials = new WorldCelestials();
+            server.getDataStorage().set(WorldCelestials.ID, worldCelestials);
+        }
+
+        return worldCelestials;
+    }
+
+    public static WorldCelestials get(SavedDataStorage savedDataStorage) {
+        WorldCelestials worldCelestials = savedDataStorage.get(WorldCelestials.ID);
+
+        if (worldCelestials == null) {
+            worldCelestials = new WorldCelestials();
+            savedDataStorage.set(WorldCelestials.ID, worldCelestials);
+        }
+
+        return worldCelestials;
+    }
+
+    public @Nullable CelestialBodyInstance get(Holder<Celestial> body) {
+        return this.instances.get(body.key());
+    }
+
+    public CelestialBodyInstance getOrDefault(Holder<Celestial> body) {
+        if (!this.instances.containsKey(body.key())) {
+            this.instances.put(body.key(), new CelestialBodyInstance(body));
+        }
+
         return this.instances.get(body.key());
     }
 

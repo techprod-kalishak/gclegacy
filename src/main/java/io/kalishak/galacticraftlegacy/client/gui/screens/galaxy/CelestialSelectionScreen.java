@@ -105,7 +105,7 @@ public class CelestialSelectionScreen extends Screen {
     }
 
     public static CelestialSelectionScreen create(RegistryAccess registryAccess, SavedDataStorage savedDataStorage, boolean canPlayerLeave, boolean canCreateStations) {
-        WorldCelestials worldCelestials = savedDataStorage.computeIfAbsent(WorldCelestials.ID);
+        WorldCelestials worldCelestials = WorldCelestials.get(savedDataStorage);
         List<CelestialBodyInstance> celestialBodies = registryAccess.lookupOrThrow(GalacticraftRegistries.Keys.CELESTIAL).registryKeySet().stream().map(registryAccess::getOrThrow).map(worldCelestials::get).toList();
         return new CelestialSelectionScreen(worldCelestials, registryAccess, canPlayerLeave, celestialBodies, canCreateStations);
     }
@@ -120,7 +120,7 @@ public class CelestialSelectionScreen extends Screen {
         MinecraftServer server = Minecraft.getInstance().getSingleplayerServer();
 
         if (server != null) {
-            WorldCelestials worldCelestials = server.getDataStorage().computeIfAbsent(WorldCelestials.ID);
+            WorldCelestials worldCelestials = WorldCelestials.get(server);
             this.registryAccess.lookupOrThrow(GalacticraftRegistries.Keys.CELESTIAL)
                     .registryKeySet()
                     .stream()

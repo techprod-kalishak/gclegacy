@@ -4,141 +4,93 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.Dynamic2CommandExceptionType;
 import com.mojang.brigadier.exceptions.DynamicCommandExceptionType;
+import io.kalishak.galacticraftlegacy.galaxies.celestial.Celestial;
 import io.kalishak.galacticraftlegacy.galaxies.celestial.CelestialBodyInstance;
 import io.kalishak.galacticraftlegacy.galaxies.celestial.WorldCelestials;
-import io.kalishak.galacticraftlegacy.server.commands.arguments.CelestialArgument;
-import io.kalishak.galacticraftlegacy.server.commands.arguments.input.CelestialInput;
+import io.kalishak.galacticraftlegacy.registry.GalacticraftRegistries;
+import io.kalishak.galacticraftlegacy.server.commands.arguments.DataComponentTypeArgument;
 import net.minecraft.commands.CommandBuildContext;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
-import net.minecraft.commands.arguments.EntityArgument;
-import net.minecraft.commands.arguments.IdentifierArgument;
-import net.minecraft.core.Registry;
-import net.minecraft.core.RegistryAccess;
+import net.minecraft.commands.arguments.ResourceArgument;
+import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponentType;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextColor;
-import net.minecraft.resources.Identifier;
-import net.minecraft.world.entity.EntityReference;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.phys.Vec3;
-
-import java.util.Optional;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.server.MinecraftServer;
 
 public class CelestialCommand {
+    private static final DynamicCommandExceptionType ERROR_EMPTY_CELESTIAL = new DynamicCommandExceptionType(obj -> Component.literal("CelestialBodyInstance" + obj + " does not exist"));
     private static final DynamicCommandExceptionType ERROR_INVALID_COMPONENT = new DynamicCommandExceptionType(obj -> Component.literal("Component" + obj + " does not exist"));
-    private static final Dynamic2CommandExceptionType ERROR_EMPTY_COMPONENT = new Dynamic2CommandExceptionType((arg, qarg) -> Component.literal(qarg + "does not have " + arg + " component"));
+    private static final Dynamic2CommandExceptionType ERROR_EMPTY_COMPONENT = new Dynamic2CommandExceptionType((arg, qarg) -> Component.literal(arg + "does not have " + qarg + " component"));
 
     static void register(CommandDispatcher<CommandSourceStack> dispatcher, CommandBuildContext context) {
         dispatcher.register(
                 Commands.literal("celestial")
                         .requires(Commands.hasPermission(Commands.LEVEL_GAMEMASTERS))
                         .then(
-                                Commands.literal("get")
+                                Commands.argument("body", ResourceArgument.resource(context, GalacticraftRegistries.Keys.CELESTIAL))
+                                        .executes(
+                                                c -> printCelestialBody(c.getSource(), ResourceArgument.getResource(c, "body", GalacticraftRegistries.Keys.CELESTIAL))
+                                        )
                                         .then(
-                                                Commands.argument("instance", CelestialArgument.celestial(context))
-                                                        .executes(c -> printCelestialInstance(c.getSource(), CelestialArgument.getCelestial(c, "instance")))
-                                                        .then(
-                                                                Commands.argument("component", IdentifierArgument.id())
-                                                                        .executes(c -> printCelestialComponent(c.getSource(), CelestialArgument.getCelestial(c, "instance"), IdentifierArgument.getId(c, "component")))
+                                                Commands.argument("component", DataComponentTypeArgument.dataComponentType())
+                                                        .executes(
+                                                                c -> printCelestialBody(
+                                                                        c.getSource(),
+                                                                        ResourceArgument.getResource(c, "body", GalacticraftRegistries.Keys.CELESTIAL),
+                                                                        DataComponentTypeArgument.getDataComponentType(c, "component")
+                                                                )
                                                         )
                                         )
-
                         )
-                        .then(
-                                Commands.literal("modify")
-                                        .then(
-                                                Commands.argument("instance", CelestialArgument.celestial(context))
-                                                        .then(Commands.argument("component", IdentifierArgument.id()))
-                                                        .executes(c -> modifyComponent(c.getSource(), CelestialArgument.getCelestial(c, "instance"), IdentifierArgument.getId(c, "component")))
-                                        )
-                        )
-                        .then(
-                                Commands.literal("debug")
-                                        .then(
-                                                Commands.argument("instance", CelestialArgument.celestial(context))
-                                                        .then(Commands.argument("player", EntityArgument.player())
-                                                        .executes(c -> fill(c.getSource(), CelestialArgument.getCelestial(c, "instance"), EntityArgument.getPlayer(c, "player")))
-                                        )
-                        )
-        ));
+        );
     }
 
-    private static int printCelestialInstance(CommandSourceStack source, CelestialInput input) throws CommandSyntaxException {
-        WorldCelestials worldCelestials = source.getServer().getDataStorage().computeIfAbsent(WorldCelestials.ID);
-        CelestialBodyInstance instance = worldCelestials.get(input.celestial());
+    private static int printCelestialBody(CommandSourceStack source, Holder<Celestial> celestial) throws CommandSyntaxException {
+        MinecraftServer server = source.getServer();
+        WorldCelestials worldCelestials = WorldCelestials.get(server);
+        CelestialBodyInstance instance = worldCelestials.getOrDefault(celestial);
 
         if (instance.isEmpty()) {
-            return -1;
+            throw ERROR_EMPTY_CELESTIAL.create(celestial.getRegisteredName());
         }
 
-        StringBuilder builder = new StringBuilder();
-        builder.append(instance.typeHolder().getRegisteredName()).append(" has the following components: ");
+        int finalValue = 1;
+        Component customName = instance.getDisplayName();
+        MutableComponent component = customName.copy().append(":\n");
 
-        instance.getComponents().stream().forEach(component -> {
-            Identifier id = source.registryAccess().lookupOrThrow(Registries.DATA_COMPONENT_TYPE).getKey(component.type());
-            var value = component.value();
+        for (var dataComponent : instance.getComponents()) {
+            Object value = instance.get(dataComponent.type());
 
-            builder.append(id).append("=").append(value).append(",\n");
-        });
-
-        source.sendSuccess(() -> Component.literal(builder.toString()), false);
-
-        return 1;
-    }
-
-    private static int printCelestialComponent(CommandSourceStack source, CelestialInput input, Identifier componentId) throws CommandSyntaxException {
-        WorldCelestials worldCelestials = source.getServer().getDataStorage().computeIfAbsent(WorldCelestials.ID);
-        CelestialBodyInstance instance = worldCelestials.get(input.celestial());
-
-        DataComponentType<?> optionalDataComponent = getComponent(source.registryAccess(), componentId);
-
-        var component = instance.get(optionalDataComponent);
-
-        if (component == null) {
-            throw ERROR_EMPTY_COMPONENT.create(instance.typeHolder().getRegisteredName(), componentId);
+            if (value != null) {
+                finalValue++;
+                component = component.append(dataComponent + "=" + value);
+            }
         }
 
-        source.sendSuccess(() -> Component.literal(componentId + "=" + component), false);
+        source.sendSuccess(component::copy, false);
 
-        return 1;
+        return finalValue;
     }
 
-    private static int modifyComponent(CommandSourceStack source, CelestialInput input, Identifier componentId) throws CommandSyntaxException {
-        WorldCelestials worldCelestials = source.getServer().getDataStorage().computeIfAbsent(WorldCelestials.ID);
-        DataComponentType<?> data = getComponent(source.registryAccess(), componentId);
+    private static <T> int printCelestialBody(CommandSourceStack source, Holder<Celestial> celestial, DataComponentType<T> component) throws CommandSyntaxException {
+        MinecraftServer server = source.getServer();
+        WorldCelestials worldCelestials = WorldCelestials.get(server);
+        CelestialBodyInstance instance = worldCelestials.getOrDefault(celestial);
 
-        input.components().keySet().forEach(component -> {
-
-        });
-
-        return 1;
-    }
-
-    private static int fill(CommandSourceStack source, CelestialInput input, Player player) throws CommandSyntaxException {
-        WorldCelestials worldCelestials = source.getServer().getDataStorage().computeIfAbsent(WorldCelestials.ID);
-
-        worldCelestials.modify(input.celestial(), celestial -> {
-            celestial.setCustomName(Component.literal("I have a name!").withColor(TextColor.AQUA));
-            celestial.setOwner(EntityReference.of(player));
-            celestial.setPosition(new Vec3(1.0F, 2.0F, 3.0F));
-        });
-
-        return 1;
-    }
-
-    @SuppressWarnings("unchecked")
-    private static <T> DataComponentType<T> getComponent(RegistryAccess registryAccess, Identifier componentId) throws CommandSyntaxException {
-        Registry<DataComponentType<?>> components = registryAccess.lookupOrThrow(Registries.DATA_COMPONENT_TYPE);
-
-        Optional<DataComponentType<?>> optionalDataComponent = components.getOptional(componentId);
-
-        if (optionalDataComponent.isEmpty()) {
-            throw ERROR_INVALID_COMPONENT.create(componentId);
+        if (instance.isEmpty()) {
+            throw ERROR_EMPTY_CELESTIAL.create(celestial.getRegisteredName());
         }
 
-        return (DataComponentType<T>) optionalDataComponent.get();
-    }
+        T value = instance.get(component);
 
+        if (value == null) {
+            throw ERROR_EMPTY_COMPONENT.create(instance.getDisplayName(), component);
+        }
+
+        source.sendSuccess(() -> instance.getDisplayName().copy().append(Component.literal(":\n" + component + "=" + value)), false);
+
+        return 1;
+    }
 }

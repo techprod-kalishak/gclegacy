@@ -186,7 +186,7 @@ public final class CelestialBodyInstance implements Nameable, DataComponentHolde
     }
 
     public static CelestialBodyInstance getFromLevel(ServerLevel level) {
-        WorldCelestials worldCelestials = level.getServer().getDataStorage().computeIfAbsent(WorldCelestials.ID);
+        WorldCelestials worldCelestials = WorldCelestials.get(level.getServer());
 
         return worldCelestials.getFromLevel(level);
     }

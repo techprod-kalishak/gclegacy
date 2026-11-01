@@ -20,6 +20,8 @@ import net.minecraft.util.context.ContextKey;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 
+import java.util.Objects;
+
 public interface GearRenderState {
     ContextKey<ItemStack> THERMAL_CAP = new ContextKey<>(Constants.id("thermal_cap"));
     ContextKey<ItemStack> THERMAL_SHIRT = new ContextKey<>(Constants.id("thermal_shirt"));
@@ -49,7 +51,7 @@ public interface GearRenderState {
     static <E extends LivingEntity, S extends LivingEntityRenderState> void appendPlayerRenderStates(E entity, S reusedState) {
         GearInventoryProvider gear = AttachmentHelper.getGearInventory(entity);
         SpaceGearEquipment spaceGearEquipment = gear.getGearEquipment();
-        CelestialBodyInstance instance = Minecraft.getInstance().getSingleplayerServer().getDataStorage().computeIfAbsent(WorldCelestials.ID).getFromLevel(entity.level());
+        CelestialBodyInstance instance = WorldCelestials.get(Objects.requireNonNull(Minecraft.getInstance().getSingleplayerServer())).getFromLevel(entity.level());
         float temperatureModifier = 1.0F;
 
         if (!instance.isEmpty()) {
