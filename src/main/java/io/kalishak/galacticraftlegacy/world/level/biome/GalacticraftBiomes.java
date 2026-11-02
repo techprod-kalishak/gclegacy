@@ -8,7 +8,7 @@
 package io.kalishak.galacticraftlegacy.world.level.biome;
 
 import io.kalishak.galacticraftlegacy.references.Constants;
-import io.kalishak.galacticraftlegacy.world.entity.GalacticraftEntityType;
+import io.kalishak.galacticraftlegacy.world.entity.GalacticraftEntityTypes;
 import io.kalishak.galacticraftlegacy.world.level.levelgen.placement.GalacticraftPlacements;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
@@ -56,8 +56,8 @@ public interface GalacticraftBiomes {
 
     static void evolvedMonsters(MobSpawnSettings.Builder builder, int zombieWeight, int skeletonWeight) {
         //builder.addSpawn(GalacticraftEntityType.EVOLVED_SPIDER.get(), 100, ConstantInt.of(4));
-        builder.addSpawn(GalacticraftEntityType.EVOLVED_ZOMBIE.get(), zombieWeight, ConstantInt.of(4));
-        builder.addSpawn(GalacticraftEntityType.EVOLVED_SKELETON.get(), skeletonWeight, ConstantInt.of(4));
+        builder.addSpawn(GalacticraftEntityTypes.EVOLVED_ZOMBIE.get(), zombieWeight, ConstantInt.of(4));
+        builder.addSpawn(GalacticraftEntityTypes.EVOLVED_SKELETON.get(), skeletonWeight, ConstantInt.of(4));
         //builder.addSpawn(GalacticraftEntityType.EVOLVED_ENDERMAN.get(), 10, UniformInt.of(1, 4));
         //builder.addSpawn(GalacticraftEntityType.EVOLVED_WITCH.get(), 5, ConstantInt.of(1));
     }

@@ -10,7 +10,7 @@ package io.kalishak.galacticraftlegacy.world.entity.projectile;
 import io.kalishak.galacticraftlegacy.attachment.GalacticraftAttachments;
 import io.kalishak.galacticraftlegacy.component.GalacticraftDataComponents;
 import io.kalishak.galacticraftlegacy.world.damagesource.GalacticraftDamageTypes;
-import io.kalishak.galacticraftlegacy.world.entity.GalacticraftEntityType;
+import io.kalishak.galacticraftlegacy.world.entity.GalacticraftEntityTypes;
 import io.kalishak.galacticraftlegacy.world.item.GalacticraftItems;
 import io.kalishak.galacticraftlegacy.world.item.component.HotContent;
 import net.minecraft.core.component.DataComponentGetter;
@@ -39,7 +39,7 @@ public class ThrownMeteorChunk extends ThrowableItemProjectile {
     }
 
     public ThrownMeteorChunk(Level level, LivingEntity mob, ItemStack itemStack) {
-        super(GalacticraftEntityType.THROWN_METEOR_CHUNK.get(), mob, level, itemStack);
+        super(GalacticraftEntityTypes.THROWN_METEOR_CHUNK.get(), mob, level, itemStack);
     }
 
     @Override

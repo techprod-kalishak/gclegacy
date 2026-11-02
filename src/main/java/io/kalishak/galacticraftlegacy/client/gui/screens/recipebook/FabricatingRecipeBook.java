@@ -15,6 +15,7 @@ import net.minecraft.client.gui.components.WidgetSprites;
 import net.minecraft.client.gui.screens.recipebook.GhostSlots;
 import net.minecraft.client.gui.screens.recipebook.RecipeBookComponent;
 import net.minecraft.client.gui.screens.recipebook.RecipeCollection;
+import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.context.ContextMap;
 import net.minecraft.world.entity.player.StackedItemContents;
@@ -52,7 +53,7 @@ public class FabricatingRecipeBook extends RecipeBookComponent<CircuitFabricator
 
     @Override
     protected Component getRecipeFilterName() {
-        return Component.empty();
+        return CommonComponents.EMPTY;
     }
 
     @Override

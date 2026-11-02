@@ -10,9 +10,6 @@ package io.kalishak.galacticraftlegacy.world.item;
 import io.kalishak.galacticraftlegacy.Galacticraft;
 import io.kalishak.galacticraftlegacy.component.GalacticraftDataComponents;
 import io.kalishak.galacticraftlegacy.component.SchematicVariant;
-import io.kalishak.galacticraftlegacy.component.flag.BuiltinFlagMaterials;
-import io.kalishak.galacticraftlegacy.component.flag.FlagData;
-import io.kalishak.galacticraftlegacy.component.flag.FlagMaterial;
 import io.kalishak.galacticraftlegacy.references.GalacticraftComponents;
 import io.kalishak.galacticraftlegacy.registry.GalacticraftRegistries;
 import io.kalishak.galacticraftlegacy.world.level.material.fluid.GalacticraftFluids;
@@ -116,7 +113,8 @@ public final class GalacticraftCreativeModeTabs {
         output.accept(GalacticraftItems.CHEESE_CHUNK);
         output.accept(GalacticraftItems.RAW_METEORIC_IRON);
         output.accept(GalacticraftItems.SAPPHIRE);
-        flag(output, itemDisplayParameters.holders().lookupOrThrow(GalacticraftRegistries.Keys.FLAG_MATERIAL));
+        output.accept(GalacticraftItems.FLAG);
+        //flag(output, itemDisplayParameters.holders().lookupOrThrow(GalacticraftRegistries.Keys.FLAG_MATERIAL));
         output.accept(GalacticraftItems.DUNGEON_LOCATOR);
         output.accept(GalacticraftItems.RAW_DESH);
         output.accept(GalacticraftItems.DESH_STICK);
@@ -352,9 +350,9 @@ public final class GalacticraftCreativeModeTabs {
         });
     }
 
-    private static void flag(CreativeModeTab.Output output, HolderLookup.RegistryLookup<FlagMaterial> flagMaterials) {
-        ItemStack flag = GalacticraftItems.FLAG.toStack();
-        flag.set(GalacticraftDataComponents.FLAG_DATA, FlagData.withMaterial(flagMaterials.getOrThrow(BuiltinFlagMaterials.CLASSIC)));
-        output.accept(flag);
-    }
+//    private static void flag(CreativeModeTab.Output output, HolderLookup.RegistryLookup<FlagMaterial> flagMaterials) {
+//        ItemStack flag = GalacticraftItems.FLAG.toStack();
+//        flag.set(GalacticraftDataComponents.FLAG_DATA, FlagData.withMaterial(flagMaterials.getOrThrow(BuiltinFlagMaterials.CLASSIC)));
+//        output.accept(flag);
+//    }
 }

@@ -26,7 +26,6 @@ import net.minecraft.world.item.equipment.EquipmentAsset;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.SimpleFluidContent;
-import net.neoforged.neoforge.transfer.transaction.Transaction;
 import org.jspecify.annotations.NonNull;
 
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -58,7 +57,7 @@ public  class GearItem extends Item {
                                                 thermal,
                                                 AttributeModifier.Operation.ADD_VALUE
                                         ),
-                                        GearEquipmentSlotGroup.THERMAL
+                                        GearEquipmentSlotGroup.bySlot(slot)
                                 )
                                 .build()
                 );
@@ -87,9 +86,7 @@ public  class GearItem extends Item {
         GearEquippable equippable = itemstack.get(GalacticraftDataComponents.GEAR_EQUIPPABLE);
 
         if (equippable != null && equippable.swappable()) {
-            try (Transaction tx = Transaction.open(null)) {
-                return equippable.swapWithGearEquipmentSlot(itemstack, player);
-            }
+            return equippable.swapWithGearEquipmentSlot(itemstack, player);
         }
 
         return super.use(level, player, hand);

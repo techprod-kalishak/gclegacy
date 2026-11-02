@@ -11,9 +11,11 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.kalishak.galacticraftlegacy.component.GalacticraftDataComponents;
 import io.kalishak.galacticraftlegacy.world.item.GalacticraftItems;
+import net.minecraft.core.component.DataComponentGetter;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.ComponentSerialization;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.util.Prediction;
@@ -24,13 +26,16 @@ import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemStackTemplate;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.Consumable;
 import net.minecraft.world.item.component.ConsumableListener;
+import net.minecraft.world.item.component.TooltipProvider;
 import net.minecraft.world.level.Level;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
 import java.util.Optional;
+import java.util.function.Consumer;
 import java.util.function.UnaryOperator;
 
 public record CannedFood(Component title, FoodProperties foodProperties, Consumable consumable, Optional<ItemStackTemplate> additionalRemainder) {
@@ -38,11 +43,16 @@ public record CannedFood(Component title, FoodProperties foodProperties, Consuma
         return new Builder();
     }
 
-    public record CannedComponent(Optional<ItemStackTemplate> additionalRemainder) implements ConsumableListener {
+    public record CannedComponent(Component title, Optional<ItemStackTemplate> additionalRemainder) implements ConsumableListener, TooltipProvider {
         public static final Codec<CannedComponent> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+                ComponentSerialization.CODEC.fieldOf("title").forGetter(CannedComponent::title),
                 ItemStackTemplate.CODEC.optionalFieldOf("additional_remainder").forGetter(CannedComponent::additionalRemainder)
         ).apply(instance, CannedComponent::new));
-        public static final StreamCodec<RegistryFriendlyByteBuf, CannedComponent> STREAM_CODEC = ItemStackTemplate.STREAM_CODEC.apply(ByteBufCodecs::optional).map(CannedComponent::new, CannedComponent::additionalRemainder);
+        public static final StreamCodec<RegistryFriendlyByteBuf, CannedComponent> STREAM_CODEC = StreamCodec.composite(
+                ComponentSerialization.TRUSTED_STREAM_CODEC, CannedComponent::title,
+                ItemStackTemplate.STREAM_CODEC.apply(ByteBufCodecs::optional), CannedComponent::additionalRemainder,
+                CannedComponent::new
+        );
 
         @Override
         public void onConsume(@NonNull Level level, LivingEntity user, @NonNull ItemStack stack, @NonNull Consumable consumable) {
@@ -57,18 +67,21 @@ public record CannedFood(Component title, FoodProperties foodProperties, Consuma
                 }
             }
         }
+
+        @Override
+        public void addToTooltip(Item.TooltipContext tooltipContext, Consumer<Component> consumer, TooltipFlag tooltipFlag, DataComponentGetter dataComponentGetter) {
+            consumer.accept(this.title);
+        }
     }
 
     public static Item.Properties createProperties(CannedFood cannedFood) {
         Item.Properties properties = new Item.Properties();
 
-        if (cannedFood.additionalRemainder.isPresent()) {
-            properties.component(GalacticraftDataComponents.CANNED_FOOD::value, new CannedComponent(cannedFood.additionalRemainder()));
-        }
-
         return properties
+                .component(GalacticraftDataComponents.CANNED_FOOD::value, new CannedComponent(cannedFood.title, cannedFood.additionalRemainder))
                 .food(cannedFood.foodProperties(), cannedFood.consumable())
-                .craftRemainder(new ItemStackTemplate(GalacticraftItems.TIN_CANISTER));
+                .craftRemainder(new ItemStackTemplate(GalacticraftItems.TIN_CANISTER))
+                .overrideDescription("item.galacticraftlegacy.canned_food");
     }
 
     public static class Builder {

@@ -8,7 +8,7 @@
 package io.kalishak.galacticraftlegacy.world.entity.monster;
 
 import io.kalishak.galacticraftlegacy.transfer.entity.SpaceGearEquipment;
-import io.kalishak.galacticraftlegacy.world.entity.GalacticraftEntityType;
+import io.kalishak.galacticraftlegacy.world.entity.GalacticraftEntityTypes;
 import io.kalishak.galacticraftlegacy.world.entity.SpaceEntity;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -35,7 +35,7 @@ public class EvolvedSkeleton extends Skeleton implements EvolvedMonster {
     }
 
     public EvolvedSkeleton(Level level) {
-        this(GalacticraftEntityType.EVOLVED_SKELETON.get(), level);
+        this(GalacticraftEntityTypes.EVOLVED_SKELETON.get(), level);
     }
 
     public static AttributeSupplier.Builder createAttributes() {

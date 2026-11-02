@@ -22,12 +22,24 @@ public class FlagModel extends Model<Unit> {
         super(root, RenderTypes::entitySolid);
     }
 
-    public static LayerDefinition createLayer() {
+    public static LayerDefinition createBaseLayer() {
         MeshDefinition meshdefinition = new MeshDefinition();
         PartDefinition partdefinition = meshdefinition.getRoot();
-        partdefinition.addOrReplaceChild("base", CubeListBuilder.create().texOffs(4, 0).addBox(-1.5F, 0.0F, -1.5F, 3.0F, 1.0F, 3.0F, true), PartPose.offset(0.0F, 23.0F, 0.0F));
-        partdefinition.addOrReplaceChild("pole", CubeListBuilder.create().texOffs(0, 0).addBox(-0.5F, -40.0F, -0.5F, 1.0F, 40.0F, 1.0F, true), PartPose.offset(0.0F, 23.0F, 0.0F));
+        partdefinition.addOrReplaceChild(
+                "base",
+                CubeListBuilder.create()
+                        .texOffs(4, 0)
+                        .addBox(-1.5F, 0.0F, -1.5F, 3.0F, 1.0F, 3.0F),
+                PartPose.offset(0.0F, 24.0F, 0.0F)
+        );
+        partdefinition.addOrReplaceChild(
+                "pole",
+                CubeListBuilder.create()
+                        .texOffs(0, 0)
+                        .addBox(-0.5F, -40.0F, -0.5F, 1.0F, 40.0F, 1.0F),
+                PartPose.offset(0.0F, 24.0F, 0.0F)
+        );
 
-        return LayerDefinition.create(meshdefinition, 128, 64);
+        return LayerDefinition.create(meshdefinition, 16, 48);
     }
 }

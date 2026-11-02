@@ -15,10 +15,13 @@ import io.kalishak.galacticraftlegacy.world.inventory.GearInventoryMenu;
 import io.kalishak.galacticraftlegacy.world.item.GalacticraftItems;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
-import net.minecraft.client.gui.components.*;
+import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.gui.screens.inventory.*;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.gui.screens.inventory.EffectsInInventory;
+import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.renderer.RenderPipelines;
+import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
@@ -36,7 +39,7 @@ public class GearInventoryScreen extends AbstractContainerScreen<GearInventoryMe
     private final EffectsInInventory effects;
 
     public GearInventoryScreen(GearInventoryMenu menu, Inventory playerInventory, Component component) {
-        super(menu, playerInventory, Component.empty());
+        super(menu, playerInventory, CommonComponents.EMPTY);
         this.effects = new EffectsInInventory(this);
     }
 

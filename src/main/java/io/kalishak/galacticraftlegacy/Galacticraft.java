@@ -25,7 +25,8 @@ import io.kalishak.galacticraftlegacy.registry.PackedNodeNetworkTypes;
 import io.kalishak.galacticraftlegacy.server.commands.GalacticraftCommands;
 import io.kalishak.galacticraftlegacy.sounds.GalacticraftSounds;
 import io.kalishak.galacticraftlegacy.world.attribute.GalacticraftEnvironmentAttributes;
-import io.kalishak.galacticraftlegacy.world.entity.GalacticraftEntityType;
+import io.kalishak.galacticraftlegacy.world.entity.GalacticraftEntityTypes;
+import io.kalishak.galacticraftlegacy.world.entity.ai.attributes.GalacticraftAttributes;
 import io.kalishak.galacticraftlegacy.world.inventory.GalacticraftMenuType;
 import io.kalishak.galacticraftlegacy.world.item.GalacticraftCreativeModeTabs;
 import io.kalishak.galacticraftlegacy.world.item.GalacticraftItems;
@@ -66,13 +67,14 @@ public class Galacticraft {
 
     public Galacticraft(IEventBus modEventBus, ModContainer modContainer) {
         GalacticraftAttachments.init(modEventBus);
+        GalacticraftAttributes.init(modEventBus);
         GalacticraftBlocks.init(modEventBus);
         GalacticraftBlockEntityType.init(modEventBus);
         GalacticraftConditions.init(modEventBus);
         GalacticraftCreativeModeTabs.init(modEventBus);
         GalacticraftCriteriaTriggers.init(modEventBus);
         GalacticraftDataComponents.init(modEventBus);
-        GalacticraftEntityType.init(modEventBus);
+        GalacticraftEntityTypes.init(modEventBus);
         GalacticraftEnvironmentAttributes.init(modEventBus);
         FlagTypeProviders.init(modEventBus);
         GalacticraftFeatures.init(modEventBus);

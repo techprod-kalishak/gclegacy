@@ -8,26 +8,22 @@
 package io.kalishak.galacticraftlegacy.world.level.block.entity;
 
 import io.kalishak.galacticraftlegacy.component.GalacticraftDataComponents;
+import io.kalishak.galacticraftlegacy.component.PlayerOwnable;
 import io.kalishak.galacticraftlegacy.data.GalacticraftTags;
 import io.kalishak.galacticraftlegacy.transfer.ResourcefulHelper;
 import io.kalishak.galacticraftlegacy.transfer.capability.fluid.SingleTankResourceHandler;
 import io.kalishak.galacticraftlegacy.world.inventory.ParachestMenu;
 import io.kalishak.galacticraftlegacy.world.level.block.GalacticraftBlocks;
 import io.kalishak.galacticraftlegacy.world.level.block.ParachestBlock;
-import io.kalishak.galacticraftlegacy.world.score.race.SpaceRaceHooks;
-import io.kalishak.galacticraftlegacy.world.score.race.SpaceRaceScoreboard;
-import io.kalishak.galacticraftlegacy.world.score.race.SpaceRaceTeam;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.component.DataComponentGetter;
 import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.ContainerUser;
-import net.minecraft.world.entity.EntityReference;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -55,7 +51,7 @@ import java.util.List;
 public class ParachestBlockEntity extends BaseItemStorageBlockEntity implements LidBlockEntity {
     private final int slotCount;
     private FluidStack tank = FluidStack.EMPTY;
-    private @Nullable EntityReference<Player> owner;
+    private @Nullable PlayerOwnable owner;
     private DyeColor parachuteColor = DyeColor.RED;
 
     private final ContainerOpenersCounter openersCounter = new ContainerOpenersCounter() {
@@ -138,7 +134,7 @@ public class ParachestBlockEntity extends BaseItemStorageBlockEntity implements 
     protected void loadAdditional(ValueInput input) {
         super.loadAdditional(input);
         this.tank = input.read("FluidStack", FluidStack.OPTIONAL_CODEC).orElse(FluidStack.EMPTY);
-        this.owner = EntityReference.read(input, "Owner");
+        input.read("Owner", PlayerOwnable.CODEC).ifPresent(owner -> this.owner = owner);
         this.parachuteColor = input.read("TeamColor", DyeColor.CODEC).orElse(DyeColor.RED);
     }
 
@@ -149,7 +145,7 @@ public class ParachestBlockEntity extends BaseItemStorageBlockEntity implements 
         output.store("FluidStack", FluidStack.OPTIONAL_CODEC, this.tank);
 
         if (this.owner != null) {
-            this.owner.store(output, "Owner");
+            output.store("Owner", PlayerOwnable.CODEC, this.owner);
         }
 
         if (this.parachuteColor != DyeColor.RED) {
@@ -197,24 +193,7 @@ public class ParachestBlockEntity extends BaseItemStorageBlockEntity implements 
 
     @Override
     public boolean canOpen(Player player) {
-        boolean par = super.canOpen(player);
-
-        if (this.owner == null || this.owner.getUUID().equals(player.getUUID())) {
-            return par;
-        }
-
-        if (this.level instanceof ServerLevel serverLevel) {
-            SpaceRaceScoreboard spaceRaceScoreboard = SpaceRaceHooks.getFromLevel(serverLevel);
-            Player owner = this.owner.getEntity(serverLevel, Player.class);
-
-            if (owner != null) {
-                SpaceRaceTeam ownerTeam = spaceRaceScoreboard.getSpaceRaceTeam(owner.getScoreboardName());
-
-                return ownerTeam != null && ownerTeam.getPlayers().contains(player.getScoreboardName());
-            }
-        }
-
-        return par;
+        return this.owner == null ? super.canOpen(player) : this.owner.isOwnedBy(player);
     }
 
     public void startOpen(ContainerUser containerUser) {
@@ -263,7 +242,7 @@ public class ParachestBlockEntity extends BaseItemStorageBlockEntity implements 
     @Override
     protected void applyImplicitComponents(DataComponentGetter componentGetter) {
         super.applyImplicitComponents(componentGetter);
-        this.owner = componentGetter.get(GalacticraftDataComponents.PLAYER_REFERENCE);
+        this.owner = componentGetter.get(GalacticraftDataComponents.PLAYER_OWNABLE);
         this.tank = componentGetter.getOrDefault(GalacticraftDataComponents.FLUID_TANK, SimpleFluidContent.EMPTY).copy();
     }
 
@@ -272,7 +251,7 @@ public class ParachestBlockEntity extends BaseItemStorageBlockEntity implements 
         super.collectImplicitComponents(components);
 
         if (this.owner != null) {
-            components.set(GalacticraftDataComponents.PLAYER_REFERENCE, this.owner);
+            components.set(GalacticraftDataComponents.PLAYER_OWNABLE, this.owner);
         }
 
         components.set(GalacticraftDataComponents.FLUID_TANK, SimpleFluidContent.copyOf(this.tank));

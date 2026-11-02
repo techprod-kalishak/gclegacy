@@ -10,16 +10,17 @@ package io.kalishak.galacticraftlegacy.aunified.data;
 import com.google.common.collect.Iterators;
 import net.minecraft.data.PackOutput;
 import net.minecraft.references.BlockItemId;
-import net.minecraft.references.ItemIds;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.Util;
+import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.level.block.ColorCollection;
 import net.minecraft.world.level.block.WeatheringCopperCollection;
 import net.neoforged.neoforge.common.data.LanguageProvider;
 
 import java.util.Iterator;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 public abstract class ExtendedLanguageProvider extends LanguageProvider {
     protected final String namespace;
@@ -62,6 +63,10 @@ public abstract class ExtendedLanguageProvider extends LanguageProvider {
     protected void addAdvancement(String id, String title, String description) {
         add("advancements.%s.%s.title".formatted(this.namespace, id), title);
         add("advancements.%s.%s.description".formatted(this.namespace, id), description);
+    }
+
+    protected void addAttribute(Supplier<? extends Attribute> attribute, String name) {
+        add(attribute.get().getDescriptionId(), name);
     }
 
     protected static <R> String translatable(ResourceKey<R> resourceKey, String suffix) {

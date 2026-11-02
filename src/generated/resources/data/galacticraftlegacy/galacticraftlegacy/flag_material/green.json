@@ -1,0 +1,8 @@
+{
+  "flag_provider": {
+    "type": "galacticraftlegacy:textured",
+    "height": 32,
+    "image": "galacticraftlegacy:textures/entity/flag/material/green",
+    "width": 48
+  }
+}

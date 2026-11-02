@@ -15,10 +15,8 @@ import io.kalishak.galacticraftlegacy.codec.SerializableEnum;
 import io.kalishak.galacticraftlegacy.world.entity.GearEquipmentSlot;
 import io.kalishak.galacticraftlegacy.world.entity.GearEquipmentSlotGroup;
 import io.netty.buffer.ByteBuf;
-import net.minecraft.ChatFormatting;
 import net.minecraft.core.Holder;
 import net.minecraft.network.RegistryFriendlyByteBuf;
-import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.ComponentSerialization;
 import net.minecraft.network.codec.ByteBufCodecs;
@@ -26,9 +24,7 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 import org.apache.logging.log4j.util.TriConsumer;
 import org.jspecify.annotations.NonNull;
@@ -162,40 +158,15 @@ public record GearAttributeModifiers(List<GearAttributeModifiers.Entry> modifier
             @Override
             public void apply(Consumer<Component> consumer, @Nullable Player player, Holder<Attribute> attribute, AttributeModifier modifier) {
                 double amount = modifier.amount();
-                boolean displayWithBase = false;
-                if (player != null) {
-                    if (modifier.is(Item.BASE_ATTACK_DAMAGE_ID)) {
-                        amount += player.getAttributeBaseValue(Attributes.ATTACK_DAMAGE);
-                        displayWithBase = true;
-                    } else if (modifier.is(Item.BASE_ATTACK_SPEED_ID)) {
-                        amount += player.getAttributeBaseValue(Attributes.ATTACK_SPEED);
-                        displayWithBase = true;
-                    }
-                }
 
                 double displayAmount;
-                if (modifier.operation() == AttributeModifier.Operation.ADD_MULTIPLIED_BASE
-                        || modifier.operation() == AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL) {
+                if (modifier.operation() == AttributeModifier.Operation.ADD_MULTIPLIED_BASE || modifier.operation() == AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL) {
                     displayAmount = amount * 100.0;
-                } else if (attribute.is(Attributes.KNOCKBACK_RESISTANCE)) {
-                    displayAmount = amount * 10.0;
                 } else {
                     displayAmount = amount;
                 }
 
-                if (displayWithBase) {
-                    consumer.accept(
-                            CommonComponents.space()
-                                    .append(
-                                            Component.translatable(
-                                                    "attribute.modifier.equals." + modifier.operation().id(),
-                                                    ItemAttributeModifiers.ATTRIBUTE_MODIFIER_FORMAT.format(displayAmount),
-                                                    Component.translatable(attribute.value().getDescriptionId())
-                                            )
-                                    )
-                                    .withStyle(ChatFormatting.DARK_GREEN)
-                    );
-                } else if (amount > 0.0) {
+                if (amount > 0.0) {
                     consumer.accept(
                             Component.translatable(
                                             "attribute.modifier.plus." + modifier.operation().id(),

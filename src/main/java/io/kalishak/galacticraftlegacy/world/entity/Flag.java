@@ -46,7 +46,7 @@ public class Flag extends Entity {
     }
 
     public Flag(Level level, FlagData flagData, double x, double y, double z, float facingAngle) {
-        this(GalacticraftEntityType.FLAG.get(), level);
+        this(GalacticraftEntityTypes.FLAG.get(), level);
         setFlagData(flagData);
         setPos(x, y, z);
         setXRot(facingAngle);

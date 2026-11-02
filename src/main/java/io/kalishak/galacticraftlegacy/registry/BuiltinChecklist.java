@@ -53,19 +53,19 @@ public final class BuiltinChecklist {
                 cxt,
                 EQUIP_THERMAL_PADDING,
                 map -> map
-                        .put(GearEquipmentSlot.THERMAL_CAP, ItemPredicate.Builder.item().of(itemHolderGetter, GalacticraftItems.THERMAL_PADDING_HELM).build())
-                        .put(GearEquipmentSlot.THERMAL_SHIRT, ItemPredicate.Builder.item().of(itemHolderGetter, GalacticraftItems.THERMAL_PADDING_CHESTPIECE).build())
-                        .put(GearEquipmentSlot.THERMAL_LEGGINGS, ItemPredicate.Builder.item().of(itemHolderGetter, GalacticraftItems.THERMAL_PADDING_LEGGINGS).build())
-                        .put(GearEquipmentSlot.THERMAL_SOCKS, ItemPredicate.Builder.item().of(itemHolderGetter, GalacticraftItems.THERMAL_PADDING_BOOTS).build())
+                        .put(GearEquipmentSlot.THERMAL_HEAD, ItemPredicate.Builder.item().of(itemHolderGetter, GalacticraftItems.THERMAL_PADDING_HELM).build())
+                        .put(GearEquipmentSlot.THERMAL_CHEST, ItemPredicate.Builder.item().of(itemHolderGetter, GalacticraftItems.THERMAL_PADDING_CHESTPIECE).build())
+                        .put(GearEquipmentSlot.THERMAL_LEGS, ItemPredicate.Builder.item().of(itemHolderGetter, GalacticraftItems.THERMAL_PADDING_LEGGINGS).build())
+                        .put(GearEquipmentSlot.THERMAL_FEET, ItemPredicate.Builder.item().of(itemHolderGetter, GalacticraftItems.THERMAL_PADDING_BOOTS).build())
         );
         register(
                 cxt,
                 EQUIP_ISOTHERMAL_PADDING,
                 map -> map
-                        .put(GearEquipmentSlot.THERMAL_CAP, ItemPredicate.Builder.item().of(itemHolderGetter, GalacticraftItems.ISOTHERMAL_HELM).build())
-                        .put(GearEquipmentSlot.THERMAL_SHIRT, ItemPredicate.Builder.item().of(itemHolderGetter, GalacticraftItems.ISOTHERMAL_CHESTPIECE).build())
-                        .put(GearEquipmentSlot.THERMAL_LEGGINGS, ItemPredicate.Builder.item().of(itemHolderGetter, GalacticraftItems.ISOTHERMAL_LEGGINGS).build())
-                        .put(GearEquipmentSlot.THERMAL_SOCKS, ItemPredicate.Builder.item().of(itemHolderGetter, GalacticraftItems.ISOTHERMAL_BOOTS).build())
+                        .put(GearEquipmentSlot.THERMAL_HEAD, ItemPredicate.Builder.item().of(itemHolderGetter, GalacticraftItems.ISOTHERMAL_HELM).build())
+                        .put(GearEquipmentSlot.THERMAL_CHEST, ItemPredicate.Builder.item().of(itemHolderGetter, GalacticraftItems.ISOTHERMAL_CHESTPIECE).build())
+                        .put(GearEquipmentSlot.THERMAL_LEGS, ItemPredicate.Builder.item().of(itemHolderGetter, GalacticraftItems.ISOTHERMAL_LEGGINGS).build())
+                        .put(GearEquipmentSlot.THERMAL_FEET, ItemPredicate.Builder.item().of(itemHolderGetter, GalacticraftItems.ISOTHERMAL_BOOTS).build())
         );
         register(
                 cxt,

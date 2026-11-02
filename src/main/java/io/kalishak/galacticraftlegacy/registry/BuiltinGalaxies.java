@@ -4,7 +4,7 @@ import io.kalishak.galacticraftlegacy.component.ChecklistEntry;
 import io.kalishak.galacticraftlegacy.data.GalacticraftTags;
 import io.kalishak.galacticraftlegacy.galaxies.celestial.Celestial;
 import io.kalishak.galacticraftlegacy.references.Constants;
-import io.kalishak.galacticraftlegacy.world.entity.GalacticraftEntityType;
+import io.kalishak.galacticraftlegacy.world.entity.GalacticraftEntityTypes;
 import io.kalishak.galacticraftlegacy.world.item.FeatureTier;
 import io.kalishak.galacticraftlegacy.world.level.dimension.GalacticraftDimensionTypes;
 import io.kalishak.galacticraftlegacy.world.level.dimension.SpaceStationRecipe;
@@ -80,7 +80,7 @@ public class BuiltinGalaxies {
                                 .gas(ResourceKey.create(Registries.FLUID, Constants.id("nitrogen")), 3.5)
 
                         )
-                        .transferableTo(dimensions.getOrThrow(GalacticraftDimensionTypes.VENUS), new LanderPlanetaryTransition(GalacticraftEntityType.ENTRY_POD), FeatureTier.TIER_3)
+                        .transferableTo(dimensions.getOrThrow(GalacticraftDimensionTypes.VENUS), new LanderPlanetaryTransition(GalacticraftEntityTypes.ENTRY_POD), FeatureTier.TIER_3)
                         .parent(self.getOrThrow(SUN))
                         .ringColors(0.1F, 0.9F, 0.6F)
                         //.biome(GalacticraftTags.Biomes.IS_VENUS)
@@ -116,7 +116,7 @@ public class BuiltinGalaxies {
                                 .gas(ResourceKey.create(Registries.FLUID, Constants.id("argon")), 2.7F)
                                 .gas(ResourceKey.create(Registries.FLUID, Constants.id("nitrogen")), 2.0F)
                         )
-                        .transferableTo(dimensions.getOrThrow(GalacticraftDimensionTypes.MARS), new LanderPlanetaryTransition(GalacticraftEntityType.LANDING_BALLOONS), FeatureTier.TIER_2)
+                        .transferableTo(dimensions.getOrThrow(GalacticraftDimensionTypes.MARS), new LanderPlanetaryTransition(GalacticraftEntityTypes.LANDING_BALLOONS), FeatureTier.TIER_2)
                         .parent(self.getOrThrow(SUN))
                         .ringColors(0.67F, 0.1F, 0.1F)
                         //.biome(GalacticraftTags.Biomes.IS_MARS)
@@ -170,7 +170,7 @@ public class BuiltinGalaxies {
                         .relativeDistanceFromCenter(13.0F)
                         .relativeOrbitTime(1.0F / 0.1F)
                         .parent(self.getOrThrow(EARTH))
-                        .transferableTo(dimensions.getOrThrow(GalacticraftDimensionTypes.MOON), new LanderPlanetaryTransition(GalacticraftEntityType.LANDER), FeatureTier.TIER_1)
+                        .transferableTo(dimensions.getOrThrow(GalacticraftDimensionTypes.MOON), new LanderPlanetaryTransition(GalacticraftEntityTypes.LANDER), FeatureTier.TIER_1)
                         //.biome(GalacticraftTags.Biomes.IS_MOON)
                         .checklist(checklists.getOrThrow(GalacticraftTags.Checklist.MOON_CHECKLIST))
         );
@@ -184,7 +184,7 @@ public class BuiltinGalaxies {
                         .relativeOrbitTime(45.0F)
                         .parent(self.getOrThrow(SUN))
                         //.biome(GalacticraftTags.Biomes.IS_ASTEROIDS)
-                        .transferableTo(dimensions.getOrThrow(GalacticraftDimensionTypes.ASTEROIDS), new LanderPlanetaryTransition(GalacticraftEntityType.ENTRY_POD), FeatureTier.TIER_3)
+                        .transferableTo(dimensions.getOrThrow(GalacticraftDimensionTypes.ASTEROIDS), new LanderPlanetaryTransition(GalacticraftEntityTypes.ENTRY_POD), FeatureTier.TIER_3)
                         .checklist(checklists.getOrThrow(GalacticraftTags.Checklist.ASTEROIDS_CHECKLIST))
         );
 

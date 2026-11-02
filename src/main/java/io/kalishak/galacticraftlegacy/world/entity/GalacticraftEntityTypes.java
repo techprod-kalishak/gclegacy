@@ -10,6 +10,7 @@ package io.kalishak.galacticraftlegacy.world.entity;
 import io.kalishak.galacticraftlegacy.Galacticraft;
 import io.kalishak.galacticraftlegacy.references.GalacticraftEntityIds;
 import io.kalishak.galacticraftlegacy.registry.deferred.DeferredEntityTypeRegister;
+import io.kalishak.galacticraftlegacy.world.entity.ai.attributes.GalacticraftAttributes;
 import io.kalishak.galacticraftlegacy.world.entity.item.FallenMeteor;
 import io.kalishak.galacticraftlegacy.world.entity.monster.EvolvedMonster;
 import io.kalishak.galacticraftlegacy.world.entity.monster.EvolvedSkeleton;
@@ -26,15 +27,17 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
+import net.neoforged.neoforge.event.entity.EntityAttributeModificationEvent;
 import net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import org.jspecify.annotations.NonNull;
 
 import java.util.stream.Stream;
 
-public final class GalacticraftEntityType {
+public final class GalacticraftEntityTypes {
     private static final DeferredEntityTypeRegister REGISTRY = DeferredEntityTypeRegister.createEntities(Galacticraft.MODID);
 
     public static final DeferredHolder<EntityType<?>, EntityType<EntryPod>> ENTRY_POD = REGISTRY.registerEntityType(
@@ -62,7 +65,7 @@ public final class GalacticraftEntityType {
             builder -> builder
                     .noLootTable()
                     .noSummon()
-                    .sized(0.4F, 3.0F)
+                    .sized(0.2F, 3.0F)
     );
     public static final DeferredHolder<EntityType<?>, EntityType<FallenMeteor>> FALLEN_METEOR = REGISTRY.registerEntityType(
             GalacticraftEntityIds.FALLEN_METEOR,
@@ -197,20 +200,23 @@ public final class GalacticraftEntityType {
 
     public static void init(IEventBus bus) {
         REGISTRY.register(bus);
-        bus.addListener(GalacticraftEntityType::registerCapabilities);
-        bus.addListener(GalacticraftEntityType::registerAttributes);
-        bus.addListener(GalacticraftEntityType::registerSpawnPlacements);
+        bus.addListener(GalacticraftEntityTypes::registerCapabilities);
+        bus.addListener(GalacticraftEntityTypes::registerAttributes);
+        bus.addListener(GalacticraftEntityTypes::registerSpawnPlacements);
     }
 
+    @SubscribeEvent
     private static void registerCapabilities(RegisterCapabilitiesEvent event) {
         FallingParachest.registerCapabilities(event);
     }
 
+    @SubscribeEvent
     public static void registerAttributes(EntityAttributeCreationEvent event) {
         event.put(EVOLVED_SKELETON.get(), EvolvedSkeleton.createAttributes().build());
         event.put(EVOLVED_ZOMBIE.get(), EvolvedZombie.createAttributes().build());
     }
 
+    @SubscribeEvent
     public static void registerSpawnPlacements(RegisterSpawnPlacementsEvent event) {
         event.register(
                 EVOLVED_SKELETON.get(),
@@ -226,6 +232,12 @@ public final class GalacticraftEntityType {
                 withBound(15),
                 RegisterSpawnPlacementsEvent.Operation.AND
         );
+    }
+
+    @SubscribeEvent
+    public static void modifyAttributes(EntityAttributeModificationEvent event) {
+        event.add(EntityTypes.PLAYER, GalacticraftAttributes.THERMAL_PROTECTION);
+        event.add(EntityTypes.PLAYER, GalacticraftAttributes.CORROSION_PROTECTION);
     }
 
     private static <T extends Entity & EvolvedMonster> SpawnPlacements.SpawnPredicate<@NonNull T> withBound(int bounds) {

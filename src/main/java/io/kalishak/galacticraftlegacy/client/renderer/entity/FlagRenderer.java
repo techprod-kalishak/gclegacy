@@ -24,13 +24,15 @@ import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureAtlas;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Unit;
 import net.minecraft.world.phys.AABB;
 import org.jspecify.annotations.NonNull;
 
 public class FlagRenderer extends EntityRenderer<Flag, FlagRenderState> {
-    public static final Identifier TEXTURES = Identifier.fromNamespaceAndPath(Galacticraft.MODID, "textures/entity/flag.png");
+    public static final Identifier TEXTURES = Identifier.fromNamespaceAndPath(Galacticraft.MODID, "textures/entity/flag/base.png");
+    public static final Identifier GREEN = Identifier.fromNamespaceAndPath(Galacticraft.MODID, "textures/entity/flag/material/green");
     private final FlagModel model;
     private final TextureAtlas flags;
 
@@ -52,6 +54,20 @@ public class FlagRenderer extends EntityRenderer<Flag, FlagRenderState> {
         reusedState.id = flag.getId();
         reusedState.rotation = flag.getYRot();
         reusedState.windLevel = flag.getWindLevel();
+
+        try {
+            reusedState.colors = reusedState.flagData.resolveColors(id -> this.flags.getSprite(id.texture()));
+        } catch (IllegalArgumentException _) {
+            reusedState.colors = new byte[reusedState.flagData.width()][reusedState.flagData.height()][3];
+
+            for (int i = 0; i < reusedState.flagData.width(); i++) {
+                for (int j = 0; j < reusedState.flagData.height(); j++) {
+                    reusedState.colors[i][j][0] = 127;
+                    reusedState.colors[i][j][1] = 127;
+                    reusedState.colors[i][j][2] = 127;
+                }
+            }
+        }
     }
 
     @Override
@@ -65,8 +81,8 @@ public class FlagRenderer extends EntityRenderer<Flag, FlagRenderState> {
         poseStack.pushPose();
         poseStack.translate(seedX, seedY + 1.5F, seedZ);
         poseStack.rotateDegrees(Axis.YP, 180.0F - renderState.rotation);
-        poseStack.scale(-1.0F, -1.0F, 0.0F);
-        nodeCollector.submitModel(this.model, Unit.INSTANCE, poseStack, RenderTypes.entitySolid(TEXTURES), 1, 1, 1);
+        poseStack.rotateDegrees(Axis.XP, 180.0F);
+        nodeCollector.submitModel(this.model, Unit.INSTANCE, poseStack, RenderTypes.entitySolid(TEXTURES), renderState.lightCoords, 0, renderState.outlineColor);
 
         submitFlag(renderState, poseStack, nodeCollector);
         poseStack.popPose();
@@ -78,7 +94,8 @@ public class FlagRenderer extends EntityRenderer<Flag, FlagRenderState> {
     }
 
     private void submitFlag(FlagRenderState renderState, PoseStack stack, SubmitNodeCollector nodeCollector) {
-        byte[][][] colors = renderState.flagData.resolveColors(id -> this.flags.getSprite(id.texture()));
+        TextureAtlasSprite defaultTexture = this.flags.getSprite(GREEN);
+        byte[][][] colors = renderState.colors;
         float windLevel = renderState.windLevel;
 
         stack.pushPose();
@@ -88,7 +105,7 @@ public class FlagRenderer extends EntityRenderer<Flag, FlagRenderState> {
 
         nodeCollector.submitCustomGeometry(
                 stack,
-                RenderTypes.endPortal(),
+                RenderTypes.entitySolidZOffsetForward(defaultTexture.atlasLocation()),
                 (pose, buffer) -> submitVertexes(pose, buffer, renderState.flagData.width(), renderState.flagData.height(), windLevel, renderState.partialTick, colors, renderState.lightCoords)
         );
         stack.popPose();

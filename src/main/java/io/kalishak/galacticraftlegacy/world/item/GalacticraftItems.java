@@ -9,13 +9,16 @@ package io.kalishak.galacticraftlegacy.world.item;
 
 import io.kalishak.galacticraftlegacy.Galacticraft;
 import io.kalishak.galacticraftlegacy.component.GalacticraftDataComponents;
+import io.kalishak.galacticraftlegacy.component.flag.BuiltinFlagMaterials;
+import io.kalishak.galacticraftlegacy.component.flag.FlagData;
+import io.kalishak.galacticraftlegacy.component.flag.FlagMaterial;
 import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.references.GalacticraftComponents;
 import io.kalishak.galacticraftlegacy.references.GalacticraftItemIds;
 import io.kalishak.galacticraftlegacy.registry.BuiltinSchematicVariants;
 import io.kalishak.galacticraftlegacy.registry.deferred.DeferredItemRegister;
 import io.kalishak.galacticraftlegacy.transfer.capability.fluid.ItemAccessFluidTank;
-import io.kalishak.galacticraftlegacy.world.entity.GalacticraftEntityType;
+import io.kalishak.galacticraftlegacy.world.entity.GalacticraftEntityTypes;
 import io.kalishak.galacticraftlegacy.world.entity.GearEquipmentSlot;
 import io.kalishak.galacticraftlegacy.world.entity.GearEquipmentSlotGroup;
 import io.kalishak.galacticraftlegacy.world.entity.ai.attributes.GalacticraftAttributes;
@@ -30,6 +33,7 @@ import io.kalishak.galacticraftlegacy.world.level.block.GalacticraftBlocks;
 import io.kalishak.galacticraftlegacy.world.level.material.fluid.GalacticraftFluids;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Style;
 import net.minecraft.world.entity.EntityTypes;
@@ -50,7 +54,6 @@ import net.neoforged.neoforge.transfer.energy.InfiniteEnergyHandler;
 import net.neoforged.neoforge.transfer.energy.ItemAccessEnergyHandler;
 import net.neoforged.neoforge.transfer.fluid.FluidResource;
 import net.neoforged.neoforge.transfer.fluid.ItemAccessFluidHandler;
-import net.neoforged.neoforge.transfer.item.ItemAccessItemHandler;
 
 import java.util.List;
 import java.util.Optional;
@@ -86,42 +89,42 @@ public final class GalacticraftItems {
     public static final DeferredItem<GearItem> THERMAL_PADDING_HELM = REGISTRY.registerItem(
             GalacticraftItemIds.THERMAL_CAP,
             GearItem::new,
-            () -> GearItem.thermalPiece(GearEquipmentSlot.THERMAL_CAP, GearEquipmentAssets.THERMAL, -0.25F)
+            () -> GearItem.thermalPiece(GearEquipmentSlot.THERMAL_HEAD, GearEquipmentAssets.THERMAL, -0.25F)
     );
     public static final DeferredItem<GearItem> THERMAL_PADDING_CHESTPIECE = REGISTRY.registerItem(
             GalacticraftItemIds.THERMAL_SHIRT,
             GearItem::new,
-            () -> GearItem.thermalPiece(GearEquipmentSlot.THERMAL_SHIRT, GearEquipmentAssets.THERMAL, -0.25F)
+            () -> GearItem.thermalPiece(GearEquipmentSlot.THERMAL_CHEST, GearEquipmentAssets.THERMAL, -0.25F)
     );
     public static final DeferredItem<GearItem> THERMAL_PADDING_LEGGINGS = REGISTRY.registerItem(
             GalacticraftItemIds.THERMAL_LEGGINGS,
             GearItem::new,
-            () -> GearItem.thermalPiece(GearEquipmentSlot.THERMAL_LEGGINGS, GearEquipmentAssets.THERMAL, -0.25F)
+            () -> GearItem.thermalPiece(GearEquipmentSlot.THERMAL_LEGS, GearEquipmentAssets.THERMAL, -0.25F)
     );
     public static final DeferredItem<GearItem> THERMAL_PADDING_BOOTS = REGISTRY.registerItem(
             GalacticraftItemIds.THERMAL_SOCKS,
             GearItem::new,
-            () -> GearItem.thermalPiece(GearEquipmentSlot.THERMAL_SOCKS, GearEquipmentAssets.THERMAL, -0.25F)
+            () -> GearItem.thermalPiece(GearEquipmentSlot.THERMAL_FEET, GearEquipmentAssets.THERMAL, -0.25F)
     );
     public static final DeferredItem<GearItem> ISOTHERMAL_HELM = REGISTRY.registerItem(
             GalacticraftItemIds.ISOTHERMAL_CAP,
             GearItem::new,
-            () -> GearItem.thermalPiece(GearEquipmentSlot.THERMAL_CAP, GearEquipmentAssets.ISOTHERMAL, 0.25F)
+            () -> GearItem.thermalPiece(GearEquipmentSlot.THERMAL_HEAD, GearEquipmentAssets.ISOTHERMAL, 0.25F)
     );
     public static final DeferredItem<GearItem> ISOTHERMAL_CHESTPIECE = REGISTRY.registerItem(
             GalacticraftItemIds.ISOTHERMAL_SHIRT,
             GearItem::new,
-            () -> GearItem.thermalPiece(GearEquipmentSlot.THERMAL_SHIRT, GearEquipmentAssets.ISOTHERMAL, 0.25F)
+            () -> GearItem.thermalPiece(GearEquipmentSlot.THERMAL_CHEST, GearEquipmentAssets.ISOTHERMAL, 0.25F)
     );
     public static final DeferredItem<GearItem> ISOTHERMAL_LEGGINGS = REGISTRY.registerItem(
             GalacticraftItemIds.ISOTHERMAL_LEGGINGS,
             GearItem::new,
-            () -> GearItem.thermalPiece(GearEquipmentSlot.THERMAL_LEGGINGS, GearEquipmentAssets.ISOTHERMAL, 0.25F)
+            () -> GearItem.thermalPiece(GearEquipmentSlot.THERMAL_LEGS, GearEquipmentAssets.ISOTHERMAL, 0.25F)
     );
     public static final DeferredItem<GearItem> ISOTHERMAL_BOOTS = REGISTRY.registerItem(
             GalacticraftItemIds.ISOTHERMAL_SOCKS,
             GearItem::new,
-            () -> GearItem.thermalPiece(GearEquipmentSlot.THERMAL_SOCKS, GearEquipmentAssets.ISOTHERMAL, 0.25F)
+            () -> GearItem.thermalPiece(GearEquipmentSlot.THERMAL_FEET, GearEquipmentAssets.ISOTHERMAL, 0.25F)
     );
     public static final DeferredItem<GearItem> LIGHT_TANK = REGISTRY.registerItem(
             GalacticraftItemIds.LIGHT_OXYGEN_TANK,
@@ -241,6 +244,11 @@ public final class GalacticraftItems {
             GalacticraftItemIds.FLAG,
             FlagItem::new, properties -> properties
                     .stacksTo(1)
+                    .delayedComponent(GalacticraftDataComponents.FLAG_DATA.get(), provider -> {
+                        Holder<FlagMaterial> flagMaterialHolder = provider.getOrThrow(BuiltinFlagMaterials.GREEN);
+
+                        return FlagData.withMaterial(flagMaterialHolder);
+                    })
     );
     public static final DeferredItem<SchematicItem> SCHEMATIC = REGISTRY.registerItem(
             GalacticraftItemIds.NASA_WORKBENCH_SCHEMATIC,
@@ -528,12 +536,12 @@ public final class GalacticraftItems {
     public static final DeferredItem<SpawnEggItem> EVOLVED_SKELETON_SPAWN_EGG = REGISTRY.registerItem(
             GalacticraftItemIds.EVOLVED_SKELETON_SPAWN_EGG,
             SpawnEggItem::new,
-            () -> new Item.Properties().spawnEgg(GalacticraftEntityType.EVOLVED_SKELETON.get())
+            () -> new Item.Properties().spawnEgg(GalacticraftEntityTypes.EVOLVED_SKELETON.get())
     );
     public static final DeferredItem<SpawnEggItem> EVOLVED_ZOMBIE_SPAWN_EGG = REGISTRY.registerItem(
             GalacticraftItemIds.EVOLVED_ZOMBIE_SPAWN_EGG,
             SpawnEggItem::new,
-            () -> new Item.Properties().spawnEgg(GalacticraftEntityType.EVOLVED_ZOMBIE.get())
+            () -> new Item.Properties().spawnEgg(GalacticraftEntityTypes.EVOLVED_ZOMBIE.get())
     );
     public static final DeferredItem<ThrowableMeteorItem> THROWABLE_METEOR_CHUNK = REGISTRY.registerItem(
             GalacticraftItemIds.THROWABLE_METEOR_CHUNK,
@@ -556,27 +564,27 @@ public final class GalacticraftItems {
 
     public static final DeferredItem<VehicleItem> TIER_1_ROCKET = REGISTRY.registerItem(
             GalacticraftItemIds.TIER_1_ROCKET,
-            properties -> new VehicleItem(GalacticraftEntityType.TIER_1_ROCKET::value, GalacticraftBlocks.LANDING_PAD, properties)
+            properties -> new VehicleItem(GalacticraftEntityTypes.TIER_1_ROCKET::value, GalacticraftBlocks.LANDING_PAD, properties)
     );
     public static final DeferredItem<VehicleItem> BUGGY = REGISTRY.registerItem(
             GalacticraftItemIds.BUGGY,
-            properties -> new VehicleItem(GalacticraftEntityType.BUGGY::value, GalacticraftBlocks.FUELING_PAD, properties)
+            properties -> new VehicleItem(GalacticraftEntityTypes.BUGGY::value, GalacticraftBlocks.FUELING_PAD, properties)
     );
     public static final DeferredItem<VehicleItem> TIER_2_ROCKET = REGISTRY.registerItem(
             GalacticraftItemIds.TIER_2_ROCKET,
-            properties -> new VehicleItem(GalacticraftEntityType.TIER_2_ROCKET::value, GalacticraftBlocks.LANDING_PAD, properties)
+            properties -> new VehicleItem(GalacticraftEntityTypes.TIER_2_ROCKET::value, GalacticraftBlocks.LANDING_PAD, properties)
     );
     public static final DeferredItem<VehicleItem> CARGO_ROCKET = REGISTRY.registerItem(
             GalacticraftItemIds.CARGO_ROCKET,
-            properties -> new VehicleItem(GalacticraftEntityType.CARGO_ROCKET::value, GalacticraftBlocks.LANDING_PAD, properties)
+            properties -> new VehicleItem(GalacticraftEntityTypes.CARGO_ROCKET::value, GalacticraftBlocks.LANDING_PAD, properties)
     );
     public static final DeferredItem<VehicleItem> TIER_3_ROCKET = REGISTRY.registerItem(
             GalacticraftItemIds.TIER_3_ROCKET,
-            properties -> new VehicleItem(GalacticraftEntityType.TIER_3_ROCKET::value, GalacticraftBlocks.LANDING_PAD, properties)
+            properties -> new VehicleItem(GalacticraftEntityTypes.TIER_3_ROCKET::value, GalacticraftBlocks.LANDING_PAD, properties)
     );
     public static final DeferredItem<VehicleItem> ASTRO_MINER = REGISTRY.registerItem(
             GalacticraftItemIds.ASTRO_MINER,
-            properties -> new VehicleItem(GalacticraftEntityType.ASTRO_MINER::value, GalacticraftBlocks.ASTRO_MINER_BASE, properties)
+            properties -> new VehicleItem(GalacticraftEntityTypes.ASTRO_MINER::value, GalacticraftBlocks.ASTRO_MINER_BASE, properties)
     );
 
     public static final DeferredItem<BlockItem> ALUMINUM_WIRE = REGISTRY.registerSimpleBlockItemWithDescription(GalacticraftBlocks.ALUMINUM_WIRE);
@@ -759,11 +767,6 @@ public final class GalacticraftItems {
                 Capabilities.Fluid.ITEM,
                 (_, cxt) -> new ItemAccessFluidHandler(cxt, GalacticraftDataComponents.FLUID_TANK.get(), 8000),
                 FLUID_CANISTER
-        );
-        event.registerItem(
-                Capabilities.Item.ITEM,
-                (_, cxt) -> new ItemAccessItemHandler(cxt, DataComponents.CONTAINER, 9),
-                GalacticraftItems.SPACE_EMERGENCY_KIT
         );
     }
 }

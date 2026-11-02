@@ -69,7 +69,7 @@ public class FallingParachest extends FallingBlockEntity implements ParachuteFal
     }
 
     private FallingParachest(Level level, double x, double y, double z, BlockState state, @Nullable BlockEntity blockEntity) {
-        super(GalacticraftEntityType.FALLING_PARACHEST.get(), level);
+        super(GalacticraftEntityTypes.FALLING_PARACHEST.get(), level);
         this.blockState = state;
         this.blocksBuilding = true;
         this.xo = x;
@@ -132,12 +132,12 @@ public class FallingParachest extends FallingBlockEntity implements ParachuteFal
     public static void registerCapabilities(RegisterCapabilitiesEvent event) {
         event.registerEntity(
                 Capabilities.Item.ENTITY,
-                GalacticraftEntityType.FALLING_PARACHEST.get(),
+                GalacticraftEntityTypes.FALLING_PARACHEST.get(),
                 (entity, cxt) -> entity.itemResources
         );
         event.registerEntity(
                 Capabilities.Fluid.ENTITY,
-                GalacticraftEntityType.FALLING_PARACHEST.get(),
+                GalacticraftEntityTypes.FALLING_PARACHEST.get(),
                 (entity, cxt) -> entity.fluidResource
         );
     }

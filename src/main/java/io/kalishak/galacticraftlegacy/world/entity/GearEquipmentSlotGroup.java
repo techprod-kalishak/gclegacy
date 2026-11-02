@@ -23,8 +23,11 @@ import java.util.function.Predicate;
 public enum GearEquipmentSlotGroup implements SerializableEnum, Iterable<GearEquipmentSlot>, Predicate<GearEquipmentSlot> {
     ANY(0, "any", Predicates.alwaysTrue()),
     GEAR(1, "gear", GearEquipmentSlot::isGear),
-    TOOL(2, "tool", slot -> slot == GearEquipmentSlot.FREQUENCY_MODULE || slot == GearEquipmentSlot.PARACHUTE || slot == GearEquipmentSlot.SHIELD),
-    THERMAL(3, "thermal", GearEquipmentSlot::isThermal);
+    TANK(2, "tank", GearEquipmentSlot::isTank),
+    THERMAL_HEAD(3, "thermal_head", GearEquipmentSlot.THERMAL_HEAD),
+    THERMAL_CHEST(4, "thermal_chest", GearEquipmentSlot.THERMAL_CHEST),
+    THERMAL_LEGS(5, "thermal_legs", GearEquipmentSlot.THERMAL_LEGS),
+    THERMAL_FEET(6, "thermal_feet", GearEquipmentSlot.THERMAL_FEET);
 
     public static final Codec<GearEquipmentSlotGroup> CODEC = SerializableEnum.codec(GearEquipmentSlotGroup.class);
     public static final StreamCodec<ByteBuf, GearEquipmentSlotGroup> STREAM_CODEC = SerializableEnum.streamCodec(GearEquipmentSlotGroup.class);
@@ -46,9 +49,12 @@ public enum GearEquipmentSlotGroup implements SerializableEnum, Iterable<GearEqu
 
     public static GearEquipmentSlotGroup bySlot(GearEquipmentSlot slot) {
         return switch (slot) {
-            case MASK, GEAR, TANK, ADDITIONAL_TANK -> GEAR;
-            case FREQUENCY_MODULE, PARACHUTE, SHIELD -> TOOL;
-            case THERMAL_CAP, THERMAL_SHIRT, THERMAL_LEGGINGS, THERMAL_SOCKS -> THERMAL;
+            case TANK, ADDITIONAL_TANK -> TANK;
+            case THERMAL_HEAD -> THERMAL_HEAD;
+            case THERMAL_CHEST -> THERMAL_CHEST;
+            case THERMAL_LEGS -> THERMAL_LEGS;
+            case THERMAL_FEET -> THERMAL_FEET;
+            default -> GEAR;
         };
     }
 

@@ -58,10 +58,10 @@ public interface GearRenderState {
             temperatureModifier = instance.typeHolder().value().atmosphereInfo().getTemperatureModifier();
         }
 
-        reusedState.setRenderData(GearRenderState.THERMAL_CAP, spaceGearEquipment.get(GearEquipmentSlot.THERMAL_CAP));
-        reusedState.setRenderData(GearRenderState.THERMAL_SHIRT, spaceGearEquipment.get(GearEquipmentSlot.THERMAL_SHIRT));
-        reusedState.setRenderData(GearRenderState.THERMAL_LEGGINGS, spaceGearEquipment.get(GearEquipmentSlot.THERMAL_LEGGINGS));
-        reusedState.setRenderData(GearRenderState.THERMAL_SOCKS, spaceGearEquipment.get(GearEquipmentSlot.THERMAL_SOCKS));
+        reusedState.setRenderData(GearRenderState.THERMAL_CAP, spaceGearEquipment.get(GearEquipmentSlot.THERMAL_HEAD));
+        reusedState.setRenderData(GearRenderState.THERMAL_SHIRT, spaceGearEquipment.get(GearEquipmentSlot.THERMAL_CHEST));
+        reusedState.setRenderData(GearRenderState.THERMAL_LEGGINGS, spaceGearEquipment.get(GearEquipmentSlot.THERMAL_LEGS));
+        reusedState.setRenderData(GearRenderState.THERMAL_SOCKS, spaceGearEquipment.get(GearEquipmentSlot.THERMAL_FEET));
         appendCommonRenderStates(entity, reusedState);
         reusedState.setRenderData(GearRenderState.PARACHUTE, spaceGearEquipment.get(GearEquipmentSlot.PARACHUTE));
         reusedState.setRenderData(GearRenderState.IS_PARACHUTE_OPEN, gear.usesParachute());

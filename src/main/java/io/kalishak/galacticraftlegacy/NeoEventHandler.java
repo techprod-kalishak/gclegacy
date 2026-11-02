@@ -15,6 +15,7 @@ import io.kalishak.galacticraftlegacy.data.datamap.Extinguishable;
 import io.kalishak.galacticraftlegacy.data.datamap.GalacticraftDataMaps;
 import io.kalishak.galacticraftlegacy.transfer.node.NodeNetwork;
 import io.kalishak.galacticraftlegacy.world.entity.GearEquipmentSlot;
+import io.kalishak.galacticraftlegacy.world.entity.GearEquipmentSlotGroup;
 import io.kalishak.galacticraftlegacy.world.item.component.GearAttributeModifiers;
 import io.kalishak.galacticraftlegacy.world.item.component.ShieldController;
 import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.GalacticraftRecipeType;
@@ -71,13 +72,13 @@ public class NeoEventHandler {
 
         if (attributeModifiers != null) {
             if (event.getContext().tooltipDisplay().shows(GalacticraftDataComponents.GEAR_ATTRIBUTE_MODIFIERS.get())) {
-                for (GearEquipmentSlot slot : GearEquipmentSlot.values()) {
+                for (GearEquipmentSlotGroup slotGroup : GearEquipmentSlotGroup.values()) {
                     MutableBoolean first =  new MutableBoolean(true);
 
-                    attributeModifiers.forEach(slot, (attribute, modifier, tooltip) -> {
+                    attributeModifiers.forEach(slotGroup, (attribute, modifier, tooltip) -> {
                         if (tooltip != GearAttributeModifiers.Display.hidden()) {
                             if (first.isTrue()) {
-                                event.addTooltipLines(CommonComponents.EMPTY, Component.translatable("item.modifiers." + slot.getSerializedName()).withStyle(ChatFormatting.GRAY));
+                                event.addTooltipLines(CommonComponents.EMPTY, Component.translatable("item.galacticraftlegacy.modifiers." + slotGroup.getSerializedName()).withStyle(ChatFormatting.GRAY));
                                 first.setFalse();
                             }
 

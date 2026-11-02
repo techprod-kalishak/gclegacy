@@ -45,7 +45,7 @@ public class SchematicEntity extends HangingEntity {
     }
 
     public SchematicEntity(Level level, BlockPos pos) {
-        super(GalacticraftEntityType.SCHEMATIC.get(), level, pos);
+        super(GalacticraftEntityTypes.SCHEMATIC.get(), level, pos);
     }
 
     public SchematicEntity(Level level, BlockPos blockPos, Direction direction, Holder<SchematicVariant> schematicHolder) {

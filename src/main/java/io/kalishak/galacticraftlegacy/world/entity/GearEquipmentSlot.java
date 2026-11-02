@@ -19,14 +19,14 @@ import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
 public enum GearEquipmentSlot implements SerializableEnum {
-    THERMAL_CAP(EquipmentSlot.HEAD, 0, "thermal_cap"),
-    THERMAL_SHIRT(EquipmentSlot.CHEST, 1, "thermal_shirt"),
-    THERMAL_LEGGINGS(EquipmentSlot.LEGS, 2, "thermal_leggings"),
-    THERMAL_SOCKS(EquipmentSlot.FEET, 3, "thermal_foot_socks"),
-    MASK(EquipmentSlot.HEAD, 4, "mask"),
-    GEAR(EquipmentSlot.CHEST, 5, "gear"),
-    TANK(EquipmentSlot.CHEST, 6, "tank"),
-    ADDITIONAL_TANK(EquipmentSlot.CHEST, 7, "additional_tank"),
+    THERMAL_HEAD(EquipmentSlot.HEAD, 0, "thermal_cap"),
+    THERMAL_CHEST(EquipmentSlot.CHEST, 1, "thermal_shirt"),
+    THERMAL_LEGS(EquipmentSlot.LEGS, 2, "thermal_leggings"),
+    THERMAL_FEET(EquipmentSlot.FEET, 3, "thermal_foot_socks"),
+    TANK(EquipmentSlot.CHEST, 4, "tank"),
+    ADDITIONAL_TANK(EquipmentSlot.CHEST, 5, "additional_tank"),
+    MASK(EquipmentSlot.HEAD, 6, "mask"),
+    GEAR(EquipmentSlot.CHEST, 7, "gear"),
     PARACHUTE(EquipmentSlot.CHEST, 8, "parachute"),
     FREQUENCY_MODULE(EquipmentSlot.HEAD, 9, "frequency_module"),
     SHIELD(EquipmentSlot.BODY, 10, "shield");
@@ -78,10 +78,6 @@ public enum GearEquipmentSlot implements SerializableEnum {
     }
 
     public boolean isGear() {
-        return this.index >= MASK.getIndex() && this.index <= PARACHUTE.getIndex();
-    }
-
-    public boolean isThermal() {
-        return this.index < MASK.getIndex();
+        return this.index > 5;
     }
 }

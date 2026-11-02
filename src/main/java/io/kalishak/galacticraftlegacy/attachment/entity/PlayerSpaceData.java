@@ -107,10 +107,10 @@ public class PlayerSpaceData extends GearInventoryProvider {
     @SuppressWarnings("ConstantConditions")
     public boolean isThermalPaddingEffective(float temperatureModifier) {
         List<ItemStack> thermal = List.of(
-                getGearEquipment().get(GearEquipmentSlot.THERMAL_CAP),
-                getGearEquipment().get(GearEquipmentSlot.THERMAL_SHIRT),
-                getGearEquipment().get(GearEquipmentSlot.THERMAL_LEGGINGS),
-                getGearEquipment().get(GearEquipmentSlot.THERMAL_SOCKS)
+                getGearEquipment().get(GearEquipmentSlot.THERMAL_HEAD),
+                getGearEquipment().get(GearEquipmentSlot.THERMAL_CHEST),
+                getGearEquipment().get(GearEquipmentSlot.THERMAL_LEGS),
+                getGearEquipment().get(GearEquipmentSlot.THERMAL_FEET)
         );
 
         float effectiveness = (float) thermal.stream()

@@ -15,4 +15,5 @@ public class FlagRenderState extends EntityRenderState {
     public int id;
     public float rotation;
     public float windLevel;
+    public byte[][][] colors;
 }

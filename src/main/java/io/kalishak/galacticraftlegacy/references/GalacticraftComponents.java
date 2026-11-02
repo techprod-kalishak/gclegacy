@@ -14,6 +14,8 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.util.Util;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.transfer.energy.EnergyHandler;
 import org.apache.commons.lang3.function.TriFunction;
@@ -49,7 +51,6 @@ public class GalacticraftComponents {
     public static final Key CREATIVE_ONLY = key("item.galacticraftlegacy.creative_only", ChatFormatting.RED);
     public static final Key INFINITE = key("item.galacticraftlegacy.infinite", ChatFormatting.GREEN);
     public static final Function<String, MutableComponent> TOOLTIP_BATTERY = arg -> Component.translatable("item.galacticraftlegacy.battery.tooltip", arg);
-    public static final MutableComponent TOOLTIP_FLAG = Component.translatable("item.galacticraftlegacy.team_flag");
     public static final Key TOOLTIP_EMPTY_TANK = key("item.galacticraftlegact.fluid_tank.empty", ChatFormatting.GRAY);
     public static final Key TOOLTIP_MORE = key("item.galacticraftlegacy.press_shift", ChatFormatting.GRAY);
     public static final Function<Number, MutableComponent> TOOLTIP_ENERGY_PER_TICK = (amount) -> Component.translatable("item.galacticraftlegacy.energy_per_tick", amount);
@@ -62,13 +63,13 @@ public class GalacticraftComponents {
     public static final Key NEW_SCHEMATIC = key("container.nasa_workbench.add_new_schematic");
 
     // Items
-    public static final Key ITEM_DEHYDRATED_APPLE = key("item.galacticraftlegacy.dehydrated_apple", ChatFormatting.YELLOW);
-    public static final Key ITEM_DEHYDRATED_CARROT = key("item.galacticraftlegacy.dehydrated_carrot", ChatFormatting.YELLOW);
-    public static final Key ITEM_DEHYDRATED_MELON = key("item.galacticraftlegacy.dehydrated_melon", ChatFormatting.YELLOW);
-    public static final Key ITEM_DEHYDRATED_PUMPKIN = key("item.galacticraftlegacy.dehydrated_pumpkin", ChatFormatting.YELLOW);
-    public static final Key ITEM_DEHYDRATED_BEETROOT = key("item.galacticraftlegacy.dehydrated_beetroot", ChatFormatting.YELLOW);
-    public static final Key ITEM_DEHYDRATED_POTATO = key("item.galacticraftlegacy.dehydrated_potato", ChatFormatting.YELLOW);
-    public static final Key ITEM_CANNED_BEEF = key("item.galacticraftlegacy.canned_beef", ChatFormatting.YELLOW);
+    public static final Key ITEM_DEHYDRATED_APPLE = key(GalacticraftItemIds.DEHYDRATED_APPLE, ChatFormatting.YELLOW);
+    public static final Key ITEM_DEHYDRATED_CARROT = key(GalacticraftItemIds.DEHYDRATED_CARROT, ChatFormatting.YELLOW);
+    public static final Key ITEM_DEHYDRATED_MELON = key(GalacticraftItemIds.DEHYDRATED_MELON, ChatFormatting.YELLOW);
+    public static final Key ITEM_DEHYDRATED_PUMPKIN = key(GalacticraftItemIds.DEHYDRATED_PUMPKIN, ChatFormatting.YELLOW);
+    public static final Key ITEM_DEHYDRATED_BEETROOT = key(GalacticraftItemIds.DEHYDRATED_BEETROOT, ChatFormatting.YELLOW);
+    public static final Key ITEM_DEHYDRATED_POTATO = key(GalacticraftItemIds.DEHYDRATED_POTATO, ChatFormatting.YELLOW);
+    public static final Key ITEM_CANNED_BEEF = key(GalacticraftItemIds.CANNED_BEEF, ChatFormatting.YELLOW);
 
     // Blocks
     public static final Key BLOCK_DUNGEON_CHEST = key("galacticraftlegacy.container.dungeon_chest");
@@ -103,18 +104,15 @@ public class GalacticraftComponents {
     public static final Component COMMAND_ERROR_SPACE_RACE_FRIENDLY_FIRE_ENABLED = Component.translatable("galacticraftlegacy.commands.space_race.option.friendlyfire.alreadyEnabled");
     public static final Component COMMAND_ERROR_SPACE_RACE_FRIENDLY_FIRE_DISABLED = Component.translatable("galacticraftlegacy.commands.space_race.option.friendlyfire.alreadyDisabled");
     public static final Component COMMAND_ERROR_SPACE_RACE_FRIENDLY_INVISIBLES_ENABLED = Component.translatable("galacticraftlegacy.commands.space_race.option.seeFriendlyInvisibles.alreadyEnabled");
-    public static final Component COMMAND_ERROR_SPACE_RACE_FRIENDLY_INVISIBLES_DISABLED = Component.translatable("galacticraftlegacy.commands.space_race.option.seeFriendlyInvisibles.alreadyEnabled");
+    public static final Component COMMAND_ERROR_SPACE_RACE_FRIENDLY_INVISIBLES_DISABLED = Component.translatable("galacticraftlegacy.commands.space_race.option.seeFriendlyInvisibles.alreadyDisabled");
     public static final Component COMMAND_ERROR_SPACE_RACE_NAME_TAG = Component.translatable("galacticraftlegacy.commands.space_race.option.nametagVisibility.unchanged");
     public static final Component COMMAND_ERROR_SPACE_RACE_DEATH_MESSAGE = Component.translatable("galacticraftlegacy.commands.space_race.option.deathMessageVisibility.unchanged");
     public static final Component COMMAND_ERROR_SPACE_RACE_COLLISION_RULE = Component.translatable("galacticraftlegacy.commands.space_race.option.collisionRule.unchanged");
-    public static final Component COMMAND_ERROR_SPACE_RACE_SCHEMATIC = Component.translatable("galacticraftlegacy.commands.space_race.schematics.duplicate");
+    public static final Component COMMAND_ERROR_SPACE_RACE_SCHEMATIC = Component.translatable("galacticraftlegacy.commands.space_race.schematics.unchanged");
     public static final Dynamic2CommandExceptionType.Function COMMAND_ERROR_NOT_EQUIPABLE = (entity, equipment) -> Component.translatableEscape("galacticraftlegacy.commands.equipment.not_equippable", entity, equipment);
     public static final Function<Object, Message> COMMAND_ERROR_INVALID_GEAR_OWNER = entity -> Component.translatableEscape("galacticraftlegacy.commands.invalid_gear_owner", entity);
     public static final Function<Object, Message> COMMAND_ERROR_SPACE_RACE_DONT_EXIST = name -> Component.translatableEscape("galacticraftlegacy.commands.space_race.notFound", name);
     public static final Key KEY_ERROR_EMPTY_CELESTIAL = key("galacticraftlegacy.commands.data.celestial.empty");
-    public static final Function<Object, Message> COMMAND_ERROR_CELESTIAL_INVALID = name -> Component.translatableEscape("galacticraftlegacy.commands.celestial.invalid", name);
-    public static final Function<Object, Message> COMMAND_ERROR_CELESTIAL_MALFORMED = name -> Component.translatableEscape("galacticraftlegacy.commands.celestial.malformed", name);
-    public static final Function<Object, Message> COMMAND_ERROR_CELESTIAL_BLANK = name -> Component.translatableEscape("galacticraftlegacy.commands.celestial.blank", name);
 
     public static final MutableComponent COMMAND_SUCCESS_SPACE_RACE_LEAVE_SINGLE = Component.translatable("galacticraftlegacy.commands.space_race.leave.success.single");
     public static final MutableComponent COMMAND_SUCCESS_SPACE_RACE_LEAVE_MULTIPLE = Component.translatable("galacticraftlegacy.commands.space_race.leave.success.multiple");
@@ -185,6 +183,10 @@ public class GalacticraftComponents {
 
     private static Key key(String translationKey, ChatFormatting color) {
         return new Key(translationKey, style -> style.withColor(color));
+    }
+
+    private static <T> Key key(ResourceKey<T> key, ChatFormatting color) {
+        return new Key(Util.makeDescriptionId(key.registry().getPath(), key.identifier()),style -> style.withColor(color));
     }
 
     public record Key(String translationKey, UnaryOperator<Style> styled) {

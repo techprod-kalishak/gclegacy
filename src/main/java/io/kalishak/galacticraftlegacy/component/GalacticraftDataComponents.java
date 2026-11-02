@@ -24,8 +24,6 @@ import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.util.ExtraCodecs;
-import net.minecraft.world.entity.EntityReference;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.TooltipProvider;
@@ -33,7 +31,6 @@ import net.minecraft.world.phys.Vec3;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.capabilities.Capabilities;
-import net.neoforged.neoforge.capabilities.ItemCapability;
 import net.neoforged.neoforge.common.tooltip.TooltipAppender;
 import net.neoforged.neoforge.common.tooltip.TooltipLocation;
 import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent;
@@ -41,9 +38,10 @@ import net.neoforged.neoforge.event.RegisterTooltipAppendersEvent;
 import net.neoforged.neoforge.fluids.SimpleFluidContent;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
+import net.neoforged.neoforge.transfer.ResourceHandler;
 import net.neoforged.neoforge.transfer.access.ItemAccess;
 import net.neoforged.neoforge.transfer.energy.EnergyHandler;
-import net.neoforged.neoforge.transfer.fluid.ItemAccessFluidHandler;
+import net.neoforged.neoforge.transfer.fluid.FluidResource;
 
 import java.util.List;
 import java.util.function.BiConsumer;
@@ -60,9 +58,9 @@ public final class GalacticraftDataComponents {
             "crafting_memory",
             builder -> builder.persistent(CraftingMemory.CODEC).networkSynchronized(CraftingMemory.STREAM_CODEC).cacheEncoding()
     );
-    public static final DeferredHolder<DataComponentType<?>, DataComponentType<EntityReference<Player>>> PLAYER_REFERENCE = REGISTRY.registerComponentType(
-            "entity_reference",
-            builder -> builder.persistent(EntityReference.codec()).networkSynchronized(EntityReference.streamCodec()).cacheEncoding()
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<PlayerOwnable>> PLAYER_OWNABLE = REGISTRY.registerComponentType(
+            "player_ownable",
+            builder -> builder.persistent(PlayerOwnable.CODEC).networkSynchronized(PlayerOwnable.STREAM_CODEC).cacheEncoding()
     );
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<FlagData>> FLAG_DATA = REGISTRY.registerComponentType(
             "flag_data",
@@ -125,10 +123,6 @@ public final class GalacticraftDataComponents {
             "body_position",
             builder -> builder.persistent(Vec3.CODEC).networkSynchronized(Vec3.STREAM_CODEC)
     );
-    public static final DeferredHolder<DataComponentType<?>, DataComponentType<EntityReference<Player>>> BODY_OWNER = REGISTRY.registerComponentType(
-            "body_owner",
-            builder -> builder.persistent(EntityReference.codec()).networkSynchronized(EntityReference.streamCodec())
-    );
 
     public static void init(IEventBus bus) {
         REGISTRY.register(bus);
@@ -152,32 +146,47 @@ public final class GalacticraftDataComponents {
 
     @SubscribeEvent
     public static void appendComponentTooltip(RegisterTooltipAppendersEvent event) {
+        appendIfPresent(event::registerAppender, TooltipLocation.HEAD, GalacticraftDataComponents.PLAYER_OWNABLE);
         appendIfPresent(event::registerAppender, TooltipLocation.TAIL, GalacticraftDataComponents.ITEM_WITH_DESCRIPTION);
         appendIfPresent(event::registerAppender, TooltipLocation.HEAD, GalacticraftDataComponents.CRAFTING_MEMORY);
         appendIfPresent(event::registerAppender, TooltipLocation.HEAD, GalacticraftDataComponents.FLAG_DATA);
         appendIfPresent(event::registerAppender, TooltipLocation.HEAD, GalacticraftDataComponents.FLUID_TANK_CONTENTS);
         appendIfPresent(event::registerAppender, TooltipLocation.HEAD, GalacticraftDataComponents.HOT_CONTENT);
-        appendIfPresent(event::registerAppender, TooltipLocation.HEAD, GalacticraftDataComponents.SCHEMATIC);
-        appendIfPresent(event::registerAppender, TooltipLocation.HEAD, GalacticraftDataComponents.SHIELD_CONTROLLER);
-        appendIfCapability(event::registerAppender, Capabilities.Energy.ITEM);
-        appendIfCapability(event::registerAppender, Capabilities.Fluid.ITEM);
+        appendIfHolderPresent(event::registerAppender, TooltipLocation.HEAD, GalacticraftDataComponents.SCHEMATIC);
+        appendIfPresent(event::registerAppender, TooltipLocation.POST_CUSTOM, GalacticraftDataComponents.SHIELD_CONTROLLER);
+        appendIfPresent(event::registerAppender, TooltipLocation.HEAD, GalacticraftDataComponents.CANNED_FOOD);
+        appendCapacitor(event::registerAppender);
+        appendFluidTank(event::registerAppender);
     }
 
     private static boolean isModdedItem(ItemStack itemStack) {
         return itemStack.typeHolder().key().identifier().getNamespace().equals(Galacticraft.MODID);
     }
 
-    private static <T> void appendIfCapability(BiConsumer<TooltipLocation, TooltipAppender> consumer, ItemCapability<T, ItemAccess> capability) {
+    private static void appendFluidTank(BiConsumer<TooltipLocation, TooltipAppender> consumer) {
+        consumer.accept(
+                TooltipLocation.HEAD,
+                (stack, _, _, _, _, builder) -> {
+                    if (isModdedItem(stack)) {
+                        ResourceHandler<FluidResource> handler = stack.getCapability(Capabilities.Fluid.ITEM, ItemAccess.forStack(stack));
+
+                        if (handler != null) {
+                            ItemAccessFluidUtils.addTooltip(handler, builder);
+                        }
+                    }
+                }
+        );
+    }
+
+    private static void appendCapacitor(BiConsumer<TooltipLocation, TooltipAppender> consumer) {
         consumer.accept(
                 TooltipLocation.HEAD,
                 (stack, context, _, _, _, builder) -> {
                     if (isModdedItem(stack)) {
-                        T handler = stack.getCapability(capability, ItemAccess.forStack(stack));
+                        EnergyHandler handler = stack.getCapability(Capabilities.Energy.ITEM, ItemAccess.forStack(stack));
 
-                        switch (handler) {
-                            case EnergyHandler energyHandler -> ItemAccessEnergyUtils.addTooltip(energyHandler, Constants.ifClient(context.level(), ClientConfig.ENERGY_UNIT, EnergyUnit.GIGA_JOULES), builder);
-                            case ItemAccessFluidHandler fluidHandler -> ItemAccessFluidUtils.addTooltip(fluidHandler, builder);
-                            case null, default -> {}
+                        if (handler != null) {
+                            ItemAccessEnergyUtils.addTooltip(handler, Constants.ifClient(context.level(), ClientConfig.ENERGY_UNIT, EnergyUnit.GIGA_JOULES), builder);
                         }
                     }
                 }
@@ -187,11 +196,26 @@ public final class GalacticraftDataComponents {
     private static <T> void appendIfPresent(BiConsumer<TooltipLocation, TooltipAppender> consumer, TooltipLocation tooltipLocation, Supplier<? extends DataComponentType<T>> componentType) {
         consumer.accept(
                 tooltipLocation,
-                (stack, context, _, _, tooltipFlag, builder) -> {
-                    if (isModdedItem(stack)) {
+                (stack, context, display, _, tooltipFlag, builder) -> {
+                    if (display.shows(componentType.get())) {
                         T component = stack.get(componentType);
 
                         if (component instanceof TooltipProvider tooltipProvider) {
+                            tooltipProvider.addToTooltip(context, builder, tooltipFlag, stack);
+                        }
+                    }
+                }
+        );
+    }
+
+    private static <T> void appendIfHolderPresent(BiConsumer<TooltipLocation, TooltipAppender> consumer, TooltipLocation tooltipLocation, Supplier<? extends DataComponentType<Holder<T>>> componentType) {
+        consumer.accept(
+                tooltipLocation,
+                (stack, context, display, _, tooltipFlag, builder) -> {
+                    if (display.shows(componentType.get())) {
+                        Holder<T> component = stack.get(componentType);
+
+                        if (component != null && component.value() instanceof TooltipProvider tooltipProvider) {
                             tooltipProvider.addToTooltip(context, builder, tooltipFlag, stack);
                         }
                     }

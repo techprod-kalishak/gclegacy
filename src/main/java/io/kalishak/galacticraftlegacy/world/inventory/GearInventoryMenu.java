@@ -21,7 +21,8 @@ import net.minecraft.util.Util;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.*;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.Map;
@@ -44,10 +45,10 @@ public class GearInventoryMenu extends AbstractContainerMenu {
     public static final Identifier EMPTY_SLOT_TELEMETRY = Identifier.fromNamespaceAndPath(Galacticraft.MODID, "container/slot/telemetry");
     public static final Identifier EMPTY_SLOT_SHIELD = Identifier.fromNamespaceAndPath(Galacticraft.MODID, "container/slot/shield");
     private static final Map<GearEquipmentSlot, Identifier> TEXTURE_EMPTY_SLOTS = Util.makeEnumMap(GearEquipmentSlot.class, slot -> switch (slot) {
-        case THERMAL_CAP -> EMPTY_SLOT_THERMAL_HELMET;
-        case THERMAL_SHIRT -> EMPTY_SLOT_THERMAL_CHESTPLATE;
-        case THERMAL_LEGGINGS -> EMPTY_SLOT_THERMAL_LEGGINGS;
-        case THERMAL_SOCKS -> EMPTY_SLOT_THERMAL_BOOTS;
+        case THERMAL_HEAD -> EMPTY_SLOT_THERMAL_HELMET;
+        case THERMAL_CHEST -> EMPTY_SLOT_THERMAL_CHESTPLATE;
+        case THERMAL_LEGS -> EMPTY_SLOT_THERMAL_LEGGINGS;
+        case THERMAL_FEET -> EMPTY_SLOT_THERMAL_BOOTS;
         case MASK -> EMPTY_SLOT_HELMET;
         case GEAR -> EMPTY_SLOT_GEAR;
         case TANK, ADDITIONAL_TANK -> EMPTY_SLOT_TANK;

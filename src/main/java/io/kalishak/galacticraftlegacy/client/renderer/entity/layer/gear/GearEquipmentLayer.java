@@ -121,7 +121,7 @@ public abstract class GearEquipmentLayer<S extends LivingEntityRenderState, M ex
 
     protected EquipmentClientInfo.LayerType getLayerForSlot(GearEquipmentSlot gearEquipmentSlot) {
         return switch (gearEquipmentSlot) {
-            case THERMAL_CAP, THERMAL_SHIRT, THERMAL_LEGGINGS, THERMAL_SOCKS, SHIELD -> EnumExtensions.LAYER_TYPE_THERMAL_PADDING.getValue();
+            case THERMAL_HEAD, THERMAL_CHEST, THERMAL_LEGS, THERMAL_FEET, SHIELD -> EnumExtensions.LAYER_TYPE_THERMAL_PADDING.getValue();
             case TANK, ADDITIONAL_TANK -> EnumExtensions.LAYER_TYPE_TANK.getValue();
             case PARACHUTE -> EnumExtensions.LAYER_TYPE_PARACHUTE.getValue();
             default -> null;

@@ -45,7 +45,7 @@ public class NoGravityMovingBlockEntity extends Entity {
     }
 
     private NoGravityMovingBlockEntity(Level level, double x, double y, double z, BlockState blockState, Vec3 movement) {
-        this(GalacticraftEntityType.NO_GRAVITY_MOVING_BLOCK.get(), level);
+        this(GalacticraftEntityTypes.NO_GRAVITY_MOVING_BLOCK.get(), level);
         this.blockState = blockState;
         this.blocksBuilding = true;
         setPos(x, y, z);

@@ -3,10 +3,12 @@ package io.kalishak.galacticraftlegacy.galaxies.celestial;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.kalishak.galacticraftlegacy.component.GalacticraftDataComponents;
+import io.kalishak.galacticraftlegacy.component.PlayerOwnable;
 import io.kalishak.galacticraftlegacy.registry.GalacticraftRegistries;
 import io.kalishak.galacticraftlegacy.world.entity.vehicle.rocket.TieredRocket;
 import io.kalishak.galacticraftlegacy.world.item.FeatureTier;
 import io.kalishak.galacticraftlegacy.world.level.dimension.transition.PlanetaryTransition;
+import io.kalishak.galacticraftlegacy.world.score.race.SpaceRaceTeam;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.RegistryAccess;
@@ -18,7 +20,6 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.Nameable;
-import net.minecraft.world.entity.EntityReference;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.phys.Vec3;
@@ -113,16 +114,20 @@ public final class CelestialBodyInstance implements Nameable, DataComponentHolde
         this.components.set(type, value);
     }
 
-    public void setOwner(EntityReference<Player> owner) {
-        this.components.set(GalacticraftDataComponents.BODY_OWNER.get(), owner);
+    public void setOwner(PlayerOwnable owner) {
+        this.components.set(GalacticraftDataComponents.PLAYER_OWNABLE.get(), owner);
     }
 
     public void setOwner(Player player) {
-        setOwner(EntityReference.of(player));
+        setOwner(PlayerOwnable.byPlayer(player));
     }
 
-    public @Nullable EntityReference<Player> getOwner() {
-        return this.components.get(GalacticraftDataComponents.BODY_OWNER);
+    public void setOwner(SpaceRaceTeam team) {
+        setOwner(PlayerOwnable.byTeam(team));
+    }
+
+    public @Nullable PlayerOwnable getOwner() {
+        return this.components.get(GalacticraftDataComponents.PLAYER_OWNABLE);
     }
 
     public void setCustomName(Component customName) {
@@ -210,7 +215,7 @@ public final class CelestialBodyInstance implements Nameable, DataComponentHolde
     }
 
     public static boolean isOwnedByPlayer(CelestialBodyInstance celestialBody, Player player) {
-        return celestialBody.getOwner() != null && celestialBody.getOwner().matches(player);
+        return celestialBody.getOwner() != null && celestialBody.getOwner().isOwnedBy(player);
     }
 
     public static Set<CelestialBodyInstance> showReachable(Collection<CelestialBodyInstance> registry, TieredRocket rocket) {

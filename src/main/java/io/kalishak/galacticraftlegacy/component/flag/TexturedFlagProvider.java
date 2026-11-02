@@ -27,7 +27,7 @@ public final class TexturedFlagProvider extends AbstractFlagProvider {
         SpriteId id = new SpriteId(GalacticraftSheets.FLAG_SHEET, this.image);
         TextureAtlasSprite sprite = spriteGetter.get(id);
 
-        this.colors = FlagTypeProvider.populateColor(this.width, this.height, (x, y) -> sprite.getPixelARGB(1, x, y));
+        this.colors = FlagTypeProvider.populateColor(this.width, this.height, (x, y) -> sprite.getPixelARGB(0, x, y));
 
         return this.colors;
     }

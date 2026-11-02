@@ -36,10 +36,10 @@ public class ThermalPaddingLayer extends GearEquipmentLayer<AvatarRenderState, P
 
     @Override
     public void submit(PoseStack poseStack, SubmitNodeCollector nodeCollector, int packedLight, AvatarRenderState renderState, float yRot, float xRot) {
-        renderThermalPiece(poseStack, nodeCollector, renderState.getRenderDataOrDefault(GearRenderState.THERMAL_CAP, ItemStack.EMPTY), GearEquipmentSlot.THERMAL_CAP, packedLight, renderState);
-        renderThermalPiece(poseStack, nodeCollector, renderState.getRenderDataOrDefault(GearRenderState.THERMAL_SHIRT, ItemStack.EMPTY), GearEquipmentSlot.THERMAL_SHIRT, packedLight, renderState);
-        renderThermalPiece(poseStack, nodeCollector, renderState.getRenderDataOrDefault(GearRenderState.THERMAL_LEGGINGS, ItemStack.EMPTY), GearEquipmentSlot.THERMAL_LEGGINGS, packedLight, renderState, EnumExtensions.LAYER_TYPE_THERMAL_PADDING_LEGGINGS.getValue(), PADDING_LEGGINGS_LAYER, 1);
-        renderThermalPiece(poseStack, nodeCollector, renderState.getRenderDataOrDefault(GearRenderState.THERMAL_SOCKS, ItemStack.EMPTY), GearEquipmentSlot.THERMAL_SOCKS, packedLight, renderState);
+        renderThermalPiece(poseStack, nodeCollector, renderState.getRenderDataOrDefault(GearRenderState.THERMAL_CAP, ItemStack.EMPTY), GearEquipmentSlot.THERMAL_HEAD, packedLight, renderState);
+        renderThermalPiece(poseStack, nodeCollector, renderState.getRenderDataOrDefault(GearRenderState.THERMAL_SHIRT, ItemStack.EMPTY), GearEquipmentSlot.THERMAL_CHEST, packedLight, renderState);
+        renderThermalPiece(poseStack, nodeCollector, renderState.getRenderDataOrDefault(GearRenderState.THERMAL_LEGGINGS, ItemStack.EMPTY), GearEquipmentSlot.THERMAL_LEGS, packedLight, renderState, EnumExtensions.LAYER_TYPE_THERMAL_PADDING_LEGGINGS.getValue(), PADDING_LEGGINGS_LAYER, 1);
+        renderThermalPiece(poseStack, nodeCollector, renderState.getRenderDataOrDefault(GearRenderState.THERMAL_SOCKS, ItemStack.EMPTY), GearEquipmentSlot.THERMAL_FEET, packedLight, renderState);
     }
 
     @Override

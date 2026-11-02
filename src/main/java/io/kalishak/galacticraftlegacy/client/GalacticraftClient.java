@@ -46,7 +46,7 @@ import io.kalishak.galacticraftlegacy.client.renderer.item.properties.range.Flui
 import io.kalishak.galacticraftlegacy.client.renderer.item.properties.select.SchematicTierProperty;
 import io.kalishak.galacticraftlegacy.client.renderer.special.*;
 import io.kalishak.galacticraftlegacy.references.Constants;
-import io.kalishak.galacticraftlegacy.world.entity.GalacticraftEntityType;
+import io.kalishak.galacticraftlegacy.world.entity.GalacticraftEntityTypes;
 import io.kalishak.galacticraftlegacy.world.inventory.GalacticraftMenuType;
 import io.kalishak.galacticraftlegacy.world.level.block.GalacticraftBlocks;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityType;
@@ -196,15 +196,15 @@ public class GalacticraftClient {
     }
 
     private void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
-        event.registerEntityRenderer(GalacticraftEntityType.FLAG.get(), FlagRenderer::new);
-        event.registerEntityRenderer(GalacticraftEntityType.FALLEN_METEOR.get(), FallingBlockRenderer::new);
-        event.registerEntityRenderer(GalacticraftEntityType.SCHEMATIC.get(), SchematicRenderer::new);
-        event.registerEntityRenderer(GalacticraftEntityType.THROWN_METEOR_CHUNK.get(), ThrownMeteorRenderer::new);
-        event.registerEntityRenderer(GalacticraftEntityType.FALLING_PARACHEST.get(), FallingParachestRenderer::new);
-        event.registerEntityRenderer(GalacticraftEntityType.EVOLVED_SKELETON.get(), EvolvedSkeletonRenderer::new);
-        event.registerEntityRenderer(GalacticraftEntityType.EVOLVED_ZOMBIE.get(), EvolvedZombieRenderer::new);
-        event.registerEntityRenderer(GalacticraftEntityType.NO_GRAVITY_MOVING_BLOCK.get(), NoGravityMovingBlockRenderer::new);
-        event.registerEntityRenderer(GalacticraftEntityType.TIER_1_ROCKET.get(), Tier1RocketRenderer::new);
+        event.registerEntityRenderer(GalacticraftEntityTypes.FLAG.get(), FlagRenderer::new);
+        event.registerEntityRenderer(GalacticraftEntityTypes.FALLEN_METEOR.get(), FallingBlockRenderer::new);
+        event.registerEntityRenderer(GalacticraftEntityTypes.SCHEMATIC.get(), SchematicRenderer::new);
+        event.registerEntityRenderer(GalacticraftEntityTypes.THROWN_METEOR_CHUNK.get(), ThrownMeteorRenderer::new);
+        event.registerEntityRenderer(GalacticraftEntityTypes.FALLING_PARACHEST.get(), FallingParachestRenderer::new);
+        event.registerEntityRenderer(GalacticraftEntityTypes.EVOLVED_SKELETON.get(), EvolvedSkeletonRenderer::new);
+        event.registerEntityRenderer(GalacticraftEntityTypes.EVOLVED_ZOMBIE.get(), EvolvedZombieRenderer::new);
+        event.registerEntityRenderer(GalacticraftEntityTypes.NO_GRAVITY_MOVING_BLOCK.get(), NoGravityMovingBlockRenderer::new);
+        event.registerEntityRenderer(GalacticraftEntityTypes.TIER_1_ROCKET.get(), Tier1RocketRenderer::new);
 
         event.registerBlockEntityRenderer(GalacticraftBlockEntityType.EMERGENCY_POST.get(), EmergencyPostBlockRenderer::new);
         event.registerBlockEntityRenderer(GalacticraftBlockEntityType.FLUID_TANK.get(), FluidTankBlockRenderer::new);
@@ -234,7 +234,7 @@ public class GalacticraftClient {
         event.registerLayerDefinition(GalacticraftModelLayers.THERMAL_PADDING.legs(), thermalPadding::legs);
         event.registerLayerDefinition(GalacticraftModelLayers.THERMAL_PADDING.feet(), thermalPadding::feet);
         event.registerLayerDefinition(GalacticraftModelLayers.TIER_1_ROCKET, Tier1RocketModel::createLayer);
-        event.registerLayerDefinition(GalacticraftModelLayers.FLAG, FlagModel::createLayer);
+        event.registerLayerDefinition(GalacticraftModelLayers.FLAG, FlagModel::createBaseLayer);
     }
 
     private void registerScreens(RegisterMenuScreensEvent event) {

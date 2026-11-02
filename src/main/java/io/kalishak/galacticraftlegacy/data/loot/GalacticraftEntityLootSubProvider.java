@@ -7,7 +7,7 @@
 
 package io.kalishak.galacticraftlegacy.data.loot;
 
-import io.kalishak.galacticraftlegacy.world.entity.GalacticraftEntityType;
+import io.kalishak.galacticraftlegacy.world.entity.GalacticraftEntityTypes;
 import io.kalishak.galacticraftlegacy.world.item.GalacticraftItems;
 import io.kalishak.galacticraftlegacy.world.level.material.fluid.GalacticraftFluids;
 import io.kalishak.galacticraftlegacy.world.level.storage.loot.functions.SetItemFluidTankFunction;
@@ -40,7 +40,7 @@ public class GalacticraftEntityLootSubProvider extends EntityLootSubProvider {
     public void generate() {
         HolderGetter<Enchantment> enchantments = this.output.lookup(Registries.ENCHANTMENT);
         add(
-                GalacticraftEntityType.EVOLVED_SKELETON.get(),
+                GalacticraftEntityTypes.EVOLVED_SKELETON.get(),
                 LootTable.lootTable()
                         .withPool(
                                 LootPool.lootPool()
@@ -96,7 +96,7 @@ public class GalacticraftEntityLootSubProvider extends EntityLootSubProvider {
                         )
         );
         add(
-                GalacticraftEntityType.EVOLVED_ZOMBIE.get(),
+                GalacticraftEntityTypes.EVOLVED_ZOMBIE.get(),
                 LootTable.lootTable()
                         .withPool(
                                 LootPool.lootPool()
@@ -146,6 +146,6 @@ public class GalacticraftEntityLootSubProvider extends EntityLootSubProvider {
 
     @Override
     protected Stream<EntityType<?>> getKnownEntityTypes() {
-        return GalacticraftEntityType.asStream();
+        return GalacticraftEntityTypes.asStream();
     }
 }

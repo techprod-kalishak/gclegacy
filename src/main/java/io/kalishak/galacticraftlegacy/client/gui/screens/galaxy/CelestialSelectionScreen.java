@@ -33,6 +33,7 @@ import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
+import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.MinecraftServer;
@@ -159,7 +160,7 @@ public class CelestialSelectionScreen extends Screen {
             return parent.getDisplayName();
         }
 
-        return Component.empty();
+        return CommonComponents.EMPTY;
     }
 
     protected float getScale(CelestialBodyInstance celestialBody) {

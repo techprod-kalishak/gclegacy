@@ -25,12 +25,12 @@ import java.util.function.Supplier;
 public class Constants {
     public static final double RADIANS_TO_DEGREES = 180.0D / Math.PI;
 
-    public static Identifier id(String assetName) {
-        return Identifier.fromNamespaceAndPath(Galacticraft.MODID, assetName);
+    public static Identifier id(String name) {
+        return Identifier.fromNamespaceAndPath(Galacticraft.MODID, name);
     }
 
-    public static Identifier texture(String assetName) {
-        return id("textures/" + assetName);
+    public static Identifier texture(String name) {
+        return id("textures/" + name);
     }
 
     public static <R> ResourceKey<R> key(ResourceKey<? extends Registry<R>> registryKey, String name) {

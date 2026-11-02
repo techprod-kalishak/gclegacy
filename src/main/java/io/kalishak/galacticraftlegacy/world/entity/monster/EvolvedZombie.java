@@ -8,7 +8,7 @@
 package io.kalishak.galacticraftlegacy.world.entity.monster;
 
 import io.kalishak.galacticraftlegacy.transfer.entity.SpaceGearEquipment;
-import io.kalishak.galacticraftlegacy.world.entity.GalacticraftEntityType;
+import io.kalishak.galacticraftlegacy.world.entity.GalacticraftEntityTypes;
 import io.kalishak.galacticraftlegacy.world.entity.SpaceEntity;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -35,7 +35,7 @@ public class EvolvedZombie extends Zombie implements EvolvedMonster {
     }
 
     public EvolvedZombie(Level level) {
-        this(GalacticraftEntityType.EVOLVED_ZOMBIE.get(), level);
+        this(GalacticraftEntityTypes.EVOLVED_ZOMBIE.get(), level);
     }
 
     public static AttributeSupplier.Builder createAttributes() {

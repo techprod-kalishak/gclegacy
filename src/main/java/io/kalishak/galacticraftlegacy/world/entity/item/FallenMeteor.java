@@ -10,7 +10,7 @@ package io.kalishak.galacticraftlegacy.world.entity.item;
 import io.kalishak.galacticraftlegacy.attachment.GalacticraftAttachments;
 import io.kalishak.galacticraftlegacy.component.GalacticraftDataComponents;
 import io.kalishak.galacticraftlegacy.data.GalacticraftTags;
-import io.kalishak.galacticraftlegacy.world.entity.GalacticraftEntityType;
+import io.kalishak.galacticraftlegacy.world.entity.GalacticraftEntityTypes;
 import io.kalishak.galacticraftlegacy.world.item.component.HotContent;
 import io.kalishak.galacticraftlegacy.world.level.block.GalacticraftBlocks;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.FallenMeteorBlockEntity;
@@ -40,7 +40,7 @@ public class FallenMeteor extends FallingBlockEntity {
     }
 
     private FallenMeteor(Level level, double x, double y, double z, HotContent hotContent) {
-        this(GalacticraftEntityType.FALLEN_METEOR.get(), level);
+        this(GalacticraftEntityTypes.FALLEN_METEOR.get(), level);
         this.blocksBuilding = true;
         setPos(x, y, z);
         setDeltaMovement(Vec3.ZERO);
