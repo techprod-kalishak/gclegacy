@@ -82,8 +82,7 @@ public class FlagRenderer extends EntityRenderer<Flag, FlagRenderState> {
         poseStack.translate(seedX, seedY + 1.5F, seedZ);
         poseStack.rotateDegrees(Axis.YP, 180.0F - renderState.rotation);
         poseStack.rotateDegrees(Axis.XP, 180.0F);
-        nodeCollector.submitModel(this.model, Unit.INSTANCE, poseStack, RenderTypes.entitySolid(TEXTURES), renderState.lightCoords, 0, renderState.outlineColor);
-
+        nodeCollector.submitModel(this.model, Unit.INSTANCE, poseStack, RenderTypes.entitySolid(TEXTURES), renderState.lightCoords, OverlayTexture.NO_OVERLAY, renderState.outlineColor);
         submitFlag(renderState, poseStack, nodeCollector);
         poseStack.popPose();
     }
@@ -106,15 +105,28 @@ public class FlagRenderer extends EntityRenderer<Flag, FlagRenderState> {
         nodeCollector.submitCustomGeometry(
                 stack,
                 RenderTypes.entitySolidZOffsetForward(defaultTexture.atlasLocation()),
-                (pose, buffer) -> submitVertexes(pose, buffer, renderState.flagData.width(), renderState.flagData.height(), windLevel, renderState.partialTick, colors, renderState.lightCoords)
+                (pose, buffer) -> submitVertexes(
+                        pose,
+                        buffer,
+                        renderState.flagData.width(),
+                        renderState.flagData.height(),
+                        windLevel,
+                        renderState.partialTick,
+                        colors,
+                        renderState.lightCoords
+                )
         );
         stack.popPose();
     }
-    
+
     private void submitVertexes(PoseStack.Pose pose, VertexConsumer buffer, int width, int height, float windLevel, float partialTick, byte[][][] colors, int lightCoords) {
+        float offsetX = (float) (-width) / 2.0F;
+        float offsetY = (float) (-height) / 2.0F;
+
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
-                pose.translate(0, -1.0F, 0);
+                float x = offsetX + i;
+                float y = offsetY + j;
                 float offset = 0.0F;
                 float offsetAhead = 0.0F;
 
@@ -127,18 +139,18 @@ public class FlagRenderer extends EntityRenderer<Flag, FlagRenderState> {
 
                 int color = FlagTypeProvider.toColor(colors[i][j]);
 
-                vertex(pose, buffer, i, j, i / 24.0F + 0.0F / 24.0F, j / 24.0F + 0.0F / 24.0F + offset, offset, 0, 0, lightCoords, color);
-                vertex(pose, buffer, i, j, i / 24.0F + 0.0F / 24.0F, j / 24.0F + 0.0F / 24.0F + offset, offset, 0, 1, lightCoords, color);
-                vertex(pose, buffer, i, j, i / 24.0F + 1.0F / 24.0F, j / 24.0F + 1.0F / 24.0F + offsetAhead, offsetAhead, 1, 1, lightCoords, color);
+                vertex(pose, buffer, x, y, offset, i / 24.0F + 0.0F / 24.0F, j / 24.0F + 0.0F / 24.0F + offset, lightCoords, color);
+                vertex(pose, buffer, x, y, offset, i / 24.0F + 0.0F / 24.0F, j / 24.0F + 0.0F / 24.0F + offset, lightCoords, color);
+                vertex(pose, buffer, x, y, offsetAhead, i / 24.0F + 1.0F / 24.0F, j / 24.0F + 1.0F / 24.0F + offsetAhead, lightCoords, color);
 
-                vertex(pose, buffer, i, j, i / 24.0F + 0.0F / 24.0F, j / 24.0F + 0.0F / 24.0F + offset, offset, 0, 0, lightCoords, color);
-                vertex(pose, buffer, i, j, i / 24.0F + 1.0F / 24.0F, j / 24.0F + 1.0F / 24.0F + offsetAhead, offsetAhead, 1, 1, lightCoords, color);
-                vertex(pose, buffer, i, j, i / 24.0F + 1.0F / 24.0F, j / 24.0F + 0.0F / 24.0F + offsetAhead, offsetAhead, 1, 0, lightCoords, color);
+                vertex(pose, buffer, x, y, offset, i / 24.0F + 0.0F / 24.0F, j / 24.0F + 0.0F / 24.0F + offset, lightCoords, color);
+                vertex(pose, buffer, x, y, offsetAhead, i / 24.0F + 1.0F / 24.0F, j / 24.0F + 1.0F / 24.0F + offsetAhead, lightCoords, color);
+                vertex(pose, buffer, x, y, offsetAhead, i / 24.0F + 1.0F / 24.0F, j / 24.0F + 0.0F / 24.0F + offsetAhead, lightCoords, color);
             }
         }
     }
 
-    private static void vertex(PoseStack.Pose pose, VertexConsumer buffer, float x, float y, float u, float v, float z, int nx, int ny, int lightCoords, int color) {
-        buffer.addVertex(pose, x, y, z).setColor(color).setUv(u, v).setOverlay(OverlayTexture.NO_OVERLAY).setLight(lightCoords).setNormal(pose, nx, ny, 0);
+    private static void vertex(PoseStack.Pose pose, VertexConsumer buffer, float x, float y, float z, float nx, float ny, int lightCoords, int color) {
+        buffer.addVertex(pose, x, y, z).setUv(0, 0).setColor(color).setOverlay(OverlayTexture.NO_OVERLAY).setLight(lightCoords).setNormal(nx, ny, 0.0F);
     }
 }

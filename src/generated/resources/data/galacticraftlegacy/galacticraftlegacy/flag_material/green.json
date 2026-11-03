@@ -4,5 +4,9 @@
     "height": 32,
     "image": "galacticraftlegacy:textures/entity/flag/material/green",
     "width": 48
+  },
+  "team_name": {
+    "color": "green",
+    "text": "Team Green"
   }
 }

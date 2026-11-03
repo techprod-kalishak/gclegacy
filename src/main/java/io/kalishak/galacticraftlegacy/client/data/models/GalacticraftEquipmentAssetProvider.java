@@ -7,8 +7,8 @@
 
 package io.kalishak.galacticraftlegacy.client.data.models;
 
-import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.EnumExtensions;
+import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.world.item.GearEquipmentAssets;
 import net.minecraft.client.data.models.EquipmentAssetProvider;
 import net.minecraft.client.resources.model.EquipmentClientInfo;
@@ -51,10 +51,6 @@ public class GalacticraftEquipmentAssetProvider extends EquipmentAssetProvider {
         output.accept(
                 GearEquipmentAssets.ISOTHERMAL,
                 thermalHumanoid(GearEquipmentAssets.ISOTHERMAL)
-        );
-        output.accept(
-                GearEquipmentAssets.WOLF_THERMAL,
-                custom(GearEquipmentAssets.WOLF_THERMAL, () -> EquipmentClientInfo.LayerType.WOLF_BODY)
         );
         output.accept(
                 GearEquipmentAssets.HEAVY_TANK,

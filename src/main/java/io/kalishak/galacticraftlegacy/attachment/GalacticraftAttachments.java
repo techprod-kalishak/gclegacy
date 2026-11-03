@@ -14,6 +14,7 @@ import io.kalishak.galacticraftlegacy.attachment.entity.AdvancedMovement;
 import io.kalishak.galacticraftlegacy.attachment.entity.EntityGearInventory;
 import io.kalishak.galacticraftlegacy.attachment.entity.PlayerSpaceData;
 import io.kalishak.galacticraftlegacy.component.SchematicVariant;
+import io.kalishak.galacticraftlegacy.component.flag.BuiltinFlagMaterials;
 import io.kalishak.galacticraftlegacy.component.flag.FlagData;
 import io.kalishak.galacticraftlegacy.registry.BuiltinSchematicVariants;
 import io.kalishak.galacticraftlegacy.world.item.component.HotContent;
@@ -78,7 +79,13 @@ public final class GalacticraftAttachments {
     );
     public static final DeferredHolder<AttachmentType<?>, AttachmentType<FlagData>> FLAG_DATA = REGISTRY.register(
             "flag_data",
-            () -> AttachmentType.builder(() -> FlagData.EMPTY)
+            () -> AttachmentType.builder(attachmentHolder -> {
+                if (attachmentHolder instanceof Entity entity) {
+                    return FlagData.withMaterial(entity.registryAccess().getOrThrow(BuiltinFlagMaterials.GREEN));
+                }
+
+                else return FlagData.EMPTY;
+            })
                     .serialize(FlagData.MAP_CODEC)
                     .sync(FlagData.STREAM_CODEC)
                     .build()

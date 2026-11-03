@@ -4,7 +4,6 @@ import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.registry.GalacticraftRegistries;
 import net.minecraft.ChatFormatting;
 import net.minecraft.data.worldgen.BootstrapContext;
-import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.Util;
@@ -57,7 +56,7 @@ public class BuiltinFlagMaterials {
                                 48,
                                 32
                         ),
-                        CommonComponents.EMPTY
+                        Component.literal("Team Green").withStyle(ChatFormatting.GREEN)
                 )
         );
     }

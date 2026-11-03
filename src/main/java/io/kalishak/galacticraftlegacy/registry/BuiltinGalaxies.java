@@ -179,7 +179,7 @@ public class BuiltinGalaxies {
                 context,
                 ASTEROIDS,
                 builder -> builder
-                        .phaseShift((float) (Math.random() * (2 * Math.PI)))
+                        .phaseShift(3.02F) //.phaseShift((float) (Math.random() * (2 * Math.PI)))
                         .relativeDistanceFromCenter(1.375F)
                         .relativeOrbitTime(45.0F)
                         .parent(self.getOrThrow(SUN))
