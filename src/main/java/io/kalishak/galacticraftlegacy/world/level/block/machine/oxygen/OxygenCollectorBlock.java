@@ -7,10 +7,10 @@
 
 package io.kalishak.galacticraftlegacy.world.level.block.machine.oxygen;
 
-import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityType;
-import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.OxygenCollectorBlockEntity;
+import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityTypes;
+import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.oxygen.OxygenCollectorBlockEntity;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.wire.network.NetworkType;
-import io.kalishak.galacticraftlegacy.world.level.block.machine.AbstractMachineBlock;
+import io.kalishak.galacticraftlegacy.world.level.block.machine.electric.AbstractMachineBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -24,19 +24,22 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+
+@ParametersAreNonnullByDefault
 public class OxygenCollectorBlock extends AbstractMachineBlock {
     public OxygenCollectorBlock(Properties properties) {
         super(properties);
     }
 
     @Override
-    public @NonNull NetworkType getNetworkType(@NonNull Direction direction) {
+    public @NonNull NetworkType getNetworkType(Direction direction) {
         return direction == Direction.WEST ? NetworkType.FLUID : super.getNetworkType(direction);
     }
 
     @Override
     public @Nullable BlockEntity newBlockEntity(BlockPos worldPosition, BlockState blockState) {
-        return GalacticraftBlockEntityType.OXYGEN_COLLECTOR.get().create(worldPosition, blockState);
+        return GalacticraftBlockEntityTypes.OXYGEN_COLLECTOR.get().create(worldPosition, blockState);
     }
 
     @Override
@@ -76,7 +79,7 @@ public class OxygenCollectorBlock extends AbstractMachineBlock {
         if (level instanceof ServerLevel serverLevel) {
             return createTickerHelper(
                     type,
-                    GalacticraftBlockEntityType.OXYGEN_COLLECTOR.get(),
+                    GalacticraftBlockEntityTypes.OXYGEN_COLLECTOR.get(),
                     (_, worldPosition, worldBlockState, blockEntity) -> OxygenCollectorBlockEntity.serverTick(serverLevel, worldPosition, worldBlockState, blockEntity)
             );
         }

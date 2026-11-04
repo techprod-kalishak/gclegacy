@@ -26,7 +26,7 @@ import org.jspecify.annotations.NonNull;
 
 public class FallenMeteorBlockEntity extends BlockEntity {
     public FallenMeteorBlockEntity(BlockPos worldPosition, BlockState blockState) {
-        super(GalacticraftBlockEntityType.FALLEN_METEOR.get(), worldPosition, blockState);
+        super(GalacticraftBlockEntityTypes.FALLEN_METEOR.get(), worldPosition, blockState);
     }
 
     public static void serverTick(ServerLevel level, BlockPos worldPosition, BlockState blockState, FallenMeteorBlockEntity meteor) {

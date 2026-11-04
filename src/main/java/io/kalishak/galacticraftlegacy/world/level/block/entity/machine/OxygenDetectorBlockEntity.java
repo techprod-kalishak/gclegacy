@@ -10,8 +10,8 @@ package io.kalishak.galacticraftlegacy.world.level.block.entity.machine;
 import io.kalishak.galacticraftlegacy.data.GalacticraftTags;
 import io.kalishak.galacticraftlegacy.galaxies.celestial.CelestialBodyInstance;
 import io.kalishak.galacticraftlegacy.world.level.OxygenHelper;
-import io.kalishak.galacticraftlegacy.world.level.block.OxygenDetectorBlock;
-import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityType;
+import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityTypes;
+import io.kalishak.galacticraftlegacy.world.level.block.machine.OxygenDetectorBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -24,7 +24,7 @@ public class OxygenDetectorBlockEntity extends BlockEntity {
     private final AABB searchBounds;
 
     public OxygenDetectorBlockEntity(BlockPos pos, BlockState blockState) {
-        super(GalacticraftBlockEntityType.OXYGEN_DETECTOR.get(), pos, blockState);
+        super(GalacticraftBlockEntityTypes.OXYGEN_DETECTOR.get(), pos, blockState);
 
         this.searchBounds = new AABB(
                 getBlockPos().getX() - 0.6D,

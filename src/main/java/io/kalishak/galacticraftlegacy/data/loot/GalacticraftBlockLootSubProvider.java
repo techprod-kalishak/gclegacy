@@ -77,9 +77,12 @@ public class GalacticraftBlockLootSubProvider extends BlockLootSubProvider {
         add(GalacticraftBlocks.CIRCUIT_FABRICATOR.get(), this::createNameableBlockEntityTable);
         add(GalacticraftBlocks.COMPRESSOR.get(), this::createNameableBlockEntityTable);
         add(GalacticraftBlocks.ELECTRIC_COMPRESSOR.get(), this::createNameableBlockEntityTable);
+        add(GalacticraftBlocks.ADVANCED_COMPRESSOR.get(), this::createNameableBlockEntityTable);
         add(GalacticraftBlocks.ELECTRIC_FURNACE.get(), this::createNameableBlockEntityTable);
         add(GalacticraftBlocks.ELECTRIC_ARC_FURNACE.get(), this::createNameableBlockEntityTable);
         add(GalacticraftBlocks.OXYGEN_COLLECTOR.get(), this::createNameableBlockEntityTable);
+        add(GalacticraftBlocks.BASIC_SOLAR_PANEL.get(), block -> createComponentsBlockEntityTable(block, builder -> builder.include(GalacticraftDataComponents.STORED_ENERGY.get())));
+        add(GalacticraftBlocks.ADVANCED_SOLAR_PANEL.get(), block -> createComponentsBlockEntityTable(block, builder -> builder.include(GalacticraftDataComponents.STORED_ENERGY.get())));
         dropSelf(GalacticraftBlocks.OXYGEN_DETECTOR.get());
         dropSelf(GalacticraftBlocks.ALUMINUM_WIRE.get());
         dropSelf(GalacticraftBlocks.HEAVY_ALUMINUM_WIRE.get());

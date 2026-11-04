@@ -10,7 +10,7 @@ package io.kalishak.galacticraftlegacy.world.inventory;
 import io.kalishak.galacticraftlegacy.transfer.ResourcefulHelper;
 import io.kalishak.galacticraftlegacy.world.inventory.slot.NotPlaceableResourceHandlerSlot;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.DungeonChestBlockEntity;
-import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityType;
+import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityTypes;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -36,7 +36,7 @@ public class DungeonChestMenu extends AbstractContainerMenu {
     }
 
     public DungeonChestMenu(int containerId, Inventory playerInventory, RegistryFriendlyByteBuf buf) {
-        this(containerId, playerInventory, ResourcefulHelper.readBlockEntity(GalacticraftBlockEntityType.DUNGEON_CHEST.get(), playerInventory.player.level(), buf));
+        this(containerId, playerInventory, ResourcefulHelper.readBlockEntity(GalacticraftBlockEntityTypes.DUNGEON_CHEST.get(), playerInventory.player.level(), buf));
     }
 
     @Override

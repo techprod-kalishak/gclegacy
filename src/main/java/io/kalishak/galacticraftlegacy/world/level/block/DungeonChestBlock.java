@@ -9,7 +9,7 @@ package io.kalishak.galacticraftlegacy.world.level.block;
 
 import io.kalishak.galacticraftlegacy.world.item.FeatureTier;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.DungeonChestBlockEntity;
-import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityType;
+import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
@@ -80,7 +80,7 @@ public class DungeonChestBlock extends KeyLockedBlock implements SimpleWaterlogg
 
     @Override
     public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
-        return level.isClientSide() ? createTickerHelper(blockEntityType, GalacticraftBlockEntityType.DUNGEON_CHEST.get(), DungeonChestBlockEntity::lidAnimateTick) : null;
+        return level.isClientSide() ? createTickerHelper(blockEntityType, GalacticraftBlockEntityTypes.DUNGEON_CHEST.get(), DungeonChestBlockEntity::lidAnimateTick) : null;
     }
 
     @Override

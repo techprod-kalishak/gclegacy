@@ -82,8 +82,8 @@ public class TelemetryTracker {
                 if (level != null) {
                     BlockEntity blockEntity = level.getBlockEntity(pos.pos());
 
-                    if (blockEntity instanceof LaunchControllerBlockEntity) {
-                        list.add((LaunchControllerBlockEntity) blockEntity);
+                    if (blockEntity instanceof LaunchControllerBlockEntity launchController) {
+                        list.add(launchController);
                     } else {
                         this.launchControllers.remove(pos);
                     }

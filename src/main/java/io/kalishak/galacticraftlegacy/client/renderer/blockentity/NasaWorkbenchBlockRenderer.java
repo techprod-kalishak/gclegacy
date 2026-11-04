@@ -16,10 +16,18 @@ import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.blockentity.state.BlockEntityRenderState;
+import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
 import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.client.resources.model.sprite.SpriteGetter;
+import net.minecraft.util.LightCoordsUtil;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+
+@ParametersAreNonnullByDefault
 public class NasaWorkbenchBlockRenderer implements BlockEntityRenderer<NasaWorkbenchBlockEntity, BlockEntityRenderState>, NasaWorkbenchModelRenderer<BlockEntityRenderState> {
     private final SpriteGetter sprites;
     private final NasaWorkbenchModel model;
@@ -35,6 +43,12 @@ public class NasaWorkbenchBlockRenderer implements BlockEntityRenderer<NasaWorkb
     }
 
     @Override
+    public void extractRenderState(NasaWorkbenchBlockEntity blockEntity, BlockEntityRenderState state, float partialTicks, Vec3 cameraPosition, ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
+        BlockEntityRenderer.super.extractRenderState(blockEntity, state, partialTicks, cameraPosition, breakProgress);
+        state.lightCoords = blockEntity.getLevel() != null ? LightCoordsUtil.getLightCoords(blockEntity.getLevel(), blockEntity.getBlockPos().above()) : 15728880;
+    }
+
+    @Override
     public NasaWorkbenchModel getWorkbenchModel() {
         return this.model;
     }
@@ -45,7 +59,7 @@ public class NasaWorkbenchBlockRenderer implements BlockEntityRenderer<NasaWorkb
     }
 
     @Override
-    public AABB getRenderBoundingBox(NasaWorkbenchBlockEntity blockEntity) {
+    public @NonNull AABB getRenderBoundingBox(NasaWorkbenchBlockEntity blockEntity) {
         return BlockEntityRenderer.super.getRenderBoundingBox(blockEntity).expandTowards(0.2D, 1.0D, 0.2D);
     }
 }

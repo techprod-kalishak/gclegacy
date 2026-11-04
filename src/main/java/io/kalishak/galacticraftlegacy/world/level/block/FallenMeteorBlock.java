@@ -12,7 +12,7 @@ import io.kalishak.galacticraftlegacy.component.GalacticraftDataComponents;
 import io.kalishak.galacticraftlegacy.world.item.HotItem;
 import io.kalishak.galacticraftlegacy.world.item.component.HotContent;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.FallenMeteorBlockEntity;
-import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityType;
+import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -103,7 +103,7 @@ public class FallenMeteorBlock extends FallingBlock implements EntityBlock, Simp
         HotContent content = itemStack.get(GalacticraftDataComponents.HOT_CONTENT);
 
         if (content != null) {
-            level.getBlockEntity(pos, GalacticraftBlockEntityType.FALLEN_METEOR.get()).ifPresent(fallenMeteor -> fallenMeteor.setData(GalacticraftAttachments.HOT_CONTENT, content));
+            level.getBlockEntity(pos, GalacticraftBlockEntityTypes.FALLEN_METEOR.get()).ifPresent(fallenMeteor -> fallenMeteor.setData(GalacticraftAttachments.HOT_CONTENT, content));
         }
     }
 
@@ -149,7 +149,7 @@ public class FallenMeteorBlock extends FallingBlock implements EntityBlock, Simp
         ItemStack result = super.getCloneItemStack(level, pos, state, includeData, player);
 
         if (includeData) {
-            level.getBlockEntity(pos, GalacticraftBlockEntityType.FALLEN_METEOR.get()).ifPresent(meteor -> result.set(GalacticraftDataComponents.HOT_CONTENT, meteor.getData(GalacticraftAttachments.HOT_CONTENT)));
+            level.getBlockEntity(pos, GalacticraftBlockEntityTypes.FALLEN_METEOR.get()).ifPresent(meteor -> result.set(GalacticraftDataComponents.HOT_CONTENT, meteor.getData(GalacticraftAttachments.HOT_CONTENT)));
         }
 
         return result;
@@ -170,7 +170,7 @@ public class FallenMeteorBlock extends FallingBlock implements EntityBlock, Simp
     @Override
     public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(@NonNull Level level, @NonNull BlockState blockState, @NonNull BlockEntityType<T> type) {
         return level instanceof ServerLevel serverLevel
-                ? createTickerHelper(type, GalacticraftBlockEntityType.FALLEN_METEOR.get(), (_, pos, state, entity) -> FallenMeteorBlockEntity.serverTick(serverLevel, pos, state, entity))
+                ? createTickerHelper(type, GalacticraftBlockEntityTypes.FALLEN_METEOR.get(), (_, pos, state, entity) -> FallenMeteorBlockEntity.serverTick(serverLevel, pos, state, entity))
                 : null;
     }
 

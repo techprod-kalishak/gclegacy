@@ -12,6 +12,6 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class LandingPadBlockEntity extends AbstractPadBlockEntity {
     public LandingPadBlockEntity(BlockPos worldPosition, BlockState blockState) {
-        super(GalacticraftBlockEntityType.LANDING_PAD.get(), worldPosition, blockState);
+        super(GalacticraftBlockEntityTypes.LANDING_PAD.get(), worldPosition, blockState);
     }
 }

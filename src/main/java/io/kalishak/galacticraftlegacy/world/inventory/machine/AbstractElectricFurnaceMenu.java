@@ -9,7 +9,7 @@ package io.kalishak.galacticraftlegacy.world.inventory.machine;
 
 import io.kalishak.galacticraftlegacy.world.item.component.ItemAccessEnergyUtils;
 import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.ElectricCookingRecipe;
-import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.AbstractElectricFurnaceBlockEntity;
+import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.electric.AbstractElectricFurnaceBlockEntity;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;

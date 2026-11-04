@@ -7,7 +7,7 @@
 
 package io.kalishak.galacticraftlegacy.world.level.block.wire;
 
-import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityType;
+import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityTypes;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.wire.ColoredPipeBlockEntity;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.wire.network.NetworkType;
 import net.minecraft.core.BlockPos;
@@ -91,7 +91,7 @@ public class ColoredPipeBlock extends AbstractWireBlock {
         if (level instanceof ServerLevel serverLevel) {
             return createTickerHelper(
                     blockEntityType,
-                    GalacticraftBlockEntityType.COLORED_PIPE.get(),
+                    GalacticraftBlockEntityTypes.COLORED_PIPE.get(),
                     (l, pipePos, pipeState, pipe) -> ColoredPipeBlockEntity.serverTick(serverLevel, pipePos, pipeState, pipe)
             );
         }

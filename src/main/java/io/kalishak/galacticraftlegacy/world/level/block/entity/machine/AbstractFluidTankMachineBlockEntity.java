@@ -11,6 +11,7 @@ import io.kalishak.galacticraftlegacy.attachment.GalacticraftAttachments;
 import io.kalishak.galacticraftlegacy.attachment.block.SyncedFluidResource;
 import io.kalishak.galacticraftlegacy.transfer.ResourcefulHelper;
 import io.kalishak.galacticraftlegacy.world.inventory.container.Tank;
+import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.electric.AbstractMachineBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponentGetter;
 import net.minecraft.core.component.DataComponentMap;

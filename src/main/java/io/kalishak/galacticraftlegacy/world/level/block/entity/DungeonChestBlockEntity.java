@@ -28,7 +28,7 @@ public class DungeonChestBlockEntity extends KeyLockedBlockEntity implements Lid
     private FeatureTier featureTier = FeatureTier.TIER_1;
 
     public DungeonChestBlockEntity(BlockPos blockPos, BlockState blockState) {
-        super(GalacticraftBlockEntityType.DUNGEON_CHEST.get(), blockPos, blockState);
+        super(GalacticraftBlockEntityTypes.DUNGEON_CHEST.get(), blockPos, blockState);
     }
 
     public DungeonChestBlockEntity(BlockPos blockPos, BlockState blockState, FeatureTier featureTier) {
@@ -38,7 +38,7 @@ public class DungeonChestBlockEntity extends KeyLockedBlockEntity implements Lid
     }
 
     public static void registerCapabilities(RegisterCapabilitiesEvent event) {
-        event.registerBlockEntity(Capabilities.Item.BLOCK, GalacticraftBlockEntityType.DUNGEON_CHEST.get(), (entity, _) -> entity.items);
+        event.registerBlockEntity(Capabilities.Item.BLOCK, GalacticraftBlockEntityTypes.DUNGEON_CHEST.get(), (entity, _) -> entity.items);
     }
 
     public static void lidAnimateTick(Level level, BlockPos blockPos, BlockState state, DungeonChestBlockEntity dungeonChest) {

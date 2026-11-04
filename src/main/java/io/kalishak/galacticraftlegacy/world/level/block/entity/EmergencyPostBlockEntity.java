@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2026 Kalishak
+ *
+ * Licensed under the MIT license
+ * See LICENSE file for more details
+ */
+
 package io.kalishak.galacticraftlegacy.world.level.block.entity;
 
 import com.google.common.collect.Maps;
@@ -28,7 +35,7 @@ public class EmergencyPostBlockEntity extends BlockEntity implements LidBlockEnt
     private boolean isAnySideOpen;
 
     public EmergencyPostBlockEntity(BlockPos worldPosition, BlockState blockState) {
-        super(GalacticraftBlockEntityType.EMERGENCY_POST.get(), worldPosition, blockState);
+        super(GalacticraftBlockEntityTypes.EMERGENCY_POST.get(), worldPosition, blockState);
     }
 
     public static void clientTick(Level level, BlockPos blockPos, BlockState blockState, EmergencyPostBlockEntity emergencyPost) {
@@ -38,7 +45,7 @@ public class EmergencyPostBlockEntity extends BlockEntity implements LidBlockEnt
     public static void registerCapability(RegisterCapabilitiesEvent event) {
         event.registerBlockEntity(
                 Capabilities.Item.BLOCK,
-                GalacticraftBlockEntityType.EMERGENCY_POST.get(),
+                GalacticraftBlockEntityTypes.EMERGENCY_POST.get(),
                 (entity, _) -> entity.singleItemHandler
         );
     }

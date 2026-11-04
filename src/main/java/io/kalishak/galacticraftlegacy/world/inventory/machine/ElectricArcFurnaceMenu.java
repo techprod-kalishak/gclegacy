@@ -14,8 +14,8 @@ import io.kalishak.galacticraftlegacy.world.inventory.slot.CapabilityHandlerSlot
 import io.kalishak.galacticraftlegacy.world.inventory.slot.NotPlaceableResourceHandlerSlot;
 import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.ArcHeatingRecipe;
 import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.GalacticraftRecipeType;
-import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityType;
-import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.ElectricArcFurnaceBlockEntity;
+import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityTypes;
+import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.electric.ElectricArcFurnaceBlockEntity;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.recipebook.ServerPlaceRecipe;
 import net.minecraft.server.level.ServerLevel;
@@ -45,7 +45,7 @@ public class ElectricArcFurnaceMenu extends AbstractElectricFurnaceMenu<ArcHeati
     }
 
     public ElectricArcFurnaceMenu(int containerId, Inventory playerInventory, RegistryFriendlyByteBuf data) {
-        this(containerId, playerInventory, ResourcefulHelper.readBlockEntity(GalacticraftBlockEntityType.ELECTRIC_ARC_FURNACE.get(), playerInventory.player.level(), data), new SimpleContainerData(2));
+        this(containerId, playerInventory, ResourcefulHelper.readBlockEntity(GalacticraftBlockEntityTypes.ELECTRIC_ARC_FURNACE.get(), playerInventory.player.level(), data), new SimpleContainerData(2));
     }
 
     @Override

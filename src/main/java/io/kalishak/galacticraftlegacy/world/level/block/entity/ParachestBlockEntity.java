@@ -82,7 +82,7 @@ public class ParachestBlockEntity extends BaseItemStorageBlockEntity implements 
     private final ChestLidController chestLidController = new ChestLidController();
 
     public ParachestBlockEntity(BlockPos blockPos, BlockState blockState, int baseChestSlotCount) {
-        super(GalacticraftBlockEntityType.PARACHEST.get(), blockPos, blockState);
+        super(GalacticraftBlockEntityTypes.PARACHEST.get(), blockPos, blockState);
         this.slotCount = 3 + baseChestSlotCount;
     }
 
@@ -93,12 +93,12 @@ public class ParachestBlockEntity extends BaseItemStorageBlockEntity implements 
     public static void registerCapabilities(RegisterCapabilitiesEvent event) {
         event.registerBlockEntity(
                 Capabilities.Item.BLOCK,
-                GalacticraftBlockEntityType.PARACHEST.get(),
+                GalacticraftBlockEntityTypes.PARACHEST.get(),
                 (entity, _) -> entity.items
         );
         event.registerBlockEntity(
                 Capabilities.Fluid.BLOCK,
-                GalacticraftBlockEntityType.PARACHEST.get(),
+                GalacticraftBlockEntityTypes.PARACHEST.get(),
                 (entity, _) -> new SingleTankResourceHandler(entity.tank, 6000)
         );
     }

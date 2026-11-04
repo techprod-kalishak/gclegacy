@@ -9,7 +9,7 @@ package io.kalishak.galacticraftlegacy.world.inventory.magnetic_crafting;
 
 import io.kalishak.galacticraftlegacy.transfer.ResourcefulHelper;
 import io.kalishak.galacticraftlegacy.world.inventory.GalacticraftMenuType;
-import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityType;
+import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityTypes;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.MagneticCraftingBlockEntity;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
@@ -50,7 +50,7 @@ public class MagneticCraftingMenu extends RecipeBookMenu implements ContainerLis
     }
 
     public MagneticCraftingMenu(int containerId, Inventory playerInventory, RegistryFriendlyByteBuf data) {
-        this(containerId, playerInventory, ResourcefulHelper.readBlockEntity(GalacticraftBlockEntityType.MAGNETIC_CRAFTING_TABLE.get(), playerInventory.player.level(), data));
+        this(containerId, playerInventory, ResourcefulHelper.readBlockEntity(GalacticraftBlockEntityTypes.MAGNETIC_CRAFTING_TABLE.get(), playerInventory.player.level(), data));
     }
 
     private void addCraftingSlots() {

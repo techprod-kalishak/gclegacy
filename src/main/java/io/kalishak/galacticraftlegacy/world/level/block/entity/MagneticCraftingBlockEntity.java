@@ -56,7 +56,7 @@ public class MagneticCraftingBlockEntity extends BlockEntity implements MenuProv
     private @Nullable RecipeHolder<?> recipeUsed;
 
     public MagneticCraftingBlockEntity(BlockPos worldPosition, BlockState blockState) {
-        super(GalacticraftBlockEntityType.MAGNETIC_CRAFTING_TABLE.get(), worldPosition, blockState);
+        super(GalacticraftBlockEntityTypes.MAGNETIC_CRAFTING_TABLE.get(), worldPosition, blockState);
         this.items = new MemorableResourceHandler(this, 10) {
             @Override
             protected void onContentsChanged(int index, @NonNull ItemStack previousContents) {
@@ -69,7 +69,7 @@ public class MagneticCraftingBlockEntity extends BlockEntity implements MenuProv
     public static void registerCapabilities(RegisterCapabilitiesEvent event) {
         event.registerBlockEntity(
                 Capabilities.Item.BLOCK,
-                GalacticraftBlockEntityType.MAGNETIC_CRAFTING_TABLE.get(),
+                GalacticraftBlockEntityTypes.MAGNETIC_CRAFTING_TABLE.get(),
                 (entity, side) -> {
                     if (side == Direction.UP) {
                         return RangedResourceHandler.of(() -> entity.items, 1, 10);

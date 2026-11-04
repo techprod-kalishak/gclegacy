@@ -7,7 +7,7 @@
 
 package io.kalishak.galacticraftlegacy.attachment.block;
 
-import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.AbstractMachineBlockEntity;
+import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.electric.AbstractMachineBlockEntity;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;

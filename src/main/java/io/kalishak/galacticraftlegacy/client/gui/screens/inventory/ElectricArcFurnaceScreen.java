@@ -15,7 +15,7 @@ import io.kalishak.galacticraftlegacy.world.inventory.machine.ElectricArcFurnace
 import io.kalishak.galacticraftlegacy.world.item.GalacticraftItems;
 import io.kalishak.galacticraftlegacy.world.item.crafting.GalacticraftRecipeBookCategories;
 import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.ArcHeatingRecipe;
-import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.ElectricArcFurnaceBlockEntity;
+import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.electric.ElectricArcFurnaceBlockEntity;
 import net.minecraft.client.gui.components.WidgetSprites;
 import net.minecraft.client.gui.screens.recipebook.RecipeBookComponent;
 import net.minecraft.network.chat.Component;

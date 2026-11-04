@@ -7,25 +7,20 @@
 
 package io.kalishak.galacticraftlegacy.client.gui.screens.inventory;
 
+import io.kalishak.galacticraftlegacy.client.gui.screens.recipebook.ElectricFurnaceRecipeBookComponent;
 import io.kalishak.galacticraftlegacy.client.gui.screens.recipebook.SearchRecipeBookCategory;
 import io.kalishak.galacticraftlegacy.references.Constants;
-import io.kalishak.galacticraftlegacy.client.gui.screens.recipebook.ElectricFurnaceRecipeBookComponent;
 import io.kalishak.galacticraftlegacy.references.GalacticraftComponents;
 import io.kalishak.galacticraftlegacy.world.inventory.machine.ElectricFurnaceMenu;
 import io.kalishak.galacticraftlegacy.world.item.crafting.GalacticraftRecipeBookCategories;
 import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.HeatingRecipe;
-import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.ElectricFurnaceBlockEntity;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
+import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.electric.ElectricFurnaceBlockEntity;
 import net.minecraft.client.gui.components.WidgetSprites;
-import net.minecraft.client.gui.navigation.ScreenPosition;
 import net.minecraft.client.gui.screens.recipebook.RecipeBookComponent;
-import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
-import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.crafting.RecipeBookCategories;
 
 import java.util.List;
 

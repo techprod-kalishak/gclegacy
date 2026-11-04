@@ -10,13 +10,15 @@ package io.kalishak.galacticraftlegacy.world.inventory.machine;
 import io.kalishak.galacticraftlegacy.transfer.ResourcefulHelper;
 import io.kalishak.galacticraftlegacy.world.inventory.GalacticraftMenuType;
 import io.kalishak.galacticraftlegacy.world.inventory.slot.FuelHandlerSlot;
-import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.CoalGeneratorBlockEntity;
-import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityType;
+import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityTypes;
+import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.electric.CoalGeneratorBlockEntity;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.*;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.DataSlot;
+import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 
 public class CoalGeneratorMenu extends AbstractContainerMenu {
@@ -42,7 +44,7 @@ public class CoalGeneratorMenu extends AbstractContainerMenu {
     }
 
     public CoalGeneratorMenu(int containerId, Inventory playerInventory, RegistryFriendlyByteBuf data) {
-        this(containerId, playerInventory, ResourcefulHelper.readBlockEntity(GalacticraftBlockEntityType.COAL_GENERATOR.get(), playerInventory.player.level(), data), DataSlot.standalone());
+        this(containerId, playerInventory, ResourcefulHelper.readBlockEntity(GalacticraftBlockEntityTypes.COAL_GENERATOR.get(), playerInventory.player.level(), data), DataSlot.standalone());
     }
 
     public static boolean isFuel(ItemStack itemStack) {

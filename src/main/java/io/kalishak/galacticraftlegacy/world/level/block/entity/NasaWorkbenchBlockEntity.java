@@ -13,6 +13,6 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class NasaWorkbenchBlockEntity extends BlockEntity {
     public NasaWorkbenchBlockEntity(BlockPos worldPosition, BlockState blockState) {
-        super(GalacticraftBlockEntityType.NASA_WORKBENCH.get(), worldPosition, blockState);
+        super(GalacticraftBlockEntityTypes.NASA_WORKBENCH.get(), worldPosition, blockState);
     }
 }

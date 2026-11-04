@@ -7,10 +7,10 @@
 
 package io.kalishak.galacticraftlegacy.world.level.block.entity.machine;
 
-import io.kalishak.galacticraftlegacy.world.level.block.entity.AbstractPadBlockEntity;
-import io.kalishak.galacticraftlegacy.world.level.telemetry.TelemetryTracker;
 import io.kalishak.galacticraftlegacy.world.entity.vehicle.rocket.AbstractAutoRocket;
-import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityType;
+import io.kalishak.galacticraftlegacy.world.level.block.entity.AbstractPadBlockEntity;
+import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityTypes;
+import io.kalishak.galacticraftlegacy.world.level.telemetry.TelemetryTracker;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
@@ -21,7 +21,7 @@ public class LaunchControllerBlockEntity extends BlockEntity {
     private int targetFrequency = -1;
 
     public LaunchControllerBlockEntity(BlockPos pos, BlockState blockState) {
-        super(GalacticraftBlockEntityType.LAUNCH_CONTROLLER.get(), pos, blockState);
+        super(GalacticraftBlockEntityTypes.LAUNCH_CONTROLLER.get(), pos, blockState);
     }
 
     @Override

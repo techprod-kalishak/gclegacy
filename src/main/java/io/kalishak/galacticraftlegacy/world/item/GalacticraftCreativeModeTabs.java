@@ -232,12 +232,15 @@ public final class GalacticraftCreativeModeTabs {
         output.accept(GalacticraftItems.METEORIC_IRON_BLOCK);
         output.accept(GalacticraftItems.RAW_SILICON_BLOCK);
         output.accept(GalacticraftItems.MAGNETIC_CRAFTING_TABLE);
+        output.accept(GalacticraftItems.BASIC_SOLAR_PANEL);
+        output.accept(GalacticraftItems.ADVANCED_SOLAR_PANEL);
         output.accept(GalacticraftItems.COAL_GENERATOR);
         output.accept(GalacticraftItems.COMPRESSOR);
         output.accept(GalacticraftItems.ELECTRIC_COMPRESSOR);
         output.accept(GalacticraftItems.CIRCUIT_FABRICATOR);
         output.accept(GalacticraftItems.ELECTRIC_FURNACE);
         output.accept(GalacticraftItems.ELECTRIC_ARC_FURNACE);
+        output.accept(GalacticraftItems.ADVANCED_COMPRESSOR);
         output.accept(GalacticraftItems.MOON_COPPER_ORE);
         output.accept(GalacticraftItems.MOON_TIN_ORE);
         output.accept(GalacticraftItems.MOON_CHEESE_ORE);

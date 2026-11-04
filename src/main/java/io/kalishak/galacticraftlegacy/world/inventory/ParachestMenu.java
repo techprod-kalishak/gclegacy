@@ -10,7 +10,7 @@ package io.kalishak.galacticraftlegacy.world.inventory;
 import io.kalishak.galacticraftlegacy.transfer.ResourcefulHelper;
 import io.kalishak.galacticraftlegacy.world.inventory.slot.CapabilityHandlerSlot;
 import io.kalishak.galacticraftlegacy.world.inventory.slot.NotPlaceableResourceHandlerSlot;
-import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityType;
+import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityTypes;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.ParachestBlockEntity;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.world.Container;
@@ -59,7 +59,7 @@ public class ParachestMenu extends AbstractContainerMenu {
     }
 
     public ParachestMenu(int containerId, Inventory playerInventory, RegistryFriendlyByteBuf data) {
-        this(containerId, playerInventory, ResourcefulHelper.readBlockEntity(GalacticraftBlockEntityType.PARACHEST.get(), playerInventory.player.level(), data));
+        this(containerId, playerInventory, ResourcefulHelper.readBlockEntity(GalacticraftBlockEntityTypes.PARACHEST.get(), playerInventory.player.level(), data));
     }
 
     public int getRowCount() {

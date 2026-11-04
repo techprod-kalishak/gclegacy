@@ -56,6 +56,7 @@ public class GalacticraftModelProvider extends ExtendedModelProvider<Galacticraf
         blockModels.createNonTemplateModelBlock(GalacticraftBlocks.FUEL.get());
         blockModels.createRotationalMachine(GalacticraftTexturedModel.BASIC_MACHINE, GalacticraftBlocks.COMPRESSOR.get());
         blockModels.createRotationalMachine(GalacticraftTexturedModel.ADVANCED_MACHINE, GalacticraftBlocks.ELECTRIC_COMPRESSOR.get());
+        blockModels.createRotationalMachine(GalacticraftTexturedModel.ADVANCED_MACHINE, GalacticraftBlocks.ADVANCED_COMPRESSOR.get());
         blockModels.createTrivialCube(GalacticraftBlocks.MOON_DIRT.get());
         blockModels.createRotatedMirroredVariantBlock(GalacticraftBlocks.MOON_TURF.get());
         blockModels.createTrivialCube(GalacticraftBlocks.MOON_CHEESE_ORE.get());
@@ -94,6 +95,8 @@ public class GalacticraftModelProvider extends ExtendedModelProvider<Galacticraf
         GalacticraftBlocks.UNLIT_COPPER_LANTERN.zipUnwaxedWaxed((unwaxed, waxed) -> blockModels.createCopperLantern(unwaxed.get(), waxed.get()));
         blockModels.createMagneticCraftingTable(GalacticraftBlocks.MAGNETIC_CRAFTING_TABLE.get());
         blockModels.createRotationalMachine(GalacticraftTexturedModel.OXYGEN_COLLECTOR, GalacticraftBlocks.OXYGEN_COLLECTOR.get());
+        blockModels.createRotationalMachine(GalacticraftTexturedModel.BASIC_MACHINE, GalacticraftBlocks.BASIC_SOLAR_PANEL.get());
+        blockModels.createRotationalMachine(GalacticraftTexturedModel.ADVANCED_MACHINE, GalacticraftBlocks.ADVANCED_SOLAR_PANEL.get());
         blockModels.createTrivialCube(GalacticraftBlocks.ASTEROID_ALUMINUM_ORE.get());
         blockModels.createTrivialBlock(GalacticraftBlocks.TIN_WALL_DECORATION_BLOCK.get(), TexturedModel.CUBE_BOTTOM_TOP);
         blockModels.createSlab(GalacticraftBlocks.TIN_WALL_DECORATION_SLAB.get(), GalacticraftBlocks.TIN_WALL_DECORATION_BLOCK.get(), TextureMapping::cubeBottomTop);

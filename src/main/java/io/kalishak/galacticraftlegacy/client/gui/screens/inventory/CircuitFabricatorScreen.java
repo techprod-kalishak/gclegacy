@@ -7,12 +7,12 @@
 
 package io.kalishak.galacticraftlegacy.client.gui.screens.inventory;
 
-import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.client.gui.screens.recipebook.FabricatingRecipeBook;
 import io.kalishak.galacticraftlegacy.client.gui.screens.recipebook.SearchRecipeBookCategory;
+import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.world.inventory.machine.CircuitFabricatorMenu;
 import io.kalishak.galacticraftlegacy.world.item.GalacticraftItems;
-import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.CircuitFabricatorBlockEntity;
+import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.electric.CircuitFabricatorBlockEntity;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.navigation.ScreenPosition;
 import net.minecraft.client.gui.screens.recipebook.RecipeBookComponent;

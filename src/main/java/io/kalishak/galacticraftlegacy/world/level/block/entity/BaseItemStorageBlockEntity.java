@@ -18,13 +18,10 @@ import net.minecraft.network.chat.ComponentSerialization;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.*;
 import net.minecraft.world.entity.SlotAccess;
-import net.minecraft.world.entity.SlotProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.AbstractFurnaceBlock;
-import net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -48,10 +45,11 @@ import net.neoforged.neoforge.transfer.transaction.Transaction;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Optional;
 import java.util.function.BiConsumer;
-import java.util.function.Function;
 
+@ParametersAreNonnullByDefault
 public abstract class BaseItemStorageBlockEntity extends BlockEntity implements MenuProvider, Nameable, LootContextProvider {
     private LockCode lockKey = LockCode.NO_LOCK;
     private @Nullable Component name;

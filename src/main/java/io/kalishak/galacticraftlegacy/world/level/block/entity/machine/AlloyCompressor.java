@@ -8,9 +8,7 @@
 package io.kalishak.galacticraftlegacy.world.level.block.entity.machine;
 
 import net.minecraft.core.Direction;
-import net.minecraft.core.NonNullList;
 import net.minecraft.world.MenuProvider;
-import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.inventory.RecipeCraftingHolder;
 import net.minecraft.world.inventory.StackedContentsCompatible;
 import net.minecraft.world.item.ItemStack;
@@ -87,17 +85,17 @@ public interface AlloyCompressor extends MenuProvider, StackedContentsCompatible
         }
     }
 
-    static void compress(ResourceHandler<ItemResource> items, ItemStack result) {
+    static void compress(ResourceHandler<ItemResource> items, ItemStack result, int toInsert) {
         try (Transaction tx = Transaction.open(null)) {
             for (int i = 0; i < items.size(); i++) {
                 ItemResource resource = items.getResource(i);
 
-                if (items.extract(i, resource, 1, tx) <= 0) {
+                if (items.extract(i, resource, toInsert, tx) <= 0) {
                     return;
                 }
             }
 
-            if (items.insert(ItemResource.of(result), 1, tx) > 0) {
+            if (items.insert(ItemResource.of(result), toInsert, tx) > 0) {
                 tx.commit();
             }
         }

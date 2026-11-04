@@ -14,7 +14,9 @@ import io.kalishak.galacticraftlegacy.registry.deferred.DeferredBlockRegister;
 import io.kalishak.galacticraftlegacy.world.item.FeatureTier;
 import io.kalishak.galacticraftlegacy.world.level.block.cauldron.FlammableCauldronBlock;
 import io.kalishak.galacticraftlegacy.world.level.block.cauldron.GalacticraftCauldronInteraction;
-import io.kalishak.galacticraftlegacy.world.level.block.machine.*;
+import io.kalishak.galacticraftlegacy.world.level.block.machine.CompressorBlock;
+import io.kalishak.galacticraftlegacy.world.level.block.machine.OxygenDetectorBlock;
+import io.kalishak.galacticraftlegacy.world.level.block.machine.electric.*;
 import io.kalishak.galacticraftlegacy.world.level.block.machine.oxygen.OxygenCollectorBlock;
 import io.kalishak.galacticraftlegacy.world.level.block.state.GalacticraftBlockSetType;
 import io.kalishak.galacticraftlegacy.world.level.block.wire.ColoredPipeBlock;
@@ -1144,9 +1146,14 @@ public final class GalacticraftBlocks {
             CompressorBlock::new,
             GalacticraftBlocks::machine
     );
-    public static final DeferredBlock<CompressorBlock> ELECTRIC_COMPRESSOR = REGISTRY.registerBlock(
+    public static final DeferredBlock<ElectricCompressorBlock> ELECTRIC_COMPRESSOR = REGISTRY.registerBlock(
             GalacticraftBlockItemIds.ELECTRIC_COMPRESSOR,
             ElectricCompressorBlock::new,
+            GalacticraftBlocks::machine
+    );
+    public static final DeferredBlock<AdvancedCompressorBlock> ADVANCED_COMPRESSOR = REGISTRY.registerBlock(
+            GalacticraftBlockItemIds.ADVANCED_COMPRESSOR,
+            AdvancedCompressorBlock::new,
             GalacticraftBlocks::machine
     );
     public static final DeferredBlock<ElectricFurnaceBlock> ELECTRIC_FURNACE = REGISTRY.registerBlock(
@@ -1157,6 +1164,16 @@ public final class GalacticraftBlocks {
     public static final DeferredBlock<ArcFurnaceBlock> ELECTRIC_ARC_FURNACE = REGISTRY.registerBlock(
             GalacticraftBlockItemIds.ELECTRIC_ARC_FURNACE,
             ArcFurnaceBlock::new,
+            GalacticraftBlocks::machine
+    );
+    public static final DeferredBlock<BasicSolarPanelBlock> BASIC_SOLAR_PANEL = REGISTRY.registerBlock(
+            GalacticraftBlockItemIds.BASIC_SOLAR_PANEL,
+            BasicSolarPanelBlock::new,
+            GalacticraftBlocks::machine
+    );
+    public static final DeferredBlock<AdvancedSolarPanelBlock> ADVANCED_SOLAR_PANEL = REGISTRY.registerBlock(
+            GalacticraftBlockItemIds.ADVANCED_SOLAR_PANEL,
+            AdvancedSolarPanelBlock::new,
             GalacticraftBlocks::machine
     );
     public static final DeferredBlock<OxygenCollectorBlock> OXYGEN_COLLECTOR = REGISTRY.registerBlock(

@@ -11,13 +11,13 @@ import com.mojang.serialization.Codec;
 import io.kalishak.galacticraftlegacy.attachment.GalacticraftAttachments;
 import io.kalishak.galacticraftlegacy.codec.SerializableEnum;
 import io.kalishak.galacticraftlegacy.transfer.capability.fluid.LimitedFluidResourceHandler;
+import io.kalishak.galacticraftlegacy.transfer.capability.fluid.SingleTankResourceHandler;
 import io.kalishak.galacticraftlegacy.transfer.node.FluidNodeNetwork;
 import io.kalishak.galacticraftlegacy.transfer.node.NodeNetwork;
 import io.kalishak.galacticraftlegacy.world.level.OxygenHelper;
-import io.kalishak.galacticraftlegacy.world.level.block.entity.wire.network.ResourceTransmitter;
-import io.kalishak.galacticraftlegacy.transfer.capability.fluid.SingleTankResourceHandler;
-import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityType;
+import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityTypes;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.wire.network.NetworkType;
+import io.kalishak.galacticraftlegacy.world.level.block.entity.wire.network.ResourceTransmitter;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -53,7 +53,7 @@ public class ColoredPipeBlockEntity extends AbstractConnectableBlockEntity imple
     };
 
     public ColoredPipeBlockEntity(BlockPos pos, BlockState blockState) {
-        super(GalacticraftBlockEntityType.COLORED_PIPE.get(), pos, blockState);
+        super(GalacticraftBlockEntityTypes.COLORED_PIPE.get(), pos, blockState);
     }
 
     public ColoredPipeBlockEntity(BlockPos pos, BlockState blockState, DyeColor color) {
@@ -62,7 +62,7 @@ public class ColoredPipeBlockEntity extends AbstractConnectableBlockEntity imple
     }
 
     public static void registerCapabilities(RegisterCapabilitiesEvent event) {
-        event.registerBlockEntity(Capabilities.Fluid.BLOCK, GalacticraftBlockEntityType.COLORED_PIPE.get(), (blockEntity, _) -> blockEntity.fluidHandler);
+        event.registerBlockEntity(Capabilities.Fluid.BLOCK, GalacticraftBlockEntityTypes.COLORED_PIPE.get(), (blockEntity, _) -> blockEntity.fluidHandler);
     }
 
     public static void serverTick(ServerLevel level, BlockPos pos, BlockState state, ColoredPipeBlockEntity coloredPipe) {

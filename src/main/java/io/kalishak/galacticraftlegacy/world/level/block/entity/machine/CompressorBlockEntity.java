@@ -12,8 +12,9 @@ import io.kalishak.galacticraftlegacy.world.inventory.machine.CompressorMenu;
 import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.AnvilCompressingRecipe;
 import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.GalacticraftRecipeType;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.BaseItemStorageBlockEntity;
-import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityType;
+import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityTypes;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.LootContextProvider;
+import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.electric.RecipeMachineBlockEntity;
 import it.unimi.dsi.fastutil.objects.Reference2IntMap;
 import it.unimi.dsi.fastutil.objects.Reference2IntOpenHashMap;
 import net.minecraft.core.BlockPos;
@@ -96,13 +97,13 @@ public class CompressorBlockEntity extends BaseItemStorageBlockEntity implements
     protected final RecipeManager.CachedCheck<CraftingInput, AnvilCompressingRecipe> quickCheck = RecipeManager.createCheck(GalacticraftRecipeType.COMPRESSING.get());
 
     public CompressorBlockEntity(BlockPos pos, BlockState blockState) {
-        super(GalacticraftBlockEntityType.COMPRESSOR.get(), pos, blockState);
+        super(GalacticraftBlockEntityTypes.COMPRESSOR.get(), pos, blockState);
     }
 
     public static void registerItemCapabilities(RegisterCapabilitiesEvent event) {
         event.registerBlockEntity(
                 Capabilities.Item.BLOCK,
-                GalacticraftBlockEntityType.COMPRESSOR.get(),
+                GalacticraftBlockEntityTypes.COMPRESSOR.get(),
                 (entity, side) -> switch (side) {
                     case UP -> RangedResourceHandler.of(() -> entity.items, 0, 9); // Crafting grid
                     case DOWN -> RangedResourceHandler.ofSingleIndex(() -> entity.items, 10); // Output
@@ -162,7 +163,7 @@ public class CompressorBlockEntity extends BaseItemStorageBlockEntity implements
                         if (compressor.compressingTimer == compressor.compressingTotalTime) {
                             compressor.compressingTimer = 0;
                             compressor.compressingTotalTime = recipe.value().compressingTime();
-                            AlloyCompressor.compress(compressor.items, recipeResult);
+                            AlloyCompressor.compress(compressor.items, recipeResult, 1);
                             compressor.setRecipeUsed(recipe);
                             changed = true;
                         }

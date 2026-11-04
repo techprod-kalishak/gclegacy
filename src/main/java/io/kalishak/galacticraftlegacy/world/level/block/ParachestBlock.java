@@ -11,7 +11,7 @@ import com.mojang.serialization.Codec;
 import io.kalishak.galacticraftlegacy.codec.SerializableEnum;
 import io.kalishak.galacticraftlegacy.transfer.ResourcefulHelper;
 import io.kalishak.galacticraftlegacy.world.entity.FallingParachest;
-import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityType;
+import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityTypes;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.ParachestBlockEntity;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.core.BlockPos;
@@ -55,7 +55,7 @@ public class ParachestBlock extends AbstractChestBlock<ParachestBlockEntity> imp
     private final Type type;
 
     public ParachestBlock(Type type, BlockBehaviour.Properties properties) {
-        super(properties, GalacticraftBlockEntityType.PARACHEST::value);
+        super(properties, GalacticraftBlockEntityTypes.PARACHEST::value);
         this.type = type;
 
         registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(WATERLOGGED, false));
@@ -124,7 +124,7 @@ public class ParachestBlock extends AbstractChestBlock<ParachestBlockEntity> imp
 
     @Override
     public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
-        return level.isClientSide() ? createTickerHelper(blockEntityType, GalacticraftBlockEntityType.PARACHEST.get(), ParachestBlockEntity::lidAnimateTick) : null;
+        return level.isClientSide() ? createTickerHelper(blockEntityType, GalacticraftBlockEntityTypes.PARACHEST.get(), ParachestBlockEntity::lidAnimateTick) : null;
     }
 
     @Override

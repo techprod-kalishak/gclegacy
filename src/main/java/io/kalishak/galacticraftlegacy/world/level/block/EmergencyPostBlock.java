@@ -1,8 +1,15 @@
+/*
+ * Copyright (c) 2026 Kalishak
+ *
+ * Licensed under the MIT license
+ * See LICENSE file for more details
+ */
+
 package io.kalishak.galacticraftlegacy.world.level.block;
 
 import io.kalishak.galacticraftlegacy.world.item.SpaceEmergencyKitItem;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.EmergencyPostBlockEntity;
-import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityType;
+import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.InteractionHand;
@@ -111,6 +118,6 @@ public class EmergencyPostBlock extends BaseEntityBlock {
 
     @Override
     public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState, BlockEntityType<T> type) {
-        return level.isClientSide() ? createTickerHelper(type, GalacticraftBlockEntityType.EMERGENCY_POST.get(), EmergencyPostBlockEntity::clientTick) : null;
+        return level.isClientSide() ? createTickerHelper(type, GalacticraftBlockEntityTypes.EMERGENCY_POST.get(), EmergencyPostBlockEntity::clientTick) : null;
     }
 }

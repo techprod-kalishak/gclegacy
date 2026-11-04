@@ -12,9 +12,9 @@ import io.kalishak.galacticraftlegacy.world.inventory.GalacticraftMenuType;
 import io.kalishak.galacticraftlegacy.world.inventory.slot.CapabilityHandlerSlot;
 import io.kalishak.galacticraftlegacy.world.inventory.slot.ResultResourceHandlerSlot;
 import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.ElectricCompressingRecipe;
-import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityType;
+import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityTypes;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.AlloyCompressor;
-import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.ElectricCompressorBlockEntity;
+import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.electric.ElectricCompressorBlockEntity;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.recipebook.ServerPlaceRecipe;
 import net.minecraft.server.level.ServerLevel;
@@ -45,7 +45,7 @@ public class ElectricCompressorMenu extends AbstractCompressorMenu {
     }
 
     public ElectricCompressorMenu(int containerId, Inventory playerInventory, RegistryFriendlyByteBuf data) {
-        this(containerId, playerInventory, ResourcefulHelper.readBlockEntity(GalacticraftBlockEntityType.ELECTRIC_COMPRESSOR.get(), playerInventory.player.level(), data), new SimpleContainerData(4));
+        this(containerId, playerInventory, ResourcefulHelper.readBlockEntity(GalacticraftBlockEntityTypes.ELECTRIC_COMPRESSOR.get(), playerInventory.player.level(), data), new SimpleContainerData(4));
     }
 
     public int getEnergyCapacity() {

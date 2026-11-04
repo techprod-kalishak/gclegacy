@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "condition": {
+        "type": "minecraft:survives_explosion"
+      },
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "modifier": {
+            "type": "minecraft:copy_components",
+            "include": [
+              "galacticraftlegacy:stored_energy"
+            ],
+            "source": "block_entity"
+          },
+          "name": "galacticraftlegacy:basic_solar_panel"
+        }
+      ],
+      "rolls": 1
+    }
+  ],
+  "random_sequence": "galacticraftlegacy:blocks/basic_solar_panel"
+}

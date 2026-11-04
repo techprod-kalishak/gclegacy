@@ -7,13 +7,13 @@
 
 package io.kalishak.galacticraftlegacy.world.level.block.entity.wire;
 
-import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityType;
+import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class DenseWireBlockEntity extends WireBlockEntity {
     public DenseWireBlockEntity(BlockPos pos, BlockState blockState) {
-        super(GalacticraftBlockEntityType.DENSE_WIRE.get(), pos, blockState);
+        super(GalacticraftBlockEntityTypes.DENSE_WIRE.get(), pos, blockState);
     }
 
     @Override

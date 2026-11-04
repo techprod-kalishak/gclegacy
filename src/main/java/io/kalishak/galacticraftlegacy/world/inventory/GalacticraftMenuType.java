@@ -37,6 +37,7 @@ public final class GalacticraftMenuType {
     public static final DeferredHolder<MenuType<?>, MenuType<NasaWorkbenchEmptyPageMenu>> NASA_WORKBENCH_EMPTY_PAGE = REGISTRY.register("nasa_workbench_empty_page", () -> IMenuTypeExtension.create(NasaWorkbenchEmptyPageMenu::new));
     public static final DeferredHolder<MenuType<?>, MenuType<ParachestMenu>> PARACHEST = REGISTRY.register("parachest", () -> IMenuTypeExtension.create(ParachestMenu::new));
     public static final DeferredHolder<MenuType<?>, MenuType<OxygenCollectorMenu>> OXYGEN_COLLECTOR = REGISTRY.register("oxygen_collector", () -> IMenuTypeExtension.create(OxygenCollectorMenu::new));
+    public static final DeferredHolder<MenuType<?>, MenuType<SolarPanelMenu>> SOLAR_PANEL = REGISTRY.register("solar_panel", () -> IMenuTypeExtension.create(SolarPanelMenu::new));
 
     public static void init(IEventBus bus) {
         REGISTRY.register(bus);

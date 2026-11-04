@@ -8,11 +8,14 @@
 package io.kalishak.galacticraftlegacy.references;
 
 public class GalacticraftBlockEntityIds {
+    public static final String BASIC_SOLAR_PANEL = GalacticraftBlockItemIds.BASIC_SOLAR_PANEL.block().identifier().getPath();
+    public static final String ADVANCED_SOLAR_PANEL = GalacticraftBlockItemIds.ADVANCED_SOLAR_PANEL.block().identifier().getPath();
     public static final String ELECTRIC_ARC_FURNACE = GalacticraftBlockItemIds.ELECTRIC_ARC_FURNACE.block().identifier().getPath();
     public static final String FLUID_PIPE = "fluid_pipe";
     public static final String COMPRESSOR = GalacticraftBlockItemIds.COMPRESSOR.block().identifier().getPath();
     public static final String DUNGEON_CHEST = "dungeon_chest";
     public static final String ELECTRIC_COMPRESSOR = GalacticraftBlockItemIds.ELECTRIC_COMPRESSOR.block().identifier().getPath();
+    public static final String ADVANCED_COMPRESSOR = GalacticraftBlockItemIds.ADVANCED_COMPRESSOR.block().identifier().getPath();
     public static final String ELECTRIC_FURNACE = GalacticraftBlockItemIds.ELECTRIC_FURNACE.block().identifier().getPath();
     public static final String EMERGENCY_POST = GalacticraftBlockItemIds.EMERGENCY_POST.block().identifier().getPath();
     public static final String FALLEN_METEOR = GalacticraftBlockItemIds.FALLEN_METEOR.block().identifier().getPath();

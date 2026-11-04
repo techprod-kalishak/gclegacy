@@ -8,7 +8,7 @@
 package io.kalishak.galacticraftlegacy.world.inventory.machine;
 
 import io.kalishak.galacticraftlegacy.transfer.ResourcefulHelper;
-import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.AbstractMachineBlockEntity;
+import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.electric.AbstractMachineBlockEntity;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;

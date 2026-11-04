@@ -9,7 +9,7 @@ package io.kalishak.galacticraftlegacy.world.inventory.machine;
 
 import io.kalishak.galacticraftlegacy.transfer.ResourcefulHelper;
 import io.kalishak.galacticraftlegacy.world.item.component.ItemAccessEnergyUtils;
-import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.AbstractOxygenBlockEntity;
+import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.oxygen.AbstractOxygenBlockEntity;
 import io.kalishak.galacticraftlegacy.world.level.material.fluid.GalacticraftFluids;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;

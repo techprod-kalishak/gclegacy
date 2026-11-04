@@ -160,8 +160,11 @@ public class GalacticraftLanguageProvider extends ExtendedLanguageProvider {
         addWithDescription(GalacticraftBlocks.CIRCUIT_FABRICATOR, "Circuit Fabricator", "Circuit Fabricator will process basic materials into silicon wafers, used for advanced machines.");
         addWithDescription(GalacticraftBlocks.COMPRESSOR, "Compressor", "Compressor will process ingots into their compressed equivalents. The most essential machine in Galacticraft!");
         addWithDescription(GalacticraftBlocks.ELECTRIC_COMPRESSOR, "Electric Compressor", "Electric Compressor will process ingots into their compressed equivalents. Compresses two at a time, making it more effective than its predecessor.");
+        addWithDescription(GalacticraftBlocks.ADVANCED_COMPRESSOR, "Advanced Compressor", "A faster version of the Electric Compressor.  Rapidly processes ingots into their compressed equivalents.");
         addWithDescription(GalacticraftBlocks.ELECTRIC_FURNACE, "Electric Furnace", "Electric Furnace is used as a faster alternative to traditional coal furnaces");
         addWithDescription(GalacticraftBlocks.ELECTRIC_ARC_FURNACE, "Electric Arc Furnace", "Electric Arc Furnace is used as a better and faster alternative to both traditional coal and electric furnaces: double output from ores!");
+        addWithDescription(GalacticraftBlocks.BASIC_SOLAR_PANEL, "Basic Solar Panel", "Basic Solar Panels will collect energy from the sun, storing it for further use. Collects most energy at mid-day (non-adjustable)");
+        addWithDescription(GalacticraftBlocks.ADVANCED_SOLAR_PANEL, "Advanced Solar Panel", "Advanced Solar Panels will collect energy from the sun, storing it for further use. Automatically adjusts panel angle for optimal energy collection.");
         addWithDescription(GalacticraftBlocks.OXYGEN_COLLECTOR, "Oxygen Collector", "Oxygen Collector will store oxygen collected from leaves in the surrounding area.");
         //addWithDescription(GalacticraftBlocks.OXYGEN_BUBBLE_DISTRIBUTOR, "Oxygen Bubble Distributor", "Oxygen Bubble Distributor will emit an oxygen bubble outwards from the center block, using internal tank. This allows safe breathing inside the bubble.");
         //addWithDescription(GalacticraftBlocks.OXYGEN_COMPRESSOR, "Oxygen Compressor", "Oxygen Compressor will load oxygen from internal storage into an oxygen tank.");

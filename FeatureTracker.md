@@ -44,17 +44,17 @@ Please note that the following list is a preliminary outline of planned features
 - [ ] Sealed Aluminum Wire ❌
 - [ ] Sealed Heavy Aluminum Wire ❌
 - [ ] Sealed Fluid Pipe ❌
-- [ ] Parachest ⏳
-- [ ] Basic Solar Panel ❌
-- [ ] Advanced Solar Panel ❌
+- [ ] Parachest ✅
+- [ ] Basic Solar Panel ⏳
+- [ ] Advanced Solar Panel ⏳
 - [ ] Communication Dish ❌
 - [ ] Coal Generator ✅
-- [ ] Compressor ⏳
-- [ ] Electric Compressor ⏳
-- [ ] Circuit Fabricator ⏳
+- [ ] Compressor ✅
+- [ ] Electric Compressor ✅
+- [ ] Circuit Fabricator ✅
 - [ ] Oxygen Storage Module ❌
-- [ ] Electric Arc Furnace ❌
-- [ ] Advanced Compressor ❌
+- [ ] Electric Arc Furnace ✅
+- [ ] Advanced Compressor ✅
 - [ ] Lightning Panels ❌
 - - [ ] Square
 - - [ ] Spotlight

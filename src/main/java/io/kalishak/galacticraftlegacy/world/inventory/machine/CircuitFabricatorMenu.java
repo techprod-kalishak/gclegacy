@@ -16,8 +16,8 @@ import io.kalishak.galacticraftlegacy.world.inventory.slot.CapabilityHandlerSlot
 import io.kalishak.galacticraftlegacy.world.inventory.slot.ConditionalHandlerSlot;
 import io.kalishak.galacticraftlegacy.world.item.component.ItemAccessEnergyUtils;
 import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.CircuitRecipe;
-import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.CircuitFabricatorBlockEntity;
-import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityType;
+import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityTypes;
+import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.electric.CircuitFabricatorBlockEntity;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.recipebook.ServerPlaceRecipe;
 import net.minecraft.server.level.ServerLevel;
@@ -25,7 +25,10 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.StackedItemContents;
-import net.minecraft.world.inventory.*;
+import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.inventory.RecipeBookType;
+import net.minecraft.world.inventory.SimpleContainerData;
+import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.RecipeHolder;
@@ -57,7 +60,7 @@ public class CircuitFabricatorMenu extends AbstractMachineRecipeBookMenu<Circuit
     }
 
     public CircuitFabricatorMenu(int containerId, Inventory playerInventory, RegistryFriendlyByteBuf data) {
-        this(containerId, playerInventory, ResourcefulHelper.readBlockEntity(GalacticraftBlockEntityType.CIRCUIT_FABRICATOR.get(), playerInventory.player.level(), data), new SimpleContainerData(2));
+        this(containerId, playerInventory, ResourcefulHelper.readBlockEntity(GalacticraftBlockEntityTypes.CIRCUIT_FABRICATOR.get(), playerInventory.player.level(), data), new SimpleContainerData(2));
     }
 
     public float getProgress() {

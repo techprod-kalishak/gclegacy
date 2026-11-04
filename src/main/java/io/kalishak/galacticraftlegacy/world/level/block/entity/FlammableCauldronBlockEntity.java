@@ -30,7 +30,7 @@ public class FlammableCauldronBlockEntity extends BlockEntity {
     };
 
     public FlammableCauldronBlockEntity(BlockPos pos, BlockState blockState) {
-        super(GalacticraftBlockEntityType.FLAMMABLE_CAULDRON.get(), pos, blockState);
+        super(GalacticraftBlockEntityTypes.FLAMMABLE_CAULDRON.get(), pos, blockState);
     }
 
     public FlammableCauldronBlockEntity(BlockPos pos, BlockState blockState, FluidStack initialStack) {
@@ -39,7 +39,7 @@ public class FlammableCauldronBlockEntity extends BlockEntity {
     }
 
     public static void registerCapability(RegisterCapabilitiesEvent event) {
-        event.registerBlockEntity(Capabilities.Fluid.BLOCK, GalacticraftBlockEntityType.FLAMMABLE_CAULDRON.get(), (blockEntity, _) -> blockEntity.handler);
+        event.registerBlockEntity(Capabilities.Fluid.BLOCK, GalacticraftBlockEntityTypes.FLAMMABLE_CAULDRON.get(), (blockEntity, _) -> blockEntity.handler);
     }
 
     private void refreshBlockState() {

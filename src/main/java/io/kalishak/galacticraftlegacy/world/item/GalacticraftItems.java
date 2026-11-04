@@ -605,8 +605,11 @@ public final class GalacticraftItems {
     public static final DeferredItem<BlockItem> CIRCUIT_FABRICATOR = REGISTRY.registerSimpleBlockItemWithDescription(GalacticraftBlocks.CIRCUIT_FABRICATOR);
     public static final DeferredItem<BlockItem> COMPRESSOR = REGISTRY.registerSimpleBlockItemWithDescription(GalacticraftBlocks.COMPRESSOR);
     public static final DeferredItem<BlockItem> ELECTRIC_COMPRESSOR = REGISTRY.registerSimpleBlockItemWithDescription(GalacticraftBlocks.ELECTRIC_COMPRESSOR);
+    public static final DeferredItem<BlockItem> ADVANCED_COMPRESSOR = REGISTRY.registerSimpleBlockItemWithDescription(GalacticraftBlocks.ADVANCED_COMPRESSOR);
     public static final DeferredItem<BlockItem> ELECTRIC_FURNACE = REGISTRY.registerSimpleBlockItemWithDescription(GalacticraftBlocks.ELECTRIC_FURNACE);
     public static final DeferredItem<BlockItem> ELECTRIC_ARC_FURNACE = REGISTRY.registerSimpleBlockItemWithDescription(GalacticraftBlocks.ELECTRIC_ARC_FURNACE);
+    public static final DeferredItem<BlockItem> BASIC_SOLAR_PANEL = REGISTRY.registerSimpleBlockItemWithDescription(GalacticraftBlocks.BASIC_SOLAR_PANEL);
+    public static final DeferredItem<BlockItem> ADVANCED_SOLAR_PANEL = REGISTRY.registerSimpleBlockItemWithDescription(GalacticraftBlocks.ADVANCED_SOLAR_PANEL);
     public static final DeferredItem<BlockItem> OXYGEN_COLLECTOR = REGISTRY.registerSimpleBlockItemWithDescription(GalacticraftBlocks.OXYGEN_COLLECTOR);
     public static final DeferredItem<BlockItem> MOON_DIRT = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.MOON_DIRT);
     public static final DeferredItem<BlockItem> MOON_TURF = REGISTRY.registerSimpleBlockItem(GalacticraftBlocks.MOON_TURF);

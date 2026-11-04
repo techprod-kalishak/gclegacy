@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "down": "galacticraftlegacy:block/advanced_machine_top",
+    "east": "galacticraftlegacy:block/advanced_machine_energy_output",
+    "north": "galacticraftlegacy:block/advanced_solar_panel_front",
+    "particle": "galacticraftlegacy:block/advanced_machine_top",
+    "south": "galacticraftlegacy:block/advanced_machine_side",
+    "up": "galacticraftlegacy:block/advanced_machine_top",
+    "west": "galacticraftlegacy:block/advanced_machine_side"
+  }
+}

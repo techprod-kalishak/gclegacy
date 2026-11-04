@@ -7,7 +7,7 @@
 
 package io.kalishak.galacticraftlegacy.world.level.block.wire;
 
-import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityType;
+import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityTypes;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.wire.DenseWireBlockEntity;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.wire.WireBlockEntity;
 import net.minecraft.core.BlockPos;
@@ -34,7 +34,7 @@ public class HeavyWireBlock extends WireBlock {
         if (level instanceof ServerLevel serverLevel) {
             return createTickerHelper(
                     blockEntityType,
-                    GalacticraftBlockEntityType.DENSE_WIRE.get(),
+                    GalacticraftBlockEntityTypes.DENSE_WIRE.get(),
                     (l, wirePos, wireState, wire) -> WireBlockEntity.serverTick(serverLevel, wirePos, wireState, wire)
             );
         }

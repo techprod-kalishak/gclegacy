@@ -10,8 +10,8 @@ package io.kalishak.galacticraftlegacy.world.inventory.machine;
 import io.kalishak.galacticraftlegacy.transfer.ResourcefulHelper;
 import io.kalishak.galacticraftlegacy.world.inventory.GalacticraftMenuType;
 import io.kalishak.galacticraftlegacy.world.inventory.slot.CapabilityHandlerSlot;
-import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityType;
-import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.OxygenCollectorBlockEntity;
+import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityTypes;
+import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.oxygen.OxygenCollectorBlockEntity;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.neoforged.neoforge.capabilities.Capabilities;
@@ -25,7 +25,7 @@ public class OxygenCollectorMenu extends AbstractOxygenMachineMenu<OxygenCollect
     }
 
     public OxygenCollectorMenu(int containerId, Inventory playerInventory, RegistryFriendlyByteBuf data) {
-        this(containerId, playerInventory, ResourcefulHelper.readBlockEntity(GalacticraftBlockEntityType.OXYGEN_COLLECTOR.get(), playerInventory.player.level(), data));
+        this(containerId, playerInventory, ResourcefulHelper.readBlockEntity(GalacticraftBlockEntityTypes.OXYGEN_COLLECTOR.get(), playerInventory.player.level(), data));
     }
 
     @Override

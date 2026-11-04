@@ -9,7 +9,7 @@ package io.kalishak.galacticraftlegacy.world.level.block.entity.wire;
 
 import io.kalishak.galacticraftlegacy.transfer.node.EnergyNodeNetwork;
 import io.kalishak.galacticraftlegacy.transfer.node.NodeNetwork;
-import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityType;
+import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -60,7 +60,7 @@ public class WireBlockEntity extends AbstractConnectableBlockEntity {
     }
 
     public WireBlockEntity(BlockPos pos, BlockState blockState) {
-        super(GalacticraftBlockEntityType.WIRE.get(), pos, blockState);
+        super(GalacticraftBlockEntityTypes.WIRE.get(), pos, blockState);
     }
 
     @Override

@@ -14,14 +14,17 @@ import io.kalishak.galacticraftlegacy.world.inventory.slot.CapabilityHandlerSlot
 import io.kalishak.galacticraftlegacy.world.inventory.slot.NotPlaceableResourceHandlerSlot;
 import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.GalacticraftRecipeType;
 import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.HeatingRecipe;
-import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.ElectricFurnaceBlockEntity;
-import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityType;
+import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityTypes;
+import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.electric.ElectricFurnaceBlockEntity;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.recipebook.ServerPlaceRecipe;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.StackedItemContents;
-import net.minecraft.world.inventory.*;
+import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.inventory.RecipeBookType;
+import net.minecraft.world.inventory.SimpleContainerData;
+import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.SingleRecipeInput;
@@ -41,7 +44,7 @@ public class ElectricFurnaceMenu extends AbstractElectricFurnaceMenu<HeatingReci
     }
 
     public ElectricFurnaceMenu(int containerId, Inventory playerInventory, RegistryFriendlyByteBuf data) {
-        this(containerId, playerInventory, ResourcefulHelper.readBlockEntity(GalacticraftBlockEntityType.ELECTRIC_FURNACE.get(), playerInventory.player.level(), data), new SimpleContainerData(2));
+        this(containerId, playerInventory, ResourcefulHelper.readBlockEntity(GalacticraftBlockEntityTypes.ELECTRIC_FURNACE.get(), playerInventory.player.level(), data), new SimpleContainerData(2));
     }
 
     @Override

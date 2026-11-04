@@ -10,7 +10,6 @@ package io.kalishak.galacticraftlegacy.world.level.block.entity;
 import com.google.common.base.Predicates;
 import io.kalishak.galacticraftlegacy.transfer.capability.fluid.SingleTankResourceHandler;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
@@ -22,7 +21,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.capabilities.Capabilities;
-import net.neoforged.neoforge.capabilities.ICapabilityProvider;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.common.SoundActions;
 import net.neoforged.neoforge.fluids.FluidStack;
@@ -36,7 +34,7 @@ public class FluidTankBlockEntity extends BlockEntity {
     private final SingleTankResourceHandler tank = new SingleTankResourceHandler(16000);
 
     public FluidTankBlockEntity(BlockPos worldPosition, BlockState blockState) {
-        super(GalacticraftBlockEntityType.FLUID_TANK.get(), worldPosition, blockState);
+        super(GalacticraftBlockEntityTypes.FLUID_TANK.get(), worldPosition, blockState);
     }
 
     public static void serverTick(ServerLevel level, BlockPos blockPos, BlockState blockState, FluidTankBlockEntity blockEntity) {
@@ -58,7 +56,7 @@ public class FluidTankBlockEntity extends BlockEntity {
     public static void registerCapability(RegisterCapabilitiesEvent event) {
         event.registerBlockEntity(
                 Capabilities.Fluid.BLOCK,
-                GalacticraftBlockEntityType.FLUID_TANK.get(),
+                GalacticraftBlockEntityTypes.FLUID_TANK.get(),
                 (entity, side) -> entity.tank
         );
     }

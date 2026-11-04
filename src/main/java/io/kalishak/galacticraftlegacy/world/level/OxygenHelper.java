@@ -9,7 +9,7 @@ package io.kalishak.galacticraftlegacy.world.level;
 
 import io.kalishak.galacticraftlegacy.data.GalacticraftTags;
 import io.kalishak.galacticraftlegacy.world.level.block.SealableBlock;
-import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.OxygenDistributorBlockEntity;
+import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.oxygen.OxygenDistributorBlockEntity;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.wire.ColoredPipeBlockEntity;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.wire.ConnectorBlockEntity;
 import net.minecraft.core.BlockPos;

@@ -10,7 +10,7 @@ package io.kalishak.galacticraftlegacy.client.gui.screens.recipebook;
 import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.world.inventory.machine.CircuitFabricatorMenu;
 import io.kalishak.galacticraftlegacy.world.item.crafting.display.CircutFabricatorRecipeDisplay;
-import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.CircuitFabricatorBlockEntity;
+import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.electric.CircuitFabricatorBlockEntity;
 import net.minecraft.client.gui.components.WidgetSprites;
 import net.minecraft.client.gui.screens.recipebook.GhostSlots;
 import net.minecraft.client.gui.screens.recipebook.RecipeBookComponent;

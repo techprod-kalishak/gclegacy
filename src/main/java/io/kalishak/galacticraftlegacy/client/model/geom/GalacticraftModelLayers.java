@@ -13,7 +13,6 @@ import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.entity.ArmorModelSet;
 import net.minecraft.util.Util;
 
-import java.util.EnumMap;
 import java.util.Map;
 
 public class GalacticraftModelLayers {
@@ -29,6 +28,7 @@ public class GalacticraftModelLayers {
             modelType -> createLocation("emergency_post" + "_" + modelType)
     );
     public static final ModelLayerLocation NASA_WORKBENCH = createLocation("nasa_workbench/workbench_arms");
+    public static final ModelLayerLocation SOLAR_PANEL = createLocation("solar_panel");
     public static final ModelLayerLocation PARACHUTE = createLocation("parachute");
     public static final ArmorModelSet<ModelLayerLocation> THERMAL_PADDING = new ArmorModelSet<>(
             createLocation("head_thermal_padding"),

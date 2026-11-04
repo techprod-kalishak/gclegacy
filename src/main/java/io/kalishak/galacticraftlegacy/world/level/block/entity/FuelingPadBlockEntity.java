@@ -12,6 +12,6 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class FuelingPadBlockEntity extends AbstractPadBlockEntity {
     public FuelingPadBlockEntity(BlockPos worldPosition, BlockState blockState) {
-        super(GalacticraftBlockEntityType.FUELING_PAD.get(), worldPosition, blockState);
+        super(GalacticraftBlockEntityTypes.FUELING_PAD.get(), worldPosition, blockState);
     }
 }

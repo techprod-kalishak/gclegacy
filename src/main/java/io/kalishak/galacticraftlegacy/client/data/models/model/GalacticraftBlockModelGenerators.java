@@ -25,7 +25,6 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.neoforged.neoforge.client.model.generators.blockstate.UnbakedMutator;
 import net.neoforged.neoforge.client.model.generators.template.ExtendedModelTemplateBuilder;
 
 import java.util.EnumMap;
@@ -249,7 +248,7 @@ public class GalacticraftBlockModelGenerators extends ExtendedBlockModelGenerato
         registerSimpleItemModel(block.asItem(), fallBack);
     }
 
-    public void createEmergencyPost(EmergencyPostBlock block) {
+    public void createEmergencyPost(Block block) {
         Identifier fallBack = ModelLocationUtils.getModelLocation(block, "_with_kit");
         MultiVariant withoutKit = plainVariant(ModelLocationUtils.getModelLocation(block));
 

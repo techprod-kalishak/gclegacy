@@ -12,7 +12,7 @@ import io.kalishak.galacticraftlegacy.world.inventory.GalacticraftMenuType;
 import io.kalishak.galacticraftlegacy.world.inventory.slot.FuelHandlerSlot;
 import io.kalishak.galacticraftlegacy.world.inventory.slot.ResultResourceHandlerSlot;
 import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.AnvilCompressingRecipe;
-import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityType;
+import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityTypes;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.AlloyCompressor;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.CompressorBlockEntity;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -22,7 +22,9 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.StackedItemContents;
-import net.minecraft.world.inventory.*;
+import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.inventory.SimpleContainerData;
+import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.RecipeHolder;
@@ -41,7 +43,7 @@ public class CompressorMenu extends AbstractCompressorMenu {
     }
 
     public CompressorMenu(int containerId, Inventory playerInventory, RegistryFriendlyByteBuf data) {
-        this(containerId, playerInventory, ResourcefulHelper.readBlockEntity(GalacticraftBlockEntityType.COMPRESSOR.get(), playerInventory.player.level(), data), new SimpleContainerData(4));
+        this(containerId, playerInventory, ResourcefulHelper.readBlockEntity(GalacticraftBlockEntityTypes.COMPRESSOR.get(), playerInventory.player.level(), data), new SimpleContainerData(4));
     }
 
     @Override

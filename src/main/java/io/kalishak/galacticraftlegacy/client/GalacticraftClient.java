@@ -22,6 +22,7 @@ import io.kalishak.galacticraftlegacy.client.item.ColorByFluid;
 import io.kalishak.galacticraftlegacy.client.model.FlagModel;
 import io.kalishak.galacticraftlegacy.client.model.block.EmergencyPostModel;
 import io.kalishak.galacticraftlegacy.client.model.block.NasaWorkbenchModel;
+import io.kalishak.galacticraftlegacy.client.model.block.SolarPanelModel;
 import io.kalishak.galacticraftlegacy.client.model.entity.Tier1RocketModel;
 import io.kalishak.galacticraftlegacy.client.model.gear.FrequencyModuleModel;
 import io.kalishak.galacticraftlegacy.client.model.gear.OxygenGearModel;
@@ -49,7 +50,7 @@ import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.world.entity.GalacticraftEntityTypes;
 import io.kalishak.galacticraftlegacy.world.inventory.GalacticraftMenuType;
 import io.kalishak.galacticraftlegacy.world.level.block.GalacticraftBlocks;
-import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityType;
+import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityTypes;
 import io.kalishak.galacticraftlegacy.world.level.dimension.GalacticraftDimensions;
 import io.kalishak.galacticraftlegacy.world.level.material.fluid.GalacticraftFluidType;
 import io.kalishak.galacticraftlegacy.world.level.material.fluid.GalacticraftFluids;
@@ -75,6 +76,7 @@ import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 import net.neoforged.neoforge.client.model.standalone.SimpleUnbakedStandaloneModel;
 import net.neoforged.neoforge.client.renderstate.RegisterRenderStateModifiersEvent;
 import net.neoforged.neoforge.common.NeoForge;
+import org.jspecify.annotations.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -189,7 +191,7 @@ public class GalacticraftClient {
     private void registerClientExtensions(RegisterClientExtensionsEvent event) {
         event.registerFluidType(new IClientFluidTypeExtensions() {
             @Override
-            public Identifier getRenderOverlayTexture(Minecraft mc) {
+            public Identifier getRenderOverlayTexture(@NonNull Minecraft mc) {
                 return Identifier.withDefaultNamespace("textures/misc/underwater.png");
             }
         }, GalacticraftFluidType.OIL);
@@ -206,11 +208,13 @@ public class GalacticraftClient {
         event.registerEntityRenderer(GalacticraftEntityTypes.NO_GRAVITY_MOVING_BLOCK.get(), NoGravityMovingBlockRenderer::new);
         event.registerEntityRenderer(GalacticraftEntityTypes.TIER_1_ROCKET.get(), Tier1RocketRenderer::new);
 
-        event.registerBlockEntityRenderer(GalacticraftBlockEntityType.EMERGENCY_POST.get(), EmergencyPostBlockRenderer::new);
-        event.registerBlockEntityRenderer(GalacticraftBlockEntityType.FLUID_TANK.get(), FluidTankBlockRenderer::new);
-        event.registerBlockEntityRenderer(GalacticraftBlockEntityType.DUNGEON_CHEST.get(), DungeonBlockRenderer::new);
-        event.registerBlockEntityRenderer(GalacticraftBlockEntityType.NASA_WORKBENCH.get(), NasaWorkbenchBlockRenderer::new);
-        event.registerBlockEntityRenderer(GalacticraftBlockEntityType.PARACHEST.get(), ParachestBlockRenderer::new);
+        event.registerBlockEntityRenderer(GalacticraftBlockEntityTypes.EMERGENCY_POST.get(), EmergencyPostBlockRenderer::new);
+        event.registerBlockEntityRenderer(GalacticraftBlockEntityTypes.FLUID_TANK.get(), FluidTankBlockRenderer::new);
+        event.registerBlockEntityRenderer(GalacticraftBlockEntityTypes.DUNGEON_CHEST.get(), DungeonBlockRenderer::new);
+        event.registerBlockEntityRenderer(GalacticraftBlockEntityTypes.NASA_WORKBENCH.get(), NasaWorkbenchBlockRenderer::new);
+        event.registerBlockEntityRenderer(GalacticraftBlockEntityTypes.PARACHEST.get(), ParachestBlockRenderer::new);
+        event.registerBlockEntityRenderer(GalacticraftBlockEntityTypes.BASIC_SOLAR_PANEL.get(), SolarPanelBlockRenderer::new);
+        event.registerBlockEntityRenderer(GalacticraftBlockEntityTypes.ADVANCED_SOLAR_PANEL.get(), SolarPanelBlockRenderer::new);
     }
 
     private void registerOverlays(RegisterGuiLayersEvent event) {
@@ -226,6 +230,7 @@ public class GalacticraftClient {
         event.registerLayerDefinition(GalacticraftModelLayers.MEDIUM_OXYGEN_TANK, OxygenTankModel::createMediumTankLayer);
         event.registerLayerDefinition(GalacticraftModelLayers.LIGHT_OXYGEN_TANK, OxygenTankModel::createLightTankLayer);
         event.registerLayerDefinition(GalacticraftModelLayers.NASA_WORKBENCH, NasaWorkbenchModel::createArmLayer);
+        event.registerLayerDefinition(GalacticraftModelLayers.SOLAR_PANEL, SolarPanelModel::createBodyLayer);
         GalacticraftModelLayers.EMERGENCY_POST.forEach((modelType, layerLocation) -> event.registerLayerDefinition(layerLocation, () -> EmergencyPostModel.createEmergencyPostLayerFor(modelType)));
         event.registerLayerDefinition(GalacticraftModelLayers.PARACHUTE, ParachuteModel::createParachuteLayer);
         ArmorModelSet<LayerDefinition> thermalPadding = PlayerModel.createArmorMeshSet(new CubeDeformation(0.032F), new CubeDeformation(0.06F)).map(layer -> LayerDefinition.create(layer, 64, 32));

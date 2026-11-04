@@ -9,7 +9,7 @@ package io.kalishak.galacticraftlegacy.world.level.block;
 
 import io.kalishak.galacticraftlegacy.component.GalacticraftDataComponents;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.FluidTankBlockEntity;
-import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityType;
+import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
@@ -154,7 +154,7 @@ public class FluidTankBlock extends BaseEntityBlock {
         if (includeData) {
             level.getBlockEntity(
                     pos,
-                    GalacticraftBlockEntityType.FLUID_TANK.get()
+                    GalacticraftBlockEntityTypes.FLUID_TANK.get()
             ).ifPresent(tank -> stack.set(GalacticraftDataComponents.FLUID_TANK, SimpleFluidContent.copyOf(tank.getFluidStack())));
         }
 

@@ -37,9 +37,9 @@ import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.GalacticraftRec
 import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.GalacticraftRecipeType;
 import io.kalishak.galacticraftlegacy.world.level.GalacticraftParticleTypes;
 import io.kalishak.galacticraftlegacy.world.level.block.GalacticraftBlocks;
-import io.kalishak.galacticraftlegacy.world.level.block.GalacticraftDispenserBehaviors;
 import io.kalishak.galacticraftlegacy.world.level.block.cauldron.GalacticraftCauldronInteraction;
-import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityType;
+import io.kalishak.galacticraftlegacy.world.level.block.dispenser.GalacticraftDispenserBehaviors;
+import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityTypes;
 import io.kalishak.galacticraftlegacy.world.level.dimension.transition.LanderPlanetaryTransition;
 import io.kalishak.galacticraftlegacy.world.level.dimension.transition.TransitionType;
 import io.kalishak.galacticraftlegacy.world.level.levelgen.features.GalacticraftFeatures;
@@ -69,7 +69,7 @@ public class Galacticraft {
         GalacticraftAttachments.init(modEventBus);
         GalacticraftAttributes.init(modEventBus);
         GalacticraftBlocks.init(modEventBus);
-        GalacticraftBlockEntityType.init(modEventBus);
+        GalacticraftBlockEntityTypes.init(modEventBus);
         GalacticraftConditions.init(modEventBus);
         GalacticraftCreativeModeTabs.init(modEventBus);
         GalacticraftCriteriaTriggers.init(modEventBus);
