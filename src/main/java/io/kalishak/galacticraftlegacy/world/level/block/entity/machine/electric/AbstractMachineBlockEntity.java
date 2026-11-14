@@ -149,6 +149,28 @@ public abstract class AbstractMachineBlockEntity extends BaseItemStorageBlockEnt
         return doCommit;
     }
 
+    protected static <M extends AbstractMachineBlockEntity> boolean chargeBattery(M machine, int energyBasePerOperation, @Nullable Transaction tx) {
+        ItemStack battery = machine.getItem(machine.getProperties().getBatterySlotIndex());
+        boolean doCommit = false;
+
+        if (!battery.isEmpty()) {
+            EnergyHandler itemCapacitor = battery.getCapability(Capabilities.Energy.ITEM, ItemAccess.forStack(battery));
+
+            if (itemCapacitor != null && itemCapacitor.getAmountAsInt() > 0) {
+                int toMove = Math.min(machine.capacitor.getAmountAsInt(), energyBasePerOperation);
+
+                try (Transaction childTx = Transaction.open(tx)) {
+                    if (EnergyHandlerUtil.move(machine.capacitor, itemCapacitor, toMove, childTx) > 0) {
+                        childTx.commit();
+                        doCommit = true;
+                    }
+                }
+            }
+        }
+
+        return doCommit;
+    }
+
     /**
      * Checks whether all ingredients can be considered a recipe
      * @param machine producer
@@ -195,7 +217,7 @@ public abstract class AbstractMachineBlockEntity extends BaseItemStorageBlockEnt
         setData(GalacticraftAttachments.MACHINE_STATUS, machineStatus);
     }
 
-    protected MachineStatus getMachineStatus() {
+    public MachineStatus getMachineStatus() {
         return this.machineStatus;
     }
 

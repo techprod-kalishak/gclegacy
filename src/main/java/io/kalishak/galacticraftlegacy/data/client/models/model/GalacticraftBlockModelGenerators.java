@@ -5,7 +5,7 @@
  * See LICENSE file for more details
  */
 
-package io.kalishak.galacticraftlegacy.client.data.models.model;
+package io.kalishak.galacticraftlegacy.data.client.models.model;
 
 import io.kalishak.galacticraftlegacy.aunified.data.model.ExtendedBlockModelGenerator;
 import io.kalishak.galacticraftlegacy.client.renderer.special.NasaWorkbenchSpecialRenderer;

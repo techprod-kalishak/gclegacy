@@ -11,10 +11,7 @@ import io.kalishak.galacticraftlegacy.network.handler.client.OpenGalaxySelection
 import io.kalishak.galacticraftlegacy.network.handler.client.ToggleGearInventoryClientHandler;
 import io.kalishak.galacticraftlegacy.network.handler.client.UpdateEnergyNodeNetworkClientHandler;
 import io.kalishak.galacticraftlegacy.network.handler.client.UpdateFluidNodeNetworkClientHandler;
-import io.kalishak.galacticraftlegacy.network.handler.server.MoveVehiclePageServerHandler;
-import io.kalishak.galacticraftlegacy.network.handler.server.ToggleGearInventoryServerHandler;
-import io.kalishak.galacticraftlegacy.network.handler.server.ToggleSensorGlassesServerHandler;
-import io.kalishak.galacticraftlegacy.network.handler.server.UnlockSchematicServerHandler;
+import io.kalishak.galacticraftlegacy.network.handler.server.*;
 import io.kalishak.galacticraftlegacy.network.payload.*;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
@@ -60,6 +57,12 @@ public final class GalacticraftNetworkHandler {
                 OpenGalaxySelectionScreenPayload.TYPE,
                 OpenGalaxySelectionScreenPayload.STREAM_CODEC,
                 OpenGalaxySelectionScreenClientHandler::handle
+        );
+
+        registrar.playToServer(
+                ToggleMachineButtonPayload.TYPE,
+                ToggleMachineButtonPayload.STREAM_CODEC,
+                ToggleMachineButtonServerHandler::handle
         );
     }
 }

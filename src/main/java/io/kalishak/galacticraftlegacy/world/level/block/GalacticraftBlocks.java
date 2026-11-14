@@ -1224,6 +1224,11 @@ public final class GalacticraftBlocks {
             () -> BlockBehaviour.Properties.of()
                     .noLootTable()
     );
+    public static final DeferredBlock<DummyBlock> DUMMY_SOLAR_PANEL = REGISTRY.registerBlock(
+            "dummy_solar_panel",
+            DummyBlock::new,
+            GalacticraftBlocks::dummy
+    );
 
     private static BlockBehaviour.Properties wallVariant(Supplier<Block> baseBlock, boolean overrideDescription, UnaryOperator<BlockBehaviour.Properties> properties) {
         BlockBehaviour.Properties wallProperties = BlockBehaviour.Properties.of().overrideLootTable(baseBlock.get().getLootTable());
@@ -1242,6 +1247,7 @@ public final class GalacticraftBlocks {
                 .requiresCorrectToolForDrops()
                 .strength(3.0F);
     }
+
     private static BlockBehaviour.Properties litMachine(int light) {
         return BlockBehaviour.Properties.of()
                 .mapColor(MapColor.DEEPSLATE)
@@ -1250,6 +1256,17 @@ public final class GalacticraftBlocks {
                 .requiresCorrectToolForDrops()
                 .strength(3.0F)
                 .lightLevel(state -> state.getValue(BlockStateProperties.LIT) ? light : 0);
+    }
+
+    private static BlockBehaviour.Properties dummy() {
+        return BlockBehaviour.Properties.of()
+                .mapColor(MapColor.NONE)
+                .strength(-1.0F, 3600000.8F)
+                .noLootTable()
+                .noOcclusion()
+                .isValidSpawn(Blocks::never)
+                .noTerrainParticles()
+                .pushReaction(PushReaction.IMMOVEABLE);
     }
 
     private static boolean never(BlockState blockState, BlockGetter blockGetter, BlockPos blockPos) {

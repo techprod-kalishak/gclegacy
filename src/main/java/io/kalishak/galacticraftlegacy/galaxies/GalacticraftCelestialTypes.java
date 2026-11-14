@@ -16,7 +16,7 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 public class GalacticraftCelestialTypes {
-    private static final DeferredRegister<MapCodec<? extends Celestial>> REGISTRY = DeferredRegister.create(GalacticraftRegistries.CELESTIAL_TYPE, Galacticraft.MODID);
+    private static final DeferredRegister<MapCodec<? extends Celestial>> REGISTRY = DeferredRegister.create(GalacticraftRegistries.Keys.CELESTIAL_TYPE, Galacticraft.MODID);
 
     public static final DeferredHolder<MapCodec<? extends Celestial>, MapCodec<SimpleCelestialBody>> SIMPLE = REGISTRY.register(
             "simple",

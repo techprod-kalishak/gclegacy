@@ -8,11 +8,11 @@
 package io.kalishak.galacticraftlegacy.data;
 
 import io.kalishak.galacticraftlegacy.Galacticraft;
-import io.kalishak.galacticraftlegacy.client.data.*;
-import io.kalishak.galacticraftlegacy.client.data.models.GalacticraftCustomModelProvider;
-import io.kalishak.galacticraftlegacy.client.data.models.GalacticraftEquipmentAssetProvider;
 import io.kalishak.galacticraftlegacy.component.flag.BuiltinFlagMaterials;
 import io.kalishak.galacticraftlegacy.data.advancement.GalacticraftAdvancements;
+import io.kalishak.galacticraftlegacy.data.client.*;
+import io.kalishak.galacticraftlegacy.data.client.models.GalacticraftCustomModelProvider;
+import io.kalishak.galacticraftlegacy.data.client.models.GalacticraftEquipmentAssetProvider;
 import io.kalishak.galacticraftlegacy.data.datamap.GalacticraftDataMaps;
 import io.kalishak.galacticraftlegacy.data.loot.GalacticraftBlockLootSubProvider;
 import io.kalishak.galacticraftlegacy.data.loot.GalacticraftChestLootSubProvider;
@@ -67,7 +67,7 @@ public class GalacticraftData {
     public static void gatherData(GatherDataEvent.Client event) {
         event.createProvider(PackMetadataGenerator::new)
                 .add(PackMetadataSection.SERVER_TYPE, new PackMetadataSection(
-                        GalacticraftComponents.DATAPACK_DESCRIPTION.asComponent(),
+                        GalacticraftComponents.DATAPACK_DESCRIPTION.translated(),
                         new InclusiveRange<>(DetectedVersion.BUILT_IN.packVersion(PackType.SERVER_DATA))));
         event.createProvider(GalacticraftSpritesProvider::new);
         event.createProvider(GalacticraftLanguageProvider::new);
@@ -88,7 +88,7 @@ public class GalacticraftData {
         event.createProvider(GalacticraftTimelinesTagsProvider::new);
 
         DataGenerator.PackGenerator adventureMode = event.getGenerator().getBuiltinDatapack(true, "galacticraftlegacy", "adventure_mode");
-        adventureMode.addProvider(packOutput -> PackMetadataGenerator.forFeaturePack(packOutput, GalacticraftComponents.ADVENTURE_MODE_DESCRIPTION.asComponent(), FeatureFlagSet.of(Galacticraft.ADVENTURE_MODE)));
+        adventureMode.addProvider(packOutput -> PackMetadataGenerator.forFeaturePack(packOutput, GalacticraftComponents.ADVENTURE_MODE_DESCRIPTION.translated(), FeatureFlagSet.of(Galacticraft.ADVENTURE_MODE)));
     }
 
     @SubscribeEvent
@@ -131,7 +131,7 @@ public class GalacticraftData {
         event.addPackFinders(
                 Constants.id("developers_art"),
                 PackType.CLIENT_RESOURCES,
-                GalacticraftComponents.CLASSIC_ASSETS_DESCRIPTION.asComponent(),
+                GalacticraftComponents.CLASSIC_ASSETS_DESCRIPTION.translated(),
                 PackSource.BUILT_IN,
                 false,
                 Pack.Position.BOTTOM

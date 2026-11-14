@@ -5,7 +5,7 @@
  * See LICENSE file for more details
  */
 
-package io.kalishak.galacticraftlegacy.client.data;
+package io.kalishak.galacticraftlegacy.data.client;
 
 import io.kalishak.galacticraftlegacy.world.level.block.GalacticraftBlocks;
 import net.minecraft.data.BlockFamily;

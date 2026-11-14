@@ -23,4 +23,8 @@ public interface EnergyProducer {
 
         return false;
     }
+
+    default boolean isGenerating() {
+        return true;
+    }
 }

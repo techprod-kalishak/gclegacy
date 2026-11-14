@@ -5,7 +5,7 @@
  * See LICENSE file for more details
  */
 
-package io.kalishak.galacticraftlegacy.client.data.models;
+package io.kalishak.galacticraftlegacy.data.client.models;
 
 import io.kalishak.galacticraftlegacy.Galacticraft;
 import io.kalishak.galacticraftlegacy.aunified.data.model.CustomModelGenerator;

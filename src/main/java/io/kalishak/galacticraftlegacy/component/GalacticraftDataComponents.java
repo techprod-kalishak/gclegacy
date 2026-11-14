@@ -24,6 +24,7 @@ import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.util.ExtraCodecs;
+import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.TooltipProvider;
@@ -167,7 +168,7 @@ public final class GalacticraftDataComponents {
         consumer.accept(
                 TooltipLocation.HEAD,
                 (stack, _, _, _, _, builder) -> {
-                    if (isModdedItem(stack)) {
+                    if (isModdedItem(stack) && !(stack.getItem() instanceof BucketItem)) {
                         ResourceHandler<FluidResource> handler = stack.getCapability(Capabilities.Fluid.ITEM, ItemAccess.forStack(stack));
 
                         if (handler != null) {

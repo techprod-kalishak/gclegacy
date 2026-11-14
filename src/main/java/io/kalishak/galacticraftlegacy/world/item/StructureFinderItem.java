@@ -64,6 +64,6 @@ public class StructureFinderItem extends Item {
     @Override
     @SuppressWarnings("deprecation")
     public void appendHoverText(@NonNull ItemStack stack, @NonNull TooltipContext context, @NonNull TooltipDisplay tooltipDisplay, Consumer<Component> tooltipAdder, @NonNull TooltipFlag flag) {
-        tooltipAdder.accept(GalacticraftComponents.CREATIVE_ONLY.asComponent());
+        tooltipAdder.accept(GalacticraftComponents.CREATIVE_ONLY.translated());
     }
 }

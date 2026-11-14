@@ -9,10 +9,10 @@ package io.kalishak.galacticraftlegacy.component;
 
 import com.mojang.datafixers.util.Either;
 import com.mojang.serialization.Codec;
+import io.kalishak.galacticraftlegacy.references.GalacticraftComponents;
 import io.kalishak.galacticraftlegacy.world.score.race.SpaceRaceHooks;
 import io.kalishak.galacticraftlegacy.world.score.race.SpaceRaceTeam;
 import io.netty.buffer.ByteBuf;
-import net.minecraft.ChatFormatting;
 import net.minecraft.core.component.DataComponentGetter;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.ByteBufCodecs;
@@ -111,7 +111,7 @@ public final class PlayerOwnable implements TooltipProvider {
             Component displayName = resolveDisplayName(serverLevel);
 
             if (displayName != null) {
-                consumer.accept(Component.translatable("item.galacticraftlegacy.ownable.description").withStyle(ChatFormatting.GRAY));
+                consumer.accept(GalacticraftComponents.TOOLTIP_OWNED_BY.translated());
                 consumer.accept(displayName);
             }
         }

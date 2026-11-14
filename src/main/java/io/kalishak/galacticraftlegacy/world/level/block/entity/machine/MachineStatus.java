@@ -12,7 +12,10 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.kalishak.galacticraftlegacy.codec.SerializableEnum;
 import io.netty.buffer.ByteBuf;
+import net.minecraft.ChatFormatting;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.util.ARGB;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import org.jspecify.annotations.NonNull;
@@ -41,26 +44,49 @@ public record MachineStatus(Type type) {
     public enum Type implements SerializableEnum {
         IDLE("idle", 0),
         GENERATING("generating", 1),
-        COLLECTING("collecting", 2),
+        COLLECTING("collecting", 2, ChatFormatting.GREEN),
         NOT_ENOUGH_POWER("not_enough_power", 3),
         NOT_ENOUGH_OXYGEN("not_enough_oxygen", 4),
         EMPTY_TANK("empty_tank", 5),
         NEEDS_REDSTONE_SIGNAL("needs_redstone_signal", 6),
-        BLOCKED("blocked", 7);
+        BLOCKED("blocked", 7),
+        SUN_NOT_VISIBLE("sun_not_visible", 8, ChatFormatting.DARK_RED),
+        DISABLED("disabled", 9, ChatFormatting.GOLD);
 
         public static final Codec<Type> CODEC = SerializableEnum.codec(Type.class);
         public static final StreamCodec<ByteBuf, Type> STREAM_CODEC = SerializableEnum.streamCodec(Type.class);
         private final String name;
         private final int id;
+        private final ChatFormatting color;
 
-        Type(String name, int id) {
+        Type(String name, int id, ChatFormatting color) {
             this.name = name;
             this.id = id;
+            this.color = color;
+        }
+
+        Type(String name, int id) {
+            this(name, id, ChatFormatting.DARK_GRAY);
         }
 
         @Override
         public @NonNull String getSerializedName() {
             return this.name;
+        }
+
+        public ChatFormatting getColor() {
+            return this.color;
+        }
+
+        public int getTextColor() {
+            int base = switch (this) {
+                case COLLECTING -> DyeColor.LIME.getTextColor();
+                case SUN_NOT_VISIBLE -> DyeColor.RED.getTextColor();
+                case DISABLED -> DyeColor.YELLOW.getTextColor();
+                default -> 0;
+            };
+
+            return ARGB.toABGR(base);
         }
 
         @Override

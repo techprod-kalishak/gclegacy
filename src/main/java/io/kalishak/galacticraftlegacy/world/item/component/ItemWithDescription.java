@@ -57,13 +57,13 @@ public record ItemWithDescription(String translationKey, int energyPerTick, Opti
         if (this.energyPerTick > 0) {
             tooltipAdder.accept(
                     GalacticraftComponents.TOOLTIP_ENERGY_PER_TICK
-                            .apply(Constants.calculateUnit(this.energyPerTick, Constants.ifClient(context.level(), ClientConfig.ENERGY_UNIT, EnergyUnit.GIGA_JOULES)))
+                            .translatedArg(Constants.calculateUnit(this.energyPerTick, Constants.ifClient(context.level(), ClientConfig.ENERGY_UNIT, EnergyUnit.GIGA_JOULES)))
                             .withStyle(ChatFormatting.GREEN)
             );
         }
 
         if (!flag.hasShiftDown()) {
-            tooltipAdder.accept(GalacticraftComponents.TOOLTIP_MORE.asComponent());
+            tooltipAdder.accept(GalacticraftComponents.TOOLTIP_MORE.translated());
         } else {
             tooltipAdder.accept(Component.translatable(this.translationKey).withStyle(this.style.orElse(Style.EMPTY.applyFormat(ChatFormatting.GRAY))));
         }

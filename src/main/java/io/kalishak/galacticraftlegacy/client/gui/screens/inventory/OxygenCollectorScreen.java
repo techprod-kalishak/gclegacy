@@ -7,10 +7,9 @@
 
 package io.kalishak.galacticraftlegacy.client.gui.screens.inventory;
 
-import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.attachment.GalacticraftAttachments;
 import io.kalishak.galacticraftlegacy.attachment.block.SyncedEnergyHandler;
-import io.kalishak.galacticraftlegacy.config.ClientConfig;
+import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.world.inventory.machine.OxygenCollectorMenu;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -28,6 +27,12 @@ public class OxygenCollectorScreen extends AbstractContainerScreen<OxygenCollect
     }
 
     @Override
+    protected void init() {
+        super.init();
+        addRenderableOnly(getEnergyTooltip(this.menu.getEnergyCapacity(), this.leftPos, this.topPos));
+    }
+
+    @Override
     public void extractBackground(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTick) {
         int i = this.leftPos;
         int j = this.topPos;
@@ -38,19 +43,7 @@ public class OxygenCollectorScreen extends AbstractContainerScreen<OxygenCollect
     @Override
     protected void extractTooltip(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY) {
         super.extractTooltip(guiGraphics, mouseX, mouseY);
-
-        if (isHovering(getEnergyBarBounds(), BAR_WIDTH, BAR_HEIGHT, mouseX, mouseY)) {
-            Constants.energy(getEnergyStored(), this.menu.getEnergyCapacity(), ClientConfig.ENERGY_UNIT, component -> guiGraphics.setTooltipForNextFrame(
-                    this.font,
-                    component,
-                    mouseX,
-                    mouseY
-            ));
-        }
-    }
-
-    protected boolean isHovering(Bounds area, int width, int height, double x, double y) {
-        return isHovering(area.x(), area.y(), width, height, x, y);
+        extractBatterySlotTooltip(guiGraphics, this.font, this.hoveredSlot, 0, mouseX, mouseY);
     }
 
     @Override

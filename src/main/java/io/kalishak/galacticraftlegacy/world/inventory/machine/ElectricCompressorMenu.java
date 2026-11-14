@@ -29,9 +29,12 @@ import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.neoforged.neoforge.capabilities.Capabilities;
+import org.jspecify.annotations.NonNull;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 
+@ParametersAreNonnullByDefault
 public class ElectricCompressorMenu extends AbstractCompressorMenu {
     public ElectricCompressorMenu(int containerId, Inventory playerInventory, ElectricCompressorBlockEntity compressor, ContainerData dataAccess) {
         super(GalacticraftMenuType.ELECTRIC_COMPRESSOR.get(), containerId, playerInventory, compressor, dataAccess);
@@ -57,12 +60,13 @@ public class ElectricCompressorMenu extends AbstractCompressorMenu {
     }
 
     @Override
-    public ItemStack quickMoveStack(Player player, int slotIndex) {
+    public @NonNull ItemStack quickMoveStack(Player player, int slotIndex) {
         return ItemStack.EMPTY;
     }
 
     @Override
-    public PostPlaceAction handlePlacement(boolean useMaxItems, boolean allowDroppingItemsToClear, RecipeHolder<?> recipe, ServerLevel level, Inventory inventory) {
+    @SuppressWarnings("unchecked")
+    public @NonNull PostPlaceAction handlePlacement(boolean useMaxItems, boolean allowDroppingItemsToClear, RecipeHolder<?> recipe, ServerLevel level, Inventory inventory) {
         final List<Slot> slotsToClear = List.of(
                 getSlot(0), //CRAFTING_SLOT_START
                 getSlot(1),

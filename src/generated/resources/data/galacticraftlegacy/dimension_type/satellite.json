@@ -1,16 +1,10 @@
 {
   "ambient_light": 0.0,
   "attributes": {
-    "galacticraftlegacy:gameplay/fall_damage_modifier": 0.81,
-    "galacticraftlegacy:gameplay/gravity": 0.065,
-    "minecraft:gameplay/bed_rule": {
-      "can_set_spawn": "never",
-      "can_sleep": "never",
-      "error_message": {
-        "translate": "block.galacticraftlegacy.bed.sleep_in_cryo_chamber"
-      }
-    },
-    "minecraft:gameplay/water_evaporates": true
+    "galacticraftlegacy:gameplay/fall_damage_modifier": 0.1,
+    "galacticraftlegacy:gameplay/fuel_usage_multiplier": 0.5,
+    "galacticraftlegacy:gameplay/gravity": 0.075,
+    "galacticraftlegacy:gameplay/solar_boost_multiplier": 2.0
   },
   "coordinate_scale": 1.0,
   "default_clock": "galacticraftlegacy:venus",
@@ -24,5 +18,5 @@
   "monster_spawn_block_light_limit": 15,
   "monster_spawn_light_level": 6,
   "skybox": "none",
-  "timelines": "#galacticraftlegacy:in_venus"
+  "timelines": "#galacticraftlegacy:in_orbit"
 }

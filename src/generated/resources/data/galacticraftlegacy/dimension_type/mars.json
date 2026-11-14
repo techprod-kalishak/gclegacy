@@ -1,8 +1,10 @@
 {
   "ambient_light": 0.0,
   "attributes": {
-    "galacticraftlegacy:gameplay/fall_damage_modifier": 0.5,
-    "galacticraftlegacy:gameplay/gravity": 0.04,
+    "galacticraftlegacy:gameplay/fall_damage_modifier": 0.38,
+    "galacticraftlegacy:gameplay/fuel_usage_multiplier": 0.9,
+    "galacticraftlegacy:gameplay/gravity": 0.058,
+    "galacticraftlegacy:gameplay/solar_boost_multiplier": 0.5,
     "minecraft:gameplay/bed_rule": {
       "can_set_spawn": "never",
       "can_sleep": "never",

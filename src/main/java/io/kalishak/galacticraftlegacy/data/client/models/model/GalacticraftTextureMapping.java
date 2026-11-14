@@ -5,7 +5,7 @@
  * See LICENSE file for more details
  */
 
-package io.kalishak.galacticraftlegacy.client.data.models.model;
+package io.kalishak.galacticraftlegacy.data.client.models.model;
 
 import io.kalishak.galacticraftlegacy.Galacticraft;
 import net.minecraft.client.data.models.model.TextureMapping;
@@ -39,7 +39,11 @@ public class GalacticraftTextureMapping {
                 .put(TextureSlot.WEST, withSuffix(ADVANCED_MACHINE, "_side"))
                 .put(TextureSlot.UP, withSuffix(ADVANCED_MACHINE, "_top"))
                 .put(TextureSlot.DOWN, withSuffix(ADVANCED_MACHINE, "_top"))
-                .put(TextureSlot.PARTICLE, withSuffix(ADVANCED_MACHINE, "_top"));
+                .put(TextureSlot.PARTICLE, withSuffix(ADVANCED_MACHINE, "_side"));
+    }
+
+    public static TextureMapping machineWithTop(TextureMapping mapping, Block block) {
+        return mapping.copy().put(TextureSlot.UP, getBlockTexture(block, "_top"));
     }
 
     public static TextureMapping oxygenCollector(Block block) {

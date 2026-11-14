@@ -9,9 +9,9 @@ package io.kalishak.galacticraftlegacy.data.recipes;
 
 import io.kalishak.galacticraftlegacy.advancements.MissingGearTrigger;
 import io.kalishak.galacticraftlegacy.advancements.SchematicUnlockedTrigger;
-import io.kalishak.galacticraftlegacy.client.data.GalacticraftBlockFamilies;
 import io.kalishak.galacticraftlegacy.component.SchematicVariant;
 import io.kalishak.galacticraftlegacy.data.GalacticraftTags;
+import io.kalishak.galacticraftlegacy.data.client.GalacticraftBlockFamilies;
 import io.kalishak.galacticraftlegacy.data.recipes.builder.CompressingRecipeBuilder;
 import io.kalishak.galacticraftlegacy.data.recipes.builder.ElectricCookingRecipeBuilder;
 import io.kalishak.galacticraftlegacy.data.recipes.builder.FabricatingRecipeBuilder;

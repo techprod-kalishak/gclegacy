@@ -41,6 +41,6 @@ public class ElectricArcFurnaceScreen extends AbstractElectricFurnaceScreen<ArcH
     );
 
     public ElectricArcFurnaceScreen(ElectricArcFurnaceMenu menu, Inventory playerInventory, Component title) {
-        super(menu, new ElectricFurnaceRecipeBookComponent(menu, FILTER_SPRITES, GalacticraftComponents.FILTER_NAME_ARC_HEATABLE.asComponent(), TABS), playerInventory, title, TEXTURES);
+        super(menu, new ElectricFurnaceRecipeBookComponent(menu, FILTER_SPRITES, GalacticraftComponents.FILTER_NAME_ARC_HEATABLE.translated(), TABS), playerInventory, title, TEXTURES);
     }
 }

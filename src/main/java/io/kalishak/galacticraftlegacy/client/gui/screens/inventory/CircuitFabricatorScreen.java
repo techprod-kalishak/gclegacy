@@ -63,4 +63,10 @@ public class CircuitFabricatorScreen extends AbstractMachineScreen<CircuitFabric
             guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, PROCESS_PROGRESS, 51, 10, 0, 0, leftOffset + 88, topOffset + 20, progressBarLength, 10);
         }
     }
+
+    @Override
+    protected void extractTooltip(GuiGraphicsExtractor graphics, int mouseX, int mouseY) {
+        super.extractTooltip(graphics, mouseX, mouseY);
+        extractBatterySlotTooltip(graphics, this.font, this.hoveredSlot, 0, mouseX, mouseY);
+    }
 }

@@ -37,18 +37,18 @@ import java.util.Collection;
 import java.util.Collections;
 
 public class SpaceRaceCommand {
-    private static final SimpleCommandExceptionType ERROR_SPACE_RACE_ALREADY_EXISTS = new SimpleCommandExceptionType(GalacticraftComponents.COMMAND_ERROR_SPACE_RACE_DUPE);
-    private static final SimpleCommandExceptionType ERROR_SPACE_RACE_ALREADY_EMPTY = new SimpleCommandExceptionType(GalacticraftComponents.COMMAND_ERROR_SPACE_RACE_UNCHANGED);
-    private static final SimpleCommandExceptionType ERROR_SPACE_RACE_ALREADY_NAME = new SimpleCommandExceptionType(GalacticraftComponents.COMMAND_ERROR_SPACE_RACE_NAME);
-    private static final SimpleCommandExceptionType ERROR_SPACE_RACE_ALREADY_COLOR = new SimpleCommandExceptionType(GalacticraftComponents.COMMAND_ERROR_SPACE_RACE_COLOR);
-    private static final SimpleCommandExceptionType ERROR_SPACE_RACE_ALREADY_FRIENDLYFIRE_ENABLED = new SimpleCommandExceptionType(GalacticraftComponents.COMMAND_ERROR_SPACE_RACE_FRIENDLY_FIRE_ENABLED);
-    private static final SimpleCommandExceptionType ERROR_SPACE_RACE_ALREADY_FRIENDLYFIRE_DISABLED = new SimpleCommandExceptionType(GalacticraftComponents.COMMAND_ERROR_SPACE_RACE_FRIENDLY_FIRE_DISABLED);
-    private static final SimpleCommandExceptionType ERROR_SPACE_RACE_ALREADY_FRIENDLYINVISIBLES_ENABLED = new SimpleCommandExceptionType(GalacticraftComponents.COMMAND_ERROR_SPACE_RACE_FRIENDLY_INVISIBLES_ENABLED);
-    private static final SimpleCommandExceptionType ERROR_SPACE_RACE_ALREADY_FRIENDLYINVISIBLES_DISABLED = new SimpleCommandExceptionType(GalacticraftComponents.COMMAND_ERROR_SPACE_RACE_FRIENDLY_INVISIBLES_DISABLED);
-    private static final SimpleCommandExceptionType ERROR_SPACE_RACE_NAMETAG_VISIBLITY_UNCHANGED = new SimpleCommandExceptionType(GalacticraftComponents.COMMAND_ERROR_SPACE_RACE_NAME_TAG);
-    private static final SimpleCommandExceptionType ERROR_SPACE_RACE_DEATH_MESSAGE_VISIBLITY_UNCHANGED = new SimpleCommandExceptionType(GalacticraftComponents.COMMAND_ERROR_SPACE_RACE_DEATH_MESSAGE);
-    private static final SimpleCommandExceptionType ERROR_SPACE_RACE_COLLISION_UNCHANGED = new SimpleCommandExceptionType(GalacticraftComponents.COMMAND_ERROR_SPACE_RACE_COLLISION_RULE);
-    private static final SimpleCommandExceptionType ERROR_SPACE_RACE_SCHEMATIC_ALREADY_UNLOCKED = new SimpleCommandExceptionType(GalacticraftComponents.COMMAND_ERROR_SPACE_RACE_SCHEMATIC);
+    private static final SimpleCommandExceptionType ERROR_SPACE_RACE_ALREADY_EXISTS = new SimpleCommandExceptionType(GalacticraftComponents.COMMAND_ERROR_SPACE_RACE_DUPE.translated());
+    private static final SimpleCommandExceptionType ERROR_SPACE_RACE_ALREADY_EMPTY = new SimpleCommandExceptionType(GalacticraftComponents.COMMAND_ERROR_SPACE_RACE_UNCHANGED.translated());
+    private static final SimpleCommandExceptionType ERROR_SPACE_RACE_ALREADY_NAME = new SimpleCommandExceptionType(GalacticraftComponents.COMMAND_ERROR_SPACE_RACE_NAME.translated());
+    private static final SimpleCommandExceptionType ERROR_SPACE_RACE_ALREADY_COLOR = new SimpleCommandExceptionType(GalacticraftComponents.COMMAND_ERROR_SPACE_RACE_COLOR.translated());
+    private static final SimpleCommandExceptionType ERROR_SPACE_RACE_ALREADY_FRIENDLYFIRE_ENABLED = new SimpleCommandExceptionType(GalacticraftComponents.COMMAND_ERROR_SPACE_RACE_FRIENDLY_FIRE_ENABLED.translated());
+    private static final SimpleCommandExceptionType ERROR_SPACE_RACE_ALREADY_FRIENDLYFIRE_DISABLED = new SimpleCommandExceptionType(GalacticraftComponents.COMMAND_ERROR_SPACE_RACE_FRIENDLY_FIRE_DISABLED.translated());
+    private static final SimpleCommandExceptionType ERROR_SPACE_RACE_ALREADY_FRIENDLYINVISIBLES_ENABLED = new SimpleCommandExceptionType(GalacticraftComponents.COMMAND_ERROR_SPACE_RACE_FRIENDLY_INVISIBLES_ENABLED.translated());
+    private static final SimpleCommandExceptionType ERROR_SPACE_RACE_ALREADY_FRIENDLYINVISIBLES_DISABLED = new SimpleCommandExceptionType(GalacticraftComponents.COMMAND_ERROR_SPACE_RACE_FRIENDLY_INVISIBLES_DISABLED.translated());
+    private static final SimpleCommandExceptionType ERROR_SPACE_RACE_NAMETAG_VISIBLITY_UNCHANGED = new SimpleCommandExceptionType(GalacticraftComponents.COMMAND_ERROR_SPACE_RACE_NAME_TAG.translated());
+    private static final SimpleCommandExceptionType ERROR_SPACE_RACE_DEATH_MESSAGE_VISIBLITY_UNCHANGED = new SimpleCommandExceptionType(GalacticraftComponents.COMMAND_ERROR_SPACE_RACE_DEATH_MESSAGE.translated());
+    private static final SimpleCommandExceptionType ERROR_SPACE_RACE_COLLISION_UNCHANGED = new SimpleCommandExceptionType(GalacticraftComponents.COMMAND_ERROR_SPACE_RACE_COLLISION_RULE.translated());
+    private static final SimpleCommandExceptionType ERROR_SPACE_RACE_SCHEMATIC_ALREADY_UNLOCKED = new SimpleCommandExceptionType(GalacticraftComponents.COMMAND_ERROR_SPACE_RACE_SCHEMATIC.translated());
 
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher, CommandBuildContext context) {
         dispatcher.register(
@@ -278,9 +278,9 @@ public class SpaceRaceCommand {
         }
 
         if (members.size() == 1) {
-            source.sendSuccess(() -> GalacticraftComponents.COMMAND_SUCCESS_SPACE_RACE_LEAVE_SINGLE.append(getFirstMemberName(members)), true);
+            source.sendSuccess(() -> GalacticraftComponents.COMMAND_SUCCESS_SPACE_RACE_LEAVE_SINGLE.translated().append(getFirstMemberName(members)), true);
         } else {
-            source.sendSuccess(() -> GalacticraftComponents.COMMAND_SUCCESS_SPACE_RACE_LEAVE_MULTIPLE.append(String.valueOf(members.size())), true);
+            source.sendSuccess(() -> GalacticraftComponents.COMMAND_SUCCESS_SPACE_RACE_LEAVE_MULTIPLE.translated().append(String.valueOf(members.size())), true);
         }
 
         return members.size();
@@ -294,9 +294,9 @@ public class SpaceRaceCommand {
         }
 
         if (members.size() == 1) {
-            source.sendSuccess(() -> GalacticraftComponents.COMMAND_SUCCESS_SPACE_RACE_JOIN_SINGLE.append(getFirstMemberName(members)), true);
+            source.sendSuccess(() -> GalacticraftComponents.COMMAND_SUCCESS_SPACE_RACE_JOIN_SINGLE.translated().append(getFirstMemberName(members)), true);
         } else {
-            source.sendSuccess(() -> GalacticraftComponents.COMMAND_SUCCESS_SPACE_RACE_JOIN_MULTIPLE.append(String.valueOf(members.size())), true);
+            source.sendSuccess(() -> GalacticraftComponents.COMMAND_SUCCESS_SPACE_RACE_JOIN_MULTIPLE.translated().append(String.valueOf(members.size())), true);
         }
 
         return members.size();
@@ -307,7 +307,7 @@ public class SpaceRaceCommand {
             throw ERROR_SPACE_RACE_NAMETAG_VISIBLITY_UNCHANGED.create();
         } else {
             spaceRaceTeam.setNameTagVisibility(visibility);
-            source.sendSuccess(() -> GalacticraftComponents.COMMAND_SUCCESS_SPACE_RACE_NAMETAG_CHANGE.apply(spaceRaceTeam.getFormattedDisplayName(), visibility.getDisplayName()), true);
+            source.sendSuccess(() -> GalacticraftComponents.COMMAND_SUCCESS_SPACE_RACE_NAMETAG_CHANGE.translatedArg(spaceRaceTeam.getFormattedDisplayName(), visibility.getDisplayName()), true);
             
             return 0;
         }
@@ -318,7 +318,7 @@ public class SpaceRaceCommand {
             throw ERROR_SPACE_RACE_DEATH_MESSAGE_VISIBLITY_UNCHANGED.create();
         } else {
             spaceRaceTeam.setDeathMessageVisibility(visibility);
-            source.sendSuccess(() -> GalacticraftComponents.COMMAND_SUCCESS_SPACE_RACE_DEATH_MESSAGE_CHANGE.apply(spaceRaceTeam.getFormattedDisplayName(), visibility.getDisplayName()), true);
+            source.sendSuccess(() -> GalacticraftComponents.COMMAND_SUCCESS_SPACE_RACE_DEATH_MESSAGE_CHANGE.translatedArg(spaceRaceTeam.getFormattedDisplayName(), visibility.getDisplayName()), true);
             
             return 0;
         }
@@ -329,7 +329,7 @@ public class SpaceRaceCommand {
             throw ERROR_SPACE_RACE_COLLISION_UNCHANGED.create();
         } else {
             spaceRaceTeam.setCollisionRule(collision);
-            source.sendSuccess(() -> GalacticraftComponents.COMMAND_SUCCESS_SPACE_RACE_COLLISION_RULE_CHANGE.apply(spaceRaceTeam.getFormattedDisplayName(), collision.getDisplayName()), true);
+            source.sendSuccess(() -> GalacticraftComponents.COMMAND_SUCCESS_SPACE_RACE_COLLISION_RULE_CHANGE.translatedArg(spaceRaceTeam.getFormattedDisplayName(), collision.getDisplayName()), true);
 
             return 0;
         }
@@ -344,7 +344,7 @@ public class SpaceRaceCommand {
             }
         } else {
             spaceRaceTeam.setSeeFriendlyInvisibles(allowed);
-            MutableComponent component = allowed ? GalacticraftComponents.COMMAND_SUCCESS_SPACE_RACE_FRIENDLY_INVISIBLES_ENABLED : GalacticraftComponents.COMMAND_SUCCESS_SPACE_RACE_FRIENDLY_INVISIBLES_DISABLED;
+            MutableComponent component = allowed ? GalacticraftComponents.COMMAND_SUCCESS_SPACE_RACE_FRIENDLY_INVISIBLES_ENABLED.translated() : GalacticraftComponents.COMMAND_SUCCESS_SPACE_RACE_FRIENDLY_INVISIBLES_DISABLED.translated();
 
             source.sendSuccess(() -> component.append(spaceRaceTeam.getFormattedDisplayName()), true);
             return 0;
@@ -360,7 +360,7 @@ public class SpaceRaceCommand {
             }
         } else {
             spaceRaceTeam.setAllowFriendlyFire(allowed);
-            MutableComponent component = allowed ? GalacticraftComponents.COMMAND_SUCCESS_SPACE_RACE_FRIENDLY_FIRE_ENABLED : GalacticraftComponents.COMMAND_SUCCESS_SPACE_RACE_FRIENDLY_FIRE_DISABLED;
+            MutableComponent component = allowed ? GalacticraftComponents.COMMAND_SUCCESS_SPACE_RACE_FRIENDLY_FIRE_ENABLED.translated() : GalacticraftComponents.COMMAND_SUCCESS_SPACE_RACE_FRIENDLY_FIRE_DISABLED.translated();
             source.sendSuccess(() -> component.append(spaceRaceTeam.getFormattedDisplayName()), true);
 
             return 0;
@@ -372,7 +372,7 @@ public class SpaceRaceCommand {
             throw ERROR_SPACE_RACE_ALREADY_NAME.create();
         } else {
             spaceRaceTeam.setDisplayName(displayName);
-            source.sendSuccess(() -> GalacticraftComponents.COMMAND_SUCCESS_SPACE_RACE_NAME_SET.append(spaceRaceTeam.getFormattedDisplayName()), true);
+            source.sendSuccess(() -> GalacticraftComponents.COMMAND_SUCCESS_SPACE_RACE_NAME_SET.translated().append(spaceRaceTeam.getFormattedDisplayName()), true);
 
             return 0;
         }
@@ -383,7 +383,7 @@ public class SpaceRaceCommand {
             throw ERROR_SPACE_RACE_ALREADY_COLOR.create();
         } else {
             spaceRaceTeam.setColor(color);
-            source.sendSuccess(() -> GalacticraftComponents.COMMAND_SUCCESS_SPACE_RACE_COLOR_SET.apply(spaceRaceTeam.getFormattedDisplayName(), color.getSerializedName()), true);
+            source.sendSuccess(() -> GalacticraftComponents.COMMAND_SUCCESS_SPACE_RACE_COLOR_SET.translatedArg(spaceRaceTeam.getFormattedDisplayName(), color.getSerializedName()), true);
 
             return 0;
         }
@@ -400,7 +400,7 @@ public class SpaceRaceCommand {
                 scoreboard.removePlayerFromSpaceRace(member, spaceRaceTeam);
             }
 
-            source.sendSuccess(() -> GalacticraftComponents.COMMAND_SUCCESS_SPACE_RACE_EMPTY.apply(members.size(), spaceRaceTeam.getFormattedDisplayName()), true);
+            source.sendSuccess(() -> GalacticraftComponents.COMMAND_SUCCESS_SPACE_RACE_EMPTY.translatedArg(members.size(), spaceRaceTeam.getFormattedDisplayName()), true);
             return members.size();
         }
     }
@@ -409,7 +409,7 @@ public class SpaceRaceCommand {
         SpaceRaceScoreboard scoreboard = SpaceRaceHooks.getFromServer(source.getServer());
 
         scoreboard.removeSpaceRace(spaceRaceTeam);
-        source.sendSuccess(() -> GalacticraftComponents.COMMAND_SUCCESS_SPACE_RACE_REMOVE.append(spaceRaceTeam.getFormattedDisplayName()), true);
+        source.sendSuccess(() -> GalacticraftComponents.COMMAND_SUCCESS_SPACE_RACE_REMOVE.translated().append(spaceRaceTeam.getFormattedDisplayName()), true);
 
         return scoreboard.getSpaceRaceTeams().size();
     }
@@ -426,7 +426,7 @@ public class SpaceRaceCommand {
         } else {
             SpaceRaceTeam spaceRaceTeam = scoreboard.getOrCreatePlayerSpaceRace(name);
             spaceRaceTeam.setDisplayName(displayName);
-            source.sendSuccess(() -> GalacticraftComponents.COMMAND_SUCCESS_SPACE_RACE_ADD.append(spaceRaceTeam.getFormattedDisplayName()), true);
+            source.sendSuccess(() -> GalacticraftComponents.COMMAND_SUCCESS_SPACE_RACE_ADD.translated().append(spaceRaceTeam.getFormattedDisplayName()), true);
 
             return scoreboard.getSpaceRaceTeams().size();
         }
@@ -435,9 +435,9 @@ public class SpaceRaceCommand {
     private static int listMembers(CommandSourceStack source, SpaceRaceTeam spaceRaceTeam) {
         Collection<String> members = spaceRaceTeam.getPlayers();
         if (members.isEmpty()) {
-            source.sendSuccess(() -> GalacticraftComponents.COMMAND_SUCCESS_SPACE_RACE_LIST_EMPTY.append(spaceRaceTeam.getFormattedDisplayName()), false);
+            source.sendSuccess(() -> GalacticraftComponents.COMMAND_SUCCESS_SPACE_RACE_LIST_EMPTY.translated().append(spaceRaceTeam.getFormattedDisplayName()), false);
         } else {
-            source.sendSuccess(() -> GalacticraftComponents.COMMAND_SUCCESS_SPACE_RACE_LIST.apply(spaceRaceTeam.getFormattedDisplayName(), members.size(), ComponentUtils.formatList(members)), false);
+            source.sendSuccess(() -> GalacticraftComponents.COMMAND_SUCCESS_SPACE_RACE_LIST.translatedArg(spaceRaceTeam.getFormattedDisplayName(), members.size(), ComponentUtils.formatList(members)), false);
         }
 
         return members.size();
@@ -448,9 +448,9 @@ public class SpaceRaceCommand {
 
         Collection<SpaceRaceTeam> spaceRaceTeams = scoreboard.getSpaceRaceTeams();
         if (spaceRaceTeams.isEmpty()) {
-            source.sendSuccess(() -> GalacticraftComponents.COMMAND_SUCCESS_SPACE_RACES_EMPTY, false);
+            source.sendSuccess(GalacticraftComponents.COMMAND_SUCCESS_SPACE_RACES_EMPTY::translated, false);
         } else {
-            source.sendSuccess(() -> GalacticraftComponents.COMMAND_SUCCESS_SPACE_RACES_EXIST.apply(spaceRaceTeams.size(), ComponentUtils.formatList(spaceRaceTeams, SpaceRaceTeam::getFormattedDisplayName)), false);
+            source.sendSuccess(() -> GalacticraftComponents.COMMAND_SUCCESS_SPACE_RACES_EXIST.translatedArg(spaceRaceTeams.size(), ComponentUtils.formatList(spaceRaceTeams, SpaceRaceTeam::getFormattedDisplayName)), false);
         }
 
         return spaceRaceTeams.size();
@@ -458,14 +458,14 @@ public class SpaceRaceCommand {
 
     private static int setPrefix(CommandSourceStack source, SpaceRaceTeam spaceRaceTeam, Component prefix) {
         spaceRaceTeam.setPlayerPrefix(prefix);
-        source.sendSuccess(() -> GalacticraftComponents.COMMAND_SUCCESS_SPACE_RACE_PREFIX.append(prefix), false);
+        source.sendSuccess(() -> GalacticraftComponents.COMMAND_SUCCESS_SPACE_RACE_PREFIX.translated().append(prefix), false);
 
         return 1;
     }
 
     private static int setSuffix(CommandSourceStack source, SpaceRaceTeam spaceRaceTeam, Component suffix) {
         spaceRaceTeam.setPlayerSuffix(suffix);
-        source.sendSuccess(() -> GalacticraftComponents.COMMAND_SUCCESS_SPACE_RACE_SUFFIX.append(suffix), false);
+        source.sendSuccess(() -> GalacticraftComponents.COMMAND_SUCCESS_SPACE_RACE_SUFFIX.translated().append(suffix), false);
 
         return 1;
     }

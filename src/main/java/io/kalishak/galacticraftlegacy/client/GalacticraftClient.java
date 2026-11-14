@@ -9,7 +9,6 @@ package io.kalishak.galacticraftlegacy.client;
 
 import com.google.common.reflect.TypeToken;
 import io.kalishak.galacticraftlegacy.Galacticraft;
-import io.kalishak.galacticraftlegacy.client.data.GalacticraftSpritesProvider;
 import io.kalishak.galacticraftlegacy.client.gui.SensorGlassesOverlay;
 import io.kalishak.galacticraftlegacy.client.gui.TanksLayer;
 import io.kalishak.galacticraftlegacy.client.gui.screens.inventory.*;
@@ -46,6 +45,7 @@ import io.kalishak.galacticraftlegacy.client.renderer.item.properties.numeric.Du
 import io.kalishak.galacticraftlegacy.client.renderer.item.properties.range.FluidAmountProperty;
 import io.kalishak.galacticraftlegacy.client.renderer.item.properties.select.SchematicTierProperty;
 import io.kalishak.galacticraftlegacy.client.renderer.special.*;
+import io.kalishak.galacticraftlegacy.data.client.GalacticraftSpritesProvider;
 import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.world.entity.GalacticraftEntityTypes;
 import io.kalishak.galacticraftlegacy.world.inventory.GalacticraftMenuType;
@@ -254,6 +254,7 @@ public class GalacticraftClient {
         event.register(GalacticraftMenuType.MAGNETIC_CRAFTING.get(), MagneticCraftingTableScreen::new);
         event.register(GalacticraftMenuType.PARACHEST.get(), ParachestScreen::new);
         event.register(GalacticraftMenuType.OXYGEN_COLLECTOR.get(), OxygenCollectorScreen::new);
+        event.register(GalacticraftMenuType.SOLAR_PANEL.get(), SolarPanelScreen::new);
 
         event.register(GalacticraftMenuType.NASA_WORKBENCH.get(), NasaWorkbenchScreen::new);
         event.register(GalacticraftMenuType.NASA_WORKBENCH_PAGE.get(), NasaWorkbenchPageScreen::new);

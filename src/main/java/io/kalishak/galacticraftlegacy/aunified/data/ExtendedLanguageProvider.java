@@ -60,11 +60,6 @@ public abstract class ExtendedLanguageProvider extends LanguageProvider {
         add(translatable(resourceKey, suffix), translation);
     }
 
-    protected void addAdvancement(String id, String title, String description) {
-        add("advancements.%s.%s.title".formatted(this.namespace, id), title);
-        add("advancements.%s.%s.description".formatted(this.namespace, id), description);
-    }
-
     protected void addAttribute(Supplier<? extends Attribute> attribute, String name) {
         add(attribute.get().getDescriptionId(), name);
     }

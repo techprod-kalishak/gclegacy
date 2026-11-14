@@ -78,7 +78,7 @@ public final class GalacticraftItems {
                     .component(
                             GalacticraftDataComponents.ITEM_WITH_DESCRIPTION,
                             new ItemWithDescription(
-                                    GalacticraftComponents.FREQUENCY_MODULE_DESC,
+                                    GalacticraftComponents.FREQUENCY_MODULE_DESC.asString(),
                                     0,
                                     Optional.of(Style.EMPTY.applyFormat(ChatFormatting.AQUA))
                             )

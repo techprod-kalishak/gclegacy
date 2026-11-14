@@ -34,13 +34,13 @@ public class MoonFeatures {
                 cxt,
                 MOON_CRATER,
                 CraterSize.SMALL,
-                20
+                2//20
         );
         GalacticraftFeatures.craterSimple(
                 cxt,
                 MOON_CRATER_LARGE,
                 CraterSize.LARGE,
-                8
+                1//8
         );
 
         cxt.register(

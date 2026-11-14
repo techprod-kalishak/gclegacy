@@ -47,7 +47,7 @@ public final class GalacticraftCreativeModeTabs {
             CreativeModeTab.builder()
                     .icon(GalacticraftItems.OXYGEN_MASK::toStack)
                     .displayItems(GalacticraftCreativeModeTabs::buildItems)
-                    .title(GalacticraftComponents.CREATIVE_MODE_TAB_ITEMS.asComponent())
+                    .title(GalacticraftComponents.CREATIVE_MODE_TAB_ITEMS.translated())
                     ::build
     );
 
@@ -56,7 +56,7 @@ public final class GalacticraftCreativeModeTabs {
             CreativeModeTab.builder()
                     .icon(GalacticraftItems.COAL_GENERATOR::toStack)
                     .displayItems(GalacticraftCreativeModeTabs::buildBlocks)
-                    .title(GalacticraftComponents.CREATIVE_MODE_TAB_BLOCKS.asComponent())
+                    .title(GalacticraftComponents.CREATIVE_MODE_TAB_BLOCKS.translated())
                     ::build
     );
 

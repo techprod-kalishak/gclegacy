@@ -7,8 +7,8 @@
 
 package io.kalishak.galacticraftlegacy.data.loot;
 
-import io.kalishak.galacticraftlegacy.client.data.GalacticraftBlockFamilies;
 import io.kalishak.galacticraftlegacy.component.GalacticraftDataComponents;
+import io.kalishak.galacticraftlegacy.data.client.GalacticraftBlockFamilies;
 import io.kalishak.galacticraftlegacy.world.item.GalacticraftItems;
 import io.kalishak.galacticraftlegacy.world.level.block.GalacticraftBlocks;
 import net.minecraft.core.HolderGetter;

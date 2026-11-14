@@ -55,7 +55,7 @@ public class HotContent implements TooltipProvider {
     public void addToTooltip(Item.@NonNull TooltipContext context, Consumer<Component> consumer, @NonNull TooltipFlag flag, @NonNull DataComponentGetter components) {
         float burnTime = Math.round(this.heatLevel / 10.0F) / 2.0F;
 
-        consumer.accept(GalacticraftComponents.TOOLTIP_HOT_CONTENT.apply(burnTime));
+        consumer.accept(GalacticraftComponents.TOOLTIP_HOT_CONTENT.translatedArg(burnTime + "s"));
     }
 
     public int getHeatLevel() {

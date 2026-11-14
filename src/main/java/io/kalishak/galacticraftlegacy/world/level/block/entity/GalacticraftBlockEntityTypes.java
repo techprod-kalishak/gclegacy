@@ -169,6 +169,8 @@ public final class GalacticraftBlockEntityTypes {
     );
 
     private static void registerCapabilities(RegisterCapabilitiesEvent event) {
+        AbstractSolarPanelBlockEntity.registerCapabilities(BASIC_SOLAR_PANEL.get(), event);
+        AbstractSolarPanelBlockEntity.registerCapabilities(ADVANCED_SOLAR_PANEL.get(), event);
         CircuitFabricatorBlockEntity.registerCapabilities(event);
         CoalGeneratorBlockEntity.registerCapabilities(event);
         ColoredPipeBlockEntity.registerCapabilities(event);

@@ -10,7 +10,6 @@ package io.kalishak.galacticraftlegacy.references;
 import io.kalishak.galacticraftlegacy.Galacticraft;
 import io.kalishak.galacticraftlegacy.config.values.EnergyUnit;
 import io.kalishak.galacticraftlegacy.world.item.component.ItemAccessEnergyUtils;
-import net.minecraft.ChatFormatting;
 import net.minecraft.core.Registry;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
@@ -58,13 +57,19 @@ public class Constants {
     }
 
     public static void energy(int stored, int capacity, Supplier<EnergyUnit> unitSupplier, Consumer<Component> tooltipAdder) {
+        tooltipAdder.accept(energy(stored, capacity, unitSupplier));
+    }
+
+    public static Component energy(int stored, int capacity, Supplier<EnergyUnit> unitSupplier) {
         int scaledStored = unitSupplier.get().calculate(stored);
         int scaledCapacity = unitSupplier.get().calculate(capacity);
 
-        tooltipAdder.accept(
-                GalacticraftComponents.TOOLTIP_BATTERY.apply("").withStyle(ChatFormatting.GRAY)
-                        .append(Component.literal(" " + scaledStored + "/" + scaledCapacity + " " + unitSupplier.get().getUnit())
-                                .withStyle(Style.EMPTY.withColor(ItemAccessEnergyUtils.colorFromStorage(stored, capacity))))
-        );
+        return GalacticraftComponents.TOOLTIP_BATTERY.translated()
+                .append(Component.literal(" " + scaledStored + "/" + scaledCapacity + " " + unitSupplier.get().getUnit())
+                        .withStyle(Style.EMPTY.withColor(ItemAccessEnergyUtils.colorFromStorage(stored, capacity))));
+    }
+
+    public static void batterySlot(Consumer<Component> tooltipAdder) {
+        tooltipAdder.accept(GalacticraftComponents.TOOLTIP_BATTERY_SLOT.translated());
     }
 }

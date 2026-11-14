@@ -34,8 +34,8 @@ public class GalacticraftAdvancements extends AdvancementSubProvider {
                 .display(
                         new DisplayInfo(
                                 new ItemStackTemplate(GalacticraftItems.ADVANCED_WAFER),
-                                GalacticraftComponents.ADVANCEMENT_GC.asComponent(),
-                                GalacticraftComponents.ADVANCEMENT_GC_DESC.asComponent(),
+                                GalacticraftComponents.ADVANCEMENT_GC.translated(),
+                                GalacticraftComponents.ADVANCEMENT_GC_DESC.translated(),
                                 Optional.of(new ClientAsset.ResourceTexture(Constants.id("gui/advancements/backgrounds/space"))),
                                 AdvancementType.TASK,
                                 false,
@@ -48,8 +48,8 @@ public class GalacticraftAdvancements extends AdvancementSubProvider {
         AdvancementHolder coalPower = Advancement.Builder.advancement()
                 .display(
                         GalacticraftItems.COAL_GENERATOR.get(),
-                        GalacticraftComponents.ADVANCEMENT_COAL_POWER.asComponent(),
-                        GalacticraftComponents.ADVANCEMENT_COAL_POWER_DESC.asComponent(),
+                        GalacticraftComponents.ADVANCEMENT_COAL_POWER.translated(),
+                        GalacticraftComponents.ADVANCEMENT_COAL_POWER_DESC.translated(),
                         AdvancementType.TASK,
                         true,
                         true,
@@ -61,8 +61,8 @@ public class GalacticraftAdvancements extends AdvancementSubProvider {
         AdvancementHolder fabricated = Advancement.Builder.advancement()
                 .display(
                         GalacticraftItems.CIRCUIT_FABRICATOR.get(),
-                        GalacticraftComponents.ADVANCEMENT_FABRICATED.asComponent(),
-                        GalacticraftComponents.ADVANCEMENT_FABRICATED_DESC.asComponent(),
+                        GalacticraftComponents.ADVANCEMENT_FABRICATED.translated(),
+                        GalacticraftComponents.ADVANCEMENT_FABRICATED_DESC.translated(),
                         AdvancementType.TASK,
                         true,
                         true,
@@ -74,8 +74,8 @@ public class GalacticraftAdvancements extends AdvancementSubProvider {
         AdvancementHolder wafers = Advancement.Builder.advancement()
                 .display(
                         GalacticraftItems.BASIC_WAFER.get(),
-                        GalacticraftComponents.ADVANCEMENT_WAFERS.asComponent(),
-                        GalacticraftComponents.ADVANCEMENT_WAFERS_DESC.asComponent(),
+                        GalacticraftComponents.ADVANCEMENT_WAFERS.translated(),
+                        GalacticraftComponents.ADVANCEMENT_WAFERS_DESC.translated(),
                         AdvancementType.TASK,
                         true,
                         true,
@@ -87,8 +87,8 @@ public class GalacticraftAdvancements extends AdvancementSubProvider {
         AdvancementHolder goldenWafers = Advancement.Builder.advancement()
                 .display(
                         GalacticraftItems.ADVANCED_WAFER.get(),
-                        GalacticraftComponents.ADVANCEMENT_GOLDEN_WAFERS.asComponent(),
-                        GalacticraftComponents.ADVANCEMENT_GOLDEN_WAFERS_DESC.asComponent(),
+                        GalacticraftComponents.ADVANCEMENT_GOLDEN_WAFERS.translated(),
+                        GalacticraftComponents.ADVANCEMENT_GOLDEN_WAFERS_DESC.translated(),
                         AdvancementType.TASK,
                         true,
                         true,
@@ -100,8 +100,8 @@ public class GalacticraftAdvancements extends AdvancementSubProvider {
         AdvancementHolder compressed = Advancement.Builder.advancement()
                 .display(
                         GalacticraftItems.COMPRESSOR.get(),
-                        GalacticraftComponents.ADVANCEMENT_COMPRESSED.asComponent(),
-                        GalacticraftComponents.ADVANCEMENT_COMPRESSED_DESC.asComponent(),
+                        GalacticraftComponents.ADVANCEMENT_COMPRESSED.translated(),
+                        GalacticraftComponents.ADVANCEMENT_COMPRESSED_DESC.translated(),
                         AdvancementType.TASK,
                         true,
                         true,

@@ -7,149 +7,75 @@
 
 package io.kalishak.galacticraftlegacy.world.level.block.machine.electric;
 
+import io.kalishak.galacticraftlegacy.world.level.block.BlockWithDummies;
+import io.kalishak.galacticraftlegacy.world.level.block.DummyBlock;
+import io.kalishak.galacticraftlegacy.world.level.block.GalacticraftBlocks;
 import io.kalishak.galacticraftlegacy.world.level.block.SealableBlock;
+import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.electric.AbstractSolarPanelBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.world.MenuProvider;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.pathfinder.PathComputationType;
-import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
-public abstract class AbstractSolarPanelBlock extends AbstractMachineBlock implements SealableBlock {
-    public static final EnumProperty<SolarPanelPart> PART = EnumProperty.create("solar_part", SolarPanelPart.class);
-    protected static final VoxelShape SOLAR_PANEL_SHAPE = Block.box(0, 0, 0, 16, 3, 16);
-    protected static final VoxelShape SOLAR_POLE_SHAPE = Block.box(4.8D, 0, 4.8D, 11.2D, 16, 11.2D);
+import javax.annotation.ParametersAreNonnullByDefault;
 
+@ParametersAreNonnullByDefault
+public abstract class AbstractSolarPanelBlock extends AbstractMachineBlock implements SealableBlock, BlockWithDummies {
     protected AbstractSolarPanelBlock(Properties properties) {
         super(properties);
-        registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH));//.setValue(PART, SolarPanelPart.BASE));
+        registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH));
     }
 
-//    @Override
-//    protected @NonNull VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-//        return switch (state.getValue(PART)) {
-//            case BASE -> super.getShape(state, level, pos, context);
-//            case POLE -> SOLAR_POLE_SHAPE;
-//            case PANEL -> SOLAR_PANEL_SHAPE;
-//        };
-//    }
-
     @Override
-    protected @NonNull InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
-//        if (state.getValue(PART) != SolarPanelPart.BASE) {
-//            return InteractionResult.PASS;
-//        }
+    public @NonNull BlockState playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
+        if (!level.isClientSide() && (player.isCreative() || !player.hasCorrectToolForDrops(state, level, pos))) {
+            destroyDummyBlock(level, GalacticraftBlocks.DUMMY_SOLAR_PANEL, pos.above(), player);
+            destroyDummyBlock(level, GalacticraftBlocks.DUMMY_SOLAR_PANEL, pos.above(2), player);
 
-        if (!level.isClientSide()) {
-            BlockEntity blockEntity = level.getBlockEntity(pos);
-
-            if (blockEntity instanceof MenuProvider menuProvider) {
-                player.openMenu(menuProvider, pos);
+            for (int x = -1; x < 2; x++) {
+                for (int z = -1; z < 2; z++) {
+                    destroyDummyBlock(level, GalacticraftBlocks.DUMMY_SOLAR_PANEL, pos.offset(x, 3, z), player);
+                }
             }
         }
 
-        return InteractionResult.SUCCESS;
+        return super.playerWillDestroy(level, pos, state, player);
     }
-
-//    @Override
-//    protected BlockState updateShape(BlockState state, LevelReader level, ScheduledTickAccess ticks, BlockPos pos, Direction directionToNeighbour, BlockPos neighbourPos, BlockState neighbourState, RandomSource random) {
-//        switch (state.getValue(PART)) {
-//            case BASE -> {
-//                if (directionToNeighbour == Direction.UP && (!neighbourState.is(this) || neighbourState.getValue(PART) != SolarPanelPart.POLE)) {
-//                    return Blocks.AIR.defaultBlockState();
-//                }
-//            }
-//
-//            case POLE -> {
-//                if (directionToNeighbour == Direction.UP && (!neighbourState.is(this) || neighbourState.getValue(PART) != SolarPanelPart.PANEL)) {
-//                    return Blocks.AIR.defaultBlockState();
-//                }
-//
-//                if (directionToNeighbour == Direction.DOWN && (!neighbourState.is(this) || neighbourState.getValue(PART) != SolarPanelPart.BASE)) {
-//                    return Blocks.AIR.defaultBlockState();
-//                }
-//            }
-//
-//            case PANEL -> {
-//                if (directionToNeighbour == Direction.DOWN && (!neighbourState.is(this) || neighbourState.getValue(PART) != SolarPanelPart.POLE)) {
-//                    return Blocks.AIR.defaultBlockState();
-//                }
-//            }
-//        }
-//
-//        return super.updateShape(state, level, ticks, pos, directionToNeighbour, neighbourPos, neighbourState, random);
-//    }
-
-//    @Override
-//    public BlockState playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
-//        if (!level.isClientSide() && (player.isCreative() || !player.hasCorrectToolForDrops(state, level, pos))) {
-//            SolarPanelPart panelPart = state.getValue(PART);
-//
-//            if (panelPart != SolarPanelPart.BASE) {
-//                BlockPos abovePos = pos.above();
-//                BlockState aboveState = level.getBlockState(abovePos);
-//
-//                if (aboveState.is(state.getBlock()) && aboveState.getValue(PART) == SolarPanelPart.POLE) {
-//                    BlockState blockState = Blocks.AIR.defaultBlockState();
-//                    level.setBlock(abovePos, blockState, 35);
-//                    level.levelEvent(player, LevelEvent.PARTICLES_AND_SOUND_DESTROY_BLOCK, abovePos, Block.getId(aboveState));
-//                }
-//
-//                abovePos = abovePos.above();
-//                aboveState = level.getBlockState(abovePos);
-//                if (aboveState.is(state.getBlock()) && aboveState.getValue(PART) == SolarPanelPart.PANEL) {
-//                    BlockState blockState = Blocks.AIR.defaultBlockState();
-//                    level.setBlock(abovePos, blockState, 35);
-//                    level.levelEvent(player, LevelEvent.PARTICLES_AND_SOUND_DESTROY_BLOCK, abovePos, Block.getId(aboveState));
-//                }
-//            }
-//        }
-//
-//        return super.playerWillDestroy(level, pos, state, player);
-//    }
 
     @Override
     protected boolean isPathfindable(BlockState state, PathComputationType type) {
         return false;
     }
 
-//    @Override
-//    public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity by, ItemStack itemStack) {
-//        level.setBlockAndUpdate(pos.above(), state.setValue(PART, SolarPanelPart.POLE));
-//        level.setBlockAndUpdate(pos.above(2), state.setValue(PART, SolarPanelPart.PANEL));
-//    }
+    @Override
+    public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity by, ItemStack itemStack) {
+        BlockState dummyState = GalacticraftBlocks.DUMMY_SOLAR_PANEL.get().defaultBlockState();
+
+        setDummyBlock(level, pos.above(), dummyState.setValue(DummyBlock.TYPE, DummyBlock.Type.SOLAR_PANEL_POLE));
+        setDummyBlock(level, pos.above(2), dummyState.setValue(DummyBlock.TYPE, DummyBlock.Type.SOLAR_PANEL_POLE));
+
+        for (int x = -1; x < 2; x++) {
+            for (int z = -1; z < 2; z++) {
+                setDummyBlock(level, pos.offset(x, 3, z), dummyState.setValue(DummyBlock.TYPE, DummyBlock.Type.SOLAR_PANEL));
+            }
+        }
+    }
 
     @Override
     public boolean isSealed(BlockGetter level, BlockPos pos, Direction facing) {
         return facing == Direction.UP;
-    }
-
-//    @Override
-//    public @NonNull ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state, boolean includeData, Player player) {
-//        SolarPanelPart solarPanelPart = state.getValue(PART);
-//
-//        if (solarPanelPart != SolarPanelPart.BASE) {
-//            return ItemStack.EMPTY;
-//        }
-//
-//        return super.getCloneItemStack(level, pos, state, includeData, player);
-//    }
-
-    @Override
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        //builder.add(FACING, PART);
-        builder.add(FACING);
     }
 
     @Override
@@ -169,5 +95,13 @@ public abstract class AbstractSolarPanelBlock extends AbstractMachineBlock imple
         }
 
         return super.canSurvive(state, level, pos);
+    }
+
+    protected static <T extends BlockEntity> @Nullable BlockEntityTicker<T> createTicker(Level level, BlockEntityType<T> actualType, BlockEntityType<? extends AbstractSolarPanelBlockEntity> expectedType) {
+        if (level instanceof ServerLevel serverLevel) {
+            return createTickerHelper(actualType, expectedType, (_, pos, state, entity) -> AbstractSolarPanelBlockEntity.serverTick(serverLevel, pos, state, entity));
+        }
+
+        return null;
     }
 }

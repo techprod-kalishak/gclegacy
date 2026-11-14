@@ -5,14 +5,15 @@
  * See LICENSE file for more details
  */
 
-package io.kalishak.galacticraftlegacy.client.data;
+package io.kalishak.galacticraftlegacy.data.client;
 
 import io.kalishak.galacticraftlegacy.Galacticraft;
 import io.kalishak.galacticraftlegacy.aunified.data.model.ExtendedModelProvider;
-import io.kalishak.galacticraftlegacy.client.data.models.model.GalacticraftBlockModelGenerators;
-import io.kalishak.galacticraftlegacy.client.data.models.model.GalacticraftItemModelGenerators;
-import io.kalishak.galacticraftlegacy.client.data.models.model.GalacticraftTexturedModel;
 import io.kalishak.galacticraftlegacy.client.renderer.special.*;
+import io.kalishak.galacticraftlegacy.data.client.models.model.GalacticraftBlockModelGenerators;
+import io.kalishak.galacticraftlegacy.data.client.models.model.GalacticraftItemModelGenerators;
+import io.kalishak.galacticraftlegacy.data.client.models.model.GalacticraftTextureMapping;
+import io.kalishak.galacticraftlegacy.data.client.models.model.GalacticraftTexturedModel;
 import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.world.item.FeatureTier;
 import io.kalishak.galacticraftlegacy.world.item.GalacticraftItems;
@@ -55,7 +56,7 @@ public class GalacticraftModelProvider extends ExtendedModelProvider<Galacticraf
         blockModels.createNonTemplateModelBlock(GalacticraftBlocks.OIL.get());
         blockModels.createNonTemplateModelBlock(GalacticraftBlocks.FUEL.get());
         blockModels.createRotationalMachine(GalacticraftTexturedModel.BASIC_MACHINE, GalacticraftBlocks.COMPRESSOR.get());
-        blockModels.createRotationalMachine(GalacticraftTexturedModel.ADVANCED_MACHINE, GalacticraftBlocks.ELECTRIC_COMPRESSOR.get());
+        blockModels.createRotationalMachine(GalacticraftTexturedModel.BASIC_MACHINE, GalacticraftBlocks.ELECTRIC_COMPRESSOR.get());
         blockModels.createRotationalMachine(GalacticraftTexturedModel.ADVANCED_MACHINE, GalacticraftBlocks.ADVANCED_COMPRESSOR.get());
         blockModels.createTrivialCube(GalacticraftBlocks.MOON_DIRT.get());
         blockModels.createRotatedMirroredVariantBlock(GalacticraftBlocks.MOON_TURF.get());
@@ -95,8 +96,20 @@ public class GalacticraftModelProvider extends ExtendedModelProvider<Galacticraf
         GalacticraftBlocks.UNLIT_COPPER_LANTERN.zipUnwaxedWaxed((unwaxed, waxed) -> blockModels.createCopperLantern(unwaxed.get(), waxed.get()));
         blockModels.createMagneticCraftingTable(GalacticraftBlocks.MAGNETIC_CRAFTING_TABLE.get());
         blockModels.createRotationalMachine(GalacticraftTexturedModel.OXYGEN_COLLECTOR, GalacticraftBlocks.OXYGEN_COLLECTOR.get());
-        blockModels.createRotationalMachine(GalacticraftTexturedModel.BASIC_MACHINE, GalacticraftBlocks.BASIC_SOLAR_PANEL.get());
-        blockModels.createRotationalMachine(GalacticraftTexturedModel.ADVANCED_MACHINE, GalacticraftBlocks.ADVANCED_SOLAR_PANEL.get());
+        blockModels.createRotationalMachine(
+                TexturedModel.createDefault(
+                        block -> GalacticraftTextureMapping.machineWithTop(GalacticraftTextureMapping.basicMachine(block), block),
+                        ModelTemplates.CUBE
+                ),
+                GalacticraftBlocks.BASIC_SOLAR_PANEL.get()
+        );
+        blockModels.createRotationalMachine(
+                TexturedModel.createDefault(
+                        block -> GalacticraftTextureMapping.machineWithTop(GalacticraftTextureMapping.basicMachine(block), block),
+                        ModelTemplates.CUBE
+                ),
+                GalacticraftBlocks.ADVANCED_SOLAR_PANEL.get()
+        );
         blockModels.createTrivialCube(GalacticraftBlocks.ASTEROID_ALUMINUM_ORE.get());
         blockModels.createTrivialBlock(GalacticraftBlocks.TIN_WALL_DECORATION_BLOCK.get(), TexturedModel.CUBE_BOTTOM_TOP);
         blockModels.createSlab(GalacticraftBlocks.TIN_WALL_DECORATION_SLAB.get(), GalacticraftBlocks.TIN_WALL_DECORATION_BLOCK.get(), TextureMapping::cubeBottomTop);
@@ -133,6 +146,7 @@ public class GalacticraftModelProvider extends ExtendedModelProvider<Galacticraf
         blockModels.createTrivialCube(GalacticraftBlocks.VENUS_SILICON_ORE.get());
         blockModels.createTrivialCube(GalacticraftBlocks.VENUS_TIN_ORE.get());
         blockModels.createTrivialCube(GalacticraftBlocks.VENUS_SOLAR_ORE.get());
+        blockModels.createParticleOnlyBlock(GalacticraftBlocks.DUMMY_SOLAR_PANEL.get());
         itemModels.generateFlatItem(GalacticraftItems.THROWABLE_METEOR_CHUNK.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(GalacticraftItems.BATTERY.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(GalacticraftItems.INFINITE_BATTERY.get(), GalacticraftItems.BATTERY.get(), ModelTemplates.FLAT_ITEM);

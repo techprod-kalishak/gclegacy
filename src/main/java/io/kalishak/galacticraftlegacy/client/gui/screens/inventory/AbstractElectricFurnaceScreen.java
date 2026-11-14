@@ -55,4 +55,10 @@ public abstract class AbstractElectricFurnaceScreen<R extends ElectricCookingRec
         int processProgress = Mth.ceil(this.menu.getBurnProgress() * 24.0F);
         guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, BURN_PROGRESS_SPRITE, 24, 16, 0, 0, leftOffset + 78, topOffset + 24, processProgress, 16);
     }
+
+    @Override
+    protected void extractTooltip(GuiGraphicsExtractor graphics, int mouseX, int mouseY) {
+        super.extractTooltip(graphics, mouseX, mouseY);
+        extractBatterySlotTooltip(graphics, this.font, this.hoveredSlot, 1, mouseX, mouseY);
+    }
 }

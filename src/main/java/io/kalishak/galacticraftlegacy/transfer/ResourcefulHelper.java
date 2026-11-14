@@ -157,6 +157,16 @@ public interface ResourcefulHelper {
         return ItemResource.of(emptyTank);
     }
 
+    static <BE extends BlockEntity> BE readBlockEntityOfClass(Class<BE> blockEntityClass, Level level, RegistryFriendlyByteBuf data) {
+        BlockEntity blockEntity = level.getBlockEntity(data.readBlockPos());
+
+        if (blockEntityClass.isInstance(blockEntity)) {
+            return blockEntityClass.cast(blockEntity);
+        }
+
+        throw new IllegalArgumentException(String.format("%s is not a BlockEntity", blockEntityClass.getName()));
+    }
+
     @SuppressWarnings("unchecked")
     static <BE extends BlockEntity> BE readBlockEntity(BlockEntityType<BE> wantedType, Level level, RegistryFriendlyByteBuf data) {
         BlockEntity blockEntity = level.getBlockEntity(data.readBlockPos());
@@ -165,7 +175,7 @@ public interface ResourcefulHelper {
             return (BE) blockEntity;
         }
 
-        throw new IllegalArgumentException("BlockEntityType " + wantedType + " not found");
+        throw new IllegalArgumentException(String.format("BlockEntityType %s not found", wantedType));
     }
 
     /** Energy */

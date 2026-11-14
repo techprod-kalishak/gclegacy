@@ -69,8 +69,10 @@ public class GalacticraftDimensionTypes {
                                 .set(NeoForgeEnvironmentAttributes.CUSTOM_WEATHER_EFFECTS, DummyWeatherRenderer.ID)
                                 .set(EnvironmentAttributes.BED_RULE, GalacticraftWorldAttributes.BED_RULE_CRYO_CHAMBER)
                                 .set(EnvironmentAttributes.WATER_EVAPORATES, true)
-                                .set(GalacticraftEnvironmentAttributes.GRAVITY.get(), 0.01F)
+                                .set(GalacticraftEnvironmentAttributes.GRAVITY.get(), 0.075F)
                                 .set(GalacticraftEnvironmentAttributes.FALL_DAMAGE_MODIFIER.get(), 0.0F)
+                                .set(GalacticraftEnvironmentAttributes.FUEL_MULTIPLIER.get(), 0.5F)
+                                .set(GalacticraftEnvironmentAttributes.SOLAR_MULTIPLIER.get(), 2.0F)
                                 .build(),
                         timelineHolderGetter.getOrThrow(GalacticraftTags.Timelines.IN_ORBIT),
                         Optional.empty()
@@ -100,8 +102,10 @@ public class GalacticraftDimensionTypes {
                                 .set(EnvironmentAttributes.BED_RULE, GalacticraftWorldAttributes.BED_RULE_CRYO_CHAMBER)
                                 .set(EnvironmentAttributes.AMBIENT_SOUNDS, GalacticraftWorldAttributes.AMBIENT_SOUNDS_SPACE)
                                 .set(EnvironmentAttributes.WATER_EVAPORATES, true)
-                                .set(GalacticraftEnvironmentAttributes.GRAVITY.get(), 0.013F)
-                                .set(GalacticraftEnvironmentAttributes.FALL_DAMAGE_MODIFIER.get(), 0.16F)
+                                .set(GalacticraftEnvironmentAttributes.GRAVITY.get(), 0.062F)//0.013F
+                                .set(GalacticraftEnvironmentAttributes.FALL_DAMAGE_MODIFIER.get(), 0.18F)
+                                .set(GalacticraftEnvironmentAttributes.FUEL_MULTIPLIER.get(), 0.70F)
+                                .set(GalacticraftEnvironmentAttributes.SOLAR_MULTIPLIER.get(), 1.40F)
                                 .build(),
                         timelineHolderGetter.getOrThrow(GalacticraftTags.Timelines.IN_MOON),
                         worldClocks.get(GalacticraftWorldClocks.MOON).map(IHolderExtension::getDelegate)
@@ -126,8 +130,10 @@ public class GalacticraftDimensionTypes {
                         EnvironmentAttributeMap.builder()
                                 .set(EnvironmentAttributes.BED_RULE, GalacticraftWorldAttributes.BED_RULE_CRYO_CHAMBER)
                                 .set(EnvironmentAttributes.WATER_EVAPORATES, true)
-                                .set(GalacticraftEnvironmentAttributes.GRAVITY.get(), 0.04F)
-                                .set(GalacticraftEnvironmentAttributes.FALL_DAMAGE_MODIFIER.get(), 0.5F)
+                                .set(GalacticraftEnvironmentAttributes.GRAVITY.get(), 0.058F)//0.04F
+                                .set(GalacticraftEnvironmentAttributes.FALL_DAMAGE_MODIFIER.get(), 0.38F)
+                                .set(GalacticraftEnvironmentAttributes.FUEL_MULTIPLIER.get(), 0.9F)
+                                .set(GalacticraftEnvironmentAttributes.SOLAR_MULTIPLIER.get(), 0.5F)
                                 .build(),
                         timelineHolderGetter.getOrThrow(GalacticraftTags.Timelines.IN_MARS),
                         worldClocks.get(GalacticraftWorldClocks.MARS).map(IHolderExtension::getDelegate)
@@ -152,8 +158,10 @@ public class GalacticraftDimensionTypes {
                         EnvironmentAttributeMap.builder()
                                 .set(EnvironmentAttributes.BED_RULE, GalacticraftWorldAttributes.BED_RULE_CRYO_CHAMBER)
                                 .set(EnvironmentAttributes.WATER_EVAPORATES, true)
-                                .set(GalacticraftEnvironmentAttributes.GRAVITY.get(), 0.01F)
-                                .set(GalacticraftEnvironmentAttributes.FALL_DAMAGE_MODIFIER.get(), 0.16F)
+                                .set(GalacticraftEnvironmentAttributes.GRAVITY.get(), 0.072F)
+                                .set(GalacticraftEnvironmentAttributes.FALL_DAMAGE_MODIFIER.get(), 0.1F)
+                                .set(GalacticraftEnvironmentAttributes.FUEL_MULTIPLIER.get(), 0.9F)
+                                .set(GalacticraftEnvironmentAttributes.SOLAR_MULTIPLIER.get(), 2.0F)
                                 .build(),
                         timelineHolderGetter.getOrThrow(GalacticraftTags.Timelines.IN_ASTEROIDS),
                         worldClocks.get(GalacticraftWorldClocks.ASTEROIDS).map(IHolderExtension::getDelegate)
@@ -178,8 +186,10 @@ public class GalacticraftDimensionTypes {
                         EnvironmentAttributeMap.builder()
                                 .set(EnvironmentAttributes.BED_RULE, GalacticraftWorldAttributes.BED_RULE_CRYO_CHAMBER)
                                 .set(EnvironmentAttributes.WATER_EVAPORATES, true)
-                                .set(GalacticraftEnvironmentAttributes.GRAVITY.get(), 0.065F)
-                                .set(GalacticraftEnvironmentAttributes.FALL_DAMAGE_MODIFIER.get(), 0.81F)
+                                .set(GalacticraftEnvironmentAttributes.GRAVITY.get(), 0.0375F)
+                                .set(GalacticraftEnvironmentAttributes.FALL_DAMAGE_MODIFIER.get(), 0.38F)
+                                .set(GalacticraftEnvironmentAttributes.FUEL_MULTIPLIER.get(), 0.9F)
+                                .set(GalacticraftEnvironmentAttributes.SOLAR_MULTIPLIER.get(), 0.36F)
                                 .build(),
                         timelineHolderGetter.getOrThrow(GalacticraftTags.Timelines.IN_VENUS),
                         worldClocks.get(GalacticraftWorldClocks.VENUS).map(IHolderExtension::getDelegate)
@@ -202,12 +212,12 @@ public class GalacticraftDimensionTypes {
                         DimensionType.Skybox.NONE,
                         CardinalLighting.Type.DEFAULT,
                         EnvironmentAttributeMap.builder()
-                                .set(EnvironmentAttributes.BED_RULE, GalacticraftWorldAttributes.BED_RULE_CRYO_CHAMBER)
-                                .set(EnvironmentAttributes.WATER_EVAPORATES, true)
-                                .set(GalacticraftEnvironmentAttributes.GRAVITY.get(), 0.065F)
-                                .set(GalacticraftEnvironmentAttributes.FALL_DAMAGE_MODIFIER.get(), 0.81F)
+                                .set(GalacticraftEnvironmentAttributes.GRAVITY.get(), 0.075F)
+                                .set(GalacticraftEnvironmentAttributes.FALL_DAMAGE_MODIFIER.get(), 0.1F)
+                                .set(GalacticraftEnvironmentAttributes.FUEL_MULTIPLIER.get(), 0.5F)
+                                .set(GalacticraftEnvironmentAttributes.SOLAR_MULTIPLIER.get(), 2.0F)
                                 .build(),
-                        timelineHolderGetter.getOrThrow(GalacticraftTags.Timelines.IN_VENUS),
+                        timelineHolderGetter.getOrThrow(GalacticraftTags.Timelines.IN_ORBIT),
                         worldClocks.get(GalacticraftWorldClocks.VENUS).map(IHolderExtension::getDelegate)
                 )
         );

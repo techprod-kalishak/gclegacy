@@ -41,7 +41,7 @@ public class MoonSkyRenderer implements CustomSkyboxRenderer {
         RandomSource random = RandomSource.createThreadLocalInstance(10842L);
         float starDistance = 100.0F;
 
-        GpuBuffer var19;
+        GpuBuffer starBuffer;
         try (ByteBufferBuilder byteBufferBuilder = ByteBufferBuilder.exactlySized(DefaultVertexFormat.POSITION.getVertexSize() * 1500 * 4)) {
             BufferBuilder bufferBuilder = new BufferBuilder(byteBufferBuilder, PrimitiveTopology.QUADS, DefaultVertexFormat.POSITION);
 
@@ -51,8 +51,9 @@ public class MoonSkyRenderer implements CustomSkyboxRenderer {
                 float z = random.nextFloat() * 2.0F - 1.0F;
                 float starSize = 0.15F + random.nextFloat() * 0.1F;
                 float lengthSq = Mth.lengthSquared(x, y, z);
+
                 if (!(lengthSq <= 0.010000001F) && !(lengthSq >= 1.0F)) {
-                    Vector3f starCenter = (new Vector3f(x, y, z)).normalize(100.0F);
+                    Vector3f starCenter = (new Vector3f(x, y, z)).normalize(starDistance);
                     float zRot = (float)(random.nextDouble() * (double)(float)Math.PI * (double)2.0F);
                     Matrix3f rotation = (new Matrix3f()).rotateTowards((new Vector3f(starCenter)).negate(), new Vector3f(0.0F, 1.0F, 0.0F)).rotateZ(-zRot);
                     bufferBuilder.addVertex((new Vector3f(starSize, -starSize, 0.0F)).mul(rotation).add(starCenter));
@@ -64,10 +65,10 @@ public class MoonSkyRenderer implements CustomSkyboxRenderer {
 
             try (MeshData mesh = bufferBuilder.buildOrThrow()) {
                 MoonSkyRenderer.starIndexCount = mesh.drawState().indexCount();
-                var19 = RenderSystem.getDevice().createBuffer(() -> "Stars vertex buffer", GpuBuffer.USAGE_COPY_DST | GpuBuffer.USAGE_VERTEX, mesh.vertexBuffer());
+                starBuffer = RenderSystem.getDevice().createBuffer(() -> "Stars vertex buffer", GpuBuffer.USAGE_COPY_DST | GpuBuffer.USAGE_VERTEX, mesh.vertexBuffer());
             }
         }
 
-        return var19;
+        return starBuffer;
     }
 }

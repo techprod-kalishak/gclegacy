@@ -7,6 +7,7 @@
 
 package io.kalishak.galacticraftlegacy.config;
 
+import io.kalishak.galacticraftlegacy.references.GalacticraftComponents;
 import net.minecraft.SharedConstants;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
@@ -26,13 +27,13 @@ public class CommonConfig {
     public static final ModConfigSpec.BooleanValue DEBUG_MODE = BUILDER
             .push("general")
             .comment("If this is enabled, debug messages will appear in the console. This is useful for finding bugs in the mod. (this is still overridden in IDE)")
-            .translation("galacticraftlegacy.configgui.common.debug_mode")
+            .translation(GalacticraftComponents.CONFIG_DEBUG_MODE)
             .define("debugMode", false);
 
     //TODO tag key?
     public static final ModConfigSpec.ConfigValue<List<? extends String>> DIMENSIONS_WITH_DISABLED_ROCKETS = BUILDER
             .comment("Keys of dimensions where rockets should not launch - this should always include The Nether.")
-            .translation("galacticraftlegacy.configgui.common.dimensions_with_disabled_rockets")
+            .translation(GalacticraftComponents.CONFIG_DISABLED_ROCKETS_DIMENSIONS)
             .defineListAllowEmpty(
                     "dimensionsWithDisabledRockets",
                     List.of(
@@ -43,19 +44,19 @@ public class CommonConfig {
                     CommonConfig::validateResourceKeys);
     public static final ModConfigSpec.BooleanValue DISABLE_RETURNING_ROCKETS = BUILDER
             .comment("If true, rockets will be unable to reach the Overworld (only use this in special modpacks!)")
-            .translation("galacticraftlegacy.configgui.common.disable_returning_rockets")
+            .translation(GalacticraftComponents.CONFIG_DISABLE_RETURNING_ROCKETS)
             .define("disableReturningRockets", false);
     public static final ModConfigSpec.BooleanValue FORCE_OVERWORLD_RESPAWN = BUILDER
             .comment("By default, you will respawn on Galacticraft dimensions if you die. If you are dying over and over on a planet, set this to true, and you will respawn back on the Overworld.")
-            .translation("galacticraftlegacy.configgui.common.force_overworld_respawn")
+            .translation(GalacticraftComponents.CONFIG_FORCE_OVERWORLD_RESPAWN)
             .define("forceOverworldRespawn", false);
     public static final ModConfigSpec.BooleanValue DISABLE_LANDERS = BUILDER
             .comment("If this is true, the Player will parachute onto celestial bodies instead - use only in debug situations.")
-            .translation("galacticraftlegacy.configgui.common.disable_landers")
+            .translation(GalacticraftComponents.CONFIG_DISABLE_LANDERS)
             .define("disableLanders", false);
     public static final ModConfigSpec.BooleanValue DISABLE_ROCKET_PARTICLES = BUILDER
             .comment("If you have FPS problems, setting this to true will help if rocket particles are in your sights")
-            .translation("galacticraftlegacy.configgui.client.disable_rocket_particles")
+            .translation(GalacticraftComponents.CONFIG_DISABLE_PARTICLES)
             .define("disableRocketParticles", false);
 
     public static final ModConfigSpec SPEC = BUILDER.pop().build();

@@ -7,11 +7,11 @@
 
 package io.kalishak.galacticraftlegacy.client.gui.screens.inventory;
 
-import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.Galacticraft;
 import io.kalishak.galacticraftlegacy.attachment.GalacticraftAttachments;
 import io.kalishak.galacticraftlegacy.attachment.block.SyncedEnergyHandler;
 import io.kalishak.galacticraftlegacy.client.gui.screens.recipebook.CompressorRecipeBookComponent;
+import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.world.inventory.machine.ElectricCompressorMenu;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.navigation.ScreenPosition;
@@ -34,6 +34,8 @@ public class ElectricCompressorScreen extends AbstractRecipeBookScreen<ElectricC
     protected void init() {
         super.init();
         this.titleLabelX = (this.imageWidth - this.font.width(this.title)) / 2;
+
+        addRenderableOnly(getEnergyTooltip(this.menu.getEnergyCapacity(), this.leftPos, this.topPos));
     }
 
     @Override
@@ -72,6 +74,12 @@ public class ElectricCompressorScreen extends AbstractRecipeBookScreen<ElectricC
             int burnProgressWidth = Mth.ceil(this.menu.getCompressingProgress() * 52.0F);
             graphics.blitSprite(RenderPipelines.GUI_TEXTURED, PROGRESS_SPRITE, 52, 30, 0, 0, xo + 77, yo + 31, burnProgressWidth, 30);
         }
+    }
+
+    @Override
+    protected void extractTooltip(GuiGraphicsExtractor graphics, int mouseX, int mouseY) {
+        super.extractTooltip(graphics, mouseX, mouseY);
+        extractBatterySlotTooltip(graphics, this.font, this.hoveredSlot, 0, mouseX, mouseY);
     }
 
     @Override

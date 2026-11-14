@@ -40,6 +40,6 @@ public class ElectricFurnaceScreen extends AbstractElectricFurnaceScreen<Heating
     );
 
     public ElectricFurnaceScreen(ElectricFurnaceMenu menu, Inventory playerInventory, Component title) {
-        super(menu, new ElectricFurnaceRecipeBookComponent(menu, FILTER_SPRITES, GalacticraftComponents.FILTER_NAME_HEATABLE.asComponent(), TABS), playerInventory, title, TEXTURES);
+        super(menu, new ElectricFurnaceRecipeBookComponent(menu, FILTER_SPRITES, GalacticraftComponents.FILTER_NAME_HEATABLE.translated(), TABS), playerInventory, title, TEXTURES);
     }
 }

@@ -33,8 +33,8 @@ import java.util.Arrays;
 import java.util.Collection;
 
 public class EmergencyEquipCommand {
-    private static final Dynamic2CommandExceptionType ERROR_ITEMS_NOT_EQUPPABLE = new Dynamic2CommandExceptionType(GalacticraftComponents.COMMAND_ERROR_NOT_EQUIPABLE);
-    private static final DynamicCommandExceptionType ERROR_INVALID_ENTITIY = new  DynamicCommandExceptionType(GalacticraftComponents.COMMAND_ERROR_INVALID_GEAR_OWNER);
+    private static final Dynamic2CommandExceptionType ERROR_ITEMS_NOT_EQUPPABLE = new Dynamic2CommandExceptionType(GalacticraftComponents.COMMAND_ERROR_NOT_EQUIPABLE::translatedArg);
+    private static final DynamicCommandExceptionType ERROR_INVALID_ENTITIY = new  DynamicCommandExceptionType(GalacticraftComponents.COMMAND_ERROR_INVALID_GEAR_OWNER::translatedArg);
     public static final SuggestionProvider<CommandSourceStack> SUGGEST_EQUIPMENT = (_, builder) ->
             SharedSuggestionProvider.suggest(Arrays.stream(EmergencyEquipment.values()).map(EmergencyEquipment::getSerializedName), builder);
 
@@ -105,7 +105,7 @@ public class EmergencyEquipCommand {
         int swapped = createEquipment(player, equipment, swapExisting);
 
         if (swapped > 0) {
-            source.sendSuccess(() -> GalacticraftComponents.COMMAND_SUCCESS_EQUIP_EMERGENCY_GEAR.apply(player.getDisplayName(), swapped), true);
+            source.sendSuccess(() -> GalacticraftComponents.COMMAND_SUCCESS_EQUIP_EMERGENCY_GEAR.translatedArg(player.getDisplayName(), swapped), true);
         } else {
             throw ERROR_INVALID_ENTITIY.create(player.getDisplayName());
         }

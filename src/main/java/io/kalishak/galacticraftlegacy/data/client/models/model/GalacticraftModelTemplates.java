@@ -5,7 +5,7 @@
  * See LICENSE file for more details
  */
 
-package io.kalishak.galacticraftlegacy.client.data.models.model;
+package io.kalishak.galacticraftlegacy.data.client.models.model;
 
 import io.kalishak.galacticraftlegacy.references.Constants;
 import net.minecraft.client.data.models.model.ModelTemplate;

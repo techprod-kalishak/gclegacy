@@ -9,8 +9,6 @@ package io.kalishak.galacticraftlegacy.client.gui.screens.inventory;
 
 import io.kalishak.galacticraftlegacy.attachment.GalacticraftAttachments;
 import io.kalishak.galacticraftlegacy.attachment.block.SyncedEnergyHandler;
-import io.kalishak.galacticraftlegacy.config.ClientConfig;
-import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.world.inventory.machine.AbstractMachineRecipeBookMenu;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.electric.AbstractMachineBlockEntity;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
@@ -58,23 +56,5 @@ public abstract class AbstractMachineScreen<BE extends AbstractMachineBlockEntit
         int j = this.topPos;
         guiGraphics.blit(RenderPipelines.GUI_TEXTURED, this.backgroundTexture, i, j, 0.0F, 0.0F, this.imageWidth, this.imageHeight, 256, 256);
         extractSprites(guiGraphics, i, j, this.menu.getEnergyCapacity());
-    }
-
-    @Override
-    protected void extractTooltip(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY) {
-        super.extractTooltip(guiGraphics, mouseX, mouseY);
-
-        if (isHovering(getEnergyBarBounds(), BAR_WIDTH, BAR_HEIGHT, mouseX, mouseY)) {
-            Constants.energy(getEnergyStored(), this.menu.getEnergyCapacity(), ClientConfig.ENERGY_UNIT, component -> guiGraphics.setTooltipForNextFrame(
-                    this.font,
-                    component,
-                    mouseX,
-                    mouseY
-            ));
-        }
-    }
-
-    protected boolean isHovering(Bounds area, int width, int height, double x, double y) {
-        return isHovering(area.x(), area.y(), width, height, x, y);
     }
 }

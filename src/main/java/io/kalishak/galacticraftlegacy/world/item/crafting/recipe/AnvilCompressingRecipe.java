@@ -16,6 +16,7 @@ import net.minecraft.core.Holder;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.RecipeBookCategory;
@@ -31,7 +32,7 @@ public class AnvilCompressingRecipe extends CompressingRecipe {
             ShapedRecipePattern.MAP_CODEC.forGetter(compressingRecipe -> compressingRecipe.pattern),
             ItemStackTemplate.CODEC.fieldOf("result").forGetter(AnvilCompressingRecipe::result),
             Codec.INT.optionalFieldOf("compressing_time", 200).forGetter(AnvilCompressingRecipe::compressingTime),
-            Codec.FLOAT.optionalFieldOf("experience", 0.0F).forGetter(AnvilCompressingRecipe::experience)
+            ExtraCodecs.NON_NEGATIVE_FLOAT.optionalFieldOf("experience", 0.0F).forGetter(AnvilCompressingRecipe::experience)
     ).apply(instance, AnvilCompressingRecipe::new));
     public static final StreamCodec<RegistryFriendlyByteBuf, AnvilCompressingRecipe> STREAM_CODEC = StreamCodec.composite(
             CommonInfo.STREAM_CODEC, compressingRecipe -> compressingRecipe.commonInfo,

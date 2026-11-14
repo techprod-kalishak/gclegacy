@@ -82,7 +82,7 @@ public class MoveVehiclePageServerHandler {
                 new NasaWorkbenchMenuSupplier(
                         NasaWorkbenchEmptyPageMenu::new,
                         blockPos,
-                        GalacticraftComponents.NEW_SCHEMATIC.asComponent()
+                        GalacticraftComponents.NEW_SCHEMATIC.translated()
                 ), blockPos
         );
     }

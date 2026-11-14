@@ -103,7 +103,7 @@ public class SolarPanelModel extends Model<Float> {
     @Override
     public void setupAnim(Float state) {
         super.setupAnim(state);
-        float rot = -Mth.sin(state / Math.PI);
+        float rot = Mth.sin(state / Math.PI);
         this.panel.zRot = rot;
         this.vertical0.zRot = rot;
         this.vertical1.zRot = rot;

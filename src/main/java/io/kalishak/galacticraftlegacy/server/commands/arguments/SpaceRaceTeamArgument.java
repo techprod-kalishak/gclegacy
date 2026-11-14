@@ -20,7 +20,6 @@ import io.kalishak.galacticraftlegacy.world.score.race.SpaceRaceScoreboard;
 import io.kalishak.galacticraftlegacy.world.score.race.SpaceRaceTeam;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.SharedSuggestionProvider;
-import net.minecraft.network.chat.Component;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -28,7 +27,7 @@ import java.util.concurrent.CompletableFuture;
 
 public class SpaceRaceTeamArgument implements ArgumentType<String> {
     private static final Collection<String> EXAMPLES = Arrays.asList("spaceM", "MASA");
-    private static final DynamicCommandExceptionType ERROR_SPACE_RACE_NOT_FOUND = new DynamicCommandExceptionType(GalacticraftComponents.COMMAND_ERROR_SPACE_RACE_DONT_EXIST);
+    private static final DynamicCommandExceptionType ERROR_SPACE_RACE_NOT_FOUND = new DynamicCommandExceptionType(GalacticraftComponents.COMMAND_ERROR_SPACE_RACE_DONT_EXIST::translatedArg);
 
     @Override
     public String parse(StringReader reader) {

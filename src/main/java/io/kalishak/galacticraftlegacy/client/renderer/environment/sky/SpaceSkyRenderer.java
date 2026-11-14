@@ -16,9 +16,9 @@ import com.mojang.renderpearl.api.buffers.GpuBufferSlice;
 import com.mojang.renderpearl.api.commands.RenderPass;
 import com.mojang.renderpearl.api.pipeline.PrimitiveTopology;
 import com.mojang.renderpearl.api.vertex.VertexFormat;
-import io.kalishak.galacticraftlegacy.client.data.GalacticraftSpritesProvider;
 import io.kalishak.galacticraftlegacy.client.renderer.environment.CelestialSpritesLocations;
 import io.kalishak.galacticraftlegacy.config.ClientConfig;
+import io.kalishak.galacticraftlegacy.data.client.GalacticraftSpritesProvider;
 import io.kalishak.galacticraftlegacy.world.level.EarthPhase;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
@@ -67,16 +67,19 @@ public class SpaceSkyRenderer implements CustomSkyboxRenderer, AutoCloseable {
 
     @Override
     public boolean renderSky(LevelRenderState levelRenderState, SkyRenderState skyRenderState, Matrix4fc modelViewMatrix, GpuBufferSlice skyFog) {
-        if (!this.seenAtlas) {
-            createBuffers(Minecraft.getInstance().getAtlasManager());
-        }
+//        if (!this.seenAtlas) {
+//            createBuffers(Minecraft.getInstance().getAtlasManager());
+//        }
+//
+//        PoseStack poseStack = new PoseStack();
+//        Camera camera = Minecraft.getInstance().gameRenderer.mainCamera();
+//        RenderTarget renderTarget = Minecraft.getInstance().gameRenderer.mainRenderTarget();
+//
+//        try (RenderPass renderPass = RenderSystem.getDevice().createCommandEncoder().createRenderPass(() -> "Space Sky", renderTarget.getColorTextureView(), Optional.empty(), renderTarget.getDepthTextureView(), OptionalDouble.empty())) {
+//            renderSkybox(renderPass, poseStack, camera, levelRenderState, modelViewMatrix, skyFog);
+//        }
 
-        PoseStack poseStack = new PoseStack();
-        Camera camera = Minecraft.getInstance().gameRenderer.mainCamera();
-
-        //renderSkybox(poseStack, camera, levelRenderState, modelViewMatrix, skyFog);
-
-        return true;
+        return false;
     }
 
     protected void renderSkybox(RenderPass renderPass, PoseStack poseStack, Camera camera, LevelRenderState levelRenderState, Matrix4fc modelViewMatrix, GpuBufferSlice skyFog) {

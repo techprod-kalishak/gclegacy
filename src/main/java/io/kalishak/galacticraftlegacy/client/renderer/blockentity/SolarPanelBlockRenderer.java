@@ -50,7 +50,7 @@ public class SolarPanelBlockRenderer<T extends AbstractSolarPanelBlockEntity> im
     public void extractRenderState(T blockEntity, SolarPanelBlockRenderState state, float partialTicks, Vec3 cameraPosition, ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
         BlockEntityRenderer.super.extractRenderState(blockEntity, state, partialTicks, cameraPosition, breakProgress);
         state.lightCoords = blockEntity.getLevel() != null ? LightCoordsUtil.getLightCoords(blockEntity.getLevel(), blockEntity.getBlockPos().above()) : 15728880;
-        state.angle = 6.0F;
+        state.angle = blockEntity.getCurrentAngle();
     }
 
     @Override

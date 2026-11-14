@@ -191,13 +191,13 @@ public final class FluidTankContents implements TooltipProvider {
                 if (lineCount <= 4) {
                     lineCount++;
                     FluidStack fluidStack = fluid.get().create();
-                    consumer.accept(GalacticraftComponents.TOOLTIP_SINGLE_FLUID.apply(fluidStack));
+                    consumer.accept(GalacticraftComponents.TOOLTIP_SINGLE_FLUID.translatedArg(fluidStack));
                 }
             }
         }
 
         if (count - lineCount > 0) {
-            consumer.accept(GalacticraftComponents.TOOLTIP_MORE_FLUIDS.apply(count - lineCount));
+            consumer.accept(GalacticraftComponents.TOOLTIP_MORE_FLUIDS.translatedArg(count - lineCount));
         }
     }
 

@@ -33,8 +33,8 @@ import java.util.function.BiPredicate;
 
 @SuppressWarnings("unused")
 public class UnlockSchematicCommand {
-    private static final SimpleCommandExceptionType ERROR_SCHEMATIC_ALREADY_UNLOCKED = new SimpleCommandExceptionType(GalacticraftComponents.COMMAND_ERROR_SCHEMATIC_ALREADY_UNLOCKED);
-    private static final SimpleCommandExceptionType ERROR_SCHEMATIC_NOT_UNLOCKED = new SimpleCommandExceptionType(GalacticraftComponents.COMMAND_ERROR_SCHEMATIC_NOT_UNLOCKED);
+    private static final SimpleCommandExceptionType ERROR_SCHEMATIC_ALREADY_UNLOCKED = new SimpleCommandExceptionType(GalacticraftComponents.COMMAND_ERROR_SCHEMATIC_ALREADY_UNLOCKED.translated());
+    private static final SimpleCommandExceptionType ERROR_SCHEMATIC_NOT_UNLOCKED = new SimpleCommandExceptionType(GalacticraftComponents.COMMAND_ERROR_SCHEMATIC_NOT_UNLOCKED.translated());
 
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
         dispatcher.register(
@@ -94,7 +94,7 @@ public class UnlockSchematicCommand {
             Schematics schematics = player.getData(GalacticraftAttachments.PLAYER_SPACE_DATA).getSchematics();
 
             update(schematics, getRegisteredSchematics(source.registryAccess()), UnlockSchematicCommand::add);
-            source.sendSuccess(() -> GalacticraftComponents.COMMAND_SUCCESS_SCHEMATIC_ADD_ALL.apply(player.getDisplayName()), false);
+            source.sendSuccess(() -> GalacticraftComponents.COMMAND_SUCCESS_SCHEMATIC_ADD_ALL.translatedArg(player.getDisplayName()), false);
         }
 
         return 1;
@@ -110,7 +110,7 @@ public class UnlockSchematicCommand {
                 throw ERROR_SCHEMATIC_ALREADY_UNLOCKED.create();
             }
 
-            source.sendSuccess(() -> GalacticraftComponents.COMMAND_SUCCESS_SCHEMATIC_ADD.apply(player.getDisplayName(), id.identifier().toString()), false);
+            source.sendSuccess(() -> GalacticraftComponents.COMMAND_SUCCESS_SCHEMATIC_ADD.translatedArg(player.getDisplayName(), id.identifier().toString()), false);
             addedCount++;
         }
 
@@ -122,7 +122,7 @@ public class UnlockSchematicCommand {
             Schematics schematics = player.getData(GalacticraftAttachments.PLAYER_SPACE_DATA).getSchematics();
 
             update(schematics, getRegisteredSchematics(source.registryAccess()), UnlockSchematicCommand::remove);
-            source.sendSuccess(() -> GalacticraftComponents.COMMAND_SUCCESS_SCHEMATIC_REMOVE_ALL.apply(player.getDisplayName()), false);
+            source.sendSuccess(() -> GalacticraftComponents.COMMAND_SUCCESS_SCHEMATIC_REMOVE_ALL.translatedArg(player.getDisplayName()), false);
         }
 
         return players.size();
@@ -138,7 +138,7 @@ public class UnlockSchematicCommand {
                 throw ERROR_SCHEMATIC_NOT_UNLOCKED.create();
             }
 
-            source.sendSuccess(() -> GalacticraftComponents.COMMAND_SUCCESS_SCHEMATIC_REMOVE.apply(player.getDisplayName(), id.identifier().toString()), false);
+            source.sendSuccess(() -> GalacticraftComponents.COMMAND_SUCCESS_SCHEMATIC_REMOVE.translatedArg(player.getDisplayName(), id.identifier().toString()), false);
             removedCount++;
         }
 
@@ -150,9 +150,9 @@ public class UnlockSchematicCommand {
             Schematics schematics = player.getData(GalacticraftAttachments.PLAYER_SPACE_DATA).getSchematics();
 
             if (schematics.isEmpty()) {
-                source.sendSuccess(() -> GalacticraftComponents.COMMAND_SUCCESS_SCHEMATIC_EMPTY_LIST.apply(player.getDisplayName()), false);
+                source.sendSuccess(() -> GalacticraftComponents.COMMAND_SUCCESS_SCHEMATIC_EMPTY_LIST.translatedArg(player.getDisplayName()), false);
             } else {
-                source.sendSuccess(() -> GalacticraftComponents.COMMAND_SUCCESS_SCHEMATICS_LIST.apply(player.getDisplayName(), schematics.unlockedCount(), ComponentUtils.formatList(schematics.asStringList())), false);
+                source.sendSuccess(() -> GalacticraftComponents.COMMAND_SUCCESS_SCHEMATICS_LIST.translatedArg(player.getDisplayName(), schematics.unlockedCount(), ComponentUtils.formatList(schematics.asStringList())), false);
             }
         }
 
@@ -168,7 +168,7 @@ public class UnlockSchematicCommand {
             }
         }
 
-        source.sendSuccess(() -> GalacticraftComponents.COMMAND_SUCCESS_SCHEMATIC_ADD_ALL.apply(spaceRaceTeam.getDisplayName()), true);
+        source.sendSuccess(() -> GalacticraftComponents.COMMAND_SUCCESS_SCHEMATIC_ADD_ALL.translatedArg(spaceRaceTeam.getDisplayName()), true);
 
         return schematics.unlockedCount();
     }
@@ -180,7 +180,7 @@ public class UnlockSchematicCommand {
             throw ERROR_SCHEMATIC_ALREADY_UNLOCKED.create();
         }
 
-        source.sendSuccess(() -> GalacticraftComponents.COMMAND_SUCCESS_SCHEMATIC_ADD.apply(spaceRaceTeam.getDisplayName(), id.identifier().toString()), false);
+        source.sendSuccess(() -> GalacticraftComponents.COMMAND_SUCCESS_SCHEMATIC_ADD.translatedArg(spaceRaceTeam.getDisplayName(), id.identifier().toString()), false);
         return 1;
     }
 
@@ -188,7 +188,7 @@ public class UnlockSchematicCommand {
         Schematics schematics = spaceRaceTeam.getUnlockedSchematics();
 
         int i = update(schematics, getRegisteredSchematics(source.registryAccess()), UnlockSchematicCommand::remove);
-        source.sendSuccess(() -> GalacticraftComponents.COMMAND_SUCCESS_SCHEMATIC_REMOVE_ALL.apply(spaceRaceTeam.getDisplayName()), true);
+        source.sendSuccess(() -> GalacticraftComponents.COMMAND_SUCCESS_SCHEMATIC_REMOVE_ALL.translatedArg(spaceRaceTeam.getDisplayName()), true);
 
         return i;
     }
@@ -200,7 +200,7 @@ public class UnlockSchematicCommand {
             throw ERROR_SCHEMATIC_NOT_UNLOCKED.create();
         }
 
-        source.sendSuccess(() -> GalacticraftComponents.COMMAND_SUCCESS_SCHEMATIC_REMOVE.apply(spaceRaceTeam.getDisplayName(), id.identifier().toString()), false);
+        source.sendSuccess(() -> GalacticraftComponents.COMMAND_SUCCESS_SCHEMATIC_REMOVE.translatedArg(spaceRaceTeam.getDisplayName(), id.identifier().toString()), false);
         return 1;
     }
 
@@ -208,9 +208,9 @@ public class UnlockSchematicCommand {
         Schematics schematics = spaceRaceTeam.getUnlockedSchematics();
 
         if (schematics.isEmpty()) {
-            source.sendSuccess(() -> GalacticraftComponents.COMMAND_SUCCESS_SCHEMATIC_EMPTY_LIST.apply(spaceRaceTeam.getDisplayName()), false);
+            source.sendSuccess(() -> GalacticraftComponents.COMMAND_SUCCESS_SCHEMATIC_EMPTY_LIST.translatedArg(spaceRaceTeam.getDisplayName()), false);
         } else {
-            source.sendSuccess(() -> GalacticraftComponents.COMMAND_SUCCESS_SCHEMATICS_LIST.apply(spaceRaceTeam.getDisplayName(), schematics.unlockedCount(), ComponentUtils.formatList(schematics.asStringList())), false);
+            source.sendSuccess(() -> GalacticraftComponents.COMMAND_SUCCESS_SCHEMATICS_LIST.translatedArg(spaceRaceTeam.getDisplayName(), schematics.unlockedCount(), ComponentUtils.formatList(schematics.asStringList())), false);
         }
 
         return schematics.unlockedCount();
