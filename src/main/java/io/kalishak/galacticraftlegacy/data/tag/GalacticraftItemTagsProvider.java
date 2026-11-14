@@ -115,7 +115,9 @@ public class GalacticraftItemTagsProvider extends BlockTagCopyingItemTagProvider
                 .add(GalacticraftItemIds.TITANIUM_SWORD);
         tag(Tags.Items.BUCKETS)
                 .add(GalacticraftItemIds.OIL_BUCKET)
-                .add(GalacticraftItemIds.FUEL_BUCKET);
+                .add(GalacticraftItemIds.FUEL_BUCKET)
+                .add(GalacticraftItemIds.BACTERIAL_SLUDGE_BUCKET)
+                .add(GalacticraftItemIds.SULFURIC_ACID_BUCKET);
         tag(Tags.Items.INGOTS)
                 .addTag(GalacticraftTags.Items.INGOTS_ALUMINUM)
                 .addTag(GalacticraftTags.Items.INGOTS_DESH)

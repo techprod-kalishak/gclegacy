@@ -123,6 +123,8 @@ public final class GalacticraftCreativeModeTabs {
         output.accept(GalacticraftItems.SOLAR_ARRAY_PANEL);
         output.accept(GalacticraftItems.OIL_BUCKET);
         output.accept(GalacticraftItems.FUEL_BUCKET);
+        output.accept(GalacticraftItems.BACTERIAL_SLUDGE_BUCKET);
+        output.accept(GalacticraftItems.SULFURIC_ACID_BUCKET);
         generateSchematics(output, itemDisplayParameters.holders().lookupOrThrow(GalacticraftRegistries.Keys.SCHEMATIC));
         output.accept(GalacticraftItems.STEEL_HELMET);
         output.accept(GalacticraftItems.STEEL_CHESTPLATE);

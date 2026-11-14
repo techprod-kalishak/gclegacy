@@ -37,7 +37,7 @@ import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.GalacticraftRec
 import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.GalacticraftRecipeType;
 import io.kalishak.galacticraftlegacy.world.level.GalacticraftParticleTypes;
 import io.kalishak.galacticraftlegacy.world.level.block.GalacticraftBlocks;
-import io.kalishak.galacticraftlegacy.world.level.block.cauldron.GalacticraftCauldronInteraction;
+import io.kalishak.galacticraftlegacy.world.level.block.cauldron.GalacticraftCauldronInteractions;
 import io.kalishak.galacticraftlegacy.world.level.block.dispenser.GalacticraftDispenserBehaviors;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.GalacticraftBlockEntityTypes;
 import io.kalishak.galacticraftlegacy.world.level.dimension.transition.LanderPlanetaryTransition;
@@ -99,7 +99,7 @@ public class Galacticraft {
         modEventBus.addListener(this::registerCauldronFluids);
         modEventBus.addListener(LanderPlanetaryTransition::onConfigReloaded);
 
-        GalacticraftCauldronInteraction.init(modEventBus);
+        GalacticraftCauldronInteractions.init(modEventBus);
         modEventBus.addListener(GalacticraftNetworkHandler::registerPackets);
         modEventBus.addListener(GalacticraftDataMaps::registerDataMaps);
         modEventBus.register(GalacticraftData.class);

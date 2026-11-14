@@ -21,6 +21,7 @@ public class GalacticraftParticleProvider extends ParticleDescriptionProvider {
     @Override
     protected void addDescriptions() {
         spriteSet(GalacticraftParticleTypes.DRIPPING_OIL.get(), Identifier.withDefaultNamespace("drip_hang"));
+        spriteSet(GalacticraftParticleTypes.DRIPPING_SULFURIC_ACID.get(), Identifier.withDefaultNamespace("drip_hang"));
         spriteSet(GalacticraftParticleTypes.SPARKS.get(), Constants.id("sparks"));
     }
 }

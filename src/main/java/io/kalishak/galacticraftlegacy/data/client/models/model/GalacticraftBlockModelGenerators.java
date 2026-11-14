@@ -24,6 +24,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.LayeredCauldronBlock;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.neoforged.neoforge.client.model.generators.template.ExtendedModelTemplateBuilder;
 
@@ -43,11 +44,44 @@ public class GalacticraftBlockModelGenerators extends ExtendedBlockModelGenerato
         registerSimpleItemModel(block, blockModel);
     }
 
-    public void createCauldron(Block block, Block liquidBlock) {
-        this.blockStateOutput.accept(createSimpleBlock(
-                block,
-                plainVariant(ModelTemplates.CAULDRON_FULL.create(block, TextureMapping.cauldron(TextureMapping.getBlockTexture(liquidBlock, "_still")), this.modelOutput)))
-        );
+    public void createCauldron(Block block, Block liquidBlock, boolean layered) {
+        if (layered) {
+            this.blockStateOutput.accept(MultiVariantGenerator.dispatch(block).with(PropertyDispatch.initial(LayeredCauldronBlock.LEVEL)
+                            .select(
+                                    1,
+                                    plainVariant(ModelTemplates.CAULDRON_LEVEL1.createWithSuffix(
+                                            block,
+                                            "_level1",
+                                            TextureMapping.cauldron(TextureMapping.getBlockTexture(liquidBlock, "_still")),
+                                            this.modelOutput)
+                                    )
+                            )
+                            .select(
+                                    2,
+                                    plainVariant(ModelTemplates.CAULDRON_LEVEL2.createWithSuffix(
+                                            block,
+                                            "_level2",
+                                            TextureMapping.cauldron(TextureMapping.getBlockTexture(liquidBlock, "_still")),
+                                            this.modelOutput)
+                                    )
+                            )
+                            .select(
+                                    3,
+                                    plainVariant(ModelTemplates.CAULDRON_FULL.createWithSuffix(
+                                            block,
+                                            "_full",
+                                            TextureMapping.cauldron(TextureMapping.getBlockTexture(liquidBlock, "_still")),
+                                            this.modelOutput)
+                                    )
+                            )
+                    )
+            );
+        } else {
+            this.blockStateOutput.accept(createSimpleBlock(
+                    block,
+                    plainVariant(ModelTemplates.CAULDRON_FULL.create(block, TextureMapping.cauldron(TextureMapping.getBlockTexture(liquidBlock, "_still")), this.modelOutput)))
+            );
+        }
     }
 
     public void createBarsAndItem(Block block, TextureMapping textures) {

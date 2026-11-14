@@ -55,6 +55,8 @@ public class GalacticraftModelProvider extends ExtendedModelProvider<Galacticraf
         blockModels.createRotationalMachine(GalacticraftTexturedModel.ADVANCED_MACHINE, GalacticraftBlocks.ELECTRIC_ARC_FURNACE.get());
         blockModels.createNonTemplateModelBlock(GalacticraftBlocks.OIL.get());
         blockModels.createNonTemplateModelBlock(GalacticraftBlocks.FUEL.get());
+        blockModels.createNonTemplateModelBlock(GalacticraftBlocks.BACTERIAL_SLUDGE.get());
+        blockModels.createNonTemplateModelBlock(GalacticraftBlocks.SULFURIC_ACID.get());
         blockModels.createRotationalMachine(GalacticraftTexturedModel.BASIC_MACHINE, GalacticraftBlocks.COMPRESSOR.get());
         blockModels.createRotationalMachine(GalacticraftTexturedModel.BASIC_MACHINE, GalacticraftBlocks.ELECTRIC_COMPRESSOR.get());
         blockModels.createRotationalMachine(GalacticraftTexturedModel.ADVANCED_MACHINE, GalacticraftBlocks.ADVANCED_COMPRESSOR.get());
@@ -84,8 +86,10 @@ public class GalacticraftModelProvider extends ExtendedModelProvider<Galacticraf
         GalacticraftBlocks.FLUID_PIPE.forEach(fluidPipeBlock -> blockModels.pipeLike(fluidPipeBlock.get()));
         blockModels.pipeLike(GalacticraftBlocks.ALUMINUM_WIRE.get());
         blockModels.pipeLike(GalacticraftBlocks.HEAVY_ALUMINUM_WIRE.get());
-        blockModels.createCauldron(GalacticraftBlocks.OIL_CAULDRON.get(), GalacticraftBlocks.OIL.get());
-        blockModels.createCauldron(GalacticraftBlocks.FUEL_CAULDRON.get(), GalacticraftBlocks.FUEL.get());
+        blockModels.createCauldron(GalacticraftBlocks.OIL_CAULDRON.get(), GalacticraftBlocks.OIL.get(), false);
+        blockModels.createCauldron(GalacticraftBlocks.FUEL_CAULDRON.get(), GalacticraftBlocks.FUEL.get(), false);
+        blockModels.createCauldron(GalacticraftBlocks.BACTERIAL_SLUDGE_CAULDRON.get(), GalacticraftBlocks.BACTERIAL_SLUDGE.get(), false);
+        blockModels.createCauldron(GalacticraftBlocks.SULFURIC_ACID_CAULDRON.get(), GalacticraftBlocks.SULFURIC_ACID.get(), true);
         blockModels.createFluidTank(GalacticraftBlocks.FLUID_TANK.get());
         blockModels.copyModel(GalacticraftBlocks.TIN_DECORATION_BLOCK.get(), GalacticraftBlocks.SEALED_REDSTONE_WIRE.get());
         blockModels.copyModel(GalacticraftBlocks.TIN_DECORATION_BLOCK.get(), GalacticraftBlocks.SEALED_REPEATER.get());
@@ -192,6 +196,8 @@ public class GalacticraftModelProvider extends ExtendedModelProvider<Galacticraf
         itemModels.createFluidTank(GalacticraftItems.FLUID_CANISTER.get());
         itemModels.generateFlatItem(GalacticraftItems.OIL_BUCKET.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(GalacticraftItems.FUEL_BUCKET.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.BACTERIAL_SLUDGE_BUCKET.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.SULFURIC_ACID_BUCKET.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(GalacticraftItems.RAW_STEEL.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(GalacticraftItems.STEEL_INGOT.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(GalacticraftItems.STEEL_NUGGET.get(), ModelTemplates.FLAT_ITEM);

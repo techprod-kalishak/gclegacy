@@ -170,8 +170,12 @@ public class GalacticraftLanguageProvider extends ExtendedLanguageProvider {
         addBlock(GalacticraftBlocks.CHEESE, "Cheese");
         addBlock(GalacticraftBlocks.OIL, "Oil");
         addBlock(GalacticraftBlocks.FUEL, "Fuel");
+        addBlock(GalacticraftBlocks.BACTERIAL_SLUDGE, "Bacterial Sludge");
+        addBlock(GalacticraftBlocks.SULFURIC_ACID, "Sulfuric Acid");
         addBlock(GalacticraftBlocks.OIL_CAULDRON, "Oil Cauldron");
         addBlock(GalacticraftBlocks.FUEL_CAULDRON, "Fuel Cauldron");
+        addBlock(GalacticraftBlocks.BACTERIAL_SLUDGE_CAULDRON, "Bacterial Sludge Cauldron");
+        addBlock(GalacticraftBlocks.SULFURIC_ACID_CAULDRON, "Sulfuric Acid Cauldron");
         addWithDescription(GalacticraftBlocks.FLUID_TANK, "Fluid Tank", "Fluid Tanks will store liquids and gases for later use.");
         addBlock(GalacticraftBlocks.SEALED_REDSTONE_WIRE, "Sealed Redstone");
         addBlock(GalacticraftBlocks.SEALED_REPEATER, "Sealed Repeater");
@@ -344,6 +348,8 @@ public class GalacticraftLanguageProvider extends ExtendedLanguageProvider {
         addItem(GalacticraftItems.FLUID_CANISTER, "Fluid Tank");
         addItem(GalacticraftItems.OIL_BUCKET, "Oil Bucket");
         addItem(GalacticraftItems.FUEL_BUCKET, "Fuel Bucket");
+        addItem(GalacticraftItems.BACTERIAL_SLUDGE_BUCKET, "Bacterial Sludge Bucket");
+        addItem(GalacticraftItems.SULFURIC_ACID_BUCKET, "Sulfuric Acid Bucket");
         addItem(GalacticraftItems.RAW_STEEL, "Raw Carbon-Iron");
         addItem(GalacticraftItems.STEEL_INGOT, "Heavy Duty Ingot");
         addItem(GalacticraftItems.STEEL_NUGGET, "Heavy Duty Nugget");

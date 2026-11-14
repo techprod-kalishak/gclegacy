@@ -52,8 +52,8 @@ public abstract class GaseousFluid extends BaseFlowingFluid {
 
     }
 
-    public static class Still extends GaseousFluid {
-        public Still(Properties properties) {
+    public static class Source extends GaseousFluid {
+        public Source(Properties properties) {
             super(properties);
         }
 
@@ -71,7 +71,7 @@ public abstract class GaseousFluid extends BaseFlowingFluid {
     public static class Flowing extends GaseousFluid {
         public Flowing(Properties properties) {
             super(properties);
-            registerDefaultState(this.stateDefinition.any().setValue(LEVEL, 0));
+            registerDefaultState(this.stateDefinition.any().setValue(LEVEL, 7));
         }
 
         @Override
@@ -86,6 +86,7 @@ public abstract class GaseousFluid extends BaseFlowingFluid {
 
         @Override
         protected void createFluidStateDefinition(StateDefinition.Builder<Fluid, FluidState> builder) {
+            super.createFluidStateDefinition(builder);
             builder.add(LEVEL);
         }
     }

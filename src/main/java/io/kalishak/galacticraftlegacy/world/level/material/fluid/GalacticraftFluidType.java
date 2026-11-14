@@ -8,6 +8,7 @@
 package io.kalishak.galacticraftlegacy.world.level.material.fluid;
 
 import io.kalishak.galacticraftlegacy.Galacticraft;
+import io.kalishak.galacticraftlegacy.references.GalacticraftFluidIds;
 import io.kalishak.galacticraftlegacy.world.level.GalacticraftParticleTypes;
 import io.kalishak.galacticraftlegacy.world.level.block.GalacticraftBlocks;
 import net.minecraft.sounds.SoundEvents;
@@ -23,24 +24,24 @@ public class GalacticraftFluidType {
     private static final DeferredRegister<FluidType> REGISTRY = DeferredRegister.create(NeoForgeRegistries.Keys.FLUID_TYPES, Galacticraft.MODID);
 
     public static final DeferredHolder<FluidType, FluidType> OXYGEN = REGISTRY.register(
-            "oxygen",
+            GalacticraftFluidIds.OXYGEN.identifier().getPath(),
             () -> GaseousFluid.gaseousType("block.galacticraftlegacy.oxygen")
     );
     public static final DeferredHolder<FluidType, FluidType> HYDROGEN = REGISTRY.register(
-            "hydrogen",
+            GalacticraftFluidIds.HYDROGEN.identifier().getPath(),
             () -> GaseousFluid.gaseousType("block.galacticraftlegacy.hydrogen")
     );
     public static final DeferredHolder<FluidType, FluidType> NITROGEN = REGISTRY.register(
-            "nitrogen",
+            GalacticraftFluidIds.NITROGEN.identifier().getPath(),
             () -> GaseousFluid.gaseousType("block.galacticraftlegacy.nitrogen")
     );
     public static final DeferredHolder<FluidType, FluidType> CO2 = REGISTRY.register(
-            "co2",
+            GalacticraftFluidIds.CO2.identifier().getPath(),
             () -> GaseousFluid.gaseousType("block.galacticraftlegacy.co2")
     );
 
     public static final DeferredHolder<FluidType, FluidType> OIL = REGISTRY.register(
-            "oil",
+            GalacticraftFluidIds.OIL.identifier().getPath(),
             () -> new FluidType(FluidType.Properties.create()
                     .descriptionId("block.galacticraftlegacy.oil")
                     .viscosity(2230)
@@ -48,11 +49,10 @@ public class GalacticraftFluidType {
                     .rarity(Rarity.UNCOMMON)
                     .sound(SoundActions.BUCKET_FILL, SoundEvents.BUCKET_FILL)
                     .sound(SoundActions.BUCKET_EMPTY, SoundEvents.BUCKET_EMPTY)
-                    .addDripstoneDripping(0.1F, GalacticraftParticleTypes.DRIPPING_OIL.get(), GalacticraftBlocks.OIL_CAULDRON.get(), SoundEvents.BUCKET_FILL_LAVA)
             )
     );
     public static final DeferredHolder<FluidType, FluidType> FUEL = REGISTRY.register(
-            "fuel",
+            GalacticraftFluidIds.FUEL.identifier().getPath(),
             () -> new FluidType(FluidType.Properties.create()
                     .descriptionId("block.galacticraftlegacy.fuel")
                     .viscosity(850)
@@ -60,6 +60,29 @@ public class GalacticraftFluidType {
                     .rarity(Rarity.RARE)
                     .sound(SoundActions.BUCKET_FILL, SoundEvents.BUCKET_FILL)
                     .sound(SoundActions.BUCKET_EMPTY, SoundEvents.BUCKET_EMPTY)
+            )
+    );
+    public static final DeferredHolder<FluidType, FluidType> BACTERIAL_SLUDGE = REGISTRY.register(
+            GalacticraftFluidIds.BACTERIAL_SLUDGE.identifier().getPath(),
+            () -> new FluidType(FluidType.Properties.create()
+                    .descriptionId("block.galacticraftlegacy.bacterial_sludge")
+                    .viscosity(2230)
+                    .density(700)
+                    .rarity(Rarity.RARE)
+                    .sound(SoundActions.BUCKET_FILL, SoundEvents.BUCKET_FILL)
+                    .sound(SoundActions.BUCKET_EMPTY, SoundEvents.BUCKET_EMPTY)
+            )
+    );
+    public static final DeferredHolder<FluidType, FluidType> SULFURIC_ACID = REGISTRY.register(
+            GalacticraftFluidIds.SULFURIC_ACID.identifier().getPath(),
+            () -> new FluidType(FluidType.Properties.create()
+                    .descriptionId("block.galacticraftlegacy.sulfuric_acid")
+                    .viscosity(2230)
+                    .density(700)
+                    .sound(SoundActions.BUCKET_FILL, SoundEvents.BUCKET_FILL)
+                    .sound(SoundActions.BUCKET_EMPTY, SoundEvents.BUCKET_EMPTY)
+                    .sound(SoundActions.CAULDRON_DRIP, SoundEvents.POINTED_DRIPSTONE_DRIP_WATER_INTO_CAULDRON)
+                    .addDripstoneDripping(0.1F, GalacticraftParticleTypes.DRIPPING_SULFURIC_ACID.get(), GalacticraftBlocks.SULFURIC_ACID_CAULDRON.get(), SoundEvents.BUCKET_FILL)
             )
     );
 

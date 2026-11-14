@@ -266,11 +266,19 @@ public final class GalacticraftItems {
     );
     public static final DeferredItem<BucketItem> OIL_BUCKET = REGISTRY.registerItem(
             GalacticraftItemIds.OIL_BUCKET,
-            properties -> new BucketItem(GalacticraftFluids.OIL.value(), properties)
+            properties -> new BucketItem(GalacticraftFluids.OIL.get(), properties)
     );
     public static final DeferredItem<BucketItem> FUEL_BUCKET = REGISTRY.registerItem(
             GalacticraftItemIds.FUEL_BUCKET,
-            properties -> new BucketItem(GalacticraftFluids.FUEL.value(), properties)
+            properties -> new BucketItem(GalacticraftFluids.FUEL.get(), properties)
+    );
+    public static final DeferredItem<BucketItem> BACTERIAL_SLUDGE_BUCKET = REGISTRY.registerItem(
+            GalacticraftItemIds.BACTERIAL_SLUDGE_BUCKET,
+            properties -> new BucketItem(GalacticraftFluids.BACTERIAL_SLUDGE.get(), properties)
+    );
+    public static final DeferredItem<BucketItem> SULFURIC_ACID_BUCKET = REGISTRY.registerItem(
+            GalacticraftItemIds.SULFURIC_ACID_BUCKET,
+            properties -> new BucketItem(GalacticraftFluids.SULFURIC_ACID.get(), properties)
     );
 
     public static final DeferredItem<Item> RAW_STEEL = REGISTRY.registerSimpleItem(GalacticraftItemIds.RAW_STEEL);

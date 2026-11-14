@@ -1,6 +1,6 @@
 {
   "effects": "drowning",
   "exhaustion": 1.0,
-  "message_id": "galacticraft.suffocation",
+  "message_id": "galacticraftSuffocation",
   "scaling": "always"
 }

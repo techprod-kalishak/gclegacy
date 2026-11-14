@@ -144,6 +144,8 @@ public final class GalacticraftTags {
         public static final TagKey<Fluid> IS_OXYGEN = shared(Registries.FLUID, "is_oxygen");
         public static final TagKey<Fluid> IS_OIL = shared(Registries.FLUID, "is_oil");
         public static final TagKey<Fluid> IS_FUEL = shared(Registries.FLUID, "is_fuel");
+        public static final TagKey<Fluid> IS_BACTERIAL_SLUDGE = shared(Registries.FLUID, "is_bacterial_sludge");
+        public static final TagKey<Fluid> IS_SULFURIC_ACID = shared(Registries.FLUID, "is_sulfuric_acid");
     }
 
     public static class Items {

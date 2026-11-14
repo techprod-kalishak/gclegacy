@@ -8,7 +8,6 @@
 package io.kalishak.galacticraftlegacy.world.damagesource;
 
 import io.kalishak.galacticraftlegacy.references.Constants;
-import io.kalishak.galacticraftlegacy.EnumExtensions;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
@@ -27,31 +26,31 @@ public final class GalacticraftDamageTypes {
         cxt.register(
                 ACID_VICTIM,
                 new DamageType(
-                        "galacticraft.acid_victim",
+                        "galacticraft.acidVictim",
                         DamageScaling.ALWAYS,
-                        0.1F
+                        0.6F
                 )
         );
         cxt.register(
                 METEOR_CHUNK,
                 new DamageType(
-                        "galacticraft.meteor_chunk",
+                        "galacticraft.meteorChunk",
                         DamageScaling.WHEN_CAUSED_BY_LIVING_NON_PLAYER,
-                        0.5F
+                        0.2F
                 )
         );
         cxt.register(
                 SPACESHIP_CRASH,
                 new DamageType(
-                        "galacticraft.spaceship_crash",
+                        "galacticraft.spaceshipCrash",
                         DamageScaling.NEVER,
-                        2.0F
+                        0.1F
                 )
         );
         cxt.register(
                 SUFFOCATION,
                 new DamageType(
-                        "galacticraft.suffocation",
+                        "galacticraftSuffocation",
                         DamageScaling.ALWAYS,
                         1.0F,
                         DamageEffects.DROWNING

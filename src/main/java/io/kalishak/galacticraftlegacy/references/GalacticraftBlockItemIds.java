@@ -79,8 +79,12 @@ public final class GalacticraftBlockItemIds {
     public static final BlockItemId COMMUNICATION_DISH = create("communication_dish");
     public static final BlockItemId OIL = create("oil");
     public static final BlockItemId FUEL = create("fuel");
+    public static final BlockItemId BACTERIAL_SLUDGE = create("bacterial_sludge");
+    public static final BlockItemId SULFURIC_ACID = create("sulfuric_acid");
     public static final BlockItemId OIL_CAULDRON = create("oil_cauldron");
     public static final BlockItemId FUEL_CAULDRON = create("fuel_cauldron");
+    public static final BlockItemId BACTERIAL_SLUDGE_CAULDRON = create("bacterial_sludge_cauldron");
+    public static final BlockItemId SULFURIC_ACID_CAULDRON = create("sulfuric_acid_cauldron");
     public static final BlockItemId COAL_GENERATOR = create("coal_generator");
     public static final BlockItemId COMPRESSOR = create("compressor");
     public static final BlockItemId ELECTRIC_COMPRESSOR = create("electric_compressor");

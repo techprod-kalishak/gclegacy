@@ -111,6 +111,8 @@ public class GalacticraftBlockLootSubProvider extends BlockLootSubProvider {
         dropSelf(GalacticraftBlocks.METEORIC_IRON_BLOCK.get());
         dropOther(GalacticraftBlocks.OIL_CAULDRON.get(), Items.CAULDRON);
         dropOther(GalacticraftBlocks.FUEL_CAULDRON.get(), Items.CAULDRON);
+        dropOther(GalacticraftBlocks.BACTERIAL_SLUDGE_CAULDRON.get(), Items.CAULDRON);
+        dropOther(GalacticraftBlocks.SULFURIC_ACID_CAULDRON.get(), Items.CAULDRON);
         dropSelf(GalacticraftBlocks.SEALED_REDSTONE_WIRE.get());
         dropSelf(GalacticraftBlocks.SEALED_REPEATER.get());
         dropSelf(GalacticraftBlocks.FLUID_TANK.get());

@@ -12,8 +12,10 @@ import io.kalishak.galacticraftlegacy.references.GalacticraftBlockIds;
 import io.kalishak.galacticraftlegacy.references.GalacticraftBlockItemIds;
 import io.kalishak.galacticraftlegacy.registry.deferred.DeferredBlockRegister;
 import io.kalishak.galacticraftlegacy.world.item.FeatureTier;
+import io.kalishak.galacticraftlegacy.world.level.block.cauldron.AcidCauldronBlock;
+import io.kalishak.galacticraftlegacy.world.level.block.cauldron.FilledCauldronBlock;
 import io.kalishak.galacticraftlegacy.world.level.block.cauldron.FlammableCauldronBlock;
-import io.kalishak.galacticraftlegacy.world.level.block.cauldron.GalacticraftCauldronInteraction;
+import io.kalishak.galacticraftlegacy.world.level.block.cauldron.GalacticraftCauldronInteractions;
 import io.kalishak.galacticraftlegacy.world.level.block.machine.CompressorBlock;
 import io.kalishak.galacticraftlegacy.world.level.block.machine.OxygenDetectorBlock;
 import io.kalishak.galacticraftlegacy.world.level.block.machine.electric.*;
@@ -827,6 +829,32 @@ public final class GalacticraftBlocks {
                     .liquid()
                     .sound(SoundType.EMPTY)
     );
+    public static final DeferredBlock<LiquidBlock> BACTERIAL_SLUDGE = REGISTRY.registerBlock(
+            GalacticraftBlockItemIds.BACTERIAL_SLUDGE,
+            properties -> new LiquidBlock(GalacticraftFluids.BACTERIAL_SLUDGE.get(), properties),
+            () -> BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.COLOR_LIGHT_GREEN)
+                    .replaceable()
+                    .noCollision()
+                    .strength(100.0F)
+                    .pushReaction(PushReaction.POPPED)
+                    .noLootTable()
+                    .liquid()
+                    .sound(SoundType.EMPTY)
+    );
+    public static final DeferredBlock<LiquidBlock> SULFURIC_ACID = REGISTRY.registerBlock(
+            GalacticraftBlockItemIds.SULFURIC_ACID,
+            properties -> new LiquidBlock(GalacticraftFluids.SULFURIC_ACID.get(), properties),
+            () -> BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.TERRACOTTA_LIGHT_GREEN)
+                    .replaceable()
+                    .noCollision()
+                    .strength(100.0F)
+                    .pushReaction(PushReaction.POPPED)
+                    .noLootTable()
+                    .liquid()
+                    .sound(SoundType.EMPTY)
+    );
 
     //Pipes
     public static final ColorCollection<DeferredBlock<ColoredPipeBlock>> FLUID_PIPE = REGISTRY.registerColoredBlocks(
@@ -870,7 +898,7 @@ public final class GalacticraftBlocks {
     // Misc
     public static final DeferredBlock<FlammableCauldronBlock> OIL_CAULDRON = REGISTRY.registerBlock(
             GalacticraftBlockItemIds.OIL_CAULDRON,
-            properties -> new FlammableCauldronBlock(GalacticraftCauldronInteraction.OIL, GalacticraftFluids.OIL, properties),
+            properties -> new FlammableCauldronBlock(GalacticraftCauldronInteractions.OIL, properties),
             () -> BlockBehaviour.Properties.of()
                     .mapColor(MapColor.STONE)
                     .requiresCorrectToolForDrops()
@@ -879,7 +907,25 @@ public final class GalacticraftBlocks {
     );
     public static final DeferredBlock<FlammableCauldronBlock> FUEL_CAULDRON = REGISTRY.registerBlock(
             GalacticraftBlockItemIds.FUEL_CAULDRON,
-            properties -> new FlammableCauldronBlock(GalacticraftCauldronInteraction.FUEL, GalacticraftFluids.FUEL, properties),
+            properties -> new FlammableCauldronBlock(GalacticraftCauldronInteractions.FUEL, properties),
+            () -> BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.STONE)
+                    .requiresCorrectToolForDrops()
+                    .strength(2.0F)
+                    .noOcclusion()
+    );
+    public static final DeferredBlock<FilledCauldronBlock> BACTERIAL_SLUDGE_CAULDRON = REGISTRY.registerBlock(
+            GalacticraftBlockItemIds.BACTERIAL_SLUDGE_CAULDRON,
+            properties -> new FilledCauldronBlock(GalacticraftCauldronInteractions.BACTERIAL_SLUDGE, properties),
+            () -> BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.STONE)
+                    .requiresCorrectToolForDrops()
+                    .strength(2.0F)
+                    .noOcclusion()
+    );
+    public static final DeferredBlock<AcidCauldronBlock> SULFURIC_ACID_CAULDRON = REGISTRY.registerBlock(
+            GalacticraftBlockItemIds.SULFURIC_ACID_CAULDRON,
+            properties -> new AcidCauldronBlock(GalacticraftCauldronInteractions.SULFURIC_ACID, properties),
             () -> BlockBehaviour.Properties.of()
                     .mapColor(MapColor.STONE)
                     .requiresCorrectToolForDrops()

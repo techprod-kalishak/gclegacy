@@ -38,15 +38,28 @@ public class GalacticraftFluids {
             GalacticraftFluids.FUEL::value,
             GalacticraftFluids.FUEL_FLOWING::value
     ).block(GalacticraftBlocks.FUEL::value).bucket(GalacticraftItems.FUEL_BUCKET::value));
+    private static final Supplier<BaseFlowingFluid.Properties> BACTERIAL_SLUDGE_PROPERTIES = Suppliers.memoize(() -> new BaseFlowingFluid.Properties(
+            GalacticraftFluidType.BACTERIAL_SLUDGE::value,
+            GalacticraftFluids.BACTERIAL_SLUDGE::value,
+            GalacticraftFluids.BACTERIAL_SLUDGE_FLOWING::value
+    ).block(GalacticraftBlocks.BACTERIAL_SLUDGE::value).bucket(GalacticraftItems.BACTERIAL_SLUDGE_BUCKET::value));
+    private static final Supplier<BaseFlowingFluid.Properties> SULFURIC_ACID_PROPERTIES = Suppliers.memoize(() -> new BaseFlowingFluid.Properties(
+            GalacticraftFluidType.SULFURIC_ACID::value,
+            GalacticraftFluids.SULFURIC_ACID::value,
+            GalacticraftFluids.SULFURIC_ACID_FLOWING::value
+    ).block(GalacticraftBlocks.SULFURIC_ACID::value).bucket(GalacticraftItems.SULFURIC_ACID_BUCKET::value));
 
-    public static final DeferredHolder<Fluid, BaseFlowingFluid.Source> OXYGEN = REGISTRY.register(GalacticraftFluidIds.OXYGEN.identifier().getPath(), () -> new BaseFlowingFluid.Source(OXYGEN_PROPERTIES.get()));
-    public static final DeferredHolder<Fluid, BaseFlowingFluid.Flowing> OXYGEN_FLOWING = REGISTRY.register(GalacticraftFluidIds.FLOWING_OXYGEN.identifier().getPath(), () -> new BaseFlowingFluid.Flowing(OXYGEN_PROPERTIES.get()));
-
+    public static final DeferredHolder<Fluid, GaseousFluid.Source> OXYGEN = REGISTRY.register(GalacticraftFluidIds.OXYGEN.identifier().getPath(), () -> new GaseousFluid.Source(OXYGEN_PROPERTIES.get()));
+    public static final DeferredHolder<Fluid, GaseousFluid.Flowing> OXYGEN_FLOWING = REGISTRY.register(GalacticraftFluidIds.FLOWING_OXYGEN.identifier().getPath(), () -> new GaseousFluid.Flowing(OXYGEN_PROPERTIES.get()));
     public static final DeferredHolder<Fluid, BaseFlowingFluid.Source> OIL = REGISTRY.register(GalacticraftFluidIds.OIL.identifier().getPath(), () -> new BaseFlowingFluid.Source(OIL_PROPERTIES.get()));
     public static final DeferredHolder<Fluid, BaseFlowingFluid.Flowing> OIL_FLOWING = REGISTRY.register(GalacticraftFluidIds.FLOWING_OIL.identifier().getPath(), () -> new BaseFlowingFluid.Flowing(OIL_PROPERTIES.get()));
-
     public static final DeferredHolder<Fluid, BaseFlowingFluid.Source> FUEL = REGISTRY.register(GalacticraftFluidIds.FUEL.identifier().getPath(), () -> new BaseFlowingFluid.Source(FUEL_PROPERTIES.get()));
     public static final DeferredHolder<Fluid, BaseFlowingFluid.Flowing> FUEL_FLOWING = REGISTRY.register(GalacticraftFluidIds.FLOWING_FUEL.identifier().getPath(), () -> new BaseFlowingFluid.Flowing(FUEL_PROPERTIES.get()));
+
+    public static final DeferredHolder<Fluid, BaseFlowingFluid.Source> BACTERIAL_SLUDGE = REGISTRY.register(GalacticraftFluidIds.BACTERIAL_SLUDGE.identifier().getPath(), () -> new BaseFlowingFluid.Source(BACTERIAL_SLUDGE_PROPERTIES.get()));
+    public static final DeferredHolder<Fluid, BaseFlowingFluid.Flowing> BACTERIAL_SLUDGE_FLOWING = REGISTRY.register(GalacticraftFluidIds.FLOWING_BACTERIAL_SLUDGE.identifier().getPath(), () -> new BaseFlowingFluid.Flowing(BACTERIAL_SLUDGE_PROPERTIES.get()));
+    public static final DeferredHolder<Fluid, SulfuricAcidFluid.Source> SULFURIC_ACID = REGISTRY.register(GalacticraftFluidIds.SULFURIC_ACID.identifier().getPath(), () -> new SulfuricAcidFluid.Source(SULFURIC_ACID_PROPERTIES.get()));
+    public static final DeferredHolder<Fluid, SulfuricAcidFluid.Flowing> SULFURIC_ACID_FLOWING = REGISTRY.register(GalacticraftFluidIds.FLOWING_SULFURIC_ACID.identifier().getPath(), () -> new SulfuricAcidFluid.Flowing(SULFURIC_ACID_PROPERTIES.get()));
 
     public static void init(IEventBus bus) {
         REGISTRY.register(bus);

@@ -1,6 +1,8 @@
 {
   "values": [
     "galacticraftlegacy:oil_bucket",
-    "galacticraftlegacy:fuel_bucket"
+    "galacticraftlegacy:fuel_bucket",
+    "galacticraftlegacy:bacterial_sludge_bucket",
+    "galacticraftlegacy:sulfuric_acid_bucket"
   ]
 }

@@ -89,14 +89,6 @@ public final class GalacticraftBlockEntityTypes {
             FallenMeteorBlockEntity::new,
             GalacticraftBlocks.FALLEN_METEOR
     );
-    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<FlammableCauldronBlockEntity>> FLAMMABLE_CAULDRON = REGISTRY.registerBlockEntity(
-            GalacticraftBlockEntityIds.FLAMMABLE_CAULDRON,
-            FlammableCauldronBlockEntity::new,
-            Set.of(
-                    GalacticraftBlocks.OIL_CAULDRON,
-                    GalacticraftBlocks.FUEL_CAULDRON
-            )
-    );
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<FluidTankBlockEntity>> FLUID_TANK = REGISTRY.registerBlockEntity(
             GalacticraftBlockEntityIds.FLUID_TANK,
             FluidTankBlockEntity::new,
@@ -180,7 +172,7 @@ public final class GalacticraftBlockEntityTypes {
         EmergencyPostBlockEntity.registerCapability(event);
         AbstractElectricFurnaceBlockEntity.registerCapabilities(event, ELECTRIC_FURNACE.get());
         AbstractElectricFurnaceBlockEntity.registerCapabilities(event, ELECTRIC_ARC_FURNACE.get());
-        FlammableCauldronBlockEntity.registerCapability(event);
+        //FlammableCauldronBlockEntity.registerCapability(event);
         FluidTankBlockEntity.registerCapability(event);
         MagneticCraftingBlockEntity.registerCapabilities(event);
         ParachestBlockEntity.registerCapabilities(event);

@@ -8,9 +8,7 @@
 package io.kalishak.galacticraftlegacy.world.level.block.cauldron;
 
 import io.kalishak.galacticraftlegacy.data.GalacticraftTags;
-import io.kalishak.galacticraftlegacy.world.level.block.entity.FlammableCauldronBlockEntity;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Holder;
 import net.minecraft.core.cauldron.CauldronInteraction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
@@ -18,109 +16,61 @@ import net.minecraft.world.entity.InsideBlockEffectApplier;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.AbstractCauldronBlock;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.EntityBlock;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
-import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.fluids.CauldronFluidContent;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidType;
-import net.neoforged.neoforge.transfer.ResourceHandler;
-import net.neoforged.neoforge.transfer.fluid.FluidResource;
-import net.neoforged.neoforge.transfer.fluid.FluidUtil;
 import org.jspecify.annotations.Nullable;
 
-public class FlammableCauldronBlock extends AbstractCauldronBlock implements EntityBlock {
-    public static final BooleanProperty FULL = BooleanProperty.create("full");
-    private final Holder<Fluid> fuelIn;
-
-    public FlammableCauldronBlock(CauldronInteraction.Dispatcher interactions, Holder<Fluid> fuelIn, Properties properties) {
-        super(properties, interactions);
-        this.fuelIn = fuelIn;
-        registerDefaultState(this.stateDefinition.any().setValue(FULL, true));
-    }
-
-    @Override
-    protected boolean triggerEvent(BlockState state, Level level, BlockPos pos, int id, int param) {
-        super.triggerEvent(state, level, pos, id, param);
-        BlockEntity blockentity = level.getBlockEntity(pos);
-        return blockentity != null && blockentity.triggerEvent(id, param);
+public class FlammableCauldronBlock extends FilledCauldronBlock {
+    public FlammableCauldronBlock(CauldronInteraction.Dispatcher interactions, Properties properties) {
+        super(interactions, properties);
     }
 
     @Override
     protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity, InsideBlockEffectApplier applier, boolean intersects) {
-        if (!level.isClientSide()) {
-            kaboom(entity, state, level, pos);
+        if (entity.canInteractWithLevel() && entity.isOnFire()) {
+            kaboom(entity, level, pos);
         }
     }
 
     @Override
     public void onBlockExploded(BlockState state, ServerLevel level, BlockPos pos, Explosion explosion) {
         super.onBlockExploded(state, level, pos, explosion);
-        kaboom(explosion.getDirectSourceEntity(), state, level, pos);
+        kaboom(explosion.getDirectSourceEntity(), level, pos);
     }
 
     @Override
     protected void onProjectileHit(Level level, BlockState state, BlockHitResult hit, Projectile projectile) {
-        if (projectile.isOnFire() && projectile.canInteractWithLevel()) {
-            kaboom(projectile, state, level, hit.getBlockPos());
+        if (hit.isInside() && projectile.canInteractWithLevel() && projectile.isOnFire()) {
+            kaboom(projectile, level, hit.getBlockPos());
         }
     }
 
-    private void kaboom(@Nullable Entity entity, BlockState state, Level level, BlockPos pos) {
-        if (entity == null || entity.isOnFire()) {
-            FluidStack fluidIn = FluidStack.EMPTY;
+    private void kaboom(@Nullable Entity entity, Level level, BlockPos pos) {
+        FluidStack fluidIn = FluidStack.EMPTY;
+        CauldronFluidContent cauldronFluidContent = CauldronFluidContent.getForBlock(this);
 
-            ResourceHandler<FluidResource> fluidTank = level.getCapability(Capabilities.Fluid.BLOCK, pos, null);
+        if (cauldronFluidContent != null && cauldronFluidContent.fluid != Fluids.EMPTY) {
+            fluidIn = new FluidStack(cauldronFluidContent.fluid, FluidType.BUCKET_VOLUME);
+        }
 
-            if (fluidTank != null) {
-                fluidIn = FluidUtil.getStack(fluidTank, 0);
-            } else if (state.getValue(FULL)) {
-                CauldronFluidContent cauldronFluidContent = CauldronFluidContent.getForBlock(this);
+        if (fluidIn.is(GalacticraftTags.Fluids.FLAMMABLE_LIQUID)) {
+            level.removeBlock(pos, false);
+            level.explode(
+                    entity,
+                    pos.getX(),
+                    pos.getY() + 0.5D,
+                    pos.getZ(),
+                    5,
+                    Level.ExplosionInteraction.MOB
+            );
 
-                if (cauldronFluidContent != null && cauldronFluidContent.fluid != Fluids.EMPTY) {
-                    fluidIn = new FluidStack(cauldronFluidContent.fluid, FluidType.BUCKET_VOLUME);
-                }
-            }
-
-            if (fluidIn.is(GalacticraftTags.Fluids.FLAMMABLE_LIQUID)) {
-                float fluidAmount = fluidIn.getAmount() / 1000.0F;
-                level.removeBlock(pos, false);
-                level.explode(
-                        entity,
-                        pos.getX() + 0.5,
-                        pos.getY(),
-                        pos.getZ(),
-                        2 + 4 * fluidAmount,
-                        Level.ExplosionInteraction.MOB
-                );
-
-                if (entity instanceof Projectile projectile && entity.isAlive()) {
-                    projectile.setRemoved(Entity.RemovalReason.KILLED);
-                }
+            if (entity instanceof Projectile projectile && !projectile.isInvulnerable()) {
+                projectile.setRemoved(Entity.RemovalReason.KILLED);
             }
         }
-    }
-
-    @Override
-    public @Nullable BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return new FlammableCauldronBlockEntity(blockPos, blockState, new FluidStack(this.fuelIn, FluidType.BUCKET_VOLUME));
-    }
-
-    @Override
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FULL);
-    }
-
-    @Override
-    public boolean isFull(BlockState blockState) {
-        return blockState.getValue(FULL);
     }
 }

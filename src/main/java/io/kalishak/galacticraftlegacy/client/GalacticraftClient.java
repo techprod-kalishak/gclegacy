@@ -164,22 +164,34 @@ public class GalacticraftClient {
                 new Material(still),
                 new Material(flow),
                 null,
-                state -> 0xFFAFEEEE
-        ), GalacticraftFluids.OXYGEN, GalacticraftFluids.OXYGEN_FLOWING);
+                _ -> 0xFFAFEEEE
+        ), GalacticraftFluids.OXYGEN::value, GalacticraftFluids.OXYGEN_FLOWING::value);
         event.register(new FluidModel.Unbaked(
                 new Material(still),
                 new Material(flow),
                 new Material(Identifier.withDefaultNamespace("block/water_overlay")),
-                state -> 0xFF281E15
-                ), GalacticraftFluids.OIL, GalacticraftFluids.OIL_FLOWING
+                _ -> 0xFF281E15
+                ), GalacticraftFluids.OIL::value, GalacticraftFluids.OIL_FLOWING::value
         );
         event.register(new FluidModel.Unbaked(
-                        new Material(Constants.id("block/fuel_still")),
-                        new Material(Constants.id("block/fuel_flow")),
-                        null,
-                        state -> 0xFFECF542
-                ), GalacticraftFluids.FUEL, GalacticraftFluids.FUEL_FLOWING
+                new Material(Constants.id("block/fuel_still")),
+                new Material(Constants.id("block/fuel_flow")),
+                null,
+                _ -> 0xFFECF542
+                ), GalacticraftFluids.FUEL::value, GalacticraftFluids.FUEL_FLOWING::value
         );
+        event.register(new FluidModel.Unbaked(
+                new Material(Constants.id("block/bacterial_sludge_still")),
+                new Material(Constants.id("block/bacterial_sludge_flow")),
+                new Material(Constants.id("block/bacterial_sludge_overlay")),
+                _ -> 0x073F0A
+        ), GalacticraftFluids.BACTERIAL_SLUDGE::value, GalacticraftFluids.BACTERIAL_SLUDGE_FLOWING::value);
+        event.register(new FluidModel.Unbaked(
+                new Material(Constants.id("block/sulfuric_acid_still")),
+                new Material(Constants.id("block/sulfuric_acid_flow")),
+                new Material(Constants.id("block/sulfuric_acid_overlay")),
+                _ -> 0x70F430
+        ), GalacticraftFluids.SULFURIC_ACID::value, GalacticraftFluids.SULFURIC_ACID_FLOWING::value);
     }
 
     private void registerStandaloneModels(ModelEvent.RegisterStandalone event) {

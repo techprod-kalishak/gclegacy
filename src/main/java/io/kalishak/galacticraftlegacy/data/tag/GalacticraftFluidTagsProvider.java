@@ -36,6 +36,12 @@ public class GalacticraftFluidTagsProvider extends FluidTagsProvider {
         tag(GalacticraftTags.Fluids.IS_FUEL)
                 .add(GalacticraftFluidIds.FUEL)
                 .add(GalacticraftFluidIds.FLOWING_FUEL);
+        tag(GalacticraftTags.Fluids.IS_BACTERIAL_SLUDGE)
+                .add(GalacticraftFluidIds.BACTERIAL_SLUDGE)
+                .add(GalacticraftFluidIds.FLOWING_BACTERIAL_SLUDGE);
+        tag(GalacticraftTags.Fluids.IS_SULFURIC_ACID)
+                .add(GalacticraftFluidIds.SULFURIC_ACID)
+                .add(GalacticraftFluidIds.FLOWING_SULFURIC_ACID);
         tag(GalacticraftTags.Fluids.FLAMMABLE_LIQUID)
                 .addTag(GalacticraftTags.Fluids.IS_OIL)
                 .addTag(GalacticraftTags.Fluids.IS_FUEL);

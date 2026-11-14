@@ -17,9 +17,14 @@ public class GalacticraftFluidIds {
     public static final ResourceKey<Fluid> FLOWING_OXYGEN = ResourceKey.create(Registries.FLUID, Constants.id("flowing_oxygen"));
     public static final ResourceKey<Fluid> ARGON = ResourceKey.create(Registries.FLUID, Constants.id("argon"));
     public static final ResourceKey<Fluid> CO2 = ResourceKey.create(Registries.FLUID, Constants.id("carbon_dioxide"));
+    public static final ResourceKey<Fluid> HYDROGEN = ResourceKey.create(Registries.FLUID, Constants.id("hydrogen"));
 
     public static final ResourceKey<Fluid> FUEL = ResourceKey.create(Registries.FLUID, Constants.id("fuel"));
     public static final ResourceKey<Fluid> FLOWING_FUEL = ResourceKey.create(Registries.FLUID, Constants.id("flowing_fuel"));
     public static final ResourceKey<Fluid> OIL = ResourceKey.create(Registries.FLUID, Constants.id("oil"));
     public static final ResourceKey<Fluid> FLOWING_OIL = ResourceKey.create(Registries.FLUID, Constants.id("flowing_oil"));
+    public static final ResourceKey<Fluid> BACTERIAL_SLUDGE = ResourceKey.create(Registries.FLUID, Constants.id("bacterial_sludge"));
+    public static final ResourceKey<Fluid> FLOWING_BACTERIAL_SLUDGE = ResourceKey.create(Registries.FLUID, Constants.id("flowing_bacterial_sludge"));
+    public static final ResourceKey<Fluid> SULFURIC_ACID = ResourceKey.create(Registries.FLUID, Constants.id("sulfuric_acid"));
+    public static final ResourceKey<Fluid> FLOWING_SULFURIC_ACID = ResourceKey.create(Registries.FLUID, Constants.id("flowing_sulfuric_acid"));
 }

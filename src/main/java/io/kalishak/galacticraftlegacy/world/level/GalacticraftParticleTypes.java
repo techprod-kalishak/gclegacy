@@ -22,6 +22,10 @@ public class GalacticraftParticleTypes {
             "dripping_oil",
             () -> new SimpleParticleType(false)
     );
+    public static final DeferredHolder<ParticleType<?>, SimpleParticleType> DRIPPING_SULFURIC_ACID = REGISTRY.register(
+            "dripping_sulfuric_acid",
+            () -> new SimpleParticleType(false)
+    );
     public static final DeferredHolder<ParticleType<?>, SimpleParticleType> SPARKS = REGISTRY.register(
             "sparks",
             () -> new SimpleParticleType(false)
