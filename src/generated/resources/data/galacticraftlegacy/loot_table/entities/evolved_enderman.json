@@ -1,0 +1,55 @@
+{
+  "type": "minecraft:entity",
+  "pools": [
+    {
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "modifier": [
+            {
+              "type": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 1,
+                "min": 0
+              }
+            },
+            {
+              "type": "minecraft:enchanted_count_increase",
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 1.0,
+                "min": 0.0
+              },
+              "enchantment": "minecraft:looting"
+            }
+          ],
+          "name": "minecraft:ender_pearl"
+        },
+        {
+          "type": "minecraft:item",
+          "modifier": {
+            "type": "galacticraftlegacy:set_fluid_in_tank",
+            "fluid": "galacticraftlegacy:oxygen",
+            "value": {
+              "type": "minecraft:uniform",
+              "max": 901,
+              "min": 1
+            }
+          },
+          "name": "galacticraftlegacy:medium_oxygen_tank"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:ender_eye"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "galacticraftlegacy:oxygen_mask"
+        }
+      ],
+      "rolls": 1
+    }
+  ],
+  "random_sequence": "galacticraftlegacy:entities/evolved_enderman"
+}
