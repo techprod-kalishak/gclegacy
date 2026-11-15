@@ -5,7 +5,7 @@
  * See LICENSE file for more details
  */
 
-package io.kalishak.galacticraftlegacy.client.renderer.entity;
+package io.kalishak.galacticraftlegacy.client.renderer.entity.monster;
 
 import io.kalishak.galacticraftlegacy.attachment.GalacticraftAttachments;
 import io.kalishak.galacticraftlegacy.client.renderer.entity.layer.gear.OxygenGearLayer;

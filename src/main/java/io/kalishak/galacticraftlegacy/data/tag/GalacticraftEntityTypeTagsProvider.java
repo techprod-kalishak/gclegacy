@@ -30,10 +30,8 @@ public class GalacticraftEntityTypeTagsProvider extends EntityTypeTagsProvider {
         tag(GalacticraftTags.EntityTypes.CAN_EQUIP_PARACHUTE)
                 .add(EntityTypeIds.PLAYER);
         tag(GalacticraftTags.EntityTypes.CAN_EQUIP_GEAR)
-                .add(EntityTypeIds.CREEPER)
                 .add(EntityTypeIds.PLAYER)
                 .add(EntityTypeIds.SKELETON)
-                .add(EntityTypeIds.WOLF)
                 .add(EntityTypeIds.ZOMBIE);
         tag(EntityTypeTags.BURN_IN_DAYLIGHT)
                 .add(GalacticraftEntityIds.EVOLVED_SKELETON)
@@ -46,6 +44,7 @@ public class GalacticraftEntityTypeTagsProvider extends EntityTypeTagsProvider {
                 .add(GalacticraftEntityIds.EVOLVED_CREEPER);
         tag(GalacticraftTags.EntityTypes.SPACE_MOB)
                 .add(GalacticraftEntityIds.EVOLVED_CREEPER)
+                .add(GalacticraftEntityIds.EVOLVED_ENDERMAN)
                 .add(GalacticraftEntityIds.EVOLVED_SKELETON)
                 .add(GalacticraftEntityIds.EVOLVED_ZOMBIE);
     }

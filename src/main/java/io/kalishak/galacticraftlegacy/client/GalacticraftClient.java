@@ -36,6 +36,10 @@ import io.kalishak.galacticraftlegacy.client.renderer.blockentity.*;
 import io.kalishak.galacticraftlegacy.client.renderer.entity.*;
 import io.kalishak.galacticraftlegacy.client.renderer.entity.layer.gear.GearEquipmentLayer;
 import io.kalishak.galacticraftlegacy.client.renderer.entity.layer.gear.OxygenMaskLayer;
+import io.kalishak.galacticraftlegacy.client.renderer.entity.monster.EvolvedCreeperRenderer;
+import io.kalishak.galacticraftlegacy.client.renderer.entity.monster.EvolvedEndermanRenderer;
+import io.kalishak.galacticraftlegacy.client.renderer.entity.monster.EvolvedSkeletonRenderer;
+import io.kalishak.galacticraftlegacy.client.renderer.entity.monster.EvolvedZombieRenderer;
 import io.kalishak.galacticraftlegacy.client.renderer.entity.state.GearRenderState;
 import io.kalishak.galacticraftlegacy.client.renderer.environment.DummyCloudsRenderer;
 import io.kalishak.galacticraftlegacy.client.renderer.environment.DummyWeatherRenderer;
@@ -236,6 +240,7 @@ public class GalacticraftClient {
         event.registerEntityRenderer(GalacticraftEntityTypes.THROWN_METEOR_CHUNK.get(), ThrownMeteorRenderer::new);
         event.registerEntityRenderer(GalacticraftEntityTypes.FALLING_PARACHEST.get(), FallingParachestRenderer::new);
         event.registerEntityRenderer(GalacticraftEntityTypes.EVOLVED_CREEPER.get(), EvolvedCreeperRenderer::new);
+        event.registerEntityRenderer(GalacticraftEntityTypes.EVOLVED_ENDERMAN.get(), EvolvedEndermanRenderer::new);
         event.registerEntityRenderer(GalacticraftEntityTypes.EVOLVED_SKELETON.get(), EvolvedSkeletonRenderer::new);
         event.registerEntityRenderer(GalacticraftEntityTypes.EVOLVED_ZOMBIE.get(), EvolvedZombieRenderer::new);
         event.registerEntityRenderer(GalacticraftEntityTypes.NO_GRAVITY_MOVING_BLOCK.get(), NoGravityMovingBlockRenderer::new);

@@ -47,7 +47,8 @@ public class EvolvedZombie extends Zombie implements EvolvedMonster {
                 .add(Attributes.ATTACK_DAMAGE, 3.5)
                 .add(Attributes.ARMOR, 2.0)
                 .add(Attributes.SPAWN_REINFORCEMENTS_CHANCE, 0.5D)
-                .add(GalacticraftAttributes.THERMAL_PROTECTION, 1.0);
+                .add(GalacticraftAttributes.THERMAL_PROTECTION, 1.0)
+                .add(GalacticraftAttributes.CORROSION_PROTECTION);
     }
 
     @Override

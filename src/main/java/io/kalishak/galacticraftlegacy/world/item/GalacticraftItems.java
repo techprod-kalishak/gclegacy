@@ -546,6 +546,11 @@ public final class GalacticraftItems {
             SpawnEggItem::new,
             () -> new Item.Properties().spawnEgg(GalacticraftEntityTypes.EVOLVED_CREEPER.get())
     );
+    public static final DeferredItem<SpawnEggItem> EVOLVED_ENDERMAN_SPAWN_EGG = REGISTRY.registerItem(
+            GalacticraftItemIds.EVOLVED_ENDERMAN_SPAWN_EGG,
+            SpawnEggItem::new,
+            () -> new Item.Properties().spawnEgg(GalacticraftEntityTypes.EVOLVED_ENDERMAN.get())
+    );
     public static final DeferredItem<SpawnEggItem> EVOLVED_SKELETON_SPAWN_EGG = REGISTRY.registerItem(
             GalacticraftItemIds.EVOLVED_SKELETON_SPAWN_EGG,
             SpawnEggItem::new,

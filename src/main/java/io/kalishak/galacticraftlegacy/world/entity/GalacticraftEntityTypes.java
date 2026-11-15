@@ -12,10 +12,7 @@ import io.kalishak.galacticraftlegacy.references.GalacticraftEntityIds;
 import io.kalishak.galacticraftlegacy.registry.deferred.DeferredEntityTypeRegister;
 import io.kalishak.galacticraftlegacy.world.entity.ai.attributes.GalacticraftAttributes;
 import io.kalishak.galacticraftlegacy.world.entity.item.FallenMeteor;
-import io.kalishak.galacticraftlegacy.world.entity.monster.EvolvedCreeper;
-import io.kalishak.galacticraftlegacy.world.entity.monster.EvolvedMonster;
-import io.kalishak.galacticraftlegacy.world.entity.monster.EvolvedSkeleton;
-import io.kalishak.galacticraftlegacy.world.entity.monster.EvolvedZombie;
+import io.kalishak.galacticraftlegacy.world.entity.monster.*;
 import io.kalishak.galacticraftlegacy.world.entity.projectile.ThrownMeteorChunk;
 import io.kalishak.galacticraftlegacy.world.entity.vehicle.AstroMiner;
 import io.kalishak.galacticraftlegacy.world.entity.vehicle.MoonBuggy;
@@ -127,6 +124,17 @@ public final class GalacticraftEntityTypes {
                     .clientTrackingRange(8)
                     .notInPeaceful()
     );
+    public static final DeferredHolder<EntityType<?>, EntityType<EvolvedEnderman>> EVOLVED_ENDERMAN = REGISTRY.registerEntityType(
+            GalacticraftEntityIds.EVOLVED_ENDERMAN,
+            EvolvedEnderman::new,
+            MobCategory.MONSTER,
+            builder -> builder
+                    .sized(0.6F, 2.9F)
+                    .eyeHeight(2.55F)
+                    .passengerAttachments(2.80625F)
+                    .clientTrackingRange(8)
+                    .notInPeaceful()
+    );
     public static final DeferredHolder<EntityType<?>, EntityType<EvolvedSkeleton>> EVOLVED_SKELETON = REGISTRY.registerEntityType(
             GalacticraftEntityIds.EVOLVED_SKELETON,
             EvolvedSkeleton::new,
@@ -225,6 +233,7 @@ public final class GalacticraftEntityTypes {
         event.put(EVOLVED_CREEPER.get(), EvolvedCreeper.createAttributes().build());
         event.put(EVOLVED_SKELETON.get(), EvolvedSkeleton.createAttributes().build());
         event.put(EVOLVED_ZOMBIE.get(), EvolvedZombie.createAttributes().build());
+        event.put(EVOLVED_ENDERMAN.get(), EvolvedEnderman.createAttributes().build());
     }
 
     @SubscribeEvent
@@ -248,6 +257,13 @@ public final class GalacticraftEntityTypes {
                 SpawnPlacementTypes.ON_GROUND,
                 Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
                 withBound(15),
+                RegisterSpawnPlacementsEvent.Operation.AND
+        );
+        event.register(
+                EVOLVED_ENDERMAN.get(),
+                SpawnPlacementTypes.ON_GROUND,
+                Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                withBound(5),
                 RegisterSpawnPlacementsEvent.Operation.AND
         );
     }

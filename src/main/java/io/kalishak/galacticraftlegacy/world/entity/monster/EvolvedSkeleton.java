@@ -43,7 +43,8 @@ public class EvolvedSkeleton extends Skeleton implements EvolvedMonster {
         return Monster.createMonsterAttributes()
                 .add(Attributes.MAX_HEALTH, 25)
                 .add(Attributes.MOVEMENT_SPEED, 0.35)
-                .add(GalacticraftAttributes.THERMAL_PROTECTION, 1.0);
+                .add(GalacticraftAttributes.THERMAL_PROTECTION, 1.0)
+                .add(GalacticraftAttributes.CORROSION_PROTECTION);
     }
 
     @Override

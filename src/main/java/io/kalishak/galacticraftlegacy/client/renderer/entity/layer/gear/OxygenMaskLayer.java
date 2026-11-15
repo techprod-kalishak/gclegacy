@@ -10,10 +10,10 @@ package io.kalishak.galacticraftlegacy.client.renderer.entity.layer.gear;
 import com.mojang.blaze3d.vertex.PoseStack;
 import io.kalishak.galacticraftlegacy.client.model.gear.GearEquipmentModel;
 import io.kalishak.galacticraftlegacy.client.model.geom.GalacticraftModelLayers;
+import io.kalishak.galacticraftlegacy.client.renderer.entity.state.EvolvedEndermanRenderState;
 import io.kalishak.galacticraftlegacy.client.renderer.entity.state.GearRenderState;
 import io.kalishak.galacticraftlegacy.client.renderer.entity.state.GearRenders;
 import io.kalishak.galacticraftlegacy.references.Constants;
-import io.kalishak.galacticraftlegacy.world.entity.GalacticraftEntityTypes;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.model.geom.PartPose;
@@ -35,7 +35,11 @@ public class OxygenMaskLayer<S extends LivingEntityRenderState, M extends Entity
     public static final Identifier TEXTURES = Constants.texture("entity/equipment/gear/oxygen_mask.png");
 
     public OxygenMaskLayer(RenderLayerParent<S, M> renderer, EntityModelSet modelSet, EquipmentLayerRenderer layerRenderer, EquipmentAssetManager equipmentAssets) {
-        super(renderer, GearEquipmentModel.simple(modelSet.bakeLayer(GalacticraftModelLayers.OXYGEN_MASK), RenderTypes::entityCutout), layerRenderer, equipmentAssets);
+        this(renderer, modelSet, layerRenderer, equipmentAssets, 0.02F);
+    }
+
+    public OxygenMaskLayer(RenderLayerParent<S, M> renderer, EntityModelSet modelSet, EquipmentLayerRenderer layerRenderer, EquipmentAssetManager equipmentAssets, float yOffset) {
+        super(renderer, GearEquipmentModel.simple(modelSet.bakeLayer(GalacticraftModelLayers.OXYGEN_MASK), RenderTypes::entityCutout), layerRenderer, equipmentAssets, yOffset);
     }
 
     public static LayerDefinition createOxygenMaskLayer() {
@@ -51,11 +55,15 @@ public class OxygenMaskLayer<S extends LivingEntityRenderState, M extends Entity
     @Override
     public void submit(PoseStack poseStack, SubmitNodeCollector nodeCollector, int packedLight, S renderState, float yRot, float xRot) {
         ItemStack stack = extractFromRenderState(renderState, GearRenderState.OXYGEN_MASK, GearRenders::oxygenMask);
-        float yOffset = renderState.entityType.equals(GalacticraftEntityTypes.EVOLVED_CREEPER.get()) ? 0.39F : 0.02F;
+        float newOffset = this.yOffset;
+
+        if (renderState instanceof EvolvedEndermanRenderState endermanRenderState && endermanRenderState.isCreepy) {
+            newOffset += 2.5F;
+        }
 
         if (!stack.isEmpty()) {
             poseStack.pushPose();
-            poseStack.translate(0.0F, yOffset, 0.0F);
+            poseStack.translate(0.0F, newOffset, 0.0F);
             poseStack.scale(0.57F, 0.57F, 0.57F);
             nodeCollector.order(1).submitModel(this.model, renderState, poseStack, this.model.renderType(TEXTURES), packedLight, OverlayTexture.NO_OVERLAY, renderState.outlineColor);
             poseStack.scale(1.0F, 1.0F, 1.0F);

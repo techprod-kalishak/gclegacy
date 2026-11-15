@@ -177,6 +177,32 @@ public class GalacticraftEntityLootSubProvider extends EntityLootSubProvider {
                                         )
                         )
         );
+        add(
+                GalacticraftEntityTypes.EVOLVED_ENDERMAN.get(),
+                LootTable.lootTable()
+                        .withPool(
+                                LootPool.lootPool()
+                                        .setRolls(ContextIntProviders.exactly(1))
+                                        .add(
+                                                LootItem.lootTableItem(Items.ENDER_PEARL)
+                                                        .apply(SetItemCountFunction.setCount(ContextIntProviders.between(0, 1)))
+                                                        .apply(EnchantedCountIncreaseFunction.lootingMultiplier(this.enchantments, ContextFloatProviders.between(0.0F, 1.0F)))
+                                        )
+                                        .add(
+                                                LootItem.lootTableItem(GalacticraftItems.MEDIUM_TANK)
+                                                        .apply(SetItemFluidTankFunction.setFluid(GalacticraftFluids.OXYGEN, ContextIntProviders.between(1, 901)))
+                                        )
+                                        .add(
+                                                LootItem.lootTableItem(Items.ENDER_EYE)
+                                        )
+//                                        .add(
+//                                                LootItem.lootTableItem(GalacticraftItems.OXYGEN_CONCENTRATOR)
+//                                        )
+                                        .add(
+                                                LootItem.lootTableItem(GalacticraftItems.OXYGEN_MASK)
+                                        )
+                        )
+        );
     }
 
     @Override

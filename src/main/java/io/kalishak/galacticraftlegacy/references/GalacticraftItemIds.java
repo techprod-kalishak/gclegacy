@@ -177,6 +177,7 @@ public class GalacticraftItemIds {
     public static final ResourceKey<Item> STICKY_DESH_PICKAXE = create("sticky_desh_pickaxe");
     public static final ResourceKey<Item> VOLCANIC_PICKAXE = create("volcanic_pickaxe");
     public static final ResourceKey<Item> EVOLVED_CREEPER_SPAWN_EGG = create("evolved_creeper_spawn_egg");
+    public static final ResourceKey<Item> EVOLVED_ENDERMAN_SPAWN_EGG = create("evolved_enderman_spawn_egg");
     public static final ResourceKey<Item> EVOLVED_SKELETON_SPAWN_EGG = create("evolved_skeleton_spawn_egg");
     public static final ResourceKey<Item> EVOLVED_ZOMBIE_SPAWN_EGG = create("evolved_zombie_spawn_egg");
     

@@ -66,6 +66,13 @@ public class GalacticraftBlockTagsProvider extends BlockTagsProvider {
                 .add(BlockIds.VOID_AIR)
                 .add(BlockIds.CAVE_AIR)
                 .add(GalacticraftBlockIds.OXYGEN_AIR);
+        tag(BlockTags.ENDERMAN_HOLDABLE)
+                .add(GalacticraftBlockItemIds.MOON_DIRT.block())
+                .add(GalacticraftBlockItemIds.MOON_TURF.block())
+                .add(GalacticraftBlockItemIds.MARS_REGOLITH.block())
+                .add(GalacticraftBlockItemIds.MARS_FINE_REGOLITH.block())
+                .add(GalacticraftBlockItemIds.ASTEROID_ROCK.block())
+                .add(GalacticraftBlockItemIds.VENUS_SOFT_ROCK.block());
         TagAppender<Block> tintedGlasses = tag(GalacticraftTags.Blocks.CONNECTS_TO_TINTED_GLASS_PANES)
                 .addTag(BlockTags.WALLS)
                 .addTag(Tags.BlockItems.GLASS_PANES.block())

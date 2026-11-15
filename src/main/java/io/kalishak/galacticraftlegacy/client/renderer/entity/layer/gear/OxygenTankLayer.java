@@ -14,7 +14,6 @@ import io.kalishak.galacticraftlegacy.client.model.gear.OxygenTankModel;
 import io.kalishak.galacticraftlegacy.client.model.geom.GalacticraftModelLayers;
 import io.kalishak.galacticraftlegacy.client.renderer.entity.state.GearRenderState;
 import io.kalishak.galacticraftlegacy.client.renderer.entity.state.GearRenders;
-import io.kalishak.galacticraftlegacy.world.entity.GalacticraftEntityTypes;
 import io.kalishak.galacticraftlegacy.world.item.GalacticraftItems;
 import io.kalishak.galacticraftlegacy.world.item.component.GearEquippable;
 import net.minecraft.client.model.EntityModel;
@@ -36,24 +35,27 @@ public class OxygenTankLayer<S extends LivingEntityRenderState, M extends Entity
     protected final GearEquipmentModel<S> mediumTank;
     protected final GearEquipmentModel<S> lightTank;
 
-    public OxygenTankLayer(RenderLayerParent<S, M> renderer, EntityModelSet modelSet, EquipmentLayerRenderer layerRenderer, EquipmentAssetManager equipmentAssets) {
-        super(renderer, new OxygenTankModel<>(modelSet.bakeLayer(GalacticraftModelLayers.HEAVY_OXYGEN_TANK)), layerRenderer, equipmentAssets);
+    public OxygenTankLayer(RenderLayerParent<S, M> renderer, EntityModelSet modelSet, EquipmentLayerRenderer layerRenderer, EquipmentAssetManager equipmentAssets, float yOffset) {
+        super(renderer, new OxygenTankModel<>(modelSet.bakeLayer(GalacticraftModelLayers.HEAVY_OXYGEN_TANK)), layerRenderer, equipmentAssets, yOffset);
         this.mediumTank = new OxygenTankModel<>(modelSet.bakeLayer(GalacticraftModelLayers.MEDIUM_OXYGEN_TANK));
         this.lightTank = new OxygenTankModel<>(modelSet.bakeLayer(GalacticraftModelLayers.LIGHT_OXYGEN_TANK));
+    }
+
+    public OxygenTankLayer(RenderLayerParent<S, M> renderer, EntityModelSet modelSet, EquipmentLayerRenderer layerRenderer, EquipmentAssetManager equipmentAssets) {
+        this(renderer, modelSet, layerRenderer, equipmentAssets, 0.2F);
     }
 
     @Override
     public void submit(PoseStack poseStack, SubmitNodeCollector nodeCollector, int packedLight, S renderState, float yRot, float xRot) {
         ItemStack leftTankStack = extractFromRenderState(renderState, GearRenderState.TANK, GearRenders::leftTank);
         ItemStack rightTankStack = extractFromRenderState(renderState, GearRenderState.ADDITIONAL_TANK, GearRenders::rightTank);
-        float yOffset = renderState.entityType.equals(GalacticraftEntityTypes.EVOLVED_CREEPER.get()) ? 0.57F : 0.2F;
 
         GearEquippable.extractAssetId(leftTankStack).ifPresent(asset -> {
             Identifier textures = getGearTextures(asset, EnumExtensions.LAYER_TYPE_TANK.getValue());
             Model<S> leftTank = chooseTankModel(leftTankStack);
 
             poseStack.pushPose();
-            poseStack.translate(0.12F, 0.2F, 0.2F);
+            transformTanks(poseStack, true);
             nodeCollector.submitModel(leftTank, renderState, poseStack, leftTank.renderType(textures), packedLight, OverlayTexture.NO_OVERLAY, renderState.outlineColor);
             poseStack.popPose();
         });
@@ -63,10 +65,18 @@ public class OxygenTankLayer<S extends LivingEntityRenderState, M extends Entity
             Model<S> rightTank = chooseTankModel(rightTankStack);
 
             poseStack.pushPose();
-            poseStack.translate(-0.175F, 0.2F, 0.2F);
+            transformTanks(poseStack, false);
             nodeCollector.submitModel(rightTank, renderState, poseStack, rightTank.renderType(textures), packedLight, OverlayTexture.NO_OVERLAY, renderState.outlineColor);
             poseStack.popPose();
         });
+    }
+
+    protected void transformTanks(PoseStack poseStack, boolean isLeftTank) {
+        if (isLeftTank) {
+            poseStack.translate(0.12F, this.yOffset, 0.2F);
+        } else {
+            poseStack.translate(-0.175F, this.yOffset, 0.2F);
+        }
     }
 
     private Model<S> chooseTankModel(ItemStack stack) {

@@ -1,4 +1,4 @@
-package io.kalishak.galacticraftlegacy.client.renderer.entity;
+package io.kalishak.galacticraftlegacy.client.renderer.entity.monster;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import io.kalishak.galacticraftlegacy.client.model.entity.EvolvedCreeperModel;
@@ -22,9 +22,9 @@ public class EvolvedCreeperRenderer extends AgeableMobRenderer<EvolvedCreeper, E
     public EvolvedCreeperRenderer(EntityRendererProvider.Context context) {
         super(context, new EvolvedCreeperModel(context.bakeLayer(GalacticraftModelLayers.EVOLVED_CREEPER)), new EvolvedCreeperModel(context.bakeLayer(GalacticraftModelLayers.EVOLVED_CREEPER)), 0.5F);
         addLayer(new EvolvedCreeperPowerLayer(this, context.getModelSet()));
-        addLayer(new OxygenMaskLayer<>(this, context.getModelSet(), context.getEquipmentRenderer(), context.getEquipmentAssets()));
-        addLayer(new OxygenGearLayer<>(this, context.getModelSet(), context.getEquipmentRenderer(), context.getEquipmentAssets()));
-        addLayer(new OxygenTankLayer<>(this, context.getModelSet(), context.getEquipmentRenderer(), context.getEquipmentAssets()));
+        addLayer(new OxygenMaskLayer<>(this, context.getModelSet(), context.getEquipmentRenderer(), context.getEquipmentAssets(), 0.39F));
+        addLayer(new OxygenGearLayer<>(this, context.getModelSet(), context.getEquipmentRenderer(), context.getEquipmentAssets(), 0.37F));
+        addLayer(new OxygenTankLayer<>(this, context.getModelSet(), context.getEquipmentRenderer(), context.getEquipmentAssets(), 0.57F));
     }
 
     @Override

@@ -19,6 +19,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.material.Fluid;
 import net.neoforged.bus.api.IEventBus;
@@ -320,7 +321,9 @@ public final class GalacticraftCreativeModeTabs {
 
     private static void populateVanillaCreativeTabs(BuildCreativeModeTabContentsEvent event) {
         if (event.getTabKey().equals(CreativeModeTabs.SPAWN_EGGS)) {
-            event.accept(GalacticraftItems.EVOLVED_CREEPER_SPAWN_EGG);
+            event.insertAfter(new ItemStack(Items.CREEPER_SPAWN_EGG), GalacticraftItems.EVOLVED_CREEPER_SPAWN_EGG.toStack(), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+            //event.accept(GalacticraftItems.EVOLVED_CREEPER_SPAWN_EGG);
+            event.accept(GalacticraftItems.EVOLVED_ENDERMAN_SPAWN_EGG);
             event.accept(GalacticraftItems.EVOLVED_SKELETON_SPAWN_EGG);
             event.accept(GalacticraftItems.EVOLVED_ZOMBIE_SPAWN_EGG);
         }

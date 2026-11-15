@@ -13,7 +13,6 @@ import io.kalishak.galacticraftlegacy.client.model.geom.GalacticraftModelLayers;
 import io.kalishak.galacticraftlegacy.client.renderer.entity.state.GearRenderState;
 import io.kalishak.galacticraftlegacy.client.renderer.entity.state.GearRenders;
 import io.kalishak.galacticraftlegacy.references.Constants;
-import io.kalishak.galacticraftlegacy.world.entity.GalacticraftEntityTypes;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.renderer.SubmitNodeCollector;
@@ -29,24 +28,27 @@ import net.minecraft.world.item.ItemStack;
 public class OxygenGearLayer<S extends LivingEntityRenderState, M extends EntityModel<S>> extends GearEquipmentLayer<S, M> {
     public static final Identifier TEXTURES = Constants.texture("entity/equipment/gear/oxygen_gear.png");
 
+    public OxygenGearLayer(RenderLayerParent<S, M> renderer, EntityModelSet entityModels, EquipmentLayerRenderer layerRenderer, EquipmentAssetManager equipmentAssetManager, float yOffset) {
+        super(renderer, OxygenGearModel::new, GalacticraftModelLayers.OXYGEN_GEAR, entityModels, layerRenderer, equipmentAssetManager, yOffset);
+    }
+
     public OxygenGearLayer(RenderLayerParent<S, M> renderer, EntityModelSet entityModels, EquipmentLayerRenderer layerRenderer, EquipmentAssetManager equipmentAssetManager) {
-        super(renderer, OxygenGearModel::new, GalacticraftModelLayers.OXYGEN_GEAR, entityModels, layerRenderer, equipmentAssetManager);
+        this(renderer, entityModels, layerRenderer, equipmentAssetManager, 0.0F);
     }
 
     @Override
     public void submit(PoseStack poseStack, SubmitNodeCollector nodeCollector, int packedLight, S renderState, float yRot, float xRot) {
         ItemStack stack = extractFromRenderState(renderState, GearRenderState.OXYGEN_GEAR, GearRenders::oxygenGear);
-        float yOffset = renderState.entityType.equals(GalacticraftEntityTypes.EVOLVED_CREEPER.get()) ? 0.37F : 0.0F;
 
         if (!stack.isEmpty()) {
             for (int i = 0; i < 7; i++) {
                 for (int j = 0; j < 2; j++) {
                     poseStack.pushPose();
-                    poseStack.translate(0.175F * (float) (j * 2 - 1), yOffset, 0.0F);
-                    poseStack.translate(0.0F, -0.0325F * (float) (i * 2 - 1) + yOffset, 0.0F);
-                    poseStack.translate(0.0F, yOffset, -0.0325F * (float) (Math.pow(i * 2 - 1, 2) * 0.05));
-                    poseStack.translate(0.0F, 0.2F + yOffset, 0.0F);
-                    poseStack.translate(0.0F, yOffset, 0.2F);
+                    poseStack.translate(0.175F * (float) (j * 2 - 1), this.yOffset, 0.0F);
+                    poseStack.translate(0.0F, -0.0325F * (float) (i * 2 - 1) + this.yOffset, 0.0F);
+                    poseStack.translate(0.0F, this.yOffset, -0.0325F * (float) (Math.pow(i * 2 - 1, 2) * 0.05));
+                    poseStack.translate(0.0F, 0.2F + this.yOffset, 0.0F);
+                    poseStack.translate(0.0F, this.yOffset, 0.2F);
 
                     nodeCollector.submitModelPart(
                             ((OxygenGearModel<S>) this.model).tubes[j][i],
