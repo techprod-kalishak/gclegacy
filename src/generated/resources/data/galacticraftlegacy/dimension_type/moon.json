@@ -3,7 +3,7 @@
   "attributes": {
     "galacticraftlegacy:gameplay/fall_damage_modifier": 0.18,
     "galacticraftlegacy:gameplay/fuel_usage_multiplier": 0.7,
-    "galacticraftlegacy:gameplay/gravity": 0.062,
+    "galacticraftlegacy:gameplay/gravity": 0.013,
     "galacticraftlegacy:gameplay/solar_boost_multiplier": 1.4,
     "minecraft:audio/ambient_sounds": {
       "mood": {

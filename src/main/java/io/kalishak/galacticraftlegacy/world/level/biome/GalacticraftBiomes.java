@@ -56,6 +56,7 @@ public interface GalacticraftBiomes {
 
     static void evolvedMonsters(MobSpawnSettings.Builder builder, int zombieWeight, int skeletonWeight) {
         //builder.addSpawn(GalacticraftEntityType.EVOLVED_SPIDER.get(), 100, ConstantInt.of(4));
+        builder.addSpawn(GalacticraftEntityTypes.EVOLVED_CREEPER.get(), 15, ConstantInt.of(2));
         builder.addSpawn(GalacticraftEntityTypes.EVOLVED_ZOMBIE.get(), zombieWeight, ConstantInt.of(4));
         builder.addSpawn(GalacticraftEntityTypes.EVOLVED_SKELETON.get(), skeletonWeight, ConstantInt.of(4));
         //builder.addSpawn(GalacticraftEntityType.EVOLVED_ENDERMAN.get(), 10, UniformInt.of(1, 4));

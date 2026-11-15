@@ -1,0 +1,98 @@
+{
+  "type": "minecraft:entity",
+  "pools": [
+    {
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "modifier": [
+            {
+              "type": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 2,
+                "min": 0
+              }
+            },
+            {
+              "type": "minecraft:enchanted_count_increase",
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 1.0,
+                "min": 0.0
+              },
+              "enchantment": "minecraft:looting"
+            }
+          ],
+          "name": "minecraft:redstone"
+        },
+        {
+          "type": "minecraft:item",
+          "condition": {
+            "type": "galacticraftlegacy:is_burning"
+          },
+          "modifier": [
+            {
+              "type": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 1,
+                "min": 0
+              }
+            },
+            {
+              "type": "minecraft:enchanted_count_increase",
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 1.0,
+                "min": 0.0
+              },
+              "enchantment": "minecraft:looting"
+            }
+          ],
+          "name": "minecraft:blaze_rod"
+        }
+      ],
+      "rolls": 1
+    },
+    {
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:sand"
+        },
+        {
+          "type": "minecraft:item",
+          "modifier": {
+            "type": "galacticraftlegacy:set_fluid_in_tank",
+            "fluid": "galacticraftlegacy:oxygen",
+            "value": {
+              "type": "minecraft:uniform",
+              "max": 901,
+              "min": 1
+            }
+          },
+          "name": "galacticraftlegacy:medium_oxygen_tank"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "galacticraftlegacy:oxygen_gear"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:ice"
+        },
+        {
+          "type": "minecraft:item",
+          "condition": {
+            "type": "galacticraftlegacy:game_difficulty",
+            "target_difficulty": "adventure"
+          },
+          "name": "minecraft:sugar_cane"
+        }
+      ],
+      "rolls": 1
+    }
+  ],
+  "random_sequence": "galacticraftlegacy:entities/evolved_creeper"
+}

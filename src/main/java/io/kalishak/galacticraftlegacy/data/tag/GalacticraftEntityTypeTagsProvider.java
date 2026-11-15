@@ -35,11 +35,17 @@ public class GalacticraftEntityTypeTagsProvider extends EntityTypeTagsProvider {
                 .add(EntityTypeIds.SKELETON)
                 .add(EntityTypeIds.WOLF)
                 .add(EntityTypeIds.ZOMBIE);
+        tag(EntityTypeTags.BURN_IN_DAYLIGHT)
+                .add(GalacticraftEntityIds.EVOLVED_SKELETON)
+                .add(GalacticraftEntityIds.EVOLVED_ZOMBIE);
         tag(EntityTypeTags.SKELETONS)
                 .add(GalacticraftEntityIds.EVOLVED_SKELETON);
         tag(EntityTypeTags.ZOMBIES)
                 .add(GalacticraftEntityIds.EVOLVED_ZOMBIE);
+        tag(EntityTypeTags.CANNOT_BE_AGE_LOCKED)
+                .add(GalacticraftEntityIds.EVOLVED_CREEPER);
         tag(GalacticraftTags.EntityTypes.SPACE_MOB)
+                .add(GalacticraftEntityIds.EVOLVED_CREEPER)
                 .add(GalacticraftEntityIds.EVOLVED_SKELETON)
                 .add(GalacticraftEntityIds.EVOLVED_ZOMBIE);
     }

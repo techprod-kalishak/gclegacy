@@ -42,7 +42,7 @@ public class GearInventoryMenu extends AbstractContainerMenu {
     public static final Identifier EMPTY_SLOT_GEAR = Identifier.fromNamespaceAndPath(Galacticraft.MODID, "container/slot/gear");
     public static final Identifier EMPTY_SLOT_TANK = Identifier.fromNamespaceAndPath(Galacticraft.MODID, "container/slot/tank");
     public static final Identifier EMPTY_SLOT_PARACHUTE = Identifier.fromNamespaceAndPath(Galacticraft.MODID, "container/slot/parachute");
-    public static final Identifier EMPTY_SLOT_TELEMETRY = Identifier.fromNamespaceAndPath(Galacticraft.MODID, "container/slot/telemetry");
+    public static final Identifier EMPTY_SLOT_FREQUENCY = Identifier.fromNamespaceAndPath(Galacticraft.MODID, "container/slot/frequency_module");
     public static final Identifier EMPTY_SLOT_SHIELD = Identifier.fromNamespaceAndPath(Galacticraft.MODID, "container/slot/shield");
     private static final Map<GearEquipmentSlot, Identifier> TEXTURE_EMPTY_SLOTS = Util.makeEnumMap(GearEquipmentSlot.class, slot -> switch (slot) {
         case THERMAL_HEAD -> EMPTY_SLOT_THERMAL_HELMET;
@@ -53,7 +53,7 @@ public class GearInventoryMenu extends AbstractContainerMenu {
         case GEAR -> EMPTY_SLOT_GEAR;
         case TANK, ADDITIONAL_TANK -> EMPTY_SLOT_TANK;
         case PARACHUTE -> EMPTY_SLOT_PARACHUTE;
-        case FREQUENCY_MODULE -> EMPTY_SLOT_TELEMETRY;
+        case FREQUENCY_MODULE -> EMPTY_SLOT_FREQUENCY;
         case SHIELD -> EMPTY_SLOT_SHIELD;
     });
     private static final GearEquipmentSlot[] SLOTS_IDS = GearEquipmentSlot.values();
@@ -85,12 +85,12 @@ public class GearInventoryMenu extends AbstractContainerMenu {
             addSlot(new GearSlot(gearHandler, equipment, player, slot, identifier, i, 79, 8 + i * 18));
         }
 
-        addSlot(new GearSlot(gearHandler, equipment, player, GearEquipmentSlot.MASK, EMPTY_SLOT_HELMET, 4, 125, 26));
-        addSlot(new GearSlot(gearHandler, equipment, player, GearEquipmentSlot.GEAR, EMPTY_SLOT_GEAR, 5, 125, 44));
-        addSlot(new GearSlot(gearHandler, equipment, player, GearEquipmentSlot.TANK, EMPTY_SLOT_TANK, 6, 116, 62));
-        addSlot(new GearSlot(gearHandler, equipment, player, GearEquipmentSlot.ADDITIONAL_TANK, EMPTY_SLOT_TANK, 7, 134, 62));
+        addSlot(new GearSlot(gearHandler, equipment, player, GearEquipmentSlot.TANK, EMPTY_SLOT_TANK, 4, 116, 62));
+        addSlot(new GearSlot(gearHandler, equipment, player, GearEquipmentSlot.ADDITIONAL_TANK, EMPTY_SLOT_TANK, 5, 134, 62));
+        addSlot(new GearSlot(gearHandler, equipment, player, GearEquipmentSlot.MASK, EMPTY_SLOT_HELMET, 6, 125, 26));
+        addSlot(new GearSlot(gearHandler, equipment, player, GearEquipmentSlot.GEAR, EMPTY_SLOT_GEAR, 7, 125, 44));
         addSlot(new GearSlot(gearHandler, equipment, player, GearEquipmentSlot.PARACHUTE, EMPTY_SLOT_PARACHUTE, 8, 143, 26));
-        addSlot(new GearSlot(gearHandler, equipment, player, GearEquipmentSlot.FREQUENCY_MODULE, EMPTY_SLOT_TELEMETRY, 9, 107, 26));
+        addSlot(new GearSlot(gearHandler, equipment, player, GearEquipmentSlot.FREQUENCY_MODULE, EMPTY_SLOT_FREQUENCY, 9, 107, 26));
         addSlot(new GearSlot(gearHandler, equipment, player, GearEquipmentSlot.SHIELD, EMPTY_SLOT_SHIELD, 10, 125, 8));
 
         for (int i = 0; i < 4; i++) {

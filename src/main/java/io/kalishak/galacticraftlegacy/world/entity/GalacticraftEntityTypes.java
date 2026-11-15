@@ -12,6 +12,7 @@ import io.kalishak.galacticraftlegacy.references.GalacticraftEntityIds;
 import io.kalishak.galacticraftlegacy.registry.deferred.DeferredEntityTypeRegister;
 import io.kalishak.galacticraftlegacy.world.entity.ai.attributes.GalacticraftAttributes;
 import io.kalishak.galacticraftlegacy.world.entity.item.FallenMeteor;
+import io.kalishak.galacticraftlegacy.world.entity.monster.EvolvedCreeper;
 import io.kalishak.galacticraftlegacy.world.entity.monster.EvolvedMonster;
 import io.kalishak.galacticraftlegacy.world.entity.monster.EvolvedSkeleton;
 import io.kalishak.galacticraftlegacy.world.entity.monster.EvolvedZombie;
@@ -117,6 +118,15 @@ public final class GalacticraftEntityTypes {
     );
 
     //Evolved variants
+    public static final DeferredHolder<EntityType<?>, EntityType<EvolvedCreeper>> EVOLVED_CREEPER = REGISTRY.registerEntityType(
+            GalacticraftEntityIds.EVOLVED_CREEPER,
+            EvolvedCreeper::new,
+            MobCategory.MONSTER,
+            builder -> builder
+                    .sized(0.7F, 2.2F)
+                    .clientTrackingRange(8)
+                    .notInPeaceful()
+    );
     public static final DeferredHolder<EntityType<?>, EntityType<EvolvedSkeleton>> EVOLVED_SKELETON = REGISTRY.registerEntityType(
             GalacticraftEntityIds.EVOLVED_SKELETON,
             EvolvedSkeleton::new,
@@ -212,6 +222,7 @@ public final class GalacticraftEntityTypes {
 
     @SubscribeEvent
     public static void registerAttributes(EntityAttributeCreationEvent event) {
+        event.put(EVOLVED_CREEPER.get(), EvolvedCreeper.createAttributes().build());
         event.put(EVOLVED_SKELETON.get(), EvolvedSkeleton.createAttributes().build());
         event.put(EVOLVED_ZOMBIE.get(), EvolvedZombie.createAttributes().build());
     }
@@ -219,15 +230,22 @@ public final class GalacticraftEntityTypes {
     @SubscribeEvent
     public static void registerSpawnPlacements(RegisterSpawnPlacementsEvent event) {
         event.register(
+                EVOLVED_CREEPER.get(),
+                SpawnPlacementTypes.ON_GROUND,
+                Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                withBound(15),
+                RegisterSpawnPlacementsEvent.Operation.AND
+        );
+        event.register(
                 EVOLVED_SKELETON.get(),
-                SpawnPlacementTypes.NO_RESTRICTIONS,
+                SpawnPlacementTypes.ON_GROUND,
                 Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
                 withBound(10),
                 RegisterSpawnPlacementsEvent.Operation.AND
         );
         event.register(
                 EVOLVED_ZOMBIE.get(),
-                SpawnPlacementTypes.NO_RESTRICTIONS,
+                SpawnPlacementTypes.ON_GROUND,
                 Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
                 withBound(15),
                 RegisterSpawnPlacementsEvent.Operation.AND

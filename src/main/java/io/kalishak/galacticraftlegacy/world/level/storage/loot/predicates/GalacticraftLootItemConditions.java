@@ -35,6 +35,10 @@ public class GalacticraftLootItemConditions {
             "game_difficulty",
             () -> GameDifficultyLootItemCondition.MAP_CODEC
     );
+    public static final DeferredHolder<MapCodec<? extends LootItemCondition>, MapCodec<BurningLootCondition>> IS_BURNING = REGISTRY.register(
+            "is_burning",
+            () -> BurningLootCondition.MAP_CODEC
+    );
 
     public static void init(IEventBus bus) {
         REGISTRY.register(bus);

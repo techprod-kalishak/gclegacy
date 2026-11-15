@@ -11,6 +11,7 @@ import io.kalishak.galacticraftlegacy.world.entity.GalacticraftEntityTypes;
 import io.kalishak.galacticraftlegacy.world.item.GalacticraftItems;
 import io.kalishak.galacticraftlegacy.world.level.material.fluid.GalacticraftFluids;
 import io.kalishak.galacticraftlegacy.world.level.storage.loot.functions.SetItemFluidTankFunction;
+import io.kalishak.galacticraftlegacy.world.level.storage.loot.predicates.BurningLootCondition;
 import io.kalishak.galacticraftlegacy.world.level.storage.loot.predicates.GalacticraftLootItemConditions;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
@@ -140,6 +141,40 @@ public class GalacticraftEntityLootSubProvider extends EntityLootSubProvider {
                                         .when(GalacticraftLootItemConditions.withAdventureMode())
                                         .when(LootItemKilledByPlayerCondition.killedByPlayer())
                                         .when(LootItemRandomChanceWithEnchantedBonusCondition.randomChanceAndLootingBoost(enchantments, 0.35F, 0.05F))
+                        )
+        );
+        add(
+                GalacticraftEntityTypes.EVOLVED_CREEPER.get(),
+                LootTable.lootTable()
+                        .withPool(
+                                LootPool.lootPool()
+                                        .setRolls(ContextIntProviders.exactly(1))
+                                        .add(
+                                                LootItem.lootTableItem(Items.REDSTONE)
+                                                        .apply(SetItemCountFunction.setCount(ContextIntProviders.between(0, 2)))
+                                                        .apply(EnchantedCountIncreaseFunction.lootingMultiplier(this.enchantments, ContextFloatProviders.between(0.0F, 1.0F)))
+                                        )
+                                        .add(
+                                                LootItem.lootTableItem(Items.BLAZE_ROD)
+                                                        .when(BurningLootCondition.isBurning())
+                                                        .apply(SetItemCountFunction.setCount(ContextIntProviders.between(0, 1)))
+                                                        .apply(EnchantedCountIncreaseFunction.lootingMultiplier(this.enchantments, ContextFloatProviders.between(0.0F, 1.0F)))
+                                        )
+                        )
+                        .withPool(
+                                LootPool.lootPool()
+                                        .setRolls(ContextIntProviders.exactly(1))
+                                        .add(LootItem.lootTableItem(Items.SAND))
+                                        .add(
+                                                LootItem.lootTableItem(GalacticraftItems.MEDIUM_TANK)
+                                                        .apply(SetItemFluidTankFunction.setFluid(GalacticraftFluids.OXYGEN, ContextIntProviders.between(1, 901)))
+                                        )
+                                        .add(LootItem.lootTableItem(GalacticraftItems.OXYGEN_GEAR))
+                                        .add(LootItem.lootTableItem(Items.ICE))
+                                        .add(
+                                                LootItem.lootTableItem(Items.SUGAR_CANE)
+                                                        .when(GalacticraftLootItemConditions.withAdventureMode())
+                                        )
                         )
         );
     }

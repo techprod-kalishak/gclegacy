@@ -33,9 +33,8 @@ public interface GearRenderState {
     ContextKey<ItemStack> ADDITIONAL_TANK = new ContextKey<>(Constants.id("right_tank"));
     ContextKey<ItemStack> PARACHUTE = new ContextKey<>(Constants.id("parachute"));
     ContextKey<Boolean> IS_PARACHUTE_OPEN = new ContextKey<>(Constants.id("is_parachute_open"));
-    ContextKey<ItemStack> TELEMETRY_MODULE = new ContextKey<>(Constants.id("telemetry_module"));
+    ContextKey<ItemStack> FREQUENCY_MODULE = new ContextKey<>(Constants.id("telemetry_module"));
     ContextKey<ItemStack> SHIELD_CONTROLLER = new ContextKey<>(Constants.id("shield_controller"));
-
     ContextKey<Float> TEMPERATURE_MODIFIER = new ContextKey<>(Constants.id("temperature_modifier"));
 
     static <E extends LivingEntity, S extends LivingEntityRenderState> void appendCommonRenderStates(E entity, S reusedState) {
@@ -65,25 +64,10 @@ public interface GearRenderState {
         appendCommonRenderStates(entity, reusedState);
         reusedState.setRenderData(GearRenderState.PARACHUTE, spaceGearEquipment.get(GearEquipmentSlot.PARACHUTE));
         reusedState.setRenderData(GearRenderState.IS_PARACHUTE_OPEN, gear.usesParachute());
-        reusedState.setRenderData(GearRenderState.TELEMETRY_MODULE, spaceGearEquipment.get(GearEquipmentSlot.FREQUENCY_MODULE));
+        reusedState.setRenderData(GearRenderState.FREQUENCY_MODULE, spaceGearEquipment.get(GearEquipmentSlot.FREQUENCY_MODULE));
         reusedState.setRenderData(GearRenderState.SHIELD_CONTROLLER, spaceGearEquipment.get(GearEquipmentSlot.SHIELD));
         reusedState.setRenderData(GearRenderState.TEMPERATURE_MODIFIER, temperatureModifier);
     }
 
-    ItemStack oxygenMask();
-    ItemStack oxygenGear();
-    ItemStack leftTank();
-    ItemStack rightTank();
-
-    default ItemStack parachute() {
-        return ItemStack.EMPTY;
-    }
-
-    default ItemStack telemetryModule() {
-        return ItemStack.EMPTY;
-    }
-
-    default ItemStack shieldController() {
-        return ItemStack.EMPTY;
-    }
+    GearRenders gearRenders();
 }

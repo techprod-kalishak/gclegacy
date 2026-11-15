@@ -320,6 +320,7 @@ public final class GalacticraftCreativeModeTabs {
 
     private static void populateVanillaCreativeTabs(BuildCreativeModeTabContentsEvent event) {
         if (event.getTabKey().equals(CreativeModeTabs.SPAWN_EGGS)) {
+            event.accept(GalacticraftItems.EVOLVED_CREEPER_SPAWN_EGG);
             event.accept(GalacticraftItems.EVOLVED_SKELETON_SPAWN_EGG);
             event.accept(GalacticraftItems.EVOLVED_ZOMBIE_SPAWN_EGG);
         }

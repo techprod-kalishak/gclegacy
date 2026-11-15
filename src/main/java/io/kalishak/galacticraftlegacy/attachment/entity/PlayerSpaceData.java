@@ -27,6 +27,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gamerules.GameRules;
 import net.neoforged.neoforge.attachment.IAttachmentHolder;
 import org.jetbrains.annotations.ApiStatus;
@@ -105,7 +106,7 @@ public class PlayerSpaceData extends GearInventoryProvider {
 
     @Override
     @SuppressWarnings("ConstantConditions")
-    public boolean isThermalPaddingEffective(float temperatureModifier) {
+    public boolean isThermalPaddingEffective(Level level, float temperatureModifier) {
         List<ItemStack> thermal = List.of(
                 getGearEquipment().get(GearEquipmentSlot.THERMAL_HEAD),
                 getGearEquipment().get(GearEquipmentSlot.THERMAL_CHEST),

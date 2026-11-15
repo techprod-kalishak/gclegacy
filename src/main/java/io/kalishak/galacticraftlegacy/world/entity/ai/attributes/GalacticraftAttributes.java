@@ -21,7 +21,7 @@ public class GalacticraftAttributes {
 
     public static final DeferredHolder<Attribute, PercentageAttribute> THERMAL_PROTECTION = REGISTRY.register(
             "thermal_protection",
-            () -> new PercentageAttribute("attribute.name.thermal_protection", 0.0D, -0.25D, 0.25D)
+            () -> new PercentageAttribute("attribute.name.thermal_protection", -1.0D, -1.0D, 1.0D)
     );
     public static final DeferredHolder<Attribute, BooleanAttribute> CORROSION_PROTECTION = REGISTRY.register(
             "corrosion_protection",

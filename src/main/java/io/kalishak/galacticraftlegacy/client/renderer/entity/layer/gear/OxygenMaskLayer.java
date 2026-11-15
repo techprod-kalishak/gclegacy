@@ -11,7 +11,9 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import io.kalishak.galacticraftlegacy.client.model.gear.GearEquipmentModel;
 import io.kalishak.galacticraftlegacy.client.model.geom.GalacticraftModelLayers;
 import io.kalishak.galacticraftlegacy.client.renderer.entity.state.GearRenderState;
+import io.kalishak.galacticraftlegacy.client.renderer.entity.state.GearRenders;
 import io.kalishak.galacticraftlegacy.references.Constants;
+import io.kalishak.galacticraftlegacy.world.entity.GalacticraftEntityTypes;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.model.geom.PartPose;
@@ -27,7 +29,6 @@ import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.resources.model.EquipmentAssetManager;
 import net.minecraft.resources.Identifier;
-import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.item.ItemStack;
 
 public class OxygenMaskLayer<S extends LivingEntityRenderState, M extends EntityModel<S>> extends GearEquipmentLayer<S, M> {
@@ -49,11 +50,12 @@ public class OxygenMaskLayer<S extends LivingEntityRenderState, M extends Entity
 
     @Override
     public void submit(PoseStack poseStack, SubmitNodeCollector nodeCollector, int packedLight, S renderState, float yRot, float xRot) {
-        ItemStack stack = extractFromRenderState(renderState, GearRenderState.OXYGEN_MASK, GearRenderState::oxygenMask);
+        ItemStack stack = extractFromRenderState(renderState, GearRenderState.OXYGEN_MASK, GearRenders::oxygenMask);
+        float yOffset = renderState.entityType.equals(GalacticraftEntityTypes.EVOLVED_CREEPER.get()) ? 0.39F : 0.02F;
 
         if (!stack.isEmpty()) {
             poseStack.pushPose();
-            poseStack.translate(0.0F, renderState.entityType.equals(EntityTypes.CREEPER) ? 0.39F : 0.02F, 0.0F);
+            poseStack.translate(0.0F, yOffset, 0.0F);
             poseStack.scale(0.57F, 0.57F, 0.57F);
             nodeCollector.order(1).submitModel(this.model, renderState, poseStack, this.model.renderType(TEXTURES), packedLight, OverlayTexture.NO_OVERLAY, renderState.outlineColor);
             poseStack.scale(1.0F, 1.0F, 1.0F);

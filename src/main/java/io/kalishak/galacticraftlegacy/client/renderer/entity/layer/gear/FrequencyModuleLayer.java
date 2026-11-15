@@ -12,6 +12,7 @@ import com.mojang.math.Axis;
 import io.kalishak.galacticraftlegacy.client.model.gear.FrequencyModuleModel;
 import io.kalishak.galacticraftlegacy.client.renderer.entity.ObjModelHelper;
 import io.kalishak.galacticraftlegacy.client.renderer.entity.state.GearRenderState;
+import io.kalishak.galacticraftlegacy.client.renderer.entity.state.GearRenders;
 import io.kalishak.galacticraftlegacy.references.Constants;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.EntityModel;
@@ -37,7 +38,7 @@ public class FrequencyModuleLayer<S extends LivingEntityRenderState, M extends E
 
     @Override
     public void submit(PoseStack poseStack, SubmitNodeCollector nodeCollector, int packedLight, S renderState, float yRot, float xRot) {
-        ItemStack stack = extractFromRenderState(renderState, GearRenderState.TELEMETRY_MODULE, GearRenderState::telemetryModule);
+        ItemStack stack = extractFromRenderState(renderState, GearRenderState.FREQUENCY_MODULE, GearRenders::frequencyModule);
         boolean hasHelmet = renderState instanceof HumanoidRenderState humanoidRenderState && !humanoidRenderState.headEquipment.isEmpty();
         boolean isCrouching = renderState instanceof HumanoidRenderState humanoidRenderState && humanoidRenderState.isCrouching;
         QuadCollection baseQuads = Minecraft.getInstance().getModelManager().getStandaloneModel(FrequencyModuleModel.BASE_MODEL_KEY);

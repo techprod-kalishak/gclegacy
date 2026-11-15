@@ -55,7 +55,7 @@ public abstract class GearInventoryProvider implements ParachuteFalling {
 
     public abstract void dropAll(ServerLevel level, @NonNull LivingEntity gearOwner, @Nullable DamageSource cause);
 
-    public abstract boolean isThermalPaddingEffective(float temperatureModifier);
+    public abstract boolean isThermalPaddingEffective(Level level, float temperatureModifier);
 
     public void serverGearTick(ServerLevel serverLevel, LivingEntity gearOwner) {
         //Oxygen
@@ -88,7 +88,7 @@ public abstract class GearInventoryProvider implements ParachuteFalling {
 
             float temperatureModifier = celestialBodyInstance.typeHolder().value().atmosphereInfo().getTemperatureModifier();
             if (temperatureModifier != 1.0) {
-                if (!isThermalPaddingEffective(temperatureModifier)) {
+                if (!isThermalPaddingEffective(serverLevel, temperatureModifier)) {
                     gearOwner.hurtServer(serverLevel, serverLevel.damageSources().source(GalacticraftDamageTypes.SUN_RADIATION), 0.2F);
                 }
             }

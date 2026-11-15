@@ -13,6 +13,8 @@ import io.kalishak.galacticraftlegacy.client.model.gear.GearEquipmentModel;
 import io.kalishak.galacticraftlegacy.client.model.gear.OxygenTankModel;
 import io.kalishak.galacticraftlegacy.client.model.geom.GalacticraftModelLayers;
 import io.kalishak.galacticraftlegacy.client.renderer.entity.state.GearRenderState;
+import io.kalishak.galacticraftlegacy.client.renderer.entity.state.GearRenders;
+import io.kalishak.galacticraftlegacy.world.entity.GalacticraftEntityTypes;
 import io.kalishak.galacticraftlegacy.world.item.GalacticraftItems;
 import io.kalishak.galacticraftlegacy.world.item.component.GearEquippable;
 import net.minecraft.client.model.EntityModel;
@@ -42,8 +44,9 @@ public class OxygenTankLayer<S extends LivingEntityRenderState, M extends Entity
 
     @Override
     public void submit(PoseStack poseStack, SubmitNodeCollector nodeCollector, int packedLight, S renderState, float yRot, float xRot) {
-        ItemStack leftTankStack = extractFromRenderState(renderState, GearRenderState.TANK, GearRenderState::leftTank);
-        ItemStack rightTankStack = extractFromRenderState(renderState, GearRenderState.ADDITIONAL_TANK, GearRenderState::rightTank);
+        ItemStack leftTankStack = extractFromRenderState(renderState, GearRenderState.TANK, GearRenders::leftTank);
+        ItemStack rightTankStack = extractFromRenderState(renderState, GearRenderState.ADDITIONAL_TANK, GearRenders::rightTank);
+        float yOffset = renderState.entityType.equals(GalacticraftEntityTypes.EVOLVED_CREEPER.get()) ? 0.57F : 0.2F;
 
         GearEquippable.extractAssetId(leftTankStack).ifPresent(asset -> {
             Identifier textures = getGearTextures(asset, EnumExtensions.LAYER_TYPE_TANK.getValue());

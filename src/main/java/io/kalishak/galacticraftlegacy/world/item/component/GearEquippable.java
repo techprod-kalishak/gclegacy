@@ -52,7 +52,7 @@ public record GearEquippable(GearEquipmentSlot gearSlot, Holder<SoundEvent> equi
             SoundEvent.CODEC.optionalFieldOf("equip_sound", SoundEvents.ARMOR_EQUIP_GENERIC).forGetter(GearEquippable::equipSound),
             GearEquipmentSlot.CODEC.optionalFieldOf("additional_gear_slot").forGetter(GearEquippable::additionalGearSlot),
             ResourceKey.codec(EquipmentAssets.ROOT_ID).optionalFieldOf("asset_id").forGetter(GearEquippable::assetId),
-            RegistryCodecs.holderSet(Registries.ENTITY_TYPE).optionalFieldOf("allowed_entities").forGetter(GearEquippable::allowedEntities),
+            RegistryCodecs.holderSet(Registries.ENTITY_TYPE, EntityType.CODEC).optionalFieldOf("allowed_entities").forGetter(GearEquippable::allowedEntities),
             Codec.BOOL.fieldOf("dispensable").forGetter(GearEquippable::dispensable),
             Codec.BOOL.fieldOf("swappable").forGetter(GearEquippable::swappable)
     ).apply(instance, GearEquippable::new));

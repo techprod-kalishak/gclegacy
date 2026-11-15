@@ -66,8 +66,8 @@ public class GalacticraftFluidType {
             GalacticraftFluidIds.BACTERIAL_SLUDGE.identifier().getPath(),
             () -> new FluidType(FluidType.Properties.create()
                     .descriptionId("block.galacticraftlegacy.bacterial_sludge")
-                    .viscosity(2230)
-                    .density(700)
+                    .viscosity(1500)
+                    .density(800)
                     .rarity(Rarity.RARE)
                     .sound(SoundActions.BUCKET_FILL, SoundEvents.BUCKET_FILL)
                     .sound(SoundActions.BUCKET_EMPTY, SoundEvents.BUCKET_EMPTY)
@@ -77,8 +77,8 @@ public class GalacticraftFluidType {
             GalacticraftFluidIds.SULFURIC_ACID.identifier().getPath(),
             () -> new FluidType(FluidType.Properties.create()
                     .descriptionId("block.galacticraftlegacy.sulfuric_acid")
-                    .viscosity(2230)
-                    .density(700)
+                    .viscosity(1400)
+                    .density(6229)
                     .sound(SoundActions.BUCKET_FILL, SoundEvents.BUCKET_FILL)
                     .sound(SoundActions.BUCKET_EMPTY, SoundEvents.BUCKET_EMPTY)
                     .sound(SoundActions.CAULDRON_DRIP, SoundEvents.POINTED_DRIPSTONE_DRIP_WATER_INTO_CAULDRON)

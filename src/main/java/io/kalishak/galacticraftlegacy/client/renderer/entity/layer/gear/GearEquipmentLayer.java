@@ -7,31 +7,26 @@
 
 package io.kalishak.galacticraftlegacy.client.renderer.entity.layer.gear;
 
-import io.kalishak.galacticraftlegacy.EnumExtensions;
 import io.kalishak.galacticraftlegacy.client.model.gear.GearEquipmentModel;
 import io.kalishak.galacticraftlegacy.client.model.geom.GalacticraftModelLayers;
 import io.kalishak.galacticraftlegacy.client.renderer.entity.state.GearRenderState;
-import io.kalishak.galacticraftlegacy.world.entity.GearEquipmentSlot;
-import io.kalishak.galacticraftlegacy.world.item.component.GearEquippable;
+import io.kalishak.galacticraftlegacy.client.renderer.entity.state.GearRenders;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.Model;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
-import net.minecraft.client.renderer.entity.*;
+import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.EquipmentLayerRenderer;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.entity.player.AvatarRenderer;
 import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
-import net.minecraft.client.renderer.rendertype.RenderType;
-import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.resources.model.EquipmentAssetManager;
 import net.minecraft.client.resources.model.EquipmentClientInfo;
 import net.minecraft.client.resources.model.sprite.SpriteGetter;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.context.ContextKey;
-import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.player.PlayerModelType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.equipment.EquipmentAsset;
@@ -73,15 +68,6 @@ public abstract class GearEquipmentLayer<S extends LivingEntityRenderState, M ex
 
         AvatarRenderer<?> wideAvatarRenderer = event.getPlayerRenderer(PlayerModelType.WIDE);
         registerLayerForPlayerRenderer(wideAvatarRenderer, modelSet, equipmentRenderer, equipmentAssets, spriteGetter);
-
-        CreeperRenderer creeperRenderer = event.getRenderer(EntityTypes.CREEPER);
-        registerLayerForRenderer(creeperRenderer, modelSet, equipmentRenderer, equipmentAssets);
-
-        SkeletonRenderer skeletonRenderer = event.getRenderer(EntityTypes.SKELETON);
-        registerLayerForRenderer(skeletonRenderer, modelSet, equipmentRenderer, equipmentAssets);
-
-        ZombieRenderer zombieRenderer = event.getRenderer(EntityTypes.ZOMBIE);
-        registerLayerForRenderer(zombieRenderer, modelSet, equipmentRenderer, equipmentAssets);
     }
 
     private static void registerLayerForPlayerRenderer(@Nullable AvatarRenderer<?> renderer, EntityModelSet modelSet, EquipmentLayerRenderer layerRenderer, EquipmentAssetManager equipmentAssets, SpriteGetter spriteGetter) {
@@ -95,21 +81,11 @@ public abstract class GearEquipmentLayer<S extends LivingEntityRenderState, M ex
         }
     }
 
-    private static <S extends LivingEntityRenderState, M extends EntityModel<S>> void registerLayerForRenderer(@Nullable LivingEntityRenderer<?, S, M> renderer, EntityModelSet modelSet, EquipmentLayerRenderer layerRenderer, EquipmentAssetManager equipmentAssets) {
-        if (renderer == null) {
-            return;
-        }
-
-        renderer.addLayer(new OxygenMaskLayer<>(renderer, modelSet, layerRenderer, equipmentAssets));
-        renderer.addLayer(new OxygenGearLayer<>(renderer, modelSet, layerRenderer, equipmentAssets));
-        renderer.addLayer(new OxygenTankLayer<>(renderer, modelSet, layerRenderer, equipmentAssets));
-    }
-
-    protected ItemStack extractFromRenderState(S renderState, ContextKey<ItemStack> contextKey, Function<GearRenderState, ItemStack> callback) {
+    protected @NonNull ItemStack extractFromRenderState(S renderState, ContextKey<ItemStack> contextKey, Function<GearRenders, ItemStack> callback) {
         ItemStack stack = renderState.getRenderDataOrDefault(contextKey, ItemStack.EMPTY);
 
         if (stack.isEmpty() && renderState instanceof GearRenderState gearRenderState) {
-            stack = callback.apply(gearRenderState);
+            stack = callback.apply(gearRenderState.gearRenders());
         }
 
         return stack;
@@ -119,42 +95,7 @@ public abstract class GearEquipmentLayer<S extends LivingEntityRenderState, M ex
         return this.equipmentAssets;
     }
 
-    protected EquipmentClientInfo.LayerType getLayerForSlot(GearEquipmentSlot gearEquipmentSlot) {
-        return switch (gearEquipmentSlot) {
-            case THERMAL_HEAD, THERMAL_CHEST, THERMAL_LEGS, THERMAL_FEET, SHIELD -> EnumExtensions.LAYER_TYPE_THERMAL_PADDING.getValue();
-            case TANK, ADDITIONAL_TANK -> EnumExtensions.LAYER_TYPE_TANK.getValue();
-            case PARACHUTE -> EnumExtensions.LAYER_TYPE_PARACHUTE.getValue();
-            default -> null;
-        };
-    }
-
     protected Identifier getGearTextures(@NonNull ResourceKey<EquipmentAsset> gearEquipmentAsset, EquipmentClientInfo.LayerType layerType) {
         return this.equipmentAssets.get(gearEquipmentAsset).getLayers(layerType).getFirst().getTextureLocation(layerType);
-    }
-
-    protected RenderType getRenderType(Model<S> model, @NonNull ResourceKey<EquipmentAsset> tankAsset, GearEquipmentSlot gearEquipmentSlot) {
-        EquipmentClientInfo.LayerType layerType = getLayerForSlot(gearEquipmentSlot);
-
-        return model.renderType(getGearTextures(tankAsset, layerType));
-    }
-
-    protected RenderType getRenderType(Model<S> model, GearEquippable gearEquippable) {
-        if (gearEquippable.assetId().isEmpty()) {
-            return RenderTypes.debugFilledBox();
-        }
-
-        return getRenderType(model, gearEquippable.assetId().get(), gearEquippable.gearSlot());
-    }
-
-    protected Identifier getEquipment(ResourceKey<EquipmentAsset> equipmentAsset, EquipmentClientInfo.LayerType layerType) {
-        return this.equipmentAssets.get(equipmentAsset).getLayers(layerType).getFirst().textureId();
-    }
-
-    protected @Nullable <C> C getDataFromContext(S renderState, ContextKey<C> cxtKey) {
-        return renderState.getRenderData(cxtKey);
-    }
-
-    protected <C> C getDataFromContext(S renderState, ContextKey<C> cxtKey, C defaultValue) {
-        return renderState.getRenderDataOrDefault(cxtKey, defaultValue);
     }
 }

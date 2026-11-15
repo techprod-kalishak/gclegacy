@@ -541,6 +541,11 @@ public final class GalacticraftItems {
             () -> new Item.Properties()
                     .stacksTo(1)
     );
+    public static final DeferredItem<SpawnEggItem> EVOLVED_CREEPER_SPAWN_EGG = REGISTRY.registerItem(
+            GalacticraftItemIds.EVOLVED_CREEPER_SPAWN_EGG,
+            SpawnEggItem::new,
+            () -> new Item.Properties().spawnEgg(GalacticraftEntityTypes.EVOLVED_CREEPER.get())
+    );
     public static final DeferredItem<SpawnEggItem> EVOLVED_SKELETON_SPAWN_EGG = REGISTRY.registerItem(
             GalacticraftItemIds.EVOLVED_SKELETON_SPAWN_EGG,
             SpawnEggItem::new,

@@ -12,8 +12,8 @@ import io.kalishak.galacticraftlegacy.client.renderer.entity.layer.gear.OxygenGe
 import io.kalishak.galacticraftlegacy.client.renderer.entity.layer.gear.OxygenMaskLayer;
 import io.kalishak.galacticraftlegacy.client.renderer.entity.layer.gear.OxygenTankLayer;
 import io.kalishak.galacticraftlegacy.client.renderer.entity.state.EvolvedSkeletonRenderState;
+import io.kalishak.galacticraftlegacy.client.renderer.entity.state.GearRenders;
 import io.kalishak.galacticraftlegacy.transfer.entity.SpaceGearEquipment;
-import io.kalishak.galacticraftlegacy.world.entity.GearEquipmentSlot;
 import io.kalishak.galacticraftlegacy.world.entity.monster.EvolvedSkeleton;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.AbstractSkeletonRenderer;
@@ -39,10 +39,7 @@ public class EvolvedSkeletonRenderer extends AbstractSkeletonRenderer<EvolvedSke
     public void extractRenderState(EvolvedSkeleton entity, EvolvedSkeletonRenderState state, float partialTicks) {
         super.extractRenderState(entity, state, partialTicks);
         SpaceGearEquipment spaceGearEquipment = entity.getData(GalacticraftAttachments.ENTITY_GEAR_INVENTORY).getGearEquipment();
-        state.oxygenMask = spaceGearEquipment.get(GearEquipmentSlot.MASK);
-        state.oxygenGear = spaceGearEquipment.get(GearEquipmentSlot.GEAR);
-        state.tank = spaceGearEquipment.get(GearEquipmentSlot.TANK);
-        state.additionalTank = spaceGearEquipment.get(GearEquipmentSlot.ADDITIONAL_TANK);
+        state.gearRenders = GearRenders.fromGear(spaceGearEquipment);
     }
 
     @Override

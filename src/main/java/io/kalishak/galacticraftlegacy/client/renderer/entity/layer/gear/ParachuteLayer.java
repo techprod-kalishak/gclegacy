@@ -13,6 +13,7 @@ import io.kalishak.galacticraftlegacy.client.model.geom.GalacticraftModelLayers;
 import io.kalishak.galacticraftlegacy.client.renderer.GalacticraftSheets;
 import io.kalishak.galacticraftlegacy.client.renderer.ParachuteRenderable;
 import io.kalishak.galacticraftlegacy.client.renderer.entity.state.GearRenderState;
+import io.kalishak.galacticraftlegacy.client.renderer.entity.state.GearRenders;
 import io.kalishak.galacticraftlegacy.world.item.GearEquipmentAssets;
 import io.kalishak.galacticraftlegacy.world.item.component.GearEquippable;
 import net.minecraft.client.model.EntityModel;
@@ -38,7 +39,7 @@ public class ParachuteLayer<S extends LivingEntityRenderState, M extends EntityM
 
     @Override
     public void submit(PoseStack poseStack, SubmitNodeCollector nodeCollector, int packedLight, S renderState, float yRot, float xRot) {
-        ItemStack stack = extractFromRenderState(renderState, GearRenderState.PARACHUTE, GearRenderState::parachute);
+        ItemStack stack = extractFromRenderState(renderState, GearRenderState.PARACHUTE, GearRenders::parachute);
         boolean useParachute = renderState.getRenderDataOrDefault(GearRenderState.IS_PARACHUTE_OPEN, false);
 
         if (!stack.isEmpty()) {
@@ -53,7 +54,7 @@ public class ParachuteLayer<S extends LivingEntityRenderState, M extends EntityM
 
     @Override
     public SpriteId getParachuteMaterial(S renderState) {
-        ItemStack stack = extractFromRenderState(renderState, GearRenderState.PARACHUTE, GearRenderState::parachute);
+        ItemStack stack = extractFromRenderState(renderState, GearRenderState.PARACHUTE, GearRenders::parachute);
         Identifier path = GearEquippable.extractAssetId(stack).orElse(GearEquipmentAssets.PARACHUTES.red()).identifier();
 
         return new SpriteId(GalacticraftSheets.PARACHUTE_SHEET, path);

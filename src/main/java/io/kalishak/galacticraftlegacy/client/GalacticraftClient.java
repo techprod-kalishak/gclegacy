@@ -22,6 +22,7 @@ import io.kalishak.galacticraftlegacy.client.model.FlagModel;
 import io.kalishak.galacticraftlegacy.client.model.block.EmergencyPostModel;
 import io.kalishak.galacticraftlegacy.client.model.block.NasaWorkbenchModel;
 import io.kalishak.galacticraftlegacy.client.model.block.SolarPanelModel;
+import io.kalishak.galacticraftlegacy.client.model.entity.EvolvedCreeperModel;
 import io.kalishak.galacticraftlegacy.client.model.entity.Tier1RocketModel;
 import io.kalishak.galacticraftlegacy.client.model.gear.FrequencyModuleModel;
 import io.kalishak.galacticraftlegacy.client.model.gear.OxygenGearModel;
@@ -59,7 +60,8 @@ import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.player.PlayerModel;
 import net.minecraft.client.renderer.block.FluidModel;
-import net.minecraft.client.renderer.entity.*;
+import net.minecraft.client.renderer.entity.ArmorModelSet;
+import net.minecraft.client.renderer.entity.FallingBlockRenderer;
 import net.minecraft.client.renderer.entity.player.AvatarRenderer;
 import net.minecraft.client.resources.model.sprite.AtlasManager;
 import net.minecraft.client.resources.model.sprite.Material;
@@ -204,9 +206,27 @@ public class GalacticraftClient {
         event.registerFluidType(new IClientFluidTypeExtensions() {
             @Override
             public Identifier getRenderOverlayTexture(@NonNull Minecraft mc) {
-                return Identifier.withDefaultNamespace("textures/misc/underwater.png");
+                return Constants.id("textures/misc/underoil.png");
             }
         }, GalacticraftFluidType.OIL);
+        event.registerFluidType(new IClientFluidTypeExtensions() {
+            @Override
+            public Identifier getRenderOverlayTexture(@NonNull Minecraft mc) {
+                return Constants.id("textures/misc/underfuel.png");
+            }
+        }, GalacticraftFluidType.FUEL);
+        event.registerFluidType(new IClientFluidTypeExtensions() {
+            @Override
+            public Identifier getRenderOverlayTexture(@NonNull Minecraft mc) {
+                return Constants.id("textures/misc/undersludge.png");
+            }
+        }, GalacticraftFluidType.BACTERIAL_SLUDGE);
+        event.registerFluidType(new IClientFluidTypeExtensions() {
+            @Override
+            public Identifier getRenderOverlayTexture(@NonNull Minecraft mc) {
+                return Constants.id("textures/misc/underacid.png");
+            }
+        }, GalacticraftFluidType.SULFURIC_ACID);
     }
 
     private void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
@@ -215,6 +235,7 @@ public class GalacticraftClient {
         event.registerEntityRenderer(GalacticraftEntityTypes.SCHEMATIC.get(), SchematicRenderer::new);
         event.registerEntityRenderer(GalacticraftEntityTypes.THROWN_METEOR_CHUNK.get(), ThrownMeteorRenderer::new);
         event.registerEntityRenderer(GalacticraftEntityTypes.FALLING_PARACHEST.get(), FallingParachestRenderer::new);
+        event.registerEntityRenderer(GalacticraftEntityTypes.EVOLVED_CREEPER.get(), EvolvedCreeperRenderer::new);
         event.registerEntityRenderer(GalacticraftEntityTypes.EVOLVED_SKELETON.get(), EvolvedSkeletonRenderer::new);
         event.registerEntityRenderer(GalacticraftEntityTypes.EVOLVED_ZOMBIE.get(), EvolvedZombieRenderer::new);
         event.registerEntityRenderer(GalacticraftEntityTypes.NO_GRAVITY_MOVING_BLOCK.get(), NoGravityMovingBlockRenderer::new);
@@ -250,6 +271,7 @@ public class GalacticraftClient {
         event.registerLayerDefinition(GalacticraftModelLayers.THERMAL_PADDING.chest(), thermalPadding::chest);
         event.registerLayerDefinition(GalacticraftModelLayers.THERMAL_PADDING.legs(), thermalPadding::legs);
         event.registerLayerDefinition(GalacticraftModelLayers.THERMAL_PADDING.feet(), thermalPadding::feet);
+        event.registerLayerDefinition(GalacticraftModelLayers.EVOLVED_CREEPER, EvolvedCreeperModel::createBodyLayer);
         event.registerLayerDefinition(GalacticraftModelLayers.TIER_1_ROCKET, Tier1RocketModel::createLayer);
         event.registerLayerDefinition(GalacticraftModelLayers.FLAG, FlagModel::createBaseLayer);
     }
@@ -306,18 +328,6 @@ public class GalacticraftClient {
         event.registerEntityModifier(
                 new TypeToken<AvatarRenderer<?>>() {},
                 GearRenderState::appendPlayerRenderStates
-        );
-        event.registerEntityModifier(
-                CreeperRenderer.class,
-                GearRenderState::appendCommonRenderStates
-        );
-        event.registerEntityModifier(
-                ZombieRenderer.class,
-                GearRenderState::appendCommonRenderStates
-        );
-        event.registerEntityModifier(
-                SkeletonRenderer.class,
-                GearRenderState::appendCommonRenderStates
         );
     }
 

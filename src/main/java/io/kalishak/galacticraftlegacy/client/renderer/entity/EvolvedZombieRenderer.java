@@ -12,8 +12,8 @@ import io.kalishak.galacticraftlegacy.client.renderer.entity.layer.gear.OxygenGe
 import io.kalishak.galacticraftlegacy.client.renderer.entity.layer.gear.OxygenMaskLayer;
 import io.kalishak.galacticraftlegacy.client.renderer.entity.layer.gear.OxygenTankLayer;
 import io.kalishak.galacticraftlegacy.client.renderer.entity.state.EvolvedZombieRenderState;
+import io.kalishak.galacticraftlegacy.client.renderer.entity.state.GearRenders;
 import io.kalishak.galacticraftlegacy.transfer.entity.SpaceGearEquipment;
-import io.kalishak.galacticraftlegacy.world.entity.GearEquipmentSlot;
 import io.kalishak.galacticraftlegacy.world.entity.monster.EvolvedZombie;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.model.monster.zombie.BabyZombieModel;
@@ -25,6 +25,7 @@ import net.minecraft.resources.Identifier;
 
 public class EvolvedZombieRenderer extends AbstractZombieRenderer<EvolvedZombie, EvolvedZombieRenderState, ZombieModel<EvolvedZombieRenderState>> {
     private static final Identifier ZOMBIE_LOCATION = Identifier.withDefaultNamespace("textures/entity/zombie/zombie.png");
+    private static final Identifier BABY_ZOMBIE_LOCATION = Identifier.withDefaultNamespace("textures/entity/zombie/zombie_baby.png");
 
     public EvolvedZombieRenderer(EntityRendererProvider.Context context) {
         super(
@@ -41,17 +42,14 @@ public class EvolvedZombieRenderer extends AbstractZombieRenderer<EvolvedZombie,
 
     @Override
     public Identifier getTextureLocation(EvolvedZombieRenderState state) {
-        return ZOMBIE_LOCATION;
+        return state.isBaby ? BABY_ZOMBIE_LOCATION : ZOMBIE_LOCATION;
     }
 
     @Override
     public void extractRenderState(EvolvedZombie entity, EvolvedZombieRenderState state, float partialTicks) {
         super.extractRenderState(entity, state, partialTicks);
         SpaceGearEquipment spaceGearEquipment = entity.getData(GalacticraftAttachments.ENTITY_GEAR_INVENTORY).getGearEquipment();
-        state.oxygenMask = spaceGearEquipment.get(GearEquipmentSlot.MASK);
-        state.oxygenGear = spaceGearEquipment.get(GearEquipmentSlot.GEAR);
-        state.tank = spaceGearEquipment.get(GearEquipmentSlot.TANK);
-        state.additionalTank = spaceGearEquipment.get(GearEquipmentSlot.ADDITIONAL_TANK);
+        state.gearRenders = GearRenders.fromGear(spaceGearEquipment);
     }
 
     @Override

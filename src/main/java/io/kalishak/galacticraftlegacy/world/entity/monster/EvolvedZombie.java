@@ -10,6 +10,7 @@ package io.kalishak.galacticraftlegacy.world.entity.monster;
 import io.kalishak.galacticraftlegacy.transfer.entity.SpaceGearEquipment;
 import io.kalishak.galacticraftlegacy.world.entity.GalacticraftEntityTypes;
 import io.kalishak.galacticraftlegacy.world.entity.SpaceEntity;
+import io.kalishak.galacticraftlegacy.world.entity.ai.attributes.GalacticraftAttributes;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -45,7 +46,8 @@ public class EvolvedZombie extends Zombie implements EvolvedMonster {
                 .add(Attributes.MOVEMENT_SPEED, 0.26F)
                 .add(Attributes.ATTACK_DAMAGE, 3.5)
                 .add(Attributes.ARMOR, 2.0)
-                .add(Attributes.SPAWN_REINFORCEMENTS_CHANCE);
+                .add(Attributes.SPAWN_REINFORCEMENTS_CHANCE, 0.5D)
+                .add(GalacticraftAttributes.THERMAL_PROTECTION, 1.0);
     }
 
     @Override
@@ -103,7 +105,6 @@ public class EvolvedZombie extends Zombie implements EvolvedMonster {
     @Override
     protected void addAdditionalSaveData(ValueOutput output) {
         super.addAdditionalSaveData(output);
-        this.gear.serialize(output);
         output.putFloat("Tumbling", this.tumbling);
         EvolvedMonster.writeGear(this, this.gear);
     }
@@ -111,7 +112,6 @@ public class EvolvedZombie extends Zombie implements EvolvedMonster {
     @Override
     protected void readAdditionalSaveData(ValueInput input) {
         super.readAdditionalSaveData(input);
-        this.gear.deserialize(input);
         this.tumbling = input.getFloatOr("Tumbling", 0.0F);
         EvolvedMonster.readGear(this, this.gear);
     }

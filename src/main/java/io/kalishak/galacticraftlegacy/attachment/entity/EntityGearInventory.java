@@ -19,13 +19,13 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentEffectComponents;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.LootTable;
 import org.jspecify.annotations.NonNull;
@@ -108,13 +108,8 @@ public class EntityGearInventory extends GearInventoryProvider {
     }
 
     @Override
-    public boolean isThermalPaddingEffective(float temperatureModifier) {
+    public boolean isThermalPaddingEffective(Level level, float temperatureModifier) {
         return true;
-    }
-
-    @Override
-    public boolean shouldSuffocate(LivingEntity livingEntity) {
-        return !livingEntity.is(EntityTypeTags.UNDEAD) && super.shouldSuffocate(livingEntity);
     }
 
     public void markGuaranteedDrop(GearEquipmentSlot slot) {

@@ -36,6 +36,7 @@ public class GalacticraftModelLayers {
             createLocation("legs_thermal_padding"),
             createLocation("foot_thermal_padding")
     );
+    public static final ModelLayerLocation EVOLVED_CREEPER = createLocation("evolved_creeper");
     public static final ModelLayerLocation TIER_1_ROCKET = createLocation("tier_1_rocket");
     public static final ModelLayerLocation MOON_BUGGY = createLocation("moon_buggy");
     public static final ModelLayerLocation TIER_2_ROCKET = createLocation("tier_2_rocket");

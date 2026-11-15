@@ -437,6 +437,7 @@ public class GalacticraftLanguageProvider extends ExtendedLanguageProvider {
         addItem(GalacticraftItems.SOLAR_ARRAY_WAFER, "Solar Array Wafer");
         addItem(GalacticraftItems.SOLAR_ARRAY_PANEL, "Solar Array Panel");
 
+        addItem(GalacticraftItems.EVOLVED_CREEPER_SPAWN_EGG, "Evolved Creeper Spawn Egg");
         addItem(GalacticraftItems.EVOLVED_SKELETON_SPAWN_EGG, "Evolved Skeleton Spawn Egg");
         addItem(GalacticraftItems.EVOLVED_ZOMBIE_SPAWN_EGG, "Evolved Zombie Spawn Egg");
 

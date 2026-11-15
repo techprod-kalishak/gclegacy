@@ -102,7 +102,7 @@ public class GalacticraftDimensionTypes {
                                 .set(EnvironmentAttributes.BED_RULE, GalacticraftWorldAttributes.BED_RULE_CRYO_CHAMBER)
                                 .set(EnvironmentAttributes.AMBIENT_SOUNDS, GalacticraftWorldAttributes.AMBIENT_SOUNDS_SPACE)
                                 .set(EnvironmentAttributes.WATER_EVAPORATES, true)
-                                .set(GalacticraftEnvironmentAttributes.GRAVITY.get(), 0.062F)//0.013F
+                                .set(GalacticraftEnvironmentAttributes.GRAVITY.get(), 0.013F)
                                 .set(GalacticraftEnvironmentAttributes.FALL_DAMAGE_MODIFIER.get(), 0.18F)
                                 .set(GalacticraftEnvironmentAttributes.FUEL_MULTIPLIER.get(), 0.70F)
                                 .set(GalacticraftEnvironmentAttributes.SOLAR_MULTIPLIER.get(), 1.40F)

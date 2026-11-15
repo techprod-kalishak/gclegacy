@@ -39,7 +39,7 @@ public  class GearItem extends Item {
     public static Properties tankProperties(ResourceKey<EquipmentAsset> equipmentAsset) {
         return new Properties()
                 .stacksTo(1)
-                .component(GalacticraftDataComponents.GEAR_EQUIPPABLE, GearEquippable.builder(GearEquipmentSlot.TANK).setAsset(equipmentAsset).setAdditionalSlot(GearEquipmentSlot.ADDITIONAL_TANK).build())
+                .component(GalacticraftDataComponents.GEAR_EQUIPPABLE, GearEquippable.tank(equipmentAsset))
                 .component(GalacticraftDataComponents.FLUID_TANK, SimpleFluidContent.copyOf(FluidStack.EMPTY));
     }
 
@@ -62,6 +62,7 @@ public  class GearItem extends Item {
                                 .build()
                 );
     }
+
     public static Properties parachute(DyeColor color) {
         return new Properties()
                 .stacksTo(1)
