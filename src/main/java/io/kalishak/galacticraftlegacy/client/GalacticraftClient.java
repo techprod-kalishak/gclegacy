@@ -22,6 +22,8 @@ import io.kalishak.galacticraftlegacy.client.model.FlagModel;
 import io.kalishak.galacticraftlegacy.client.model.block.EmergencyPostModel;
 import io.kalishak.galacticraftlegacy.client.model.block.NasaWorkbenchModel;
 import io.kalishak.galacticraftlegacy.client.model.block.SolarPanelModel;
+import io.kalishak.galacticraftlegacy.client.model.entity.AlienVillagerModel;
+import io.kalishak.galacticraftlegacy.client.model.entity.BabyAlienVillagerModel;
 import io.kalishak.galacticraftlegacy.client.model.entity.EvolvedCreeperModel;
 import io.kalishak.galacticraftlegacy.client.model.entity.Tier1RocketModel;
 import io.kalishak.galacticraftlegacy.client.model.gear.FrequencyModuleModel;
@@ -62,6 +64,7 @@ import io.kalishak.galacticraftlegacy.world.level.material.fluid.GalacticraftFlu
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
+import net.minecraft.client.model.geom.builders.MeshTransformer;
 import net.minecraft.client.model.player.PlayerModel;
 import net.minecraft.client.renderer.block.FluidModel;
 import net.minecraft.client.renderer.entity.ArmorModelSet;
@@ -243,6 +246,7 @@ public class GalacticraftClient {
         event.registerEntityRenderer(GalacticraftEntityTypes.EVOLVED_ENDERMAN.get(), EvolvedEndermanRenderer::new);
         event.registerEntityRenderer(GalacticraftEntityTypes.EVOLVED_SKELETON.get(), EvolvedSkeletonRenderer::new);
         event.registerEntityRenderer(GalacticraftEntityTypes.EVOLVED_ZOMBIE.get(), EvolvedZombieRenderer::new);
+        event.registerEntityRenderer(GalacticraftEntityTypes.ALIEN_VILLAGER.get(), AlienVillagerRenderer::new);
         event.registerEntityRenderer(GalacticraftEntityTypes.NO_GRAVITY_MOVING_BLOCK.get(), NoGravityMovingBlockRenderer::new);
         event.registerEntityRenderer(GalacticraftEntityTypes.TIER_1_ROCKET.get(), Tier1RocketRenderer::new);
 
@@ -277,6 +281,11 @@ public class GalacticraftClient {
         event.registerLayerDefinition(GalacticraftModelLayers.THERMAL_PADDING.legs(), thermalPadding::legs);
         event.registerLayerDefinition(GalacticraftModelLayers.THERMAL_PADDING.feet(), thermalPadding::feet);
         event.registerLayerDefinition(GalacticraftModelLayers.EVOLVED_CREEPER, EvolvedCreeperModel::createBodyLayer);
+        MeshTransformer villagerLikeScale = MeshTransformer.scaling(0.9375F);
+        event.registerLayerDefinition(GalacticraftModelLayers.ALIEN_VILLAGER, () -> LayerDefinition.create(AlienVillagerModel.createBodyModel(), 64, 64).apply(villagerLikeScale));
+        event.registerLayerDefinition(GalacticraftModelLayers.ALIEN_VILLAGER_BABY, () -> LayerDefinition.create(BabyAlienVillagerModel.createBodyModel(), 64, 64));
+        event.registerLayerDefinition(GalacticraftModelLayers.ALIEN_VILLAGER_NO_HAT, () -> LayerDefinition.create(AlienVillagerModel.createNoHatModel(), 64, 64).apply(villagerLikeScale));
+        event.registerLayerDefinition(GalacticraftModelLayers.ALIEN_VILLAGER_BABY_NO_HAT, () -> LayerDefinition.create(BabyAlienVillagerModel.createNoHatModel(), 64, 64));
         event.registerLayerDefinition(GalacticraftModelLayers.TIER_1_ROCKET, Tier1RocketModel::createLayer);
         event.registerLayerDefinition(GalacticraftModelLayers.FLAG, FlagModel::createBaseLayer);
     }

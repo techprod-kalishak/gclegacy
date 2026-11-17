@@ -1,0 +1,9 @@
+{
+  "gives": {
+    "id": "galacticraftlegacy:fluid_canister"
+  },
+  "max_uses": 24,
+  "wants": {
+    "id": "minecraft:carrot"
+  }
+}

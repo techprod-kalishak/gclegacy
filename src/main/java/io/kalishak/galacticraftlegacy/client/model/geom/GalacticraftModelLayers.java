@@ -37,6 +37,10 @@ public class GalacticraftModelLayers {
             createLocation("foot_thermal_padding")
     );
     public static final ModelLayerLocation EVOLVED_CREEPER = createLocation("evolved_creeper");
+    public static final ModelLayerLocation ALIEN_VILLAGER = createLocation("alien_villager");
+    public static final ModelLayerLocation ALIEN_VILLAGER_BABY = createLocation("alien_villager_baby");
+    public static final ModelLayerLocation ALIEN_VILLAGER_NO_HAT = createLocation("alien_villager_no_hat");
+    public static final ModelLayerLocation ALIEN_VILLAGER_BABY_NO_HAT = createLocation("alien_villager_baby_no_hat");
     public static final ModelLayerLocation TIER_1_ROCKET = createLocation("tier_1_rocket");
     public static final ModelLayerLocation MOON_BUGGY = createLocation("moon_buggy");
     public static final ModelLayerLocation TIER_2_ROCKET = createLocation("tier_2_rocket");

@@ -7,8 +7,8 @@
 
 package io.kalishak.galacticraftlegacy.world.level.levelgen;
 
+import io.kalishak.galacticraftlegacy.data.worldgen.placement.OverworldPlacements;
 import io.kalishak.galacticraftlegacy.references.Constants;
-import io.kalishak.galacticraftlegacy.world.level.levelgen.placement.OverworldPlacements;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.Registry;

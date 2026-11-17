@@ -203,6 +203,7 @@ public class GalacticraftEntityLootSubProvider extends EntityLootSubProvider {
                                         )
                         )
         );
+        add(GalacticraftEntityTypes.ALIEN_VILLAGER.get(), LootTable.lootTable());
     }
 
     @Override

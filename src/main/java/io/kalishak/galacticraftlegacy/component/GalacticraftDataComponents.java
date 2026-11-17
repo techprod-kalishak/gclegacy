@@ -55,6 +55,10 @@ public final class GalacticraftDataComponents {
             "canned_food",
             builder -> builder.persistent(CannedFood.CannedComponent.CODEC).networkSynchronized(CannedFood.CannedComponent.STREAM_CODEC).cacheEncoding()
     );
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<AlienVillagerFood>> ALIEN_VILLAGER_FOOD = REGISTRY.registerComponentType(
+            "alien_villager_food",
+            builder -> builder.persistent(AlienVillagerFood.CODEC).networkSynchronized(AlienVillagerFood.STREAM_CODEC).cacheEncoding()
+    );
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<CraftingMemory>> CRAFTING_MEMORY = REGISTRY.registerComponentType(
             "crafting_memory",
             builder -> builder.persistent(CraftingMemory.CODEC).networkSynchronized(CraftingMemory.STREAM_CODEC).cacheEncoding()

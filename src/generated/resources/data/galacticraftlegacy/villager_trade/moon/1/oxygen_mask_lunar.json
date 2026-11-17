@@ -1,0 +1,15 @@
+{
+  "gives": {
+    "id": "galacticraftlegacy:oxygen_mask"
+  },
+  "max_uses": 9,
+  "wants": {
+    "count": {
+      "type": "minecraft:uniform",
+      "max": 2,
+      "min": 1
+    },
+    "id": "galacticraftlegacy:sapphire"
+  },
+  "xp": 2
+}

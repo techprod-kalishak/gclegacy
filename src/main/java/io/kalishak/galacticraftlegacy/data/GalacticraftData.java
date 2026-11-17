@@ -19,8 +19,12 @@ import io.kalishak.galacticraftlegacy.data.loot.GalacticraftChestLootSubProvider
 import io.kalishak.galacticraftlegacy.data.loot.GalacticraftEntityLootSubProvider;
 import io.kalishak.galacticraftlegacy.data.recipes.GalacticraftRecipeProvider;
 import io.kalishak.galacticraftlegacy.data.tag.*;
-import io.kalishak.galacticraftlegacy.data.worldgen.GalacticraftCarvers;
-import io.kalishak.galacticraftlegacy.data.worldgen.GalacticraftMaterialRules;
+import io.kalishak.galacticraftlegacy.data.villager.GalacticraftTradeSets;
+import io.kalishak.galacticraftlegacy.data.villager.GalacticraftTrades;
+import io.kalishak.galacticraftlegacy.data.worldgen.*;
+import io.kalishak.galacticraftlegacy.data.worldgen.feature.GalacticraftFeatures;
+import io.kalishak.galacticraftlegacy.data.worldgen.placement.GalacticraftPlacements;
+import io.kalishak.galacticraftlegacy.data.worldgen.village.MoonVillagePools;
 import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.references.GalacticraftComponents;
 import io.kalishak.galacticraftlegacy.registry.BuiltinChecklist;
@@ -40,8 +44,6 @@ import io.kalishak.galacticraftlegacy.world.level.levelgen.GalacticraftBiomeModi
 import io.kalishak.galacticraftlegacy.world.level.levelgen.GalacticraftNoiseGeneratorSettings;
 import io.kalishak.galacticraftlegacy.world.level.levelgen.GalacticraftNoiseRouterData;
 import io.kalishak.galacticraftlegacy.world.level.levelgen.GalacticraftNoises;
-import io.kalishak.galacticraftlegacy.world.level.levelgen.features.GalacticraftFeatures;
-import io.kalishak.galacticraftlegacy.world.level.levelgen.placement.GalacticraftPlacements;
 import io.kalishak.galacticraftlegacy.world.timeline.GalacticraftTimelines;
 import io.kalishak.galacticraftlegacy.world.timeline.GalacticraftWorldClocks;
 import net.minecraft.DetectedVersion;
@@ -84,6 +86,7 @@ public class GalacticraftData {
         event.createProvider(GalacticraftDimensionTypeTags::new);
         event.createProvider(GalacticraftEntityTypeTagsProvider::new);
         event.createProvider(GalacticraftFluidTagsProvider::new);
+        event.createProvider(GalacticraftTradeTagProvider::new);
         event.createBlockAndItemTags(GalacticraftBlockTagsProvider::new, GalacticraftItemTagsProvider::new);
         event.createProvider(GalacticraftTimelinesTagsProvider::new);
 
@@ -104,9 +107,15 @@ public class GalacticraftData {
         event.add(Registries.NOISE, GalacticraftNoises::bootstrap);
         event.add(Registries.NOISE_SETTINGS, GalacticraftNoiseGeneratorSettings::bootstrap);
         event.add(Registries.PLACED_FEATURE, GalacticraftPlacements::bootstrap);
+        event.add(Registries.PROCESSOR_LIST, GalacticraftProcessorLists::bootstrap);
+        event.add(Registries.STRUCTURE, GalacticraftStructures::bootstrap);
+        event.add(Registries.STRUCTURE_SET, GalacticraftStructureSets::bootstrap);
         event.add(Registries.SULFUR_CUBE_ARCHETYPE, GalacticraftSulfurCubeArchetypes::bootstrap);
+        event.add(Registries.TEMPLATE_POOL, MoonVillagePools::bootstrap);
         event.add(Registries.TIMELINE, GalacticraftTimelines::bootstrap);
+        event.add(Registries.TRADE_SET, GalacticraftTradeSets::bootstrap);
         event.add(Registries.TRIM_MATERIAL, GalacticraftTrimMaterials::bootstrap);
+        event.add(Registries.VILLAGER_TRADE, GalacticraftTrades::bootstrap);
         event.add(Registries.WORLD_CLOCK, GalacticraftWorldClocks::bootstrap);
         event.add(NeoForgeRegistries.Keys.BIOME_MODIFIERS, GalacticraftBiomeModifiers::bootstrap);
         event.add(GalacticraftRegistries.Keys.FLAG_MATERIAL, BuiltinFlagMaterials::bootstrap);

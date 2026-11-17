@@ -326,6 +326,7 @@ public final class GalacticraftCreativeModeTabs {
             event.accept(GalacticraftItems.EVOLVED_ENDERMAN_SPAWN_EGG);
             event.accept(GalacticraftItems.EVOLVED_SKELETON_SPAWN_EGG);
             event.accept(GalacticraftItems.EVOLVED_ZOMBIE_SPAWN_EGG);
+            event.accept(GalacticraftItems.ALIEN_VILLAGER_SPAWN_EGG);
         }
     }
 

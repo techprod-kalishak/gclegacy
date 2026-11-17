@@ -32,7 +32,7 @@ public class EvolvedEndermanRenderer extends MobRenderer<EvolvedEnderman, Evolve
         addLayer(new EvolvedEnderEyesLayer(this));
         addLayer(new EvolvedCarriedBlockLayer(this));
         addLayer(new OxygenMaskLayer<>(this, context.getModelSet(), context.getEquipmentRenderer(), context.getEquipmentAssets(), -0.78F));
-        addLayer(new OxygenGearLayer<>(this, context.getModelSet(), context.getEquipmentRenderer(), context.getEquipmentAssets(), -0.8F));
+        addLayer(new OxygenGearLayer<>(this, context.getModelSet(), context.getEquipmentRenderer(), context.getEquipmentAssets(), -0.15F));
         addLayer(new EvolvedEndermanTankLayer(this, context.getModelSet(), context.getEquipmentRenderer(), context.getEquipmentAssets()));
     }
 

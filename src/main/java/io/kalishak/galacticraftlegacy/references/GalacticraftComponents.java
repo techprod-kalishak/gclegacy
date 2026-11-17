@@ -74,7 +74,8 @@ public class GalacticraftComponents {
     public static final KeyComponent ITEM_DEHYDRATED_POTATO = KeyComponent.direct(GalacticraftItemIds.DEHYDRATED_POTATO, ChatFormatting.YELLOW);
     public static final KeyComponent ITEM_CANNED_BEEF = KeyComponent.direct(GalacticraftItemIds.CANNED_BEEF, ChatFormatting.YELLOW);
     public static final KeyComponent FREQUENCY_MODULE_DESC = KeyComponent.direct("item.galacticraftlegacy.frequency_module.desc");
-    public static final KeyComponent FREQUENCY_MODULE_WARNING = KeyComponent.direct("item.galacticraftlegacy.frequency_module.warning");
+    public static final KeyComponent FREQUENCY_MODULE_WARNING = KeyComponent.direct("item.galacticraftlegacy.missing_frequency_module.warning");
+    public static final KeyComponent NEED_FREQUENCY_MODULE = KeyComponent.direct("item.galacticraftlegacy.missing_frequency_module.villager");
 
     // Blocks
     public static final KeyComponent BLOCK_DUNGEON_CHEST = KeyComponent.direct("container.dungeon_chest");

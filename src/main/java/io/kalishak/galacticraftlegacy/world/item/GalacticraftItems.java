@@ -561,6 +561,11 @@ public final class GalacticraftItems {
             SpawnEggItem::new,
             () -> new Item.Properties().spawnEgg(GalacticraftEntityTypes.EVOLVED_ZOMBIE.get())
     );
+    public static final DeferredItem<SpawnEggItem> ALIEN_VILLAGER_SPAWN_EGG = REGISTRY.registerItem(
+            GalacticraftItemIds.ALIEN_VILLAGER_SPAWN_EGG,
+            SpawnEggItem::new,
+            () -> new Item.Properties().spawnEgg(GalacticraftEntityTypes.ALIEN_VILLAGER.get())
+    );
     public static final DeferredItem<ThrowableMeteorItem> THROWABLE_METEOR_CHUNK = REGISTRY.registerItem(
             GalacticraftItemIds.THROWABLE_METEOR_CHUNK,
             ThrowableMeteorItem::new

@@ -1,0 +1,24 @@
+{
+  "given_item_modifier": {
+    "type": "galacticraftlegacy:set_fluid_in_tank",
+    "fluid": "galacticraftlegacy:fuel",
+    "value": {
+      "type": "minecraft:uniform",
+      "max": 317,
+      "min": 0
+    }
+  },
+  "gives": {
+    "id": "galacticraftlegacy:fluid_canister"
+  },
+  "max_uses": 6,
+  "wants": {
+    "count": {
+      "type": "minecraft:uniform",
+      "max": 4,
+      "min": 3
+    },
+    "id": "galacticraftlegacy:sapphire"
+  },
+  "xp": 4
+}

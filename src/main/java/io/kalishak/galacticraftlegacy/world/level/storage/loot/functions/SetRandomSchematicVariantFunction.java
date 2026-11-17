@@ -40,7 +40,7 @@ public class SetRandomSchematicVariantFunction extends LootItemConditionalFuncti
     }
 
     @SuppressWarnings("unused")
-    public LootItemConditionalFunction.Builder<?> randomTiered(FeatureTier tier) {
+    public static LootItemConditionalFunction.Builder<?> randomTiered(FeatureTier tier) {
         return simpleBuilder(i -> new SetRandomSchematicVariantFunction(i, tier));
     }
 

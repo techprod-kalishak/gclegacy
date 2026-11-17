@@ -1,0 +1,22 @@
+{
+  "given_item_modifier": {
+    "type": "galacticraftlegacy:charged_capacitor",
+    "value": {
+      "type": "minecraft:uniform",
+      "max_inclusive": 7500,
+      "min_inclusive": 0
+    }
+  },
+  "gives": {
+    "id": "galacticraftlegacy:battery"
+  },
+  "wants": {
+    "count": {
+      "type": "minecraft:uniform",
+      "max": 4,
+      "min": 2
+    },
+    "id": "galacticraftlegacy:sapphire"
+  },
+  "xp": 3
+}

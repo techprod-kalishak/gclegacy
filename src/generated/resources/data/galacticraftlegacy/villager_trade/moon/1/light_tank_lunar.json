@@ -1,0 +1,23 @@
+{
+  "given_item_modifier": {
+    "type": "galacticraftlegacy:set_fluid_in_tank",
+    "fluid": "galacticraftlegacy:oxygen",
+    "value": {
+      "type": "minecraft:uniform",
+      "max": 235,
+      "min": 0
+    }
+  },
+  "gives": {
+    "id": "galacticraftlegacy:light_oxygen_tank"
+  },
+  "wants": {
+    "count": {
+      "type": "minecraft:uniform",
+      "max": 4,
+      "min": 3
+    },
+    "id": "galacticraftlegacy:sapphire"
+  },
+  "xp": 3
+}

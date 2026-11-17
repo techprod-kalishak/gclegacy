@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 10387312,
+    "separation": 12,
+    "spacing": 54
+  },
+  "structures": [
+    {
+      "structure": "galacticraftlegacy:village_moon",
+      "weight": 1
+    }
+  ]
+}

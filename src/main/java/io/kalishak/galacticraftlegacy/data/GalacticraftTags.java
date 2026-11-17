@@ -20,6 +20,7 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.trading.VillagerTrade;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.dimension.DimensionType;
@@ -53,6 +54,8 @@ public final class GalacticraftTags {
         public static final TagKey<Biome> HAS_BASIC_FEATURES = tagKey(Registries.BIOME, "has_basic_features");
         public static final TagKey<Biome> HAS_ADVANCED_FEATURES = tagKey(Registries.BIOME, "has_advanced_features");
         public static final TagKey<Biome> HAS_ULTIMATE_FEATURES = tagKey(Registries.BIOME, "has_ultimate_features");
+
+        public static final TagKey<Biome> HAS_VILLAGE_MOON = tagKey(Registries.BIOME, "has_structure/village_moon");
     }
 
     public static class Blocks {
@@ -212,5 +215,13 @@ public final class GalacticraftTags {
         public static final TagKey<Timeline> IN_MARS = tagKey(Registries.TIMELINE, "in_mars");
         public static final TagKey<Timeline> IN_ASTEROIDS = tagKey(Registries.TIMELINE, "in_asteroids");
         public static final TagKey<Timeline> IN_VENUS = tagKey(Registries.TIMELINE, "in_venus");
+    }
+
+    public static class VillagerTrades {
+        public static final TagKey<VillagerTrade> MOON_LEVEL_1 = tagKey(Registries.VILLAGER_TRADE, "moon/level_1");
+        public static final TagKey<VillagerTrade> MOON_LEVEL_2 = tagKey(Registries.VILLAGER_TRADE, "moon/level_2");
+        public static final TagKey<VillagerTrade> MOON_LEVEL_3 = tagKey(Registries.VILLAGER_TRADE, "moon/level_3");
+        public static final TagKey<VillagerTrade> MOON_LEVEL_4 = tagKey(Registries.VILLAGER_TRADE, "moon/level_4");
+        public static final TagKey<VillagerTrade> MOON_LEVEL_5 = tagKey(Registries.VILLAGER_TRADE, "moon/level_5");
     }
 }

@@ -26,9 +26,14 @@ public class GalacticraftLootFunctions {
             "charged_capacitor",
             () -> SetItemCapacitorFunction.MAP_CODEC
     );
-    public static final DeferredHolder<MapCodec<? extends LootItemFunction>, MapCodec<SetRandomSchematicVariantFunction>> SCHEMATIC = REGISTRY.register(
-            "set_schematic_variant",
+    public static final DeferredHolder<MapCodec<? extends LootItemFunction>, MapCodec<SetRandomSchematicVariantFunction>> RANDOM_SCHEMATIC = REGISTRY.register(
+            "set_random_schematic_variant",
             () -> SetRandomSchematicVariantFunction.MAP_CODEC
+    );
+
+    public static final DeferredHolder<MapCodec<? extends LootItemFunction>, MapCodec<SetSchematicVariantFunction>> SCHEMATIC = REGISTRY.register(
+            "set_schematic_variant",
+            () -> SetSchematicVariantFunction.MAP_CODEC
     );
 
     public static void init(IEventBus bus) {

@@ -8,12 +8,14 @@
 package io.kalishak.galacticraftlegacy.data.datamap;
 
 import io.kalishak.galacticraftlegacy.references.Constants;
+import io.kalishak.galacticraftlegacy.references.GalacticraftEntityIds;
 import io.kalishak.galacticraftlegacy.world.level.block.GalacticraftBlocks;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.Identifier;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.WeatheringCopperCollection;
@@ -22,6 +24,8 @@ import net.neoforged.neoforge.common.data.DataMapProvider;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.datamaps.DataMapType;
 import net.neoforged.neoforge.registries.datamaps.RegisterDataMapTypesEvent;
+import net.neoforged.neoforge.registries.datamaps.builtin.AcceptableVillagerDistance;
+import net.neoforged.neoforge.registries.datamaps.builtin.BiomeVillagerType;
 import net.neoforged.neoforge.registries.datamaps.builtin.NeoForgeDataMaps;
 import net.neoforged.neoforge.registries.datamaps.builtin.Oxidizable;
 
@@ -33,9 +37,15 @@ public class GalacticraftDataMaps {
             Registries.BLOCK,
             Extinguishable.CODEC
     ).build();
+    public static final DataMapType<EntityType<?>, AcceptableVillagerDistance> ACCEPTABLE_ALIEN_VILLAGER_DISTANCES = DataMapType.builder(
+            Constants.id("acceptable_alien_villager_distances"),
+            Registries.ENTITY_TYPE,
+            AcceptableVillagerDistance.CODEC
+    ).synced(AcceptableVillagerDistance.DISTANCE_CODEC, false).build();
 
     public static void registerDataMaps(RegisterDataMapTypesEvent event) {
         event.register(EXTINGUISHED_WITHOUT_OXYGEN);
+        event.register(ACCEPTABLE_ALIEN_VILLAGER_DISTANCES);
     }
 
     public static class Provider extends DataMapProvider {
@@ -62,6 +72,11 @@ public class GalacticraftDataMaps {
             buildExtinguishable(extinguishableBuilder, Blocks.COPPER_LANTERN.waxed().exposed(), GalacticraftBlocks.UNLIT_COPPER_LANTERN.waxed().exposed().get());
             buildExtinguishable(extinguishableBuilder, Blocks.COPPER_LANTERN.waxed().weathered(), GalacticraftBlocks.UNLIT_COPPER_LANTERN.waxed().weathered().get());
             buildExtinguishable(extinguishableBuilder, Blocks.COPPER_LANTERN.waxed().oxidized(), GalacticraftBlocks.UNLIT_COPPER_LANTERN.waxed().oxidized().get());
+
+            builder(ACCEPTABLE_ALIEN_VILLAGER_DISTANCES)
+                    .add(GalacticraftEntityIds.EVOLVED_ZOMBIE, new AcceptableVillagerDistance(8.0F), false);
+            builder(NeoForgeDataMaps.VILLAGER_TYPES)
+                    .add(Constants.id("moon"), new BiomeVillagerType(Constants.key(Registries.VILLAGER_TYPE, "moon")), false);
         }
 
         private static void buildOxidizables(Builder<Oxidizable, Block> dataMapBuilder, WeatheringCopperCollection<DeferredBlock<Block>> blocks) {

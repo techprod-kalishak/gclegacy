@@ -13,6 +13,7 @@ import io.kalishak.galacticraftlegacy.registry.deferred.DeferredEntityTypeRegist
 import io.kalishak.galacticraftlegacy.world.entity.ai.attributes.GalacticraftAttributes;
 import io.kalishak.galacticraftlegacy.world.entity.item.FallenMeteor;
 import io.kalishak.galacticraftlegacy.world.entity.monster.*;
+import io.kalishak.galacticraftlegacy.world.entity.npc.villager.AlienVillager;
 import io.kalishak.galacticraftlegacy.world.entity.projectile.ThrownMeteorChunk;
 import io.kalishak.galacticraftlegacy.world.entity.vehicle.AstroMiner;
 import io.kalishak.galacticraftlegacy.world.entity.vehicle.MoonBuggy;
@@ -112,6 +113,15 @@ public final class GalacticraftEntityTypes {
                     .sized(0.5F, 0.5F)
                     .clientTrackingRange(10)
                     .updateInterval(Integer.MAX_VALUE)
+    );
+    public static final DeferredHolder<EntityType<?>, EntityType<AlienVillager>> ALIEN_VILLAGER = REGISTRY.registerEntityType(
+            GalacticraftEntityIds.ALIEN_VILLAGER.identifier().getPath(),
+            AlienVillager::new,
+            MobCategory.MISC,
+            builder -> builder
+                    .sized(0.6F, 1.95F)
+                    .eyeHeight(1.62F)
+                    .clientTrackingRange(10)
     );
 
     //Evolved variants
@@ -234,6 +244,7 @@ public final class GalacticraftEntityTypes {
         event.put(EVOLVED_SKELETON.get(), EvolvedSkeleton.createAttributes().build());
         event.put(EVOLVED_ZOMBIE.get(), EvolvedZombie.createAttributes().build());
         event.put(EVOLVED_ENDERMAN.get(), EvolvedEnderman.createAttributes().build());
+        event.put(ALIEN_VILLAGER.get(), AlienVillager.createAttributes().build());
     }
 
     @SubscribeEvent
@@ -264,6 +275,14 @@ public final class GalacticraftEntityTypes {
                 SpawnPlacementTypes.ON_GROUND,
                 Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
                 withBound(5),
+                RegisterSpawnPlacementsEvent.Operation.AND
+        );
+
+        event.register(
+                ALIEN_VILLAGER.get(),
+                SpawnPlacementTypes.ON_GROUND,
+                Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                (type, level, spawnReason, pos, random) -> false,
                 RegisterSpawnPlacementsEvent.Operation.AND
         );
     }

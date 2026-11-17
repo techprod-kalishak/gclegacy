@@ -1,0 +1,13 @@
+{
+  "gives": {
+    "id": "galacticraftlegacy:white_parachute"
+  },
+  "wants": {
+    "count": {
+      "type": "minecraft:uniform",
+      "max": 2,
+      "min": 1
+    },
+    "id": "galacticraftlegacy:sapphire"
+  }
+}

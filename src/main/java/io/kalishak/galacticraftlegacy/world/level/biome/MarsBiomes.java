@@ -7,8 +7,8 @@
 
 package io.kalishak.galacticraftlegacy.world.level.biome;
 
+import io.kalishak.galacticraftlegacy.data.worldgen.placement.MarsPlacements;
 import io.kalishak.galacticraftlegacy.sounds.GalacticraftSounds;
-import io.kalishak.galacticraftlegacy.world.level.levelgen.placement.MarsPlacements;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;

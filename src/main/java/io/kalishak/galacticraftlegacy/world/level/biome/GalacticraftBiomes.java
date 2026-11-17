@@ -7,9 +7,9 @@
 
 package io.kalishak.galacticraftlegacy.world.level.biome;
 
+import io.kalishak.galacticraftlegacy.data.worldgen.placement.GalacticraftPlacements;
 import io.kalishak.galacticraftlegacy.references.Constants;
 import io.kalishak.galacticraftlegacy.world.entity.GalacticraftEntityTypes;
-import io.kalishak.galacticraftlegacy.world.level.levelgen.placement.GalacticraftPlacements;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;

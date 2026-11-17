@@ -38,5 +38,7 @@ public class GalacticraftBiomeTagsProvider extends TagsProvider<Biome> {
                 .addOptionalTag(GalacticraftTags.Biomes.IS_VENUS);
         tag(GalacticraftTags.Biomes.IS_MOON)
                 .add(MoonBiomes.MOON_PLAINS);
+        tag(GalacticraftTags.Biomes.HAS_VILLAGE_MOON)
+                .add(MoonBiomes.MOON_PLAINS);
     }
 }

@@ -1,0 +1,15 @@
+{
+  "gives": {
+    "id": "galacticraftlegacy:basic_wafer"
+  },
+  "max_uses": 3,
+  "wants": {
+    "count": {
+      "type": "minecraft:uniform",
+      "max": 4,
+      "min": 3
+    },
+    "id": "galacticraftlegacy:sapphire"
+  },
+  "xp": 4
+}

@@ -1,0 +1,31 @@
+{
+  "given_item_modifier": [
+    {
+      "type": "galacticraftlegacy:set_schematic_variant",
+      "variant": "galacticraftlegacy:moon_buggy"
+    },
+    {
+      "type": "minecraft:filtered",
+      "item_filter": {
+        "components": {
+          "galacticraftlegacy:schematic": "galacticraftlegacy:tier_2_rocket"
+        },
+        "items": "galacticraftlegacy:schematic"
+      },
+      "on_fail": {
+        "type": "minecraft:discard"
+      }
+    }
+  ],
+  "gives": {
+    "components": {
+      "galacticraftlegacy:schematic": "galacticraftlegacy:moon_buggy"
+    },
+    "id": "galacticraftlegacy:schematic"
+  },
+  "max_uses": 2,
+  "wants": {
+    "id": "galacticraftlegacy:schematic"
+  },
+  "xp": 5
+}

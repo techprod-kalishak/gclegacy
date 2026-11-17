@@ -35,6 +35,7 @@ public class GalacticraftLanguageProvider extends ExtendedLanguageProvider {
         GalacticraftComponents.ADVENTURE_MODE_DESCRIPTION.translate(this::add, "Adventure mode features");
         GalacticraftComponents.SPACE_TRAVEL_TEXT.translate(this::add, "That's one small step for a player, one giant leap for the server");
         GalacticraftComponents.BED_RULE_CRYOGENIC_CHAMBER.translate(this::add, "I should sleep in a Cryo-chamber");
+        GalacticraftComponents.NETWORK_FAILURE.translate(this::add, "There was an error on Galacticraft Legacy network thread: %s");
         GalacticraftComponents.ALLOW_ENTRY.translate(this::add, "to allow another player to enter this space station!");
         GalacticraftComponents.SPACE_STATION_ALLOW_ENTRY.translate(this::add, "<playername>");
         add("gui.spacestation.type_command", "Type");
@@ -70,6 +71,7 @@ public class GalacticraftLanguageProvider extends ExtendedLanguageProvider {
         GalacticraftComponents.ENVIRONMENTAL_BOOST.translate(this::add, "Environmental Boost: %s");
         GalacticraftComponents.FREQUENCY_MODULE_DESC.translate(this::add, "Can receive weak sound, waves and distant signals");
         GalacticraftComponents.FREQUENCY_MODULE_WARNING.translate(this::add, "I'll probably need a if I want to hear properly here.");
+        GalacticraftComponents.NEED_FREQUENCY_MODULE.translate(this::add, "I'll need to equip a Frequency Module to communicate with them!");
         GalacticraftComponents.BLOCK_DUNGEON_CHEST.translate(this::add, "Dungeon Treasure Chest");
         GalacticraftComponents.GENERATOR_GENERATING.translate(this::add, "Generating");
         GalacticraftComponents.COAL_GENERATOR_NOT_GENERATING.translate(this::add, "Not Generating");
@@ -299,8 +301,12 @@ public class GalacticraftLanguageProvider extends ExtendedLanguageProvider {
         addEntityType(GalacticraftEntityTypes.FLAG, "Flag");
         addEntityType(GalacticraftEntityTypes.FALLING_PARACHEST, "Parachest");
         addEntityType(GalacticraftEntityTypes.SCHEMATIC, "Schematic");
+        addEntityType(GalacticraftEntityTypes.EVOLVED_CREEPER, "Evolved Creeper");
+        addEntityType(GalacticraftEntityTypes.EVOLVED_ENDERMAN, "Evolved Enderman");
         addEntityType(GalacticraftEntityTypes.EVOLVED_SKELETON, "Evolved Skeleton");
         addEntityType(GalacticraftEntityTypes.EVOLVED_ZOMBIE, "Evolved Zombie");
+        addEntityType(GalacticraftEntityTypes.ALIEN_VILLAGER, "Alien Villager");
+        add("entity.galacticraftlegacy.villager.moon", "Moonllager");
 
         addItem(GalacticraftItems.BATTERY, "Battery");
         addItem(GalacticraftItems.INFINITE_BATTERY, "Battery");
@@ -441,6 +447,7 @@ public class GalacticraftLanguageProvider extends ExtendedLanguageProvider {
         addItem(GalacticraftItems.EVOLVED_ENDERMAN_SPAWN_EGG, "Evolved Enderman Spawn Egg");
         addItem(GalacticraftItems.EVOLVED_SKELETON_SPAWN_EGG, "Evolved Skeleton Spawn Egg");
         addItem(GalacticraftItems.EVOLVED_ZOMBIE_SPAWN_EGG, "Evolved Zombie Spawn Egg");
+        addItem(GalacticraftItems.ALIEN_VILLAGER_SPAWN_EGG, "Alien Villager Spawn Egg");
 
         addWithSuffix(BuiltinSchematicVariants.ASTRO_MINER, "title", "Astro Miner");
         addWithSuffix(BuiltinSchematicVariants.CARGO_ROCKET, "title", "Cargo Rocket");
