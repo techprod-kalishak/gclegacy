@@ -74,7 +74,8 @@ public class GalacticraftDataMaps {
             buildExtinguishable(extinguishableBuilder, Blocks.COPPER_LANTERN.waxed().oxidized(), GalacticraftBlocks.UNLIT_COPPER_LANTERN.waxed().oxidized().get());
 
             builder(ACCEPTABLE_ALIEN_VILLAGER_DISTANCES)
-                    .add(GalacticraftEntityIds.EVOLVED_ZOMBIE, new AcceptableVillagerDistance(8.0F), false);
+                    .add(GalacticraftEntityIds.EVOLVED_ZOMBIE, new AcceptableVillagerDistance(8.0F), false)
+                    .add(GalacticraftEntityIds.EVOLVED_WITCH, new AcceptableVillagerDistance(10.0F), false);
             builder(NeoForgeDataMaps.VILLAGER_TYPES)
                     .add(Constants.id("moon"), new BiomeVillagerType(Constants.key(Registries.VILLAGER_TYPE, "moon")), false);
         }

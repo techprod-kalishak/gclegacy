@@ -33,7 +33,7 @@ public class ParachuteLayer<S extends LivingEntityRenderState, M extends EntityM
     private final SpriteGetter materials;
 
     public ParachuteLayer(RenderLayerParent<S, M> renderer, SpriteGetter spriteGetter, EntityModelSet entityModelSet, EquipmentLayerRenderer layerRenderer, EquipmentAssetManager equipmentAssetManager) {
-        super(renderer, ParachuteModel::new, GalacticraftModelLayers.PARACHUTE, entityModelSet, layerRenderer, equipmentAssetManager, 0.0F);
+        super(renderer, ParachuteModel::new, GalacticraftModelLayers.PARACHUTE, entityModelSet, layerRenderer, equipmentAssetManager, 0.0F, 0.0F);
         this.materials = spriteGetter;
     }
 

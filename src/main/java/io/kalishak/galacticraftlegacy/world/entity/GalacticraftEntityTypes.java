@@ -32,7 +32,6 @@ import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 import net.neoforged.neoforge.event.entity.EntityAttributeModificationEvent;
 import net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
-import org.jspecify.annotations.NonNull;
 
 import java.util.stream.Stream;
 
@@ -168,6 +167,17 @@ public final class GalacticraftEntityTypes {
                     .clientTrackingRange(8)
                     .notInPeaceful()
     );
+    public static final DeferredHolder<EntityType<?>, EntityType<EvolvedWitch>> EVOLVED_WITCH = REGISTRY.registerEntityType(
+            GalacticraftEntityIds.EVOLVED_WITCH,
+            EvolvedWitch::new,
+            MobCategory.MONSTER,
+            builder -> builder
+                    .sized(0.6F, 1.95F)
+                    .eyeHeight(1.62F)
+                    .passengerAttachments(2.2625F)
+                    .clientTrackingRange(8)
+                    .notInPeaceful()
+    );
 
     //Misc
     public static final DeferredHolder<EntityType<?>, EntityType<ThrownMeteorChunk>> THROWN_METEOR_CHUNK = REGISTRY.registerEntityType(
@@ -244,6 +254,7 @@ public final class GalacticraftEntityTypes {
         event.put(EVOLVED_SKELETON.get(), EvolvedSkeleton.createAttributes().build());
         event.put(EVOLVED_ZOMBIE.get(), EvolvedZombie.createAttributes().build());
         event.put(EVOLVED_ENDERMAN.get(), EvolvedEnderman.createAttributes().build());
+        event.put(EVOLVED_WITCH.get(), EvolvedWitch.createAttributes().build());
         event.put(ALIEN_VILLAGER.get(), AlienVillager.createAttributes().build());
     }
 
@@ -253,28 +264,35 @@ public final class GalacticraftEntityTypes {
                 EVOLVED_CREEPER.get(),
                 SpawnPlacementTypes.ON_GROUND,
                 Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
-                withBound(15),
+                EvolvedMonster::checkEvolvedSpawnRules,
                 RegisterSpawnPlacementsEvent.Operation.AND
         );
         event.register(
                 EVOLVED_SKELETON.get(),
                 SpawnPlacementTypes.ON_GROUND,
                 Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
-                withBound(10),
+                EvolvedMonster::checkEvolvedSpawnRules,
                 RegisterSpawnPlacementsEvent.Operation.AND
         );
         event.register(
                 EVOLVED_ZOMBIE.get(),
                 SpawnPlacementTypes.ON_GROUND,
                 Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
-                withBound(15),
+                EvolvedMonster::checkEvolvedSpawnRules,
                 RegisterSpawnPlacementsEvent.Operation.AND
         );
         event.register(
                 EVOLVED_ENDERMAN.get(),
                 SpawnPlacementTypes.ON_GROUND,
                 Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
-                withBound(5),
+                EvolvedMonster::checkEvolvedSpawnRules,
+                RegisterSpawnPlacementsEvent.Operation.AND
+        );
+        event.register(
+                EVOLVED_WITCH.get(),
+                SpawnPlacementTypes.ON_GROUND,
+                Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                EvolvedMonster::checkEvolvedSpawnRules,
                 RegisterSpawnPlacementsEvent.Operation.AND
         );
 
@@ -282,7 +300,7 @@ public final class GalacticraftEntityTypes {
                 ALIEN_VILLAGER.get(),
                 SpawnPlacementTypes.ON_GROUND,
                 Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
-                (type, level, spawnReason, pos, random) -> false,
+                AlienVillager::checkAlienSpawnRules,
                 RegisterSpawnPlacementsEvent.Operation.AND
         );
     }
@@ -291,10 +309,6 @@ public final class GalacticraftEntityTypes {
     public static void modifyAttributes(EntityAttributeModificationEvent event) {
         event.add(EntityTypes.PLAYER, GalacticraftAttributes.THERMAL_PROTECTION);
         event.add(EntityTypes.PLAYER, GalacticraftAttributes.CORROSION_PROTECTION);
-    }
-
-    private static <T extends Entity & EvolvedMonster> SpawnPlacements.SpawnPredicate<@NonNull T> withBound(int bounds) {
-        return (type, level, spawnReason, pos, random) -> EvolvedMonster.checkEvolvedSpawnRules(type, level, spawnReason, pos, random, bounds);
     }
 
     public static Stream<EntityType<?>> asStream() {

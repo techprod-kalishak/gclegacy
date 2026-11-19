@@ -561,6 +561,11 @@ public final class GalacticraftItems {
             SpawnEggItem::new,
             () -> new Item.Properties().spawnEgg(GalacticraftEntityTypes.EVOLVED_ZOMBIE.get())
     );
+    public static final DeferredItem<SpawnEggItem> EVOLVED_WITCH_SPAWN_EGG = REGISTRY.registerItem(
+            GalacticraftItemIds.EVOLVED_WITCH_SPAWN_EGG,
+            SpawnEggItem::new,
+            () -> new Item.Properties().spawnEgg(GalacticraftEntityTypes.EVOLVED_WITCH.get())
+    );
     public static final DeferredItem<SpawnEggItem> ALIEN_VILLAGER_SPAWN_EGG = REGISTRY.registerItem(
             GalacticraftItemIds.ALIEN_VILLAGER_SPAWN_EGG,
             SpawnEggItem::new,

@@ -204,6 +204,26 @@ public class GalacticraftEntityLootSubProvider extends EntityLootSubProvider {
                         )
         );
         add(GalacticraftEntityTypes.ALIEN_VILLAGER.get(), LootTable.lootTable());
+        add(
+                GalacticraftEntityTypes.EVOLVED_WITCH.get(),
+                LootTable.lootTable()
+                        .withPool(
+                                LootPool.lootPool()
+                                        .setRolls(ContextIntProviders.between(1, 2))
+                                        .add(LootItem.lootTableItem(Items.GLOWSTONE))
+                                        .add(LootItem.lootTableItem(GalacticraftItems.DEHYDRATED_CARROT))
+                                        .add(
+                                                LootItem.lootTableItem(GalacticraftItems.HEAVY_TANK)
+                                                        .apply(SetItemFluidTankFunction.setFluid(GalacticraftFluids.OXYGEN, ContextIntProviders.between(1, 1350)))
+                                        )
+//                                        .add(
+//                                                LootItem.lootTableItem(GalacticraftItems.OXYGEN_VENT)
+//                                        )
+                                        .add(
+                                                LootItem.lootTableItem(GalacticraftItems.OXYGEN_MASK)
+                                        )
+                        )
+        );
     }
 
     @Override

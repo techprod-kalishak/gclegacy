@@ -53,8 +53,8 @@ public class EvolvedEnderman extends Enderman implements EvolvedMonster {
     }
 
     @Override
-    public void tick() {
-        super.tick();
+    public void aiStep() {
+        super.aiStep();
 
         if (isAlive()) {
             if (this.tumbling != 0.0F && onGround()) {

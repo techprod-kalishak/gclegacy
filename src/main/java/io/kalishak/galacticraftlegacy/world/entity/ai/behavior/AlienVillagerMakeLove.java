@@ -7,6 +7,7 @@ import net.minecraft.core.GlobalPos;
 import net.minecraft.core.Holder;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.world.entity.EntityEvent;
 import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.behavior.Behavior;
@@ -40,8 +41,8 @@ public class AlienVillagerMakeLove extends Behavior<AlienVillager> {
     protected void start(ServerLevel level, AlienVillager body, long timestamp) {
         AgeableMob breedTarget = body.getBrain().getMemory(MemoryModuleType.BREED_TARGET).get();
         BehaviorUtils.lockGazeAndWalkToEachOther(body, breedTarget, 0.5F, 2);
-        level.broadcastEntityEvent(breedTarget, (byte)18);
-        level.broadcastEntityEvent(body, (byte)18);
+        level.broadcastEntityEvent(breedTarget, EntityEvent.IN_LOVE_HEARTS);
+        level.broadcastEntityEvent(body, EntityEvent.IN_LOVE_HEARTS);
         int duration = 275 + body.getRandom().nextInt(50);
         this.birthTimestamp = timestamp + duration;
     }
@@ -58,22 +59,22 @@ public class AlienVillagerMakeLove extends Behavior<AlienVillager> {
                 target.eatAndDigestFood();
                 tryToGiveBirth(level, body, target);
             } else if (body.getRandom().nextInt(35) == 0) {
-                level.broadcastEntityEvent(target, (byte) 12);
-                level.broadcastEntityEvent(body, (byte) 12);
+                level.broadcastEntityEvent(target, EntityEvent.LOVE_HEARTS);
+                level.broadcastEntityEvent(body, EntityEvent.LOVE_HEARTS);
             }
         }
     }
 
     private void tryToGiveBirth(ServerLevel level, AlienVillager body, AlienVillager target) {
-        Optional<BlockPos> childsBed = this.takeVacantBed(level, body);
+        Optional<BlockPos> childsBed = takeVacantBed(level, body);
 
         if (childsBed.isEmpty()) {
-            level.broadcastEntityEvent(target, (byte) 13);
-            level.broadcastEntityEvent(body, (byte) 13);
+            level.broadcastEntityEvent(target, EntityEvent.VILLAGER_ANGRY);
+            level.broadcastEntityEvent(body, EntityEvent.VILLAGER_ANGRY);
         } else {
-            Optional<AlienVillager> child = this.breed(level, body, target);
+            Optional<AlienVillager> child = breed(level, body, target);
             if (child.isPresent()) {
-                this.giveBedToChild(level, child.get(), childsBed.get());
+                giveBedToChild(level, child.get(), childsBed.get());
             } else {
                 level.getPoiManager().release(childsBed.get());
                 level.debugSynchronizers().updatePoi(childsBed.get());

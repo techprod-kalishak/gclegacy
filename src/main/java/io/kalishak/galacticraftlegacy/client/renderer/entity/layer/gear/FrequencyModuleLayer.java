@@ -33,7 +33,7 @@ public class FrequencyModuleLayer<S extends LivingEntityRenderState, M extends E
     public static final Identifier TEXTURES = Constants.id("textures/model/frequency_module.png");
 
     public FrequencyModuleLayer(RenderLayerParent<S, M> renderer, EquipmentLayerRenderer layerRenderer, EquipmentAssetManager equipmentAssetManager) {
-        super(renderer, null, layerRenderer, equipmentAssetManager, 0.0F);
+        super(renderer, null, layerRenderer, equipmentAssetManager, 0.0F, 0.0F);
     }
 
     @Override

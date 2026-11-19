@@ -69,6 +69,11 @@ public class EvolvedZombie extends Zombie implements EvolvedMonster {
     public void tick() {
         super.tick();
         this.gear.tick(this);
+    }
+
+    @Override
+    public void aiStep() {
+        super.aiStep();
 
         if (isAlive()) {
             if (this.tumbling != 0.0F && onGround()) {

@@ -42,21 +42,24 @@ public abstract class GearEquipmentLayer<S extends LivingEntityRenderState, M ex
     protected final EquipmentAssetManager equipmentAssets;
     protected final Model<S> model;
     protected final float yOffset;
+    protected final float zOffset;
 
-    protected GearEquipmentLayer(RenderLayerParent<S, M> renderer, GearEquipmentModel<S> model, EquipmentLayerRenderer layerRenderer, EquipmentAssetManager equipmentAssetManager, float yOffset) {
+    protected GearEquipmentLayer(RenderLayerParent<S, M> renderer, GearEquipmentModel<S> model, EquipmentLayerRenderer layerRenderer, EquipmentAssetManager equipmentAssetManager, float yOffset, float zOffset) {
         super(renderer);
         this.model = model;
         this.layerRenderer = layerRenderer;
         this.equipmentAssets = equipmentAssetManager;
         this.yOffset = yOffset;
+        this.zOffset = zOffset;
     }
 
-    protected GearEquipmentLayer(RenderLayerParent<S, M> renderer, Function<ModelPart, ? extends Model<S>> modelGetter, ModelLayerLocation modelLayerLocation, EntityModelSet entityModels, EquipmentLayerRenderer layerRenderer, EquipmentAssetManager equipmentAssetManager, float yOffset) {
+    protected GearEquipmentLayer(RenderLayerParent<S, M> renderer, Function<ModelPart, ? extends Model<S>> modelGetter, ModelLayerLocation modelLayerLocation, EntityModelSet entityModels, EquipmentLayerRenderer layerRenderer, EquipmentAssetManager equipmentAssetManager, float yOffset, float zOffset) {
         super(renderer);
         this.model = modelGetter.apply(entityModels.bakeLayer(modelLayerLocation));
         this.layerRenderer = layerRenderer;
         this.equipmentAssets = equipmentAssetManager;
         this.yOffset = yOffset;
+        this.zOffset = zOffset;
     }
 
     @SubscribeEvent

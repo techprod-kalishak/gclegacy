@@ -447,6 +447,7 @@ public class GalacticraftLanguageProvider extends ExtendedLanguageProvider {
         addItem(GalacticraftItems.EVOLVED_ENDERMAN_SPAWN_EGG, "Evolved Enderman Spawn Egg");
         addItem(GalacticraftItems.EVOLVED_SKELETON_SPAWN_EGG, "Evolved Skeleton Spawn Egg");
         addItem(GalacticraftItems.EVOLVED_ZOMBIE_SPAWN_EGG, "Evolved Zombie Spawn Egg");
+        addItem(GalacticraftItems.EVOLVED_WITCH_SPAWN_EGG, "Evolved Witch Spawn Egg");
         addItem(GalacticraftItems.ALIEN_VILLAGER_SPAWN_EGG, "Alien Villager Spawn Egg");
 
         addWithSuffix(BuiltinSchematicVariants.ASTRO_MINER, "title", "Astro Miner");

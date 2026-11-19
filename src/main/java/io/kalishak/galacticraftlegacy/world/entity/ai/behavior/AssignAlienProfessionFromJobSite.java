@@ -4,6 +4,7 @@ import io.kalishak.galacticraftlegacy.world.entity.npc.villager.AlienVillager;
 import net.minecraft.core.GlobalPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.world.entity.EntityEvent;
 import net.minecraft.world.entity.ai.behavior.BehaviorControl;
 import net.minecraft.world.entity.ai.behavior.declarative.BehaviorBuilder;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
@@ -25,7 +26,7 @@ public class AssignAlienProfessionFromJobSite {
 
                                     potentialJobSite.erase();
                                     jobSite.set(pos);
-                                    level.broadcastEntityEvent(body, (byte)14);
+                                    level.broadcastEntityEvent(body, EntityEvent.VILLAGER_HAPPY);
 
                                     if (!body.getVillagerData().profession().is(VillagerProfession.NONE)) {
                                         return true;

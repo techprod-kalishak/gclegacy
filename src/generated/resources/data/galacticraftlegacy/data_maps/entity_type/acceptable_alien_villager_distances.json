@@ -1,5 +1,8 @@
 {
   "values": {
+    "galacticraftlegacy:evolved_witch": {
+      "acceptable_villager_distance": 10.0
+    },
     "galacticraftlegacy:evolved_zombie": {
       "acceptable_villager_distance": 8.0
     }

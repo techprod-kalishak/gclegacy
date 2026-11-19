@@ -180,6 +180,7 @@ public class GalacticraftItemIds {
     public static final ResourceKey<Item> EVOLVED_ENDERMAN_SPAWN_EGG = create("evolved_enderman_spawn_egg");
     public static final ResourceKey<Item> EVOLVED_SKELETON_SPAWN_EGG = create("evolved_skeleton_spawn_egg");
     public static final ResourceKey<Item> EVOLVED_ZOMBIE_SPAWN_EGG = create("evolved_zombie_spawn_egg");
+    public static final ResourceKey<Item> EVOLVED_WITCH_SPAWN_EGG = create("evolved_witch_spawn_egg");
     public static final ResourceKey<Item> ALIEN_VILLAGER_SPAWN_EGG = create("alien_villager_spawn_egg");
     
     private static ResourceKey<Item> create(String name) {

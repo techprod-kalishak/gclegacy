@@ -35,14 +35,14 @@ public class OxygenTankLayer<S extends LivingEntityRenderState, M extends Entity
     protected final GearEquipmentModel<S> mediumTank;
     protected final GearEquipmentModel<S> lightTank;
 
-    public OxygenTankLayer(RenderLayerParent<S, M> renderer, EntityModelSet modelSet, EquipmentLayerRenderer layerRenderer, EquipmentAssetManager equipmentAssets, float yOffset) {
-        super(renderer, new OxygenTankModel<>(modelSet.bakeLayer(GalacticraftModelLayers.HEAVY_OXYGEN_TANK)), layerRenderer, equipmentAssets, yOffset);
+    public OxygenTankLayer(RenderLayerParent<S, M> renderer, EntityModelSet modelSet, EquipmentLayerRenderer layerRenderer, EquipmentAssetManager equipmentAssets, float yOffset, float zOffset) {
+        super(renderer, new OxygenTankModel<>(modelSet.bakeLayer(GalacticraftModelLayers.HEAVY_OXYGEN_TANK)), layerRenderer, equipmentAssets, yOffset, zOffset);
         this.mediumTank = new OxygenTankModel<>(modelSet.bakeLayer(GalacticraftModelLayers.MEDIUM_OXYGEN_TANK));
         this.lightTank = new OxygenTankModel<>(modelSet.bakeLayer(GalacticraftModelLayers.LIGHT_OXYGEN_TANK));
     }
 
     public OxygenTankLayer(RenderLayerParent<S, M> renderer, EntityModelSet modelSet, EquipmentLayerRenderer layerRenderer, EquipmentAssetManager equipmentAssets) {
-        this(renderer, modelSet, layerRenderer, equipmentAssets, 0.2F);
+        this(renderer, modelSet, layerRenderer, equipmentAssets, 0.2F, 0.2F);
     }
 
     @Override
@@ -73,9 +73,9 @@ public class OxygenTankLayer<S extends LivingEntityRenderState, M extends Entity
 
     protected void transformTanks(PoseStack poseStack, boolean isLeftTank) {
         if (isLeftTank) {
-            poseStack.translate(0.12F, this.yOffset, 0.2F);
+            poseStack.translate(0.12F, this.yOffset, this.zOffset);
         } else {
-            poseStack.translate(-0.175F, this.yOffset, 0.2F);
+            poseStack.translate(-0.175F, this.yOffset, this.zOffset);
         }
     }
 

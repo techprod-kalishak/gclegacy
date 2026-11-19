@@ -29,7 +29,7 @@ public class ThermalPaddingLayer extends GearEquipmentLayer<AvatarRenderState, P
     private final ArmorModelSet<PlayerModel> wideModelSet;
 
     public ThermalPaddingLayer(RenderLayerParent<AvatarRenderState, PlayerModel> renderer, ArmorModelSet<ModelLayerLocation> modelSet, EntityModelSet entityModels, EquipmentLayerRenderer layerRenderer, EquipmentAssetManager equipmentAssetManager) {
-        super(renderer, null, layerRenderer, equipmentAssetManager, 0.0F);
+        super(renderer, null, layerRenderer, equipmentAssetManager, 0.0F, 0.0F);
         this.slimModelSet = ArmorModelSet.bake(modelSet, entityModels, part -> new PlayerModel(part, false));
         this.wideModelSet = ArmorModelSet.bake(modelSet, entityModels, part -> new PlayerModel(part, true));
     }

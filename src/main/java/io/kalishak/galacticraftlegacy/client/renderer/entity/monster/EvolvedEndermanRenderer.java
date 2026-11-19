@@ -2,9 +2,9 @@ package io.kalishak.galacticraftlegacy.client.renderer.entity.monster;
 
 import io.kalishak.galacticraftlegacy.client.renderer.entity.layer.EvolvedCarriedBlockLayer;
 import io.kalishak.galacticraftlegacy.client.renderer.entity.layer.EvolvedEnderEyesLayer;
-import io.kalishak.galacticraftlegacy.client.renderer.entity.layer.EvolvedEndermanTankLayer;
 import io.kalishak.galacticraftlegacy.client.renderer.entity.layer.gear.OxygenGearLayer;
 import io.kalishak.galacticraftlegacy.client.renderer.entity.layer.gear.OxygenMaskLayer;
+import io.kalishak.galacticraftlegacy.client.renderer.entity.layer.gear.OxygenTankLayer;
 import io.kalishak.galacticraftlegacy.client.renderer.entity.state.EvolvedEndermanRenderState;
 import io.kalishak.galacticraftlegacy.client.renderer.entity.state.GearRenders;
 import io.kalishak.galacticraftlegacy.world.entity.monster.EvolvedEnderman;
@@ -31,9 +31,9 @@ public class EvolvedEndermanRenderer extends MobRenderer<EvolvedEnderman, Evolve
         this.blockModelResolver = context.getBlockModelResolver();
         addLayer(new EvolvedEnderEyesLayer(this));
         addLayer(new EvolvedCarriedBlockLayer(this));
-        addLayer(new OxygenMaskLayer<>(this, context.getModelSet(), context.getEquipmentRenderer(), context.getEquipmentAssets(), -0.78F));
-        addLayer(new OxygenGearLayer<>(this, context.getModelSet(), context.getEquipmentRenderer(), context.getEquipmentAssets(), -0.15F));
-        addLayer(new EvolvedEndermanTankLayer(this, context.getModelSet(), context.getEquipmentRenderer(), context.getEquipmentAssets()));
+        addLayer(new OxygenMaskLayer<>(this, context.getModelSet(), context.getEquipmentRenderer(), context.getEquipmentAssets(), -0.78F, 0.0F));
+        addLayer(new OxygenGearLayer<>(this, context.getModelSet(), context.getEquipmentRenderer(), context.getEquipmentAssets(), -0.15F, 0.0F));
+        addLayer(new OxygenTankLayer<>(this, context.getModelSet(), context.getEquipmentRenderer(), context.getEquipmentAssets(), -0.70F, 0.255F));
     }
 
     @Override

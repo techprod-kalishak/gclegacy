@@ -28,12 +28,12 @@ import net.minecraft.world.item.ItemStack;
 public class OxygenGearLayer<S extends LivingEntityRenderState, M extends EntityModel<S>> extends GearEquipmentLayer<S, M> {
     public static final Identifier TEXTURES = Constants.texture("entity/equipment/gear/oxygen_gear.png");
 
-    public OxygenGearLayer(RenderLayerParent<S, M> renderer, EntityModelSet entityModels, EquipmentLayerRenderer layerRenderer, EquipmentAssetManager equipmentAssetManager, float yOffset) {
-        super(renderer, OxygenGearModel::new, GalacticraftModelLayers.OXYGEN_GEAR, entityModels, layerRenderer, equipmentAssetManager, yOffset);
+    public OxygenGearLayer(RenderLayerParent<S, M> renderer, EntityModelSet entityModels, EquipmentLayerRenderer layerRenderer, EquipmentAssetManager equipmentAssetManager, float yOffset, float zOffset) {
+        super(renderer, OxygenGearModel::new, GalacticraftModelLayers.OXYGEN_GEAR, entityModels, layerRenderer, equipmentAssetManager, yOffset, zOffset);
     }
 
     public OxygenGearLayer(RenderLayerParent<S, M> renderer, EntityModelSet entityModels, EquipmentLayerRenderer layerRenderer, EquipmentAssetManager equipmentAssetManager) {
-        this(renderer, entityModels, layerRenderer, equipmentAssetManager, 0.0F);
+        this(renderer, entityModels, layerRenderer, equipmentAssetManager, 0.0F, 0.0F);
     }
 
     @Override
@@ -44,11 +44,11 @@ public class OxygenGearLayer<S extends LivingEntityRenderState, M extends Entity
             for (int i = 0; i < 7; i++) {
                 for (int j = 0; j < 2; j++) {
                     poseStack.pushPose();
-                    poseStack.translate(0.175F * (float) (j * 2 - 1), this.yOffset, 0.0F);
-                    poseStack.translate(0.0F, -0.0325F * (float) (i * 2 - 1) + this.yOffset, 0.0F);
-                    poseStack.translate(0.0F, this.yOffset, -0.0325F * (float) (Math.pow(i * 2 - 1, 2) * 0.05));
-                    poseStack.translate(0.0F, 0.2F + this.yOffset, 0.0F);
-                    poseStack.translate(0.0F, this.yOffset, 0.2F);
+                    poseStack.translate(0.175F * (float) (j * 2 - 1), this.yOffset, this.zOffset);
+                    poseStack.translate(0.0F, -0.0325F * (float) (i * 2 - 1) + this.yOffset, this.zOffset);
+                    poseStack.translate(0.0F, this.yOffset, -0.0325F * (float) (Math.pow(i * 2 - 1, 2) * 0.05D + this.zOffset));
+                    poseStack.translate(0.0F, 0.2F + this.yOffset, this.zOffset);
+                    poseStack.translate(0.0F, this.yOffset, 0.2F + this.zOffset);
 
                     nodeCollector.submitModelPart(
                             ((OxygenGearModel<S>) this.model).tubes[j][i],

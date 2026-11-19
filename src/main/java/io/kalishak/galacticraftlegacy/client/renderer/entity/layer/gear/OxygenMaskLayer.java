@@ -35,11 +35,11 @@ public class OxygenMaskLayer<S extends LivingEntityRenderState, M extends Entity
     public static final Identifier TEXTURES = Constants.texture("entity/equipment/gear/oxygen_mask.png");
 
     public OxygenMaskLayer(RenderLayerParent<S, M> renderer, EntityModelSet modelSet, EquipmentLayerRenderer layerRenderer, EquipmentAssetManager equipmentAssets) {
-        this(renderer, modelSet, layerRenderer, equipmentAssets, 0.02F);
+        this(renderer, modelSet, layerRenderer, equipmentAssets, 0.02F, 0.0F);
     }
 
-    public OxygenMaskLayer(RenderLayerParent<S, M> renderer, EntityModelSet modelSet, EquipmentLayerRenderer layerRenderer, EquipmentAssetManager equipmentAssets, float yOffset) {
-        super(renderer, GearEquipmentModel.simple(modelSet.bakeLayer(GalacticraftModelLayers.OXYGEN_MASK), RenderTypes::entityCutout), layerRenderer, equipmentAssets, yOffset);
+    public OxygenMaskLayer(RenderLayerParent<S, M> renderer, EntityModelSet modelSet, EquipmentLayerRenderer layerRenderer, EquipmentAssetManager equipmentAssets, float yOffset, float zOffset) {
+        super(renderer, GearEquipmentModel.simple(modelSet.bakeLayer(GalacticraftModelLayers.OXYGEN_MASK), RenderTypes::entityCutout), layerRenderer, equipmentAssets, yOffset, zOffset);
     }
 
     public static LayerDefinition createOxygenMaskLayer() {

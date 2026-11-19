@@ -153,7 +153,7 @@ public class Flag extends Entity {
 
         long i = level.getGameTime();
         if (i - this.lastHit > 5L) {
-            level.broadcastEntityEvent(this, (byte) 32);
+            level.broadcastEntityEvent(this, EntityEvent.ARMORSTAND_WOBBLE);
             gameEvent(GameEvent.ENTITY_DAMAGE, damageSource.getEntity());
             this.lastHit = i;
         } else {

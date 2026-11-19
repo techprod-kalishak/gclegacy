@@ -5,6 +5,7 @@ import com.google.common.collect.ImmutableSet;
 import com.mojang.datafixers.util.Pair;
 import io.kalishak.galacticraftlegacy.attachment.GalacticraftAttachments;
 import io.kalishak.galacticraftlegacy.component.GalacticraftDataComponents;
+import io.kalishak.galacticraftlegacy.data.GalacticraftTags;
 import io.kalishak.galacticraftlegacy.data.villager.GalacticraftVillagerProfession;
 import io.kalishak.galacticraftlegacy.references.GalacticraftComponents;
 import io.kalishak.galacticraftlegacy.transfer.entity.SpaceGearEquipment;
@@ -13,6 +14,7 @@ import io.kalishak.galacticraftlegacy.world.entity.GearEquipmentSlot;
 import io.kalishak.galacticraftlegacy.world.entity.ai.attributes.GalacticraftAttributes;
 import io.kalishak.galacticraftlegacy.world.entity.ai.behavior.AlienVillagerGoalPackages;
 import io.kalishak.galacticraftlegacy.world.entity.ai.sensing.GalacticraftSensorTypes;
+import io.kalishak.galacticraftlegacy.world.entity.monster.EvolvedWitch;
 import io.kalishak.galacticraftlegacy.world.item.GalacticraftItems;
 import io.kalishak.galacticraftlegacy.world.item.component.AlienVillagerFood;
 import io.kalishak.galacticraftlegacy.world.timeline.GalacticraftTimelines;
@@ -36,12 +38,10 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.util.profiling.Profiler;
 import net.minecraft.util.profiling.ProfilerFiller;
-import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.*;
 import net.minecraft.world.attribute.EnvironmentAttributes;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -75,9 +75,12 @@ import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraft.world.item.trading.MerchantOffers;
 import net.minecraft.world.item.trading.TradeSet;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
+import net.neoforged.neoforge.event.EventHooks;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
@@ -170,6 +173,18 @@ public class AlienVillager extends AbstractVillager implements VillagerDataHolde
                 .add(GalacticraftAttributes.THERMAL_PROTECTION, 1.0F);
     }
 
+    public static boolean checkAlienSpawnRules(EntityType<? extends Mob> type, LevelAccessor level, EntitySpawnReason spawnReason, BlockPos pos, RandomSource random) {
+        Holder<Biome> biomeAt = level.getBiome(pos);
+
+        if (!biomeAt.is(GalacticraftTags.Biomes.IS_MOON)) {
+            return false;
+        }
+
+        BlockPos below = pos.below();
+
+        return EntitySpawnReason.isSpawner(spawnReason) || level.getBlockState(below).isValidSpawn(level, below, type);
+    }
+
     @Override
     @SuppressWarnings("unchecked")
     public @NonNull Brain<AlienVillager> getBrain() {
@@ -218,14 +233,14 @@ public class AlienVillager extends AbstractVillager implements VillagerDataHolde
 
         if (this.lastTradedPlayer != null) {
             level.onReputationEvent(ReputationEventType.TRADE, this.lastTradedPlayer, this);
-            level.broadcastEntityEvent(this, (byte) 14);
+            level.broadcastEntityEvent(this, EntityEvent.VILLAGER_HAPPY);
             this.lastTradedPlayer = null;
         }
 
         if (!isNoAi() && this.random.nextInt(100) == 0) {
             Raid raid = level.getRaidAt(blockPosition());
             if (raid != null && raid.isActive() && !raid.isOver()) {
-                level.broadcastEntityEvent(this, (byte) 42);
+                level.broadcastEntityEvent(this, EntityEvent.VILLAGER_SWEAT);
             }
         }
 
@@ -594,7 +609,7 @@ public class AlienVillager extends AbstractVillager implements VillagerDataHolde
             serverLevel.onReputationEvent(ReputationEventType.VILLAGER_HURT, hurtBy, this);
 
             if (isAlive() && hurtBy instanceof Player) {
-                level().broadcastEntityEvent(this, (byte) 13);
+                level().broadcastEntityEvent(this, EntityEvent.VILLAGER_ANGRY);
             }
         }
 
@@ -770,24 +785,24 @@ public class AlienVillager extends AbstractVillager implements VillagerDataHolde
         return baby;
     }
 
-//    @Override
-//    public void thunderHit(ServerLevel level, LightningBolt lightningBolt) {
-//        if (level.getDifficulty() != Difficulty.PEACEFUL && EventHooks.canLivingConvert(this, GalacticraftEntityTypes.EVOLVED_WITCH.get(), _ -> {})) {
-//
-//            EvolvedWitch witch = convertTo(GalacticraftEntityTypes.EVOLVED_WITCH.get(), ConversionParams.single(this, false, false), w -> {
-//                w.finalizeSpawn(level, level.getCurrentDifficultyAt(w.blockPosition()), EntitySpawnReason.CONVERSION, null);
-//                EventHooks.onLivingConvert(this, w);
-//                w.setPersistenceRequired();
-//                releaseAllPois();
-//            });
-//
-//            if (witch == null) {
-//                super.thunderHit(level, lightningBolt);
-//            }
-//        } else {
-//            super.thunderHit(level, lightningBolt);
-//        }
-//    }
+    @Override
+    public void thunderHit(ServerLevel level, LightningBolt lightningBolt) {
+        if (level.getDifficulty() != Difficulty.PEACEFUL && EventHooks.canLivingConvert(this, GalacticraftEntityTypes.EVOLVED_WITCH.get(), _ -> {})) {
+
+            EvolvedWitch witch = convertTo(GalacticraftEntityTypes.EVOLVED_WITCH.get(), ConversionParams.single(this, false, false), w -> {
+                EventHooks.finalizeMobSpawn(w, level, level.getCurrentDifficultyAt(w.blockPosition()), EntitySpawnReason.CONVERSION, null);
+                EventHooks.onLivingConvert(this, w);
+                w.setPersistenceRequired();
+                releaseAllPois();
+            });
+
+            if (witch == null) {
+                super.thunderHit(level, lightningBolt);
+            }
+        } else {
+            super.thunderHit(level, lightningBolt);
+        }
+    }
 
     @Override
     protected void pickUpItem(ServerLevel level, ItemEntity entity) {

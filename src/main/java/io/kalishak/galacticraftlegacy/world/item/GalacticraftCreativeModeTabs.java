@@ -322,11 +322,11 @@ public final class GalacticraftCreativeModeTabs {
     private static void populateVanillaCreativeTabs(BuildCreativeModeTabContentsEvent event) {
         if (event.getTabKey().equals(CreativeModeTabs.SPAWN_EGGS)) {
             event.insertAfter(new ItemStack(Items.CREEPER_SPAWN_EGG), GalacticraftItems.EVOLVED_CREEPER_SPAWN_EGG.toStack(), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-            //event.accept(GalacticraftItems.EVOLVED_CREEPER_SPAWN_EGG);
-            event.accept(GalacticraftItems.EVOLVED_ENDERMAN_SPAWN_EGG);
-            event.accept(GalacticraftItems.EVOLVED_SKELETON_SPAWN_EGG);
-            event.accept(GalacticraftItems.EVOLVED_ZOMBIE_SPAWN_EGG);
-            event.accept(GalacticraftItems.ALIEN_VILLAGER_SPAWN_EGG);
+            event.insertAfter(new ItemStack(Items.ENDERMAN_SPAWN_EGG), GalacticraftItems.EVOLVED_ENDERMAN_SPAWN_EGG.toStack(), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+            event.insertAfter(new ItemStack(Items.SKELETON_SPAWN_EGG), GalacticraftItems.EVOLVED_SKELETON_SPAWN_EGG.toStack(), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+            event.insertAfter(new ItemStack(Items.ZOMBIE_SPAWN_EGG), GalacticraftItems.EVOLVED_ZOMBIE_SPAWN_EGG.toStack(), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+            event.insertAfter(new ItemStack(Items.WITCH_SPAWN_EGG), GalacticraftItems.EVOLVED_WITCH_SPAWN_EGG.toStack(), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+            event.insertAfter(new ItemStack(Items.VILLAGER_SPAWN_EGG), GalacticraftItems.ALIEN_VILLAGER_SPAWN_EGG.toStack(), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
         }
     }
 
