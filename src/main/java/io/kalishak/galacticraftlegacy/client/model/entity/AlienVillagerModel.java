@@ -37,7 +37,7 @@ public class AlienVillagerModel extends EntityModel<AlienVillagerRenderState> im
                 "nose", CubeListBuilder.create().texOffs(24, 0).addBox(-1.0F, -1.0F, -6.0F, 2.0F, 4.0F, 2.0F), PartPose.offset(0.0F, -2.0F, 0.0F)
         );
         head.addOrReplaceChild(
-                "brain", CubeListBuilder.create().texOffs(32, 0).addBox(-4.0F, -18.0F, -4.0F, 8.0F, 8.0F, 8.0F), PartPose.offset(0.0F, 1.0F, 0.0F)
+                "brain", CubeListBuilder.create().texOffs(32, 0).addBox(-4.5F, -10.0F, -4.5F, 8.0F, 7.0F, 8.0F, new CubeDeformation(0.5F)), PartPose.offset(0.5F, -6.0F, 0.5F)
         );
         PartDefinition body = root.addOrReplaceChild(
                 "body", CubeListBuilder.create().texOffs(16, 20).addBox(-4.0F, 0.0F, -3.0F, 8.0F, 12.0F, 6.0F), PartPose.ZERO

@@ -40,7 +40,7 @@ public class BabyAlienVillagerModel extends AlienVillagerModel {
                 "head", CubeListBuilder.create().texOffs(0, 0).addBox(-4.0F, -8.0F, -3.5F, 8.0F, 8.0F, 7.0F), PartPose.offset(0.0F, 16.0F, 0.0F)
         );
         head.addOrReplaceChild(
-                "brain", CubeListBuilder.create().texOffs(30, 0).addBox(-3.5F, -14.0F, -3.5F, 7.0F, 7.0F, 7.0F), PartPose.offset(0.0F, -1.0F, 0.0F)
+                "brain", CubeListBuilder.create().texOffs(30, 0).addBox(-4.5F, -8.0F, -4.0F, 9.0F, 7.0F, 8.0F), PartPose.offset(0.0F, -5.5F, 0.0F)
         );
         head.addOrReplaceChild(
                 "nose", CubeListBuilder.create().texOffs(23, 0).addBox(-1.0F, 0.0F, -0.5F, 2.0F, 2.0F, 1.0F), PartPose.offset(0.0F, -2.0F, -4.0F)
