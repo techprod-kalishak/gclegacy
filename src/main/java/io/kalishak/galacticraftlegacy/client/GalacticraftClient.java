@@ -239,6 +239,7 @@ public class GalacticraftClient {
         event.registerEntityRenderer(GalacticraftEntityTypes.EVOLVED_CREEPER.get(), EvolvedCreeperRenderer::new);
         event.registerEntityRenderer(GalacticraftEntityTypes.EVOLVED_ENDERMAN.get(), EvolvedEndermanRenderer::new);
         event.registerEntityRenderer(GalacticraftEntityTypes.EVOLVED_SKELETON.get(), EvolvedSkeletonRenderer::new);
+        event.registerEntityRenderer(GalacticraftEntityTypes.EVOLVED_SPIDER.get(), EvolvedSpiderRenderer::new);
         event.registerEntityRenderer(GalacticraftEntityTypes.EVOLVED_ZOMBIE.get(), EvolvedZombieRenderer::new);
         event.registerEntityRenderer(GalacticraftEntityTypes.EVOLVED_WITCH.get(), EvolvedWitchRenderer::new);
         event.registerEntityRenderer(GalacticraftEntityTypes.ALIEN_VILLAGER.get(), AlienVillagerRenderer::new);
@@ -276,6 +277,7 @@ public class GalacticraftClient {
         event.registerLayerDefinition(GalacticraftModelLayers.THERMAL_PADDING.legs(), thermalPadding::legs);
         event.registerLayerDefinition(GalacticraftModelLayers.THERMAL_PADDING.feet(), thermalPadding::feet);
         event.registerLayerDefinition(GalacticraftModelLayers.EVOLVED_CREEPER, EvolvedCreeperModel::createBodyLayer);
+        event.registerLayerDefinition(GalacticraftModelLayers.EVOLVED_SPIDER, EvolvedSpiderModel::createBodyLayer);
         event.registerLayerDefinition(GalacticraftModelLayers.EVOLVED_WITCH, EvolvedWitchModel::createBodyLayer);
         MeshTransformer villagerLikeScale = MeshTransformer.scaling(0.9375F);
         event.registerLayerDefinition(GalacticraftModelLayers.ALIEN_VILLAGER, () -> LayerDefinition.create(AlienVillagerModel.createBodyModel(), 64, 64).apply(villagerLikeScale));

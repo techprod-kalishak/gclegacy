@@ -224,6 +224,49 @@ public class GalacticraftEntityLootSubProvider extends EntityLootSubProvider {
                                         )
                         )
         );
+        add(
+                GalacticraftEntityTypes.EVOLVED_SPIDER.get(),
+                LootTable.lootTable()
+                        .withPool(
+                                LootPool.lootPool()
+                                        .setRolls(ContextIntProviders.exactly(1))
+                                        .add(
+                                                LootItem.lootTableItem(GalacticraftItems.CHEESE_CHUNK)
+                                                        .apply(SetItemCountFunction.setCount(ContextIntProviders.between(1, 2)))
+                                                        .apply(EnchantedCountIncreaseFunction.lootingMultiplier(this.enchantments, ContextFloatProviders.between(0.0F, 1.0F)))
+                                        )
+                                        .add(
+                                                LootItem.lootTableItem(GalacticraftItems.MEDIUM_TANK)
+                                                        .apply(SetItemFluidTankFunction.setFluid(GalacticraftFluids.OXYGEN, ContextIntProviders.between(1, 901)))
+                                        )
+//                                        .add(
+//                                                LootItem.lootTableItem(GalacticraftItems.OXYGEN_CONCENTRATOR)
+//                                        )
+                                        .add(
+                                                LootItem.lootTableItem(GalacticraftItems.OXYGEN_GEAR)
+                                        )
+                        )
+                        .withPool(
+                                LootPool.lootPool()
+                                        .setRolls(ContextIntProviders.exactly(1))
+                                        .add(
+                                                LootItem.lootTableItem(Items.FERMENTED_SPIDER_EYE)
+                                                        .apply(SetItemCountFunction.setCount(ContextIntProviders.between(0, 1)))
+                                                        .apply(EnchantedCountIncreaseFunction.lootingMultiplier(this.enchantments, ContextFloatProviders.between(0.0F, 1.0F)))
+                                        )
+                                        .when(LootItemKilledByPlayerCondition.killedByPlayer())
+                        )
+                        .withPool(
+                                LootPool.lootPool()
+                                        .setRolls(ContextIntProviders.exactly(1))
+                                        .add(
+                                                LootItem.lootTableItem(Items.NETHER_WART)
+                                                        .apply(SetItemCountFunction.setCount(ContextIntProviders.between(0, 1)))
+                                                        .apply(EnchantedCountIncreaseFunction.lootingMultiplier(this.enchantments, ContextFloatProviders.between(0.0F, 1.0F)))
+                                        )
+                                        .when(GalacticraftLootItemConditions.withAdventureMode())
+                        )
+        );
     }
 
     @Override

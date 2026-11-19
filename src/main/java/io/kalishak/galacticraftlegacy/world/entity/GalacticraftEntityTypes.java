@@ -155,6 +155,17 @@ public final class GalacticraftEntityTypes {
                     .clientTrackingRange(8)
                     .notInPeaceful()
     );
+    public static final DeferredHolder<EntityType<?>, EntityType<EvolvedSpider>> EVOLVED_SPIDER = REGISTRY.registerEntityType(
+            GalacticraftEntityIds.EVOLVED_SPIDER,
+            EvolvedSpider::new,
+            MobCategory.MONSTER,
+            builder -> builder
+                    .sized(1.4F, 0.9F)
+                    .eyeHeight(0.65F)
+                    .passengerAttachments(0.765F)
+                    .clientTrackingRange(8)
+                    .notInPeaceful()
+    );
     public static final DeferredHolder<EntityType<?>, EntityType<EvolvedZombie>> EVOLVED_ZOMBIE = REGISTRY.registerEntityType(
             GalacticraftEntityIds.EVOLVED_ZOMBIE,
             EvolvedZombie::new,
@@ -252,6 +263,7 @@ public final class GalacticraftEntityTypes {
     public static void registerAttributes(EntityAttributeCreationEvent event) {
         event.put(EVOLVED_CREEPER.get(), EvolvedCreeper.createAttributes().build());
         event.put(EVOLVED_SKELETON.get(), EvolvedSkeleton.createAttributes().build());
+        event.put(EVOLVED_SPIDER.get(), EvolvedSpider.createAttributes().build());
         event.put(EVOLVED_ZOMBIE.get(), EvolvedZombie.createAttributes().build());
         event.put(EVOLVED_ENDERMAN.get(), EvolvedEnderman.createAttributes().build());
         event.put(EVOLVED_WITCH.get(), EvolvedWitch.createAttributes().build());
@@ -269,6 +281,13 @@ public final class GalacticraftEntityTypes {
         );
         event.register(
                 EVOLVED_SKELETON.get(),
+                SpawnPlacementTypes.ON_GROUND,
+                Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                EvolvedMonster::checkEvolvedSpawnRules,
+                RegisterSpawnPlacementsEvent.Operation.AND
+        );
+        event.register(
+                EVOLVED_SPIDER.get(),
                 SpawnPlacementTypes.ON_GROUND,
                 Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
                 EvolvedMonster::checkEvolvedSpawnRules,
@@ -295,7 +314,6 @@ public final class GalacticraftEntityTypes {
                 EvolvedMonster::checkEvolvedSpawnRules,
                 RegisterSpawnPlacementsEvent.Operation.AND
         );
-
         event.register(
                 ALIEN_VILLAGER.get(),
                 SpawnPlacementTypes.ON_GROUND,

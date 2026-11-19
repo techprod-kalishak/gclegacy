@@ -327,6 +327,7 @@ public final class GalacticraftCreativeModeTabs {
             event.insertAfter(new ItemStack(Items.ZOMBIE_SPAWN_EGG), GalacticraftItems.EVOLVED_ZOMBIE_SPAWN_EGG.toStack(), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
             event.insertAfter(new ItemStack(Items.WITCH_SPAWN_EGG), GalacticraftItems.EVOLVED_WITCH_SPAWN_EGG.toStack(), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
             event.insertAfter(new ItemStack(Items.VILLAGER_SPAWN_EGG), GalacticraftItems.ALIEN_VILLAGER_SPAWN_EGG.toStack(), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+            event.insertAfter(new ItemStack(Items.SPIDER_SPAWN_EGG), GalacticraftItems.EVOLVED_SPIDER_SPAWN_EGG.toStack(), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
         }
     }
 

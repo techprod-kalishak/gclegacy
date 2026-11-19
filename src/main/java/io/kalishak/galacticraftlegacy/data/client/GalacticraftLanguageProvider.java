@@ -305,6 +305,8 @@ public class GalacticraftLanguageProvider extends ExtendedLanguageProvider {
         addEntityType(GalacticraftEntityTypes.EVOLVED_ENDERMAN, "Evolved Enderman");
         addEntityType(GalacticraftEntityTypes.EVOLVED_SKELETON, "Evolved Skeleton");
         addEntityType(GalacticraftEntityTypes.EVOLVED_ZOMBIE, "Evolved Zombie");
+        addEntityType(GalacticraftEntityTypes.EVOLVED_WITCH, "Evolved Witch");
+        addEntityType(GalacticraftEntityTypes.EVOLVED_SPIDER, "Evolved Spider");
         addEntityType(GalacticraftEntityTypes.ALIEN_VILLAGER, "Alien Villager");
         add("entity.galacticraftlegacy.villager.moon", "Moonllager");
 
@@ -448,6 +450,7 @@ public class GalacticraftLanguageProvider extends ExtendedLanguageProvider {
         addItem(GalacticraftItems.EVOLVED_SKELETON_SPAWN_EGG, "Evolved Skeleton Spawn Egg");
         addItem(GalacticraftItems.EVOLVED_ZOMBIE_SPAWN_EGG, "Evolved Zombie Spawn Egg");
         addItem(GalacticraftItems.EVOLVED_WITCH_SPAWN_EGG, "Evolved Witch Spawn Egg");
+        addItem(GalacticraftItems.EVOLVED_SPIDER_SPAWN_EGG, "Evolved Spider Spawn Egg");
         addItem(GalacticraftItems.ALIEN_VILLAGER_SPAWN_EGG, "Alien Villager Spawn Egg");
 
         addWithSuffix(BuiltinSchematicVariants.ASTRO_MINER, "title", "Astro Miner");
