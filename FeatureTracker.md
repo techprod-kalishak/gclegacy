@@ -149,11 +149,11 @@ Please note that the following list is a preliminary outline of planned features
 - [x] Oxygen Mask 
 - [x] Oxygen Gear 
 - [x] Oxygen Tanks 
-- [ ] Sensor Glasses ⏳ (Missing UI)
+- [ ] Sensor Glasses ⏳ (Missing functionality)
 - [ ] Frequency Module ⏳ (Missing textures)
 - [ ] Parachute ⏳ (Missing render and functionality)
 - [x] Space Emergency Kit 
-- [ ] Shield Controller (Missing render)
+- [x] Shield Controller
 - [ ] Rocket items 
 - [x] Tin Canister 
 - [ ] Copper Canister 
@@ -171,7 +171,7 @@ Please note that the following list is a preliminary outline of planned features
 - [x] Heavy-Duty Plate 
 - [x] Nose Cone 
 - [x] Rocket Fins 
-- [ ] Steel Pole 
+- [x] Steel Pole 
 - [x] Canvas 
 - [x] Buggy Wheel 
 - [x] Buggy Seat 
@@ -197,7 +197,7 @@ Please note that the following list is a preliminary outline of planned features
 - [ ] Beef Patty 
 - [ ] Cheeseburger 
 - [x] Battery 
-- [ ] Throwable Meteor Chunk 
+- [ ] Throwable Meteor Chunk (missing render)
 - [x] Cheese Curd 
 - [x] Raw Meteoric Iron 
 - [x] Lunar Sapphire 
@@ -220,7 +220,7 @@ Please note that the following list is a preliminary outline of planned features
 - [ ] Titanium Dust 
 - [ ] Atmospheric Valve 
 - [ ] Heavy Nose Cone 
-- [ ] Orion Drive 
+- [x] Orion Drive 
 - [ ] Strange Seeds 
 - [ ] Radioisotope Core 
 - [x] Isothermal Fabric 
@@ -228,7 +228,7 @@ Please note that the following list is a preliminary outline of planned features
 - [x] Solar Array Panel 
 - [x] Solar Array Wafer 
 - [ ] Atomic Battery 
-- [ ] Dungeon Keys 
+- [x] Dungeon Keys 
 - [x] Oil Bucket 
 - [x] Fuel Bucket 
 - [x] Bacterial Sludge Bucket 
@@ -274,13 +274,13 @@ Please note that the following list is a preliminary outline of planned features
 - [ ] Slimeling
 - [x] Evolved Zombie
 - [x] Evolved Skeleton
-- [ ] Evolved Creeper
-- [ ] Evolved Enderman
-- [ ] Evolved Spider
-- [ ] Evolved Witch
-- [ ] Evolved Skeleton Jockey
+- [x] Evolved Creeper
+- [x] Evolved Enderman
+- [x] Evolved Spider
+- [x] Evolved Witch
+- [x] Evolved Skeleton Jockey
 - [ ] Evolved Zombie Villager
-- [ ] Moon Villager
+- [x] Moon Villager
 - [x] Hanging Schematics
 
 ### Fluids and gases

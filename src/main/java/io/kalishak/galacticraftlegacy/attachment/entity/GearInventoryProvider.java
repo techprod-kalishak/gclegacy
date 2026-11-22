@@ -14,7 +14,7 @@ import io.kalishak.galacticraftlegacy.transfer.entity.SpaceGearEquipment;
 import io.kalishak.galacticraftlegacy.world.damagesource.GalacticraftDamageTypes;
 import io.kalishak.galacticraftlegacy.world.entity.GearEquipmentSlot;
 import io.kalishak.galacticraftlegacy.world.item.component.GearEquippable;
-import io.kalishak.galacticraftlegacy.world.item.component.ShieldController;
+import io.kalishak.galacticraftlegacy.world.item.component.ProtoShieldControllerData;
 import io.kalishak.galacticraftlegacy.world.level.material.fluid.GalacticraftFluids;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
@@ -101,12 +101,12 @@ public abstract class GearInventoryProvider implements ParachuteFalling {
                 if (!shieldItem.isEmpty()) {
                     isProtected = true;
 
-                    ShieldController shieldController = shieldItem.get(GalacticraftDataComponents.SHIELD_CONTROLLER);
+                    ProtoShieldControllerData protoShieldControllerData = shieldItem.get(GalacticraftDataComponents.SHIELD_CONTROLLER);
 
-                    if (shieldController != null && shieldController.getTicksBeforeFatalDamage() > 0) {
-                        shieldController.depleteByValue(shieldItem, gearOwner, serverLevel, 1);
+                    if (protoShieldControllerData != null && protoShieldControllerData.getTicksBeforeFatalDamage() > 0) {
+                        protoShieldControllerData.depleteByValue(shieldItem, gearOwner, serverLevel, 1);
 
-                        if (shieldController.getTicksBeforeFatalDamage() == 0) {
+                        if (protoShieldControllerData.getTicksBeforeFatalDamage() == 0) {
                             isProtected = false;
                         }
                     }

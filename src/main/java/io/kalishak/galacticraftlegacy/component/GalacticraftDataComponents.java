@@ -107,9 +107,9 @@ public final class GalacticraftDataComponents {
             "schematic",
             builder -> builder.persistent(SchematicVariant.CODEC).networkSynchronized(SchematicVariant.STREAM_CODEC).ignoreSwapAnimation()
     );
-    public static final DeferredHolder<DataComponentType<?>, DataComponentType<ShieldController>> SHIELD_CONTROLLER = REGISTRY.registerComponentType(
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<ProtoShieldControllerData>> SHIELD_CONTROLLER = REGISTRY.registerComponentType(
             "shield_controller",
-            builder -> builder.persistent(ShieldController.CODEC).networkSynchronized(ShieldController.STREAM_CODEC)
+            builder -> builder.persistent(ProtoShieldControllerData.CODEC).networkSynchronized(ProtoShieldControllerData.STREAM_CODEC)
     );
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<Integer>> STORED_ENERGY = REGISTRY.registerComponentType(
             "stored_energy",

@@ -31,6 +31,9 @@ import net.minecraft.client.resources.model.EquipmentAssetManager;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+
+@ParametersAreNonnullByDefault
 public class OxygenMaskLayer<S extends LivingEntityRenderState, M extends EntityModel<S>> extends GearEquipmentLayer<S, M> {
     public static final Identifier TEXTURES = Constants.texture("entity/equipment/gear/oxygen_mask.png");
 
@@ -53,7 +56,7 @@ public class OxygenMaskLayer<S extends LivingEntityRenderState, M extends Entity
     }
 
     @Override
-    public void submit(PoseStack poseStack, SubmitNodeCollector nodeCollector, int packedLight, S renderState, float yRot, float xRot) {
+    public void submit(PoseStack poseStack, SubmitNodeCollector nodeCollector, int lightCoords, S renderState, float yRot, float xRot) {
         ItemStack stack = extractFromRenderState(renderState, GearRenderState.OXYGEN_MASK, GearRenders::oxygenMask);
         float newOffset = this.yOffset;
 
@@ -65,7 +68,7 @@ public class OxygenMaskLayer<S extends LivingEntityRenderState, M extends Entity
             poseStack.pushPose();
             poseStack.translate(0.0F, newOffset, 0.0F);
             poseStack.scale(0.57F, 0.57F, 0.57F);
-            nodeCollector.order(1).submitModel(this.model, renderState, poseStack, this.model.renderType(TEXTURES), packedLight, OverlayTexture.NO_OVERLAY, renderState.outlineColor);
+            nodeCollector.order(1).submitModel(this.model, renderState, poseStack, this.model.renderType(TEXTURES), lightCoords, OverlayTexture.NO_OVERLAY, renderState.outlineColor);
             poseStack.scale(1.0F, 1.0F, 1.0F);
             poseStack.popPose();
         }

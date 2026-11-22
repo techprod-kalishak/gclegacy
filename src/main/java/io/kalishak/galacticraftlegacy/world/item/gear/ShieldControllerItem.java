@@ -8,10 +8,14 @@
 package io.kalishak.galacticraftlegacy.world.item.gear;
 
 import io.kalishak.galacticraftlegacy.component.GalacticraftDataComponents;
-import io.kalishak.galacticraftlegacy.world.item.component.ShieldController;
+import io.kalishak.galacticraftlegacy.world.item.component.ProtoShieldControllerData;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
 import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 public class ShieldControllerItem extends GearItem {
     public ShieldControllerItem(Properties properties) {
@@ -28,13 +32,18 @@ public class ShieldControllerItem extends GearItem {
         return Mth.clamp(Math.round(13.0F - intOrZero(stack) * 13.0F / 300), 0, 13);
     }
 
-    private static int intOrZero(ItemStack stack) {
-        ShieldController shieldController = stack.get(GalacticraftDataComponents.SHIELD_CONTROLLER);
+    @Override
+    public void inventoryTick(ItemStack itemStack, ServerLevel level, Entity owner, @Nullable EquipmentSlot slot) {
+        super.inventoryTick(itemStack, level, owner, slot);
+    }
 
-        if (shieldController == null) {
+    private static int intOrZero(ItemStack stack) {
+        ProtoShieldControllerData protoShieldControllerData = stack.get(GalacticraftDataComponents.SHIELD_CONTROLLER);
+
+        if (protoShieldControllerData == null) {
             return 0;
         }
 
-        return shieldController.getTicksBeforeFatalDamage();
+        return protoShieldControllerData.getTicksBeforeFatalDamage();
     }
 }

@@ -185,7 +185,7 @@ public final class GalacticraftItems {
                                     )
                                     .build()
                     )
-                    .component(GalacticraftDataComponents.SHIELD_CONTROLLER, new ShieldController(300))
+                    .component(GalacticraftDataComponents.SHIELD_CONTROLLER, new ProtoShieldControllerData(300))
                     .component(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)
                     .component(GalacticraftDataComponents.ITEM_WITH_DESCRIPTION, new ItemWithDescription(Constants.id("shield_controller").toLanguageKey("item", "desc")))
     );

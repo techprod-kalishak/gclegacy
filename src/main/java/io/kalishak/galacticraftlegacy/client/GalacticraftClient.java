@@ -276,6 +276,8 @@ public class GalacticraftClient {
         event.registerLayerDefinition(GalacticraftModelLayers.THERMAL_PADDING.chest(), thermalPadding::chest);
         event.registerLayerDefinition(GalacticraftModelLayers.THERMAL_PADDING.legs(), thermalPadding::legs);
         event.registerLayerDefinition(GalacticraftModelLayers.THERMAL_PADDING.feet(), thermalPadding::feet);
+        event.registerLayerDefinition(GalacticraftModelLayers.SHIELD_CONTROLLER, () -> LayerDefinition.create(PlayerModel.createMesh(new CubeDeformation(1.4F), false), 64, 64));
+        event.registerLayerDefinition(GalacticraftModelLayers.SHIELD_CONTROLLER_SLIM, () -> LayerDefinition.create(PlayerModel.createMesh(new CubeDeformation(1.4F), true), 64, 64));
         event.registerLayerDefinition(GalacticraftModelLayers.EVOLVED_CREEPER, EvolvedCreeperModel::createBodyLayer);
         event.registerLayerDefinition(GalacticraftModelLayers.EVOLVED_SPIDER, EvolvedSpiderModel::createBodyLayer);
         event.registerLayerDefinition(GalacticraftModelLayers.EVOLVED_WITCH, EvolvedWitchModel::createBodyLayer);

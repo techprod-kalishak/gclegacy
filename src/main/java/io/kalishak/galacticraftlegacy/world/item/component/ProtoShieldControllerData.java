@@ -12,7 +12,6 @@ import io.kalishak.galacticraftlegacy.attachment.AttachmentHelper;
 import io.kalishak.galacticraftlegacy.world.entity.GearEquipmentSlot;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.core.component.DataComponentGetter;
-import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -27,12 +26,12 @@ import net.minecraft.world.level.Level;
 
 import java.util.function.Consumer;
 
-public class ShieldController implements TooltipProvider {
-    public static final Codec<ShieldController> CODEC = Codec.INT.xmap(ShieldController::new, ShieldController::getTicksBeforeFatalDamage);
-    public static final StreamCodec<ByteBuf, ShieldController> STREAM_CODEC = ByteBufCodecs.INT.map(ShieldController::new, ShieldController::getTicksBeforeFatalDamage);
+public class ProtoShieldControllerData implements TooltipProvider {
+    public static final Codec<ProtoShieldControllerData> CODEC = Codec.INT.xmap(ProtoShieldControllerData::new, ProtoShieldControllerData::getTicksBeforeFatalDamage);
+    public static final StreamCodec<ByteBuf, ProtoShieldControllerData> STREAM_CODEC = ByteBufCodecs.INT.map(ProtoShieldControllerData::new, ProtoShieldControllerData::getTicksBeforeFatalDamage);
     private int ticksBeforeFatalDamage;
 
-    public ShieldController(final int ticksBeforeFatalDamage) {
+    public ProtoShieldControllerData(final int ticksBeforeFatalDamage) {
         this.ticksBeforeFatalDamage = ticksBeforeFatalDamage;
     }
 
@@ -61,11 +60,11 @@ public class ShieldController implements TooltipProvider {
     public boolean equals(Object obj) {
         if (this == obj) {
             return true;
-        } else if (!(obj instanceof ShieldController)) {
+        } else if (!(obj instanceof ProtoShieldControllerData)) {
             return false;
         }
 
-        return ((ShieldController)obj).ticksBeforeFatalDamage == this.ticksBeforeFatalDamage;
+        return ((ProtoShieldControllerData)obj).ticksBeforeFatalDamage == this.ticksBeforeFatalDamage;
     }
 
     @Override

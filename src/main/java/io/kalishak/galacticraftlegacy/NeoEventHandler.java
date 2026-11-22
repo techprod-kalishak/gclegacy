@@ -17,7 +17,7 @@ import io.kalishak.galacticraftlegacy.transfer.node.NodeNetwork;
 import io.kalishak.galacticraftlegacy.world.entity.GearEquipmentSlot;
 import io.kalishak.galacticraftlegacy.world.entity.GearEquipmentSlotGroup;
 import io.kalishak.galacticraftlegacy.world.item.component.GearAttributeModifiers;
-import io.kalishak.galacticraftlegacy.world.item.component.ShieldController;
+import io.kalishak.galacticraftlegacy.world.item.component.ProtoShieldControllerData;
 import io.kalishak.galacticraftlegacy.world.item.crafting.recipe.GalacticraftRecipeType;
 import io.kalishak.galacticraftlegacy.world.level.OxygenHelper;
 import io.kalishak.galacticraftlegacy.world.score.race.SpaceRaceHooks;
@@ -138,10 +138,10 @@ public class NeoEventHandler {
                 if (!bypasses && !entity.isInvulnerableTo(serverLevel, source)) {
                     event.setAmount(0.0F);
 
-                    ShieldController shieldController = shieldItem.get(GalacticraftDataComponents.SHIELD_CONTROLLER);
+                    ProtoShieldControllerData protoShieldControllerData = shieldItem.get(GalacticraftDataComponents.SHIELD_CONTROLLER);
 
-                    if (shieldController != null) {
-                        shieldController.depleteByValue(shieldItem, entity, serverLevel, (int) Math.floor(event.getOriginalAmount()));
+                    if (protoShieldControllerData != null) {
+                        protoShieldControllerData.depleteByValue(shieldItem, entity, serverLevel, (int) Math.floor(event.getOriginalAmount()));
                     }
                 }
             }

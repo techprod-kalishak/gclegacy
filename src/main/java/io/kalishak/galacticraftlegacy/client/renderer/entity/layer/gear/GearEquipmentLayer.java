@@ -7,7 +7,6 @@
 
 package io.kalishak.galacticraftlegacy.client.renderer.entity.layer.gear;
 
-import io.kalishak.galacticraftlegacy.client.model.gear.GearEquipmentModel;
 import io.kalishak.galacticraftlegacy.client.model.geom.GalacticraftModelLayers;
 import io.kalishak.galacticraftlegacy.client.renderer.entity.state.GearRenderState;
 import io.kalishak.galacticraftlegacy.client.renderer.entity.state.GearRenders;
@@ -44,7 +43,7 @@ public abstract class GearEquipmentLayer<S extends LivingEntityRenderState, M ex
     protected final float yOffset;
     protected final float zOffset;
 
-    protected GearEquipmentLayer(RenderLayerParent<S, M> renderer, GearEquipmentModel<S> model, EquipmentLayerRenderer layerRenderer, EquipmentAssetManager equipmentAssetManager, float yOffset, float zOffset) {
+    protected GearEquipmentLayer(RenderLayerParent<S, M> renderer, Model<S> model, EquipmentLayerRenderer layerRenderer, EquipmentAssetManager equipmentAssetManager, float yOffset, float zOffset) {
         super(renderer);
         this.model = model;
         this.layerRenderer = layerRenderer;
@@ -84,6 +83,7 @@ public abstract class GearEquipmentLayer<S extends LivingEntityRenderState, M ex
             renderer.addLayer(new ThermalPaddingLayer(renderer, GalacticraftModelLayers.THERMAL_PADDING, modelSet, layerRenderer, equipmentAssets));
             renderer.addLayer(new FrequencyModuleLayer<>(renderer, layerRenderer, equipmentAssets));
             renderer.addLayer(new ParachuteLayer<>(renderer, spriteGetter, modelSet, layerRenderer, equipmentAssets));
+            renderer.addLayer(new ShieldControllerLayer(renderer, modelSet, layerRenderer, equipmentAssets));
         }
     }
 
