@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "galacticraftlegacy:item/throwable_meteor_chunk"
-  }
-}

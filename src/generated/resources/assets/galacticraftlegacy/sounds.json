@@ -1,17 +1,35 @@
 {
-  "scary_scape": {
+  "ambience.scary_scape": {
     "sounds": [
       "galacticraftlegacy:ambience/scary_scape"
     ]
   },
-  "shuttle": {
+  "entity.boss.death": {
     "sounds": [
-      "galacticraftlegacy:shuttle/shuttle"
-    ]
+      "galacticraftlegacy:entity/boss/death"
+    ],
+    "subtitle": "subtitle.galacticraftlegacy.entity.boss.death"
   },
-  "spacerace": {
+  "entity.boss.hurt": {
+    "sounds": [
+      "galacticraftlegacy:entity/boss/hurt"
+    ],
+    "subtitle": "subtitle.galacticraftlegacy.entity.boss.hurt"
+  },
+  "entity.boss.laugh": {
+    "sounds": [
+      "galacticraftlegacy:entity/boss/laugh"
+    ],
+    "subtitle": "subtitle.galacticraftlegacy.entity.boss.laugh"
+  },
+  "music.spacerace": {
     "sounds": [
       "galacticraftlegacy:music/spacerace"
+    ]
+  },
+  "shuttle.shuttle": {
+    "sounds": [
+      "galacticraftlegacy:shuttle/shuttle"
     ]
   }
 }

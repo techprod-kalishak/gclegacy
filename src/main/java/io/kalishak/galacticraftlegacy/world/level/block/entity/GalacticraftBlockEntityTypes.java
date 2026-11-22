@@ -16,6 +16,7 @@ import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.LaunchCon
 import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.OxygenDetectorBlockEntity;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.electric.*;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.oxygen.OxygenCollectorBlockEntity;
+import io.kalishak.galacticraftlegacy.world.level.block.entity.spawner.SkeletonBossSpawnerBlockEntity;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.wire.ColoredPipeBlockEntity;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.wire.DenseWireBlockEntity;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.wire.WireBlockEntity;
@@ -160,6 +161,12 @@ public final class GalacticraftBlockEntityTypes {
             GalacticraftBlocks.NASA_WORKBENCH
     );
 
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<SkeletonBossSpawnerBlockEntity>> SKELETON_BOSS_SPAWNER = REGISTRY.registerBlockEntity(
+            "skeleton_boss_spawner",
+            SkeletonBossSpawnerBlockEntity::new,
+            Set.of()
+    );
+
     private static void registerCapabilities(RegisterCapabilitiesEvent event) {
         AbstractSolarPanelBlockEntity.registerCapabilities(BASIC_SOLAR_PANEL.get(), event);
         AbstractSolarPanelBlockEntity.registerCapabilities(ADVANCED_SOLAR_PANEL.get(), event);
@@ -172,7 +179,6 @@ public final class GalacticraftBlockEntityTypes {
         EmergencyPostBlockEntity.registerCapability(event);
         AbstractElectricFurnaceBlockEntity.registerCapabilities(event, ELECTRIC_FURNACE.get());
         AbstractElectricFurnaceBlockEntity.registerCapabilities(event, ELECTRIC_ARC_FURNACE.get());
-        //FlammableCauldronBlockEntity.registerCapability(event);
         FluidTankBlockEntity.registerCapability(event);
         MagneticCraftingBlockEntity.registerCapabilities(event);
         ParachestBlockEntity.registerCapabilities(event);

@@ -8,6 +8,7 @@
 package io.kalishak.galacticraftlegacy.references;
 
 import io.kalishak.galacticraftlegacy.config.ClientConfig;
+import io.kalishak.galacticraftlegacy.sounds.GalacticraftSounds;
 import io.kalishak.galacticraftlegacy.world.level.block.entity.machine.MachineStatus;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -36,6 +37,7 @@ public class GalacticraftComponents {
             .append(SPACE_STATION_SSINVITE)
             .append(SPACE_STATION_ALLOW_ENTRY.translated());
     public static final KeyComponent NETWORK_FAILURE = KeyComponent.direct("galacticraftlegacy.networking_failed");
+    public static final KeyComponent MOON_SKELETON_MESSAGE = KeyComponent.direct("entity.galacticraftlegacy.moon_skeleton.message");
 
     // Inventory
     public static final KeyComponent INVENTORY_TAB = KeyComponent.direct("container.inventory");
@@ -100,6 +102,22 @@ public class GalacticraftComponents {
     public static final KeyComponent ADVANCEMENT_GOLDEN_WAFERS_DESC = KeyComponent.direct("advancements.galacticraftlegacy.golden_wafers.description");
     public static final KeyComponent ADVANCEMENT_COMPRESSED = KeyComponent.direct("advancements.galacticraftlegacy.compressed.title");
     public static final KeyComponent ADVANCEMENT_COMPRESSED_DESC = KeyComponent.direct("advancements.galacticraftlegacy.compressed.description");
+
+    public static final KeyComponent ADVANCEMENT_MOON = KeyComponent.direct("advancements.galacticraftlegacy.moon.title");
+    public static final KeyComponent ADVANCEMENT_MOON_DESC = KeyComponent.direct("advancements.galacticraftlegacy.moon.description");
+    public static final KeyComponent ADVANCEMENT_MOON_BOSS = KeyComponent.direct("advancements.galacticraftlegacy.moon_boss.title");
+    public static final KeyComponent ADVANCEMENT_MOON_BOSS_DESC = KeyComponent.direct("advancements.galacticraftlegacy.moon_boss.description");
+    public static final KeyComponent ADVANCEMENT_KEY_T1 = KeyComponent.direct("advancements.galacticraftlegacy.key_t1.title");
+    public static final KeyComponent ADVANCEMENT_KEY_T1_DESC = KeyComponent.direct("advancements.galacticraftlegacy.key_t1.description");
+    public static final KeyComponent ADVANCEMENT_MOON_BUGGY_SCHEMATIC = KeyComponent.direct("advancements.galacticraftlegacy.moon_buggy_schematic.title");
+    public static final KeyComponent ADVANCEMENT_MOON_BUGGY_SCHEMATIC_DESC = KeyComponent.direct("advancements.galacticraftlegacy.moon_buggy_schematic.description");
+    public static final KeyComponent ADVANCEMENT_MOON_BUGGY = KeyComponent.direct("advancements.galacticraftlegacy.moon_buggy.title");
+    public static final KeyComponent ADVANCEMENT_MOON_BUGGY_DESC = KeyComponent.direct("advancements.galacticraftlegacy.moon_buggy.description");
+
+    //Accessibility
+    public static final KeyComponent SUBTITLE_BOSS_LAUGH = KeyComponent.sound("subtitle", GalacticraftSounds.BOSS_LAUGH);
+    public static final KeyComponent SUBTITLE_BOSS_HURT = KeyComponent.sound("subtitle", GalacticraftSounds.BOSS_HURT);
+    public static final KeyComponent SUBTITLE_BOSS_DEATH = KeyComponent.sound("subtitle", GalacticraftSounds.BOSS_DEATH);
 
     // Commands
     public static final KeyComponent COMMAND_ERROR_SPACE_RACE_DUPE = KeyComponent.direct("galacticraftlegacy.commands.space_race.add.duplicate");

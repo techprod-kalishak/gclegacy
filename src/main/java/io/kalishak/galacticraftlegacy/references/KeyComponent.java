@@ -2,10 +2,12 @@ package io.kalishak.galacticraftlegacy.references;
 
 import io.kalishak.galacticraftlegacy.Galacticraft;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.util.Util;
 
@@ -41,6 +43,10 @@ public sealed interface KeyComponent {
 
     static <T extends Enum<T> & StringRepresentable> Map<T, KeyComponent> mapKey(String baseKey, Class<T> enumClass) {
         return Util.makeEnumMap(enumClass, type -> direct(baseKey + "." + type.getSerializedName()));
+    }
+
+    static KeyComponent sound(String prefix, Holder<SoundEvent> holder) {
+        return new Sound(prefix, holder);
     }
 
     record Direct(String translationKey, UnaryOperator<Style> styled) implements KeyComponent {
@@ -117,6 +123,23 @@ public sealed interface KeyComponent {
 
         public void forEach(BiConsumer<String, String> dataProvider, Function<T, String> text) {
             this.components.forEach((type, key) -> key.translate(dataProvider, text.apply(type)));
+        }
+    }
+
+    record Sound(String prefix, Holder<SoundEvent> holder) implements KeyComponent {
+        @Override
+        public String asString() {
+            return this.holder.value().location().toLanguageKey(this.prefix);
+        }
+
+        @Override
+        public MutableComponent translated() {
+            return Component.translatable(asString());
+        }
+
+        @Override
+        public MutableComponent translatedArg(Object... arg) {
+            return Component.translatable(asString(), arg);
         }
     }
 

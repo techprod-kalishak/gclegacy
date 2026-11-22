@@ -1,7 +1,7 @@
 package io.kalishak.galacticraftlegacy.client.model.entity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import io.kalishak.galacticraftlegacy.client.renderer.entity.state.EvolvedWitchRenderState;
+import io.kalishak.galacticraftlegacy.client.renderer.entity.state.monster.EvolvedWitchRenderState;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.HeadedModel;
 import net.minecraft.client.model.VillagerLikeModel;

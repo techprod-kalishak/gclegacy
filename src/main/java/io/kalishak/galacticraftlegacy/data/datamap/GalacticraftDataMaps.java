@@ -42,10 +42,16 @@ public class GalacticraftDataMaps {
             Registries.ENTITY_TYPE,
             AcceptableVillagerDistance.CODEC
     ).synced(AcceptableVillagerDistance.DISTANCE_CODEC, false).build();
+    public static final DataMapType<EntityType<?>, DisabledInBossFight> DISABLED_IN_BOSS_FIGHT = DataMapType.builder(
+            Constants.id("disabled_in_boss_fight"),
+            Registries.ENTITY_TYPE,
+            DisabledInBossFight.CODEC
+    ).synced(DisabledInBossFight.PERSISTENCE_CODEC, true).build();
 
     public static void registerDataMaps(RegisterDataMapTypesEvent event) {
         event.register(EXTINGUISHED_WITHOUT_OXYGEN);
         event.register(ACCEPTABLE_ALIEN_VILLAGER_DISTANCES);
+        event.register(DISABLED_IN_BOSS_FIGHT);
     }
 
     public static class Provider extends DataMapProvider {
@@ -76,6 +82,11 @@ public class GalacticraftDataMaps {
             builder(ACCEPTABLE_ALIEN_VILLAGER_DISTANCES)
                     .add(GalacticraftEntityIds.EVOLVED_ZOMBIE, new AcceptableVillagerDistance(8.0F), false)
                     .add(GalacticraftEntityIds.EVOLVED_WITCH, new AcceptableVillagerDistance(10.0F), false);
+            builder(DISABLED_IN_BOSS_FIGHT)
+                    .add(GalacticraftEntityIds.EVOLVED_SKELETON, new DisabledInBossFight(true), false)
+                    .add(GalacticraftEntityIds.EVOLVED_CREEPER, new DisabledInBossFight(true), false)
+                    .add(GalacticraftEntityIds.EVOLVED_ZOMBIE, new DisabledInBossFight(true), false)
+                    .add(GalacticraftEntityIds.EVOLVED_SPIDER, new DisabledInBossFight(true), false);
             builder(NeoForgeDataMaps.VILLAGER_TYPES)
                     .add(Constants.id("moon"), new BiomeVillagerType(Constants.key(Registries.VILLAGER_TYPE, "moon")), false);
         }

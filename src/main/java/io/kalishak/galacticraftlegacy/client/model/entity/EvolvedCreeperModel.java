@@ -1,6 +1,6 @@
 package io.kalishak.galacticraftlegacy.client.model.entity;
 
-import io.kalishak.galacticraftlegacy.client.renderer.entity.state.EvolvedCreeperRenderState;
+import io.kalishak.galacticraftlegacy.client.renderer.entity.state.monster.EvolvedCreeperRenderState;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;

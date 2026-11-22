@@ -1,0 +1,16 @@
+{
+  "values": {
+    "galacticraftlegacy:evolved_creeper": {
+      "ignore_persistence": true
+    },
+    "galacticraftlegacy:evolved_skeleton": {
+      "ignore_persistence": true
+    },
+    "galacticraftlegacy:evolved_spider": {
+      "ignore_persistence": true
+    },
+    "galacticraftlegacy:evolved_zombie": {
+      "ignore_persistence": true
+    }
+  }
+}

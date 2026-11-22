@@ -1,5 +1,7 @@
-package io.kalishak.galacticraftlegacy.client.renderer.entity.state;
+package io.kalishak.galacticraftlegacy.client.renderer.entity.state.monster;
 
+import io.kalishak.galacticraftlegacy.client.renderer.entity.state.GearRenderState;
+import io.kalishak.galacticraftlegacy.client.renderer.entity.state.GearRenders;
 import net.minecraft.client.renderer.entity.state.WitchRenderState;
 
 public class EvolvedWitchRenderState extends WitchRenderState implements GearRenderState {

@@ -6,8 +6,8 @@ import io.kalishak.galacticraftlegacy.client.renderer.entity.layer.EvolvedWitchI
 import io.kalishak.galacticraftlegacy.client.renderer.entity.layer.gear.OxygenGearLayer;
 import io.kalishak.galacticraftlegacy.client.renderer.entity.layer.gear.OxygenMaskLayer;
 import io.kalishak.galacticraftlegacy.client.renderer.entity.layer.gear.OxygenTankLayer;
-import io.kalishak.galacticraftlegacy.client.renderer.entity.state.EvolvedWitchRenderState;
 import io.kalishak.galacticraftlegacy.client.renderer.entity.state.GearRenders;
+import io.kalishak.galacticraftlegacy.client.renderer.entity.state.monster.EvolvedWitchRenderState;
 import io.kalishak.galacticraftlegacy.world.entity.monster.EvolvedWitch;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;

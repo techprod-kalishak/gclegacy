@@ -1,0 +1,29 @@
+{
+  "parent": "galacticraftlegacy:moon",
+  "criteria": {
+    "found_moon_boss": {
+      "conditions": {
+        "boss_type": "galacticraftlegacy:skeleton_boss"
+      },
+      "trigger": "galacticraftlegacy:find_space_boss"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.galacticraftlegacy.moon_boss.description"
+    },
+    "frame": "goal",
+    "icon": {
+      "id": "galacticraftlegacy:moon_dungeon_bricks"
+    },
+    "title": {
+      "translate": "advancements.galacticraftlegacy.moon_boss.title"
+    }
+  },
+  "requirements": [
+    [
+      "found_moon_boss"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

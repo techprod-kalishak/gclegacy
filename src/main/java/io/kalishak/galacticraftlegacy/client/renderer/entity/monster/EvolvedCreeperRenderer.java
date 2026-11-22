@@ -7,8 +7,8 @@ import io.kalishak.galacticraftlegacy.client.renderer.entity.layer.EvolvedCreepe
 import io.kalishak.galacticraftlegacy.client.renderer.entity.layer.gear.OxygenGearLayer;
 import io.kalishak.galacticraftlegacy.client.renderer.entity.layer.gear.OxygenMaskLayer;
 import io.kalishak.galacticraftlegacy.client.renderer.entity.layer.gear.OxygenTankLayer;
-import io.kalishak.galacticraftlegacy.client.renderer.entity.state.EvolvedCreeperRenderState;
 import io.kalishak.galacticraftlegacy.client.renderer.entity.state.GearRenders;
+import io.kalishak.galacticraftlegacy.client.renderer.entity.state.monster.EvolvedCreeperRenderState;
 import io.kalishak.galacticraftlegacy.world.entity.monster.EvolvedCreeper;
 import net.minecraft.client.renderer.entity.AgeableMobRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;

@@ -42,6 +42,7 @@ import io.kalishak.galacticraftlegacy.client.renderer.environment.DummyWeatherRe
 import io.kalishak.galacticraftlegacy.client.renderer.environment.sky.MoonSkyRenderer;
 import io.kalishak.galacticraftlegacy.client.renderer.environment.sky.OrbitalSkyRenderer;
 import io.kalishak.galacticraftlegacy.client.renderer.environment.sky.SpaceSkyRenderer;
+import io.kalishak.galacticraftlegacy.client.renderer.item.properties.conditional.IsHotProperty;
 import io.kalishak.galacticraftlegacy.client.renderer.item.properties.numeric.DungeonLocatorAngle;
 import io.kalishak.galacticraftlegacy.client.renderer.item.properties.range.FluidAmountProperty;
 import io.kalishak.galacticraftlegacy.client.renderer.item.properties.select.SchematicTierProperty;
@@ -103,6 +104,7 @@ public class GalacticraftClient {
         bus.addListener(this::registerTintSources);
         bus.addListener(this::registerBlockTintSources);
         bus.addListener(this::registerRangedItemModelProperty);
+        bus.addListener(this::registerConditionalItemModelProperty);
         bus.addListener(this::addRenderStates);
         bus.addListener(this::registerSelectItemModelProperty);
         bus.addListener(this::registerSpecialRenderers);
@@ -160,19 +162,16 @@ public class GalacticraftClient {
     }
 
     private void registerFluidModels(RegisterFluidModelsEvent event) {
-        final Identifier still = Identifier.withDefaultNamespace("block/water_still");
-        final Identifier flow = Identifier.withDefaultNamespace("block/water_flow");
-
-        event.register(new FluidModel.Unbaked(
-                new Material(still),
-                new Material(flow),
+       event.register(new FluidModel.Unbaked(
+               new Material(Constants.id("block/oxygen")),
+               new Material(Constants.id("block/oxygen")),
                 null,
                 _ -> 0xFFAFEEEE
         ), GalacticraftFluids.OXYGEN::value, GalacticraftFluids.OXYGEN_FLOWING::value);
         event.register(new FluidModel.Unbaked(
-                new Material(still),
-                new Material(flow),
-                new Material(Identifier.withDefaultNamespace("block/water_overlay")),
+                new Material(Constants.id("block/oil_still")),
+                new Material(Constants.id("block/oil_flow")),
+                null,
                 _ -> 0xFF281E15
                 ), GalacticraftFluids.OIL::value, GalacticraftFluids.OIL_FLOWING::value
         );
@@ -243,6 +242,7 @@ public class GalacticraftClient {
         event.registerEntityRenderer(GalacticraftEntityTypes.EVOLVED_ZOMBIE.get(), EvolvedZombieRenderer::new);
         event.registerEntityRenderer(GalacticraftEntityTypes.EVOLVED_WITCH.get(), EvolvedWitchRenderer::new);
         event.registerEntityRenderer(GalacticraftEntityTypes.ALIEN_VILLAGER.get(), AlienVillagerRenderer::new);
+        event.registerEntityRenderer(GalacticraftEntityTypes.SKELETON_BOSS.get(), SkeletonBossRenderer::new);
         event.registerEntityRenderer(GalacticraftEntityTypes.NO_GRAVITY_MOVING_BLOCK.get(), NoGravityMovingBlockRenderer::new);
         event.registerEntityRenderer(GalacticraftEntityTypes.TIER_1_ROCKET.get(), Tier1RocketRenderer::new);
 
@@ -284,6 +284,7 @@ public class GalacticraftClient {
         event.registerLayerDefinition(GalacticraftModelLayers.ALIEN_VILLAGER_BABY, () -> LayerDefinition.create(BabyAlienVillagerModel.createBodyModel(), 64, 64));
         event.registerLayerDefinition(GalacticraftModelLayers.ALIEN_VILLAGER_NO_HAT, () -> LayerDefinition.create(AlienVillagerModel.createNoHatModel(), 64, 64).apply(villagerLikeScale));
         event.registerLayerDefinition(GalacticraftModelLayers.ALIEN_VILLAGER_BABY_NO_HAT, () -> LayerDefinition.create(BabyAlienVillagerModel.createNoHatModel(), 64, 64));
+        event.registerLayerDefinition(GalacticraftModelLayers.SKELETON_BOSS, SkeletonBossModel::createBodyLayer);
         event.registerLayerDefinition(GalacticraftModelLayers.TIER_1_ROCKET, Tier1RocketModel::createLayer);
         event.registerLayerDefinition(GalacticraftModelLayers.FLAG, FlagModel::createBaseLayer);
     }
@@ -334,6 +335,10 @@ public class GalacticraftClient {
         event.register(Constants.id("tier_3_rocket"), Tier3RocketSpecialRenderer.Unbaked.MAP_CODEC);
         event.register(Constants.id("cargo_rocket"), CargoRocketSpecialRenderer.Unbaked.MAP_CODEC);
         event.register(Constants.id("astro_miner"), AstroMinerSpecialRenderer.Unbaked.MAP_CODEC);
+    }
+
+    private void registerConditionalItemModelProperty(RegisterConditionalItemModelPropertyEvent event) {
+        event.register(Constants.id("is_hot"), IsHotProperty.MAP_CODEC);
     }
 
     private void addRenderStates(RegisterRenderStateModifiersEvent event) {

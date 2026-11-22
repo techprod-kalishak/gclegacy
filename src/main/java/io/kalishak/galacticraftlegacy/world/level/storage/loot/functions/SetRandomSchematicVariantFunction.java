@@ -9,21 +9,15 @@ package io.kalishak.galacticraftlegacy.world.level.storage.loot.functions;
 
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import io.kalishak.galacticraftlegacy.component.GalacticraftDataComponents;
 import io.kalishak.galacticraftlegacy.component.SchematicVariant;
-import io.kalishak.galacticraftlegacy.registry.BuiltinSchematicVariants;
-import io.kalishak.galacticraftlegacy.registry.GalacticraftRegistries;
 import io.kalishak.galacticraftlegacy.world.item.FeatureTier;
 import net.minecraft.core.Holder;
-import net.minecraft.core.HolderGetter;
-import net.minecraft.core.HolderSet;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.functions.LootItemConditionalFunction;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import org.jspecify.annotations.NonNull;
 
-import java.util.List;
 import java.util.Optional;
 
 public class SetRandomSchematicVariantFunction extends LootItemConditionalFunction {
@@ -51,23 +45,6 @@ public class SetRandomSchematicVariantFunction extends LootItemConditionalFuncti
 
     @Override
     protected @NonNull ItemStack run(@NonNull ItemStack itemStack, LootContext context) {
-        HolderGetter<SchematicVariant> variants = context.getResolver().lookupOrThrow(GalacticraftRegistries.Keys.SCHEMATIC);
-        HolderSet<SchematicVariant> holders = HolderSet.direct(variants::getOrThrow, BuiltinSchematicVariants.getVariants());
-        List<Holder<SchematicVariant>> candidates = holders
-                .stream()
-                .filter(holder -> holder.value().tier() == this.featureTier)
-                .toList();
-
-        if (candidates.isEmpty()) {
-            throw new IllegalStateException("No schematic variants found for tier " + this.featureTier);
-        }
-
-        Holder<SchematicVariant> result = candidates.size() > 1
-                ? candidates.get(context.getRandom().nextInt(candidates.size() - 1))
-                : candidates.getFirst();
-
-        itemStack.set(GalacticraftDataComponents.SCHEMATIC, result);
-
-        return itemStack;
+        return SchematicVariant.setRandomOfTier(itemStack, context.getResolver(), this.featureTier, context.getRandom());
     }
 }

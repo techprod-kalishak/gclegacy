@@ -151,7 +151,7 @@ public class GalacticraftModelProvider extends ExtendedModelProvider<Galacticraf
         blockModels.createTrivialCube(GalacticraftBlocks.VENUS_TIN_ORE.get());
         blockModels.createTrivialCube(GalacticraftBlocks.VENUS_SOLAR_ORE.get());
         blockModels.createParticleOnlyBlock(GalacticraftBlocks.DUMMY_SOLAR_PANEL.get());
-        itemModels.generateFlatItem(GalacticraftItems.THROWABLE_METEOR_CHUNK.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.createMeteorChunk(GalacticraftItems.THROWABLE_METEOR_CHUNK.get());
         itemModels.generateFlatItem(GalacticraftItems.BATTERY.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(GalacticraftItems.INFINITE_BATTERY.get(), GalacticraftItems.BATTERY.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(GalacticraftItems.FREQUENCY_MODULE.get(), ModelTemplates.FLAT_ITEM);
@@ -274,6 +274,7 @@ public class GalacticraftModelProvider extends ExtendedModelProvider<Galacticraf
         itemModels.generateFlatItem(GalacticraftItems.EVOLVED_WITCH_SPAWN_EGG.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(GalacticraftItems.EVOLVED_SPIDER_SPAWN_EGG.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(GalacticraftItems.ALIEN_VILLAGER_SPAWN_EGG.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(GalacticraftItems.SKELETON_BOSS_SPAWN_EGG.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(GalacticraftItems.RAW_METEORIC_IRON.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(GalacticraftItems.METEORIC_IRON_INGOT.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(GalacticraftItems.STEEL_POLE.get(), ModelTemplates.FLAT_ITEM);

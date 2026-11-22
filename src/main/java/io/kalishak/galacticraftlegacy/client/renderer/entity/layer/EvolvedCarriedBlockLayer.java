@@ -2,7 +2,7 @@ package io.kalishak.galacticraftlegacy.client.renderer.entity.layer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
-import io.kalishak.galacticraftlegacy.client.renderer.entity.state.EvolvedEndermanRenderState;
+import io.kalishak.galacticraftlegacy.client.renderer.entity.state.monster.EvolvedEndermanRenderState;
 import net.minecraft.client.model.monster.enderman.EndermanModel;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.block.BlockModelRenderState;

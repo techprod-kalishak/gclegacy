@@ -90,6 +90,20 @@ public class GalacticraftLanguageProvider extends ExtendedLanguageProvider {
         GalacticraftComponents.ADVANCEMENT_GOLDEN_WAFERS_DESC.translate(this::add, "Craft an advanced wafer. (You still can't eat it!)");
         GalacticraftComponents.ADVANCEMENT_COMPRESSED.translate(this::add, "Compressed");
         GalacticraftComponents.ADVANCEMENT_COMPRESSED_DESC.translate(this::add, "Craft a compressor");
+        GalacticraftComponents.ADVANCEMENT_MOON.translate(this::add, "The Moon!");
+        GalacticraftComponents.ADVANCEMENT_MOON_DESC.translate(this::add, "Land on the moon");
+        GalacticraftComponents.ADVANCEMENT_MOON_BOSS.translate(this::add, "Worse than a wither");
+        GalacticraftComponents.ADVANCEMENT_MOON_BOSS_DESC.translate(this::add, "Find an evolved skeleton boss in a dungeon");
+        GalacticraftComponents.ADVANCEMENT_KEY_T1.translate(this::add, "I has the key");
+        GalacticraftComponents.ADVANCEMENT_KEY_T1_DESC.translate(this::add, "Kill the boss hiding in the dungeon, and steal it's key");
+        GalacticraftComponents.ADVANCEMENT_MOON_BUGGY_SCHEMATIC.translate(this::add, "Glitchy schematic");
+        GalacticraftComponents.ADVANCEMENT_MOON_BUGGY_SCHEMATIC_DESC.translate(this::add, "Obtain a moon §obuggy schematic");
+        GalacticraftComponents.ADVANCEMENT_MOON_BUGGY.translate(this::add, "Buggy");
+        GalacticraftComponents.ADVANCEMENT_MOON_BUGGY_DESC.translate(this::add, "Weld a moon buggy together");
+
+        GalacticraftComponents.SUBTITLE_BOSS_LAUGH.translate(this::add, "Boss laughs");
+        GalacticraftComponents.SUBTITLE_BOSS_HURT.translate(this::add, "Boss is hurt");
+        GalacticraftComponents.SUBTITLE_BOSS_DEATH.translate(this::add, "Boss spins to death");
 
         add("item.galacticraftlegacy.tank.tooltip", "Oxygen Remaining: ");
         add("item.galacticraftlegacy.fluid_tank.tooltip", "Fluid in tank %s: %s");
@@ -309,6 +323,8 @@ public class GalacticraftLanguageProvider extends ExtendedLanguageProvider {
         addEntityType(GalacticraftEntityTypes.EVOLVED_SPIDER, "Evolved Spider");
         addEntityType(GalacticraftEntityTypes.ALIEN_VILLAGER, "Alien Villager");
         add("entity.galacticraftlegacy.villager.moon", "Moonllager");
+        addEntityType(GalacticraftEntityTypes.SKELETON_BOSS, "Moon Skeleton Boss");
+        GalacticraftComponents.MOON_SKELETON_MESSAGE.translate(this::add, "Boss despawned, don't leave the boss room while fighting! Re-enter room to respawn boss.");
 
         addItem(GalacticraftItems.BATTERY, "Battery");
         addItem(GalacticraftItems.INFINITE_BATTERY, "Battery");
@@ -430,6 +446,7 @@ public class GalacticraftLanguageProvider extends ExtendedLanguageProvider {
         addItem(GalacticraftItems.HEAVY_DUTY_PLATE_TIER_2, "Heavy Duty Plate Tier 2");
         addItem(GalacticraftItems.HEAVY_DUTY_PLATE_TIER_3, "Heavy Duty Plate Tier 3");
         addWithDescription(GalacticraftItems.SPACE_EMERGENCY_KIT, "Space Emergency Kit", "Right click to equip Oxygen Gear and other essential items. Warning: One time use!");
+        addItem(GalacticraftItems.THROWABLE_METEOR_CHUNK, "Throwable Meteor Chunk");
         addItem(GalacticraftItems.ROCKET_NOSE_CONE, "Rocket Nose Cone");
         addItem(GalacticraftItems.ROCKET_FIN, "Rocket Fins");
         addItem(GalacticraftItems.ROCKET_ENGINE, "Rocket Engine");
@@ -444,7 +461,6 @@ public class GalacticraftLanguageProvider extends ExtendedLanguageProvider {
         addItem(GalacticraftItems.SOLAR_DUST, "Solar Dust");
         addItem(GalacticraftItems.SOLAR_ARRAY_WAFER, "Solar Array Wafer");
         addItem(GalacticraftItems.SOLAR_ARRAY_PANEL, "Solar Array Panel");
-
         addItem(GalacticraftItems.EVOLVED_CREEPER_SPAWN_EGG, "Evolved Creeper Spawn Egg");
         addItem(GalacticraftItems.EVOLVED_ENDERMAN_SPAWN_EGG, "Evolved Enderman Spawn Egg");
         addItem(GalacticraftItems.EVOLVED_SKELETON_SPAWN_EGG, "Evolved Skeleton Spawn Egg");
@@ -452,6 +468,7 @@ public class GalacticraftLanguageProvider extends ExtendedLanguageProvider {
         addItem(GalacticraftItems.EVOLVED_WITCH_SPAWN_EGG, "Evolved Witch Spawn Egg");
         addItem(GalacticraftItems.EVOLVED_SPIDER_SPAWN_EGG, "Evolved Spider Spawn Egg");
         addItem(GalacticraftItems.ALIEN_VILLAGER_SPAWN_EGG, "Alien Villager Spawn Egg");
+        addItem(GalacticraftItems.SKELETON_BOSS_SPAWN_EGG, "Skeleton Boss Spawn Egg");
 
         addWithSuffix(BuiltinSchematicVariants.ASTRO_MINER, "title", "Astro Miner");
         addWithSuffix(BuiltinSchematicVariants.CARGO_ROCKET, "title", "Cargo Rocket");

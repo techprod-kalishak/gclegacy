@@ -1,0 +1,39 @@
+{
+  "parent": "galacticraftlegacy:moon_dungeon",
+  "criteria": {
+    "got_key": {
+      "conditions": {
+        "items": [
+          {
+            "components": {
+              "galacticraftlegacy:key_lock": {
+                "locked": true,
+                "tier": "basic"
+              }
+            },
+            "items": "galacticraftlegacy:moon_dungeon_key"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.galacticraftlegacy.key_t1.description"
+    },
+    "frame": "challenge",
+    "icon": {
+      "id": "galacticraftlegacy:moon_dungeon_key"
+    },
+    "title": {
+      "translate": "advancements.galacticraftlegacy.key_t1.title"
+    }
+  },
+  "requirements": [
+    [
+      "got_key"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

@@ -5,8 +5,10 @@
  * See LICENSE file for more details
  */
 
-package io.kalishak.galacticraftlegacy.client.renderer.entity.state;
+package io.kalishak.galacticraftlegacy.client.renderer.entity.state.monster;
 
+import io.kalishak.galacticraftlegacy.client.renderer.entity.state.GearRenderState;
+import io.kalishak.galacticraftlegacy.client.renderer.entity.state.GearRenders;
 import net.minecraft.client.renderer.entity.state.ZombieRenderState;
 
 public class EvolvedZombieRenderState extends ZombieRenderState implements GearRenderState {

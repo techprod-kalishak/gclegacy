@@ -1,6 +1,14 @@
 {
   "model": {
-    "type": "minecraft:model",
-    "model": "galacticraftlegacy:item/throwable_meteor_chunk"
+    "type": "minecraft:condition",
+    "on_false": {
+      "type": "minecraft:model",
+      "model": "galacticraftlegacy:item/throwable_meteor_chunk"
+    },
+    "on_true": {
+      "type": "minecraft:model",
+      "model": "galacticraftlegacy:item/throwable_meteor_chunk_hot"
+    },
+    "property": "galacticraftlegacy:is_hot"
   }
 }

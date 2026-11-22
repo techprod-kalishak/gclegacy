@@ -12,9 +12,13 @@ import io.kalishak.galacticraftlegacy.world.item.FeatureTier;
 import net.minecraft.client.model.Model;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
-import net.minecraft.client.model.geom.builders.*;
+import net.minecraft.client.model.geom.builders.CubeListBuilder;
+import net.minecraft.client.model.geom.builders.LayerDefinition;
+import net.minecraft.client.model.geom.builders.MeshDefinition;
+import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.resources.Identifier;
+import org.jspecify.annotations.Nullable;
 
 public class KeyModel extends Model<FeatureTier> {
     public KeyModel(ModelPart root) {
@@ -25,17 +29,20 @@ public class KeyModel extends Model<FeatureTier> {
         MeshDefinition mesh = new MeshDefinition();
         PartDefinition root = mesh.getRoot();
 
-        root.addOrReplaceChild("bone", CubeListBuilder.create()
-                .texOffs(1, 1).mirror().addBox(-3.0F, -9.0F, 7.5F, 3.0F, 3.0F, 1.0F, CubeDeformation.NONE)
-                .texOffs(1, 1).mirror().addBox(-4.0F, -8.5F, 7.5F, 1.0F, 2.0F, 1.0F, CubeDeformation.NONE)
-                .texOffs(1, 1).mirror().addBox(-15.0F, -8.0F, 7.5F, 11.0F, 1.0F, 1.0F, CubeDeformation.NONE)
-                .texOffs(1, 1).addBox(-14.5F, -7.0F, 7.5F, 4.0F, 1.0F, 1.0F, CubeDeformation.NONE)
-                .texOffs(1, 1).addBox(-14.5F, -6.0F, 7.5F, 3.0F, 1.0F, 1.0F, CubeDeformation.NONE), PartPose.offset(8.0F, 24.0F, -8.0F));
+        root.addOrReplaceChild("key", CubeListBuilder.create()
+                .mirror().addBox(-4.5F, -1.0F, -0.5F, 3.0F, 3.0F, 1.0F)
+                .addBox(-1.5F, -0.5F, -0.5F, 1.0F, 2.0F, 1.0F)
+                .addBox(-0.5F,  0.0F, -0.5F, 11.0F, 1.0F, 1.0F)
+                .addBox(6.0F,  1.0F, -0.5F, 4.0F, 1.0F, 1.0F)
+                .addBox( 7.0F,  2.0F, -0.5F, 3.0F, 1.0F, 1.0F), PartPose.ZERO
+        );
 
         return LayerDefinition.create(mesh, 16, 16);
     }
 
-    public static Identifier getTexture(FeatureTier tier) {
-        return Constants.texture("entity/" + tier.getCelestialBodyName() + "_dungeon_key.png");
+    public static Identifier getTexture(@Nullable FeatureTier tier) {
+        String id = tier == null ? "moon" : tier.getCelestialBodyName();
+
+        return Constants.texture("entity/dungeon_key/" + id + ".png");
     }
 }

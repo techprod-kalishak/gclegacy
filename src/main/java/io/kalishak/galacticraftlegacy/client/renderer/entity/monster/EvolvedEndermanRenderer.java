@@ -5,8 +5,8 @@ import io.kalishak.galacticraftlegacy.client.renderer.entity.layer.EvolvedEnderE
 import io.kalishak.galacticraftlegacy.client.renderer.entity.layer.gear.OxygenGearLayer;
 import io.kalishak.galacticraftlegacy.client.renderer.entity.layer.gear.OxygenMaskLayer;
 import io.kalishak.galacticraftlegacy.client.renderer.entity.layer.gear.OxygenTankLayer;
-import io.kalishak.galacticraftlegacy.client.renderer.entity.state.EvolvedEndermanRenderState;
 import io.kalishak.galacticraftlegacy.client.renderer.entity.state.GearRenders;
+import io.kalishak.galacticraftlegacy.client.renderer.entity.state.monster.EvolvedEndermanRenderState;
 import io.kalishak.galacticraftlegacy.world.entity.monster.EvolvedEnderman;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.model.monster.enderman.EndermanModel;

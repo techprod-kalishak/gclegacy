@@ -13,6 +13,7 @@ import io.kalishak.galacticraftlegacy.registry.deferred.DeferredEntityTypeRegist
 import io.kalishak.galacticraftlegacy.world.entity.ai.attributes.GalacticraftAttributes;
 import io.kalishak.galacticraftlegacy.world.entity.item.FallenMeteor;
 import io.kalishak.galacticraftlegacy.world.entity.monster.*;
+import io.kalishak.galacticraftlegacy.world.entity.monster.boss.SkeletonBoss;
 import io.kalishak.galacticraftlegacy.world.entity.npc.villager.AlienVillager;
 import io.kalishak.galacticraftlegacy.world.entity.projectile.ThrownMeteorChunk;
 import io.kalishak.galacticraftlegacy.world.entity.vehicle.AstroMiner;
@@ -189,6 +190,19 @@ public final class GalacticraftEntityTypes {
                     .clientTrackingRange(8)
                     .notInPeaceful()
     );
+    public static final DeferredHolder<EntityType<?>, EntityType<SkeletonBoss>> SKELETON_BOSS = REGISTRY.registerEntityType(
+            GalacticraftEntityIds.SKELETON_BOSS,
+            SkeletonBoss::new,
+            MobCategory.MONSTER,
+            builder -> builder
+                    .sized(1.5F, 4.0F)
+                    .eyeHeight(3.8F)
+                    .passengerAttachments(2.0F)
+                    .fireImmune()
+                    .updateInterval(20)
+                    .clientTrackingRange(4)
+                    .notInPeaceful()
+    );
 
     //Misc
     public static final DeferredHolder<EntityType<?>, EntityType<ThrownMeteorChunk>> THROWN_METEOR_CHUNK = REGISTRY.registerEntityType(
@@ -268,6 +282,7 @@ public final class GalacticraftEntityTypes {
         event.put(EVOLVED_ENDERMAN.get(), EvolvedEnderman.createAttributes().build());
         event.put(EVOLVED_WITCH.get(), EvolvedWitch.createAttributes().build());
         event.put(ALIEN_VILLAGER.get(), AlienVillager.createAttributes().build());
+        event.put(SKELETON_BOSS.get(), SkeletonBoss.createAttributes().build());
     }
 
     @SubscribeEvent

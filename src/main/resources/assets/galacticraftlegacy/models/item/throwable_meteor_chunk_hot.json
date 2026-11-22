@@ -1,0 +1,7 @@
+{
+  "parent": "galacticraftlegacy:item/throwable_meteor_chunk",
+  "textures": {
+    "particle": "galacticraftlegacy:item/throwable_meteor_chunk_hot",
+    "texture": "galacticraftlegacy:item/throwable_meteor_chunk_hot"
+  }
+}

@@ -2,7 +2,7 @@ package io.kalishak.galacticraftlegacy.client.renderer.entity.layer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import io.kalishak.galacticraftlegacy.client.model.entity.EvolvedCreeperModel;
-import io.kalishak.galacticraftlegacy.client.renderer.entity.state.EvolvedCreeperRenderState;
+import io.kalishak.galacticraftlegacy.client.renderer.entity.state.monster.EvolvedCreeperRenderState;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.model.monster.creeper.CreeperModel;

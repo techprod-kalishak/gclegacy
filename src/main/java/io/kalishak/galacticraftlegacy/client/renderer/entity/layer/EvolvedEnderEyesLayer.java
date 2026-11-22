@@ -1,6 +1,6 @@
 package io.kalishak.galacticraftlegacy.client.renderer.entity.layer;
 
-import io.kalishak.galacticraftlegacy.client.renderer.entity.state.EvolvedEndermanRenderState;
+import io.kalishak.galacticraftlegacy.client.renderer.entity.state.monster.EvolvedEndermanRenderState;
 import net.minecraft.client.model.monster.enderman.EndermanModel;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.EyesLayer;

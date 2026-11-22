@@ -8,6 +8,7 @@
 package io.kalishak.galacticraftlegacy.client.renderer.special;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Axis;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.kalishak.galacticraftlegacy.client.model.geom.GalacticraftModelLayers;
@@ -40,7 +41,7 @@ public class KeySpecialRenderer implements SpecialModelRenderer<FeatureTier> {
     @Override
     public void submit(FeatureTier argument, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, int lightCoords, int overlayCoords, boolean hasFoil, int outlineColor) {
         poseStack.pushPose();
-        poseStack.translate(1.0D, -1.0D, -1.0D);
+        poseStack.rotate(Axis.XP, 180.0F);
         submitNodeCollector.submitModelPart(
                 this.keyModel.root(),
                 poseStack,
@@ -58,7 +59,6 @@ public class KeySpecialRenderer implements SpecialModelRenderer<FeatureTier> {
     @Override
     public void getExtents(@NonNull Consumer<Vector3fc> consumer) {
         PoseStack poseStack = new PoseStack();
-        poseStack.scale(1.0F, -1.0F, -1.0F);
         this.keyModel.root().getExtentsForGui(poseStack, consumer);
     }
 

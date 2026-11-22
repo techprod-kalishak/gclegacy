@@ -3,7 +3,7 @@ package io.kalishak.galacticraftlegacy.client.renderer.entity.layer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import io.kalishak.galacticraftlegacy.client.model.entity.EvolvedWitchModel;
-import io.kalishak.galacticraftlegacy.client.renderer.entity.state.EvolvedWitchRenderState;
+import io.kalishak.galacticraftlegacy.client.renderer.entity.state.monster.EvolvedWitchRenderState;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.CrossedArmsItemLayer;
 

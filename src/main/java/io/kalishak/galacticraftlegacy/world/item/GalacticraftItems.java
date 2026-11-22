@@ -576,6 +576,11 @@ public final class GalacticraftItems {
             SpawnEggItem::new,
             () -> new Item.Properties().spawnEgg(GalacticraftEntityTypes.EVOLVED_SPIDER.get())
     );
+    public static final DeferredItem<SpawnEggItem> SKELETON_BOSS_SPAWN_EGG = REGISTRY.registerItem(
+            GalacticraftItemIds.SKELETON_BOSS_SPAWN_EGG,
+            SpawnEggItem::new,
+            () -> new Item.Properties().spawnEgg(GalacticraftEntityTypes.SKELETON_BOSS.get())
+    );
     public static final DeferredItem<ThrowableMeteorItem> THROWABLE_METEOR_CHUNK = REGISTRY.registerItem(
             GalacticraftItemIds.THROWABLE_METEOR_CHUNK,
             ThrowableMeteorItem::new

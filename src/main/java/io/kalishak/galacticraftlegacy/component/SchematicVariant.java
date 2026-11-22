@@ -10,9 +10,12 @@ package io.kalishak.galacticraftlegacy.component;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import io.kalishak.galacticraftlegacy.registry.BuiltinSchematicVariants;
 import io.kalishak.galacticraftlegacy.registry.GalacticraftRegistries;
 import io.kalishak.galacticraftlegacy.world.item.FeatureTier;
 import net.minecraft.core.Holder;
+import net.minecraft.core.HolderGetter;
+import net.minecraft.core.HolderSet;
 import net.minecraft.core.component.DataComponentGetter;
 import net.minecraft.core.registries.codec.RegistryCodecs;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -21,11 +24,14 @@ import net.minecraft.network.chat.ComponentSerialization;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.Identifier;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.TooltipProvider;
 import org.jspecify.annotations.NonNull;
 
+import java.util.List;
 import java.util.function.Consumer;
 
 public record SchematicVariant(int orderIndex, FeatureTier tier, Identifier assetId, Component title) implements TooltipProvider {
@@ -52,5 +58,26 @@ public record SchematicVariant(int orderIndex, FeatureTier tier, Identifier asse
     @Override
     public void addToTooltip(Item.@NonNull TooltipContext context, Consumer<Component> tooltipAdder, @NonNull TooltipFlag flag, @NonNull DataComponentGetter componentGetter) {
         tooltipAdder.accept(this.title);
+    }
+
+    public static ItemStack setRandomOfTier(ItemStack schematic, HolderGetter.Provider registries, FeatureTier featureTier, RandomSource random) {
+        HolderGetter<SchematicVariant> variants = registries.lookupOrThrow(GalacticraftRegistries.Keys.SCHEMATIC);
+        HolderSet<SchematicVariant> holders = HolderSet.direct(variants::getOrThrow, BuiltinSchematicVariants.getVariants());
+        List<Holder<SchematicVariant>> candidates = holders
+                .stream()
+                .filter(holder -> holder.value().tier() == featureTier)
+                .toList();
+
+        if (candidates.isEmpty()) {
+            throw new IllegalStateException("No schematic variants found for tier " + featureTier);
+        }
+
+        Holder<SchematicVariant> result = candidates.size() > 1
+                ? candidates.get(random.nextInt(candidates.size() - 1))
+                : candidates.getFirst();
+
+        schematic.set(GalacticraftDataComponents.SCHEMATIC, result);
+
+        return schematic;
     }
 }

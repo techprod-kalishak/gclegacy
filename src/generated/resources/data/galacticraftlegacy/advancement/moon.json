@@ -1,0 +1,29 @@
+{
+  "parent": "galacticraftlegacy:root",
+  "criteria": {
+    "traveled_to_moon": {
+      "conditions": {
+        "to": "galacticraftlegacy:moon"
+      },
+      "trigger": "minecraft:changed_dimension"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.galacticraftlegacy.moon.description"
+    },
+    "frame": "challenge",
+    "icon": {
+      "id": "galacticraftlegacy:moon_dirt"
+    },
+    "title": {
+      "translate": "advancements.galacticraftlegacy.moon.title"
+    }
+  },
+  "requirements": [
+    [
+      "traveled_to_moon"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

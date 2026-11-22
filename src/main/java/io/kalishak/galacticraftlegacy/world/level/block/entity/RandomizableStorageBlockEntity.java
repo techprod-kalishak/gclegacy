@@ -13,6 +13,7 @@ import net.minecraft.core.component.DataComponentGetter;
 import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -24,6 +25,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.transfer.item.ItemResource;
+import net.neoforged.neoforge.transfer.transaction.Transaction;
 import org.jspecify.annotations.Nullable;
 
 public abstract class RandomizableStorageBlockEntity extends BaseItemStorageBlockEntity implements RandomizableStorage {
@@ -76,6 +79,31 @@ public abstract class RandomizableStorageBlockEntity extends BaseItemStorageBloc
     public void setItem(int slot, ItemStack stack) {
         unpackLootTable(null);
         super.setItem(slot, stack);
+    }
+
+    public boolean setItemInRandomSlot(ItemStack stack, RandomSource random) {
+        unpackLootTable(null);
+
+        return tryRandomSlot(stack, random, random.nextInt(getSize()));
+    }
+
+    private boolean tryRandomSlot(ItemStack stack, RandomSource random, int slot) {
+        if (stack.isEmpty()) {
+            return false;
+        }
+
+        try (Transaction transaction = Transaction.open(null)) {
+            int inserted = this.items.insert(slot, ItemResource.of(stack), stack.count(), transaction);
+
+            if (inserted == stack.count()) {
+                transaction.commit();
+
+                return true;
+            }
+        }
+
+        slot = random.nextInt(getSize());
+        return tryRandomSlot(stack, random, slot);
     }
 
     @Override

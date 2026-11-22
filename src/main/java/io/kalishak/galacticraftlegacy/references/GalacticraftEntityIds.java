@@ -33,7 +33,7 @@ public class GalacticraftEntityIds {
     public static final ResourceKey<EntityType<?>> EVOLVED_ENDERMAN = create("evolved_enderman");
     public static final ResourceKey<EntityType<?>> EVOLVED_SPIDER = create("evolved_spider");
     public static final ResourceKey<EntityType<?>> EVOLVED_WITCH = create("evolved_witch");
-    public static final ResourceKey<EntityType<?>> EVOLVED_WITHER_SKELETON = create("evolved_wither_skeleton");
+    public static final ResourceKey<EntityType<?>> SKELETON_BOSS = create("skeleton_boss");
     public static final ResourceKey<EntityType<?>> EVOLVED_CREEPER_KING = create("evolved_creeper_king");
     public static final ResourceKey<EntityType<?>> EVOLVED_SPIDER_QUEEN = create("evolved_spider_queen");
     public static final ResourceKey<EntityType<?>> ALIEN_VILLAGER = create("alien_villager");

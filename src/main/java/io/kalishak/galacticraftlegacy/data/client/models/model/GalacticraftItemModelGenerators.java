@@ -9,6 +9,7 @@ package io.kalishak.galacticraftlegacy.data.client.models.model;
 
 import io.kalishak.galacticraftlegacy.aunified.data.model.ExtendedItemModelGenerator;
 import io.kalishak.galacticraftlegacy.client.item.ColorByFluid;
+import io.kalishak.galacticraftlegacy.client.renderer.item.properties.conditional.IsHotProperty;
 import io.kalishak.galacticraftlegacy.client.renderer.item.properties.numeric.DungeonLocatorAngle;
 import io.kalishak.galacticraftlegacy.client.renderer.item.properties.range.FluidAmountProperty;
 import io.kalishak.galacticraftlegacy.client.renderer.item.properties.select.SchematicTierProperty;
@@ -120,5 +121,13 @@ public class GalacticraftItemModelGenerators extends ExtendedItemModelGenerator 
         Identifier model = GalacticraftModelTemplates.ROTATING_ITEM.create(rocketItem, TextureMapping.particle(GalacticraftBlocks.ASTEROID_ROCK.get()), this.modelOutput);
         ItemModel.Unbaked unbakedModel = ItemModelUtils.specialModel(model, unbaked);
         this.itemModelOutput.accept(rocketItem, unbakedModel);
+    }
+
+    public void createMeteorChunk(Item meteorChunk) {
+        //Identifier model = createFlatItemModel(meteorChunk, ExtendedModelTemplateBuilder.builder().customLoader(ObjModelBuilder::new, obj -> obj.modelLocation(Constants.id("models/entity/thrown_meteor_chunk"))).build());
+        Identifier model = ModelLocationUtils.getModelLocation(meteorChunk);
+        ItemModel.Unbaked hotModel = ItemModelUtils.plainModel(ModelLocationUtils.getModelLocation(meteorChunk, "_hot"));
+        ItemModel.Unbaked conditionalModel = ItemModelUtils.conditional(new IsHotProperty(), hotModel, ItemModelUtils.plainModel(model));
+        this.itemModelOutput.accept(meteorChunk, conditionalModel);
     }
 }

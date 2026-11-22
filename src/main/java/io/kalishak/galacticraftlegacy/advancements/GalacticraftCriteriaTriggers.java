@@ -41,6 +41,10 @@ public final class GalacticraftCriteriaTriggers {
             "unlocked_schematic",
             SchematicUnlockedTrigger::new
     );
+    public static final DeferredHolder<CriterionTrigger<?>, FoundSpaceBossTrigger> FIND_SPACE_BOSS = REGISTRY.register(
+            "find_space_boss",
+            FoundSpaceBossTrigger::new
+    );
 
     public static void init(IEventBus bus) {
         REGISTRY.register(bus);

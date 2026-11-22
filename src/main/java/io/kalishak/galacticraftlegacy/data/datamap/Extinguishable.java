@@ -9,14 +9,7 @@ package io.kalishak.galacticraftlegacy.data.datamap;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.EnumProperty;
-import net.minecraft.world.level.block.state.properties.Property;
-
-import java.util.List;
-import java.util.Optional;
 
 public record Extinguishable(BlockState unlitState, boolean hasFacingProperty) {
     public static final Codec<Extinguishable> CODEC = RecordCodecBuilder.create(instance -> instance.group(
