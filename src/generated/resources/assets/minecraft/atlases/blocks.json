@@ -6,7 +6,7 @@
     },
     {
       "type": "minecraft:single",
-      "resource": "galacticraftlegacy:model/frequency_module"
+      "resource": "galacticraftlegacy:entity/frequency_module"
     }
   ]
 }

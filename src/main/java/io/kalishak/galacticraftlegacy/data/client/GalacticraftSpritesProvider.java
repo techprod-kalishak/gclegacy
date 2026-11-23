@@ -51,7 +51,7 @@ public class GalacticraftSpritesProvider extends SpriteSourceProvider {
                 .addSource(new DirectoryLister("gui/sprites", ""));
         atlas(AtlasIds.BLOCKS)
                 .addSource(new SingleFile(Constants.id("entity/nasa_workbench/workbench_arms")))
-                .addSource(new SingleFile(Constants.id("model/frequency_module")));
+                .addSource(new SingleFile(Constants.id("entity/frequency_module")));
         atlas(CELESTIAL_BODIES)
                 .addSource(new DirectoryLister("galaxy", ""));
         atlas(PARACHUTES)

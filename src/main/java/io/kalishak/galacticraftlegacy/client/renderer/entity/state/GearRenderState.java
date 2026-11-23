@@ -33,7 +33,7 @@ public interface GearRenderState {
     ContextKey<ItemStack> ADDITIONAL_TANK = new ContextKey<>(Constants.id("right_tank"));
     ContextKey<ItemStack> PARACHUTE = new ContextKey<>(Constants.id("parachute"));
     ContextKey<Boolean> IS_PARACHUTE_OPEN = new ContextKey<>(Constants.id("is_parachute_open"));
-    ContextKey<ItemStack> FREQUENCY_MODULE = new ContextKey<>(Constants.id("telemetry_module"));
+    ContextKey<ItemStack> FREQUENCY_MODULE = new ContextKey<>(Constants.id("frequency_module"));
     ContextKey<ItemStack> SHIELD_CONTROLLER = new ContextKey<>(Constants.id("shield_controller"));
     ContextKey<Float> TEMPERATURE_MODIFIER = new ContextKey<>(Constants.id("temperature_modifier"));
 
